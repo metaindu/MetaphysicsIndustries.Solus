@@ -85,5 +85,24 @@ namespace MetaphysicsIndustries.Solus
         //}
 
         //protected abstract Expression[] InternalCleanUpPartAssociativeOperation(Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals);
+
+        public override string ToString(ExpressionCollection arguments)
+        {
+            string[] strs = Array.ConvertAll<Expression, string>(arguments.ToArray(), Expression.ToString);
+
+            int i;
+            for (i = 0; i < strs.Length; i++)
+            {
+                if (arguments[i] is FunctionCall &&
+                    arguments[i].As<FunctionCall>().Function is Operation &&
+                    arguments[i].As<FunctionCall>().Function.As<Operation>().Precedence < Precedence)
+                {
+                    strs[i] = "(" + strs[i] + ")";
+                }
+            }
+
+            return string.Join(" " + DisplayName + " ", strs);
+        }
+
     }
 }

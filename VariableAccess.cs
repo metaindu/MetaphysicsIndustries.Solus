@@ -81,5 +81,17 @@ namespace MetaphysicsIndustries.Solus
                 return base.PreliminaryEval(varTable);
             }
         }
+
+        public override string ToString()
+        {
+            if (Variable != null)
+            {
+                return Variable.Name;
+            }
+            else
+            {
+                return "[unknown variable]";
+            }
+        }
     }
 }

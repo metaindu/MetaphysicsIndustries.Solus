@@ -32,5 +32,12 @@ namespace MetaphysicsIndustries.Solus
 			return new Literal(Math.Atan(args[0].Eval(varTable).Value));
 		}
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "atan";
+            }
+        }
     }
 }

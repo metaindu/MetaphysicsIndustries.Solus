@@ -183,5 +183,19 @@ namespace MetaphysicsIndustries.Solus
                 return new FunctionCall(Function, args.ToArray());
             }
         }
+
+        public override string ToString()
+        {
+            if (Function != null)
+            {
+                return Function.ToString(Arguments);
+            }
+            else
+            {
+                Expression[] exprs = Arguments.ToArray();
+                string[] strs = Array.ConvertAll<Expression, string>(exprs, Expression.ToString);
+                return "[unknown function](" + string.Join(", ", strs) + ")";
+            }
+        }
     }
 }

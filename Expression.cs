@@ -102,5 +102,15 @@ namespace MetaphysicsIndustries.Solus
         {
             return this as T;
         }
+
+        public static string ToString(Expression expr)
+        {
+            if (expr == null)
+            {
+                return "[null]";
+            }
+
+            return expr.ToString();
+        }
     }
 }

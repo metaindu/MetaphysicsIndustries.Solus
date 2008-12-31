@@ -96,7 +96,7 @@ namespace MetaphysicsIndustries.Solus
             double b = -2 * (variance1*mean2 +variance2*mean1);
             double c = variance1 * mean2 * mean2 + 
                         variance2 * mean1 * mean1 - 
-                        variance1 * variance2 * Math.Log(Math.Sqrt(variance1 / variance2));
+                        variance1 * variance2 * System.Math.Log(System.Math.Sqrt(variance1 / variance2));
 
             Pair<double> x = QuadraticEquation(a, b, c);
 
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Solus
 
         public static Pair<double> QuadraticEquation(double a, double b, double c)
         {
-            double d = Math.Sqrt(b * b - 4 * a * c);
+            double d = System.Math.Sqrt(b * b - 4 * a * c);
             double x1 = (-b + d) / (2 * a);
             double x2 = (-b - d) / (2 * a);
 

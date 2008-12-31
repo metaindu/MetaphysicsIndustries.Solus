@@ -74,10 +74,7 @@ namespace MetaphysicsIndustries.Solus
 
 		public virtual string DisplayName
 		{
-			get
-			{
-				return Name;
-			}
+            get { return Name; }
 		}
 
 		public string Name
@@ -144,5 +141,20 @@ namespace MetaphysicsIndustries.Solus
 
 		private  List<Type> _internaltypes = new List<Type>();
 		private  string     _name;
-	}
+
+        public virtual string ToString(ExpressionCollection arguments)
+        {
+            Expression[] exprs = arguments.ToArray();
+
+            string[] strs = Array.ConvertAll<Expression, string>(exprs, Expression.ToString);
+
+            return DisplayName + "(" + string.Join(", ", strs) + ")";
+        }
+
+        public T As<T>()
+            where T : Function
+        {
+            return this as T;
+        }
+    }
 }

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetaphysicsIndustries.Solus</RootNamespace>
-    <AssemblyName>Solus</AssemblyName>
+    <AssemblyName>MetaphysicsIndustries.Solus</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -106,6 +106,7 @@
     <Compile Include="ModulatorMatrixFilter.cs" />
     <Compile Include="DualBellEdgeDetectorMatrixFilter.cs" />
     <Compile Include="IdentityFilter.cs" />
+    <Compile Include="NegationOperation.cs" />
     <Compile Include="PolynomialTransformer.cs" />
     <Compile Include="RatioOfPolynomialsTransformer.cs" />
     <Compile Include="Settings.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="SolusEngine.Subst.cs" />
     <Compile Include="ThresholdMatrixFilter.cs" />
     <Compile Include="TransformArgs.cs" />
+    <Compile Include="UnaryOperation.cs" />
     <Compile Include="VariableTransformArgs.cs" />
     <Compile Include="ZetaTrimmedMmseMatrixFilter.cs" />
     <Compile Include="IntervalFitMatrixFilter.cs" />
@@ -210,11 +212,11 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
+    <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
       <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
       <Name>MetaphysicsIndustries.Collections</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\MetaphysicsIndustries.Utilities\MetaphysicsIndustries.Utilities.csproj">
+    <ProjectReference Include="..\MetaphysicsIndustries.Utilities\MetaphysicsIndustries.Utilities.csproj">
       <Project>{221A3FBA-E14C-4F05-A099-42508116E910}</Project>
       <Name>MetaphysicsIndustries.Utilities</Name>
     </ProjectReference>

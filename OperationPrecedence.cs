@@ -7,6 +7,8 @@
  *  Written by: Richard Sartor                                               *
  *  Copyright © 2006 Metaphysics Industries, Inc.                            *
  *                                                                           *
+ *  See SolusParser.Ex.cs                                                    *
+ *                                                                           *
  *****************************************************************************/
 
 using System;
@@ -18,13 +20,15 @@ namespace MetaphysicsIndustries.Solus
     public enum OperationPrecedence
     {
 
-        Addition = 50,
+        Addition = 120,
 
-        Multiplication = 75,
+        Multiplication = 130,
         
-        Exponent = 90,
+        Division = 131,
 
-        Division = 100,
+        Negation = 133,
+
+        Exponent = 135,
 
     }
 }

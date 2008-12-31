@@ -41,38 +41,34 @@ namespace MetaphysicsIndustries.Solus
             get { return _exponent; }
         }
 
-		protected override void CheckArguments(Expression[] args)
-		{
-			Expression[] _args = args;
-			List<Type>	types;
-			int				i;
-			int				j;
-			
-			types = this.Types;
-			if (types.Count != 2)
-			{
-				throw new InvalidOperationException("Wrong number of types specified internally to BinarryOperation (given " + types.Count.ToString() + ", require 2)");
-			}
-			if (args.Length != 2)
-			{
-				throw new InvalidOperationException("Wrong number of arguments given to " + this.DisplayName + " (given " + args.Length.ToString() + ", require 2)");
-			}
-			Type	e;
-			e = typeof(Expression);
-			j = 2;
-			for (i = 0; i < j; i++)
-			{
-				if (!e.IsAssignableFrom(types[i]))
-				{
-					
-					throw new InvalidOperationException("Required argument type " + i.ToString() + " is invalid (given \"" + types[i].Name + "\", require \"" + e.Name + ")");
-				}
-				if (!types[i].IsAssignableFrom(args[i].GetType()))
-				{
-					throw new InvalidOperationException("Argument " + ((i).ToString()) + " of wrong type (given \"" + args.GetType().Name + "\", require \"" + types[i].Name + ")");
-				}
-			}
-		}
+        protected override void CheckArguments(Expression[] args)
+        {
+            int i;
+            int j;
+            Type e;
+
+            if (Types.Count != 2)
+            {
+                throw new InvalidOperationException("Wrong number of types specified internally to BinaryOperation (given " + Types.Count.ToString() + ", require 2)");
+            }
+            if (args.Length != 2)
+            {
+                throw new InvalidOperationException("Wrong number of arguments given to " + this.DisplayName + " (given " + args.Length.ToString() + ", require 2)");
+            }
+            e = typeof(Expression);
+            j = 2;
+            for (i = 0; i < j; i++)
+            {
+                if (!e.IsAssignableFrom(Types[i]))
+                {
+                    throw new InvalidOperationException("Required argument type " + i.ToString() + " is invalid (given \"" + Types[i].Name + "\", require \"" + e.Name + "\")");
+                }
+                if (!Types[i].IsAssignableFrom(args[i].GetType()))
+                {
+                    throw new InvalidOperationException("Argument " + ((i).ToString()) + " of wrong type (given \"" + args[i].GetType().Name + "\", require \"" + Types[i].Name + "\")");
+                }
+            }
+        }
 
         //protected override Expression InternalCleanUp(Expression[] args)
         //{
@@ -122,5 +118,5 @@ namespace MetaphysicsIndustries.Solus
 
         //    return ret.Arguments.ToArray();
         //}
-	}
+    }
 }

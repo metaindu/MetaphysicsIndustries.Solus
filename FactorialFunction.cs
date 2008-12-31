@@ -48,10 +48,14 @@ namespace MetaphysicsIndustries.Solus
 
         public override string DisplayName
         {
-            get
-            {
-                return "!";
-            }
+            get { return "!"; }
+        }
+
+        public override string ToString(ExpressionCollection arguments)
+        {
+            //treat as post-fix unary operator?
+
+            return base.ToString(arguments);
         }
     }
 }
