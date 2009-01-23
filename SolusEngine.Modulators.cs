@@ -48,6 +48,19 @@ namespace MetaphysicsIndustries.Solus
             return ConvertFloatTo24g(Convert24gToFloat(value));
         }
 
+        public static double ConvertRgbTo24cTriModulator(double r, double g, double b)
+        {
+            r = Math.Max(0, Math.Min(1, r));
+            g = Math.Max(0, Math.Min(1, g));
+            b = Math.Max(0, Math.Min(1, b));
+
+            int rr = ((int)(r * 255) & 0xFF)<<16;
+            int gg = ((int)(g * 255) & 0xFF)<<8;
+            int bb = (int)(b * 255) & 0xFF;
+
+            return rr | gg | bb;
+        }
+
         public class MultiplyModulator
         {
             public MultiplyModulator(double factor) { _factor = factor; }

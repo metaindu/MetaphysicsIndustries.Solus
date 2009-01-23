@@ -118,6 +118,8 @@
     <Compile Include="SolusEngine.Subst.cs" />
     <Compile Include="ThresholdMatrixFilter.cs" />
     <Compile Include="TransformArgs.cs" />
+    <Compile Include="TriModulator.cs" />
+    <Compile Include="TriModulatorMatrixFilter.cs" />
     <Compile Include="UnaryOperation.cs" />
     <Compile Include="VariableTransformArgs.cs" />
     <Compile Include="ZetaTrimmedMmseMatrixFilter.cs" />
