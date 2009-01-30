@@ -4,22 +4,16 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public class Arctangent2Function : Function
+    public class Arctangent2Function : DualArgumentFunction
     {
         public Arctangent2Function()
             : base ("Arctangent 2")
         {
-            Types.Clear();
-            Types.Add(typeof(Expression));
-            Types.Add(typeof(Expression));
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override double InternalCall(double arg0, double arg1)
         {
-            return new Literal(
-                Math.Atan2(
-                    args[0].Eval(varTable).Value,
-                    args[1].Eval(varTable).Value));
+            return Math.Atan2(arg0, arg1);
         }
 
         public override string DisplayName

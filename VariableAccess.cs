@@ -74,7 +74,12 @@ namespace MetaphysicsIndustries.Solus
         {
             if (varTable.ContainsKey(Variable))
             {
-                return new Literal(varTable[Variable].Eval(varTable).Value);
+                //this will cause an infinite recursion if a variable 
+                //is defined in terms of itself or in terms of another 
+                //variable.
+                //we could add (if (varTable[Variable] as VariableAccess).Variable == Variable) { throw }
+                //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
+                return varTable[Variable].PreliminaryEval(varTable);
             }
             else
             {

@@ -20,8 +20,8 @@ using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Solus
 {
-	public abstract class BinaryOperation : Operation
-	{
+    public abstract class BinaryOperation : Operation
+    {
         public BinaryOperation()
         {
             Types.Clear();
@@ -69,6 +69,12 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
         }
+
+        protected override sealed Literal InternalCall(VariableTable varTable, Literal[] args)
+        {
+            return new Literal(InternalBinaryCall(args[0].Value, args[1].Value));
+        }
+        protected abstract double InternalBinaryCall(double x, double y);
 
         //protected override Expression InternalCleanUp(Expression[] args)
         //{

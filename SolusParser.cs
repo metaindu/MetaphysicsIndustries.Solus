@@ -45,6 +45,9 @@ namespace MetaphysicsIndustries.Solus
             _functions[Func.Atan2] = Function.Arctangent2;
             _functions[Func.Log] = Function.Logarithm;
             _functions[Func.Floor] = Function.Floor;
+            _functions[Func.If] = Function.If;
+            _functions[Func.Dist] = Function.Dist;
+            _functions[Func.DistSq] = Function.DistSq;
         }
 
         private static Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();
@@ -194,28 +197,48 @@ namespace MetaphysicsIndustries.Solus
                     leftArg,
                     rightArg);
             }
-            //else if (ex.Type == NodeType.Equal)
-            //{
-            //}
+            else if (ex.Type == NodeType.Equal)
+            {
+                return new FunctionCall(
+                    ComparisonOperation.Equal,
+                    leftArg,
+                    rightArg);
+            }
             else if (ex.Type == NodeType.Func)
             {
                 return ConvertFunctionExpression(ex, varTable, leftArg, rightArg);
             }
-            //else if (ex.Type == NodeType.GreaterThan)
-            //{
-            //}
-            //else if (ex.Type == NodeType.GreaterThanOrEqual)
-            //{
-            //}
+            else if (ex.Type == NodeType.GreaterThan)
+            {
+                return new FunctionCall(
+                    ComparisonOperation.GreaterThan,
+                    leftArg,
+                    rightArg);
+            }
+            else if (ex.Type == NodeType.GreaterThanOrEqual)
+            {
+                return new FunctionCall(
+                    ComparisonOperation.GreaterThanOrEqual,
+                    leftArg,
+                    rightArg);
+            }
             //else if (ex.Type == NodeType.Index)
             //{
             //}
-            //else if (ex.Type == NodeType.LessThan)
-            //{
-            //}
-            //else if (ex.Type == NodeType.LessThanOrEqual)
-            //{
-            //}
+            else if (ex.Type == NodeType.LessThan)
+            {
+                return new FunctionCall(
+                    ComparisonOperation.LessThan,
+                    leftArg,
+                    rightArg);
+            }
+            else if (ex.Type == NodeType.LessThanOrEqual)
+            {
+                return new FunctionCall(
+                    ComparisonOperation.LessThanOrEqual,
+                    leftArg,
+                    rightArg);
+            }
             //else if (ex.Type == NodeType.LogAnd)
             //{
             //}
@@ -238,9 +261,13 @@ namespace MetaphysicsIndustries.Solus
                     leftArg,
                     rightArg);
             }
-            //else if (ex.Type == NodeType.NotEqual)
-            //{
-            //}
+            else if (ex.Type == NodeType.NotEqual)
+            {
+                return new FunctionCall(
+                    ComparisonOperation.NotEqual,
+                    leftArg,
+                    rightArg);
+            }
             else if (ex.Type == NodeType.Num)
             {
                 return new Literal(ex.numValue);
@@ -815,24 +842,27 @@ namespace MetaphysicsIndustries.Solus
             string pattern;
 
             pattern = "\\s+";
-            pattern = "( " +
-                        "(?: \\\"[^\\\"]*\\\") | " +
-                        //"(?: (?:(?<=^|[\\(\\[+\\-*/\\^,<>&|%~?:])[+-])?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
-                        "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
-                        "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[xX][0-9a-fA-F]+) | " +
-                        "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[oO][0-7]+) | " +
-                        "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[bB][01]+) | " +
-                        "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?(?:0[dD])?[0-9]+) | " +
-                        "(?: [*/+\\-,]) | " +
-                        "(?: [\\^]) | " +
-                        "(?: [=]) | " +
-                        "(?: \\:\\=) | " +
-                        //"(?: [~%&|!<>?,]) | " +
-                        "(?: [a-zA-Z_]\\w*) | " +
-                        //"(?: \\<\\<|\\>\\>|\\&\\&|\\\\|\\|\\|) | " +
-                        //"(?: \\<\\=|\\>\\=|\\!\\=|\\=\\=) | " +
-                        "(?: [\\[\\]\\(\\)]) | " +
-                      "\\s+ )";
+            pattern = 
+                "( " +
+                "(?: \\\"[^\\\"]*\\\") | " +
+                //"(?: (?:(?<=^|[\\(\\[+\\-*/\\^,<>&|%~?:])[+-])?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
+                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
+                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[xX][0-9a-fA-F]+) | " +
+                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[oO][0-7]+) | " +
+                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[bB][01]+) | " +
+                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?(?:0[dD])?[0-9]+) | " +
+                "(?: [*/+\\-,]) | " +
+                "(?: [\\^]) | " +
+                "(?: \\=\\=) | " +
+                "(?: [=]) | " +
+                "(?: \\:\\=) | " +
+                //"(?: [~%&|!<>?,]) | " +
+                "(?: [a-zA-Z_]\\w*) | " +
+                //"(?: \\<\\<|\\>\\>|\\&\\&|\\\\|\\|\\|) | " +
+                "(?: \\<\\=|\\>\\=|\\!\\=|\\=\\=) | " +
+                "(?: [<>]) | " +
+                "(?: [\\[\\]\\(\\)]) | " +
+                "\\s+ )";
 
             chunks = Regex.Split(expr, pattern, RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
             chunks2 = new List<string>();
@@ -1088,7 +1118,8 @@ namespace MetaphysicsIndustries.Solus
             else if (r == Ranks.MultCat || r == Ranks.AddCat ||
                      r == Ranks.Exponent ||
                     //r == Ranks.BitwiseShiftCat ||
-                    //r == Ranks.CompareCat || r == Ranks.EqualityCat || r == Ranks.BitwiseAnd ||
+                    r == Ranks.CompareCat || r == Ranks.EqualityCat || 
+                    //r == Ranks.BitwiseAnd ||
                     //r == Ranks.BitwiseXor || r == Ranks.BitwiseOr || r == Ranks.LogicalAnd ||
                     //r == Ranks.LogicalXor || r == Ranks.LogicalOr || r == Ranks.Conditional ||
                      r == Ranks.Comma || r == Ranks.Assign) //binary operations

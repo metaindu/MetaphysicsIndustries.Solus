@@ -135,6 +135,14 @@ namespace MetaphysicsIndustries.Solus
         {
             get { return _arctangent2; }
         }
+        private static IfFunction _if = new IfFunction();
+        public static IfFunction If
+        {
+            get { return _if; }
+        }
+
+        public static readonly DistFunction Dist = new DistFunction();
+        public static readonly DistSqFunction DistSq = new DistSqFunction();
 
     }
 }

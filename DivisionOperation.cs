@@ -19,9 +19,14 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        //protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        //{
+        //    return new Literal(args[0].Value / args[1].Value);
+        //}
+
+        protected override double InternalBinaryCall(double x, double y)
         {
-            return new Literal(args[0].Value / args[1].Value);
+            return x / y;
         }
     }
 }

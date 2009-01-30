@@ -2,51 +2,51 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
   <Font Name="Tahoma" Size="8.25" />
   <Comment CommentText="A lot of this needs to be removed. Many of these classes are only used when SolusParser parses an expression string.&#xD;&#xA;&#xD;&#xA;We need to update the parser system, I guess.">
-    <Position X="7" Y="29.5" Height="1.406" Width="1.7" />
+    <Position X="7" Y="34.25" Height="1.406" Width="1.7" />
   </Comment>
   <Comment CommentText="Need to move all of this to Acuity.">
-    <Position X="8.279" Y="45.872" Height="0.75" Width="1.7" />
+    <Position X="8.279" Y="50.622" Height="0.75" Width="1.7" />
   </Comment>
   <Comment CommentText="Might make factorial into a post-fix unary operator">
-    <Position X="7.779" Y="24.573" Height="0.75" Width="1.7" />
+    <Position X="9.779" Y="24.573" Height="0.75" Width="1.7" />
   </Comment>
   <Class Name="MetaphysicsIndustries.Solus.ArccosecantFunction" Collapsed="true">
-    <Position X="0.5" Y="19.5" Width="1.5" />
+    <Position X="2.5" Y="19.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ArccosecantFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ArccosineFunction" Collapsed="true">
-    <Position X="2.25" Y="19.5" Width="1.5" />
+    <Position X="4.25" Y="19.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ArccosineFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ArccotangentFunction" Collapsed="true">
-    <Position X="4.25" Y="19.5" Width="1.5" />
+    <Position X="6.25" Y="19.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ArccotangentFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ArcsecantFunction" Collapsed="true">
-    <Position X="6" Y="19.5" Width="1.5" />
+    <Position X="8" Y="19.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ArcsecantFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ArcsineFunction" Collapsed="true">
-    <Position X="0.5" Y="20.75" Width="1.5" />
+    <Position X="2.5" Y="20.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>ArcsineFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ArctangentFunction" Collapsed="true">
-    <Position X="2.25" Y="20.75" Width="1.5" />
+    <Position X="4.25" Y="20.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>ArctangentFunction.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -56,39 +56,39 @@
     <Position X="2.5" Y="11.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>BinaryOperation.cs</FileName>
-      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAABAAABAAEAAAAAAAAIA=</HashCode>
+      <HashCode>AAAAAAAAAAUAAAAAAAAAAAAAABAAABAAEAAAAQAAAIA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CeilingFunction" Collapsed="true">
-    <Position X="4.25" Y="20.75" Width="1.5" />
+    <Position X="6.25" Y="20.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>CeilingFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CosecantFunction" Collapsed="true">
-    <Position X="6" Y="20.75" Width="1.5" />
+    <Position X="8" Y="20.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>CosecantFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CosineFunction" Collapsed="true">
-    <Position X="0.5" Y="22" Width="1.5" />
+    <Position X="2.5" Y="22" Width="1.5" />
     <TypeIdentifier>
       <FileName>CosineFunction.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CotangentFunction" Collapsed="true">
-    <Position X="2.25" Y="22" Width="1.5" />
+    <Position X="4.25" Y="22" Width="1.5" />
     <TypeIdentifier>
       <FileName>CotangentFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Expression" Collapsed="true">
-    <Position X="3.25" Y="27.25" Width="1.5" />
+    <Position X="3.25" Y="32" Width="1.5" />
     <TypeIdentifier>
       <FileName>Expression.cs</FileName>
       <HashCode>AAAAAAAAICAAAQAMAAAAAAABAAAAQAQAAAAAABAAABA=</HashCode>
@@ -104,7 +104,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.FloorFunction" Collapsed="true">
-    <Position X="4.25" Y="22" Width="1.5" />
+    <Position X="6.25" Y="22" Width="1.5" />
     <TypeIdentifier>
       <FileName>FloorFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -114,19 +114,19 @@
     <Position X="0.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Function.cs</FileName>
-      <HashCode>BoEAdHABAHQ4gAoUIBEAAA0CIACAQgACEDIAAOSgAIA=</HashCode>
+      <HashCode>BoEAdHABAHQ4gAoUIBFAAA0CIACAQgECEDIAAOSgAoA=</HashCode>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.FunctionCall" Collapsed="true">
-    <Position X="2.25" Y="28.25" Width="1.5" />
+    <Position X="2.25" Y="33" Width="1.5" />
     <TypeIdentifier>
       <FileName>FunctionCall.cs</FileName>
       <HashCode>AAAAQAAAICAAAAAEQAAAAAIAAAAAAAQBYAACBBAQABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Literal" Collapsed="true">
-    <Position X="4.25" Y="28.25" Width="1.5" />
+    <Position X="4.25" Y="33" Width="1.5" />
     <TypeIdentifier>
       <FileName>Literal.cs</FileName>
       <HashCode>ABAAAAAAIAAAAAAEAAAAAAAAAUAAAAEAAABgAAAAAJA=</HashCode>
@@ -140,14 +140,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SecantFunction" Collapsed="true">
-    <Position X="2.25" Y="23.25" Width="1.5" />
+    <Position X="4.25" Y="23.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SecantFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SineFunction" Collapsed="true">
-    <Position X="0.5" Y="23.25" Width="1.5" />
+    <Position X="2.5" Y="23.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SineFunction.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -157,11 +157,11 @@
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>SolusEngine.CleanUp.cs</FileName>
-      <HashCode>AACEgARgQxEIIASAAAQAAKEAAQKAAAgFQcgABFAAABE=</HashCode>
+      <HashCode>AACEgARgQxEIIASAAAQAAKEAAQKgAAgFQcgABFAAABE=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.TangentFunction" Collapsed="true">
-    <Position X="4.25" Y="23.25" Width="1.5" />
+    <Position X="6.25" Y="23.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>TangentFunction.cs</FileName>
       <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -178,11 +178,11 @@
     <Position X="3.25" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>DivisionOperation.cs</FileName>
-      <HashCode>AAAAAAAAAAwAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAABAAAAAAQAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.NaturalLogarithmFunction" Collapsed="true">
-    <Position X="6" Y="22" Width="1.5" />
+    <Position X="8" Y="22" Width="1.5" />
     <TypeIdentifier>
       <FileName>NaturalLogarithmFunction.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -199,11 +199,11 @@
     <Position X="5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ExponentOperation.cs</FileName>
-      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAQAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.VariableAccess" Collapsed="true">
-    <Position X="0.5" Y="28.25" Width="1.5" />
+    <Position X="0.5" Y="33" Width="1.5" />
     <TypeIdentifier>
       <FileName>VariableAccess.cs</FileName>
       <HashCode>AAgAAAAAIAEAAAAEAAAAAAAAAEAAAAAAAAQAABAAABA=</HashCode>
@@ -217,14 +217,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SingleArgumentFunction" Collapsed="true">
-    <Position X="3.25" Y="18.25" Width="1.5" />
+    <Position X="1.5" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SingleArgumentFunction.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.UnitStepFunction" Collapsed="true">
-    <Position X="6" Y="23.25" Width="1.5" />
+    <Position X="8" Y="23.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>UnitStepFunction.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -245,42 +245,42 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AbsoluteValueFunction" Collapsed="true">
-    <Position X="0.5" Y="24.5" Width="1.5" />
+    <Position X="2.5" Y="24.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>AbsoluteValueFunction.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.RandomExpression" Collapsed="true">
-    <Position X="0.5" Y="29.25" Width="1.5" />
+    <Position X="0.5" Y="34" Width="1.5" />
     <TypeIdentifier>
       <FileName>RandomExpression.cs</FileName>
       <HashCode>ABAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABE=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Log10Function" Collapsed="true">
-    <Position X="2.25" Y="24.5" Width="1.5" />
+    <Position X="4.25" Y="24.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Log10Function.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Log2Function" Collapsed="true">
-    <Position X="4.25" Y="24.5" Width="1.5" />
+    <Position X="6.25" Y="24.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>Log2Function.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.LogarithmFunction" Collapsed="true">
-    <Position X="3.25" Y="6" Width="1.5" />
+    <Position X="3.25" Y="27.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>LogarithmFunction.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Arctangent2Function" Collapsed="true">
-    <Position X="1.5" Y="6" Width="1.5" />
+    <Position X="1.5" Y="27.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Arctangent2Function.cs</FileName>
       <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -294,77 +294,77 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.PlotExpression" Collapsed="true">
-    <Position X="0.5" Y="31.25" Width="1.5" />
+    <Position X="0.5" Y="36" Width="1.5" />
     <TypeIdentifier>
       <FileName>PlotExpression.cs</FileName>
       <HashCode>AAAAAIAAIAEAAAAAAAAAAAAAAAAAIAAAAAQAAAAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Plot3dExpression" Collapsed="true">
-    <Position X="2.25" Y="31.25" Width="1.5" />
+    <Position X="2.25" Y="36" Width="1.5" />
     <TypeIdentifier>
       <FileName>Plot3dExpression.cs</FileName>
       <HashCode>AAgAAACAIAMgAFABICCKCAAQAAQAAAAAAAAEQAAADBA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ColorExpression" Collapsed="true">
-    <Position X="6" Y="28.25" Width="1.5" />
+    <Position X="6" Y="33" Width="1.5" />
     <TypeIdentifier>
       <FileName>ColorExpression.cs</FileName>
       <HashCode>AAAGAARAIAAICgIgABAAAAAABAAAAAAAAAAAgDAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AssignExpression" Collapsed="true">
-    <Position X="2.25" Y="29.25" Width="1.5" />
+    <Position X="2.25" Y="34" Width="1.5" />
     <TypeIdentifier>
       <FileName>AssignExpression.cs</FileName>
       <HashCode>ABAAAAAAIAEAAAAAAAAAAAAAAAAAAAAAAAQgAAAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.DelayAssignExpression" Collapsed="true">
-    <Position X="4.25" Y="29.25" Width="1.5" />
+    <Position X="4.25" Y="34" Width="1.5" />
     <TypeIdentifier>
       <FileName>DelayAssignExpression.cs</FileName>
       <HashCode>AAAAAAAAIAEAAAAAAAAAAAAAAAAAAAQQAAQAgAAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SolusMatrix" Collapsed="true">
-    <Position X="4.25" Y="33.5" Width="1.5" />
+    <Position X="4.25" Y="38.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SolusMatrix.cs</FileName>
       <HashCode>ABAAQEAAIBACABAACAAAACQAQAAAAAQILQAAABIAAhQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SolusVector" Collapsed="true">
-    <Position X="6" Y="33.5" Width="1.5" />
+    <Position X="6" Y="38.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SolusVector.cs</FileName>
       <HashCode>ABAAAAAAIAACABAADAAAAABAAAAAAAQIJAAAABIAABQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MathPaintExpression" Collapsed="true">
-    <Position X="4.25" Y="31.25" Width="1.5" />
+    <Position X="4.25" Y="36" Width="1.5" />
     <TypeIdentifier>
       <FileName>MathPaintExpression.cs</FileName>
       <HashCode>AAAAAAIAJQCAAAAAAAAIAEAEABAAAAAQAAAAgAAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.PlotMatrixExpression" Collapsed="true">
-    <Position X="6" Y="31.25" Width="1.5" />
+    <Position X="6" Y="36" Width="1.5" />
     <TypeIdentifier>
       <FileName>PlotMatrixExpression.cs</FileName>
       <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAgAAAAAAAAAQAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.FilterBase&lt;T&gt;" Collapsed="true">
-    <Position X="0.5" Y="44.75" Width="1.5" />
+    <Position X="0.5" Y="49.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>FilterBase.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SolusTensor" Collapsed="true">
-    <Position X="4.25" Y="32.25" Width="1.5" />
+    <Position X="4.25" Y="37" Width="1.5" />
     <TypeIdentifier>
       <FileName>SolusTensor.cs</FileName>
       <HashCode>ADAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -372,183 +372,183 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ConvolutionMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="60" Width="1.5" />
+    <Position X="1.5" Y="64.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>ConvolutionMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ConvolutionVectorFilter" Collapsed="true">
-    <Position X="2.5" Y="47.5" Width="1.5" />
+    <Position X="2.5" Y="52.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>ConvolutionVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.HighPassVectorFilter" Collapsed="true">
-    <Position X="2.5" Y="48.75" Width="1.5" />
+    <Position X="2.5" Y="53.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>HighPassVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.LowPassVectorFilter" Collapsed="true">
-    <Position X="4.25" Y="49.75" Width="1.5" />
+    <Position X="4.25" Y="54.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>LowPassVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.PlotVectorExpression" Collapsed="true">
-    <Position X="0.5" Y="32.25" Width="1.5" />
+    <Position X="0.5" Y="37" Width="1.5" />
     <TypeIdentifier>
       <FileName>PlotVectorExpression.cs</FileName>
       <HashCode>AEAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MedianVectorFilter" Collapsed="true">
-    <Position X="4.25" Y="51" Width="1.5" />
+    <Position X="4.25" Y="55.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>MedianVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAEAAABAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <InheritanceLine Type="MetaphysicsIndustries.Solus.VectorFilter" ManuallyRouted="true" FixedToPoint="true">
       <Path>
-        <Point X="2.25" Y="46.63" />
-        <Point X="2.25" Y="50.7" />
-        <Point X="5" Y="50.7" />
-        <Point X="5" Y="51" />
+        <Point X="2.25" Y="51.38" />
+        <Point X="2.25" Y="55.45" />
+        <Point X="5" Y="55.45" />
+        <Point X="5" Y="55.75" />
       </Path>
     </InheritanceLine>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MatrixFilter" Collapsed="true">
-    <Position X="0.5" Y="54.75" Width="1.5" />
+    <Position X="0.5" Y="59.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>MatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.VectorFilter" Collapsed="true">
-    <Position X="1.5" Y="46" Width="1.5" />
+    <Position X="1.5" Y="50.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>VectorFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.WeightedMedianVectorFilter" Collapsed="true">
-    <Position X="4.25" Y="52" Width="1.5" />
+    <Position X="4.25" Y="56.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>WeightedMedianFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MovingAverageVectorFilter" Collapsed="true">
-    <Position X="4.25" Y="48.75" Width="1.5" />
+    <Position X="4.25" Y="53.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>MovingAverageVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.VectorFilters" Collapsed="true">
-    <Position X="4.25" Y="44.75" Width="1.5" />
+    <Position X="4.25" Y="49.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>VectorFilters.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.GaussianNoiseVectorFilter" Collapsed="true">
-    <Position X="4.25" Y="47.5" Width="1.5" />
+    <Position X="4.25" Y="52.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>GaussianNoiseVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAACAAAAAAACAAAAAAAAAAAAgAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ArithmeticMeanFilter" Collapsed="true">
-    <Position X="2.5" Y="61.25" Width="1.5" />
+    <Position X="2.5" Y="66" Width="1.5" />
     <TypeIdentifier>
       <FileName>ArithmeticMeanFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.GaussianBlurMatrixFilter" Collapsed="true">
-    <Position X="4.25" Y="61.25" Width="1.5" />
+    <Position X="4.25" Y="66" Width="1.5" />
     <TypeIdentifier>
       <FileName>GaussianBlurMatrixFilter.cs</FileName>
       <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AdvancedConvolutionMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="64" Width="1.5" />
+    <Position X="1.5" Y="68.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>AdvancedConvolutionMatrixFilter.cs</FileName>
       <HashCode>AAgAAAAAABAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.GaussianNoiseMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="56.25" Width="1.5" />
+    <Position X="1.5" Y="61" Width="1.5" />
     <TypeIdentifier>
       <FileName>GaussianNoiseMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MedianMatrixFilter" Collapsed="true">
-    <Position X="5.5" Y="72.25" Width="1.5" />
+    <Position X="5.5" Y="77" Width="1.5" />
     <TypeIdentifier>
       <FileName>MedianFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.WeightedMedianMatrixFilter" Collapsed="true">
-    <Position X="4.5" Y="71" Width="1.5" />
+    <Position X="4.5" Y="75.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>WeightedMedianMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.GeometricMeanMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="86" Width="1.5" />
+    <Position X="1.5" Y="90.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>GeometricMeanMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.PrewittHorizontalMatrixFilter" Collapsed="true">
-    <Position X="2.5" Y="62.25" Width="1.5" />
+    <Position X="2.5" Y="67" Width="1.5" />
     <TypeIdentifier>
       <FileName>PrewittHorizontalMatrixFilter.cs</FileName>
       <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.PrewittVerticalMatrixFilter" Collapsed="true">
-    <Position X="4.25" Y="62.25" Width="1.5" />
+    <Position X="4.25" Y="67" Width="1.5" />
     <TypeIdentifier>
       <FileName>PrewittVerticalMatrixFilter.cs</FileName>
       <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SaltAndPepperNoiseMatrixFilter" Collapsed="true">
-    <Position X="3.25" Y="57.5" Width="1.5" />
+    <Position X="3.25" Y="62.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SaltAndPepperNoiseMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABQAAAEAAAAAAAAAAAAAAAAAAAAIAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.FourierTransformVectorFilter" Collapsed="true">
-    <Position X="2.5" Y="51" Width="1.5" />
+    <Position X="2.5" Y="55.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>FourierTransformVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAABAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.FourierTransformMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="57.5" Width="1.5" />
+    <Position X="1.5" Y="62.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>FourierTransformMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAACAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Tensor" Collapsed="true">
-    <Position X="0.5" Y="35" Width="1.5" />
+    <Position X="0.5" Y="39.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>Tensor.cs</FileName>
       <HashCode>ADAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -556,21 +556,21 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Matrix" Collapsed="true">
-    <Position X="0.5" Y="36.25" Width="1.5" />
+    <Position X="0.5" Y="41" Width="1.5" />
     <TypeIdentifier>
       <FileName>Matrix.cs</FileName>
       <HashCode>ABAAwECAAAACABAACAAAACQAQAAAAAAILQAAAAIAAhQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.Vector" Collapsed="true">
-    <Position X="2.25" Y="36.25" Width="1.5" />
+    <Position X="2.25" Y="41" Width="1.5" />
     <TypeIdentifier>
       <FileName>Vector.cs</FileName>
       <HashCode>ABAAAAAAAAACABAADAAAAABAAAAAAAAAJAAAAAIAABQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MinMaxMatrixFilter" Collapsed="true">
-    <Position X="2.5" Y="65.25" Width="1.5" />
+    <Position X="2.5" Y="70" Width="1.5" />
     <TypeIdentifier>
       <FileName>MinMaxMatrixFilter.cs</FileName>
       <NewMemberFileName>MinMaxMatriXFilter.cs</NewMemberFileName>
@@ -578,218 +578,218 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MaxMinMatrixFilter" Collapsed="true">
-    <Position X="4.25" Y="65.25" Width="1.5" />
+    <Position X="4.25" Y="70" Width="1.5" />
     <TypeIdentifier>
       <FileName>MaxMinMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.WeightedPMatrixFilter" Collapsed="true">
-    <Position X="3.5" Y="69.75" Width="1.5" />
+    <Position X="3.5" Y="74.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>WeightedPMatrixFilter.cs</FileName>
       <HashCode>IAAAAAAAAEAAAAAAAAAAAAABAAAAAAAAAIAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.WindowMaxMatrixFilter" Collapsed="true">
-    <Position X="6.25" Y="71" Width="1.5" />
+    <Position X="6.25" Y="75.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>WindowMaxMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.WindowMinMatrixFilter" Collapsed="true">
-    <Position X="8" Y="71" Width="1.5" />
+    <Position X="8" Y="75.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>WindowMinMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.InverseFourierTransformVectorFilter" Collapsed="true">
-    <Position X="2.5" Y="52" Width="1.5" />
+    <Position X="2.5" Y="56.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>InverseFourierTransformVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAABAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.InverseFourierTransformMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="58.5" Width="1.5" />
+    <Position X="1.5" Y="63.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>InverseFourierTransformMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CoordinateTransformMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="79.75" Width="1.5" />
+    <Position X="1.5" Y="84.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>CoordinateTransformMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.FishEyeMatrixFilter" Collapsed="true">
-    <Position X="2.5" Y="83.25" Width="1.5" />
+    <Position X="2.5" Y="88" Width="1.5" />
     <TypeIdentifier>
       <FileName>FishEyeMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.RotateCoordinatesMatrixFilter" Collapsed="true">
-    <Position X="4.25" Y="83.25" Width="1.5" />
+    <Position X="4.25" Y="88" Width="1.5" />
     <TypeIdentifier>
       <FileName>RotateCoordinatesMatrixFilter.cs</FileName>
       <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAEAAAAAAEAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SwirlMatrixFilter" Collapsed="true">
-    <Position X="6" Y="83.25" Width="1.5" />
+    <Position X="6" Y="88" Width="1.5" />
     <TypeIdentifier>
       <FileName>SwirlMatrixFilter.cs</FileName>
       <HashCode>AAAAAABAAAABAABAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CenteredCoordinateTransformMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="80.75" Width="1.5" />
+    <Position X="1.5" Y="85.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>CenteredCoordinateTransformMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.PolarCoordinateTransformMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="81.75" Width="1.5" />
+    <Position X="1.5" Y="86.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PolarCoordinateTransformMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAABAAAAAAAAAAQAAAEAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.VariableSwirlMatrixFilter" Collapsed="true">
-    <Position X="6" Y="84.25" Width="1.5" />
+    <Position X="6" Y="89" Width="1.5" />
     <TypeIdentifier>
       <FileName>VariableSwirlMatrixFilter.cs</FileName>
       <HashCode>AAAAAABAAAEAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.VariableRotateCoordinatesMatrixFilter" Collapsed="true">
-    <Position X="4.25" Y="84.25" Width="1.5" />
+    <Position X="4.25" Y="89" Width="1.5" />
     <TypeIdentifier>
       <FileName>VariableRotateCoordinatesMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAEAAgAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.BiModulatorMatrixFilter" Collapsed="true">
-    <Position X="5" Y="56.25" Width="1.5" />
+    <Position X="5" Y="61" Width="1.5" />
     <TypeIdentifier>
       <FileName>BiModulatorMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.IntervalFitMatrixFilter" Collapsed="true">
-    <Position X="6.75" Y="58.5" Width="1.5" />
+    <Position X="6.75" Y="63.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>IntervalFitMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SineWaveGeneratorVectorFilter" Collapsed="true">
-    <Position X="6" Y="47.5" Width="1.5" />
+    <Position X="6" Y="52.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SineWaveGeneratorVectorFilter.cs</FileName>
       <HashCode>AAAAAAAAABABAAAAAAAQAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
     <InheritanceLine Type="MetaphysicsIndustries.Solus.VectorFilter" ManuallyRouted="true">
       <Path>
-        <Point X="2.25" Y="46.63" />
-        <Point X="2.25" Y="47.125" />
-        <Point X="6.75" Y="47.125" />
-        <Point X="6.75" Y="47.5" />
+        <Point X="2.25" Y="51.38" />
+        <Point X="2.25" Y="51.875" />
+        <Point X="6.75" Y="51.875" />
+        <Point X="6.75" Y="52.25" />
       </Path>
     </InheritanceLine>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.OrderStatisticMatrixFilter" Collapsed="true">
-    <Position X="2.5" Y="68.5" Width="1.5" />
+    <Position X="2.5" Y="73.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>OrderStatisticMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAYBAAAAAAQA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AlphaTrimmedMeanMatrixFilter" Collapsed="true">
-    <Position X="5.25" Y="69.75" Width="1.5" />
+    <Position X="5.25" Y="74.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>AlphaTrimmedMeanMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.WindowedMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="67.25" Width="1.5" />
+    <Position X="1.5" Y="72" Width="1.5" />
     <TypeIdentifier>
       <FileName>WindowedMatrixFilter.cs</FileName>
       <HashCode>QAAQAAAAABAAAAAAAAAAAAAAAACAAAAAAQAEAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MinimalMeanSquareErrorMatrixFilter" Collapsed="true">
-    <Position X="2.5" Y="74.25" Width="1.5" />
+    <Position X="2.5" Y="79" Width="1.5" />
     <TypeIdentifier>
       <FileName>MinimalMeanSquareErrorMatrixFilter.cs</FileName>
       <HashCode>AAAQKAAACAgBAAAAAAAAAAAAAAAAAAAAAYBAAAAAAEA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AlphaTrimmedMmseMatrixFilter" Collapsed="true">
-    <Position X="4.5" Y="77.75" Width="1.5" />
+    <Position X="4.5" Y="82.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>AlphaTrimmedMmseMatrixFilter.cs</FileName>
       <HashCode>AAEAAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ZetaTrimmedMmseMatrixFilter" Collapsed="true">
-    <Position X="3.5" Y="75.5" Width="1.5" />
+    <Position X="3.5" Y="80.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>ZetaTrimmedMmseMatrixFilter.cs</FileName>
       <HashCode>AAAAIAAAAAAAAIAAAAAAAgQAgAAAAAAAAQAAABAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MedianMmseMatrixFilter" Collapsed="true">
-    <Position X="6.25" Y="77.75" Width="1.5" />
+    <Position X="6.25" Y="82.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>MedianMmseMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.OrderStatisticMmseMatrixFilter" Collapsed="true">
-    <Position X="3.5" Y="76.5" Width="1.5" />
+    <Position X="3.5" Y="81.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>OrderStatisticMmseMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AlphaTrimmedMmsePlusAtmMatrixFilter" Collapsed="true">
-    <Position X="4.5" Y="78.75" Width="1.5" />
+    <Position X="4.5" Y="83.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>AlphaTrimmedMmsePlusAtmMatrixFilter.cs</FileName>
       <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.HistogramMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="87.25" Width="1.5" />
+    <Position X="1.5" Y="92" Width="1.5" />
     <TypeIdentifier>
       <FileName>HistogramMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SsimErrorMeasure" Collapsed="true">
-    <Position X="8.5" Y="54.75" Width="1.5" />
+    <Position X="8.5" Y="59.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>SsimErrorMeasure.cs</FileName>
       <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAIACAAAAAAACAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ZetaTrimmedMeanMatrixFilter" Collapsed="true">
-    <Position X="4.25" Y="68.5" Width="1.5" />
+    <Position X="4.25" Y="73.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>ZetaTrimmedMeanMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAACAAQAAAAAAAAAAAAAAAAAAAAAQAAABAAAEA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MmseImpulseRejectionStage" Collapsed="true">
-    <Position X="5.75" Y="74.25" Width="1.5" />
+    <Position X="5.75" Y="79" Width="1.5" />
     <TypeIdentifier>
       <FileName>MmseImpulseRejectionStage.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -797,7 +797,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ZetaTrimmedMmsePlusZtmMatrixFilter" Collapsed="true">
-    <Position X="6.25" Y="75.25" Width="1.5" />
+    <Position X="6.25" Y="80" Width="1.5" />
     <TypeIdentifier>
       <FileName>ZetaTrimmedMmsePlusZtmMatrixFilter.cs</FileName>
       <NewMemberFileName>ZetaTrimmedMmsePlusAtmMatrixFilter.cs</NewMemberFileName>
@@ -805,203 +805,203 @@
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ChainMatrixFilter" Collapsed="true">
-    <Position X="8.5" Y="56.25" Width="1.5" />
+    <Position X="8.5" Y="61" Width="1.5" />
     <TypeIdentifier>
       <FileName>CompositeMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABEAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SimpleScaleMatrixFilter" Collapsed="true">
-    <Position X="3.25" Y="56.25" Width="1.5" />
+    <Position X="3.25" Y="61" Width="1.5" />
     <TypeIdentifier>
       <FileName>SimpleScaleMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SignalMeanMeasure" Collapsed="true">
-    <Position X="6.75" Y="54.75" Width="1.5" />
+    <Position X="6.75" Y="59.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>SignalMeanMeasure.cs</FileName>
       <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SignalVarianceMeasure" Collapsed="true">
-    <Position X="5" Y="54.75" Width="1.5" />
+    <Position X="5" Y="59.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>SignalVarianceMeasure.cs</FileName>
       <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ImpulseNoiseMatrixFilter" Collapsed="true">
-    <Position X="3.25" Y="58.5" Width="1.5" />
+    <Position X="3.25" Y="63.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>ImpulseNoiseMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MmseEdgeDetectionMatrixfilter" Collapsed="true">
-    <Position X="1.5" Y="75.5" Width="1.5" />
+    <Position X="1.5" Y="80.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>MmseEdgeDetectionMatrixfilter.cs</FileName>
       <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAABAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.DualBellEdgeDetectorMatrixFilter" Collapsed="true">
-    <Position X="2.5" Y="71" Width="1.5" />
+    <Position X="2.5" Y="75.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>DualBellEdgeDetectorMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ExponentMatrixFilter" Collapsed="true">
-    <Position X="5" Y="58.5" Width="1.5" />
+    <Position X="5" Y="63.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>ExponentMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQAABAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ModulatorMatrixFilter" Collapsed="true">
-    <Position X="5" Y="57.5" Width="1.5" />
+    <Position X="5" Y="62.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>ModulatorMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.SobelMatrixFilter" Collapsed="true">
-    <Position X="8.5" Y="57.5" Width="1.5" />
+    <Position X="8.5" Y="62.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>SobelMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAEgIAAAAAAABAAAEAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ExpandEdgeMatrixFilter" Collapsed="true">
-    <Position X="6.75" Y="56.25" Width="1.5" />
+    <Position X="6.75" Y="61" Width="1.5" />
     <TypeIdentifier>
       <FileName>ExpandEdgeMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAEBAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AtmImpulseRejectionStageMatrixFilter" Collapsed="true">
-    <Position X="7" Y="69.75" Width="1.5" />
+    <Position X="7" Y="74.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>AtmImpulseRejectionStageMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.MmsePlusAtmMatrixFilter" Collapsed="true">
-    <Position X="1.5" Y="76.5" Width="1.5" />
+    <Position X="1.5" Y="81.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>MmsePlusAtmMatrixFilter.cs</FileName>
       <HashCode>AAAAIAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.AlphaTrimmedDualBellEdgeDetectorMatrixFilter" Collapsed="true">
-    <Position X="2.5" Y="72" Width="1.5" />
+    <Position X="2.5" Y="76.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>AlphaTrimmedDualBellEdgeDetectorMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAAEAAAAAEAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.IdentityFilter" Collapsed="true">
-    <Position X="3.25" Y="54.75" Width="1.5" />
+    <Position X="3.25" Y="59.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>IdentityFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.IntervalFitBaseMatrixFilter" Collapsed="true">
-    <Position X="6.75" Y="57.5" Width="1.5" />
+    <Position X="6.75" Y="62.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>IntervalFitBaseMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAEAAAAAAAAAAAAAAEEABAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ZetaTrimmedMmsePlusAtmMatrixFilter" Collapsed="true">
-    <Position X="6.25" Y="76" Width="1.5" />
+    <Position X="6.25" Y="80.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>ZetaTrimmedMmsePlusAtmMatrixFilter.cs</FileName>
       <HashCode>AAAAIAAAAAAAAAAEAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ThresholdMatrixFilter" Collapsed="true">
-    <Position X="6.75" Y="59.75" Width="1.5" />
+    <Position X="6.75" Y="64.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ThresholdMatrixFilter.cs</FileName>
       <HashCode>AAAAAAAAABAAAAAAgAAAAAAAAAAAAAAAAAggAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ExpressionTransformer&lt;T&gt;" Collapsed="true">
-    <Position X="3.25" Y="39.5" Width="1.5" />
+    <Position X="3.25" Y="44.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>ExpressionTransformer.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.TransformArgs" Collapsed="true">
-    <Position X="3.25" Y="37.25" Width="1.5" />
+    <Position X="3.25" Y="42" Width="1.5" />
     <TypeIdentifier>
       <FileName>TransformArgs.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.VariableTransformArgs" Collapsed="true">
-    <Position X="2.25" Y="38.5" Width="1.5" />
+    <Position X="2.25" Y="43.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>VariableTransformArgs.cs</FileName>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.RatioOfPolynomialsTransformer" Collapsed="true">
-    <Position X="4.25" Y="40.75" Width="1.5" />
+    <Position X="4.25" Y="45.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>RatioOfPolynomialsTransformer.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.IntegralTransformer" Collapsed="true">
-    <Position X="2.25" Y="40.75" Width="1.5" />
+    <Position X="2.25" Y="45.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>IntegralTransformer.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.ExpressionTransformer" Collapsed="true">
-    <Position X="3.25" Y="41.75" Width="1.5" />
+    <Position X="3.25" Y="46.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>ExpressionTransformer.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.DerivativeTransformer" Collapsed="true">
-    <Position X="0.5" Y="40.75" Width="1.5" />
+    <Position X="0.5" Y="45.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>DerivativeTransformer.cs</FileName>
       <HashCode>AAAAAgAAAAAAAQAAABAgIAUAAIACCAAAAAAAAAAAECQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CleanUpTransformer" Collapsed="true">
-    <Position X="2.25" Y="43" Width="1.5" />
+    <Position X="2.25" Y="47.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>CleanUpTransformer.cs</FileName>
       <HashCode>AAEAAAAAAAAQAAAAgBAAIAUAAAAgAAAgAAAACEQAAAQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.CloneTransformer" Collapsed="true">
-    <Position X="4.25" Y="43" Width="1.5" />
+    <Position X="4.25" Y="47.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>CloneTransformer.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.PolynomialTransformer" Collapsed="true">
-    <Position X="6" Y="40.75" Width="1.5" />
+    <Position X="6" Y="45.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>PolynomialTransformer.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgAAAAAAAAQ=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="MetaphysicsIndustries.Solus.FactorialFunction" Collapsed="true">
-    <Position X="6" Y="24.5" Width="1.5" />
+    <Position X="8" Y="24.5" Width="1.5" />
     <TypeIdentifier>
       <FileName>FactorialFunction.cs</FileName>
       <HashCode>AAAAEAAAIAQAEAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -1021,29 +1021,106 @@
       <HashCode>AAAAAAAAAAQAAAAEAAAAAAAAAAAAAABAAEAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
+  <Class Name="MetaphysicsIndustries.Solus.IfFunction" Collapsed="true">
+    <Position X="1.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>IfFunction.cs</FileName>
+      <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.ComparisonOperation" Collapsed="true">
+    <Position X="6.75" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ComparisonOperation.cs</FileName>
+      <HashCode>ACAAAAAAAAAAAAAAgAAAAAAAAAAAAABAAABAAQRAACA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.GreaterThanComparisonOperation" Collapsed="true">
+    <Position X="7.75" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GreaterThanComparisonOperation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.LessThanComparisonOperation" Collapsed="true">
+    <Position X="9.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>LessThanComparisonOperation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.GreaterThanOrEqualComparisonOperation" Collapsed="true">
+    <Position X="7.75" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>GreaterThanOrEqualComparisonOperation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.LessThanOrEqualComparisonOperation" Collapsed="true">
+    <Position X="9.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>LessThanOrEqualComparisonOperation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.EqualComparisonOperation" Collapsed="true">
+    <Position X="7.75" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>EqualComparisonOperation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.NotEqualComparisonOperation" Collapsed="true">
+    <Position X="9.5" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>NotEqualComparisonOperation.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.DistSqFunction" Collapsed="true">
+    <Position X="5" Y="27.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DistSqFunction.cs</FileName>
+      <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.DistFunction" Collapsed="true">
+    <Position X="6.75" Y="27.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DistFunction.cs</FileName>
+      <HashCode>AAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MetaphysicsIndustries.Solus.DualArgumentFunction" Collapsed="true">
+    <Position X="0.5" Y="26" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DualArgumentFunction.cs</FileName>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
   <Struct Name="MetaphysicsIndustries.Solus.Pair&lt;T&gt;" Collapsed="true">
-    <Position X="0.5" Y="89.5" Width="1.5" />
+    <Position X="0.5" Y="94.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Pair.cs</FileName>
       <HashCode>AAAAAAABAAAAAQAEAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Struct>
   <Struct Name="MetaphysicsIndustries.Solus.Triple&lt;T&gt;" Collapsed="true">
-    <Position X="2.25" Y="89.5" Width="1.5" />
+    <Position X="2.25" Y="94.25" Width="1.5" />
     <TypeIdentifier>
       <FileName>Triple.cs</FileName>
       <HashCode>AAAAAAABAAAAAQAEAAAAAAIAAAAAAAAAAAAAAAAAAUA=</HashCode>
     </TypeIdentifier>
   </Struct>
   <Interface Name="MetaphysicsIndustries.Solus.IPerPixelOperator" Collapsed="true">
-    <Position X="4.25" Y="36.25" Width="1.5" />
+    <Position X="4.25" Y="41" Width="1.5" />
     <TypeIdentifier>
       <FileName>IPerPixelOperator.cs</FileName>
       <HashCode>AAAAAAAAEAAAAgAAAAAAAAAAAAAAAAAIAAAAgAAAAAA=</HashCode>
     </TypeIdentifier>
   </Interface>
   <Interface Name="MetaphysicsIndustries.Solus.IMmseImpulseRejectionStage" Collapsed="true">
-    <Position X="7.5" Y="74.25" Width="1.5" />
+    <Position X="7.5" Y="79" Width="1.5" />
     <TypeIdentifier>
       <FileName>IMmseImpulseRejectionStage.cs</FileName>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -1053,7 +1130,7 @@
     <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
       <FileName>OperationPrecedence.cs</FileName>
-      <HashCode>AAABAAAAAAAAAAAAAAAAAIAAABAAAgAAEAAAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAAAAAAAgAAAAAAAMAAABAAAgAAEAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Enum>
   <Delegate Name="MetaphysicsIndustries.Solus.SolusAction" Collapsed="true">

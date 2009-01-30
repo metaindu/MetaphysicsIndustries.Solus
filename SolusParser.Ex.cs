@@ -61,6 +61,10 @@ namespace MetaphysicsIndustries.Solus
             GetRow2,
             GetColumn2,
 
+            If,
+            Dist,
+            DistSq,
+
             Plot,
             Plot3d,
             MathPaint,
@@ -92,12 +96,12 @@ namespace MetaphysicsIndustries.Solus
             Exponent,
             //BitShiftLeft,
             //BitShiftRight,
-            //LessThan,
-            //GreaterThan,
-            //LessThanOrEqual,
-            //GreaterThanOrEqual,
-            //Equal,
-            //NotEqual,
+            LessThan,
+            GreaterThan,
+            LessThanOrEqual,
+            GreaterThanOrEqual,
+            Equal,
+            NotEqual,
             //BitAnd,
             //BitXor,
             //BitOr,
@@ -130,8 +134,8 @@ namespace MetaphysicsIndustries.Solus
             MultCat = 130,
             AddCat = 120,
             //BitwiseShiftCat = 110,
-            //CompareCat = 100,
-            //EqualityCat = 90,
+            CompareCat = 100,
+            EqualityCat = 90,
             //BitwiseAnd = 80,
             //BitwiseXor = 70,
             //BitwiseOr = 60,
@@ -203,6 +207,10 @@ namespace MetaphysicsIndustries.Solus
                 _functionTypes["getrow2"] = Func.GetRow2;
                 _functionTypes["getcolumn2"] = Func.GetColumn2;
 
+                _functionTypes["if"] = Func.If;
+                _functionTypes["dist"] = Func.Dist;
+                _functionTypes["distsq"] = Func.DistSq;
+
                 _functionTypes["plot"] = Func.Plot;
                 _functionTypes["plot3d"] = Func.Plot3d;
                 _functionTypes["mathpaint"] = Func.MathPaint;
@@ -232,12 +240,12 @@ namespace MetaphysicsIndustries.Solus
                 _ranksFromNodeTypes[NodeType.Sub] = Ranks.AddCat;
                 //_ranksFromNodeTypes[NodeType.BitShiftLeft] = Ranks.BitwiseShiftCat;
                 //_ranksFromNodeTypes[NodeType.BitShiftRight] = Ranks.BitwiseShiftCat;
-                //_ranksFromNodeTypes[NodeType.LessThan] = Ranks.CompareCat;
-                //_ranksFromNodeTypes[NodeType.GreaterThan] = Ranks.CompareCat;
-                //_ranksFromNodeTypes[NodeType.LessThanOrEqual] = Ranks.CompareCat;
-                //_ranksFromNodeTypes[NodeType.GreaterThanOrEqual] = Ranks.CompareCat;
-                //_ranksFromNodeTypes[NodeType.Equal] = Ranks.EqualityCat;
-                //_ranksFromNodeTypes[NodeType.NotEqual] = Ranks.EqualityCat;
+                _ranksFromNodeTypes[NodeType.LessThan] = Ranks.CompareCat;
+                _ranksFromNodeTypes[NodeType.GreaterThan] = Ranks.CompareCat;
+                _ranksFromNodeTypes[NodeType.LessThanOrEqual] = Ranks.CompareCat;
+                _ranksFromNodeTypes[NodeType.GreaterThanOrEqual] = Ranks.CompareCat;
+                _ranksFromNodeTypes[NodeType.Equal] = Ranks.EqualityCat;
+                _ranksFromNodeTypes[NodeType.NotEqual] = Ranks.EqualityCat;
                 //_ranksFromNodeTypes[NodeType.BitAnd] = Ranks.BitwiseAnd;
                 //_ranksFromNodeTypes[NodeType.BitXor] = Ranks.BitwiseXor;
                 //_ranksFromNodeTypes[NodeType.BitOr] = Ranks.BitwiseOr;
@@ -266,6 +274,9 @@ namespace MetaphysicsIndustries.Solus
                 _argsFromFunctions[Func.MathPaint] = 5;
                 _argsFromFunctions[Func.Feedback] = 2;
                 _argsFromFunctions[Func.Subst] = 3;
+                _argsFromFunctions[Func.If] = 3;
+                _argsFromFunctions[Func.Dist] = 2;
+                _argsFromFunctions[Func.DistSq] = 2;
 
                 _argsFromFunctions[Func.Unknown] = -1;
 
@@ -286,12 +297,12 @@ namespace MetaphysicsIndustries.Solus
                 //_nodeTypes["&&"] = NodeType.LogAnd;
                 //_nodeTypes["^^"] = NodeType.LogXor;
                 //_nodeTypes["||"] = NodeType.LogOr;
-                //_nodeTypes["<"] = NodeType.LessThan;
-                //_nodeTypes[">"] = NodeType.GreaterThan;
-                //_nodeTypes["<="] = NodeType.LessThanOrEqual;
-                //_nodeTypes[">="] = NodeType.GreaterThanOrEqual;
-                //_nodeTypes["!="] = NodeType.NotEqual;
-                //_nodeTypes["=="] = NodeType.Equal;
+                _nodeTypes["<"] = NodeType.LessThan;
+                _nodeTypes[">"] = NodeType.GreaterThan;
+                _nodeTypes["<="] = NodeType.LessThanOrEqual;
+                _nodeTypes[">="] = NodeType.GreaterThanOrEqual;
+                _nodeTypes["!="] = NodeType.NotEqual;
+                _nodeTypes["=="] = NodeType.Equal;
                 //_nodeTypes["?"] = NodeType.Conditional;
                 _nodeTypes[","] = NodeType.Comma;
                 _nodeTypes["="] = NodeType.Assign;
@@ -316,27 +327,16 @@ namespace MetaphysicsIndustries.Solus
 
             }
 
-            //public Ex()
-            //{
-            //}
-
             public Ex(string t, int location)
-                //: this()
             {
                 Token = t;
                 _location = location;
             }
 
-            //protected Ex(Decimal d, int location)
-            //    : this("0", location)
+            //public void Dispose()
             //{
-            //    numValue = d;
+
             //}
-
-            public void Dispose()
-            {
-
-            }
 
             public NodeType Type
             {
@@ -443,13 +443,9 @@ namespace MetaphysicsIndustries.Solus
 
             public string Token
             {
-                get
-                {
-                    return _token;
-                }
+                get { return _token; }
                 protected set
                 {
-                    string _s = value;
                     _token = value;
                     _type = Ex.GetNodeType(value);
                     _rank = Ex.GetRank(_type);

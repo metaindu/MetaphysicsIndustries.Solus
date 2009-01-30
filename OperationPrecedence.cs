@@ -19,6 +19,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public enum OperationPrecedence
     {
+        Equality = 90,
+
+        Comparison = 100,
 
         Addition = 120,
 

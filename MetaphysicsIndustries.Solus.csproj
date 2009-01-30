@@ -62,6 +62,7 @@
     <Compile Include="CleanUpTransformer.cs" />
     <Compile Include="CloneTransformer.cs" />
     <Compile Include="ColorExpression.cs" />
+    <Compile Include="ComparisonOperation.cs" />
     <Compile Include="ConvolutionMatrixFilter.cs" />
     <Compile Include="ConvolutionVectorFilter.cs" />
     <Compile Include="CoordinateTransformMatrixFilter.cs" />
@@ -71,8 +72,12 @@
     <Compile Include="DelayAssignExpression.cs" />
     <Compile Include="DerivativeOfVariable.cs" />
     <Compile Include="DerivativeTransformer.cs" />
+    <Compile Include="DistFunction.cs" />
+    <Compile Include="DistSqFunction.cs" />
     <Compile Include="DivisionOperation.cs" />
     <Compile Include="AlphaTrimmedDualBellEdgeDetectorMatrixFilter.cs" />
+    <Compile Include="DualArgumentFunction.cs" />
+    <Compile Include="EqualComparisonOperation.cs" />
     <Compile Include="ErrorFunction.cs" />
     <Compile Include="ExpandEdgeMatrixFilter.cs" />
     <Compile Include="ExponentMatrixFilter.cs" />
@@ -93,13 +98,18 @@
     <Compile Include="GaussianNoiseMatrixFilter.cs" />
     <Compile Include="GaussianNoiseVectorFilter.cs" />
     <Compile Include="GeometricMeanMatrixFilter.cs" />
+    <Compile Include="GreaterThanComparisonOperation.cs" />
+    <Compile Include="GreaterThanOrEqualComparisonOperation.cs" />
     <Compile Include="HighPassVectorFilter.cs" />
     <Compile Include="HistogramMatrixFilter.cs" />
+    <Compile Include="IfFunction.cs" />
     <Compile Include="IMmseImpulseRejectionStage.cs" />
     <Compile Include="CompositeMatrixFilter.cs" />
     <Compile Include="ImpulseNoiseMatrixFilter.cs" />
     <Compile Include="IntegralTransformer.cs" />
     <Compile Include="IntervalFitBaseMatrixFilter.cs" />
+    <Compile Include="LessThanComparisonOperation.cs" />
+    <Compile Include="LessThanOrEqualComparisonOperation.cs" />
     <Compile Include="MmseEdgeDetectionMatrixfilter.cs" />
     <Compile Include="MmseImpulseRejectionStage.cs" />
     <Compile Include="MmsePlusAtmMatrixFilter.cs" />
@@ -107,6 +117,7 @@
     <Compile Include="DualBellEdgeDetectorMatrixFilter.cs" />
     <Compile Include="IdentityFilter.cs" />
     <Compile Include="NegationOperation.cs" />
+    <Compile Include="NotEqualComparisonOperation.cs" />
     <Compile Include="PolynomialTransformer.cs" />
     <Compile Include="RatioOfPolynomialsTransformer.cs" />
     <Compile Include="Settings.cs" />
