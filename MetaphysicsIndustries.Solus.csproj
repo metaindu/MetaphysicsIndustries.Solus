@@ -154,7 +154,6 @@
     <Compile Include="MathPaintExpression.cs" />
     <Compile Include="MaxMinMatrixFilter.cs" />
     <Compile Include="MinMaxMatrixFilter.cs" />
-    <Compile Include="Pair.cs" />
     <Compile Include="PairModulator.cs" />
     <Compile Include="SolusMatrix.cs" />
     <Compile Include="Matrix.cs" />
@@ -196,7 +195,6 @@
     <Compile Include="TangentFunction.cs" />
     <Compile Include="SolusTensor.cs" />
     <Compile Include="Tensor.cs" />
-    <Compile Include="Triple.cs" />
     <Compile Include="UnitStepFunction.cs" />
     <Compile Include="Variable.cs" />
     <Compile Include="VariableAccess.cs" />
@@ -233,6 +231,9 @@
       <Project>{221A3FBA-E14C-4F05-A099-42508116E910}</Project>
       <Name>MetaphysicsIndustries.Utilities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SolusGrammar.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

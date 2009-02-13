@@ -31,7 +31,8 @@ namespace MetaphysicsIndustries.Solus
 
         Negation = 133,
 
-        Exponent = 135,
+        Exponent = 140,
 
+        Factorial = 150,
     }
 }
