@@ -56,10 +56,10 @@ namespace MetaphysicsIndustries.Solus
 
             Integrate,
             Derive,
-            GetRow,
-            GetColumn,
-            GetRow2,
-            GetColumn2,
+            //GetRow,
+            //GetColumn,
+            //GetRow2,
+            //GetColumn2,
 
             If,
             Dist,
@@ -202,10 +202,10 @@ namespace MetaphysicsIndustries.Solus
 
                 _functionTypes["integrate"] = Func.Integrate;
                 _functionTypes["derive"] = Func.Derive;
-                _functionTypes["getrow"] = Func.GetRow;
-                _functionTypes["getcolumn"] = Func.GetColumn;
-                _functionTypes["getrow2"] = Func.GetRow2;
-                _functionTypes["getcolumn2"] = Func.GetColumn2;
+                //_functionTypes["getrow"] = Func.GetRow;
+                //_functionTypes["getcolumn"] = Func.GetColumn;
+                //_functionTypes["getrow2"] = Func.GetRow2;
+                //_functionTypes["getcolumn2"] = Func.GetColumn2;
 
                 _functionTypes["if"] = Func.If;
                 _functionTypes["dist"] = Func.Dist;
@@ -267,10 +267,10 @@ namespace MetaphysicsIndustries.Solus
                 _argsFromFunctions[Func.Log] = 2;
                 _argsFromFunctions[Func.Integrate] = 2;
                 _argsFromFunctions[Func.Derive] = 2;
-                _argsFromFunctions[Func.GetRow] = 3;
-                _argsFromFunctions[Func.GetColumn] = 3;
-                _argsFromFunctions[Func.GetRow2] = 3;
-                _argsFromFunctions[Func.GetColumn2] = 3;
+                //_argsFromFunctions[Func.GetRow] = 3;
+                //_argsFromFunctions[Func.GetColumn] = 3;
+                //_argsFromFunctions[Func.GetRow2] = 3;
+                //_argsFromFunctions[Func.GetColumn2] = 3;
                 _argsFromFunctions[Func.MathPaint] = 5;
                 _argsFromFunctions[Func.Feedback] = 2;
                 _argsFromFunctions[Func.Subst] = 3;

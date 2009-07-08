@@ -13,6 +13,8 @@ namespace MetaphysicsIndustries.Solus
             return GetEnumerator();
         }
 
+        public delegate double Modulator(double x);
+        public delegate double BiModulator(double x, double y);
         public abstract void ApplyToAll(Modulator mod);
     }
 }

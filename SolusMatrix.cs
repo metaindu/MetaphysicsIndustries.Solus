@@ -6,8 +6,8 @@ using System.Diagnostics;
 namespace MetaphysicsIndustries.Solus
 {
     public class SolusMatrix : SolusTensor//, IEnumerable<Expression>
-                                    //, IEnumerable<RowVector>
-                                    //, IEnumerable<ColumnVector>
+    //, IEnumerable<RowVector>
+    //, IEnumerable<ColumnVector>
     {
         private static SolusEngine _engine = new SolusEngine();
 
@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 for (j = 0; j < columns; j++)
                 {
-                    ret[i,j] = value;
+                    ret[i, j] = value;
                 }
             }
 
@@ -173,12 +173,13 @@ namespace MetaphysicsIndustries.Solus
         public SolusMatrix Convolution(SolusMatrix convolvee)
         {
             //return AdvancedConvolution(convolvee, AssociativeCommutativeOperation.Multiplication, AssociativeCommutativeOperation.Addition);
-            return AdvancedConvolution(convolvee, SolusEngine.MultiplicationBiMod, SolusEngine.AdditionBiMod);
+            //return AdvancedConvolution(convolvee, SolusEngine.MultiplicationBiMod, SolusEngine.AdditionBiMod);
+            throw new NotImplementedException();
         }
 
-        public SolusMatrix AdvancedConvolution(SolusMatrix convolvee, 
+        public SolusMatrix AdvancedConvolution(SolusMatrix convolvee,
             BiModulator firstOp, BiModulator secondOp)
-            //Operation firstOp, AssociativeCommutativeOperation secondOp)
+        //Operation firstOp, AssociativeCommutativeOperation secondOp)
         {
 
 
@@ -463,10 +464,10 @@ namespace MetaphysicsIndustries.Solus
 
         protected class MatrixEnumerator : IEnumerator<Expression>
         {
-            public MatrixEnumerator(SolusMatrix matrix)  
+            public MatrixEnumerator(SolusMatrix matrix)
             {
                 if (matrix == null) { throw new ArgumentNullException("matrix"); }
-                 
+
                 //attach collection change notification
 
                 _matrix = matrix;

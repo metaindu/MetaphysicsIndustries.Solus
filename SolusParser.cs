@@ -422,22 +422,22 @@ namespace MetaphysicsIndustries.Solus
 
                 return _engine.GetDerivative(args[0], ((VariableAccess)args[1]).Variable);
             }
-            else if (ex.func == Func.GetRow)
-            {
-                return ConvertGetRowExpression(ex, varTable, args);
-            }
-            else if (ex.func == Func.GetColumn)
-            {
-                return ConvertGetColumnExpression(ex, varTable, args);
-            }
-            else if (ex.func == Func.GetRow2)
-            {
-                return ConvertGetRow2Expression(ex, varTable, args);
-            }
-            else if (ex.func == Func.GetColumn2)
-            {
-                return ConvertGetColumn2Expression(ex, varTable, args);
-            }
+            //else if (ex.func == Func.GetRow)
+            //{
+            //    return ConvertGetRowExpression(ex, varTable, args);
+            //}
+            //else if (ex.func == Func.GetColumn)
+            //{
+            //    return ConvertGetColumnExpression(ex, varTable, args);
+            //}
+            //else if (ex.func == Func.GetRow2)
+            //{
+            //    return ConvertGetRow2Expression(ex, varTable, args);
+            //}
+            //else if (ex.func == Func.GetColumn2)
+            //{
+            //    return ConvertGetColumn2Expression(ex, varTable, args);
+            //}
             else if (ex.func == Func.Plot)
             {
                 return ConvertPlotExpression(ex, args);
@@ -450,28 +450,28 @@ namespace MetaphysicsIndustries.Solus
             {
                 return ConvertMathPaintExpression(ex, varTable, args);
             }
-            else if (ex.func == Func.PlotMatrix)
-            {
-                return ConvertPlotMatrixExpression(ex, varTable, args);
-            }
-            else if (ex.func == Func.PlotVector)
-            {
-                Expression arg = args[0];
+            //else if (ex.func == Func.PlotMatrix)
+            //{
+            //    return ConvertPlotMatrixExpression(ex, varTable, args);
+            //}
+            //else if (ex.func == Func.PlotVector)
+            //{
+            //    Expression arg = args[0];
 
-                while (arg is VariableAccess)
-                {
-                    Expression arg2 = varTable[((VariableAccess)arg).Variable];
-                    if (arg == arg2) { break; }
-                    arg = arg2;
-                }
+            //    while (arg is VariableAccess)
+            //    {
+            //        Expression arg2 = varTable[((VariableAccess)arg).Variable];
+            //        if (arg == arg2) { break; }
+            //        arg = arg2;
+            //    }
 
-                if (!(arg is SolusVector))
-                {
-                    throw new SolusParseException(ex, "The argument to plotv must be a vector.");
-                }
+            //    if (!(arg is SolusVector))
+            //    {
+            //        throw new SolusParseException(ex, "The argument to plotv must be a vector.");
+            //    }
 
-                return new PlotVectorExpression((SolusVector)arg);
-            }
+            //    return new PlotVectorExpression((SolusVector)arg);
+            //}
             else if (ex.func == Func.Feedback)
             {
                 return ConvertFeedbackExpression(ex, varTable, args);
@@ -510,186 +510,186 @@ namespace MetaphysicsIndustries.Solus
                     new FunctionCall(AssociativeCommutativeOperation.Multiplication, g, h)));
         }
 
-        private static Expression ConvertGetRowExpression(Ex ex, VariableTable varTable, List<Expression> args)
-        {
-            Variable var;
-            SolusMatrix mat;
-            int row;
-            Expression arg;
+        //private static Expression ConvertGetRowExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        //{
+        //    Variable var;
+        //    SolusMatrix mat;
+        //    int row;
+        //    Expression arg;
 
-            if (!(args[0] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "The first argument must be a variable.");
-            }
+        //    if (!(args[0] is VariableAccess))
+        //    {
+        //        throw new SolusParseException(ex, "The first argument must be a variable.");
+        //    }
 
-            arg = args[1];
-            while (arg is VariableAccess)
-            {
-                var = ((VariableAccess)arg).Variable;
-                if (!varTable.Contains(var)) { break; }
+        //    arg = args[1];
+        //    while (arg is VariableAccess)
+        //    {
+        //        var = ((VariableAccess)arg).Variable;
+        //        if (!varTable.Contains(var)) { break; }
 
-                if (varTable[var] == arg) { break; }
+        //        if (varTable[var] == arg) { break; }
 
-                arg = varTable[var];
-            }
+        //        arg = varTable[var];
+        //    }
 
-            if (!(arg is SolusMatrix))
-            {
-                throw new SolusParseException(ex, "The second argument must be a matrix.");
-            }
+        //    if (!(arg is SolusMatrix))
+        //    {
+        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
+        //    }
 
-            var = ((VariableAccess)args[0]).Variable;
-            mat = (SolusMatrix)arg;
-            row = (int)(args[2].Eval(varTable).Value);
+        //    var = ((VariableAccess)args[0]).Variable;
+        //    mat = (SolusMatrix)arg;
+        //    row = (int)(args[2].Eval(varTable).Value);
 
-            varTable[var] = mat.GetRow(row);
-            return varTable[var];
-        }
+        //    varTable[var] = mat.GetRow(row);
+        //    return varTable[var];
+        //}
 
-        private static Expression ConvertGetColumnExpression(Ex ex, VariableTable varTable, List<Expression> args)
-        {
-            Variable var;
-            SolusMatrix mat;
-            int rolumn;
-            Expression arg;
+        //private static Expression ConvertGetColumnExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        //{
+        //    Variable var;
+        //    SolusMatrix mat;
+        //    int rolumn;
+        //    Expression arg;
 
-            if (!(args[0] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "The first argument must be a variable.");
-            }
+        //    if (!(args[0] is VariableAccess))
+        //    {
+        //        throw new SolusParseException(ex, "The first argument must be a variable.");
+        //    }
 
-            arg = args[1];
-            while (arg is VariableAccess)
-            {
-                var = ((VariableAccess)arg).Variable;
-                if (!varTable.Contains(var)) { break; }
+        //    arg = args[1];
+        //    while (arg is VariableAccess)
+        //    {
+        //        var = ((VariableAccess)arg).Variable;
+        //        if (!varTable.Contains(var)) { break; }
 
-                if (varTable[var] == arg) { break; }
+        //        if (varTable[var] == arg) { break; }
 
-                arg = varTable[var];
-            }
+        //        arg = varTable[var];
+        //    }
 
-            if (!(arg is SolusMatrix))
-            {
-                throw new SolusParseException(ex, "The second argument must be a matrix.");
-            }
+        //    if (!(arg is SolusMatrix))
+        //    {
+        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
+        //    }
 
-            var = ((VariableAccess)args[0]).Variable;
-            mat = (SolusMatrix)arg;
-            rolumn = (int)(args[2].Eval(varTable).Value);
+        //    var = ((VariableAccess)args[0]).Variable;
+        //    mat = (SolusMatrix)arg;
+        //    rolumn = (int)(args[2].Eval(varTable).Value);
 
-            varTable[var] = mat.GetColumn(rolumn);
-            return varTable[var];
-        }
+        //    varTable[var] = mat.GetColumn(rolumn);
+        //    return varTable[var];
+        //}
 
-        private static Expression ConvertGetRow2Expression(Ex ex, VariableTable varTable, List<Expression> args)
-        {
-            Variable var;
-            SolusMatrix mat;
-            int row;
-            Expression arg;
+        //private static Expression ConvertGetRow2Expression(Ex ex, VariableTable varTable, List<Expression> args)
+        //{
+        //    Variable var;
+        //    SolusMatrix mat;
+        //    int row;
+        //    Expression arg;
 
-            if (!(args[0] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "The first argument must be a variable.");
-            }
+        //    if (!(args[0] is VariableAccess))
+        //    {
+        //        throw new SolusParseException(ex, "The first argument must be a variable.");
+        //    }
 
-            arg = args[1];
-            while (arg is VariableAccess)
-            {
-                var = ((VariableAccess)arg).Variable;
-                if (!varTable.Contains(var)) { break; }
+        //    arg = args[1];
+        //    while (arg is VariableAccess)
+        //    {
+        //        var = ((VariableAccess)arg).Variable;
+        //        if (!varTable.Contains(var)) { break; }
 
-                if (varTable[var] == arg) { break; }
+        //        if (varTable[var] == arg) { break; }
 
-                arg = varTable[var];
-            }
+        //        arg = varTable[var];
+        //    }
 
-            if (!(arg is SolusMatrix))
-            {
-                throw new SolusParseException(ex, "The second argument must be a matrix.");
-            }
+        //    if (!(arg is SolusMatrix))
+        //    {
+        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
+        //    }
 
-            var = ((VariableAccess)args[0]).Variable;
-            mat = (SolusMatrix)arg;
-            row = (int)(args[2].Eval(varTable).Value);
+        //    var = ((VariableAccess)args[0]).Variable;
+        //    mat = (SolusMatrix)arg;
+        //    row = (int)(args[2].Eval(varTable).Value);
 
-            SolusVector ret = mat.GetRow(row);
-            int i;
-            for (i = 0; i < ret.Length; i++)
-            {
-                if (ret[i] is Literal)
-                {
-                    ret[i] = new Literal((int)(((Literal)ret[i]).Value) & 0x000000FF);
-                }
-            }
-            varTable[var] = ret;
-            return varTable[var];
-        }
+        //    SolusVector ret = mat.GetRow(row);
+        //    int i;
+        //    for (i = 0; i < ret.Length; i++)
+        //    {
+        //        if (ret[i] is Literal)
+        //        {
+        //            ret[i] = new Literal((int)(((Literal)ret[i]).Value) & 0x000000FF);
+        //        }
+        //    }
+        //    varTable[var] = ret;
+        //    return varTable[var];
+        //}
 
-        private static Expression ConvertGetColumn2Expression(Ex ex, VariableTable varTable, List<Expression> args)
-        {
-            Variable var;
-            SolusMatrix mat;
-            int column;
-            Expression arg;
+        //private static Expression ConvertGetColumn2Expression(Ex ex, VariableTable varTable, List<Expression> args)
+        //{
+        //    Variable var;
+        //    SolusMatrix mat;
+        //    int column;
+        //    Expression arg;
 
-            if (!(args[0] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "The first argument must be a variable.");
-            }
+        //    if (!(args[0] is VariableAccess))
+        //    {
+        //        throw new SolusParseException(ex, "The first argument must be a variable.");
+        //    }
 
-            arg = args[1];
-            while (arg is VariableAccess)
-            {
-                var = ((VariableAccess)arg).Variable;
-                if (!varTable.Contains(var)) { break; }
+        //    arg = args[1];
+        //    while (arg is VariableAccess)
+        //    {
+        //        var = ((VariableAccess)arg).Variable;
+        //        if (!varTable.Contains(var)) { break; }
 
-                if (varTable[var] == arg) { break; }
+        //        if (varTable[var] == arg) { break; }
 
-                arg = varTable[var];
-            }
+        //        arg = varTable[var];
+        //    }
 
-            if (!(arg is SolusMatrix))
-            {
-                throw new SolusParseException(ex, "The second argument must be a matrix.");
-            }
+        //    if (!(arg is SolusMatrix))
+        //    {
+        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
+        //    }
 
-            var = ((VariableAccess)args[0]).Variable;
-            mat = (SolusMatrix)arg;
-            column = (int)(args[2].Eval(varTable).Value);
+        //    var = ((VariableAccess)args[0]).Variable;
+        //    mat = (SolusMatrix)arg;
+        //    column = (int)(args[2].Eval(varTable).Value);
 
-            SolusVector ret = mat.GetColumn(column);
-            int i;
-            for (i = 0; i < ret.Length; i++)
-            {
-                if (ret[i] is Literal)
-                {
-                    ret[i] = new Literal((int)(((Literal)ret[i]).Value) & 0x000000FF);
-                }
-            }
-            varTable[var] = ret;
-            return ret;
-        }
+        //    SolusVector ret = mat.GetColumn(column);
+        //    int i;
+        //    for (i = 0; i < ret.Length; i++)
+        //    {
+        //        if (ret[i] is Literal)
+        //        {
+        //            ret[i] = new Literal((int)(((Literal)ret[i]).Value) & 0x000000FF);
+        //        }
+        //    }
+        //    varTable[var] = ret;
+        //    return ret;
+        //}
 
-        private static Expression ConvertPlotMatrixExpression(Ex ex, VariableTable varTable, List<Expression> args)
-        {
-            Expression arg = args[0];
+        //private static Expression ConvertPlotMatrixExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        //{
+        //    Expression arg = args[0];
 
-            while (arg is VariableAccess)
-            {
-                Expression arg2 = varTable[((VariableAccess)arg).Variable];
-                if (arg == arg2) { break; }
-                arg = arg2;
-            }
+        //    while (arg is VariableAccess)
+        //    {
+        //        Expression arg2 = varTable[((VariableAccess)arg).Variable];
+        //        if (arg == arg2) { break; }
+        //        arg = arg2;
+        //    }
 
-            if (!(arg is SolusMatrix))
-            {
-                throw new SolusParseException(ex, "The argument to plotm must be a matrix.");
-            }
+        //    if (!(arg is SolusMatrix))
+        //    {
+        //        throw new SolusParseException(ex, "The argument to plotm must be a matrix.");
+        //    }
 
-            return new PlotMatrixExpression((SolusMatrix)arg);
-        }
+        //    return new PlotMatrixExpression((SolusMatrix)arg);
+        //}
 
         private static Expression ConvertPlot3dExpression(Ex ex, VariableTable varTable, List<Expression> args)
         {

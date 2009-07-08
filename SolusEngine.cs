@@ -234,63 +234,6 @@ namespace MetaphysicsIndustries.Solus
             return matrix;
         }
 
-        public static Matrix LoadImage2(string filename)
-        {
-            Image fileImage = Image.FromFile(filename);
-            if (!(fileImage is Bitmap))
-            {
-                throw new InvalidOperationException("The file is not in the correct format");
-            }
-
-            Bitmap bitmap = (Bitmap)fileImage;
-            MemoryImage image = new MemoryImage(bitmap);
-
-            int i;
-            int j;
-
-            image.CopyBitmapToPixels();
-
-            Matrix matrix = new Matrix(image.Height, image.Width);
-
-            for (i = 0; i < image.Height; i++)
-            {
-                for (j = 0; j < image.Width; j++)
-                {
-                    matrix[i, j] = (image[i, j].ToArgb() & 0x00FFFFFF);
-                }
-            }
-
-            return matrix;
-        }
-
-        public static void SaveImage(string filename, Matrix image)
-        {
-            MemoryImage mem = new MemoryImage();
-            mem.Size = new Size(image.ColumnCount, image.RowCount);
-
-            int i;
-            int j;
-
-            for (i = 0; i < mem.Width; i++)
-            {
-                for (j = 0; j < mem.Height; j++)
-                {
-                    mem[i, j] = Color.FromArgb((int)(((uint)image[i, j]) | 0xFF000000));
-                }
-            }
-
-            mem.CopyPixelsToBitmap();
-
-            mem.Bitmap.Save(filename);
-        }
-
-        public static void SaveImage2(string filename, Matrix image)
-        {
-            Matrix image2 = image.Clone();
-            image2.ApplyToAll(SolusEngine.ConvertFloatTo24g);
-            SaveImage(filename, image2);
-        }
-
         public double BinomialCoefficient(int n, int k)
         {
             if (k > n) return 0;
