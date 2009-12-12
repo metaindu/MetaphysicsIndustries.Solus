@@ -171,9 +171,13 @@ namespace MetaphysicsIndustries.Solus
             //else if (ex.Type == NodeType.BitNot)
             //{
             //}
-            //else if (ex.Type == NodeType.BitOr)
-            //{
-            //}
+            else if (ex.Type == NodeType.BitOr)
+            {
+                return new FunctionCall(
+                    AssociativeCommutativeOperation.BitwiseOr,
+                    leftArg,
+                    rightArg);
+            }
             //else if (ex.Type == NodeType.BitShiftLeft)
             //{
             //}
@@ -1120,7 +1124,9 @@ namespace MetaphysicsIndustries.Solus
                     //r == Ranks.BitwiseShiftCat ||
                     r == Ranks.CompareCat || r == Ranks.EqualityCat || 
                     //r == Ranks.BitwiseAnd ||
-                    //r == Ranks.BitwiseXor || r == Ranks.BitwiseOr || r == Ranks.LogicalAnd ||
+                    //r == Ranks.BitwiseXor || 
+                    r == Ranks.BitwiseOr || 
+                    //r == Ranks.LogicalAnd ||
                     //r == Ranks.LogicalXor || r == Ranks.LogicalOr || r == Ranks.Conditional ||
                      r == Ranks.Comma || r == Ranks.Assign) //binary operations
             {

@@ -104,7 +104,7 @@ namespace MetaphysicsIndustries.Solus
             NotEqual,
             //BitAnd,
             //BitXor,
-            //BitOr,
+            BitOr,
             //LogAnd,
             //LogXor,
             //LogOr,
@@ -138,7 +138,7 @@ namespace MetaphysicsIndustries.Solus
             EqualityCat = 90,
             //BitwiseAnd = 80,
             //BitwiseXor = 70,
-            //BitwiseOr = 60,
+            BitwiseOr = 60,
             //LogicalAnd = 50,
             //LogicalXor = 40,
             //LogicalOr = 30,
@@ -248,7 +248,7 @@ namespace MetaphysicsIndustries.Solus
                 _ranksFromNodeTypes[NodeType.NotEqual] = Ranks.EqualityCat;
                 //_ranksFromNodeTypes[NodeType.BitAnd] = Ranks.BitwiseAnd;
                 //_ranksFromNodeTypes[NodeType.BitXor] = Ranks.BitwiseXor;
-                //_ranksFromNodeTypes[NodeType.BitOr] = Ranks.BitwiseOr;
+                _ranksFromNodeTypes[NodeType.BitOr] = Ranks.BitwiseOr;
                 //_ranksFromNodeTypes[NodeType.LogAnd] = Ranks.LogicalAnd;
                 //_ranksFromNodeTypes[NodeType.LogXor] = Ranks.LogicalXor;
                 //_ranksFromNodeTypes[NodeType.LogOr] = Ranks.LogicalOr;
@@ -288,7 +288,7 @@ namespace MetaphysicsIndustries.Solus
                 //_nodeTypes["%"] = NodeType.Mod;
                 //_nodeTypes["&"] = NodeType.BitAnd;
                 //_nodeTypes["^"] = NodeType.BitXor;
-                //_nodeTypes["|"] = NodeType.BitOr;
+                _nodeTypes["|"] = NodeType.BitOr;
                 _nodeTypes["+"] = NodeType.Add;
                 _nodeTypes["-"] = NodeType.Sub;
                 //_nodeTypes["<<"] = NodeType.BitShiftLeft;

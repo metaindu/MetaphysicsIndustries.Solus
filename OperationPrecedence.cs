@@ -25,6 +25,8 @@ namespace MetaphysicsIndustries.Solus
 
         Addition = 120,
 
+        Bitwise = 125,
+
         Multiplication = 130,
         
         Division = 131,

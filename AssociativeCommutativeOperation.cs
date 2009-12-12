@@ -16,6 +16,12 @@ namespace MetaphysicsIndustries.Solus
         {
             get { return _multiplication; }
         }
+        private static BitwiseOrOperation _bitwiseOr = new BitwiseOrOperation();
+        public static BitwiseOrOperation BitwiseOr
+        {
+            get { return _bitwiseOr; }
+        }
+
 
         protected override void CheckArguments(Expression[] args)
         {
@@ -126,6 +132,9 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        //if the operation collapses, then any argument that evaluates to the collapse value will cause the result of the entire operation to be that value
+        //e.g. a * 0 = 0
+
         public virtual bool Collapses
         {
             get { return false; }
@@ -136,12 +145,15 @@ namespace MetaphysicsIndustries.Solus
             get { return 0; }
         }
 
+        //if the operation culls, then any argument that evaluates to the cull value should be removed
+        //e.g. a + 0 = a
+
         public virtual bool Culls
         {
             get { return true; }
         }
 
-        public virtual double CullValue
+        public virtual double CullValue 
         {
             get { return IdentityValue; }
         }

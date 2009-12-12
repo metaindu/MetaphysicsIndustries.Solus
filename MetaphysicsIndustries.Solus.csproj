@@ -49,6 +49,7 @@
     <Compile Include="AssignExpression.cs" />
     <Compile Include="AssociativeCommutativeOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
+    <Compile Include="BitwiseOrOperation.cs" />
     <Compile Include="CeilingFunction.cs" />
     <Compile Include="CleanUpTransformer.cs" />
     <Compile Include="CloneTransformer.cs" />
