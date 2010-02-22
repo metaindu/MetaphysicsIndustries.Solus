@@ -63,5 +63,20 @@ namespace MetaphysicsIndustries.Solus
         {
             return new ColorExpression(_color);
         }
+
+        public override string ToString()
+        {
+            if (Color == Color.Black) { return "Black"; }
+            if (Color == Color.White) { return "White"; }
+            if (Color == Color.Gray) { return "Gray"; }
+            if (Color == Color.Red) { return "Red"; }
+            if (Color == Color.Green) { return "Green"; }
+            if (Color == Color.Blue) { return "Blue"; }
+            if (Color == Color.Yellow) { return "Yellow"; }
+            if (Color == Color.Cyan) { return "Cyan"; }
+            if (Color == Color.Magenta) { return "Magenta"; }
+
+            return Color.ToString();
+        }
     }
 }

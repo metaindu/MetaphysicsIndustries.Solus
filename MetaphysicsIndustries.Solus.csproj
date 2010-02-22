@@ -49,6 +49,7 @@
     <Compile Include="AssignExpression.cs" />
     <Compile Include="AssociativeCommutativeOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
+    <Compile Include="BitwiseAndOperation.cs" />
     <Compile Include="BitwiseOrOperation.cs" />
     <Compile Include="CeilingFunction.cs" />
     <Compile Include="CleanUpTransformer.cs" />
@@ -84,6 +85,9 @@
     </Compile>
     <Compile Include="LessThanComparisonOperation.cs" />
     <Compile Include="LessThanOrEqualComparisonOperation.cs" />
+    <Compile Include="LogicalAndOperation.cs" />
+    <Compile Include="LogicalOrOperation.cs" />
+    <Compile Include="ModularDivision.cs" />
     <Compile Include="NegationOperation.cs" />
     <Compile Include="NotEqualComparisonOperation.cs" />
     <Compile Include="PolynomialTransformer.cs" />
@@ -91,6 +95,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
     <Compile Include="SolusEngine.Subst.cs" />
+    <Compile Include="SolusEngine.Eval.cs" />
     <Compile Include="TransformArgs.cs" />
     <Compile Include="UnaryOperation.cs" />
     <Compile Include="VariableTransformArgs.cs" />

@@ -41,6 +41,11 @@ namespace MetaphysicsIndustries.Solus
             get { return false; }
         }
 
+        public virtual bool HasIdentityValue
+        {
+            get { return true; }
+        }
+
         public virtual double IdentityValue
         {
             get { return 1; }

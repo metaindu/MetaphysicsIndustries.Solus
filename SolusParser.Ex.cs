@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus
             //LogNot,
             Mult,
             Div,
-            //Mod,
+            Mod,
             Add,
             Sub,
             Exponent,
@@ -102,12 +102,12 @@ namespace MetaphysicsIndustries.Solus
             GreaterThanOrEqual,
             Equal,
             NotEqual,
-            //BitAnd,
+            BitAnd,
             //BitXor,
             BitOr,
-            //LogAnd,
+            LogAnd,
             //LogXor,
-            //LogOr,
+            LogOr,
             //Conditional,
             Comma,
             Whitespace,
@@ -134,17 +134,17 @@ namespace MetaphysicsIndustries.Solus
             MultCat = 130,
             AddCat = 120,
             //BitwiseShiftCat = 110,
-            CompareCat = 100,
-            EqualityCat = 90,
-            //BitwiseAnd = 80,
-            //BitwiseXor = 70,
-            BitwiseOr = 60,
-            //LogicalAnd = 50,
+            BitwiseAnd = 100,
+            //BitwiseXor = 90,
+            BitwiseOr = 80,
+            CompareCat = 70,
+            EqualityCat = 60,
+            LogicalAnd = 50,
             //LogicalXor = 40,
-            //LogicalOr = 30,
+            LogicalOr = 30,
             //Conditional = 20,
-            Comma = 10,
-            Assign = 5,
+            Assign = 10,
+            Comma = 5,
             Whitespace = 0,
 
             Unknown = -1,
@@ -166,7 +166,7 @@ namespace MetaphysicsIndustries.Solus
         }
 
         //Ex: The class that represents the nodes of a compiled expression tree. 
-        [DebuggerDisplay("{Token}")]
+        [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
         public class Ex
         {
             static Ex()
@@ -195,7 +195,7 @@ namespace MetaphysicsIndustries.Solus
                 _functionTypes["acot"] = Func.Acot;
                 _functionTypes["ceil"] = Func.Ceil;
                 _functionTypes["floor"] = Func.Floor;
-                _functionTypes["u"] = Func.UnitStep;
+                _functionTypes["ustep"] = Func.UnitStep;
 
                 _functionTypes["atan2"] = Func.Atan2;
                 _functionTypes["log"] = Func.Log;
@@ -235,7 +235,7 @@ namespace MetaphysicsIndustries.Solus
                 _ranksFromNodeTypes[NodeType.Exponent] = Ranks.Exponent;
                 _ranksFromNodeTypes[NodeType.Mult] = Ranks.MultCat;
                 _ranksFromNodeTypes[NodeType.Div] = Ranks.MultCat;
-                //_ranksFromNodeTypes[NodeType.Mod] = Ranks.MultCat;
+                _ranksFromNodeTypes[NodeType.Mod] = Ranks.MultCat;
                 _ranksFromNodeTypes[NodeType.Add] = Ranks.AddCat;
                 _ranksFromNodeTypes[NodeType.Sub] = Ranks.AddCat;
                 //_ranksFromNodeTypes[NodeType.BitShiftLeft] = Ranks.BitwiseShiftCat;
@@ -246,12 +246,12 @@ namespace MetaphysicsIndustries.Solus
                 _ranksFromNodeTypes[NodeType.GreaterThanOrEqual] = Ranks.CompareCat;
                 _ranksFromNodeTypes[NodeType.Equal] = Ranks.EqualityCat;
                 _ranksFromNodeTypes[NodeType.NotEqual] = Ranks.EqualityCat;
-                //_ranksFromNodeTypes[NodeType.BitAnd] = Ranks.BitwiseAnd;
+                _ranksFromNodeTypes[NodeType.BitAnd] = Ranks.BitwiseAnd;
                 //_ranksFromNodeTypes[NodeType.BitXor] = Ranks.BitwiseXor;
                 _ranksFromNodeTypes[NodeType.BitOr] = Ranks.BitwiseOr;
-                //_ranksFromNodeTypes[NodeType.LogAnd] = Ranks.LogicalAnd;
+                _ranksFromNodeTypes[NodeType.LogAnd] = Ranks.LogicalAnd;
                 //_ranksFromNodeTypes[NodeType.LogXor] = Ranks.LogicalXor;
-                //_ranksFromNodeTypes[NodeType.LogOr] = Ranks.LogicalOr;
+                _ranksFromNodeTypes[NodeType.LogOr] = Ranks.LogicalOr;
                 //_ranksFromNodeTypes[NodeType.Conditional] = Ranks.Conditional;
                 _ranksFromNodeTypes[NodeType.Comma] = Ranks.Comma;
                 _ranksFromNodeTypes[NodeType.Assign] = Ranks.Assign;
@@ -285,8 +285,8 @@ namespace MetaphysicsIndustries.Solus
                 _nodeTypes["^"] = NodeType.Exponent;
                 _nodeTypes["*"] = NodeType.Mult;
                 _nodeTypes["/"] = NodeType.Div;
-                //_nodeTypes["%"] = NodeType.Mod;
-                //_nodeTypes["&"] = NodeType.BitAnd;
+                _nodeTypes["%"] = NodeType.Mod;
+                _nodeTypes["&"] = NodeType.BitAnd;
                 //_nodeTypes["^"] = NodeType.BitXor;
                 _nodeTypes["|"] = NodeType.BitOr;
                 _nodeTypes["+"] = NodeType.Add;
@@ -294,9 +294,9 @@ namespace MetaphysicsIndustries.Solus
                 //_nodeTypes["<<"] = NodeType.BitShiftLeft;
                 //_nodeTypes[">>"] = NodeType.BitShiftRight;
                 //_nodeTypes["!"] = NodeType.LogNot;
-                //_nodeTypes["&&"] = NodeType.LogAnd;
+                _nodeTypes["&&"] = NodeType.LogAnd;
                 //_nodeTypes["^^"] = NodeType.LogXor;
-                //_nodeTypes["||"] = NodeType.LogOr;
+                _nodeTypes["||"] = NodeType.LogOr;
                 _nodeTypes["<"] = NodeType.LessThan;
                 _nodeTypes[">"] = NodeType.GreaterThan;
                 _nodeTypes["<="] = NodeType.LessThanOrEqual;
@@ -333,33 +333,16 @@ namespace MetaphysicsIndustries.Solus
                 _location = location;
             }
 
-            //public void Dispose()
-            //{
-
-            //}
-
             public NodeType Type
             {
-                get
-                {
-                    return _type;
-                }
-                protected set
-                {
-                    _type = value;
-                }
+                get { return _type; }
+                protected set { _type = value; }
             }
 
             public Ranks Rank
             {
-                get
-                {
-                    return _rank;
-                }
-                protected set
-                {
-                    _rank = value;
-                }
+                get { return _rank; }
+                protected set { _rank = value; }
             }
 
 

@@ -34,7 +34,13 @@ namespace MetaphysicsIndustries.Solus
 
         protected override Literal InternalCall(VariableTable varTable, Literal[] args)
         {
-            return new Literal(args[0].Value * args[1].Value);
+            double value = 1;
+            int i;
+            for (i = 0; i < args.Length; i++)
+            {
+                value *= args[i].Value;
+            }
+            return new Literal(value);
         }
 
         public override bool Collapses

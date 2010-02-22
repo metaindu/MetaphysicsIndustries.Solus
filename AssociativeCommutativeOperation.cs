@@ -21,6 +21,8 @@ namespace MetaphysicsIndustries.Solus
         {
             get { return _bitwiseOr; }
         }
+        //public static readonly BitwiseAndOperation BitwiseAnd = new BitwiseAndOperation();
+
 
 
         protected override void CheckArguments(Expression[] args)

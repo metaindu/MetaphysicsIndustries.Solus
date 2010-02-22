@@ -15,17 +15,34 @@ namespace MetaphysicsIndustries.Solus
             Types.Add(typeof(Expression));
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        public override Literal Call(VariableTable varTable, params Expression[] args)
         {
-            double value = args[0].Value;
+            CheckArguments(args);
+
+            double value = args[0].Eval(varTable).Value;
+
             if (value == 0 || double.IsNaN(value) || double.IsInfinity(value))
             {
-                return args[2];
+                return args[2].Eval(varTable);
             }
             else
             {
-                return args[1];
+                return args[1].Eval(varTable);
             }
+        }
+
+        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        {
+            throw new NotSupportedException();
+            //double value = args[0].Value;
+            //if (value == 0 || double.IsNaN(value) || double.IsInfinity(value))
+            //{
+            //    return args[2];
+            //}
+            //else
+            //{
+            //    return args[1];
+            //}
         }
 
         public override string DisplayName

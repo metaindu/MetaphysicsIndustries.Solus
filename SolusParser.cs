@@ -88,7 +88,7 @@ namespace MetaphysicsIndustries.Solus
             return _engine.CleanUp(expr);
         }
 
-        public static void SyntaxCheck(Ex[] tokens)
+        protected static void SyntaxCheck(Ex[] tokens)
         {
             int i;
             for (i = 0; i < tokens.Length - 1; i++)
@@ -138,7 +138,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public static Expression Compile(Ex[] tokens)
+        protected static Expression Compile(Ex[] tokens)
         {
             return Compile(tokens, null);
         }
@@ -163,11 +163,13 @@ namespace MetaphysicsIndustries.Solus
                     leftArg, 
                     rightArg);
             }
-            //else if (ex.Type == NodeType.BitAnd)
-            //{
-            //    return new FunctionCall(
-
-            //}
+            else if (ex.Type == NodeType.BitAnd)
+            {
+                return new FunctionCall(
+                    BinaryOperation.BitwiseAnd,
+                    leftArg,
+                    rightArg);
+            }
             //else if (ex.Type == NodeType.BitNot)
             //{
             //}
@@ -243,21 +245,33 @@ namespace MetaphysicsIndustries.Solus
                     leftArg,
                     rightArg);
             }
-            //else if (ex.Type == NodeType.LogAnd)
-            //{
-            //}
+            else if (ex.Type == NodeType.LogAnd)
+            {
+                return new FunctionCall(
+                    BinaryOperation.LogicalAnd,
+                    leftArg,
+                    rightArg);
+            }
             //else if (ex.Type == NodeType.LogNot)
             //{
             //}
-            //else if (ex.Type == NodeType.LogOr)
-            //{
-            //}
+            else if (ex.Type == NodeType.LogOr)
+            {
+                return new FunctionCall(
+                    BinaryOperation.LogicalOr,
+                    leftArg,
+                    rightArg);
+            }
             //else if (ex.Type == NodeType.LogXor)
             //{
             //}
-            //else if (ex.Type == NodeType.Mod)
-            //{
-            //}
+            else if (ex.Type == NodeType.Mod)
+            {
+                return new FunctionCall(
+                    BinaryOperation.ModularDivision,
+                    leftArg,
+                    rightArg);
+            }
             else if (ex.Type == NodeType.Mult)
             {
                 return new FunctionCall(
@@ -509,9 +523,16 @@ namespace MetaphysicsIndustries.Solus
             Expression g = args[0];
             Expression h = args[1];
 
-            return new FunctionCall(BinaryOperation.Division,
-                g, new FunctionCall(AssociativeCommutativeOperation.Addition, new Literal(1),
-                    new FunctionCall(AssociativeCommutativeOperation.Multiplication, g, h)));
+            return new FunctionCall(
+                        BinaryOperation.Division,
+                        g, 
+                        new FunctionCall(
+                            AssociativeCommutativeOperation.Addition, 
+                            new Literal(1),
+                            new FunctionCall(
+                                AssociativeCommutativeOperation.Multiplication, 
+                                g, 
+                                h)));
         }
 
         //private static Expression ConvertGetRowExpression(Ex ex, VariableTable varTable, List<Expression> args)
@@ -849,24 +870,28 @@ namespace MetaphysicsIndustries.Solus
             pattern = 
                 "( " +
                 "(?: \\\"[^\\\"]*\\\") | " +
-                //"(?: (?:(?<=^|[\\(\\[+\\-*/\\^,<>&|%~?:])[+-])?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
-                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
-                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[xX][0-9a-fA-F]+) | " +
-                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[oO][0-7]+) | " +
-                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?0[bB][01]+) | " +
-                "(?: (?:(?<=^|[\\(\\[+\\-*/\\^,]\\s*)[+-])?(?:0[dD])?[0-9]+) | " +
-                "(?: [*/+\\-,]) | " +
-                "(?: [\\^]) | " +
-                "(?: \\=\\=) | " +
-                "(?: [=]) | " +
-                "(?: \\:\\=) | " +
-                //"(?: [~%&|!<>?,]) | " +
-                "(?: [a-zA-Z_]\\w*) | " +
-                //"(?: \\<\\<|\\>\\>|\\&\\&|\\\\|\\|\\|) | " +
-                "(?: \\<\\=|\\>\\=|\\!\\=|\\=\\=) | " +
-                "(?: [<>]) | " +
-                "(?: [\\[\\]\\(\\)]) | " +
-                "\\s+ )";
+                //@"(?: (?:(?<=^|[\(\[+\-*/\^,<>&|%~?:])[+-])?[0-9]*\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
+                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?[0-9]*\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
+                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?0[xX][0-9a-fA-F]+) | " +
+                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?0[oO][0-7]+) | " +
+                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?0[bB][01]+) | " +
+                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?(?:0[dD])?[0-9]+) | " +
+                @"(?: [*/%]) | " +
+                @"(?: [+\-]) | " +
+                @"(?: [,]) | " +
+                @"(?: \&\&|\|\|) | " +
+                @"(?: [\&\|]) | " +
+                @"(?: [\^]) | " +
+                @"(?: \=\=) | " +
+                @"(?: [=]) | " +
+                @"(?: \:\=) | " +
+                //@"(?: [~%&|!<>?,]) | " +
+                @"(?: [a-zA-Z_]\w*) | " +
+                //@"(?: \<\<|\>\>|\&\&|\|\|) | " +
+                @"(?: \<\=|\>\=|\!\=|\=\=) | " +
+                @"(?: [<>]) | " +
+                @"(?: [\[\]\(\)]) | " +
+                @"\s+ )";
 
             chunks = Regex.Split(expr, pattern, RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
             chunks2 = new List<string>();
@@ -906,7 +931,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        public static Ex[] Arrange(Ex[] intokens)
+        protected static Ex[] Arrange(Ex[] intokens)
         {
 
 
@@ -930,7 +955,7 @@ namespace MetaphysicsIndustries.Solus
 
                 ex = a.Dequeue();
 
-                if (ex.Token == ")" || ex.Token == "]" || ex.Token == "}")
+                if (ex.Token == ")" || ex.Token == "]" || ex.Token == "}")// || ex.Token == ":")
                 {
                     if (ex.Token == ")")
                     {
@@ -1022,7 +1047,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        public static Ex BuildTree(Ex[] intokens)
+        protected static Ex BuildTree(Ex[] intokens)
         {
             Ex[] _intokens = intokens;
 
@@ -1115,20 +1140,11 @@ namespace MetaphysicsIndustries.Solus
 
             //    ex.left = BuildTree(b);
             //}
-            //else if (r == Ranks.NotCat) //single-argument operators
+            //else if (IsUnaryOperation(r))
             //{
             //    ex.left = BuildTree(b);
             //}
-            else if (r == Ranks.MultCat || r == Ranks.AddCat ||
-                     r == Ranks.Exponent ||
-                    //r == Ranks.BitwiseShiftCat ||
-                    r == Ranks.CompareCat || r == Ranks.EqualityCat || 
-                    //r == Ranks.BitwiseAnd ||
-                    //r == Ranks.BitwiseXor || 
-                    r == Ranks.BitwiseOr || 
-                    //r == Ranks.LogicalAnd ||
-                    //r == Ranks.LogicalXor || r == Ranks.LogicalOr || r == Ranks.Conditional ||
-                     r == Ranks.Comma || r == Ranks.Assign) //binary operations
+            else if (IsBinaryOperation(r))
             {
                 if (b.Count < 1) { throw new SolusParseException(ex, "Missing right operand"); }
                 ex.right = BuildTree(b);
@@ -1138,6 +1154,30 @@ namespace MetaphysicsIndustries.Solus
 
 
             return ex;
+        }
+
+        private static bool IsUnaryOperation(Ranks r)
+        {
+            return false;// r == Ranks.NotCat;
+        }
+        private static bool IsBinaryOperation(Ranks r)
+        {
+            return 
+                r == Ranks.MultCat || 
+                r == Ranks.AddCat ||
+                r == Ranks.Exponent ||
+                //r == Ranks.BitwiseShiftCat ||
+                r == Ranks.CompareCat || 
+                r == Ranks.EqualityCat ||
+                r == Ranks.BitwiseAnd ||
+                //r == Ranks.BitwiseXor || 
+                r == Ranks.BitwiseOr ||
+                r == Ranks.LogicalAnd ||
+                //r == Ranks.LogicalXor || 
+                r == Ranks.LogicalOr || 
+                //r == Ranks.Conditional ||
+                r == Ranks.Comma || 
+                r == Ranks.Assign;
         }
 
         protected static int CountCommaArguments(Ex ex)

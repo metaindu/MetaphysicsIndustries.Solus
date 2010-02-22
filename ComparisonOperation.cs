@@ -6,6 +6,11 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class ComparisonOperation : BinaryOperation
     {
+        protected ComparisonOperation(string name)
+        {
+            Name = name;
+        }
+
         protected override sealed double InternalBinaryCall(double x, double y)
         {
             return Compare(x, y) ? 1 : 0;
@@ -23,6 +28,11 @@ namespace MetaphysicsIndustries.Solus
         public override OperationPrecedence Precedence
         {
             get { return OperationPrecedence.Comparison; }
+        }
+
+        public override bool HasIdentityValue
+        {
+            get { return false; }
         }
     }
 }

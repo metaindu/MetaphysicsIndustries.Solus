@@ -41,6 +41,11 @@ namespace MetaphysicsIndustries.Solus
             get { return _exponent; }
         }
 
+        public static readonly BitwiseAndOperation BitwiseAnd = new BitwiseAndOperation();
+        public static readonly ModularDivision ModularDivision = new ModularDivision();
+        public static readonly LogicalAndOperation LogicalAnd = new LogicalAndOperation();
+        public static readonly LogicalOrOperation LogicalOr = new LogicalOrOperation();
+
         protected override void CheckArguments(Expression[] args)
         {
             int i;

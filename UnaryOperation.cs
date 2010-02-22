@@ -34,5 +34,10 @@ namespace MetaphysicsIndustries.Solus
                 throw new InvalidOperationException("Argument of wrong type (given \"" + args[0].GetType().Name + "\", require \"" + Types[0].Name + "\")");
             }
         }
+
+        public override bool HasIdentityValue
+        {
+            get { return false; }
+        }
     }
 }

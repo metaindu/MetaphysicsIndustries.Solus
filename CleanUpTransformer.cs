@@ -36,7 +36,8 @@ namespace MetaphysicsIndustries.Solus
             List<Expression> cleanArgs = new List<Expression>(args.Length);
             foreach (Expression arg in args)
             {
-                cleanArgs.Add(CleanUp(arg));
+                Expression cleanArg = CleanUp(arg);
+                cleanArgs.Add(cleanArg);
             }
             args = cleanArgs.ToArray();
 
@@ -245,19 +246,21 @@ namespace MetaphysicsIndustries.Solus
                 args = CleanUpPartAssociativeOperationOperation(function, args);
             }
 
-            if (function.IsCommutative &&
-                args[0] is Literal &&
-                (args[0] as Literal).Value == function.IdentityValue)
+            if (function.HasIdentityValue)
             {
-                return args[1];
-            }
+                if (function.IsCommutative &&
+                    args[0] is Literal &&
+                    (args[0] as Literal).Value == function.IdentityValue)
+                {
+                    return args[1];
+                }
 
-            if (args[1] is Literal &&
-                (args[1] as Literal).Value == function.IdentityValue)
-            {
-                return args[0];
+                if (args[1] is Literal &&
+                    (args[1] as Literal).Value == function.IdentityValue)
+                {
+                    return args[0];
+                }
             }
-
 
             return new FunctionCall(function, args);
         }

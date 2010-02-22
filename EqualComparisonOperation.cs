@@ -6,6 +6,11 @@ namespace MetaphysicsIndustries.Solus
 {
     public class EqualComparisonOperation : ComparisonOperation
     {
+        public EqualComparisonOperation()
+            : base("==")
+        {
+        }
+
         protected override bool Compare(double x, double y)
         {
             return x == y;
@@ -13,9 +18,14 @@ namespace MetaphysicsIndustries.Solus
 
         public override OperationPrecedence Precedence
         {
+            get { return OperationPrecedence.Equality; }
+        }
+
+        public override bool IsCommutative
+        {
             get
             {
-                return OperationPrecedence.Equality;
+                return true;
             }
         }
     }
