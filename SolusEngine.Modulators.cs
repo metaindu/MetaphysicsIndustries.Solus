@@ -180,14 +180,14 @@ namespace MetaphysicsIndustries.Solus
     //        int j;
 
     //        double sum = 0;
-    //        double v;
+    //        double rect;
 
     //        for (i = 0; i < a.RowCount; i++)
     //        {
     //            for (j = 0; j < a.ColumnCount; j++)
     //            {
-    //                v = a[i, j] - b[i, j];
-    //                sum += v * v;
+    //                rect = a[i, j] - b[i, j];
+    //                sum += rect * rect;
     //            }
     //        }
 
