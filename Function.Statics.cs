@@ -28,121 +28,123 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract partial class Function
     {
+        static Function()
+        {
+            RegisterFunctions();
+        }
 
-        private static ArccosecantFunction _arccosecant = new ArccosecantFunction();
-        public static Function Arccosecant
+
+        private static Dictionary<Type, Function> _registeredFunctions = new Dictionary<Type, Function>();
+        protected static void RegisterFunctionType(Function function)
         {
-            get { return _arccosecant; }
+            if (function == null) throw new ArgumentNullException("function");
+
+            _registeredFunctions[function.GetType()] = function;
         }
-        private static ArccosineFunction _arccosine = new ArccosineFunction();
-        public static Function Arccosine
+        protected static T GetRegisteredFunction<T>()
+            where T : Function
         {
-            get { return _arccosine; }
+            Type type = typeof(T);
+            if (!_registeredFunctions.ContainsKey(type)) return null;
+            return (T)_registeredFunctions[type];
         }
-        private static ArccotangentFunction _arccotangent = new ArccotangentFunction();
-        public static Function Arccotangent
+
+        public static ArccosecantFunction Arccosecant
         {
-            get { return _arccotangent; }
+            get { return GetRegisteredFunction<ArccosecantFunction>(); }
         }
-        private static ArcsecantFunction _arcsecant = new ArcsecantFunction();
-        public static Function Arcsecant
+        public static ArccosineFunction Arccosine
         {
-            get { return _arcsecant; }
+            get { return GetRegisteredFunction<ArccosineFunction>(); }
         }
-        private static ArcsineFunction _arcsine = new ArcsineFunction();
-        public static Function Arcsine
+        public static ArccotangentFunction Arccotangent
         {
-            get { return _arcsine; }
+            get { return GetRegisteredFunction<ArccotangentFunction>(); }
         }
-        private static ArctangentFunction _arctangent = new ArctangentFunction();
-        public static Function Arctangent
+        public static ArcsecantFunction Arcsecant
         {
-            get { return _arctangent; }
+            get { return GetRegisteredFunction<ArcsecantFunction>(); }
         }
-        private static CeilingFunction _ceiling = new CeilingFunction();
-        public static Function Ceiling
+        public static ArcsineFunction Arcsine
         {
-            get { return _ceiling; }
+            get { return GetRegisteredFunction<ArcsineFunction>(); }
         }
-        private static CosecantFunction _cosecant = new CosecantFunction();
-        public static Function Cosecant
+        public static ArctangentFunction Arctangent
         {
-            get { return _cosecant; }
+            get { return GetRegisteredFunction<ArctangentFunction>(); }
         }
-        private static CosineFunction _cosine = new CosineFunction();
-        public static Function Cosine
+        public static CeilingFunction Ceiling
         {
-            get { return _cosine; }
+            get { return GetRegisteredFunction<CeilingFunction>(); }
         }
-        private static CotangentFunction _cotangent = new CotangentFunction();
-        public static Function Cotangent
+        public static CosecantFunction Cosecant
         {
-            get { return _cotangent; }
+            get { return GetRegisteredFunction<CosecantFunction>(); }
         }
-        private static FloorFunction _floor = new FloorFunction();
-        public static Function Floor
+        public static CosineFunction Cosine
         {
-            get { return _floor; }
+            get { return GetRegisteredFunction<CosineFunction>(); }
         }
-        private static SecantFunction _secant = new SecantFunction();
-        public static Function Secant
+        public static CotangentFunction Cotangent
         {
-            get { return _secant; }
+            get { return GetRegisteredFunction<CotangentFunction>(); }
         }
-        private static SineFunction _sine = new SineFunction();
-        public static Function Sine
+        public static FloorFunction Floor
         {
-            get { return _sine; }
+            get { return GetRegisteredFunction<FloorFunction>(); }
         }
-        private static TangentFunction _tangent = new TangentFunction();
-        public static Function Tangent
+        public static SecantFunction Secant
         {
-            get { return _tangent; }
+            get { return GetRegisteredFunction<SecantFunction>(); }
         }
-        private static NaturalLogarithmFunction _naturalLogarithm = new NaturalLogarithmFunction();
+        public static SineFunction Sine
+        {
+            get { return GetRegisteredFunction<SineFunction>(); }
+        }
+        public static TangentFunction Tangent
+        {
+            get { return GetRegisteredFunction<TangentFunction>(); }
+        }
         public static NaturalLogarithmFunction NaturalLogarithm
         {
-            get { return _naturalLogarithm; }
+            get { return GetRegisteredFunction<NaturalLogarithmFunction>(); }
         }
-        private static UnitStepFunction _unitStep = new UnitStepFunction();
         public static UnitStepFunction UnitStep
         {
-            get { return _unitStep; }
+            get { return GetRegisteredFunction<UnitStepFunction>(); }
         }
-
-        private static Log10Function _log10 = new Log10Function();
         public static Log10Function Log10
         {
-            get { return _log10; }
+            get { return GetRegisteredFunction<Log10Function>(); }
         }
-        private static Log2Function _log2 = new Log2Function();
         public static Log2Function Log2
         {
-            get { return _log2; }
+            get { return GetRegisteredFunction<Log2Function>(); }
         }
-        private static LogarithmFunction _logarithm = new LogarithmFunction();
         public static LogarithmFunction Logarithm
         {
-            get { return _logarithm; }
+            get { return GetRegisteredFunction<LogarithmFunction>(); }
         }
-        private static AbsoluteValueFunction _absoluteValue = new AbsoluteValueFunction();
         public static AbsoluteValueFunction AbsoluteValue
         {
-            get { return _absoluteValue; }
+            get { return GetRegisteredFunction<AbsoluteValueFunction>(); }
         }
-        private static Arctangent2Function _arctangent2 = new Arctangent2Function();
         public static Arctangent2Function Arctangent2
         {
-            get { return _arctangent2; }
+            get { return GetRegisteredFunction<Arctangent2Function>(); }
         }
-        private static IfFunction _if = new IfFunction();
         public static IfFunction If
         {
-            get { return _if; }
+            get { return GetRegisteredFunction<IfFunction>(); }
         }
-
-        public static readonly DistFunction Dist = new DistFunction();
-        public static readonly DistSqFunction DistSq = new DistSqFunction();
+        public static DistFunction Dist
+        {
+            get { return GetRegisteredFunction<DistFunction>(); }
+        }
+        public static DistSqFunction DistSq
+        {
+            get { return GetRegisteredFunction<DistSqFunction>(); }
+        }
 
     }
 }
