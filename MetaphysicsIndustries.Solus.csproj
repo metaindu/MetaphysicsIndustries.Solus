@@ -174,7 +174,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>perl -W "$(SolutionDir)\Publish\publish.pl" $(ConfigurationName) "$(TargetPath)" $(ConfigurationName) "$(TargetPath)"
-</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
