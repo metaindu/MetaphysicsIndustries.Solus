@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Solus
 
         protected override Literal InternalCall(VariableTable varTable, Literal[] args)
         {
-            return new Literal(Math.Log(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Log(args[0].Eval(varTable).Value));
         }
 
         public override string DisplayName

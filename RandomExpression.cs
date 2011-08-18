@@ -8,13 +8,13 @@ namespace MetaphysicsIndustries.Solus
     {
         static Random _random = new Random();
 
-        double _value = _random.NextDouble();
+        float _value = (float)_random.NextDouble();
 
         public override Literal Eval(VariableTable varTable)
         {
             return new Literal(
                 //_value);
-                _random.NextDouble());
+                (float)_random.NextDouble());
         }
 
         public override Expression Clone()

@@ -10,7 +10,7 @@ namespace MetaphysicsIndustries.Solus
             :base("!=")
         {
         }
-        protected override bool Compare(double x, double y)
+        protected override bool Compare(float x, float y)
         {
             return x != y;
         }

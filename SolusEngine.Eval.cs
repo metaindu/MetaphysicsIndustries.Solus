@@ -23,10 +23,10 @@ namespace MetaphysicsIndustries.Solus
     public partial class SolusEngine
     {
         public Expression[] PreliminaryEvalInterval(Expression expr, VariableTable vars,
-                                                    Variable x, double xStart, double xEnd, double xStep)
+                                                    Variable x, float xStart, float xEnd, float xStep)
         {
             int i;
-            double xx;
+            float xx;
             i = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
@@ -56,11 +56,11 @@ namespace MetaphysicsIndustries.Solus
             return exprs;
         }
 
-        public double[] EvalInterval(Expression expr, VariableTable vars,
-                                        Variable x, double xStart, double xEnd, double xStep)
+        public float[] EvalInterval(Expression expr, VariableTable vars,
+                                        Variable x, float xStart, float xEnd, float xStep)
         {
             int i;
-            double xx;
+            float xx;
             i = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
@@ -79,7 +79,7 @@ namespace MetaphysicsIndustries.Solus
             //check that all variables in the expression are already in the variable table
 
 
-            double[] values = new double[i];
+            float[] values = new float[i];
 
             i = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
@@ -97,15 +97,15 @@ namespace MetaphysicsIndustries.Solus
             return values;
         }
 
-        public double[,] EvalInterval(Expression expr, VariableTable vars,
-                                        Variable x, double xStart, double xEnd, double xStep,
-                                        Variable y, double yStart, double yEnd, double yStep)
+        public float[,] EvalInterval(Expression expr, VariableTable vars,
+                                        Variable x, float xStart, float xEnd, float xStep,
+                                        Variable y, float yStart, float yEnd, float yStep)
         {
             int nx = 0;
             int ny = 0;
 
-            double xx;
-            double yy;
+            float xx;
+            float yy;
 
             List<Literal> xValues = new List<Literal>();
             List<Literal> yValues = new List<Literal>();
@@ -145,7 +145,7 @@ namespace MetaphysicsIndustries.Solus
             //check that all variables in the expression are already in the variable table
 
 
-            double[,] values = new double[nx, ny];
+            float[,] values = new float[nx, ny];
 
             int ix = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
@@ -175,18 +175,18 @@ namespace MetaphysicsIndustries.Solus
             return values;
         }
 
-        public double[, ,] EvalInterval(Expression expr, VariableTable vars,
-                                        Variable x, double xStart, double xEnd, double xStep,
-                                        Variable y, double yStart, double yEnd, double yStep,
-                                        Variable z, double zStart, double zEnd, double zStep)
+        public float[, ,] EvalInterval(Expression expr, VariableTable vars,
+                                        Variable x, float xStart, float xEnd, float xStep,
+                                        Variable y, float yStart, float yEnd, float yStep,
+                                        Variable z, float zStart, float zEnd, float zStep)
         {
             int nx = 0;
             int ny = 0;
             int nz = 0;
 
-            double xx;
-            double yy;
-            double zz;
+            float xx;
+            float yy;
+            float zz;
 
             List<Literal> xValues = new List<Literal>();
             List<Literal> yValues = new List<Literal>();
@@ -242,7 +242,7 @@ namespace MetaphysicsIndustries.Solus
             //check that all variables in the expression are already in the variable table
 
 
-            double[, ,] values = new double[nx, ny, nz];
+            float[, ,] values = new float[nx, ny, nz];
 
             int ix;
             int iy;
@@ -281,7 +281,7 @@ namespace MetaphysicsIndustries.Solus
             return values;
         }
 
-        public double[,] EvalMathPaint(Expression expr, VariableTable vars, int width, int height)
+        public float[,] EvalMathPaint(Expression expr, VariableTable vars, int width, int height)
         {
             if (!vars.ContainsKey("x"))
             {
@@ -311,7 +311,7 @@ namespace MetaphysicsIndustries.Solus
         }
 
 
-        public double[, ,] EvalMathPaint3D(Expression expr, VariableTable vars, int width, int height, int numframes)
+        public float[, ,] EvalMathPaint3D(Expression expr, VariableTable vars, int width, int height, int numframes)
         {
             if (!vars.ContainsKey("x"))
             {

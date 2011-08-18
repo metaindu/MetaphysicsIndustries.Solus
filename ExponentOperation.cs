@@ -21,9 +21,9 @@ namespace MetaphysicsIndustries.Solus
         //    return new Literal(Math.Pow(args[0].Value, args[1].Value));
         //}
 
-        protected override double InternalBinaryCall(double x, double y)
+        protected override float InternalBinaryCall(float x, float y)
         {
-            return Math.Pow(x, y);
+            return (float)Math.Pow(x, y);
         }
     }
 }

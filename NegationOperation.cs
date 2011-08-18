@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override double IdentityValue
+        public override float IdentityValue
         {
             get { return 0; }
         }

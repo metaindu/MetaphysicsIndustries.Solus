@@ -16,7 +16,7 @@ namespace MetaphysicsIndustries.Solus
             get { return "distsq"; }
         }
 
-        protected override double InternalCall(double arg0, double arg1)
+        protected override float InternalCall(float arg0, float arg1)
         {
             return arg0 * arg0 + arg1 * arg1;
         }

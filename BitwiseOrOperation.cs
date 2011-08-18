@@ -28,7 +28,7 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(value);
         }
 
-        public override double IdentityValue
+        public override float IdentityValue
         {
             get { return 0; }
         }
@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus
             get { return true; }
         }
 
-        public override double CullValue
+        public override float CullValue
         {
             get { return 0; }
         }

@@ -19,9 +19,9 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected override double InternalCall(double arg0, double arg1)
+        protected override float InternalCall(float arg0, float arg1)
         {
-            return Math.Log(arg0, arg1);
+            return (float)Math.Log(arg0, arg1);
         }
     }
 }

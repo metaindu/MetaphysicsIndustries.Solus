@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Solus
 
         protected override Literal InternalCall(VariableTable varTable, Literal[] args)
         {
-            double value = 1;
+            float value = 1;
             int i;
             for (i = 0; i < args.Length; i++)
             {
@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override double CollapseValue
+        public override float CollapseValue
         {
             get
             {

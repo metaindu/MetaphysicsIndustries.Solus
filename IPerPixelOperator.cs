@@ -8,8 +8,8 @@ namespace MetaphysicsIndustries.Solus
     {
         //int GetExtraWidth(Matrix input);
         //int GetExtraHeight(Matrix input);
-        //void SetValues(double[,] values);
+        //void SetValues(float[,] values);
 
-        //double Operate(int row, int column);
+        //float Operate(int row, int column);
     }
 }

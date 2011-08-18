@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
 
         protected override Literal InternalCall(VariableTable varTable, Literal[] args)
         {
-            double sum = 0;
+            float sum = 0;
             foreach (Literal arg in args)
             {
                 sum += arg.Value;
@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(sum);
         }
 
-        public override double IdentityValue
+        public override float IdentityValue
         {
             get
             {

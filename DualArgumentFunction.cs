@@ -19,6 +19,6 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(InternalCall(args[0].Value, args[1].Value));
         }
 
-        protected abstract double InternalCall(double arg0, double arg1);
+        protected abstract float InternalCall(float arg0, float arg1);
     }
 }

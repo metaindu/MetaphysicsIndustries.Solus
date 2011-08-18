@@ -734,12 +734,12 @@ namespace MetaphysicsIndustries.Solus
 
             Brush fillBrush = Brushes.Green;
             Pen wirePen = Pens.Black;
-            double xMin = -4;
-            double xMax = 4;
-            double yMin = -4;
-            double yMax = 4;
-            double zMin = -2;
-            double zMax = 6;
+            float xMin = -4;
+            float xMax = 4;
+            float yMin = -4;
+            float yMax = 4;
+            float zMin = -2;
+            float zMax = 6;
 
             if (args.Count == 4 || args.Count == 5)
             {

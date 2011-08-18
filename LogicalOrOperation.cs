@@ -16,7 +16,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.LogicalOr; }
         }
 
-        protected override double InternalBinaryCall(double x, double y)
+        protected override float InternalBinaryCall(float x, float y)
         {
             return ((((long)x) != 0) || (((long)y) != 0)) ? 1 : 0;
         }

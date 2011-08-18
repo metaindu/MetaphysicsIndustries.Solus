@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public class FactorialFunction : SingleArgumentFunction
     {
-        private static Dictionary<int, double> _presets = new Dictionary<int, double>();
+        private static Dictionary<int, float> _presets = new Dictionary<int, float>();
 
         static FactorialFunction()
         {
@@ -22,14 +22,14 @@ namespace MetaphysicsIndustries.Solus
 
         protected override Literal InternalCall(VariableTable varTable, Literal[] args)
         {
-            double p = args[0].Value;
+            float p = args[0].Value;
 
             if (p != (int)p) throw new ArgumentException("Argument must be an integer");
 
             return new Literal(GetValue((int)p));
         }
 
-        private double GetValue(int p)
+        private float GetValue(int p)
         {
             if (!_presets.ContainsKey(p))
             {

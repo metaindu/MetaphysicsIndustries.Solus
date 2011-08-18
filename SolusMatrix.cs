@@ -11,7 +11,7 @@ namespace MetaphysicsIndustries.Solus
     {
         private static SolusEngine _engine = new SolusEngine();
 
-        public static SolusMatrix FromUniform(double value, int rows, int columns)
+        public static SolusMatrix FromUniform(float value, int rows, int columns)
         {
             return FromUniform(new Literal(value), rows, columns);
         }
@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public SolusMatrix(int rows, int columns, params double[] initialContents)
+        public SolusMatrix(int rows, int columns, params float[] initialContents)
             : this(rows, columns)
         {
             int i;
@@ -193,10 +193,10 @@ namespace MetaphysicsIndustries.Solus
             //int jjend;
 
             //List<Expression> group = new List<Expression>();
-            double term;
+            float term;
 
-            double[,] values1 = new double[RowCount, ColumnCount];
-            double[,] values2 = new double[convolvee.RowCount, convolvee.ColumnCount];
+            float[,] values1 = new float[RowCount, ColumnCount];
+            float[,] values2 = new float[convolvee.RowCount, convolvee.ColumnCount];
 
             int i;
             int j;
@@ -406,8 +406,8 @@ namespace MetaphysicsIndustries.Solus
 
             //SolusMatrix ret = new SolusMatrix(r, c);
 
-            //double[,] values = new double[RowCount, ColumnCount];
-            ////double[,] values2 = new double[convolvee.RowCount, convolvee.ColumnCount];
+            //float[,] values = new float[RowCount, ColumnCount];
+            ////float[,] values2 = new float[convolvee.RowCount, convolvee.ColumnCount];
 
             //int i;
             //int j;
@@ -651,13 +651,13 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public double MeanSquareError(SolusMatrix mat)
+        public float MeanSquareError(SolusMatrix mat)
         {
             int i;
             int j;
 
-            double sum = 0;
-            double v;
+            float sum = 0;
+            float v;
 
             for (i = 0; i < RowCount; i++)
             {

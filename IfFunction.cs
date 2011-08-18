@@ -19,9 +19,9 @@ namespace MetaphysicsIndustries.Solus
         {
             CheckArguments(args);
 
-            double value = args[0].Eval(varTable).Value;
+            float value = args[0].Eval(varTable).Value;
 
-            if (value == 0 || double.IsNaN(value) || double.IsInfinity(value))
+            if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
             {
                 return args[2].Eval(varTable);
             }
@@ -34,8 +34,8 @@ namespace MetaphysicsIndustries.Solus
         protected override Literal InternalCall(VariableTable varTable, Literal[] args)
         {
             throw new NotSupportedException();
-            //double value = args[0].Value;
-            //if (value == 0 || double.IsNaN(value) || double.IsInfinity(value))
+            //float value = args[0].Value;
+            //if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
             //{
             //    return args[2];
             //}

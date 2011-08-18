@@ -15,9 +15,9 @@ namespace MetaphysicsIndustries.Solus
             Variable independentVariableX,
             Variable independentVariableY, 
             Expression expressionToPlot,
-            double xMin, double xMax,
-            double yMin, double yMax,
-            double zMin, double zMax,
+            float xMin, float xMax,
+            float yMin, float yMax,
+            float zMin, float zMax,
             Pen wirePen, Brush fillBrush)
         {
             _independentVariableX = independentVariableX;
@@ -69,38 +69,38 @@ namespace MetaphysicsIndustries.Solus
             set { _fillBrush = value; }
         }
 
-        private double _xMin;
-        public double XMin
+        private float _xMin;
+        public float XMin
         {
             get { return _xMin; }
             set { _xMin = value; }
         }
-        private double _xMax;
-        public double XMax
+        private float _xMax;
+        public float XMax
         {
             get { return _xMax; }
             set { _xMax = value; }
         }
-        private double _yMin;
-        public double YMin
+        private float _yMin;
+        public float YMin
         {
             get { return _yMin; }
             set { _yMin = value; }
         }
-        private double _yMax;
-        public double YMax
+        private float _yMax;
+        public float YMax
         {
             get { return _yMax; }
             set { _yMax = value; }
         }
-        private double _zMin;
-        public double ZMin
+        private float _zMin;
+        public float ZMin
         {
             get { return _zMin; }
             set { _zMin = value; }
         }
-        private double _zMax;
-        public double ZMax
+        private float _zMax;
+        public float ZMax
         {
             get { return _zMax; }
             set { _zMax = value; }

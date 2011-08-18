@@ -24,7 +24,7 @@ namespace MetaphysicsIndustries.Solus
         //    return new Literal(args[0].Value / args[1].Value);
         //}
 
-        protected override double InternalBinaryCall(double x, double y)
+        protected override float InternalBinaryCall(float x, float y)
         {
             return x / y;
         }

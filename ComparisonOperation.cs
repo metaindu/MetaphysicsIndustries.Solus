@@ -11,7 +11,7 @@ namespace MetaphysicsIndustries.Solus
             Name = name;
         }
 
-        protected override sealed double InternalBinaryCall(double x, double y)
+        protected override sealed float InternalBinaryCall(float x, float y)
         {
             return Compare(x, y) ? 1 : 0;
         }
@@ -23,7 +23,7 @@ namespace MetaphysicsIndustries.Solus
         public static readonly EqualComparisonOperation Equal = new EqualComparisonOperation();
         public static readonly NotEqualComparisonOperation NotEqual = new NotEqualComparisonOperation();
 
-        protected abstract bool Compare(double x, double y);
+        protected abstract bool Compare(float x, float y);
 
         public override OperationPrecedence Precedence
         {

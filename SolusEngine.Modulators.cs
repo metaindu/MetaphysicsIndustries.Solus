@@ -23,16 +23,16 @@ namespace MetaphysicsIndustries.Solus
 {
     //public partial class SolusEngine
     //{
-    //    public static double Convert24gToFloat(double value)
+    //    public static float Convert24gToFloat(float value)
     //    {
     //        value = Math.Max(0, Math.Min(0xFFFFFF, value));
-    //        double r = ((int)(value) & 0x000000FF) / 255.0;
-    //        double g = (((int)(value) & 0x0000FF00) >> 8) / 255.0;
-    //        double b = (((int)(value) & 0x00FF0000) >> 16) / 255.0;
+    //        float r = ((int)(value) & 0x000000FF) / 255.0;
+    //        float g = (((int)(value) & 0x0000FF00) >> 8) / 255.0;
+    //        float b = (((int)(value) & 0x00FF0000) >> 16) / 255.0;
     //        return (r + g + b) / 3;
     //    }
 
-    //    public static double ConvertFloatTo24g(double value)
+    //    public static float ConvertFloatTo24g(float value)
     //    {
     //        value = Math.Max(0, Math.Min(1, value));
 
@@ -43,12 +43,12 @@ namespace MetaphysicsIndustries.Solus
     //        return r | g | b;
     //    }
 
-    //    public static double Convert24cTo24g(double value)
+    //    public static float Convert24cTo24g(float value)
     //    {
     //        return ConvertFloatTo24g(Convert24gToFloat(value));
     //    }
 
-    //    public static double ConvertRgbTo24cTriModulator(double r, double g, double b)
+    //    public static float ConvertRgbTo24cTriModulator(float r, float g, float b)
     //    {
     //        r = Math.Max(0, Math.Min(1, r));
     //        g = Math.Max(0, Math.Min(1, g));
@@ -63,110 +63,110 @@ namespace MetaphysicsIndustries.Solus
 
     //    public class MultiplyModulator
     //    {
-    //        public MultiplyModulator(double factor) { _factor = factor; }
-    //        private double _factor;
-    //        public double Modulate(double value) { return value * _factor; }
+    //        public MultiplyModulator(float factor) { _factor = factor; }
+    //        private float _factor;
+    //        public float Modulate(float value) { return value * _factor; }
     //    }
 
     //    public class AdditionModulator
     //    {
-    //        public AdditionModulator(double factor) { _factor = factor; }
-    //        private double _factor;
-    //        public double Modulate(double value) { return value + _factor; }
+    //        public AdditionModulator(float factor) { _factor = factor; }
+    //        private float _factor;
+    //        public float Modulate(float value) { return value + _factor; }
     //    }
 
     //    public class MaximumModulator
     //    {
-    //        public MaximumModulator(double factor) { _factor = factor; }
-    //        private double _factor;
-    //        public double Modulate(double value) { return Math.Max(value, _factor); }
+    //        public MaximumModulator(float factor) { _factor = factor; }
+    //        private float _factor;
+    //        public float Modulate(float value) { return Math.Max(value, _factor); }
     //    }
 
     //    public class MinimumModulator
     //    {
-    //        public MinimumModulator(double factor) { _factor = factor; }
-    //        private double _factor;
-    //        public double Modulate(double value) { return Math.Min(value, _factor); }
+    //        public MinimumModulator(float factor) { _factor = factor; }
+    //        private float _factor;
+    //        public float Modulate(float value) { return Math.Min(value, _factor); }
     //    }
 
-    //    public static double AdditionBiMod(double x, double y)
+    //    public static float AdditionBiMod(float x, float y)
     //    {
     //        return x + y;
     //    }
 
-    //    public static double MultiplicationBiMod(double x, double y)
+    //    public static float MultiplicationBiMod(float x, float y)
     //    {
     //        return x * y;
     //    }
 
-    //    public static double ConvertNegOneOneToZeroOne(double x)
+    //    public static float ConvertNegOneOneToZeroOne(float x)
     //    {
     //        //convert a number on the interval of [-1,1] to [0,1]
     //        return (x + 1) / 2;
     //    }
 
-    //    public static double ConvertZeroOneToNegOneOne(double x)
+    //    public static float ConvertZeroOneToNegOneOne(float x)
     //    {
     //        //convert a number on the interval of [0,1] to [-1,1]
     //        return x * 2 - 1;
     //    }
 
-    //    public static Pair<double> ConvertNegOneOneToZeroOne(double x, double y)
+    //    public static Pair<float> ConvertNegOneOneToZeroOne(float x, float y)
     //    {
-    //        return new Pair<double>(
+    //        return new Pair<float>(
     //            ConvertNegOneOneToZeroOne(x),
     //            ConvertNegOneOneToZeroOne(y));
     //    }
 
-    //    public static Pair<double> ConvertZeroOneToNegOneOne(double x, double y)
+    //    public static Pair<float> ConvertZeroOneToNegOneOne(float x, float y)
     //    {
-    //        return new Pair<double>(
+    //        return new Pair<float>(
     //            ConvertZeroOneToNegOneOne(x),
     //            ConvertZeroOneToNegOneOne(y));
     //    }
 
-    //    public static Pair<double> ConvertEuclideanToPolar(double x, double y)
+    //    public static Pair<float> ConvertEuclideanToPolar(float x, float y)
     //    {
-    //        Pair<double> pair = new Pair<double>();
+    //        Pair<float> pair = new Pair<float>();
     //        pair.First = Math.Sqrt(x * x + y * y);
     //        pair.Second = Math.Atan2(y, x);
     //        return pair;
     //    }
 
-    //    public static Pair<double> ConvertPolarToEuclidean(double r, double theta)
+    //    public static Pair<float> ConvertPolarToEuclidean(float r, float theta)
     //    {
-    //        Pair<double> pair = new Pair<double>();
+    //        Pair<float> pair = new Pair<float>();
     //        pair.First = r * Math.Cos(theta);
     //        pair.Second = r * Math.Sin(theta);
     //        return pair;
     //    }
 
-    //    public static double ConvertDegreesToRadians(double degrees)
+    //    public static float ConvertDegreesToRadians(float degrees)
     //    {
     //        return Math.PI * degrees / 180.0;
     //    }
 
-    //    public static double ConvertRadiansToDegrees(double radians)
+    //    public static float ConvertRadiansToDegrees(float radians)
     //    {
     //        return 180.0 * radians / Math.PI;
     //    }
 
-    //    public static double ComplexMagnitude(double real, double imaginary)
+    //    public static float ComplexMagnitude(float real, float imaginary)
     //    {
     //        return Math.Sqrt(real * real + imaginary * imaginary);
     //    }
 
-    //    public static double ComplexPhase(double real, double imaginary)
+    //    public static float ComplexPhase(float real, float imaginary)
     //    {
     //        return Math.Atan2(imaginary, real);
     //    }
 
-    //    public static double IntervalFit(double value, double min, double max)
+    //    public static float IntervalFit(float value, float min, float max)
     //    {
     //        return (value - min) / (max - min);
     //    }
 
-    //    public static double MeanSquareError(Matrix a, Matrix b)
+    //    public static float MeanSquareError(Matrix a, Matrix b)
     //    {
     //        if (a == null) { throw new ArgumentNullException("a"); }
     //        if (b == null) { throw new ArgumentNullException("b"); }
@@ -179,8 +179,8 @@ namespace MetaphysicsIndustries.Solus
     //        int i;
     //        int j;
 
-    //        double sum = 0;
-    //        double rect;
+    //        float sum = 0;
+    //        float rect;
 
     //        for (i = 0; i < a.RowCount; i++)
     //        {
@@ -197,7 +197,7 @@ namespace MetaphysicsIndustries.Solus
     //        return sum;
     //    }
 
-    //    public static double MaxError(Matrix a, Matrix b)
+    //    public static float MaxError(Matrix a, Matrix b)
     //    {
     //        if (a == null) { throw new ArgumentNullException("a"); }
     //        if (b == null) { throw new ArgumentNullException("b"); }
@@ -210,7 +210,7 @@ namespace MetaphysicsIndustries.Solus
     //        int i;
     //        int j;
 
-    //        double max = 0;
+    //        float max = 0;
 
     //        for (i = 0; i < a.RowCount; i++)
     //        {
@@ -223,18 +223,18 @@ namespace MetaphysicsIndustries.Solus
     //        return max;
     //    }
 
-    //    public static Triple<double> ConvertRgbToHsl(Triple<double> rgb)
+    //    public static Triple<float> ConvertRgbToHsl(Triple<float> rgb)
     //    {
-    //        double r = rgb.First;
-    //        double g = rgb.Second;
-    //        double b = rgb.Third;
+    //        float r = rgb.First;
+    //        float g = rgb.Second;
+    //        float b = rgb.Third;
 
-    //        double max = Math.Max(r, Math.Max(g, b));
-    //        double min = Math.Min(r, Math.Min(g, b));
+    //        float max = Math.Max(r, Math.Max(g, b));
+    //        float min = Math.Min(r, Math.Min(g, b));
 
-    //        double h;
-    //        double s;
-    //        double l;
+    //        float h;
+    //        float s;
+    //        float l;
 
     //        if (max == min) { h = 0; }
     //        else if (max == r)
@@ -251,20 +251,20 @@ namespace MetaphysicsIndustries.Solus
     //        else if (l <= 0.5) { s = (max - min) / (2 * l); }
     //        else { s = (max - min) / (2 - 2 * l); }
 
-    //        return new Triple<double>(h, s, l);
+    //        return new Triple<float>(h, s, l);
     //    }
 
-    //    public static Triple<double> ConvertHslToRgb(Triple<double> hsl)
+    //    public static Triple<float> ConvertHslToRgb(Triple<float> hsl)
     //    {
-    //        double h = hsl.First;
-    //        double s = hsl.Second;
-    //        double l = hsl.Third;
+    //        float h = hsl.First;
+    //        float s = hsl.Second;
+    //        float l = hsl.Third;
 
-    //        double q;
-    //        double p;
-    //        double tr = h + 1 / 3.0;
-    //        double tg = h;
-    //        double tb = h - 1 / 3.0;
+    //        float q;
+    //        float p;
+    //        float tr = h + 1 / 3.0;
+    //        float tg = h;
+    //        float tb = h - 1 / 3.0;
 
     //        if (tr > 1) { tr -= 1; }
     //        if (tb < 1) { tb += 1; }
@@ -274,21 +274,21 @@ namespace MetaphysicsIndustries.Solus
 
     //        p = 2 * l - q;
 
-    //        double r;
-    //        double g;
-    //        double b;
+    //        float r;
+    //        float g;
+    //        float b;
 
     //        r = CalcHslToRgbConversion(q, p, tr);
     //        g = CalcHslToRgbConversion(q, p, tg);
     //        b = CalcHslToRgbConversion(q, p, tb);
 
-    //        return new Triple<double>(r, g, b);
+    //        return new Triple<float>(r, g, b);
     //    }
 
-    //    public static double CalcHslToRgbConversion(double q, double p, double t)
+    //    public static float CalcHslToRgbConversion(float q, float p, float t)
     //    {
 
-    //        double c;
+    //        float c;
     //        if (t < 1 / 6.0) { c = q + ((q - p) * 6 * t); }
     //        else if (t < 0.5) { c = q; }
     //        else if (t < 2 / 3.0) { c = p + ((q - p) * 6 * ((2 / 3.0) - t)); }

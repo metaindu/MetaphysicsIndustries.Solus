@@ -28,12 +28,12 @@ namespace MetaphysicsIndustries.Solus
 
         //    return new Literal(value);
         //}
-        protected override double InternalBinaryCall(double x, double y)
+        protected override float InternalBinaryCall(float x, float y)
         {
             return ((long)x) & ((long)y);   
         }
 
-        //public override double IdentityValue
+        //public override float IdentityValue
         //{
         //    get { return 0xffffffffffffffff; }
         //}

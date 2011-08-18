@@ -79,7 +79,7 @@ namespace MetaphysicsIndustries.Solus
         {
             return new Literal(InternalBinaryCall(args[0].Value, args[1].Value));
         }
-        protected abstract double InternalBinaryCall(double x, double y);
+        protected abstract float InternalBinaryCall(float x, float y);
 
         //protected override Expression InternalCleanUp(Expression[] args)
         //{

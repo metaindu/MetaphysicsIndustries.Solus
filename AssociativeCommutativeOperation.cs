@@ -142,7 +142,7 @@ namespace MetaphysicsIndustries.Solus
             get { return false; }
         }
 
-        public virtual double CollapseValue
+        public virtual float CollapseValue
         {
             get { return 0; }
         }
@@ -155,7 +155,7 @@ namespace MetaphysicsIndustries.Solus
             get { return true; }
         }
 
-        public virtual double CullValue 
+        public virtual float CullValue 
         {
             get { return IdentityValue; }
         }

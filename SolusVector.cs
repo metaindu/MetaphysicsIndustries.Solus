@@ -8,7 +8,7 @@ namespace MetaphysicsIndustries.Solus
     {
         private static SolusEngine _engine = new SolusEngine();
 
-        public static SolusVector FromUniformSequence(double value, int length)
+        public static SolusVector FromUniformSequence(float value, int length)
         {
             return FromUniformSequence(new Literal(value), length);
         }
@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public SolusVector(int length, params double[] initialContents)
+        public SolusVector(int length, params float[] initialContents)
             : this(length)
         {
             int i;

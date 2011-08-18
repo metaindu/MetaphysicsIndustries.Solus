@@ -23,21 +23,21 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
 	{
-        public static double CalculateVariance(IEnumerable<double> measures)
+        public static float CalculateVariance(IEnumerable<float> measures)
         {
-            double mean = CalculateMean(measures);
+            float mean = CalculateMean(measures);
             return CalculateVariance(measures, mean);
         }
 
-        public static double CalculateVariance(IEnumerable<double> measures, double mean)
+        public static float CalculateVariance(IEnumerable<float> measures, float mean)
         {
 
-            double variance = 0;
+            float variance = 0;
             int count = -1;
 
-            foreach (double measure in measures)
+            foreach (float measure in measures)
             {
-                double value = measure - mean;
+                float value = measure - mean;
                 variance += value * value;
                 count++;
             }
@@ -52,24 +52,24 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public static double CalculateVariance(IList<double> measures, double mean, int startIndex, int count)
+        public static float CalculateVariance(IList<float> measures, float mean, int startIndex, int count)
         {
             int i;
-            double sum = 0;
+            float sum = 0;
             for (i = startIndex; i < startIndex + count; i++)
             {
-                double value = measures[i] - mean;
+                float value = measures[i] - mean;
                 sum += value * value;
             }
-            double variance = sum / (count - 1);
+            float variance = sum / (count - 1);
             return variance;
         }
 
-        public static double CalculateMean(IEnumerable<double> measures)
+        public static float CalculateMean(IEnumerable<float> measures)
         {
-            double mean = 0;
+            float mean = 0;
             int count = 0;
-            foreach (double measure in measures)
+            foreach (float measure in measures)
             {
                 mean += measure;
                 count++;
@@ -78,38 +78,38 @@ namespace MetaphysicsIndustries.Solus
             return mean;
         }
 
-        public static double CalculateMean(IList<double> measures, int startIndex, int count)
+        public static float CalculateMean(IList<float> measures, int startIndex, int count)
         {
             int i;
-            double sum = 0;
+            float sum = 0;
             for (i = startIndex; i < startIndex + count; i++)
             {
                 sum += measures[i];
             }
-            double mean = sum / count;
+            float mean = sum / count;
             return mean;
         }
 
-        public static double CalculateNormalDistributionOverlap(double mean1, double variance1, double mean2, double variance2)
+        public static float CalculateNormalDistributionOverlap(float mean1, float variance1, float mean2, float variance2)
         {
-            double a = variance1 + variance2;
-            double b = -2 * (variance1*mean2 +variance2*mean1);
-            double c = variance1 * mean2 * mean2 + 
+            float a = variance1 + variance2;
+            float b = -2 * (variance1*mean2 +variance2*mean1);
+            float c = (float)(variance1 * mean2 * mean2 + 
                         variance2 * mean1 * mean1 - 
-                        variance1 * variance2 * System.Math.Log(System.Math.Sqrt(variance1 / variance2));
+                        variance1 * variance2 * System.Math.Log(System.Math.Sqrt(variance1 / variance2)));
 
-            Pair<double> x = QuadraticEquation(a, b, c);
+            Pair<float> x = QuadraticEquation(a, b, c);
 
             return 0;
         }
 
-        public static Pair<double> QuadraticEquation(double a, double b, double c)
+        public static Pair<float> QuadraticEquation(float a, float b, float c)
         {
-            double d = System.Math.Sqrt(b * b - 4 * a * c);
-            double x1 = (-b + d) / (2 * a);
-            double x2 = (-b - d) / (2 * a);
+            float d = (float)System.Math.Sqrt(b * b - 4 * a * c);
+            float x1 = (-b + d) / (2 * a);
+            float x2 = (-b - d) / (2 * a);
 
-            return new Pair<double>(x1, x2);
+            return new Pair<float>(x1, x2);
         }
     }
 }

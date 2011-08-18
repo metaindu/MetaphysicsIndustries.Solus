@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus
 
         protected override Literal InternalCall(VariableTable varTable, Literal[] args)
 		{
-            return new Literal(Math.Acos(1/args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Acos(1 / args[0].Eval(varTable).Value));
         }
 
     }

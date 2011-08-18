@@ -183,7 +183,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else //if (arg is Literal)
             {
-                double value = expression.Eval(varTable).Value;// ((Literal)arg).Value;
+                float value = expression.Eval(varTable).Value;// ((Literal)arg).Value;
                 int iValue = (int)(value);
                 Color color = Color.FromArgb(255, Color.FromArgb(iValue));
                 return new SolidBrush(color);
@@ -198,7 +198,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else //if (arg is Literal)
             {
-                double value = arg.Eval(varTable).Value;// ((Literal)arg).Value;
+                float value = arg.Eval(varTable).Value;// ((Literal)arg).Value;
                 int iValue = (int)(value);
                 Color color = Color.FromArgb(255, Color.FromArgb(iValue));
                 return new Pen(color);
@@ -234,25 +234,25 @@ namespace MetaphysicsIndustries.Solus
             return matrix;
         }
 
-        public double BinomialCoefficient(int n, int k)
+        public float BinomialCoefficient(int n, int k)
         {
             if (k > n) return 0;
             if (k > n / 2) k = n - k;
 
-            double prod = 1;
+            float prod = 1;
             int i;
 
             for (i = 1; i <= k; i++)
             {
-                prod *= (n - k + i) / (double)i;
+                prod *= (n - k + i) / (float)i;
             }
 
             return prod;
         }
 
-        public double[] PascalsTriangle(int row)
+        public float[] PascalsTriangle(int row)
         {
-            double[] res = new double[row + 1];
+            float[] res = new float[row + 1];
 
             int i;
 
