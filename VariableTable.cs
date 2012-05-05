@@ -206,7 +206,16 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression this[Variable key]
         {
-            get { return _currentValues[key]; }
+            get
+            {
+                if (!_currentValues.ContainsKey(key) ||
+                    _currentValues[key] == null)
+                {
+                    _currentValues[key] = new Literal(0);
+                }
+
+                return _currentValues[key];
+            }
             set
             {
                 Add(key);

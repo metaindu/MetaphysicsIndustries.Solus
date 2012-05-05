@@ -57,15 +57,12 @@ namespace MetaphysicsIndustries.Solus
 
         public static Expression Compile(string expr)
         {
-            return Compile(expr, null);
+            return Compile(expr, new VariableTable());
         }
 
         public static Expression Compile(string expr, VariableTable varTable)
         {
-            if (varTable == null)
-            {
-                varTable = new VariableTable();
-            }
+            if (varTable == null) throw new ArgumentNullException("varTable");
 
             Ex[] tokens;
             tokens = Tokenize(expr);
@@ -75,10 +72,7 @@ namespace MetaphysicsIndustries.Solus
 
         public static Expression Compile(Ex[] tokens, VariableTable varTable)
         {
-            if (varTable == null)
-            {
-                varTable = new VariableTable();
-            }
+            if (varTable == null) throw new ArgumentNullException("varTable");
 
             SyntaxCheck(tokens);
 
