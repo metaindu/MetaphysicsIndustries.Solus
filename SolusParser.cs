@@ -710,6 +710,36 @@ namespace MetaphysicsIndustries.Solus
         //    return new PlotMatrixExpression((SolusMatrix)arg);
         //}
 
+        public static Brush GetBrushFromExpression(Expression expression, VariableTable varTable)
+        {
+            if (expression is ColorExpression)
+            {
+                return ((ColorExpression)expression).Brush;
+            }
+            else //if (arg is Literal)
+            {
+                float value = expression.Eval(varTable).Value;// ((Literal)arg).Value;
+                int iValue = (int)(value);
+                Color color = Color.FromArgb(255, Color.FromArgb(iValue));
+                return new SolidBrush(color);
+            }
+        }
+
+        public static Pen GetPenFromExpression(Expression arg, VariableTable varTable)
+        {
+            if (arg is ColorExpression)
+            {
+                return ((ColorExpression)arg).Pen;
+            }
+            else //if (arg is Literal)
+            {
+                float value = arg.Eval(varTable).Value;// ((Literal)arg).Value;
+                int iValue = (int)(value);
+                Color color = Color.FromArgb(255, Color.FromArgb(iValue));
+                return new Pen(color);
+            }
+        }
+
         private static Expression ConvertPlot3dExpression(Ex ex, VariableTable varTable, List<Expression> args)
         {
             if (args.Count < 3 ||
@@ -737,11 +767,11 @@ namespace MetaphysicsIndustries.Solus
 
             if (args.Count == 4 || args.Count == 5)
             {
-                fillBrush = _engine.GetBrushFromExpression(args[3], varTable);
+                fillBrush = GetBrushFromExpression(args[3], varTable);
 
                 if (args.Count == 5)
                 {
-                    wirePen = _engine.GetPenFromExpression(args[4], varTable);
+                    wirePen = GetPenFromExpression(args[4], varTable);
                 }
             }
             else if (args.Count == 9)
@@ -763,8 +793,8 @@ namespace MetaphysicsIndustries.Solus
                 yMax = args[6].Eval(varTable).Value;
                 zMin = args[7].Eval(varTable).Value;
                 zMax = args[8].Eval(varTable).Value;
-                fillBrush = _engine.GetBrushFromExpression(args[9], varTable);
-                wirePen = _engine.GetPenFromExpression(args[10], varTable);
+                fillBrush = GetBrushFromExpression(args[9], varTable);
+                wirePen = GetPenFromExpression(args[10], varTable);
             }
             else if (args.Count != 3)
             {
