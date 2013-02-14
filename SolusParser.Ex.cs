@@ -335,16 +335,12 @@ namespace MetaphysicsIndustries.Solus
                 if (type == NodeType.Func)
                 {
                     Func func = Ex.GetFuncType(token);
-                    Ex ex = new Ex(token, location);
-                    ex.SetFunction(func);
-                    return ex;
+                    return new Ex(token, location, func);
                 }
                 else if (type == NodeType.Num)
                 {
                     float numValue = ParseNumber(token);
-                    Ex ex = new Ex(token, location);
-                    ex.SetNumber(numValue);
-                    return ex;
+                    return new Ex(token, location, numValue);
                 }
                 else
                 {
@@ -363,18 +359,14 @@ namespace MetaphysicsIndustries.Solus
                 _type = type;
                 _rank = rank;
             }
-
-            void SetFunction(SolusParser.Func func)
+            Ex(string token, int location, Func func)
+                : this(token, NodeType.Func, GetRank(NodeType.Func), location)
             {
-                _type = NodeType.Func;
-                _rank = GetRank(NodeType.Func);
                 Func = func;
             }
-
-            void SetNumber(float numValue)
+            Ex(string token, int location, float numValue)
+                : this(token, NodeType.Num, GetRank(NodeType.Num), location)
             {
-                _type = NodeType.Num;
-                _rank = GetRank(NodeType.Num);
                 NumValue = numValue;
             }
 
