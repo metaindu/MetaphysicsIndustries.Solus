@@ -358,6 +358,22 @@ namespace MetaphysicsIndustries.Solus
                 _location = location;
             }
 
+            void SetFunction(string token, SolusParser.Func func)
+            {
+                _token = token;
+                _type = NodeType.Func;
+                _rank = GetRank(NodeType.Func);
+                Func = func;
+            }
+
+            void SetNumber(string token, float numValue)
+            {
+                _token = token;
+                _type = NodeType.Num;
+                _rank = GetRank(NodeType.Num);
+                NumValue = numValue;
+            }
+
             public NodeType Type
             {
                 get { return _type; }
@@ -534,22 +550,6 @@ namespace MetaphysicsIndustries.Solus
                 }
 
                 return 0;
-            }
-
-            void SetFunction(string token, SolusParser.Func func)
-            {
-                _token = token;
-                _type = NodeType.Func;
-                _rank = GetRank(NodeType.Func);
-                Func = func;
-            }
-
-            void SetNumber(string token, float numValue)
-            {
-                _token = token;
-                _type = NodeType.Num;
-                _rank = GetRank(NodeType.Num);
-                NumValue = numValue;
             }
 
             public int Location
