@@ -443,10 +443,7 @@ namespace MetaphysicsIndustries.Solus
                 {
                     Func func = Ex.GetFuncType(token);
 
-                    _token = token;
-                    _type = type;
-                    _rank = rank;
-                    Func = func;
+                    SetFunction(token, rank, func);
                 }
                 else if (type == NodeType.Num)
                 {
@@ -540,6 +537,14 @@ namespace MetaphysicsIndustries.Solus
                 _token = token;
                 _type = type;
                 _rank = rank;
+            }
+
+            void SetFunction(string token, Ranks rank, SolusParser.Func func)
+            {
+                _token = token;
+                _type = NodeType.Func;
+                _rank = rank;
+                Func = func;
             }
 
             public int Location
