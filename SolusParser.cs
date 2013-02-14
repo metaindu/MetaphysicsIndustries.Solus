@@ -912,7 +912,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 string token = chunks2[i];
 
-                Ex ex = new Ex(token, locations[i]);
+                Ex ex = Ex.FromToken(token, locations[i]);
                 tokens[i] = ex;
 
                 //if (Ex.GetNodeType(token) == NodeType.Func &&

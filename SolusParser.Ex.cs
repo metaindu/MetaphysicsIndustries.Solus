@@ -328,7 +328,12 @@ namespace MetaphysicsIndustries.Solus
 
             }
 
-            public Ex(string token, int location)
+            public static Ex FromToken(string token, int location)
+            {
+                return new Ex(token, location);
+            }
+
+            Ex(string token, int location)
             {
                 NodeType type = Ex.GetNodeType(token);
 
