@@ -63,7 +63,8 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression PreliminaryEval(Expression expr, VariableTable varTable)
         {
-            return CleanUp(expr.PreliminaryEval(varTable));
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(expr.PreliminaryEval(varTable));
         }
 
         //protected Expression InternalPreliminaryEval(Expression expr, VariableTable varTable)

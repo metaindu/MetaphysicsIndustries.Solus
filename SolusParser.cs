@@ -79,7 +79,8 @@ namespace MetaphysicsIndustries.Solus
             tokens = Arrange(tokens);
             Ex ex = BuildTree(tokens);
             Expression expr = ConvertToSolusExpression(ex, varTable);
-            return _engine.CleanUp(expr);
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(expr);
         }
 
         protected static void SyntaxCheck(Ex[] tokens)
@@ -509,7 +510,8 @@ namespace MetaphysicsIndustries.Solus
                 throw new SolusParseException(ex, "The second argument must be a variable");
             }
 
-            return _engine.CleanUp(_engine.Subst(args[0], ((VariableAccess)args[1]).Variable, args[2]));
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(_engine.Subst(args[0], ((VariableAccess)args[1]).Variable, args[2]));
         }
 
         private static Expression ConvertFeedbackExpression(Ex ex, VariableTable varTable, List<Expression> args)
