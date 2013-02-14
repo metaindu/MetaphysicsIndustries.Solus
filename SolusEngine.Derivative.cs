@@ -30,9 +30,6 @@ namespace MetaphysicsIndustries.Solus
             DerivativeTransformer deriver = new DerivativeTransformer();
             derivative = deriver.Transform(expr, new VariableTransformArgs(var));
 
-            CleanUpTransformer cleanup = new CleanUpTransformer();
-            derivative = cleanup.CleanUp(derivative);
-
             return derivative;
         }
     }

@@ -15,8 +15,11 @@ namespace MetaphysicsIndustries.Solus
         {
             if (expr == null) { throw new ArgumentNullException("expr"); }
             if (args == null) { throw new ArgumentNullException("args"); }
-							
-            return GetDerivative(expr, args.Variable);
+
+            Expression d = GetDerivative(expr, args.Variable);
+
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(d);
         }
 
         public Expression GetDerivative(Expression expr, Variable var)
