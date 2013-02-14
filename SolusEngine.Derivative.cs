@@ -25,12 +25,8 @@ namespace MetaphysicsIndustries.Solus
     {
         public Expression GetDerivative(Expression expr, Variable var)
         {
-            Expression derivative;
-
             DerivativeTransformer deriver = new DerivativeTransformer();
-            derivative = deriver.Transform(expr, new VariableTransformArgs(var));
-
-            return derivative;
+            return deriver.Transform(expr, new VariableTransformArgs(var));
         }
     }
 }
