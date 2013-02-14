@@ -328,9 +328,28 @@ namespace MetaphysicsIndustries.Solus
 
             }
 
-            public Ex(string t, int location)
+            public Ex(string token, int location)
             {
-                SetToken(t);
+                NodeType type = Ex.GetNodeType(token);
+
+                if (type == NodeType.Func)
+                {
+                    Func func = Ex.GetFuncType(token);
+
+                    SetFunction(token, func);
+                }
+                else if (type == NodeType.Num)
+                {
+                    float numValue = ParseNumber(token);
+                    SetNumber(token, numValue);
+                }
+                else
+                {
+                    _token = token;
+                    _type = type;
+                    _rank = Ex.GetRank(type);
+                }
+
                 _location = location;
             }
 
@@ -428,30 +447,6 @@ namespace MetaphysicsIndustries.Solus
             public string Token
             {
                 get { return _token; }
-            }
-
-            void SetToken(string token)
-            {
-                NodeType type = Ex.GetNodeType(token);
-
-                if (type == NodeType.Func)
-                {
-                    Func func = Ex.GetFuncType(token);
-
-                    SetFunction(token, func);
-                }
-                else if (type == NodeType.Num)
-                {
-                    float numValue = ParseNumber(token);
-
-                    SetNumber(token, numValue);
-                }
-                else
-                {
-                    _token = token;
-                    _type = type;
-                    _rank = Ex.GetRank(type);
-                }
             }
 
             public static float ParseNumber(string token)
