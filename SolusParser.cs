@@ -141,13 +141,13 @@ namespace MetaphysicsIndustries.Solus
         {
             Expression leftArg = null;
             Expression rightArg = null;
-            if (ex.left != null)
+            if (ex.Left != null)
             {
-                leftArg = ConvertToSolusExpression(ex.left, varTable);
+                leftArg = ConvertToSolusExpression(ex.Left, varTable);
             }
-            if (ex.right != null)
+            if (ex.Right != null)
             {
-                rightArg = ConvertToSolusExpression(ex.right, varTable);
+                rightArg = ConvertToSolusExpression(ex.Right, varTable);
             }
 
             if (ex.Type == NodeType.Add)
@@ -282,7 +282,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (ex.Type == NodeType.Num)
             {
-                return new Literal(ex.numValue);
+                return new Literal(ex.NumValue);
             }
             else if (ex.Type == NodeType.Sub)
             {
@@ -358,11 +358,11 @@ namespace MetaphysicsIndustries.Solus
             Function function = null;
             List<Expression> args = new List<Expression>();
 
-            if (ex.left != null)
+            if (ex.Left != null)
             {
-                if (ex.left.Type == NodeType.Comma)
+                if (ex.Left.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.left, args, varTable);
+                    ConvertCommaToArgs(ex.Left, args, varTable);
                 }
                 else
                 {
@@ -370,11 +370,11 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            if (ex.right != null)
+            if (ex.Right != null)
             {
-                if (ex.right.Type == NodeType.Comma)
+                if (ex.Right.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.right, args, varTable);
+                    ConvertCommaToArgs(ex.Right, args, varTable);
                 }
                 else
                 {
@@ -382,9 +382,9 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            if (_functions.ContainsKey(ex.func))
+            if (_functions.ContainsKey(ex.Func))
             {
-                function = _functions[ex.func];
+                function = _functions[ex.Func];
             }
             //else if (ex.func == Func.Exponent)
             //{
@@ -407,11 +407,11 @@ namespace MetaphysicsIndustries.Solus
             //    //    leftArg,
             //    //    rightArg);
             //}
-            else if (ex.func == Func.Rand)
+            else if (ex.Func == Func.Rand)
             {
                 return new RandomExpression();
             }
-            else if (ex.func == Func.Sqrt)
+            else if (ex.Func == Func.Sqrt)
             {
                 function = BinaryOperation.Exponent;
                 args.Add(new Literal(0.5f));
@@ -420,12 +420,12 @@ namespace MetaphysicsIndustries.Solus
                 //    leftArg,
                 //    new Literal(0.5f));
             }
-            else if (ex.func == Func.Integrate)
+            else if (ex.Func == Func.Integrate)
             {
                 throw new SolusParseException(ex, "That function is not yet implemented");
                 //throw new NotImplementedException();
             }
-            else if (ex.func == Func.Derive)
+            else if (ex.Func == Func.Derive)
             {
                 if (!(args[1] is VariableAccess))
                 {
@@ -450,15 +450,15 @@ namespace MetaphysicsIndustries.Solus
             //{
             //    return ConvertGetColumn2Expression(ex, varTable, args);
             //}
-            else if (ex.func == Func.Plot)
+            else if (ex.Func == Func.Plot)
             {
                 return ConvertPlotExpression(ex, args);
             }
-            else if (ex.func == Func.Plot3d)
+            else if (ex.Func == Func.Plot3d)
             {
                 return ConvertPlot3dExpression(ex, varTable, args);
             }
-            else if (ex.func == Func.MathPaint)
+            else if (ex.Func == Func.MathPaint)
             {
                 return ConvertMathPaintExpression(ex, varTable, args);
             }
@@ -484,11 +484,11 @@ namespace MetaphysicsIndustries.Solus
 
             //    return new PlotVectorExpression((SolusVector)arg);
             //}
-            else if (ex.func == Func.Feedback)
+            else if (ex.Func == Func.Feedback)
             {
                 return ConvertFeedbackExpression(ex, varTable, args);
             }
-            else if (ex.func == Func.Subst)
+            else if (ex.Func == Func.Subst)
             {
                 return ConvertSubstExpression(ex, varTable, args);
             }
@@ -818,15 +818,15 @@ namespace MetaphysicsIndustries.Solus
 
         protected static void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
         {
-            if (ex.left != null)
+            if (ex.Left != null)
             {
-                if (ex.left.Type == NodeType.Comma)
+                if (ex.Left.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.left, args, varTable);
+                    ConvertCommaToArgs(ex.Left, args, varTable);
                 }
                 else
                 {
-                    args.Add(ConvertToSolusExpression(ex.left, varTable));
+                    args.Add(ConvertToSolusExpression(ex.Left, varTable));
                 }
             }
             else
@@ -834,15 +834,15 @@ namespace MetaphysicsIndustries.Solus
                 Debug.WriteLine("ex.left == null in SolusParser.ConvertCommaToArgs");
             }
 
-            if (ex.right != null)
+            if (ex.Right != null)
             {
-                if (ex.right.Type == NodeType.Comma)
+                if (ex.Right.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.right, args, varTable);
+                    ConvertCommaToArgs(ex.Right, args, varTable);
                 }
                 else
                 {
-                    args.Add(ConvertToSolusExpression(ex.right, varTable));
+                    args.Add(ConvertToSolusExpression(ex.Right, varTable));
                 }
             }
             else
@@ -1090,17 +1090,17 @@ namespace MetaphysicsIndustries.Solus
                 //cascaded comma operators against the functions'
                 //desired argument counts.
 
-                int funcArgs = Ex.GetFuncArgs(ex.func);
+                int funcArgs = Ex.GetFuncArgs(ex.Func);
                 if (funcArgs != 0)
                 {
-                    ex.left = BuildTree(b);
+                    ex.Left = BuildTree(b);
 
                     if (funcArgs > -1)
                     {
                         //check comma operators
                         //ensure argument count is correct
 
-                        int nargs = CountCommaArguments(ex.left);
+                        int nargs = CountCommaArguments(ex.Left);
                         if (nargs > funcArgs)
                         {
                             //throw exception
@@ -1141,9 +1141,9 @@ namespace MetaphysicsIndustries.Solus
             else if (IsBinaryOperation(r))
             {
                 if (b.Count < 1) { throw new SolusParseException(ex, "Missing right operand"); }
-                ex.right = BuildTree(b);
+                ex.Right = BuildTree(b);
                 if (b.Count < 1) { throw new SolusParseException(ex, "Missing left operand"); }
-                ex.left = BuildTree(b);
+                ex.Left = BuildTree(b);
             }
 
 
@@ -1183,7 +1183,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (ex.Type == NodeType.Comma)
             {
-                return CountCommaArguments(ex.left) + CountCommaArguments(ex.right);
+                return CountCommaArguments(ex.Left) + CountCommaArguments(ex.Right);
             }
 
             return 1;

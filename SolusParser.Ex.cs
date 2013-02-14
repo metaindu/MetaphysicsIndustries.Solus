@@ -441,7 +441,7 @@ namespace MetaphysicsIndustries.Solus
                 _rank = Ex.GetRank(_type);
                 if (_type == NodeType.Func)
                 {
-                    func = Ex.GetFuncType(value);
+                    Func = Ex.GetFuncType(value);
                     //funcargs = GetFuncArgs(func);
                 }
                 else if (_type == NodeType.Num)
@@ -449,11 +449,11 @@ namespace MetaphysicsIndustries.Solus
                     Match match;
                     if (_token.ToLower() == "e")
                     {
-                        numValue = (float)Math.E;
+                        NumValue = (float)Math.E;
                     }
                     else if (_token.ToLower() == "pi")
                     {
-                        numValue = (float)Math.PI;
+                        NumValue = (float)Math.PI;
                     }
                     else if ((match = Regex.Match(_token, "^([+-]?)(?:0[dD])?([0-9]+)$")).Length > 0)
                     {
@@ -465,7 +465,7 @@ namespace MetaphysicsIndustries.Solus
                         {
                             i = -i;
                         }
-                        numValue = (float)(i);
+                        NumValue = (float)(i);
                     }
                     else if ((match = Regex.Match(_token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0)
                     {
@@ -476,7 +476,7 @@ namespace MetaphysicsIndustries.Solus
                         tok = tok.Replace("x", string.Empty);
                         tok = tok.Replace("X", string.Empty);
                         i = int.Parse(tok, System.Globalization.NumberStyles.HexNumber);
-                        numValue = (float)(i);
+                        NumValue = (float)(i);
                     }
                     else if ((match = Regex.Match(_token, "^([+-]?)0[oO]([0-7]+)$")).Length > 0)
                     {
@@ -496,7 +496,7 @@ namespace MetaphysicsIndustries.Solus
                         {
                             num = -num;
                         }
-                        numValue = (float)(num);
+                        NumValue = (float)(num);
                     }
                     else if ((match = Regex.Match(_token, "^([+-]?)0[bB]([01]+)$")).Length > 0)
                     {
@@ -516,11 +516,11 @@ namespace MetaphysicsIndustries.Solus
                         {
                             num = -num;
                         }
-                        numValue = (float)(num);
+                        NumValue = (float)(num);
                     }
                     else if ((match = Regex.Match(_token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0)
                     {
-                        numValue = float.Parse(_token);
+                        NumValue = float.Parse(_token);
                     }
                 }
                 else if (_type == NodeType.Color)
@@ -534,11 +534,11 @@ namespace MetaphysicsIndustries.Solus
                 protected set { _location = value; }
             }
 
-            public Ex left = null;
+            public Ex Left = null;
             //public int funcargs = 0;
-            public Ex right = null;
-            public float numValue = 0;
-            public Func func = Func.Unknown;
+            public Ex Right = null;
+            public float NumValue = 0;
+            public Func Func = Func.Unknown;
             private NodeType _type = NodeType.Unknown;
             private Ranks _rank = Ranks.Unknown;
             private string _token = string.Empty;
