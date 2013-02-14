@@ -434,28 +434,33 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            void SetToken(string value)
+            void SetToken(string token)
             {
-                _token = value;
-                _type = Ex.GetNodeType(value);
-                _rank = Ex.GetRank(_type);
-                if (_type == NodeType.Func)
+                NodeType type = Ex.GetNodeType(token);
+                Ranks rank = Ex.GetRank(type);
+
+                if (type == NodeType.Func)
                 {
-                    Func = Ex.GetFuncType(value);
-                    //funcargs = GetFuncArgs(func);
+                    Func func = Ex.GetFuncType(token);
+
+                    _token = token;
+                    _type = type;
+                    _rank = rank;
+                    Func = func;
                 }
-                else if (_type == NodeType.Num)
+                else if (type == NodeType.Num)
                 {
+                    float numValue = 0;
                     Match match;
-                    if (_token.ToLower() == "e")
+                    if (token.ToLower() == "e")
                     {
-                        NumValue = (float)Math.E;
+                        numValue = (float)Math.E;
                     }
-                    else if (_token.ToLower() == "pi")
+                    else if (token.ToLower() == "pi")
                     {
-                        NumValue = (float)Math.PI;
+                        numValue = (float)Math.PI;
                     }
-                    else if ((match = Regex.Match(_token, "^([+-]?)(?:0[dD])?([0-9]+)$")).Length > 0)
+                    else if ((match = Regex.Match(token, "^([+-]?)(?:0[dD])?([0-9]+)$")).Length > 0)
                     {
                         int i;
                         string s;
@@ -465,20 +470,20 @@ namespace MetaphysicsIndustries.Solus
                         {
                             i = -i;
                         }
-                        NumValue = (float)(i);
+                        numValue = (float)(i);
                     }
-                    else if ((match = Regex.Match(_token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0)
+                    else if ((match = Regex.Match(token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0)
                     {
                         int i;
-                        string tok = _token;
+                        string tok = token;
                         tok = tok.Replace("0x", string.Empty);
                         tok = tok.Replace("0X", string.Empty);
                         tok = tok.Replace("x", string.Empty);
                         tok = tok.Replace("X", string.Empty);
                         i = int.Parse(tok, System.Globalization.NumberStyles.HexNumber);
-                        NumValue = (float)(i);
+                        numValue = (float)(i);
                     }
-                    else if ((match = Regex.Match(_token, "^([+-]?)0[oO]([0-7]+)$")).Length > 0)
+                    else if ((match = Regex.Match(token, "^([+-]?)0[oO]([0-7]+)$")).Length > 0)
                     {
                         int i;
                         int j;
@@ -496,9 +501,9 @@ namespace MetaphysicsIndustries.Solus
                         {
                             num = -num;
                         }
-                        NumValue = (float)(num);
+                        numValue = (float)(num);
                     }
-                    else if ((match = Regex.Match(_token, "^([+-]?)0[bB]([01]+)$")).Length > 0)
+                    else if ((match = Regex.Match(token, "^([+-]?)0[bB]([01]+)$")).Length > 0)
                     {
                         int i;
                         int j;
@@ -516,16 +521,25 @@ namespace MetaphysicsIndustries.Solus
                         {
                             num = -num;
                         }
-                        NumValue = (float)(num);
+                        numValue = (float)(num);
                     }
-                    else if ((match = Regex.Match(_token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0)
+                    else if ((match = Regex.Match(token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0)
                     {
-                        NumValue = float.Parse(_token);
+                        numValue = float.Parse(token);
                     }
+
+                    _token = token;
+                    _type = type;
+                    _rank = rank;
+                    NumValue = numValue;
                 }
-                else if (_type == NodeType.Color)
+                else if (type == NodeType.Color)
                 {
                 }
+
+                _token = token;
+                _type = type;
+                _rank = rank;
             }
 
             public int Location
