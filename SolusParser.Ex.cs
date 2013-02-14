@@ -348,10 +348,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 else
                 {
-                    Ex ex = new Ex(token, location);
-                    ex._type = type;
-                    ex._rank = Ex.GetRank(type);
-                    return ex;
+                    return new Ex(token, type, Ex.GetRank(type), location);
                 }
             }
 
@@ -359,6 +356,12 @@ namespace MetaphysicsIndustries.Solus
             {
                 _token = token;
                 _location = location;
+            }
+            Ex(string token, NodeType type, Ranks rank, int location)
+                : this(token, location)
+            {
+                _type = type;
+                _rank = rank;
             }
 
             void SetFunction(SolusParser.Func func)
