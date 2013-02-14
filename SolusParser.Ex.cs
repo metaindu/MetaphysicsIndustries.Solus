@@ -449,10 +449,7 @@ namespace MetaphysicsIndustries.Solus
                 {
                     float numValue = ParseNumber(token);
 
-                    _token = token;
-                    _type = type;
-                    _rank = rank;
-                    NumValue = numValue;
+                    SetNumber(token, numValue);
                 }
                 else if (type == NodeType.Color)
                 {
@@ -551,6 +548,14 @@ namespace MetaphysicsIndustries.Solus
                 _type = NodeType.Func;
                 _rank = rank;
                 Func = func;
+            }
+
+            void SetNumber(string token, float numValue)
+            {
+                _token = token;
+                _type = NodeType.Num;
+                _rank = GetRank(NodeType.Num);
+                NumValue = numValue;
             }
 
             public int Location
