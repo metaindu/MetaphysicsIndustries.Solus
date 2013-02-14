@@ -330,7 +330,7 @@ namespace MetaphysicsIndustries.Solus
 
             public Ex(string t, int location)
             {
-                Token = t;
+                SetToken(t);
                 _location = location;
             }
 
@@ -428,10 +428,6 @@ namespace MetaphysicsIndustries.Solus
             public string Token
             {
                 get { return _token; }
-                protected set
-                {
-                    SetToken(value);
-                }
             }
 
             void SetToken(string token)
