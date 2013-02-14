@@ -330,45 +330,46 @@ namespace MetaphysicsIndustries.Solus
 
             public static Ex FromToken(string token, int location)
             {
-                return new Ex(token, location);
-            }
-
-            Ex(string token, int location)
-            {
                 NodeType type = Ex.GetNodeType(token);
 
                 if (type == NodeType.Func)
                 {
                     Func func = Ex.GetFuncType(token);
-
-                    SetFunction(token, func);
+                    Ex ex = new Ex(token, location);
+                    ex.SetFunction(func);
+                    return ex;
                 }
                 else if (type == NodeType.Num)
                 {
                     float numValue = ParseNumber(token);
-                    SetNumber(token, numValue);
+                    Ex ex = new Ex(token, location);
+                    ex.SetNumber(numValue);
+                    return ex;
                 }
                 else
                 {
-                    _token = token;
-                    _type = type;
-                    _rank = Ex.GetRank(type);
+                    Ex ex = new Ex(token, location);
+                    ex._type = type;
+                    ex._rank = Ex.GetRank(type);
+                    return ex;
                 }
+            }
 
+            Ex(string token, int location)
+            {
+                _token = token;
                 _location = location;
             }
 
-            void SetFunction(string token, SolusParser.Func func)
+            void SetFunction(SolusParser.Func func)
             {
-                _token = token;
                 _type = NodeType.Func;
                 _rank = GetRank(NodeType.Func);
                 Func = func;
             }
 
-            void SetNumber(string token, float numValue)
+            void SetNumber(float numValue)
             {
-                _token = token;
                 _type = NodeType.Num;
                 _rank = GetRank(NodeType.Num);
                 NumValue = numValue;
