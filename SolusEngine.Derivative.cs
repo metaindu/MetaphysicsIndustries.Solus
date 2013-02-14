@@ -23,14 +23,12 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
     {
-        DerivativeTransformer _derivativeTransformer = new DerivativeTransformer();
-
         public Expression GetDerivative(Expression expr, Variable var)
         {
             Expression derivative;
 
-            derivative = _derivativeTransformer.Transform(expr, new VariableTransformArgs(var));
-                //InternalGetDerivative(expr, var);
+            DerivativeTransformer deriver = new DerivativeTransformer();
+            derivative = deriver.Transform(expr, new VariableTransformArgs(var));
 
             CleanUpTransformer cleanup = new CleanUpTransformer();
             derivative = cleanup.CleanUp(derivative);
