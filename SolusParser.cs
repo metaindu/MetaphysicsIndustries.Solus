@@ -433,7 +433,8 @@ namespace MetaphysicsIndustries.Solus
                     throw new SolusParseException(ex, "Argument must be a variable");
                 }
 
-                return _engine.GetDerivative(args[0], ((VariableAccess)args[1]).Variable);
+                DerivativeTransformer deriver = new DerivativeTransformer();
+                return deriver.Transform(args[0], new VariableTransformArgs(((VariableAccess)args[1]).Variable));
             }
             //else if (ex.func == Func.GetRow)
             //{

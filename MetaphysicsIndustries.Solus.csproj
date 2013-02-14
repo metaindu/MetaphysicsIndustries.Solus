@@ -129,7 +129,6 @@
     <Compile Include="SineFunction.cs" />
     <Compile Include="SingleArgumentFunction.cs" />
     <Compile Include="SolusEngine.cs" />
-    <Compile Include="SolusEngine.Derivative.cs" />
     <Compile Include="SolusEngine.GatherVariables.cs" />
     <Compile Include="SolusEngine.Integral.cs" />
     <Compile Include="SolusEngine.Modulators.cs" />
