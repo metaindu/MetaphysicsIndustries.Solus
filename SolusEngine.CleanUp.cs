@@ -25,7 +25,8 @@ namespace MetaphysicsIndustries.Solus
     {
         public Expression CleanUp(Expression expr)
         {
-            return CleanUpTransformer.DefaultInstance.CleanUp(expr);
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(expr);
         }
 
             //if (expr == null)
