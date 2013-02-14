@@ -102,7 +102,6 @@
     <Compile Include="Settings.cs" />
     <Compile Include="PolynomialSimplifier.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
-    <Compile Include="SolusEngine.Subst.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
     <Compile Include="TransformArgs.cs" />
     <Compile Include="UnaryOperation.cs" />
