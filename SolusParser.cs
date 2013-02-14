@@ -52,12 +52,12 @@ namespace MetaphysicsIndustries.Solus
 
         private static Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();
 
-        public static Expression Compile(string expr)
+        public Expression Compile(string expr)
         {
             return Compile(expr, new VariableTable());
         }
 
-        public static Expression Compile(string expr, VariableTable varTable)
+        public Expression Compile(string expr, VariableTable varTable)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus
             return Compile(tokens, varTable);
         }
 
-        public static Expression Compile(Ex[] tokens, VariableTable varTable)
+        public Expression Compile(Ex[] tokens, VariableTable varTable)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -130,7 +130,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected static Expression Compile(Ex[] tokens)
+        protected Expression Compile(Ex[] tokens)
         {
             return Compile(tokens, null);
         }

@@ -300,10 +300,11 @@ namespace MetaphysicsIndustries.Solus
             if (!vars.ContainsKey("j")) { vars.Add("j", new Variable("j")); }
 
             //previous values?
+            SolusParser parser = new SolusParser();
             vars[vars["width"]] = new Literal(width);
             vars[vars["width"]] = new Literal(width);
-            vars[vars["theta"]] = SolusParser.Compile("atan2(y,x)", vars);
-            vars[vars["radius"]] = SolusParser.Compile("sqrt(x^2+y^2)", vars);
+            vars[vars["theta"]] = parser.Compile("atan2(y,x)", vars);
+            vars[vars["radius"]] = parser.Compile("sqrt(x^2+y^2)", vars);
             vars[vars["i"]] = new VariableAccess(vars["x"]);
             vars[vars["j"]] = new VariableAccess(vars["y"]);
 
@@ -337,10 +338,11 @@ namespace MetaphysicsIndustries.Solus
             if (!vars.ContainsKey("t")) { vars.Add("t", new Variable("t")); }
 
             //previous values?
+            SolusParser parser = new SolusParser();
             vars[vars["width"]] = new Literal(width);
             vars[vars["height"]] = new Literal(height);
-            vars[vars["theta"]] = SolusParser.Compile("atan2(y,x)", vars);
-            vars[vars["radius"]] = SolusParser.Compile("sqrt(x^2+y^2)", vars);
+            vars[vars["theta"]] = parser.Compile("atan2(y,x)", vars);
+            vars[vars["radius"]] = parser.Compile("sqrt(x^2+y^2)", vars);
             vars[vars["i"]] = new VariableAccess(vars["x"]);
             vars[vars["j"]] = new VariableAccess(vars["y"]);
             vars[vars["numframes"]] = new Literal(numframes);
