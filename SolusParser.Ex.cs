@@ -437,7 +437,6 @@ namespace MetaphysicsIndustries.Solus
             void SetToken(string token)
             {
                 NodeType type = Ex.GetNodeType(token);
-                Ranks rank = Ex.GetRank(type);
 
                 if (type == NodeType.Func)
                 {
@@ -451,13 +450,12 @@ namespace MetaphysicsIndustries.Solus
 
                     SetNumber(token, numValue);
                 }
-                else if (type == NodeType.Color)
+                else
                 {
+                    _token = token;
+                    _type = type;
+                    _rank = Ex.GetRank(type);
                 }
-
-                _token = token;
-                _type = type;
-                _rank = rank;
             }
 
             public static float ParseNumber(string token)
