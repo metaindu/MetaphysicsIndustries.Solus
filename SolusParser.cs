@@ -52,9 +52,6 @@ namespace MetaphysicsIndustries.Solus
 
         private static Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();
 
-
-        private static SolusEngine _engine = new SolusEngine();
-
         public static Expression Compile(string expr)
         {
             return Compile(expr, new VariableTable());
