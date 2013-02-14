@@ -23,10 +23,5 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
     {
-        public Expression Subst(Expression exprToTransform, Variable variableToReplace, Expression exprToInsert)
-        {
-            SubstTransformer subst = new SubstTransformer();
-            return subst.Subst(exprToTransform, variableToReplace, exprToInsert);
-        }
     }
 }

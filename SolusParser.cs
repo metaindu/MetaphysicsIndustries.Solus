@@ -511,8 +511,9 @@ namespace MetaphysicsIndustries.Solus
                 throw new SolusParseException(ex, "The second argument must be a variable");
             }
 
+            SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(_engine.Subst(args[0], ((VariableAccess)args[1]).Variable, args[2]));
+            return cleanup.CleanUp(subst.Subst(args[0], ((VariableAccess)args[1]).Variable, args[2]));
         }
 
         private static Expression ConvertFeedbackExpression(Ex ex, VariableTable varTable, List<Expression> args)
