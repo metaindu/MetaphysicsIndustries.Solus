@@ -447,83 +447,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 else if (type == NodeType.Num)
                 {
-                    float numValue = 0;
-                    Match match;
-                    if (token.ToLower() == "e")
-                    {
-                        numValue = (float)Math.E;
-                    }
-                    else if (token.ToLower() == "pi")
-                    {
-                        numValue = (float)Math.PI;
-                    }
-                    else if ((match = Regex.Match(token, "^([+-]?)(?:0[dD])?([0-9]+)$")).Length > 0)
-                    {
-                        int i;
-                        string s;
-                        s = match.Groups[2].Value;
-                        i = int.Parse(s);
-                        if (match.Groups[1].Value == "-")
-                        {
-                            i = -i;
-                        }
-                        numValue = (float)(i);
-                    }
-                    else if ((match = Regex.Match(token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0)
-                    {
-                        int i;
-                        string tok = token;
-                        tok = tok.Replace("0x", string.Empty);
-                        tok = tok.Replace("0X", string.Empty);
-                        tok = tok.Replace("x", string.Empty);
-                        tok = tok.Replace("X", string.Empty);
-                        i = int.Parse(tok, System.Globalization.NumberStyles.HexNumber);
-                        numValue = (float)(i);
-                    }
-                    else if ((match = Regex.Match(token, "^([+-]?)0[oO]([0-7]+)$")).Length > 0)
-                    {
-                        int i;
-                        int j;
-                        int num;
-                        string s;
-                        num = 0;
-                        s = match.Groups[2].Value;
-                        j = s.Length;
-                        for (i = 0; i < j; i++)
-                        {
-                            num *= 8;
-                            num += ((int)(s[i]) - (int)('0'));
-                        }
-                        if (match.Groups[1].Value == "-")
-                        {
-                            num = -num;
-                        }
-                        numValue = (float)(num);
-                    }
-                    else if ((match = Regex.Match(token, "^([+-]?)0[bB]([01]+)$")).Length > 0)
-                    {
-                        int i;
-                        int j;
-                        int num;
-                        string s;
-                        num = 0;
-                        s = match.Groups[2].Value;
-                        j = s.Length;
-                        for (i = 0; i < j; i++)
-                        {
-                            num *= 2;
-                            num += ((int)(s[i]) - (int)('0'));
-                        }
-                        if (match.Groups[1].Value == "-")
-                        {
-                            num = -num;
-                        }
-                        numValue = (float)(num);
-                    }
-                    else if ((match = Regex.Match(token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0)
-                    {
-                        numValue = float.Parse(token);
-                    }
+                    float numValue = ParseNumber(token);
 
                     _token = token;
                     _type = type;
@@ -537,6 +461,88 @@ namespace MetaphysicsIndustries.Solus
                 _token = token;
                 _type = type;
                 _rank = rank;
+            }
+
+            public static float ParseNumber(string token)
+            {
+                Match match;
+                if (token.ToLower() == "e")
+                {
+                    return (float)Math.E;
+                }
+                else if (token.ToLower() == "pi")
+                {
+                    return (float)Math.PI;
+                }
+                else if ((match = Regex.Match(token, "^([+-]?)(?:0[dD])?([0-9]+)$")).Length > 0)
+                {
+                    int i;
+                    string s;
+                    s = match.Groups[2].Value;
+                    i = int.Parse(s);
+                    if (match.Groups[1].Value == "-")
+                    {
+                        i = -i;
+                    }
+                    return (float)(i);
+                }
+                else if ((match = Regex.Match(token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0)
+                {
+                    int i;
+                    string tok = token;
+                    tok = tok.Replace("0x", string.Empty);
+                    tok = tok.Replace("0X", string.Empty);
+                    tok = tok.Replace("x", string.Empty);
+                    tok = tok.Replace("X", string.Empty);
+                    i = int.Parse(tok, System.Globalization.NumberStyles.HexNumber);
+                    return (float)(i);
+                }
+                else if ((match = Regex.Match(token, "^([+-]?)0[oO]([0-7]+)$")).Length > 0)
+                {
+                    int i;
+                    int j;
+                    int num;
+                    string s;
+                    num = 0;
+                    s = match.Groups[2].Value;
+                    j = s.Length;
+                    for (i = 0; i < j; i++)
+                    {
+                        num *= 8;
+                        num += ((int)(s[i]) - (int)('0'));
+                    }
+                    if (match.Groups[1].Value == "-")
+                    {
+                        num = -num;
+                    }
+                    return (float)(num);
+                }
+                else if ((match = Regex.Match(token, "^([+-]?)0[bB]([01]+)$")).Length > 0)
+                {
+                    int i;
+                    int j;
+                    int num;
+                    string s;
+                    num = 0;
+                    s = match.Groups[2].Value;
+                    j = s.Length;
+                    for (i = 0; i < j; i++)
+                    {
+                        num *= 2;
+                        num += ((int)(s[i]) - (int)('0'));
+                    }
+                    if (match.Groups[1].Value == "-")
+                    {
+                        num = -num;
+                    }
+                    return (float)(num);
+                }
+                else if ((match = Regex.Match(token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0)
+                {
+                    return float.Parse(token);
+                }
+
+                return 0;
             }
 
             void SetFunction(string token, Ranks rank, SolusParser.Func func)
