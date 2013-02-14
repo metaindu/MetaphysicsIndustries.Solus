@@ -25,36 +25,8 @@ namespace MetaphysicsIndustries.Solus
     {
         public Expression Subst(Expression exprToTransform, Variable variableToReplace, Expression exprToInsert)
         {
-            if (exprToTransform is FunctionCall)
-            {
-                List<Expression> args = new List<Expression>(((FunctionCall)exprToTransform).Arguments);
-                int i;
-                for (i = 0; i < args.Count; i++)
-                {
-                    args[i] = Subst(args[i], variableToReplace, exprToInsert);
-                }
-
-                return new FunctionCall(((FunctionCall)exprToTransform).Function, args);
-            }
-            else if (exprToTransform is VariableAccess)
-            {
-                if (((VariableAccess)exprToTransform).Variable == variableToReplace)
-                {
-                    return exprToInsert;
-                }
-                else
-                {
-                    return exprToTransform;
-                }
-            }
-            else if (exprToTransform is Literal)
-            {
-                return exprToTransform;
-            }
-            else
-            {
-                throw new InvalidOperationException("Unknown expression type or invalid target of substitution");
-            }
+            SubstTransformer subst = new SubstTransformer();
+            return subst.Subst(exprToTransform, variableToReplace, exprToInsert);
         }
     }
 }
