@@ -387,7 +387,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (_functions.ContainsKey(ex.Func))
             {
-                function = _functions[ex.Func];
+                return BasicFunctionConverter(_functions[ex.Func])(args, varTable);
             }
             else if (ex.Func == Func.Rand)
             {
