@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusParser
     {
-        static SolusParser()
+        public SolusParser()
         {
             _functions[Func.Abs] = Function.AbsoluteValue;
             _functions[Func.Cosine] = Function.Cosine;

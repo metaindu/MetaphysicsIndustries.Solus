@@ -171,7 +171,7 @@ namespace MetaphysicsIndustries.Solus
         private static Dictionary<NodeType, Ranks> _ex_ranksFromNodeTypes = new Dictionary<NodeType, Ranks>();
         private static Dictionary<Func, int> _ex_argsFromFunctions = new Dictionary<Func, int>();
 
-        public static void InitEx()
+        public void InitEx()
         {
             _ex_functionTypes["sin"] = Func.Sine;
             _ex_functionTypes["cos"] = Func.Cosine;
