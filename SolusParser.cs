@@ -389,14 +389,7 @@ namespace MetaphysicsIndustries.Solus
                     return new FunctionCall(BinaryOperation.Exponent, args.First(), new Literal(0.5f));
                 } },
             //Func.Integrate
-            { Func.Derive, (args, vars) => 
-                {
-                    return
-                        (new DerivativeTransformer()).Transform(
-                            args.First(),
-                                new VariableTransformArgs(
-                                    ((VariableAccess)args.ElementAt(1)).Variable));
-                } },
+            { Func.Derive, ConvertDeriveExpression },
             { Func.Plot, ConvertPlotExpression },
             { Func.Plot3d, ConvertPlot3dExpression},
             { Func.MathPaint,  ConvertMathPaintExpression },
@@ -600,7 +593,14 @@ namespace MetaphysicsIndustries.Solus
                 args[4]);
         }
 
+        static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, VariableTable varTable)
+        {
+            DerivativeTransformer derive = new DerivativeTransformer();
+            Expression expr = _args.First();
+            Variable v = ((VariableAccess)_args.ElementAt(1)).Variable;
 
+            return derive.Transform(expr, new VariableTransformArgs(v));
+        }
 
 
         protected void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
