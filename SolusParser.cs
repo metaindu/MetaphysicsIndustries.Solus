@@ -351,6 +351,11 @@ namespace MetaphysicsIndustries.Solus
 
         public delegate Expression FunctionConverter(IEnumerable<Expression> args, VariableTable vars);
 
+        public FunctionConverter BasicFunctionConverter(Function function)
+        {
+            return (args, vars) => { return new FunctionCall(function, args); };
+        }
+
         private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
         {
             Function function = null;
