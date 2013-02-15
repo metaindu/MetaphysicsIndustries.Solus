@@ -48,6 +48,8 @@ namespace MetaphysicsIndustries.Solus
             _functions[Func.If] = Function.If;
             _functions[Func.Dist] = Function.Dist;
             _functions[Func.DistSq] = Function.DistSq;
+
+            InitEx();
         }
 
         private static Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();

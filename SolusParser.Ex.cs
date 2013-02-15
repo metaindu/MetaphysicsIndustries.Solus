@@ -490,31 +490,6 @@ namespace MetaphysicsIndustries.Solus
         [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
         public class Ex
         {
-            static Ex()
-            {
-                InitEx();
-            }
-
-            public static Ex FromToken(string token, int location)
-            {
-                NodeType type = GetNodeType(token);
-
-                if (type == NodeType.Func)
-                {
-                    Func func = GetFuncType(token);
-                    return new Ex(token, location, func);
-                }
-                else if (type == NodeType.Num)
-                {
-                    float numValue = ParseNumber(token);
-                    return new Ex(token, location, numValue);
-                }
-                else
-                {
-                    return new Ex(token, type, GetRank(type), location);
-                }
-            }
-
             Ex(string token, int location)
             {
                 Token = token;
@@ -545,6 +520,26 @@ namespace MetaphysicsIndustries.Solus
             public Ranks Rank { get; protected set; }
             public string Token { get; protected set; }
             public int Location { get; protected set; }
+
+            public static Ex FromToken(string token, int location)
+            {
+                NodeType type = GetNodeType(token);
+
+                if (type == NodeType.Func)
+                {
+                    Func func = GetFuncType(token);
+                    return new Ex(token, location, func);
+                }
+                else if (type == NodeType.Num)
+                {
+                    float numValue = ParseNumber(token);
+                    return new Ex(token, location, numValue);
+                }
+                else
+                {
+                    return new Ex(token, type, GetRank(type), location);
+                }
+            }
 
             public string GetStringContents()
             {
