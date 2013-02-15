@@ -517,14 +517,14 @@ namespace MetaphysicsIndustries.Solus
 
             Ex(string token, int location)
             {
-                _token = token;
-                _location = location;
+                Token = token;
+                Location = location;
             }
             Ex(string token, NodeType type, Ranks rank, int location)
                 : this(token, location)
             {
-                _type = type;
-                _rank = rank;
+                Type = type;
+                Rank = rank;
             }
             Ex(string token, int location, Func func)
                 : this(token, NodeType.Func, GetRank(NodeType.Func), location)
@@ -537,37 +537,14 @@ namespace MetaphysicsIndustries.Solus
                 NumValue = numValue;
             }
 
-            public NodeType Type
-            {
-                get { return _type; }
-                protected set { _type = value; }
-            }
-
-            public Ranks Rank
-            {
-                get { return _rank; }
-                protected set { _rank = value; }
-            }
-
-            public string Token
-            {
-                get { return _token; }
-            }
-
-            public int Location
-            {
-                get { return _location; }
-                protected set { _location = value; }
-            }
-
             public Ex Left = null;
             public Ex Right = null;
-            public float NumValue = 0;
-            public Func Func = Func.Unknown;
-            private NodeType _type = NodeType.Unknown;
-            private Ranks _rank = Ranks.Unknown;
-            private string _token = string.Empty;
-            private int _location = 0;
+            public float NumValue { get; protected set; }
+            public Func Func { get; protected set; }
+            public NodeType Type { get; protected set; }
+            public Ranks Rank { get; protected set; }
+            public string Token { get; protected set; }
+            public int Location { get; protected set; }
 
             public string GetStringContents()
             {
