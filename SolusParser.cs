@@ -397,11 +397,11 @@ namespace MetaphysicsIndustries.Solus
                                 new VariableTransformArgs(
                                     ((VariableAccess)args.ElementAt(1)).Variable));
                 } },
-            { Func.Plot, (args, vars) => { return ConvertPlotExpression(args); } },
-            { Func.Plot3d, (args, vars) => { return ConvertPlot3dExpression(vars, args); } },
-            { Func.MathPaint, (args, vars) => { return ConvertMathPaintExpression(vars, args); } },
-            { Func.Feedback, (args, vars) => { return ConvertFeedbackExpression(vars, args); } },
-            { Func.Subst, (args, vars) => { return ConvertSubstExpression(vars, args); } },
+            { Func.Plot, ConvertPlotExpression },
+            { Func.Plot3d, ConvertPlot3dExpression},
+            { Func.MathPaint,  ConvertMathPaintExpression },
+            { Func.Feedback, ConvertFeedbackExpression },
+            { Func.Subst, ConvertSubstExpression },
         };
 
         private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
@@ -447,14 +447,14 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private static Expression ConvertSubstExpression(VariableTable varTable, IEnumerable<Expression> args)
+        private static Expression ConvertSubstExpression(IEnumerable<Expression> args, VariableTable varTable)
         {
             SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();
             return cleanup.CleanUp(subst.Subst(args.First(), ((VariableAccess)args.ElementAt(1)).Variable, args.ElementAt(2)));
         }
 
-        private static Expression ConvertFeedbackExpression(VariableTable varTable, IEnumerable<Expression> args)
+        private static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, VariableTable varTable)
         {
             Expression g = args.ElementAt(0);
             Expression h = args.ElementAt(1);
@@ -501,7 +501,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private static Expression ConvertPlot3dExpression(VariableTable varTable, IEnumerable<Expression> _args)
+        private static Expression ConvertPlot3dExpression(IEnumerable<Expression> _args, VariableTable varTable)
         {
             List<Expression> args = _args.ToList();
 
@@ -574,12 +574,12 @@ namespace MetaphysicsIndustries.Solus
                 wirePen, fillBrush);
         }
 
-        private static Expression ConvertPlotExpression(IEnumerable<Expression> args)
+        private static Expression ConvertPlotExpression(IEnumerable<Expression> args, VariableTable varTable)
         {
             return new PlotExpression(((VariableAccess)args.First()).Variable, args.Skip(1));
         }
 
-        private static Expression ConvertMathPaintExpression(VariableTable varTable, IEnumerable<Expression> _args)
+        private static Expression ConvertMathPaintExpression(IEnumerable<Expression> _args, VariableTable varTable)
         {
             List<Expression> args = _args.ToList();
 
