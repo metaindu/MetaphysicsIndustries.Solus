@@ -349,6 +349,8 @@ namespace MetaphysicsIndustries.Solus
             throw new SolusParseException(ex, error);
         }
 
+        public delegate Expression FunctionConverter(IEnumerable<Expression> args, VariableTable vars);
+
         private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
         {
             Function function = null;
