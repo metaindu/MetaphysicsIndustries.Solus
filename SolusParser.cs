@@ -437,10 +437,6 @@ namespace MetaphysicsIndustries.Solus
             {
                 return _functionConverters[ex.Func](args, varTable);
             }
-            else if (_functions.ContainsKey(ex.Func))
-            {
-                return BasicFunctionConverter(_functions[ex.Func])(args, varTable);
-            }
             else if (ex.Func == Func.Integrate)
             {
                 throw new SolusParseException(ex, "That function is not yet implemented");
