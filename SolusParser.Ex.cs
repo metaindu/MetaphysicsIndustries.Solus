@@ -166,7 +166,19 @@ namespace MetaphysicsIndustries.Solus
         }
 
         private Dictionary<string, NodeType> _ex_nodeTypes = new Dictionary<string, NodeType>(StringComparer.CurrentCultureIgnoreCase);
-        private Dictionary<string, Colors> _ex_colors = new Dictionary<string, Colors>(StringComparer.CurrentCultureIgnoreCase);
+        private Dictionary<string, Colors> _ex_colors = new Dictionary<string, Colors>(StringComparer.CurrentCultureIgnoreCase)
+        {
+            { "black", Colors.Black },
+            { "white", Colors.White },
+            { "gray", Colors.Gray },
+            { "red", Colors.Red },
+            { "green", Colors.Green },
+            { "blue", Colors.Blue },
+            { "yellow", Colors.Yellow },
+            { "cyan", Colors.Cyan },
+            { "magenta", Colors.Magenta },
+        };
+
         private Dictionary<string, Func> _ex_functionTypes = new Dictionary<string, Func>(StringComparer.CurrentCultureIgnoreCase);
         private Dictionary<NodeType, Ranks> _ex_ranksFromNodeTypes = new Dictionary<NodeType, Ranks>();
         private Dictionary<Func, int> _ex_argsFromFunctions = new Dictionary<Func, int>();
@@ -316,18 +328,6 @@ namespace MetaphysicsIndustries.Solus
             _ex_nodeTypes["]"] = NodeType.Index;
             _ex_nodeTypes["e"] = NodeType.Num;
             _ex_nodeTypes["pi"] = NodeType.Num;
-
-
-            _ex_colors["black"] = Colors.Black;
-            _ex_colors["white"] = Colors.White;
-            _ex_colors["gray"] = Colors.Gray;
-            _ex_colors["red"] = Colors.Red;
-            _ex_colors["green"] = Colors.Green;
-            _ex_colors["blue"] = Colors.Blue;
-            _ex_colors["yellow"] = Colors.Yellow;
-            _ex_colors["cyan"] = Colors.Cyan;
-            _ex_colors["magenta"] = Colors.Magenta;
-
         }
 
         public NodeType GetNodeType(string token)
