@@ -485,7 +485,7 @@ namespace MetaphysicsIndustries.Solus
             return 0;
         }
 
-        public static Ex ExFromToken(string token, int location)
+        public Ex ExFromToken(string token, int location)
         {
             NodeType type = GetNodeType(token);
 
