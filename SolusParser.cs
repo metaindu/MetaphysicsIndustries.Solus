@@ -25,6 +25,13 @@ namespace MetaphysicsIndustries.Solus
     {
         private Dictionary<string, ExFunction> _functions = new Dictionary<string, ExFunction>(StringComparer.CurrentCultureIgnoreCase);
 
+        public void AddFunction(ExFunction func)
+        {
+            if (_functions.ContainsKey(func.Token)) throw new ArgumentException("A function already uses that token.", "func");
+
+            _functions.Add(func.Token, func);
+        }
+
         public Expression Compile(string expr)
         {
             return Compile(expr, new VariableTable());
