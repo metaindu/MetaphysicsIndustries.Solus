@@ -492,12 +492,12 @@ namespace MetaphysicsIndustries.Solus
             if (type == NodeType.Func)
             {
                 Func func = GetFuncType(token);
-                return Ex.ExFromFunction(token, location, func);
+                return ExFromFunction(token, location, func);
             }
             else if (type == NodeType.Num)
             {
                 float numValue = ParseNumber(token);
-                return Ex.ExFromNumber(token, location, numValue);
+                return ExFromNumber(token, location, numValue);
             }
             else
             {
@@ -505,28 +505,40 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public Ex ExFromFunction(string token, int location, Func func)
+        {
+            return new Ex(token, NodeType.Func, GetRank(NodeType.Func), location, func);
+        }
+
+        public Ex ExFromNumber(string token, int location, float numValue)
+        {
+            return new Ex(token, NodeType.Num, GetRank(NodeType.Num), location, numValue);
+        }
+
         //Ex: The class that represents the nodes of a compiled expression tree.
         [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
         public class Ex
         {
             internal Ex(string token, NodeType type, Ranks rank, int location)
+                : this(token, type, rank, location, Func.Unknown, 0)
+            {
+            }
+            internal Ex(string token, NodeType type, Ranks rank, int location, float numValue)
+                : this(token, type, rank, location, Func.Unknown, numValue)
+            {
+            }
+            internal Ex(string token, NodeType type, Ranks rank, int location, Func func)
+                : this(token, type, rank, location, func, 0)
+            {
+            }
+            internal Ex(string token, NodeType type, Ranks rank, int location, Func func, float numValue)
             {
                 Token = token;
                 Location = location;
                 Type = type;
                 Rank = rank;
-            }
-            internal static Ex ExFromFunction(string token, int location, Func func)
-            {
-                Ex ex = new Ex(token, NodeType.Func, GetRank(NodeType.Func), location);
-                ex.Func = func;
-                return ex;
-            }
-            internal static Ex ExFromNumber(string token, int location, float numValue)
-            {
-                Ex ex = new Ex(token, NodeType.Num, GetRank(NodeType.Num), location);
-                ex.NumValue = numValue;
-                return ex;
+                Func = func;
+                NumValue = numValue;
             }
 
             public Ex Left = null;
