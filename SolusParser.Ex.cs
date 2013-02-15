@@ -372,7 +372,7 @@ namespace MetaphysicsIndustries.Solus
             return Colors.Unknown;
         }
 
-        public static Func GetFuncType(string token)
+        public Func GetFuncType(string token)
         {
             if (_ex_functionTypes.ContainsKey(token))
             {
