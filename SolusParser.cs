@@ -384,10 +384,7 @@ namespace MetaphysicsIndustries.Solus
             { Func.Dist, BasicFunctionConverter(Function.Dist) },
             { Func.DistSq, BasicFunctionConverter(Function.DistSq) },
             { Func.Rand, (args, vars) => { return new RandomExpression(); } },
-            { Func.Sqrt, (args, vars) =>
-                {
-                    return new FunctionCall(BinaryOperation.Exponent, args.First(), new Literal(0.5f));
-                } },
+            { Func.Sqrt, ConvertSqrtFunction },
             //Func.Integrate
             { Func.Derive, ConvertDeriveExpression },
             { Func.Plot, ConvertPlotExpression },
@@ -600,6 +597,11 @@ namespace MetaphysicsIndustries.Solus
             Variable v = ((VariableAccess)_args.ElementAt(1)).Variable;
 
             return derive.Transform(expr, new VariableTransformArgs(v));
+        }
+
+        static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, VariableTable varTable)
+        {
+            return new FunctionCall(BinaryOperation.Exponent, _args.First(), new Literal(0.5f));
         }
 
 
