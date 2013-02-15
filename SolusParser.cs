@@ -503,7 +503,7 @@ namespace MetaphysicsIndustries.Solus
                 args);
         }
 
-        private static Expression ConvertSubstExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private Expression ConvertSubstExpression(Ex ex, VariableTable varTable, List<Expression> args)
         {
             if (!(args[1] is VariableAccess))
             {
@@ -515,7 +515,7 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(subst.Subst(args[0], ((VariableAccess)args[1]).Variable, args[2]));
         }
 
-        private static Expression ConvertFeedbackExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private Expression ConvertFeedbackExpression(Ex ex, VariableTable varTable, List<Expression> args)
         {
             Expression g = args[0];
             Expression h = args[1];
@@ -743,7 +743,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private static Expression ConvertPlot3dExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private Expression ConvertPlot3dExpression(Ex ex, VariableTable varTable, List<Expression> args)
         {
             if (args.Count < 3 ||
                 !(args[0] is VariableAccess) ||
@@ -814,7 +814,7 @@ namespace MetaphysicsIndustries.Solus
                 wirePen, fillBrush);
         }
 
-        private static Expression ConvertPlotExpression(Ex ex, List<Expression> args)
+        private Expression ConvertPlotExpression(Ex ex, List<Expression> args)
         {
             if (args.Count < 2 || !(args[0] is VariableAccess))
             {
@@ -827,7 +827,7 @@ namespace MetaphysicsIndustries.Solus
             return new PlotExpression(((VariableAccess)args[0]).Variable, exprs.ToArray());
         }
 
-        private static Expression ConvertMathPaintExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private Expression ConvertMathPaintExpression(Ex ex, VariableTable varTable, List<Expression> args)
         {
             if (!(args[0] is VariableAccess))
             {
@@ -958,7 +958,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        protected static Ex[] Arrange(Ex[] intokens)
+        protected Ex[] Arrange(Ex[] intokens)
         {
 
 
@@ -1074,7 +1074,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        protected static Ex BuildTree(Ex[] intokens)
+        protected Ex BuildTree(Ex[] intokens)
         {
             Ex[] _intokens = intokens;
 
@@ -1097,7 +1097,7 @@ namespace MetaphysicsIndustries.Solus
             return ret;
         }
 
-        protected static Ex BuildTree(Queue<Ex> b)
+        protected Ex BuildTree(Queue<Ex> b)
         {
             Ex ex;
             Ranks r;
@@ -1207,7 +1207,7 @@ namespace MetaphysicsIndustries.Solus
                 r == Ranks.Assign;
         }
 
-        protected static int CountCommaArguments(Ex ex)
+        protected int CountCommaArguments(Ex ex)
         {
             if (ex == null)
             {
