@@ -23,33 +23,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusParser
     {
-        private Dictionary<Func, Function> _functions = new Dictionary<Func, Function>()
-        {
-            { Func.Abs, Function.AbsoluteValue },
-            { Func.Cosine, Function.Cosine },
-            { Func.Ln, Function.NaturalLogarithm },
-            { Func.Log10, Function.Log10 },
-            { Func.Log2, Function.Log2 },
-            { Func.Sine, Function.Sine },
-            { Func.Tangent, Function.Tangent },
-            { Func.Sec, Function.Secant },
-            { Func.Csc, Function.Cosecant },
-            { Func.Cot, Function.Cotangent },
-            { Func.Acos, Function.Arccosine },
-            { Func.Asin, Function.Arcsine },
-            { Func.Atan, Function.Arctangent },
-            { Func.Asec, Function.Arcsecant },
-            { Func.Acsc, Function.Arccosecant },
-            { Func.Acot, Function.Arccotangent },
-            { Func.Ceil, Function.Ceiling },
-            { Func.UnitStep, Function.UnitStep },
-            { Func.Atan2, Function.Arctangent2 },
-            { Func.Log, Function.Logarithm },
-            { Func.Floor, Function.Floor },
-            { Func.If, Function.If },
-            { Func.Dist, Function.Dist },
-            { Func.DistSq, Function.DistSq },
-        };
+        private Dictionary<string, ExFunction> _functions = new Dictionary<string, ExFunction>(StringComparer.CurrentCultureIgnoreCase);
 
         public Expression Compile(string expr)
         {
