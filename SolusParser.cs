@@ -884,7 +884,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public static Ex[] Tokenize(string expr)
+        public Ex[] Tokenize(string expr)
         {
             string _expr = expr;
 
