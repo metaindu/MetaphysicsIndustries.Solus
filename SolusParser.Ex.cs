@@ -171,160 +171,160 @@ namespace MetaphysicsIndustries.Solus
         {
             static Ex()
             {
-                _functionTypes["sin"] = Func.Sine;
-                _functionTypes["cos"] = Func.Cosine;
-                _functionTypes["tan"] = Func.Tangent;
-                _functionTypes["ln"] = Func.Ln;
-                _functionTypes["log2"] = Func.Log2;
-                _functionTypes["log10"] = Func.Log10;
+                _ex_functionTypes["sin"] = Func.Sine;
+                _ex_functionTypes["cos"] = Func.Cosine;
+                _ex_functionTypes["tan"] = Func.Tangent;
+                _ex_functionTypes["ln"] = Func.Ln;
+                _ex_functionTypes["log2"] = Func.Log2;
+                _ex_functionTypes["log10"] = Func.Log10;
                 //_functionTypes["exp"] = Func.Exponent;
-                _functionTypes["sqrt"] = Func.Sqrt;
-                _functionTypes["rand"] = Func.Rand;
+                _ex_functionTypes["sqrt"] = Func.Sqrt;
+                _ex_functionTypes["rand"] = Func.Rand;
                 //_functionTypes["int"] = Func.Int;
                 //_functionTypes["pow"] = Func.Pow;
-                _functionTypes["abs"] = Func.Abs;
+                _ex_functionTypes["abs"] = Func.Abs;
 
-                _functionTypes["sec"] = Func.Sec;
-                _functionTypes["csc"] = Func.Csc;
-                _functionTypes["cot"] = Func.Cot;
-                _functionTypes["acos"] = Func.Acos;
-                _functionTypes["asin"] = Func.Asin;
-                _functionTypes["atan"] = Func.Atan;
-                _functionTypes["asec"] = Func.Asec;
-                _functionTypes["acsc"] = Func.Acsc;
-                _functionTypes["acot"] = Func.Acot;
-                _functionTypes["ceil"] = Func.Ceil;
-                _functionTypes["floor"] = Func.Floor;
-                _functionTypes["ustep"] = Func.UnitStep;
-                _functionTypes["unitstep"] = Func.UnitStep;
+                _ex_functionTypes["sec"] = Func.Sec;
+                _ex_functionTypes["csc"] = Func.Csc;
+                _ex_functionTypes["cot"] = Func.Cot;
+                _ex_functionTypes["acos"] = Func.Acos;
+                _ex_functionTypes["asin"] = Func.Asin;
+                _ex_functionTypes["atan"] = Func.Atan;
+                _ex_functionTypes["asec"] = Func.Asec;
+                _ex_functionTypes["acsc"] = Func.Acsc;
+                _ex_functionTypes["acot"] = Func.Acot;
+                _ex_functionTypes["ceil"] = Func.Ceil;
+                _ex_functionTypes["floor"] = Func.Floor;
+                _ex_functionTypes["ustep"] = Func.UnitStep;
+                _ex_functionTypes["unitstep"] = Func.UnitStep;
 
-                _functionTypes["atan2"] = Func.Atan2;
-                _functionTypes["log"] = Func.Log;
+                _ex_functionTypes["atan2"] = Func.Atan2;
+                _ex_functionTypes["log"] = Func.Log;
 
-                _functionTypes["integrate"] = Func.Integrate;
-                _functionTypes["derive"] = Func.Derive;
+                _ex_functionTypes["integrate"] = Func.Integrate;
+                _ex_functionTypes["derive"] = Func.Derive;
                 //_functionTypes["getrow"] = Func.GetRow;
                 //_functionTypes["getcolumn"] = Func.GetColumn;
                 //_functionTypes["getrow2"] = Func.GetRow2;
                 //_functionTypes["getcolumn2"] = Func.GetColumn2;
 
-                _functionTypes["if"] = Func.If;
-                _functionTypes["dist"] = Func.Dist;
-                _functionTypes["distsq"] = Func.DistSq;
+                _ex_functionTypes["if"] = Func.If;
+                _ex_functionTypes["dist"] = Func.Dist;
+                _ex_functionTypes["distsq"] = Func.DistSq;
 
-                _functionTypes["plot"] = Func.Plot;
-                _functionTypes["plot3d"] = Func.Plot3d;
-                _functionTypes["mathpaint"] = Func.MathPaint;
-                _functionTypes["plotm"] = Func.PlotMatrix;
-                _functionTypes["plotv"] = Func.PlotVector;
+                _ex_functionTypes["plot"] = Func.Plot;
+                _ex_functionTypes["plot3d"] = Func.Plot3d;
+                _ex_functionTypes["mathpaint"] = Func.MathPaint;
+                _ex_functionTypes["plotm"] = Func.PlotMatrix;
+                _ex_functionTypes["plotv"] = Func.PlotVector;
 
-                _functionTypes["feedback"] = Func.Feedback;
-                _functionTypes["subst"] = Func.Subst;
-
-
+                _ex_functionTypes["feedback"] = Func.Feedback;
+                _ex_functionTypes["subst"] = Func.Subst;
 
 
-                _ranksFromNodeTypes[NodeType.Num] = Ranks.Values;
-                _ranksFromNodeTypes[NodeType.Var] = Ranks.Values;
-                _ranksFromNodeTypes[NodeType.Color] = Ranks.Values;
-                _ranksFromNodeTypes[NodeType.String] = Ranks.Values;
-                _ranksFromNodeTypes[NodeType.Paren] = Ranks.Containers;
-                _ranksFromNodeTypes[NodeType.Index] = Ranks.Containers;
-                _ranksFromNodeTypes[NodeType.Func] = Ranks.Functions;
+
+
+                _ex_ranksFromNodeTypes[NodeType.Num] = Ranks.Values;
+                _ex_ranksFromNodeTypes[NodeType.Var] = Ranks.Values;
+                _ex_ranksFromNodeTypes[NodeType.Color] = Ranks.Values;
+                _ex_ranksFromNodeTypes[NodeType.String] = Ranks.Values;
+                _ex_ranksFromNodeTypes[NodeType.Paren] = Ranks.Containers;
+                _ex_ranksFromNodeTypes[NodeType.Index] = Ranks.Containers;
+                _ex_ranksFromNodeTypes[NodeType.Func] = Ranks.Functions;
                 //_ranksFromNodeTypes[NodeType.BitNot] = Ranks.NotCat;
                 //_ranksFromNodeTypes[NodeType.LogNot] = Ranks.NotCat;
-                _ranksFromNodeTypes[NodeType.Exponent] = Ranks.Exponent;
-                _ranksFromNodeTypes[NodeType.Mult] = Ranks.MultCat;
-                _ranksFromNodeTypes[NodeType.Div] = Ranks.MultCat;
-                _ranksFromNodeTypes[NodeType.Mod] = Ranks.MultCat;
-                _ranksFromNodeTypes[NodeType.Add] = Ranks.AddCat;
-                _ranksFromNodeTypes[NodeType.Sub] = Ranks.AddCat;
+                _ex_ranksFromNodeTypes[NodeType.Exponent] = Ranks.Exponent;
+                _ex_ranksFromNodeTypes[NodeType.Mult] = Ranks.MultCat;
+                _ex_ranksFromNodeTypes[NodeType.Div] = Ranks.MultCat;
+                _ex_ranksFromNodeTypes[NodeType.Mod] = Ranks.MultCat;
+                _ex_ranksFromNodeTypes[NodeType.Add] = Ranks.AddCat;
+                _ex_ranksFromNodeTypes[NodeType.Sub] = Ranks.AddCat;
                 //_ranksFromNodeTypes[NodeType.BitShiftLeft] = Ranks.BitwiseShiftCat;
                 //_ranksFromNodeTypes[NodeType.BitShiftRight] = Ranks.BitwiseShiftCat;
-                _ranksFromNodeTypes[NodeType.LessThan] = Ranks.CompareCat;
-                _ranksFromNodeTypes[NodeType.GreaterThan] = Ranks.CompareCat;
-                _ranksFromNodeTypes[NodeType.LessThanOrEqual] = Ranks.CompareCat;
-                _ranksFromNodeTypes[NodeType.GreaterThanOrEqual] = Ranks.CompareCat;
-                _ranksFromNodeTypes[NodeType.Equal] = Ranks.EqualityCat;
-                _ranksFromNodeTypes[NodeType.NotEqual] = Ranks.EqualityCat;
-                _ranksFromNodeTypes[NodeType.BitAnd] = Ranks.BitwiseAnd;
+                _ex_ranksFromNodeTypes[NodeType.LessThan] = Ranks.CompareCat;
+                _ex_ranksFromNodeTypes[NodeType.GreaterThan] = Ranks.CompareCat;
+                _ex_ranksFromNodeTypes[NodeType.LessThanOrEqual] = Ranks.CompareCat;
+                _ex_ranksFromNodeTypes[NodeType.GreaterThanOrEqual] = Ranks.CompareCat;
+                _ex_ranksFromNodeTypes[NodeType.Equal] = Ranks.EqualityCat;
+                _ex_ranksFromNodeTypes[NodeType.NotEqual] = Ranks.EqualityCat;
+                _ex_ranksFromNodeTypes[NodeType.BitAnd] = Ranks.BitwiseAnd;
                 //_ranksFromNodeTypes[NodeType.BitXor] = Ranks.BitwiseXor;
-                _ranksFromNodeTypes[NodeType.BitOr] = Ranks.BitwiseOr;
-                _ranksFromNodeTypes[NodeType.LogAnd] = Ranks.LogicalAnd;
+                _ex_ranksFromNodeTypes[NodeType.BitOr] = Ranks.BitwiseOr;
+                _ex_ranksFromNodeTypes[NodeType.LogAnd] = Ranks.LogicalAnd;
                 //_ranksFromNodeTypes[NodeType.LogXor] = Ranks.LogicalXor;
-                _ranksFromNodeTypes[NodeType.LogOr] = Ranks.LogicalOr;
+                _ex_ranksFromNodeTypes[NodeType.LogOr] = Ranks.LogicalOr;
                 //_ranksFromNodeTypes[NodeType.Conditional] = Ranks.Conditional;
-                _ranksFromNodeTypes[NodeType.Comma] = Ranks.Comma;
-                _ranksFromNodeTypes[NodeType.Assign] = Ranks.Assign;
-                _ranksFromNodeTypes[NodeType.DelayAssign] = Ranks.Assign;
-                _ranksFromNodeTypes[NodeType.Whitespace] = Ranks.Whitespace;
+                _ex_ranksFromNodeTypes[NodeType.Comma] = Ranks.Comma;
+                _ex_ranksFromNodeTypes[NodeType.Assign] = Ranks.Assign;
+                _ex_ranksFromNodeTypes[NodeType.DelayAssign] = Ranks.Assign;
+                _ex_ranksFromNodeTypes[NodeType.Whitespace] = Ranks.Whitespace;
 
 
 
-                _argsFromFunctions[Func.Plot] = -1;
-                _argsFromFunctions[Func.Plot3d] = -1;
-                _argsFromFunctions[Func.Rand] = 0;
-                _argsFromFunctions[Func.Atan2] = 2;
-                _argsFromFunctions[Func.Log] = 2;
-                _argsFromFunctions[Func.Integrate] = 2;
-                _argsFromFunctions[Func.Derive] = 2;
+                _ex_argsFromFunctions[Func.Plot] = -1;
+                _ex_argsFromFunctions[Func.Plot3d] = -1;
+                _ex_argsFromFunctions[Func.Rand] = 0;
+                _ex_argsFromFunctions[Func.Atan2] = 2;
+                _ex_argsFromFunctions[Func.Log] = 2;
+                _ex_argsFromFunctions[Func.Integrate] = 2;
+                _ex_argsFromFunctions[Func.Derive] = 2;
                 //_argsFromFunctions[Func.GetRow] = 3;
                 //_argsFromFunctions[Func.GetColumn] = 3;
                 //_argsFromFunctions[Func.GetRow2] = 3;
                 //_argsFromFunctions[Func.GetColumn2] = 3;
-                _argsFromFunctions[Func.MathPaint] = 5;
-                _argsFromFunctions[Func.Feedback] = 2;
-                _argsFromFunctions[Func.Subst] = 3;
-                _argsFromFunctions[Func.If] = 3;
-                _argsFromFunctions[Func.Dist] = 2;
-                _argsFromFunctions[Func.DistSq] = 2;
+                _ex_argsFromFunctions[Func.MathPaint] = 5;
+                _ex_argsFromFunctions[Func.Feedback] = 2;
+                _ex_argsFromFunctions[Func.Subst] = 3;
+                _ex_argsFromFunctions[Func.If] = 3;
+                _ex_argsFromFunctions[Func.Dist] = 2;
+                _ex_argsFromFunctions[Func.DistSq] = 2;
 
-                _argsFromFunctions[Func.Unknown] = -1;
+                _ex_argsFromFunctions[Func.Unknown] = -1;
 
 
                 //_nodeTypes["~"] = NodeType.BitNot;
-                _nodeTypes["^"] = NodeType.Exponent;
-                _nodeTypes["*"] = NodeType.Mult;
-                _nodeTypes["/"] = NodeType.Div;
-                _nodeTypes["%"] = NodeType.Mod;
-                _nodeTypes["&"] = NodeType.BitAnd;
+                _ex_nodeTypes["^"] = NodeType.Exponent;
+                _ex_nodeTypes["*"] = NodeType.Mult;
+                _ex_nodeTypes["/"] = NodeType.Div;
+                _ex_nodeTypes["%"] = NodeType.Mod;
+                _ex_nodeTypes["&"] = NodeType.BitAnd;
                 //_nodeTypes["^"] = NodeType.BitXor;
-                _nodeTypes["|"] = NodeType.BitOr;
-                _nodeTypes["+"] = NodeType.Add;
-                _nodeTypes["-"] = NodeType.Sub;
+                _ex_nodeTypes["|"] = NodeType.BitOr;
+                _ex_nodeTypes["+"] = NodeType.Add;
+                _ex_nodeTypes["-"] = NodeType.Sub;
                 //_nodeTypes["<<"] = NodeType.BitShiftLeft;
                 //_nodeTypes[">>"] = NodeType.BitShiftRight;
                 //_nodeTypes["!"] = NodeType.LogNot;
-                _nodeTypes["&&"] = NodeType.LogAnd;
+                _ex_nodeTypes["&&"] = NodeType.LogAnd;
                 //_nodeTypes["^^"] = NodeType.LogXor;
-                _nodeTypes["||"] = NodeType.LogOr;
-                _nodeTypes["<"] = NodeType.LessThan;
-                _nodeTypes[">"] = NodeType.GreaterThan;
-                _nodeTypes["<="] = NodeType.LessThanOrEqual;
-                _nodeTypes[">="] = NodeType.GreaterThanOrEqual;
-                _nodeTypes["!="] = NodeType.NotEqual;
-                _nodeTypes["=="] = NodeType.Equal;
+                _ex_nodeTypes["||"] = NodeType.LogOr;
+                _ex_nodeTypes["<"] = NodeType.LessThan;
+                _ex_nodeTypes[">"] = NodeType.GreaterThan;
+                _ex_nodeTypes["<="] = NodeType.LessThanOrEqual;
+                _ex_nodeTypes[">="] = NodeType.GreaterThanOrEqual;
+                _ex_nodeTypes["!="] = NodeType.NotEqual;
+                _ex_nodeTypes["=="] = NodeType.Equal;
                 //_nodeTypes["?"] = NodeType.Conditional;
-                _nodeTypes[","] = NodeType.Comma;
-                _nodeTypes["="] = NodeType.Assign;
-                _nodeTypes[":="] = NodeType.DelayAssign;
-                _nodeTypes["("] = NodeType.Paren;
-                _nodeTypes[")"] = NodeType.Paren;
-                _nodeTypes["["] = NodeType.Index;
-                _nodeTypes["]"] = NodeType.Index;
-                _nodeTypes["e"] = NodeType.Num;
-                _nodeTypes["pi"] = NodeType.Num;
+                _ex_nodeTypes[","] = NodeType.Comma;
+                _ex_nodeTypes["="] = NodeType.Assign;
+                _ex_nodeTypes[":="] = NodeType.DelayAssign;
+                _ex_nodeTypes["("] = NodeType.Paren;
+                _ex_nodeTypes[")"] = NodeType.Paren;
+                _ex_nodeTypes["["] = NodeType.Index;
+                _ex_nodeTypes["]"] = NodeType.Index;
+                _ex_nodeTypes["e"] = NodeType.Num;
+                _ex_nodeTypes["pi"] = NodeType.Num;
 
 
-                _colors["black"] = Colors.Black;
-                _colors["white"] = Colors.White;
-                _colors["gray"] = Colors.Gray;
-                _colors["red"] = Colors.Red;
-                _colors["green"] = Colors.Green;
-                _colors["blue"] = Colors.Blue;
-                _colors["yellow"] = Colors.Yellow;
-                _colors["cyan"] = Colors.Cyan;
-                _colors["magenta"] = Colors.Magenta;
+                _ex_colors["black"] = Colors.Black;
+                _ex_colors["white"] = Colors.White;
+                _ex_colors["gray"] = Colors.Gray;
+                _ex_colors["red"] = Colors.Red;
+                _ex_colors["green"] = Colors.Green;
+                _ex_colors["blue"] = Colors.Blue;
+                _ex_colors["yellow"] = Colors.Yellow;
+                _ex_colors["cyan"] = Colors.Cyan;
+                _ex_colors["magenta"] = Colors.Magenta;
 
             }
 
@@ -383,12 +383,12 @@ namespace MetaphysicsIndustries.Solus
             }
 
 
-            private static Dictionary<string, NodeType> _nodeTypes = new Dictionary<string, NodeType>(StringComparer.CurrentCultureIgnoreCase);
+            private static Dictionary<string, NodeType> _ex_nodeTypes = new Dictionary<string, NodeType>(StringComparer.CurrentCultureIgnoreCase);
             public static NodeType GetNodeType(string token)
             {
-                if (_nodeTypes.ContainsKey(token))
+                if (_ex_nodeTypes.ContainsKey(token))
                 {
-                    return _nodeTypes[token];
+                    return _ex_nodeTypes[token];
                 }
                 else if (GetFuncType(token) != Func.Unknown) return NodeType.Func;
                 else if (GetColor(token) != Colors.Unknown) return NodeType.Color;
@@ -416,46 +416,46 @@ namespace MetaphysicsIndustries.Solus
                 return NodeType.Unknown;
             }
 
-            private static Dictionary<string, Colors> _colors = new Dictionary<string, Colors>(StringComparer.CurrentCultureIgnoreCase);
+            private static Dictionary<string, Colors> _ex_colors = new Dictionary<string, Colors>(StringComparer.CurrentCultureIgnoreCase);
             public static Colors GetColor(string token)
             {
-                if (_colors.ContainsKey(token))
+                if (_ex_colors.ContainsKey(token))
                 {
-                    return _colors[token];
+                    return _ex_colors[token];
                 }
                 
                 return Colors.Unknown;
             }
 
-            private static Dictionary<string, Func> _functionTypes = new Dictionary<string, Func>(StringComparer.CurrentCultureIgnoreCase);
+            private static Dictionary<string, Func> _ex_functionTypes = new Dictionary<string, Func>(StringComparer.CurrentCultureIgnoreCase);
             public static Func GetFuncType(string token)
             {
-                if (_functionTypes.ContainsKey(token))
+                if (_ex_functionTypes.ContainsKey(token))
                 {
-                    return _functionTypes[token];
+                    return _ex_functionTypes[token];
                 }
 
                 return Func.Unknown;
             }
 
-            private static Dictionary<NodeType, Ranks> _ranksFromNodeTypes = new Dictionary<NodeType, Ranks>();
+            private static Dictionary<NodeType, Ranks> _ex_ranksFromNodeTypes = new Dictionary<NodeType, Ranks>();
             public static Ranks GetRank(NodeType n)
             {
-                if (_ranksFromNodeTypes.ContainsKey(n))
+                if (_ex_ranksFromNodeTypes.ContainsKey(n))
                 {
-                    return _ranksFromNodeTypes[n];
+                    return _ex_ranksFromNodeTypes[n];
                 }
 
                 
                 return Ranks.Unknown;
             }
 
-            private static Dictionary<Func, int> _argsFromFunctions = new Dictionary<Func, int>();
+            private static Dictionary<Func, int> _ex_argsFromFunctions = new Dictionary<Func, int>();
             public static int GetFuncArgs(Func f)
             {
-                if (_argsFromFunctions.ContainsKey(f))
+                if (_ex_argsFromFunctions.ContainsKey(f))
                 {
-                    return _argsFromFunctions[f];
+                    return _ex_argsFromFunctions[f];
                 }
 
                 return 1;
