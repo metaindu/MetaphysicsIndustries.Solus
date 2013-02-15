@@ -78,6 +78,14 @@ namespace MetaphysicsIndustries.Solus
             Unknown,
         }
 
+        public struct ExFunction
+        {
+            public string Token;
+            public FunctionConverter Converter;
+            public int NumArguments;
+            public bool HasVariableNumArgs;
+        }
+
         public enum NodeType
         {
             Num,
