@@ -177,6 +177,11 @@ namespace MetaphysicsIndustries.Solus
         {
             static Ex()
             {
+                InitEx();
+            }
+
+            public static void InitEx()
+            {
                 _ex_functionTypes["sin"] = Func.Sine;
                 _ex_functionTypes["cos"] = Func.Cosine;
                 _ex_functionTypes["tan"] = Func.Tangent;
