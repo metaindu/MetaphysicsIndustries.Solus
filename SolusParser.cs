@@ -40,6 +40,13 @@ namespace MetaphysicsIndustries.Solus
             _functions.Add(func.Token, func);
         }
 
+        public ExFunction? GetFunction(string token)
+        {
+            if (!_functions.ContainsKey(token)) return null;
+
+            return _functions[token];
+        }
+
         public Expression Compile(string expr)
         {
             return Compile(expr, new VariableTable());
