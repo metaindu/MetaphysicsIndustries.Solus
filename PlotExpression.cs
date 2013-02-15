@@ -1,15 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
     public class PlotExpression : Expression
     {
         public PlotExpression(Variable variable, params Expression[] expressionsToPlot)
+            : this(variable, (IEnumerable<Expression>)expressionsToPlot)
+        {
+        }
+        public PlotExpression(Variable variable, IEnumerable<Expression> expressionsToPlot)
         {
             _variable = variable;
-            _expressionsToPlot = expressionsToPlot;
+            _expressionsToPlot = expressionsToPlot.ToArray();
         }
 
         private Variable _variable;
