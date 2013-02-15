@@ -509,14 +509,10 @@ namespace MetaphysicsIndustries.Solus
         [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
         public class Ex
         {
-            Ex(string token, int location)
+            internal Ex(string token, NodeType type, Ranks rank, int location)
             {
                 Token = token;
                 Location = location;
-            }
-            internal Ex(string token, NodeType type, Ranks rank, int location)
-                : this(token, location)
-            {
                 Type = type;
                 Rank = rank;
             }
