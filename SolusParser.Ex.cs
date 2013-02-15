@@ -382,7 +382,7 @@ namespace MetaphysicsIndustries.Solus
             return Func.Unknown;
         }
 
-        public static Ranks GetRank(NodeType n)
+        public Ranks GetRank(NodeType n)
         {
             if (_ex_ranksFromNodeTypes.ContainsKey(n))
             {
