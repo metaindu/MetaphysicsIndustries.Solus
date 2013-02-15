@@ -382,27 +382,6 @@ namespace MetaphysicsIndustries.Solus
             {
                 function = _functions[ex.Func];
             }
-            //else if (ex.func == Func.Exponent)
-            //{
-            //    function = BinaryOperation.Exponent;
-            //    args.Insert(0, new Literal(Math.E));
-            //    //return new FunctionCall(
-            //    //    BinaryOperation.Exponent,
-            //    //    new Literal(Math.E),
-            //    //    leftArg);
-            //}
-            //else if (ex.func == Func.Int)
-            //{
-            //    function = Function.Floor;
-            //}
-            //else if (ex.func == Func.Pow)
-            //{
-            //    function = BinaryOperation.Exponent;
-            //    //return new FunctionCall(
-            //    //    BinaryOperation.Exponent,
-            //    //    leftArg,
-            //    //    rightArg);
-            //}
             else if (ex.Func == Func.Rand)
             {
                 return new RandomExpression();
@@ -419,7 +398,6 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Func == Func.Integrate)
             {
                 throw new SolusParseException(ex, "That function is not yet implemented");
-                //throw new NotImplementedException();
             }
             else if (ex.Func == Func.Derive)
             {
@@ -431,22 +409,6 @@ namespace MetaphysicsIndustries.Solus
                 DerivativeTransformer deriver = new DerivativeTransformer();
                 return deriver.Transform(args[0], new VariableTransformArgs(((VariableAccess)args[1]).Variable));
             }
-            //else if (ex.func == Func.GetRow)
-            //{
-            //    return ConvertGetRowExpression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.GetColumn)
-            //{
-            //    return ConvertGetColumnExpression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.GetRow2)
-            //{
-            //    return ConvertGetRow2Expression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.GetColumn2)
-            //{
-            //    return ConvertGetColumn2Expression(ex, varTable, args);
-            //}
             else if (ex.Func == Func.Plot)
             {
                 return ConvertPlotExpression(ex, args);
@@ -459,28 +421,6 @@ namespace MetaphysicsIndustries.Solus
             {
                 return ConvertMathPaintExpression(ex, varTable, args);
             }
-            //else if (ex.func == Func.PlotMatrix)
-            //{
-            //    return ConvertPlotMatrixExpression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.PlotVector)
-            //{
-            //    Expression arg = args[0];
-
-            //    while (arg is VariableAccess)
-            //    {
-            //        Expression arg2 = varTable[((VariableAccess)arg).Variable];
-            //        if (arg == arg2) { break; }
-            //        arg = arg2;
-            //    }
-
-            //    if (!(arg is SolusVector))
-            //    {
-            //        throw new SolusParseException(ex, "The argument to plotv must be a vector.");
-            //    }
-
-            //    return new PlotVectorExpression((SolusVector)arg);
-            //}
             else if (ex.Func == Func.Feedback)
             {
                 return ConvertFeedbackExpression(ex, varTable, args);
