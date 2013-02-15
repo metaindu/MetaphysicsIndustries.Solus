@@ -82,7 +82,7 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(expr);
         }
 
-        protected static void SyntaxCheck(Ex[] tokens)
+        protected void SyntaxCheck(Ex[] tokens)
         {
             int i;
             for (i = 0; i < tokens.Length - 1; i++)
