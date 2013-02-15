@@ -22,36 +22,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusParser
     {
-        public SolusParser()
+        private Dictionary<Func, Function> _functions = new Dictionary<Func, Function>()
         {
-            _functions[Func.Abs] = Function.AbsoluteValue;
-            _functions[Func.Cosine] = Function.Cosine;
-            _functions[Func.Ln] = Function.NaturalLogarithm;
-            _functions[Func.Log10] = Function.Log10;
-            _functions[Func.Log2] = Function.Log2;
-            _functions[Func.Sine] = Function.Sine;
-            _functions[Func.Tangent] = Function.Tangent;
-            _functions[Func.Sec] = Function.Secant;
-            _functions[Func.Csc] = Function.Cosecant;
-            _functions[Func.Cot] = Function.Cotangent;
-            _functions[Func.Acos] = Function.Arccosine;
-            _functions[Func.Asin] = Function.Arcsine;
-            _functions[Func.Atan] = Function.Arctangent;
-            _functions[Func.Asec] = Function.Arcsecant;
-            _functions[Func.Acsc] = Function.Arccosecant;
-            _functions[Func.Acot] = Function.Arccotangent;
-            _functions[Func.Ceil] = Function.Ceiling;
-            _functions[Func.UnitStep] = Function.UnitStep;
-            _functions[Func.Atan2] = Function.Arctangent2;
-            _functions[Func.Log] = Function.Logarithm;
-            _functions[Func.Floor] = Function.Floor;
-            _functions[Func.If] = Function.If;
-            _functions[Func.Dist] = Function.Dist;
-            _functions[Func.DistSq] = Function.DistSq;
-
-        }
-
-        private Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();
+            { Func.Abs, Function.AbsoluteValue },
+            { Func.Cosine, Function.Cosine },
+            { Func.Ln, Function.NaturalLogarithm },
+            { Func.Log10, Function.Log10 },
+            { Func.Log2, Function.Log2 },
+            { Func.Sine, Function.Sine },
+            { Func.Tangent, Function.Tangent },
+            { Func.Sec, Function.Secant },
+            { Func.Csc, Function.Cosecant },
+            { Func.Cot, Function.Cotangent },
+            { Func.Acos, Function.Arccosine },
+            { Func.Asin, Function.Arcsine },
+            { Func.Atan, Function.Arctangent },
+            { Func.Asec, Function.Arcsecant },
+            { Func.Acsc, Function.Arccosecant },
+            { Func.Acot, Function.Arccotangent },
+            { Func.Ceil, Function.Ceiling },
+            { Func.UnitStep, Function.UnitStep },
+            { Func.Atan2, Function.Arctangent2 },
+            { Func.Log, Function.Logarithm },
+            { Func.Floor, Function.Floor },
+            { Func.If, Function.If },
+            { Func.Dist, Function.Dist },
+            { Func.DistSq, Function.DistSq },
+        };
 
         public Expression Compile(string expr)
         {
