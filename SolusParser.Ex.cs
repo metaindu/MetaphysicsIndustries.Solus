@@ -492,12 +492,12 @@ namespace MetaphysicsIndustries.Solus
             if (type == NodeType.Func)
             {
                 Func func = GetFuncType(token);
-                return new Ex(token, location, func);
+                return Ex.ExFromFunction(token, location, func);
             }
             else if (type == NodeType.Num)
             {
                 float numValue = ParseNumber(token);
-                return new Ex(token, location, numValue);
+                return Ex.ExFromNumber(token, location, numValue);
             }
             else
             {
@@ -516,15 +516,17 @@ namespace MetaphysicsIndustries.Solus
                 Type = type;
                 Rank = rank;
             }
-            internal Ex(string token, int location, Func func)
-                : this(token, NodeType.Func, GetRank(NodeType.Func), location)
+            internal static Ex ExFromFunction(string token, int location, Func func)
             {
-                Func = func;
+                Ex ex = new Ex(token, NodeType.Func, GetRank(NodeType.Func), location);
+                ex.Func = func;
+                return ex;
             }
-            internal Ex(string token, int location, float numValue)
-                : this(token, NodeType.Num, GetRank(NodeType.Num), location)
+            internal static Ex ExFromNumber(string token, int location, float numValue)
             {
-                NumValue = numValue;
+                Ex ex = new Ex(token, NodeType.Num, GetRank(NodeType.Num), location);
+                ex.NumValue = numValue;
+                return ex;
             }
 
             public Ex Left = null;
