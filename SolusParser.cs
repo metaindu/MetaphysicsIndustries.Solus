@@ -117,7 +117,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 else if (ex.Type == NodeType.Func)
                 {
-                    if (Ex.GetFuncType(ex.Token) == Func.Unknown)
+                    if (GetFuncType(ex.Token) == Func.Unknown)
                     {
                         throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
                     }
@@ -303,7 +303,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (ex.Type == NodeType.Color)
             {
-                switch (Ex.GetColor(ex.Token))
+                switch (GetColor(ex.Token))
                 {
                     case Colors.Black: return ColorExpression.Black;
                     case Colors.White: return ColorExpression.White;
@@ -1121,7 +1121,7 @@ namespace MetaphysicsIndustries.Solus
                 //cascaded comma operators against the functions'
                 //desired argument counts.
 
-                int funcArgs = Ex.GetFuncArgs(ex.Func);
+                int funcArgs = GetFuncArgs(ex.Func);
                 if (funcArgs != 0)
                 {
                     ex.Left = BuildTree(b);

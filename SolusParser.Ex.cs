@@ -330,6 +330,79 @@ namespace MetaphysicsIndustries.Solus
 
         }
 
+        public static NodeType GetNodeType(string token)
+        {
+            if (_ex_nodeTypes.ContainsKey(token))
+            {
+                return _ex_nodeTypes[token];
+            }
+            else if (GetFuncType(token) != Func.Unknown) return NodeType.Func;
+            else if (GetColor(token) != Colors.Unknown) return NodeType.Color;
+            else if ((Regex.Match(token, "^\\\"[^\\\"]*\\\"$")).Length > 0)
+            {
+                return NodeType.String;
+            }
+            else if ((Regex.Match(token, "^[a-zA-Z_]\\w*$")).Length > 0)
+            {
+                return NodeType.Var;
+            }
+            else if ((Regex.Match(token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0 ||
+                     (Regex.Match(token, "^[+-]?(?:0[dD])?[0-9]+$")).Length > 0 ||
+                     (Regex.Match(token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0 ||
+                     (Regex.Match(token, "^[+-]?0[oO][0-7]+$")).Length > 0 ||
+                     (Regex.Match(token, "^[+-]?0[bB][01]+$")).Length > 0)
+            {
+                return NodeType.Num;
+            }
+            else if ((Regex.Match(token, "^\\s+$")).Length > 0)
+            {
+                return NodeType.Whitespace;
+            }
+
+            return NodeType.Unknown;
+        }
+
+        public static Colors GetColor(string token)
+        {
+            if (_ex_colors.ContainsKey(token))
+            {
+                return _ex_colors[token];
+            }
+
+            return Colors.Unknown;
+        }
+
+        public static Func GetFuncType(string token)
+        {
+            if (_ex_functionTypes.ContainsKey(token))
+            {
+                return _ex_functionTypes[token];
+            }
+
+            return Func.Unknown;
+        }
+
+        public static Ranks GetRank(NodeType n)
+        {
+            if (_ex_ranksFromNodeTypes.ContainsKey(n))
+            {
+                return _ex_ranksFromNodeTypes[n];
+            }
+
+
+            return Ranks.Unknown;
+        }
+
+        public static int GetFuncArgs(Func f)
+        {
+            if (_ex_argsFromFunctions.ContainsKey(f))
+            {
+                return _ex_argsFromFunctions[f];
+            }
+
+            return 1;
+        }
+
 
         //Ex: The class that represents the nodes of a compiled expression tree.
         [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
@@ -342,11 +415,11 @@ namespace MetaphysicsIndustries.Solus
 
             public static Ex FromToken(string token, int location)
             {
-                NodeType type = Ex.GetNodeType(token);
+                NodeType type = GetNodeType(token);
 
                 if (type == NodeType.Func)
                 {
-                    Func func = Ex.GetFuncType(token);
+                    Func func = GetFuncType(token);
                     return new Ex(token, location, func);
                 }
                 else if (type == NodeType.Num)
@@ -356,7 +429,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 else
                 {
-                    return new Ex(token, type, Ex.GetRank(type), location);
+                    return new Ex(token, type, GetRank(type), location);
                 }
             }
 
@@ -394,79 +467,6 @@ namespace MetaphysicsIndustries.Solus
                 protected set { _rank = value; }
             }
 
-
-            public static NodeType GetNodeType(string token)
-            {
-                if (_ex_nodeTypes.ContainsKey(token))
-                {
-                    return _ex_nodeTypes[token];
-                }
-                else if (GetFuncType(token) != Func.Unknown) return NodeType.Func;
-                else if (GetColor(token) != Colors.Unknown) return NodeType.Color;
-                else if ((Regex.Match(token, "^\\\"[^\\\"]*\\\"$")).Length > 0)
-                {
-                    return NodeType.String;
-                }
-                else if ((Regex.Match(token, "^[a-zA-Z_]\\w*$")).Length > 0)
-                {
-                    return NodeType.Var;
-                }
-                else if ((Regex.Match(token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0 ||
-                         (Regex.Match(token, "^[+-]?(?:0[dD])?[0-9]+$")).Length > 0 ||
-                         (Regex.Match(token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0 ||
-                         (Regex.Match(token, "^[+-]?0[oO][0-7]+$")).Length > 0 ||
-                         (Regex.Match(token, "^[+-]?0[bB][01]+$")).Length > 0)
-                {
-                    return NodeType.Num;
-                }
-                else if ((Regex.Match(token, "^\\s+$")).Length > 0)
-                {
-                    return NodeType.Whitespace;
-                }
-
-                return NodeType.Unknown;
-            }
-
-            public static Colors GetColor(string token)
-            {
-                if (_ex_colors.ContainsKey(token))
-                {
-                    return _ex_colors[token];
-                }
-
-                return Colors.Unknown;
-            }
-
-            public static Func GetFuncType(string token)
-            {
-                if (_ex_functionTypes.ContainsKey(token))
-                {
-                    return _ex_functionTypes[token];
-                }
-
-                return Func.Unknown;
-            }
-
-            public static Ranks GetRank(NodeType n)
-            {
-                if (_ex_ranksFromNodeTypes.ContainsKey(n))
-                {
-                    return _ex_ranksFromNodeTypes[n];
-                }
-
-
-                return Ranks.Unknown;
-            }
-
-            public static int GetFuncArgs(Func f)
-            {
-                if (_ex_argsFromFunctions.ContainsKey(f))
-                {
-                    return _ex_argsFromFunctions[f];
-                }
-
-                return 1;
-            }
 
             public string Token
             {
