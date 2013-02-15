@@ -362,7 +362,7 @@ namespace MetaphysicsIndustries.Solus
             return NodeType.Unknown;
         }
 
-        public static Colors GetColor(string token)
+        public Colors GetColor(string token)
         {
             if (_ex_colors.ContainsKey(token))
             {
