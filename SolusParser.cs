@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus
             InitEx();
         }
 
-        private static Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();
+        private Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();
 
         public Expression Compile(string expr)
         {
