@@ -137,7 +137,7 @@ namespace MetaphysicsIndustries.Solus
             return Compile(tokens, null);
         }
 
-        protected static Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
+        protected Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
         {
             Expression leftArg = null;
             Expression rightArg = null;
@@ -353,7 +353,7 @@ namespace MetaphysicsIndustries.Solus
             throw new SolusParseException(ex, error);
         }
 
-        private static Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
+        private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
         {
             Function function = null;
             List<Expression> args = new List<Expression>();
@@ -849,7 +849,7 @@ namespace MetaphysicsIndustries.Solus
 
 
 
-        protected static void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
+        protected void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
         {
             if (ex.Left != null)
             {
