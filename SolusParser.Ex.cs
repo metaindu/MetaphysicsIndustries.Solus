@@ -393,7 +393,7 @@ namespace MetaphysicsIndustries.Solus
             return Ranks.Unknown;
         }
 
-        public static int GetFuncArgs(Func f)
+        public int GetFuncArgs(Func f)
         {
             if (_ex_argsFromFunctions.ContainsKey(f))
             {
