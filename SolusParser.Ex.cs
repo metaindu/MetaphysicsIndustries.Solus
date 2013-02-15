@@ -330,7 +330,7 @@ namespace MetaphysicsIndustries.Solus
 
         }
 
-        public static NodeType GetNodeType(string token)
+        public NodeType GetNodeType(string token)
         {
             if (_ex_nodeTypes.ContainsKey(token))
             {
