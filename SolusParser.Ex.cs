@@ -485,6 +485,25 @@ namespace MetaphysicsIndustries.Solus
             return 0;
         }
 
+        public static Ex ExFromToken(string token, int location)
+        {
+            NodeType type = GetNodeType(token);
+
+            if (type == NodeType.Func)
+            {
+                Func func = GetFuncType(token);
+                return new Ex(token, location, func);
+            }
+            else if (type == NodeType.Num)
+            {
+                float numValue = ParseNumber(token);
+                return new Ex(token, location, numValue);
+            }
+            else
+            {
+                return new Ex(token, type, GetRank(type), location);
+            }
+        }
 
         //Ex: The class that represents the nodes of a compiled expression tree.
         [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
@@ -495,18 +514,18 @@ namespace MetaphysicsIndustries.Solus
                 Token = token;
                 Location = location;
             }
-            Ex(string token, NodeType type, Ranks rank, int location)
+            internal Ex(string token, NodeType type, Ranks rank, int location)
                 : this(token, location)
             {
                 Type = type;
                 Rank = rank;
             }
-            Ex(string token, int location, Func func)
+            internal Ex(string token, int location, Func func)
                 : this(token, NodeType.Func, GetRank(NodeType.Func), location)
             {
                 Func = func;
             }
-            Ex(string token, int location, float numValue)
+            internal Ex(string token, int location, float numValue)
                 : this(token, NodeType.Num, GetRank(NodeType.Num), location)
             {
                 NumValue = numValue;
@@ -520,26 +539,6 @@ namespace MetaphysicsIndustries.Solus
             public Ranks Rank { get; protected set; }
             public string Token { get; protected set; }
             public int Location { get; protected set; }
-
-            public static Ex FromToken(string token, int location)
-            {
-                NodeType type = GetNodeType(token);
-
-                if (type == NodeType.Func)
-                {
-                    Func func = GetFuncType(token);
-                    return new Ex(token, location, func);
-                }
-                else if (type == NodeType.Num)
-                {
-                    float numValue = ParseNumber(token);
-                    return new Ex(token, location, numValue);
-                }
-                else
-                {
-                    return new Ex(token, type, GetRank(type), location);
-                }
-            }
 
             public string GetStringContents()
             {
