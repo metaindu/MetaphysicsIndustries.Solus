@@ -23,6 +23,14 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusParser
     {
+        public SolusParser()
+        {
+            foreach (ExFunction func in _builtinFunctions)
+            {
+                AddFunction(func);
+            }
+        }
+
         private Dictionary<string, ExFunction> _functions = new Dictionary<string, ExFunction>(StringComparer.CurrentCultureIgnoreCase);
 
         public void AddFunction(ExFunction func)
