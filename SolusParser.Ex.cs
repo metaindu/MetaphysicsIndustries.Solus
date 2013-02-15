@@ -165,6 +165,12 @@ namespace MetaphysicsIndustries.Solus
             Unknown,
         }
 
+        private static Dictionary<string, NodeType> _ex_nodeTypes = new Dictionary<string, NodeType>(StringComparer.CurrentCultureIgnoreCase);
+        private static Dictionary<string, Colors> _ex_colors = new Dictionary<string, Colors>(StringComparer.CurrentCultureIgnoreCase);
+        private static Dictionary<string, Func> _ex_functionTypes = new Dictionary<string, Func>(StringComparer.CurrentCultureIgnoreCase);
+        private static Dictionary<NodeType, Ranks> _ex_ranksFromNodeTypes = new Dictionary<NodeType, Ranks>();
+        private static Dictionary<Func, int> _ex_argsFromFunctions = new Dictionary<Func, int>();
+
         //Ex: The class that represents the nodes of a compiled expression tree. 
         [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
         public class Ex
@@ -383,7 +389,6 @@ namespace MetaphysicsIndustries.Solus
             }
 
 
-            private static Dictionary<string, NodeType> _ex_nodeTypes = new Dictionary<string, NodeType>(StringComparer.CurrentCultureIgnoreCase);
             public static NodeType GetNodeType(string token)
             {
                 if (_ex_nodeTypes.ContainsKey(token))
@@ -416,7 +421,6 @@ namespace MetaphysicsIndustries.Solus
                 return NodeType.Unknown;
             }
 
-            private static Dictionary<string, Colors> _ex_colors = new Dictionary<string, Colors>(StringComparer.CurrentCultureIgnoreCase);
             public static Colors GetColor(string token)
             {
                 if (_ex_colors.ContainsKey(token))
@@ -427,7 +431,6 @@ namespace MetaphysicsIndustries.Solus
                 return Colors.Unknown;
             }
 
-            private static Dictionary<string, Func> _ex_functionTypes = new Dictionary<string, Func>(StringComparer.CurrentCultureIgnoreCase);
             public static Func GetFuncType(string token)
             {
                 if (_ex_functionTypes.ContainsKey(token))
@@ -438,7 +441,6 @@ namespace MetaphysicsIndustries.Solus
                 return Func.Unknown;
             }
 
-            private static Dictionary<NodeType, Ranks> _ex_ranksFromNodeTypes = new Dictionary<NodeType, Ranks>();
             public static Ranks GetRank(NodeType n)
             {
                 if (_ex_ranksFromNodeTypes.ContainsKey(n))
@@ -450,7 +452,6 @@ namespace MetaphysicsIndustries.Solus
                 return Ranks.Unknown;
             }
 
-            private static Dictionary<Func, int> _ex_argsFromFunctions = new Dictionary<Func, int>();
             public static int GetFuncArgs(Func f)
             {
                 if (_ex_argsFromFunctions.ContainsKey(f))
