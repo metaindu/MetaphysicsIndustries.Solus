@@ -17,6 +17,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -351,10 +352,57 @@ namespace MetaphysicsIndustries.Solus
 
         public delegate Expression FunctionConverter(IEnumerable<Expression> args, VariableTable vars);
 
-        public FunctionConverter BasicFunctionConverter(Function function)
+        public static FunctionConverter BasicFunctionConverter(Function function)
         {
             return (args, vars) => { return new FunctionCall(function, args); };
         }
+
+        Dictionary<Func, FunctionConverter> _functionConverters = new Dictionary<Func, FunctionConverter>()
+        {
+            { Func.Abs, BasicFunctionConverter(Function.AbsoluteValue) },
+            { Func.Cosine, BasicFunctionConverter(Function.Cosine) },
+            { Func.Ln, BasicFunctionConverter(Function.NaturalLogarithm) },
+            { Func.Log10, BasicFunctionConverter(Function.Log10) },
+            { Func.Log2, BasicFunctionConverter(Function.Log2) },
+            { Func.Sine, BasicFunctionConverter(Function.Sine) },
+            { Func.Tangent, BasicFunctionConverter(Function.Tangent) },
+            { Func.Sec, BasicFunctionConverter(Function.Secant) },
+            { Func.Csc, BasicFunctionConverter(Function.Cosecant) },
+            { Func.Cot, BasicFunctionConverter(Function.Cotangent) },
+            { Func.Acos, BasicFunctionConverter(Function.Arccosine) },
+            { Func.Asin, BasicFunctionConverter(Function.Arcsine) },
+            { Func.Atan, BasicFunctionConverter(Function.Arctangent) },
+            { Func.Asec, BasicFunctionConverter(Function.Arcsecant) },
+            { Func.Acsc, BasicFunctionConverter(Function.Arccosecant) },
+            { Func.Acot, BasicFunctionConverter(Function.Arccotangent) },
+            { Func.Ceil, BasicFunctionConverter(Function.Ceiling) },
+            { Func.UnitStep, BasicFunctionConverter(Function.UnitStep) },
+            { Func.Atan2, BasicFunctionConverter(Function.Arctangent2) },
+            { Func.Log, BasicFunctionConverter(Function.Logarithm) },
+            { Func.Floor, BasicFunctionConverter(Function.Floor) },
+            { Func.If, BasicFunctionConverter(Function.If) },
+            { Func.Dist, BasicFunctionConverter(Function.Dist) },
+            { Func.DistSq, BasicFunctionConverter(Function.DistSq) },
+            { Func.Rand, (args, vars) => { return new RandomExpression(); } },
+            { Func.Sqrt, (args, vars) =>
+                {
+                    return new FunctionCall(BinaryOperation.Exponent, args.First(), new Literal(0.5f));
+                } },
+            //Func.Integrate
+            { Func.Derive, (args, vars) => 
+                {
+                    return
+                        (new DerivativeTransformer()).Transform(
+                            args.First(),
+                                new VariableTransformArgs(
+                                    ((VariableAccess)args.ElementAt(1)).Variable));
+                } },
+            { Func.Plot, (args, vars) => { return ConvertPlotExpression(args); } },
+            { Func.Plot3d, (args, vars) => { return ConvertPlot3dExpression(vars, args); } },
+            { Func.MathPaint, (args, vars) => { return ConvertMathPaintExpression(vars, args); } },
+            { Func.Feedback, (args, vars) => { return ConvertFeedbackExpression(vars, args); } },
+            { Func.Subst, (args, vars) => { return ConvertSubstExpression(vars, args); } },
+        };
 
         private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
         {
@@ -385,83 +433,35 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            if (_functions.ContainsKey(ex.Func))
+            if (_functionConverters.ContainsKey(ex.Func))
+            {
+                return _functionConverters[ex.Func](args, varTable);
+            }
+            else if (_functions.ContainsKey(ex.Func))
             {
                 return BasicFunctionConverter(_functions[ex.Func])(args, varTable);
-            }
-            else if (ex.Func == Func.Rand)
-            {
-                return new RandomExpression();
-            }
-            else if (ex.Func == Func.Sqrt)
-            {
-                function = BinaryOperation.Exponent;
-                args.Add(new Literal(0.5f));
-                //return new FunctionCall(
-                //    BinaryOperation.Exponent,
-                //    leftArg,
-                //    new Literal(0.5f));
             }
             else if (ex.Func == Func.Integrate)
             {
                 throw new SolusParseException(ex, "That function is not yet implemented");
             }
-            else if (ex.Func == Func.Derive)
-            {
-                if (!(args[1] is VariableAccess))
-                {
-                    throw new SolusParseException(ex, "Argument must be a variable");
-                }
-
-                DerivativeTransformer deriver = new DerivativeTransformer();
-                return deriver.Transform(args[0], new VariableTransformArgs(((VariableAccess)args[1]).Variable));
-            }
-            else if (ex.Func == Func.Plot)
-            {
-                return ConvertPlotExpression(ex, args);
-            }
-            else if (ex.Func == Func.Plot3d)
-            {
-                return ConvertPlot3dExpression(ex, varTable, args);
-            }
-            else if (ex.Func == Func.MathPaint)
-            {
-                return ConvertMathPaintExpression(ex, varTable, args);
-            }
-            else if (ex.Func == Func.Feedback)
-            {
-                return ConvertFeedbackExpression(ex, varTable, args);
-            }
-            else if (ex.Func == Func.Subst)
-            {
-                return ConvertSubstExpression(ex, varTable, args);
-            }
             else
             {
                 throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
             }
-
-            return new FunctionCall(
-                function,
-                args);
         }
 
-        private Expression ConvertSubstExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private static Expression ConvertSubstExpression(VariableTable varTable, IEnumerable<Expression> args)
         {
-            if (!(args[1] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "The second argument must be a variable");
-            }
-
             SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(subst.Subst(args[0], ((VariableAccess)args[1]).Variable, args[2]));
+            return cleanup.CleanUp(subst.Subst(args.First(), ((VariableAccess)args.ElementAt(1)).Variable, args.ElementAt(2)));
         }
 
-        private Expression ConvertFeedbackExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private static Expression ConvertFeedbackExpression(VariableTable varTable, IEnumerable<Expression> args)
         {
-            Expression g = args[0];
-            Expression h = args[1];
+            Expression g = args.ElementAt(0);
+            Expression h = args.ElementAt(1);
 
             return new FunctionCall(
                         BinaryOperation.Division,
@@ -505,20 +505,22 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private Expression ConvertPlot3dExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private static Expression ConvertPlot3dExpression(VariableTable varTable, IEnumerable<Expression> _args)
         {
+            List<Expression> args = _args.ToList();
+
             if (args.Count < 3 ||
                 !(args[0] is VariableAccess) ||
                 !(args[1] is VariableAccess))
             {
-                throw new SolusParseException(ex, "Plot command requires two variables and one expression to plot");
+                throw new SolusParseException(null, "Plot command requires two variables and one expression to plot");
             }
 
             if ((args.Count > 5 && args.Count < 9) ||
                 args.Count == 10 ||
                 args.Count > 11)
             {
-                throw new SolusParseException(ex, "Incorrect number of arguments");
+                throw new SolusParseException(null, "Incorrect number of arguments");
             }
 
             Brush fillBrush = Brushes.Green;
@@ -563,7 +565,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (args.Count != 3)
             {
-                throw new SolusParseException(ex, "Incorrect number of arguments");
+                throw new SolusParseException(null, "Incorrect number of arguments");
             }
 
             return new Plot3dExpression(
@@ -576,28 +578,22 @@ namespace MetaphysicsIndustries.Solus
                 wirePen, fillBrush);
         }
 
-        private Expression ConvertPlotExpression(Ex ex, List<Expression> args)
+        private static Expression ConvertPlotExpression(IEnumerable<Expression> args)
         {
-            if (args.Count < 2 || !(args[0] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "Plot command requires one variable and at least one expression to plot");
-            }
-
-            List<Expression> exprs = new List<Expression>(args);
-            exprs.RemoveAt(0);
-
-            return new PlotExpression(((VariableAccess)args[0]).Variable, exprs.ToArray());
+            return new PlotExpression(((VariableAccess)args.First()).Variable, args.Skip(1));
         }
 
-        private Expression ConvertMathPaintExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private static Expression ConvertMathPaintExpression(VariableTable varTable, IEnumerable<Expression> _args)
         {
+            List<Expression> args = _args.ToList();
+
             if (!(args[0] is VariableAccess))
             {
-                throw new SolusParseException(ex, "First argument to MathPaint command must be a variable reference.");
+                throw new SolusParseException(null, "First argument to MathPaint command must be a variable reference.");
             }
             if (!(args[1] is VariableAccess))
             {
-                throw new SolusParseException(ex, "Second argument to MathPaint command must be a variable reference.");
+                throw new SolusParseException(null, "Second argument to MathPaint command must be a variable reference.");
             }
 
             return new MathPaintExpression(
