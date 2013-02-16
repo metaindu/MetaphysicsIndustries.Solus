@@ -466,8 +466,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (function.HasValue)
             {
-                Func func = GetFuncType(token);
-                return new Ex(token, NodeType.Func, GetRank(NodeType.Func), location, func);
+                return new Ex(token, NodeType.Func, GetRank(NodeType.Func), location, function.Value);
             }
             else if (GetColor(token) != Colors.Unknown)
             {
@@ -498,18 +497,18 @@ namespace MetaphysicsIndustries.Solus
         public class Ex
         {
             internal Ex(string token, NodeType type, Ranks rank, int location)
-                : this(token, type, rank, location, Func.Unknown, 0)
+                : this(token, type, rank, location, new ExFunction(), 0)
             {
             }
             internal Ex(string token, NodeType type, Ranks rank, int location, float numValue)
-                : this(token, type, rank, location, Func.Unknown, numValue)
+                : this(token, type, rank, location, new ExFunction(), numValue)
             {
             }
-            internal Ex(string token, NodeType type, Ranks rank, int location, Func func)
+            internal Ex(string token, NodeType type, Ranks rank, int location, ExFunction func)
                 : this(token, type, rank, location, func, 0)
             {
             }
-            internal Ex(string token, NodeType type, Ranks rank, int location, Func func, float numValue)
+            internal Ex(string token, NodeType type, Ranks rank, int location, ExFunction func, float numValue)
             {
                 Token = token;
                 Location = location;
@@ -522,7 +521,7 @@ namespace MetaphysicsIndustries.Solus
             public Ex Left = null;
             public Ex Right = null;
             public float NumValue { get; protected set; }
-            public Func Func { get; protected set; }
+            public ExFunction Func { get; protected set; }
             public NodeType Type { get; protected set; }
             public Ranks Rank { get; protected set; }
             public string Token { get; protected set; }
