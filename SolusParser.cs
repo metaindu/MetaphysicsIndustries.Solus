@@ -519,11 +519,6 @@ namespace MetaphysicsIndustries.Solus
                 wirePen, fillBrush);
         }
 
-        private static Expression ConvertPlotExpression(IEnumerable<Expression> args, VariableTable varTable)
-        {
-            return new PlotExpression(((VariableAccess)args.First()).Variable, args.Skip(1));
-        }
-
         private static Expression ConvertMathPaintExpression(IEnumerable<Expression> _args, VariableTable varTable)
         {
             List<Expression> args = _args.ToList();

@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus
             new ExFunction(){ Token="if",        Converter=BasicFunctionConverter(Function.If),                NumArguments=3,  HasVariableNumArgs=false },
             new ExFunction(){ Token="dist",      Converter=BasicFunctionConverter(Function.Dist),              NumArguments=2,  HasVariableNumArgs=false },
             new ExFunction(){ Token="distsq",    Converter=BasicFunctionConverter(Function.DistSq),            NumArguments=2,  HasVariableNumArgs=false },
-            new ExFunction(){ Token="plot",      Converter=ConvertPlotExpression,                              NumArguments=-1, HasVariableNumArgs=true  },
+            new ExFunction(){ Token="plot",      Converter=PlotExpression.Convert,                             NumArguments=-1, HasVariableNumArgs=true  },
             new ExFunction(){ Token="plot3d",    Converter=ConvertPlot3dExpression,                            NumArguments=-1, HasVariableNumArgs=true  },
             new ExFunction(){ Token="mathpaint", Converter=ConvertMathPaintExpression,                         NumArguments=5,  HasVariableNumArgs=false },
             new ExFunction(){ Token="feedback",  Converter=ConvertFeedbackExpression,                          NumArguments=2,  HasVariableNumArgs=false },

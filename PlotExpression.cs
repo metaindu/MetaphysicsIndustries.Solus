@@ -48,5 +48,10 @@ namespace MetaphysicsIndustries.Solus
         {
             return new PlotExpression(Variable, ExpressionsToPlot);
         }
+
+        public static Expression Convert(IEnumerable<Expression> args, VariableTable varTable)
+        {
+            return new PlotExpression(((VariableAccess)args.First()).Variable, args.Skip(1));
+        }
     }
 }
