@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -13,7 +14,7 @@ namespace MetaphysicsIndustries.Solus
         //}
         public Plot3dExpression(
             Variable independentVariableX,
-            Variable independentVariableY, 
+            Variable independentVariableY,
             Expression expressionToPlot,
             float xMin, float xMax,
             float yMin, float yMax,
@@ -122,13 +123,116 @@ namespace MetaphysicsIndustries.Solus
         public override Expression Clone()
         {
             return new Plot3dExpression(
-                IndependentVariableX, 
-                IndependentVariableY, 
+                IndependentVariableX,
+                IndependentVariableY,
                 ExpressionToPlot,
                 XMin, XMax,
                 YMin, YMax,
                 ZMin, ZMax,
                 WirePen, FillBrush);
+        }
+
+        public static Brush GetBrushFromExpression(Expression expression, VariableTable varTable)
+        {
+            if (expression is ColorExpression)
+            {
+                return ((ColorExpression)expression).Brush;
+            }
+            else //if (arg is Literal)
+            {
+                float value = expression.Eval(varTable).Value;// ((Literal)arg).Value;
+                int iValue = (int)(value);
+                Color color = Color.FromArgb(255, Color.FromArgb(iValue));
+                return new SolidBrush(color);
+            }
+        }
+
+        public static Pen GetPenFromExpression(Expression arg, VariableTable varTable)
+        {
+            if (arg is ColorExpression)
+            {
+                return ((ColorExpression)arg).Pen;
+            }
+            else //if (arg is Literal)
+            {
+                float value = arg.Eval(varTable).Value;// ((Literal)arg).Value;
+                int iValue = (int)(value);
+                Color color = Color.FromArgb(255, Color.FromArgb(iValue));
+                return new Pen(color);
+            }
+        }
+
+        public static Expression Convert(IEnumerable<Expression> _args, VariableTable varTable)
+        {
+            List<Expression> args = _args.ToList();
+
+            if (args.Count < 3 ||
+                !(args[0] is VariableAccess) ||
+                !(args[1] is VariableAccess))
+            {
+                throw new SolusParseException(null, "Plot command requires two variables and one expression to plot");
+            }
+
+            if ((args.Count > 5 && args.Count < 9) ||
+                args.Count == 10 ||
+                args.Count > 11)
+            {
+                throw new SolusParseException(null, "Incorrect number of arguments");
+            }
+
+            Brush fillBrush = Brushes.Green;
+            Pen wirePen = Pens.Black;
+            float xMin = -4;
+            float xMax = 4;
+            float yMin = -4;
+            float yMax = 4;
+            float zMin = -2;
+            float zMax = 6;
+
+            if (args.Count == 4 || args.Count == 5)
+            {
+                fillBrush = GetBrushFromExpression(args[3], varTable);
+
+                if (args.Count == 5)
+                {
+                    wirePen = GetPenFromExpression(args[4], varTable);
+                }
+            }
+            else if (args.Count == 9)
+            {
+                //3 --> xMin
+
+                xMin = args[3].Eval(varTable).Value;
+                xMax = args[4].Eval(varTable).Value;
+                yMin = args[5].Eval(varTable).Value;
+                yMax = args[6].Eval(varTable).Value;
+                zMin = args[7].Eval(varTable).Value;
+                zMax = args[8].Eval(varTable).Value;
+            }
+            else if (args.Count == 11)
+            {
+                xMin = args[3].Eval(varTable).Value;
+                xMax = args[4].Eval(varTable).Value;
+                yMin = args[5].Eval(varTable).Value;
+                yMax = args[6].Eval(varTable).Value;
+                zMin = args[7].Eval(varTable).Value;
+                zMax = args[8].Eval(varTable).Value;
+                fillBrush = GetBrushFromExpression(args[9], varTable);
+                wirePen = GetPenFromExpression(args[10], varTable);
+            }
+            else if (args.Count != 3)
+            {
+                throw new SolusParseException(null, "Incorrect number of arguments");
+            }
+
+            return new Plot3dExpression(
+                ((VariableAccess)args[0]).Variable,
+                ((VariableAccess)args[1]).Variable,
+                args[2],
+                xMin, xMax,
+                yMin, yMax,
+                zMin, zMax,
+                wirePen, fillBrush);
         }
     }
 }
