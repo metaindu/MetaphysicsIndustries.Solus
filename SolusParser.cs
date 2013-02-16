@@ -112,7 +112,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 else if (ex.Type == NodeType.Func)
                 {
-                    if (GetFuncType(ex.Token) == Func.Unknown)
+                    if (!GetFunction(ex.Token).HasValue)
                     {
                         throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
                     }
