@@ -353,43 +353,6 @@ namespace MetaphysicsIndustries.Solus
             return (args, vars) => { return new FunctionCall(function, args); };
         }
 
-        Dictionary<Func, FunctionConverter> _functionConverters = new Dictionary<Func, FunctionConverter>()
-        {
-            { Func.Abs, BasicFunctionConverter(Function.AbsoluteValue) },
-            { Func.Cosine, BasicFunctionConverter(Function.Cosine) },
-            { Func.Ln, BasicFunctionConverter(Function.NaturalLogarithm) },
-            { Func.Log10, BasicFunctionConverter(Function.Log10) },
-            { Func.Log2, BasicFunctionConverter(Function.Log2) },
-            { Func.Sine, BasicFunctionConverter(Function.Sine) },
-            { Func.Tangent, BasicFunctionConverter(Function.Tangent) },
-            { Func.Sec, BasicFunctionConverter(Function.Secant) },
-            { Func.Csc, BasicFunctionConverter(Function.Cosecant) },
-            { Func.Cot, BasicFunctionConverter(Function.Cotangent) },
-            { Func.Acos, BasicFunctionConverter(Function.Arccosine) },
-            { Func.Asin, BasicFunctionConverter(Function.Arcsine) },
-            { Func.Atan, BasicFunctionConverter(Function.Arctangent) },
-            { Func.Asec, BasicFunctionConverter(Function.Arcsecant) },
-            { Func.Acsc, BasicFunctionConverter(Function.Arccosecant) },
-            { Func.Acot, BasicFunctionConverter(Function.Arccotangent) },
-            { Func.Ceil, BasicFunctionConverter(Function.Ceiling) },
-            { Func.UnitStep, BasicFunctionConverter(Function.UnitStep) },
-            { Func.Atan2, BasicFunctionConverter(Function.Arctangent2) },
-            { Func.Log, BasicFunctionConverter(Function.Logarithm) },
-            { Func.Floor, BasicFunctionConverter(Function.Floor) },
-            { Func.If, BasicFunctionConverter(Function.If) },
-            { Func.Dist, BasicFunctionConverter(Function.Dist) },
-            { Func.DistSq, BasicFunctionConverter(Function.DistSq) },
-            { Func.Rand, (args, vars) => { return new RandomExpression(); } },
-            { Func.Sqrt, ConvertSqrtFunction },
-            //Func.Integrate
-            { Func.Derive, ConvertDeriveExpression },
-            { Func.Plot, ConvertPlotExpression },
-            { Func.Plot3d, ConvertPlot3dExpression},
-            { Func.MathPaint,  ConvertMathPaintExpression },
-            { Func.Feedback, ConvertFeedbackExpression },
-            { Func.Subst, ConvertSubstExpression },
-        };
-
         private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
         {
             Function function = null;

@@ -251,46 +251,6 @@ namespace MetaphysicsIndustries.Solus
             { "magenta", Colors.Magenta },
         };
 
-        private Dictionary<string, Func> _ex_functionTypes = new Dictionary<string, Func>(StringComparer.CurrentCultureIgnoreCase)
-        {
-            { "sin", Func.Sine },
-            { "cos", Func.Cosine },
-            { "tan", Func.Tangent },
-            { "ln", Func.Ln },
-            { "log2", Func.Log2 },
-            { "log10", Func.Log10 },
-            { "sqrt", Func.Sqrt },
-            { "rand", Func.Rand },
-            { "abs", Func.Abs },
-            { "sec", Func.Sec },
-            { "csc", Func.Csc },
-            { "cot", Func.Cot },
-            { "acos", Func.Acos },
-            { "asin", Func.Asin },
-            { "atan", Func.Atan },
-            { "asec", Func.Asec },
-            { "acsc", Func.Acsc },
-            { "acot", Func.Acot },
-            { "ceil", Func.Ceil },
-            { "floor", Func.Floor },
-            { "ustep", Func.UnitStep },
-            { "unitstep", Func.UnitStep },
-            { "atan2", Func.Atan2 },
-            { "log", Func.Log },
-            { "integrate", Func.Integrate },
-            { "derive", Func.Derive },
-            { "if", Func.If },
-            { "dist", Func.Dist },
-            { "distsq", Func.DistSq },
-            { "plot", Func.Plot },
-            { "plot3d", Func.Plot3d },
-            { "mathpaint", Func.MathPaint },
-            { "plotm", Func.PlotMatrix },
-            { "plotv", Func.PlotVector },
-            { "feedback", Func.Feedback },
-            { "subst", Func.Subst },
-        };
-
         private Dictionary<NodeType, Ranks> _ex_ranksFromNodeTypes = new Dictionary<NodeType, Ranks>()
         {
             { NodeType.Num, Ranks.Values },
@@ -320,24 +280,6 @@ namespace MetaphysicsIndustries.Solus
             { NodeType.Assign, Ranks.Assign },
             { NodeType.DelayAssign, Ranks.Assign },
             { NodeType.Whitespace, Ranks.Whitespace },
-        };
-
-        private Dictionary<Func, int> _ex_argsFromFunctions = new Dictionary<Func, int>()
-        {
-            { Func.Plot, -1 },
-            { Func.Plot3d, -1 },
-            { Func.Rand, 0 },
-            { Func.Atan2, 2 },
-            { Func.Log, 2 },
-            { Func.Integrate, 2 },
-            { Func.Derive, 2 },
-            { Func.MathPaint, 5 },
-            { Func.Feedback, 2 },
-            { Func.Subst, 3 },
-            { Func.If, 3 },
-            { Func.Dist, 2 },
-            { Func.DistSq, 2 },
-            { Func.Unknown, -1 },
         };
 
         public Colors GetColor(string token)
