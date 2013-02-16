@@ -467,7 +467,7 @@ namespace MetaphysicsIndustries.Solus
             else if (function.HasValue)
             {
                 Func func = GetFuncType(token);
-                return ExFromFunction(token, location, func);
+                return new Ex(token, NodeType.Func, GetRank(NodeType.Func), location, func);
             }
             else if (GetColor(token) != Colors.Unknown)
             {
@@ -483,7 +483,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (numValue.HasValue)
             {
-                return ExFromNumber(token, location, numValue.Value);
+                return new Ex(token, NodeType.Num, GetRank(NodeType.Num), location, numValue.Value);
             }
             else if ((Regex.Match(token, "^\\s+$")).Length > 0)
             {
@@ -491,16 +491,6 @@ namespace MetaphysicsIndustries.Solus
             }
 
             return new Ex(token, type, GetRank(type), location);
-        }
-
-        public Ex ExFromFunction(string token, int location, Func func)
-        {
-            return new Ex(token, NodeType.Func, GetRank(NodeType.Func), location, func);
-        }
-
-        public Ex ExFromNumber(string token, int location, float numValue)
-        {
-            return new Ex(token, NodeType.Num, GetRank(NodeType.Num), location, numValue);
         }
 
         //Ex: The class that represents the nodes of a compiled expression tree.
