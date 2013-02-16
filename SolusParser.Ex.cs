@@ -340,40 +340,6 @@ namespace MetaphysicsIndustries.Solus
             { Func.Unknown, -1 },
         };
 
-        public NodeType GetNodeType(string token)
-        {
-            if (_ex_nodeTypes.ContainsKey(token))
-            {
-                return _ex_nodeTypes[token];
-            }
-            else if (GetFunction(token).HasValue)
-            {
-                return NodeType.Func;
-            }
-            else if (GetColor(token) != Colors.Unknown)
-            {
-                return NodeType.Color;
-            }
-            else if ((Regex.Match(token, "^\\\"[^\\\"]*\\\"$")).Length > 0)
-            {
-                return NodeType.String;
-            }
-            else if ((Regex.Match(token, "^[a-zA-Z_]\\w*$")).Length > 0)
-            {
-                return NodeType.Var;
-            }
-            else if (ParseNumber(token).HasValue)
-            {
-                return NodeType.Num;
-            }
-            else if ((Regex.Match(token, "^\\s+$")).Length > 0)
-            {
-                return NodeType.Whitespace;
-            }
-
-            return NodeType.Unknown;
-        }
-
         public Colors GetColor(string token)
         {
             if (_ex_colors.ContainsKey(token))
@@ -489,7 +455,38 @@ namespace MetaphysicsIndustries.Solus
 
         public Ex ExFromToken(string token, int location)
         {
-            NodeType type = GetNodeType(token);
+            NodeType type = NodeType.Unknown;
+
+            if (_ex_nodeTypes.ContainsKey(token))
+            {
+                type = _ex_nodeTypes[token];
+            }
+            else if (GetFunction(token).HasValue)
+            {
+                type = NodeType.Func;
+            }
+            else if (GetColor(token) != Colors.Unknown)
+            {
+                type = NodeType.Color;
+            }
+            else if ((Regex.Match(token, "^\\\"[^\\\"]*\\\"$")).Length > 0)
+            {
+                type = NodeType.String;
+            }
+            else if ((Regex.Match(token, "^[a-zA-Z_]\\w*$")).Length > 0)
+            {
+                type = NodeType.Var;
+            }
+            else if (ParseNumber(token).HasValue)
+            {
+                type = NodeType.Num;
+            }
+            else if ((Regex.Match(token, "^\\s+$")).Length > 0)
+            {
+                type = NodeType.Whitespace;
+            }
+
+
 
             if (type == NodeType.Func)
             {
