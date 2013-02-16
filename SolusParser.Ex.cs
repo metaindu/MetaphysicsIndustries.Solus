@@ -356,11 +356,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 return NodeType.Var;
             }
-            else if ((Regex.Match(token, "^[+-]?[0-9]*\\.[0-9]+(?:[eE][+-]?[0-9]+)?$")).Length > 0 ||
-                     (Regex.Match(token, "^[+-]?(?:0[dD])?[0-9]+$")).Length > 0 ||
-                     (Regex.Match(token, "^[+-]?0[xX][0-9a-fA-F]+$")).Length > 0 ||
-                     (Regex.Match(token, "^[+-]?0[oO][0-7]+$")).Length > 0 ||
-                     (Regex.Match(token, "^[+-]?0[bB][01]+$")).Length > 0)
+            else if (ParseNumber(token).HasValue)
             {
                 return NodeType.Num;
             }
