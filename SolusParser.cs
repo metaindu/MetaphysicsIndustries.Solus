@@ -423,10 +423,6 @@ namespace MetaphysicsIndustries.Solus
             {
                 return _functions[ex.Token].Converter(args,varTable);
             }
-            else if (ex.Func == Func.Integrate)
-            {
-                throw new SolusParseException(ex, "That function is not yet implemented");
-            }
             else
             {
                 throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
