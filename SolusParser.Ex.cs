@@ -350,23 +350,12 @@ namespace MetaphysicsIndustries.Solus
             return Colors.Unknown;
         }
 
-        public Func GetFuncType(string token)
-        {
-            if (_ex_functionTypes.ContainsKey(token))
-            {
-                return _ex_functionTypes[token];
-            }
-
-            return Func.Unknown;
-        }
-
         public Ranks GetRank(NodeType n)
         {
             if (_ex_ranksFromNodeTypes.ContainsKey(n))
             {
                 return _ex_ranksFromNodeTypes[n];
             }
-
 
             return Ranks.Unknown;
         }
