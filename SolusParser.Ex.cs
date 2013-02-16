@@ -21,63 +21,6 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusParser
     {
-
-        public enum Func
-        {
-            Sine,
-            Cosine,
-            Tangent,
-            Ln,
-            Log2,
-            Log10,
-            //Exponent,
-            Sqrt,
-            Rand,
-            //Int,
-            //Pow,
-            Abs,
-
-            Sec,
-            Csc,
-            Cot,
-            Acos,
-            Asin,
-            Atan,
-            Asec,
-            Acsc,
-            Acot,
-            Ceil,
-            Floor,
-
-            UnitStep,
-
-            Atan2,
-            Log,
-
-            Integrate,
-            Derive,
-            //GetRow,
-            //GetColumn,
-            //GetRow2,
-            //GetColumn2,
-
-            If,
-            Dist,
-            DistSq,
-
-            Plot,
-            Plot3d,
-            MathPaint,
-            PlotVector,
-            PlotMatrix,
-
-            Feedback,
-
-            Subst,
-
-            Unknown,
-        }
-
         public struct ExFunction
         {
             public string Token;
