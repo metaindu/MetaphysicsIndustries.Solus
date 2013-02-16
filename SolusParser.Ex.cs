@@ -405,16 +405,6 @@ namespace MetaphysicsIndustries.Solus
             return Ranks.Unknown;
         }
 
-        public int GetFuncArgs(Func f)
-        {
-            if (_ex_argsFromFunctions.ContainsKey(f))
-            {
-                return _ex_argsFromFunctions[f];
-            }
-
-            return 1;
-        }
-
         public static float? ParseNumber(string token)
         {
             Match match;
