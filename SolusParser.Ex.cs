@@ -457,13 +457,17 @@ namespace MetaphysicsIndustries.Solus
         {
             NodeType type = NodeType.Unknown;
 
+            ExFunction? function = GetFunction(token);
+            float? numValue = ParseNumber(token);
+
             if (_ex_nodeTypes.ContainsKey(token))
             {
                 type = _ex_nodeTypes[token];
             }
-            else if (GetFunction(token).HasValue)
+            else if (function.HasValue)
             {
-                type = NodeType.Func;
+                Func func = GetFuncType(token);
+                return ExFromFunction(token, location, func);
             }
             else if (GetColor(token) != Colors.Unknown)
             {
@@ -477,31 +481,16 @@ namespace MetaphysicsIndustries.Solus
             {
                 type = NodeType.Var;
             }
-            else if (ParseNumber(token).HasValue)
+            else if (numValue.HasValue)
             {
-                type = NodeType.Num;
+                return ExFromNumber(token, location, numValue.Value);
             }
             else if ((Regex.Match(token, "^\\s+$")).Length > 0)
             {
                 type = NodeType.Whitespace;
             }
 
-
-
-            if (type == NodeType.Func)
-            {
-                Func func = GetFuncType(token);
-                return ExFromFunction(token, location, func);
-            }
-            else if (type == NodeType.Num)
-            {
-                float numValue = ParseNumber(token).Value;
-                return ExFromNumber(token, location, numValue);
-            }
-            else
-            {
-                return new Ex(token, type, GetRank(type), location);
-            }
+            return new Ex(token, type, GetRank(type), location);
         }
 
         public Ex ExFromFunction(string token, int location, Func func)
