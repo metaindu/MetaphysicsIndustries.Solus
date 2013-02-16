@@ -419,9 +419,9 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            if (_functionConverters.ContainsKey(ex.Func))
+            if (_functions.ContainsKey(ex.Token))
             {
-                return _functionConverters[ex.Func](args, varTable);
+                return _functions[ex.Token].Converter(args,varTable);
             }
             else if (ex.Func == Func.Integrate)
             {
