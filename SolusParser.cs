@@ -871,7 +871,7 @@ namespace MetaphysicsIndustries.Solus
                 //cascaded comma operators against the functions'
                 //desired argument counts.
 
-                int funcArgs = GetFuncArgs(ex.Func);
+                int funcArgs = GetFunction(ex.Token).Value.NumArguments;
                 if (funcArgs != 0)
                 {
                     ex.Left = BuildTree(b);
