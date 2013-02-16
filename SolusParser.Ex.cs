@@ -413,7 +413,7 @@ namespace MetaphysicsIndustries.Solus
             return 1;
         }
 
-        public static float ParseNumber(string token)
+        public static float? ParseNumber(string token)
         {
             Match match;
             if (token.ToLower() == "e")
@@ -492,7 +492,7 @@ namespace MetaphysicsIndustries.Solus
                 return float.Parse(token);
             }
 
-            return 0;
+            return null;
         }
 
         public Ex ExFromToken(string token, int location)
@@ -506,7 +506,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (type == NodeType.Num)
             {
-                float numValue = ParseNumber(token);
+                float numValue = ParseNumber(token).Value;
                 return ExFromNumber(token, location, numValue);
             }
             else
