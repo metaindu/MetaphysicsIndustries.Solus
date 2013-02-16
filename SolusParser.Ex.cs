@@ -60,7 +60,7 @@ namespace MetaphysicsIndustries.Solus
             new ExFunction(){ Token="distsq",    Converter=BasicFunctionConverter(Function.DistSq),            NumArguments=2,  HasVariableNumArgs=false },
             new ExFunction(){ Token="plot",      Converter=PlotExpression.Convert,                             NumArguments=-1, HasVariableNumArgs=true  },
             new ExFunction(){ Token="plot3d",    Converter=Plot3dExpression.Convert,                           NumArguments=-1, HasVariableNumArgs=true  },
-            new ExFunction(){ Token="mathpaint", Converter=ConvertMathPaintExpression,                         NumArguments=5,  HasVariableNumArgs=false },
+            new ExFunction(){ Token="mathpaint", Converter=MathPaintExpression.Convert,                        NumArguments=5,  HasVariableNumArgs=false },
             new ExFunction(){ Token="feedback",  Converter=ConvertFeedbackExpression,                          NumArguments=2,  HasVariableNumArgs=false },
             new ExFunction(){ Token="subst",     Converter=ConvertSubstExpression,                             NumArguments=3,  HasVariableNumArgs=false },
         };

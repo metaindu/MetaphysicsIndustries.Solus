@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -71,6 +72,27 @@ namespace MetaphysicsIndustries.Solus
                 Width, Height,
                 Expression
                 );
+        }
+
+        public static Expression Convert(IEnumerable<Expression> _args, VariableTable varTable)
+        {
+            List<Expression> args = _args.ToList();
+
+            if (!(args[0] is VariableAccess))
+            {
+                throw new SolusParseException(null, "First argument to MathPaint command must be a variable reference.");
+            }
+            if (!(args[1] is VariableAccess))
+            {
+                throw new SolusParseException(null, "Second argument to MathPaint command must be a variable reference.");
+            }
+
+            return new MathPaintExpression(
+                ((VariableAccess)args[0]).Variable,
+                ((VariableAccess)args[1]).Variable,
+                (int)(args[2].Eval(varTable).Value),
+                (int)(args[3].Eval(varTable).Value),
+                args[4]);
         }
     }
 }
