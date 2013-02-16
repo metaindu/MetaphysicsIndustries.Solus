@@ -346,7 +346,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 return _ex_nodeTypes[token];
             }
-            else if (GetFuncType(token) != Func.Unknown) return NodeType.Func;
+            else if (GetFunction(token).HasValue) return NodeType.Func;
             else if (GetColor(token) != Colors.Unknown) return NodeType.Color;
             else if ((Regex.Match(token, "^\\\"[^\\\"]*\\\"$")).Length > 0)
             {
