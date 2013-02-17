@@ -112,16 +112,11 @@
     <Compile Include="Log10Function.cs" />
     <Compile Include="Log2Function.cs" />
     <Compile Include="LogarithmFunction.cs" />
-    <Compile Include="MathPaintExpression.cs" />
     <Compile Include="SolusMatrix.cs" />
     <Compile Include="MultiplicationOperation.cs" />
     <Compile Include="NaturalLogarithmFunction.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="OperationPrecedence.cs" />
-    <Compile Include="Plot3dExpression.cs" />
-    <Compile Include="PlotExpression.cs" />
-    <Compile Include="PlotMatrixExpression.cs" />
-    <Compile Include="PlotVectorExpression.cs" />
     <Compile Include="ProductExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExpression.cs" />
