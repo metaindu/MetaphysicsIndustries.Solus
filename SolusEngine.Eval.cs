@@ -36,10 +36,8 @@ namespace MetaphysicsIndustries.Solus
             Expression[] exprs = new Expression[i];
 
             Expression previousValue = null;
-            bool hasPreviousValue = false;
             if (vars.Contains(x))
             {
-                hasPreviousValue = true;
                 previousValue = vars[x];
                 vars.Remove(x);
             }

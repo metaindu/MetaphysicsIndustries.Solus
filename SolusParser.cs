@@ -355,7 +355,6 @@ namespace MetaphysicsIndustries.Solus
 
         private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
         {
-            Function function = null;
             List<Expression> args = new List<Expression>();
 
             if (ex.Left != null)
