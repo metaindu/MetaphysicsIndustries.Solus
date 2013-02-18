@@ -7,8 +7,6 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CleanUpTransformer : ExpressionTransformer
     {
-        public static readonly CleanUpTransformer DefaultInstance = new CleanUpTransformer();
-
         public Expression CleanUp(Expression expr)
         {
             if (expr is FunctionCall)

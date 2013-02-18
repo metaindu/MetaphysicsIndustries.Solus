@@ -12,16 +12,17 @@
     <AssemblyName>MetaphysicsIndustries.Solus</AssemblyName>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -29,7 +30,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -102,7 +103,6 @@
     <Compile Include="Settings.cs" />
     <Compile Include="PolynomialSimplifier.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
-    <Compile Include="SolusEngine.Subst.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
     <Compile Include="TransformArgs.cs" />
     <Compile Include="UnaryOperation.cs" />
@@ -112,25 +112,18 @@
     <Compile Include="Log10Function.cs" />
     <Compile Include="Log2Function.cs" />
     <Compile Include="LogarithmFunction.cs" />
-    <Compile Include="MathPaintExpression.cs" />
     <Compile Include="SolusMatrix.cs" />
     <Compile Include="MultiplicationOperation.cs" />
     <Compile Include="NaturalLogarithmFunction.cs" />
     <Compile Include="Operation.cs" />
     <Compile Include="OperationPrecedence.cs" />
-    <Compile Include="Plot3dExpression.cs" />
-    <Compile Include="PlotExpression.cs" />
-    <Compile Include="PlotMatrixExpression.cs" />
-    <Compile Include="PlotVectorExpression.cs" />
     <Compile Include="ProductExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExpression.cs" />
     <Compile Include="SecantFunction.cs" />
     <Compile Include="SineFunction.cs" />
     <Compile Include="SingleArgumentFunction.cs" />
-    <Compile Include="SolusEngine.CleanUp.cs" />
     <Compile Include="SolusEngine.cs" />
-    <Compile Include="SolusEngine.Derivative.cs" />
     <Compile Include="SolusEngine.GatherVariables.cs" />
     <Compile Include="SolusEngine.Integral.cs" />
     <Compile Include="SolusEngine.Modulators.cs" />
@@ -144,6 +137,7 @@
     <Compile Include="VariableAccess.cs" />
     <Compile Include="VariableTable.cs" />
     <Compile Include="SolusVector.cs" />
+    <Compile Include="SubstTransformer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />

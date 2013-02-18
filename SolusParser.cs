@@ -17,50 +17,42 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusParser
     {
-        static SolusParser()
+        public SolusParser()
         {
-            _functions[Func.Abs] = Function.AbsoluteValue;
-            _functions[Func.Cosine] = Function.Cosine;
-            _functions[Func.Ln] = Function.NaturalLogarithm;
-            _functions[Func.Log10] = Function.Log10;
-            _functions[Func.Log2] = Function.Log2;
-            _functions[Func.Sine] = Function.Sine;
-            _functions[Func.Tangent] = Function.Tangent;
-            _functions[Func.Sec] = Function.Secant;
-            _functions[Func.Csc] = Function.Cosecant;
-            _functions[Func.Cot] = Function.Cotangent;
-            _functions[Func.Acos] = Function.Arccosine;
-            _functions[Func.Asin] = Function.Arcsine;
-            _functions[Func.Atan] = Function.Arctangent;
-            _functions[Func.Asec] = Function.Arcsecant;
-            _functions[Func.Acsc] = Function.Arccosecant;
-            _functions[Func.Acot] = Function.Arccotangent;
-            _functions[Func.Ceil] = Function.Ceiling;
-            _functions[Func.UnitStep] = Function.UnitStep;
-            _functions[Func.Atan2] = Function.Arctangent2;
-            _functions[Func.Log] = Function.Logarithm;
-            _functions[Func.Floor] = Function.Floor;
-            _functions[Func.If] = Function.If;
-            _functions[Func.Dist] = Function.Dist;
-            _functions[Func.DistSq] = Function.DistSq;
+            foreach (ExFunction func in _builtinFunctions)
+            {
+                AddFunction(func);
+            }
         }
 
-        private static Dictionary<Func, Function> _functions = new Dictionary<Func, Function>();
+        private Dictionary<string, ExFunction> _functions = new Dictionary<string, ExFunction>(StringComparer.CurrentCultureIgnoreCase);
 
+        public void AddFunction(ExFunction func)
+        {
+            if (_functions.ContainsKey(func.Token)) throw new ArgumentException("A function already uses that token.", "func");
 
-        private static SolusEngine _engine = new SolusEngine();
+            _functions.Add(func.Token, func);
+        }
 
-        public static Expression Compile(string expr)
+        public ExFunction? GetFunction(string token)
+        {
+            if (!_functions.ContainsKey(token)) return null;
+
+            return _functions[token];
+        }
+
+        public Expression Compile(string expr)
         {
             return Compile(expr, new VariableTable());
         }
 
-        public static Expression Compile(string expr, VariableTable varTable)
+        public Expression Compile(string expr, VariableTable varTable)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -70,7 +62,7 @@ namespace MetaphysicsIndustries.Solus
             return Compile(tokens, varTable);
         }
 
-        public static Expression Compile(Ex[] tokens, VariableTable varTable)
+        public Expression Compile(Ex[] tokens, VariableTable varTable)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -79,10 +71,11 @@ namespace MetaphysicsIndustries.Solus
             tokens = Arrange(tokens);
             Ex ex = BuildTree(tokens);
             Expression expr = ConvertToSolusExpression(ex, varTable);
-            return _engine.CleanUp(expr);
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(expr);
         }
 
-        protected static void SyntaxCheck(Ex[] tokens)
+        protected void SyntaxCheck(Ex[] tokens)
         {
             int i;
             for (i = 0; i < tokens.Length - 1; i++)
@@ -119,7 +112,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 else if (ex.Type == NodeType.Func)
                 {
-                    if (Ex.GetFuncType(ex.Token) == Func.Unknown)
+                    if (!GetFunction(ex.Token).HasValue)
                     {
                         throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
                     }
@@ -132,22 +125,22 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected static Expression Compile(Ex[] tokens)
+        protected Expression Compile(Ex[] tokens)
         {
             return Compile(tokens, null);
         }
 
-        protected static Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
+        protected Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
         {
             Expression leftArg = null;
             Expression rightArg = null;
-            if (ex.left != null)
+            if (ex.Left != null)
             {
-                leftArg = ConvertToSolusExpression(ex.left, varTable);
+                leftArg = ConvertToSolusExpression(ex.Left, varTable);
             }
-            if (ex.right != null)
+            if (ex.Right != null)
             {
-                rightArg = ConvertToSolusExpression(ex.right, varTable);
+                rightArg = ConvertToSolusExpression(ex.Right, varTable);
             }
 
             if (ex.Type == NodeType.Add)
@@ -282,7 +275,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (ex.Type == NodeType.Num)
             {
-                return new Literal(ex.numValue);
+                return new Literal(ex.NumValue);
             }
             else if (ex.Type == NodeType.Sub)
             {
@@ -305,7 +298,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (ex.Type == NodeType.Color)
             {
-                switch (Ex.GetColor(ex.Token))
+                switch (GetColor(ex.Token))
                 {
                     case Colors.Black: return ColorExpression.Black;
                     case Colors.White: return ColorExpression.White;
@@ -353,16 +346,22 @@ namespace MetaphysicsIndustries.Solus
             throw new SolusParseException(ex, error);
         }
 
-        private static Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
+        public delegate Expression FunctionConverter(IEnumerable<Expression> args, VariableTable vars);
+
+        public static FunctionConverter BasicFunctionConverter(Function function)
         {
-            Function function = null;
+            return (args, vars) => { return new FunctionCall(function, args); };
+        }
+
+        private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
+        {
             List<Expression> args = new List<Expression>();
 
-            if (ex.left != null)
+            if (ex.Left != null)
             {
-                if (ex.left.Type == NodeType.Comma)
+                if (ex.Left.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.left, args, varTable);
+                    ConvertCommaToArgs(ex.Left, args, varTable);
                 }
                 else
                 {
@@ -370,11 +369,11 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            if (ex.right != null)
+            if (ex.Right != null)
             {
-                if (ex.right.Type == NodeType.Comma)
+                if (ex.Right.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.right, args, varTable);
+                    ConvertCommaToArgs(ex.Right, args, varTable);
                 }
                 else
                 {
@@ -382,140 +381,27 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            if (_functions.ContainsKey(ex.func))
+            if (_functions.ContainsKey(ex.Token))
             {
-                function = _functions[ex.func];
-            }
-            //else if (ex.func == Func.Exponent)
-            //{
-            //    function = BinaryOperation.Exponent;
-            //    args.Insert(0, new Literal(Math.E));
-            //    //return new FunctionCall(
-            //    //    BinaryOperation.Exponent,
-            //    //    new Literal(Math.E),
-            //    //    leftArg);
-            //}
-            //else if (ex.func == Func.Int)
-            //{
-            //    function = Function.Floor;
-            //}
-            //else if (ex.func == Func.Pow)
-            //{
-            //    function = BinaryOperation.Exponent;
-            //    //return new FunctionCall(
-            //    //    BinaryOperation.Exponent,
-            //    //    leftArg,
-            //    //    rightArg);
-            //}
-            else if (ex.func == Func.Rand)
-            {
-                return new RandomExpression();
-            }
-            else if (ex.func == Func.Sqrt)
-            {
-                function = BinaryOperation.Exponent;
-                args.Add(new Literal(0.5f));
-                //return new FunctionCall(
-                //    BinaryOperation.Exponent,
-                //    leftArg,
-                //    new Literal(0.5f));
-            }
-            else if (ex.func == Func.Integrate)
-            {
-                throw new SolusParseException(ex, "That function is not yet implemented");
-                //throw new NotImplementedException();
-            }
-            else if (ex.func == Func.Derive)
-            {
-                if (!(args[1] is VariableAccess))
-                {
-                    throw new SolusParseException(ex, "Argument must be a variable");
-                }
-
-                return _engine.GetDerivative(args[0], ((VariableAccess)args[1]).Variable);
-            }
-            //else if (ex.func == Func.GetRow)
-            //{
-            //    return ConvertGetRowExpression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.GetColumn)
-            //{
-            //    return ConvertGetColumnExpression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.GetRow2)
-            //{
-            //    return ConvertGetRow2Expression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.GetColumn2)
-            //{
-            //    return ConvertGetColumn2Expression(ex, varTable, args);
-            //}
-            else if (ex.func == Func.Plot)
-            {
-                return ConvertPlotExpression(ex, args);
-            }
-            else if (ex.func == Func.Plot3d)
-            {
-                return ConvertPlot3dExpression(ex, varTable, args);
-            }
-            else if (ex.func == Func.MathPaint)
-            {
-                return ConvertMathPaintExpression(ex, varTable, args);
-            }
-            //else if (ex.func == Func.PlotMatrix)
-            //{
-            //    return ConvertPlotMatrixExpression(ex, varTable, args);
-            //}
-            //else if (ex.func == Func.PlotVector)
-            //{
-            //    Expression arg = args[0];
-
-            //    while (arg is VariableAccess)
-            //    {
-            //        Expression arg2 = varTable[((VariableAccess)arg).Variable];
-            //        if (arg == arg2) { break; }
-            //        arg = arg2;
-            //    }
-
-            //    if (!(arg is SolusVector))
-            //    {
-            //        throw new SolusParseException(ex, "The argument to plotv must be a vector.");
-            //    }
-
-            //    return new PlotVectorExpression((SolusVector)arg);
-            //}
-            else if (ex.func == Func.Feedback)
-            {
-                return ConvertFeedbackExpression(ex, varTable, args);
-            }
-            else if (ex.func == Func.Subst)
-            {
-                return ConvertSubstExpression(ex, varTable, args);
+                return _functions[ex.Token].Converter(args,varTable);
             }
             else
             {
                 throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
             }
-
-            return new FunctionCall(
-                function,
-                args);
         }
 
-        private static Expression ConvertSubstExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private static Expression ConvertSubstExpression(IEnumerable<Expression> args, VariableTable varTable)
         {
-            if (!(args[1] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "The second argument must be a variable");
-            }
-
-            return _engine.CleanUp(_engine.Subst(args[0], ((VariableAccess)args[1]).Variable, args[2]));
+            SubstTransformer subst = new SubstTransformer();
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(subst.Subst(args.First(), ((VariableAccess)args.ElementAt(1)).Variable, args.ElementAt(2)));
         }
 
-        private static Expression ConvertFeedbackExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        private static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, VariableTable varTable)
         {
-            Expression g = args[0];
-            Expression h = args[1];
+            Expression g = args.ElementAt(0);
+            Expression h = args.ElementAt(1);
 
             return new FunctionCall(
                         BinaryOperation.Division,
@@ -529,304 +415,34 @@ namespace MetaphysicsIndustries.Solus
                                 h)));
         }
 
-        //private static Expression ConvertGetRowExpression(Ex ex, VariableTable varTable, List<Expression> args)
-        //{
-        //    Variable var;
-        //    SolusMatrix mat;
-        //    int row;
-        //    Expression arg;
 
-        //    if (!(args[0] is VariableAccess))
-        //    {
-        //        throw new SolusParseException(ex, "The first argument must be a variable.");
-        //    }
 
-        //    arg = args[1];
-        //    while (arg is VariableAccess)
-        //    {
-        //        var = ((VariableAccess)arg).Variable;
-        //        if (!varTable.Contains(var)) { break; }
-
-        //        if (varTable[var] == arg) { break; }
-
-        //        arg = varTable[var];
-        //    }
-
-        //    if (!(arg is SolusMatrix))
-        //    {
-        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
-        //    }
-
-        //    var = ((VariableAccess)args[0]).Variable;
-        //    mat = (SolusMatrix)arg;
-        //    row = (int)(args[2].Eval(varTable).Value);
-
-        //    varTable[var] = mat.GetRow(row);
-        //    return varTable[var];
-        //}
-
-        //private static Expression ConvertGetColumnExpression(Ex ex, VariableTable varTable, List<Expression> args)
-        //{
-        //    Variable var;
-        //    SolusMatrix mat;
-        //    int rolumn;
-        //    Expression arg;
-
-        //    if (!(args[0] is VariableAccess))
-        //    {
-        //        throw new SolusParseException(ex, "The first argument must be a variable.");
-        //    }
-
-        //    arg = args[1];
-        //    while (arg is VariableAccess)
-        //    {
-        //        var = ((VariableAccess)arg).Variable;
-        //        if (!varTable.Contains(var)) { break; }
-
-        //        if (varTable[var] == arg) { break; }
-
-        //        arg = varTable[var];
-        //    }
-
-        //    if (!(arg is SolusMatrix))
-        //    {
-        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
-        //    }
-
-        //    var = ((VariableAccess)args[0]).Variable;
-        //    mat = (SolusMatrix)arg;
-        //    rolumn = (int)(args[2].Eval(varTable).Value);
-
-        //    varTable[var] = mat.GetColumn(rolumn);
-        //    return varTable[var];
-        //}
-
-        //private static Expression ConvertGetRow2Expression(Ex ex, VariableTable varTable, List<Expression> args)
-        //{
-        //    Variable var;
-        //    SolusMatrix mat;
-        //    int row;
-        //    Expression arg;
-
-        //    if (!(args[0] is VariableAccess))
-        //    {
-        //        throw new SolusParseException(ex, "The first argument must be a variable.");
-        //    }
-
-        //    arg = args[1];
-        //    while (arg is VariableAccess)
-        //    {
-        //        var = ((VariableAccess)arg).Variable;
-        //        if (!varTable.Contains(var)) { break; }
-
-        //        if (varTable[var] == arg) { break; }
-
-        //        arg = varTable[var];
-        //    }
-
-        //    if (!(arg is SolusMatrix))
-        //    {
-        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
-        //    }
-
-        //    var = ((VariableAccess)args[0]).Variable;
-        //    mat = (SolusMatrix)arg;
-        //    row = (int)(args[2].Eval(varTable).Value);
-
-        //    SolusVector ret = mat.GetRow(row);
-        //    int i;
-        //    for (i = 0; i < ret.Length; i++)
-        //    {
-        //        if (ret[i] is Literal)
-        //        {
-        //            ret[i] = new Literal((int)(((Literal)ret[i]).Value) & 0x000000FF);
-        //        }
-        //    }
-        //    varTable[var] = ret;
-        //    return varTable[var];
-        //}
-
-        //private static Expression ConvertGetColumn2Expression(Ex ex, VariableTable varTable, List<Expression> args)
-        //{
-        //    Variable var;
-        //    SolusMatrix mat;
-        //    int column;
-        //    Expression arg;
-
-        //    if (!(args[0] is VariableAccess))
-        //    {
-        //        throw new SolusParseException(ex, "The first argument must be a variable.");
-        //    }
-
-        //    arg = args[1];
-        //    while (arg is VariableAccess)
-        //    {
-        //        var = ((VariableAccess)arg).Variable;
-        //        if (!varTable.Contains(var)) { break; }
-
-        //        if (varTable[var] == arg) { break; }
-
-        //        arg = varTable[var];
-        //    }
-
-        //    if (!(arg is SolusMatrix))
-        //    {
-        //        throw new SolusParseException(ex, "The second argument must be a matrix.");
-        //    }
-
-        //    var = ((VariableAccess)args[0]).Variable;
-        //    mat = (SolusMatrix)arg;
-        //    column = (int)(args[2].Eval(varTable).Value);
-
-        //    SolusVector ret = mat.GetColumn(column);
-        //    int i;
-        //    for (i = 0; i < ret.Length; i++)
-        //    {
-        //        if (ret[i] is Literal)
-        //        {
-        //            ret[i] = new Literal((int)(((Literal)ret[i]).Value) & 0x000000FF);
-        //        }
-        //    }
-        //    varTable[var] = ret;
-        //    return ret;
-        //}
-
-        //private static Expression ConvertPlotMatrixExpression(Ex ex, VariableTable varTable, List<Expression> args)
-        //{
-        //    Expression arg = args[0];
-
-        //    while (arg is VariableAccess)
-        //    {
-        //        Expression arg2 = varTable[((VariableAccess)arg).Variable];
-        //        if (arg == arg2) { break; }
-        //        arg = arg2;
-        //    }
-
-        //    if (!(arg is SolusMatrix))
-        //    {
-        //        throw new SolusParseException(ex, "The argument to plotm must be a matrix.");
-        //    }
-
-        //    return new PlotMatrixExpression((SolusMatrix)arg);
-        //}
-
-        private static Expression ConvertPlot3dExpression(Ex ex, VariableTable varTable, List<Expression> args)
+        static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, VariableTable varTable)
         {
-            if (args.Count < 3 ||
-                !(args[0] is VariableAccess) ||
-                !(args[1] is VariableAccess))
+            DerivativeTransformer derive = new DerivativeTransformer();
+            Expression expr = _args.First();
+            Variable v = ((VariableAccess)_args.ElementAt(1)).Variable;
+
+            return derive.Transform(expr, new VariableTransformArgs(v));
+        }
+
+        static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, VariableTable varTable)
+        {
+            return new FunctionCall(BinaryOperation.Exponent, _args.First(), new Literal(0.5f));
+        }
+
+
+        protected void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
+        {
+            if (ex.Left != null)
             {
-                throw new SolusParseException(ex, "Plot command requires two variables and one expression to plot");
-            }
-
-            if ((args.Count > 5 && args.Count < 9) ||
-                args.Count == 10 ||
-                args.Count > 11)
-            {
-                throw new SolusParseException(ex, "Incorrect number of arguments");
-            }
-
-            Brush fillBrush = Brushes.Green;
-            Pen wirePen = Pens.Black;
-            float xMin = -4;
-            float xMax = 4;
-            float yMin = -4;
-            float yMax = 4;
-            float zMin = -2;
-            float zMax = 6;
-
-            if (args.Count == 4 || args.Count == 5)
-            {
-                fillBrush = _engine.GetBrushFromExpression(args[3], varTable);
-
-                if (args.Count == 5)
+                if (ex.Left.Type == NodeType.Comma)
                 {
-                    wirePen = _engine.GetPenFromExpression(args[4], varTable);
-                }
-            }
-            else if (args.Count == 9)
-            {
-                //3 --> xMin
-
-                xMin = args[3].Eval(varTable).Value;
-                xMax = args[4].Eval(varTable).Value;
-                yMin = args[5].Eval(varTable).Value;
-                yMax = args[6].Eval(varTable).Value;
-                zMin = args[7].Eval(varTable).Value;
-                zMax = args[8].Eval(varTable).Value;
-            }
-            else if (args.Count == 11)
-            {
-                xMin = args[3].Eval(varTable).Value;
-                xMax = args[4].Eval(varTable).Value;
-                yMin = args[5].Eval(varTable).Value;
-                yMax = args[6].Eval(varTable).Value;
-                zMin = args[7].Eval(varTable).Value;
-                zMax = args[8].Eval(varTable).Value;
-                fillBrush = _engine.GetBrushFromExpression(args[9], varTable);
-                wirePen = _engine.GetPenFromExpression(args[10], varTable);
-            }
-            else if (args.Count != 3)
-            {
-                throw new SolusParseException(ex, "Incorrect number of arguments");
-            }
-
-            return new Plot3dExpression(
-                ((VariableAccess)args[0]).Variable,
-                ((VariableAccess)args[1]).Variable,
-                args[2],
-                xMin, xMax,
-                yMin, yMax,
-                zMin, zMax,
-                wirePen, fillBrush);
-        }
-
-        private static Expression ConvertPlotExpression(Ex ex, List<Expression> args)
-        {
-            if (args.Count < 2 || !(args[0] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "Plot command requires one variable and at least one expression to plot");
-            }
-
-            List<Expression> exprs = new List<Expression>(args);
-            exprs.RemoveAt(0);
-
-            return new PlotExpression(((VariableAccess)args[0]).Variable, exprs.ToArray());
-        }
-
-        private static Expression ConvertMathPaintExpression(Ex ex, VariableTable varTable, List<Expression> args)
-        {
-            if (!(args[0] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "First argument to MathPaint command must be a variable reference.");
-            }
-            if (!(args[1] is VariableAccess))
-            {
-                throw new SolusParseException(ex, "Second argument to MathPaint command must be a variable reference.");
-            }
-
-            return new MathPaintExpression(
-                ((VariableAccess)args[0]).Variable,
-                ((VariableAccess)args[1]).Variable,
-                (int)(args[2].Eval(varTable).Value),
-                (int)(args[3].Eval(varTable).Value),
-                args[4]);
-        }
-
-
-
-
-        protected static void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
-        {
-            if (ex.left != null)
-            {
-                if (ex.left.Type == NodeType.Comma)
-                {
-                    ConvertCommaToArgs(ex.left, args, varTable);
+                    ConvertCommaToArgs(ex.Left, args, varTable);
                 }
                 else
                 {
-                    args.Add(ConvertToSolusExpression(ex.left, varTable));
+                    args.Add(ConvertToSolusExpression(ex.Left, varTable));
                 }
             }
             else
@@ -834,15 +450,15 @@ namespace MetaphysicsIndustries.Solus
                 Debug.WriteLine("ex.left == null in SolusParser.ConvertCommaToArgs");
             }
 
-            if (ex.right != null)
+            if (ex.Right != null)
             {
-                if (ex.right.Type == NodeType.Comma)
+                if (ex.Right.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.right, args, varTable);
+                    ConvertCommaToArgs(ex.Right, args, varTable);
                 }
                 else
                 {
-                    args.Add(ConvertToSolusExpression(ex.right, varTable));
+                    args.Add(ConvertToSolusExpression(ex.Right, varTable));
                 }
             }
             else
@@ -851,7 +467,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public static Ex[] Tokenize(string expr)
+        public Ex[] Tokenize(string expr)
         {
             string _expr = expr;
 
@@ -912,7 +528,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 string token = chunks2[i];
 
-                Ex ex = new Ex(token, locations[i]);
+                Ex ex = ExFromToken(token, locations[i]);
                 tokens[i] = ex;
 
                 //if (Ex.GetNodeType(token) == NodeType.Func &&
@@ -925,7 +541,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        protected static Ex[] Arrange(Ex[] intokens)
+        protected Ex[] Arrange(Ex[] intokens)
         {
 
 
@@ -1041,7 +657,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        protected static Ex BuildTree(Ex[] intokens)
+        protected Ex BuildTree(Ex[] intokens)
         {
             Ex[] _intokens = intokens;
 
@@ -1064,7 +680,7 @@ namespace MetaphysicsIndustries.Solus
             return ret;
         }
 
-        protected static Ex BuildTree(Queue<Ex> b)
+        protected Ex BuildTree(Queue<Ex> b)
         {
             Ex ex;
             Ranks r;
@@ -1090,17 +706,17 @@ namespace MetaphysicsIndustries.Solus
                 //cascaded comma operators against the functions'
                 //desired argument counts.
 
-                int funcArgs = Ex.GetFuncArgs(ex.func);
+                int funcArgs = GetFunction(ex.Token).Value.NumArguments;
                 if (funcArgs != 0)
                 {
-                    ex.left = BuildTree(b);
+                    ex.Left = BuildTree(b);
 
                     if (funcArgs > -1)
                     {
                         //check comma operators
                         //ensure argument count is correct
 
-                        int nargs = CountCommaArguments(ex.left);
+                        int nargs = CountCommaArguments(ex.Left);
                         if (nargs > funcArgs)
                         {
                             //throw exception
@@ -1141,9 +757,9 @@ namespace MetaphysicsIndustries.Solus
             else if (IsBinaryOperation(r))
             {
                 if (b.Count < 1) { throw new SolusParseException(ex, "Missing right operand"); }
-                ex.right = BuildTree(b);
+                ex.Right = BuildTree(b);
                 if (b.Count < 1) { throw new SolusParseException(ex, "Missing left operand"); }
-                ex.left = BuildTree(b);
+                ex.Left = BuildTree(b);
             }
 
 
@@ -1174,7 +790,7 @@ namespace MetaphysicsIndustries.Solus
                 r == Ranks.Assign;
         }
 
-        protected static int CountCommaArguments(Ex ex)
+        protected int CountCommaArguments(Ex ex)
         {
             if (ex == null)
             {
@@ -1183,7 +799,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (ex.Type == NodeType.Comma)
             {
-                return CountCommaArguments(ex.left) + CountCommaArguments(ex.right);
+                return CountCommaArguments(ex.Left) + CountCommaArguments(ex.Right);
             }
 
             return 1;

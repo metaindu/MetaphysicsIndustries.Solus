@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -26,21 +27,19 @@ namespace MetaphysicsIndustries.Solus
             this.Init(null, null);
         }
 
-        public FunctionCall(Function f, ICollection<Expression> a)
+        public FunctionCall(Function function, IEnumerable<Expression> args)
         {
-            if (f == null) { throw new ArgumentNullException("f"); }
-            if (a == null) { throw new ArgumentNullException("a"); }
+            if (function == null) { throw new ArgumentNullException("function"); }
+            if (args == null) { throw new ArgumentNullException("args"); }
 
-            Expression[] aa = new Expression[a.Count];
-            a.CopyTo(aa, 0);
-            Init(f, aa);
+            Init(function, args.ToArray());
         }
 
-        public FunctionCall(Function f, params Expression[] a)
+        public FunctionCall(Function function, params Expression[] args)
         {
-            if (f == null) { throw new ArgumentNullException("f"); }
+            if (function == null) { throw new ArgumentNullException("function"); }
 
-            Init(f, a);
+            Init(function, args);
         }
 
         public override void Dispose()
@@ -138,13 +137,13 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected void Init(Function f, Expression[] a)
+        protected void Init(Function function, Expression[] args)
         {
-            _function = f;
+            _function = function;
 
-            if (a != null)
+            if (args != null)
             {
-                _arguments.AddRange(a);
+                _arguments.AddRange(args);
             }
         }
 

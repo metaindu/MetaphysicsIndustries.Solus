@@ -158,7 +158,8 @@ namespace MetaphysicsIndustries.Solus
                         convolvee[n - k]));
                 }
 
-                ret[n] = _engine.CleanUp(new FunctionCall(secondOp, group.ToArray()));
+                CleanUpTransformer cleanup = new CleanUpTransformer();
+                ret[n] = cleanup.CleanUp(new FunctionCall(secondOp, group.ToArray()));
             }
 
             return ret;

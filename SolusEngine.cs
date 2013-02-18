@@ -63,7 +63,8 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression PreliminaryEval(Expression expr, VariableTable varTable)
         {
-            return CleanUp(expr.PreliminaryEval(varTable));
+            CleanUpTransformer cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(expr.PreliminaryEval(varTable));
         }
 
         //protected Expression InternalPreliminaryEval(Expression expr, VariableTable varTable)
@@ -174,36 +175,6 @@ namespace MetaphysicsIndustries.Solus
         //    }
         //    return null;
         //}
-
-        public Brush GetBrushFromExpression(Expression expression, VariableTable varTable)
-        {
-            if (expression is ColorExpression)
-            {
-                return ((ColorExpression)expression).Brush;
-            }
-            else //if (arg is Literal)
-            {
-                float value = expression.Eval(varTable).Value;// ((Literal)arg).Value;
-                int iValue = (int)(value);
-                Color color = Color.FromArgb(255, Color.FromArgb(iValue));
-                return new SolidBrush(color);
-            }
-        }
-
-        public Pen GetPenFromExpression(Expression arg, VariableTable varTable)
-        {
-            if (arg is ColorExpression)
-            {
-                return ((ColorExpression)arg).Pen;
-            }
-            else //if (arg is Literal)
-            {
-                float value = arg.Eval(varTable).Value;// ((Literal)arg).Value;
-                int iValue = (int)(value);
-                Color color = Color.FromArgb(255, Color.FromArgb(iValue));
-                return new Pen(color);
-            }
-        }
 
         public static SolusMatrix LoadImage(string filename)
         {
