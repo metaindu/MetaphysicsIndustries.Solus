@@ -174,8 +174,6 @@ namespace MetaphysicsIndustries.Solus
             { ")", NodeType.Paren },
             { "[", NodeType.Index },
             { "]", NodeType.Index },
-            { "e", NodeType.Num },
-            { "pi", NodeType.Num },
         };
 
         private Dictionary<string, Colors> _ex_colors = new Dictionary<string, Colors>(StringComparer.CurrentCultureIgnoreCase)
@@ -335,6 +333,10 @@ namespace MetaphysicsIndustries.Solus
             {
                 type = _ex_nodeTypes[token];
             }
+            else if (numValue.HasValue)
+            {
+                return new Ex(token, NodeType.Num, GetRank(NodeType.Num), location, numValue.Value);
+            }
             else if (function.HasValue)
             {
                 return new Ex(token, NodeType.Func, GetRank(NodeType.Func), location, function.Value);
@@ -350,10 +352,6 @@ namespace MetaphysicsIndustries.Solus
             else if ((Regex.Match(token, "^[a-zA-Z_]\\w*$")).Length > 0)
             {
                 type = NodeType.Var;
-            }
-            else if (numValue.HasValue)
-            {
-                return new Ex(token, NodeType.Num, GetRank(NodeType.Num), location, numValue.Value);
             }
             else if ((Regex.Match(token, "^\\s+$")).Length > 0)
             {
