@@ -29,7 +29,7 @@ NumberLiteral = (	digit+ '.'? |
 					'0' [xX] [a-fA-F0-9]+ | 
 					'0' [bB] [01]+ | 
 					'0' [oO] [0-7]+ | 
-					'0' [dD] digit+ | 
+					'0' [dD] digit+ );
 StringLiteral = '"' [^\\"]* ( '\\' [\\"] [^\\"]* )* '"';
 
 OperableExpression = (	VariableAccess | 
