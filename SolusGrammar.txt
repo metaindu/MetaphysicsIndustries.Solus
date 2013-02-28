@@ -16,7 +16,8 @@ digit = [0-9];
 VariableAccess = Identifier:Name;
 FunctionCall = Identifier:Name space* '(' space* ( Expression:Args space* ( ',' space* Expression:Args space* )* )? ')';
 Parenthesis = '(' space* Expression:Expression space* ')';
-Identifier = (Identifier:Scope '::' )? [a-zA-Z_]:Chars [a-zA-Z_0-9]*:Chars;
+IdPart = [a-zA-Z_]:Chars [a-zA-Z_0-9]*:Chars;
+Identifier = (IdPart:Scope '::' )* IdPart:Name;
 Index = IndexableExpression:Value space* '[' space* Expression:Index space* ']';
 IndexableExpression = ( VariableAccess | 
 						FunctionCall | 
