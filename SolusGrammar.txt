@@ -42,17 +42,23 @@ OperableExpression = (	VariableAccess |
 Operation = OperationAssignmentOrGreater;
 
 OperationAssignmentOrGreater = ( AssignmentOperation | OperationGreaterThanAssignment );
-OperationGreaterThanAssignment = OperationTernaryConditionalOrGreater;
-OperationTernaryConditionalOrGreater = ( TernaryConditionalOperation | OperationGreaterThanTernaryConditional );
-OperationGreaterThanTernaryConditional = OperationLogicalOrOrGreater;
+
+//OperationGreaterThanAssignment = OperationTernaryConditionalOrGreater;
+//OperationTernaryConditionalOrGreater = ( TernaryConditionalOperation | OperationGreaterThanTernaryConditional );
+//OperationGreaterThanTernaryConditional = OperationLogicalOrOrGreater;
+OperationGreaterThanAssignment = OperationLogicalOrOrGreater;
+
 OperationLogicalOrOrGreater = ( LogicalOrOperation | OperationGreaterThanLogicalOr );
 OperationGreaterThanLogicalOr = OperationLogicalAndOrGreater;
 OperationLogicalAndOrGreater = ( LogicalAndOperation | OperationGreaterThanLogicalAnd );
 OperationGreaterThanLogicalAnd = OperationBitwiseOrOrGreater;
 OperationBitwiseOrOrGreater = ( BitwiseOrOperation | OperationGreaterThanBitwiseOr );
-OperationGreaterThanBitwiseOr = OperationBitwiseXorOrGreater;
-OperationBitwiseXorOrGreater = ( BitwiseXorOperation | OperationGreaterThanBitwiseXor );
-OperationGreaterThanBitwiseXor = OperationBitwiseAndOrGreater;
+
+//OperationGreaterThanBitwiseOr = OperationBitwiseXorOrGreater;
+//OperationBitwiseXorOrGreater = ( BitwiseXorOperation | OperationGreaterThanBitwiseXor );
+//OperationGreaterThanBitwiseXor = OperationBitwiseAndOrGreater;
+OperationGreaterThanBitwiseOr = OperationBitwiseAndOrGreater;
+
 OperationBitwiseAndOrGreater = ( BitwiseAndOperation | OperationGreaterThanBitwiseAnd );
 OperationGreaterThanBitwiseAnd = OperationEqualityOrGreater;
 OperationEqualityOrGreater = ( EqualityOperation | OperationGreaterThanEquality );
@@ -85,7 +91,7 @@ BitwiseAndOperation = ( OperableExpression:Left | OperationBitwiseAndOrGreater:L
 BitwiseOrOperation = ( OperableExpression:Left | OperationBitwiseOrOrGreater:Left ) space* '|' space* ( OperableExpression:Right | OperationBitwiseOrOrGreater:Right );
 LogicalAndOperation = ( OperableExpression:Left | OperationLogicalAndOrGreater:Left ) space* '&&' space* ( OperableExpression:Right | OperationLogicalAndOrGreater:Right );
 LogicalOrOperation = ( OperableExpression:Left | OperationLogicalOrOrGreater:Left ) space* '||' space* ( OperableExpression:Right | OperationLogicalOrOrGreater:Right );
-TernaryConditionalOperation = OperationTernaryConditionalOrGreater space* '?' space* Expression space* ':' space* OperationGreaterThanTernary;
+//TernaryConditionalOperation = OperationTernaryConditionalOrGreater space* '?' space* Expression space* ':' space* OperationGreaterThanTernary;
 AssignmentOperation = ( OperableExpression:Left | OperationAssignmentOrGreater:Left ) space* 
 							('=':Operator|'^=':Operator|'&=':Operator|
 							'|=':Operator|'&&=':Operator|'||=':Operator|
