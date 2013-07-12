@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Giza"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Solus", "MetaphysicsIndustries.Solus.csproj", "{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Solus.Test", "MetaphysicsIndustries.Solus.Test\MetaphysicsIndustries.Solus.Test.csproj", "{AF9AC998-5856-4745-AF8C-D13CC1631D2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Release|Any CPU.ActiveCfg = Release|Any CPU
