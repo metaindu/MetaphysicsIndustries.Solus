@@ -42,5 +42,9 @@
       <Project>{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}</Project>
       <Name>MetaphysicsIndustries.Solus</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
+      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
+      <Name>MetaphysicsIndustries.Collections</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

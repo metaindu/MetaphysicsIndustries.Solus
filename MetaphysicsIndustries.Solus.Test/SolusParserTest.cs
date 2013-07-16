@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Solus.Test
 {
@@ -19,7 +20,7 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         [Test]
-        public void TestParens()
+        public void TestParensAndOperators()
         {
             var parser = new SolusParser();
 
@@ -39,6 +40,42 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2.0f, (fcall2.Arguments[0] as Literal).Value);
             Assert.IsInstanceOf<VariableAccess>(fcall2.Arguments[1]);
             Assert.AreEqual("c", (fcall2.Arguments[1] as VariableAccess).Variable.Name);
+        }
+
+        [Test]
+        public void TestManyOperands()
+        {
+            var parser = new SolusParser();
+
+            var expr = parser.Compile("1 + a + 2 + b + 3 + c");
+
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var fcall = (FunctionCall)expr;
+
+            Assert.IsInstanceOf<AdditionOperation>(fcall.Function);
+            Assert.GreaterOrEqual(fcall.Arguments.Count, 4);
+            Assert.LessOrEqual(fcall.Arguments.Count, 6);
+
+            Set<string> varnames = new Set<string>();
+
+            float sum = 0;
+            foreach (var arg in fcall.Arguments)
+            {
+                Assert.That(arg is Literal || arg is VariableAccess);
+                if (arg is Literal)
+                {
+                    sum += (arg as Literal).Value;
+                }
+                else
+                {
+                    varnames.Add((arg as VariableAccess).Variable.Name);
+                }
+            }
+
+            Assert.AreEqual(6.0f, sum);
+            Assert.That(varnames.Contains("a"));
+            Assert.That(varnames.Contains("b"));
+            Assert.That(varnames.Contains("c"));
         }
     }
 }
