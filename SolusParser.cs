@@ -25,22 +25,22 @@ namespace MetaphysicsIndustries.Solus
     {
         public SolusParser()
         {
-            foreach (ExFunction func in _builtinFunctions)
+            foreach (ParseFunction func in _builtinFunctions)
             {
                 AddFunction(func);
             }
         }
 
-        private Dictionary<string, ExFunction> _functions = new Dictionary<string, ExFunction>(StringComparer.CurrentCultureIgnoreCase);
+        private Dictionary<string, ParseFunction> _functions = new Dictionary<string, ParseFunction>(StringComparer.CurrentCultureIgnoreCase);
 
-        public void AddFunction(ExFunction func)
+        public void AddFunction(ParseFunction func)
         {
             if (_functions.ContainsKey(func.Token)) throw new ArgumentException("A function already uses that token.", "func");
 
             _functions.Add(func.Token, func);
         }
 
-        public ExFunction? GetFunction(string token)
+        public ParseFunction? GetFunction(string token)
         {
             if (!_functions.ContainsKey(token)) return null;
 
@@ -710,7 +710,7 @@ namespace MetaphysicsIndustries.Solus
                 //cascaded comma operators against the functions'
                 //desired argument counts.
 
-                ExFunction exf = GetFunction(ex.Token).Value;
+                ParseFunction exf = GetFunction(ex.Token).Value;
                 int funcArgs = exf.NumArguments;
                 if ((funcArgs != 0 || exf.HasVariableNumArgs) && b.Count > 0)
                 {
