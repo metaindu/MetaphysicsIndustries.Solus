@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public partial class SolusParser
+    public partial class SolusParser : ExParser
     {
         public SolusParser()
         {
@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Solus
             _functions.Add(func.Token, func);
         }
 
-        public ParseFunction? GetFunction(string token)
+        public override ParseFunction? GetFunction(string token)
         {
             if (!_functions.ContainsKey(token)) return null;
 

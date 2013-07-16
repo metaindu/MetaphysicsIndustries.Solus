@@ -127,7 +127,6 @@
     <Compile Include="SolusEngine.Modulators.cs" />
     <Compile Include="SolusParseException.cs" />
     <Compile Include="SolusParser.cs" />
-    <Compile Include="SolusParser.Ex.cs" />
     <Compile Include="TangentFunction.cs" />
     <Compile Include="SolusTensor.cs" />
     <Compile Include="UnitStepFunction.cs" />
@@ -136,6 +135,7 @@
     <Compile Include="VariableTable.cs" />
     <Compile Include="SolusVector.cs" />
     <Compile Include="SubstTransformer.cs" />
+    <Compile Include="ExParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
