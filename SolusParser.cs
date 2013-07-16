@@ -710,12 +710,13 @@ namespace MetaphysicsIndustries.Solus
                 //cascaded comma operators against the functions'
                 //desired argument counts.
 
-                int funcArgs = GetFunction(ex.Token).Value.NumArguments;
-                if (funcArgs != 0)
+                ExFunction exf = GetFunction(ex.Token).Value;
+                int funcArgs = exf.NumArguments;
+                if ((funcArgs != 0 || exf.HasVariableNumArgs) && b.Count > 0)
                 {
                     ex.Left = BuildTree(b);
 
-                    if (funcArgs > -1)
+                    if (!exf.HasVariableNumArgs)
                     {
                         //check comma operators
                         //ensure argument count is correct
