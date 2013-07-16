@@ -47,22 +47,22 @@ namespace MetaphysicsIndustries.Solus
             return _functions[token];
         }
 
-        public Expression Compile(string expr)
+        public Expression Compile(string expr, bool cleanup=true)
         {
-            return Compile(expr, new VariableTable());
+            return Compile(expr, new VariableTable(), cleanup);
         }
 
-        public Expression Compile(string expr, VariableTable varTable)
+        public Expression Compile(string expr, VariableTable varTable, bool cleanup=true)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
             Ex[] tokens;
             tokens = Tokenize(expr);
 
-            return Compile(tokens, varTable);
+            return Compile(tokens, varTable, cleanup);
         }
 
-        public Expression Compile(Ex[] tokens, VariableTable varTable)
+        public Expression Compile(Ex[] tokens, VariableTable varTable, bool cleanup=true)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -71,8 +71,12 @@ namespace MetaphysicsIndustries.Solus
             tokens = Arrange(tokens);
             Ex ex = BuildTree(tokens);
             Expression expr = ConvertToSolusExpression(ex, varTable);
-            CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(expr);
+            if (cleanup)
+            {
+                CleanUpTransformer cut = new CleanUpTransformer();
+                expr = cut.CleanUp(expr);
+            }
+            return expr;
         }
 
         protected void SyntaxCheck(Ex[] tokens)
