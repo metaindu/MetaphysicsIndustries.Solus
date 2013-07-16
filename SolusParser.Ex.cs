@@ -21,47 +21,6 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusParser
     {
-        public struct ParseFunction
-        {
-            public string Token;
-            public FunctionConverter Converter;
-            public int NumArguments;
-            public bool HasVariableNumArgs;
-        }
-
-        protected static readonly List<ParseFunction> _builtinFunctions = new List<ParseFunction>()
-        {
-            new ParseFunction(){ Token="sin",       Converter=BasicFunctionConverter(Function.Sine),              NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="cos",       Converter=BasicFunctionConverter(Function.Cosine),            NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="tan",       Converter=BasicFunctionConverter(Function.Tangent),           NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="ln",        Converter=BasicFunctionConverter(Function.NaturalLogarithm),  NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="log2",      Converter=BasicFunctionConverter(Function.Log2),              NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="log10",     Converter=BasicFunctionConverter(Function.Log10),             NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="sqrt",      Converter=ConvertSqrtFunction,                                NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="rand",      Converter=(args, vars) => { return new RandomExpression(); }, NumArguments=0,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="abs",       Converter=BasicFunctionConverter(Function.AbsoluteValue),     NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="sec",       Converter=BasicFunctionConverter(Function.Secant),            NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="csc",       Converter=BasicFunctionConverter(Function.Cosecant),          NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="cot",       Converter=BasicFunctionConverter(Function.Cotangent),         NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="acos",      Converter=BasicFunctionConverter(Function.Arccosine),         NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="asin",      Converter=BasicFunctionConverter(Function.Arcsine),           NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="atan",      Converter=BasicFunctionConverter(Function.Arctangent),        NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="asec",      Converter=BasicFunctionConverter(Function.Arcsecant),         NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="acsc",      Converter=BasicFunctionConverter(Function.Arccosecant),       NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="acot",      Converter=BasicFunctionConverter(Function.Arccotangent),      NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="ceil",      Converter=BasicFunctionConverter(Function.Ceiling),           NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="floor",     Converter=BasicFunctionConverter(Function.Floor),             NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="unitstep",  Converter=BasicFunctionConverter(Function.UnitStep),          NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="atan2",     Converter=BasicFunctionConverter(Function.Arctangent2),       NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="log",       Converter=BasicFunctionConverter(Function.Logarithm),         NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="derive",    Converter=ConvertDeriveExpression,                            NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="if",        Converter=BasicFunctionConverter(Function.If),                NumArguments=3,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="dist",      Converter=BasicFunctionConverter(Function.Dist),              NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="distsq",    Converter=BasicFunctionConverter(Function.DistSq),            NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="feedback",  Converter=ConvertFeedbackExpression,                          NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="subst",     Converter=ConvertSubstExpression,                             NumArguments=3,  HasVariableNumArgs=false },
-        };
-
         public enum NodeType
         {
             Num,
