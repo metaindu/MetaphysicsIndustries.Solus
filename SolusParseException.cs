@@ -6,17 +6,13 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SolusParseException : ApplicationException
     {
-        public SolusParseException(SolusParser.Ex ex, string error)
+        public SolusParseException(int location, string error)
         {
-            _ex = ex;
+            Location = location;
             _error = error;
         }
 
-        private SolusParser.Ex _ex;
-        public SolusParser.Ex Ex
-        {
-            get { return _ex; }
-        }
+        public int Location;
 
         private string _error;
         public string Error

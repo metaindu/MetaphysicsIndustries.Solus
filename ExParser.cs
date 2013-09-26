@@ -21,9 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class ExParser
     {
-        public abstract SolusParser.ParseFunction? GetFunction(string token);
+        protected abstract SolusParser.ParseFunction? GetFunction(string token);
         
-        public enum NodeType
+        enum NodeType
         {
             Num,
             Var,
@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Solus
             Unknown,
         }
 
-        public enum Ranks
+        enum Ranks
         {
             //Numbers = 170,
             //Variables = 170,
@@ -95,7 +95,7 @@ namespace MetaphysicsIndustries.Solus
             Unknown = -1,
         }
 
-        public enum Colors
+        enum Colors
         {
             Black,
             White,
@@ -181,7 +181,7 @@ namespace MetaphysicsIndustries.Solus
             { NodeType.Whitespace, Ranks.Whitespace },
         };
 
-        public Colors GetColor(string token)
+        private Colors GetColor(string token)
         {
             if (_ex_colors.ContainsKey(token))
             {
@@ -191,7 +191,7 @@ namespace MetaphysicsIndustries.Solus
             return Colors.Unknown;
         }
 
-        public Ranks GetRank(NodeType n)
+        private Ranks GetRank(NodeType n)
         {
             if (_ex_ranksFromNodeTypes.ContainsKey(n))
             {
@@ -201,7 +201,7 @@ namespace MetaphysicsIndustries.Solus
             return Ranks.Unknown;
         }
 
-        public static float? ParseNumber(string token)
+        private static float? ParseNumber(string token)
         {
             Match match;
             if (token.ToLower() == "e")
@@ -283,7 +283,7 @@ namespace MetaphysicsIndustries.Solus
             return null;
         }
 
-        public Ex ExFromToken(string token, int location)
+        private Ex ExFromToken(string token, int location)
         {
             NodeType type = NodeType.Unknown;
 
@@ -324,21 +324,21 @@ namespace MetaphysicsIndustries.Solus
 
         //Ex: The class that represents the nodes of a compiled expression tree.
         [DebuggerDisplay("{Token}, {Type}, {Rank}, {Location}")]
-        public class Ex
+        private class Ex
         {
-            internal Ex(string token, NodeType type, Ranks rank, int location)
+            public Ex(string token, NodeType type, Ranks rank, int location)
                 : this(token, type, rank, location, new SolusParser.ParseFunction(), 0)
             {
             }
-            internal Ex(string token, NodeType type, Ranks rank, int location, float numValue)
+            public Ex(string token, NodeType type, Ranks rank, int location, float numValue)
                 : this(token, type, rank, location, new SolusParser.ParseFunction(), numValue)
             {
             }
-            internal Ex(string token, NodeType type, Ranks rank, int location, SolusParser.ParseFunction func)
+            public Ex(string token, NodeType type, Ranks rank, int location, SolusParser.ParseFunction func)
                 : this(token, type, rank, location, func, 0)
             {
             }
-            internal Ex(string token, NodeType type, Ranks rank, int location, SolusParser.ParseFunction func, float numValue)
+            public Ex(string token, NodeType type, Ranks rank, int location, SolusParser.ParseFunction func, float numValue)
             {
                 Token = token;
                 Location = location;
@@ -384,7 +384,7 @@ namespace MetaphysicsIndustries.Solus
             return Compile(tokens, varTable, cleanup);
         }
 
-        public Expression Compile(Ex[] tokens, VariableTable varTable, bool cleanup=true)
+        private Expression Compile(Ex[] tokens, VariableTable varTable, bool cleanup=true)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -401,7 +401,7 @@ namespace MetaphysicsIndustries.Solus
             return expr;
         }
 
-        protected void SyntaxCheck(Ex[] tokens)
+        private void SyntaxCheck(Ex[] tokens)
         {
             int i;
             for (i = 0; i < tokens.Length - 1; i++)
@@ -409,7 +409,7 @@ namespace MetaphysicsIndustries.Solus
                 if (tokens[i].Type == NodeType.Func &&
                     tokens[i + 1].Token != "(")
                 {
-                    throw new SolusParseException(tokens[i], "Function call \"" + tokens[i].Token + "\" must include open parenthesis");
+                    throw new SolusParseException(tokens[i].Location, "Function call \"" + tokens[i].Token + "\" must include open parenthesis");
                 }
                 //if (tokens[i + 1].Token == "(" &&
                 //    tokens[i].Type != NodeType.Func &&
@@ -427,36 +427,36 @@ namespace MetaphysicsIndustries.Solus
             }
             if (tokens[i].Type == NodeType.Func)
             {
-                throw new SolusParseException(tokens[i], "Function call \"" + tokens[i].Token + "\" must include open parenthesis");
+                throw new SolusParseException(tokens[i].Location, "Function call \"" + tokens[i].Token + "\" must include open parenthesis");
             }
 
             foreach (Ex ex in tokens)
             {
                 if (ex.Type == NodeType.Unknown)
                 {
-                    throw new SolusParseException(ex, "Unknown token type");
+                    throw new SolusParseException(ex.Location, "Unknown token type");
                 }
                 else if (ex.Type == NodeType.Func)
                 {
                     if (!GetFunction(ex.Token).HasValue)
                     {
-                        throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
+                        throw new SolusParseException(ex.Location, "Unknown function \"" + ex.Token + "\"");
                     }
                 }
 
                 if (ex.Rank == Ranks.Unknown)
                 {
-                    throw new SolusParseException(ex, "Unknown token type");
+                    throw new SolusParseException(ex.Location, "Unknown token type");
                 }
             }
         }
 
-        protected Expression Compile(Ex[] tokens)
+        private Expression Compile(Ex[] tokens)
         {
             return Compile(tokens, null);
         }
 
-        protected Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
+        private Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
         {
             Expression leftArg = null;
             Expression rightArg = null;
@@ -648,7 +648,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (!(leftArg is VariableAccess))
                 {
-                    throw new SolusParseException(ex, "The left operand of an assignment must be a variable.");
+                    throw new SolusParseException(ex.Location, "The left operand of an assignment must be a variable.");
                 }
 
                 return new AssignExpression(((VariableAccess)leftArg).Variable, rightArg.Eval(varTable));
@@ -657,7 +657,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (!(leftArg is VariableAccess))
                 {
-                    throw new SolusParseException(ex, "The left operand of an assignment must be a variable.");
+                    throw new SolusParseException(ex.Location, "The left operand of an assignment must be a variable.");
                 }
 
                 return new DelayAssignExpression(((VariableAccess)leftArg).Variable, rightArg);
@@ -669,7 +669,7 @@ namespace MetaphysicsIndustries.Solus
                 error += ex.Type;
             }
             error += " " + ex.Token;
-            throw new SolusParseException(ex, error);
+            throw new SolusParseException(ex.Location, error);
         }
 
         private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
@@ -706,11 +706,11 @@ namespace MetaphysicsIndustries.Solus
             }
             else
             {
-                throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
+                throw new SolusParseException(ex.Location, "Unknown function \"" + ex.Token + "\"");
             }
         }
 
-        protected void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
+        private void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
         {
             if (ex.Left != null)
             {
@@ -745,7 +745,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public Ex[] Tokenize(string expr)
+        private Ex[] Tokenize(string expr)
         {
             string _expr = expr;
 
@@ -819,7 +819,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        protected Ex[] Arrange(Ex[] intokens)
+        private Ex[] Arrange(Ex[] intokens)
         {
 
 
@@ -866,15 +866,15 @@ namespace MetaphysicsIndustries.Solus
                     {
                         if (cc == "(")
                         {
-                            throw new SolusParseException(ex, "No matching left parenthesis");
+                            throw new SolusParseException(ex.Location, "No matching left parenthesis");
                         }
                         else if (cc == "[")
                         {
-                            throw new SolusParseException(ex, "No matching left bracket");
+                            throw new SolusParseException(ex.Location, "No matching left bracket");
                         }
                         else
                         {
-                            throw new SolusParseException(ex, "No matching left brace");
+                            throw new SolusParseException(ex.Location, "No matching left brace");
                         }
                     }
                     Ex cp;
@@ -935,7 +935,7 @@ namespace MetaphysicsIndustries.Solus
             return tokens;
         }
 
-        protected Ex BuildTree(Ex[] intokens)
+        private Ex BuildTree(Ex[] intokens)
         {
             Ex[] _intokens = intokens;
 
@@ -953,12 +953,12 @@ namespace MetaphysicsIndustries.Solus
             Ex ret = BuildTree(b);
             if (b.Count > 0)
             {
-                throw new SolusParseException(b.Peek(), "Excess tokens");
+                throw new SolusParseException(b.Peek().Location, "Excess tokens");
             }
             return ret;
         }
 
-        protected Ex BuildTree(Queue<Ex> b)
+        private Ex BuildTree(Queue<Ex> b)
         {
             Ex ex;
             Ranks r;
@@ -999,11 +999,11 @@ namespace MetaphysicsIndustries.Solus
                         if (nargs > funcArgs)
                         {
                             //throw exception
-                            throw new SolusParseException(ex, "Too many arguments");
+                            throw new SolusParseException(ex.Location, "Too many arguments");
                         }
                         else if (nargs < funcArgs)
                         {
-                            throw new SolusParseException(ex, "Too few arguments");
+                            throw new SolusParseException(ex.Location, "Too few arguments");
                         }
                     }
                 }
@@ -1035,9 +1035,9 @@ namespace MetaphysicsIndustries.Solus
             //}
             else if (IsBinaryOperation(r))
             {
-                if (b.Count < 1) { throw new SolusParseException(ex, "Missing right operand"); }
+                if (b.Count < 1) { throw new SolusParseException(ex.Location, "Missing right operand"); }
                 ex.Right = BuildTree(b);
-                if (b.Count < 1) { throw new SolusParseException(ex, "Missing left operand"); }
+                if (b.Count < 1) { throw new SolusParseException(ex.Location, "Missing left operand"); }
                 ex.Left = BuildTree(b);
             }
 
@@ -1069,7 +1069,7 @@ namespace MetaphysicsIndustries.Solus
                     r == Ranks.Assign;
         }
 
-        protected int CountCommaArguments(Ex ex)
+        private int CountCommaArguments(Ex ex)
         {
             if (ex == null)
             {

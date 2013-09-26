@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Solus
             _functions.Add(func.Token, func);
         }
 
-        public override ParseFunction? GetFunction(string token)
+        protected override ParseFunction? GetFunction(string token)
         {
             if (!_functions.ContainsKey(token)) return null;
 
