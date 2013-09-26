@@ -22,7 +22,22 @@ namespace MetaphysicsIndustries.Solus
     public abstract class ExParser
     {
         protected abstract SolusParser.ParseFunction? GetFunction(string token);
-        
+
+        public Expression Compile(string expr, bool cleanup=true)
+        {
+            return Compile(expr, new VariableTable(), cleanup);
+        }
+
+        public Expression Compile(string expr, VariableTable varTable, bool cleanup=true)
+        {
+            if (varTable == null) throw new ArgumentNullException("varTable");
+
+            Ex[] tokens;
+            tokens = Tokenize(expr);
+
+            return Compile(tokens, varTable, cleanup);
+        }
+
         enum NodeType
         {
             Num,
@@ -366,22 +381,6 @@ namespace MetaphysicsIndustries.Solus
 
                 return token;
             }
-        }
-
-        
-        public Expression Compile(string expr, bool cleanup=true)
-        {
-            return Compile(expr, new VariableTable(), cleanup);
-        }
-
-        public Expression Compile(string expr, VariableTable varTable, bool cleanup=true)
-        {
-            if (varTable == null) throw new ArgumentNullException("varTable");
-
-            Ex[] tokens;
-            tokens = Tokenize(expr);
-
-            return Compile(tokens, varTable, cleanup);
         }
 
         private Expression Compile(Ex[] tokens, VariableTable varTable, bool cleanup=true)
