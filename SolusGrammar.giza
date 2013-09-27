@@ -7,8 +7,11 @@ function-call = identifier:name '(' ( expr:arg ( ',' expr:arg )* )? ')';
     '0b' [01]+ | 
     '0o' [01234567]+ | 
     '0x' [\dabcdef]+ | 
-    [+-]? [\d]+ ( '.' [\d]+ )? ( [eE] [+-]? [\d]+ )?
+     float-number
 );
+
+// non-atomic, usable by the spanner
+<ignore case, subtoken> float-number = [+-]? [\d]+ ( '.' [\d]+ )? ( [eE] [+-]? [\d]+ )? ;
 
 <token> string = (
     '\'' ( [^\\'] | '\\' [rnt\\'] | unicodechar )+ '\'' |
