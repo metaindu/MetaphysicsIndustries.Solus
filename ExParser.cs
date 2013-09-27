@@ -21,7 +21,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class ExParser
     {
-        protected abstract SolusParser.ParseFunction? GetFunction(string token);
+        protected abstract ParseFunction? GetFunction(string token);
 
         public Expression Compile(string expr, bool cleanup=true)
         {
@@ -302,7 +302,7 @@ namespace MetaphysicsIndustries.Solus
         {
             NodeType type = NodeType.Unknown;
 
-            SolusParser.ParseFunction? function = GetFunction(token);
+            ParseFunction? function = GetFunction(token);
             float? numValue = ParseNumber(token);
 
             if (_ex_nodeTypes.ContainsKey(token))
@@ -342,18 +342,18 @@ namespace MetaphysicsIndustries.Solus
         private class Ex
         {
             public Ex(string token, NodeType type, Ranks rank, int location)
-                : this(token, type, rank, location, new SolusParser.ParseFunction(), 0)
+                : this(token, type, rank, location, new ParseFunction(), 0)
             {
             }
             public Ex(string token, NodeType type, Ranks rank, int location, float numValue)
-                : this(token, type, rank, location, new SolusParser.ParseFunction(), numValue)
+                : this(token, type, rank, location, new ParseFunction(), numValue)
             {
             }
-            public Ex(string token, NodeType type, Ranks rank, int location, SolusParser.ParseFunction func)
+            public Ex(string token, NodeType type, Ranks rank, int location, ParseFunction func)
                 : this(token, type, rank, location, func, 0)
             {
             }
-            public Ex(string token, NodeType type, Ranks rank, int location, SolusParser.ParseFunction func, float numValue)
+            public Ex(string token, NodeType type, Ranks rank, int location, ParseFunction func, float numValue)
             {
                 Token = token;
                 Location = location;
@@ -366,7 +366,7 @@ namespace MetaphysicsIndustries.Solus
             public Ex Left = null;
             public Ex Right = null;
             public float NumValue { get; protected set; }
-            public SolusParser.ParseFunction Func { get; protected set; }
+            public ParseFunction Func { get; protected set; }
             public NodeType Type { get; protected set; }
             public Ranks Rank { get; protected set; }
             public string Token { get; protected set; }
@@ -983,7 +983,7 @@ namespace MetaphysicsIndustries.Solus
                 //cascaded comma operators against the functions'
                 //desired argument counts.
 
-                SolusParser.ParseFunction exf = GetFunction(ex.Token).Value;
+                ParseFunction exf = GetFunction(ex.Token).Value;
                 int funcArgs = exf.NumArguments;
                 if ((funcArgs != 0 || exf.HasVariableNumArgs) && b.Count > 0)
                 {

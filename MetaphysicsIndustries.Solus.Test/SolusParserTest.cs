@@ -135,9 +135,9 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
             var func = new CustomAsdfFunction();
-            parser.AddFunction(new SolusParser.ParseFunction {
+            parser.AddFunction(new ParseFunction {
                 Token = "asdf",
-                Converter = SolusParser.BasicFunctionConverter(func),
+                Converter = ParseFunction.BasicFunctionConverter(func),
                 NumArguments = 2,
                 HasVariableNumArgs = false,
             });
@@ -188,9 +188,9 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
             var func = new CountArgsFunction();
-            parser.AddFunction(new SolusParser.ParseFunction {
+            parser.AddFunction(new ParseFunction {
                 Token = "count",
-                Converter = SolusParser.BasicFunctionConverter(func),
+                Converter = ParseFunction.BasicFunctionConverter(func),
 //                NumArguments = -1,
                 HasVariableNumArgs = true,
             });
