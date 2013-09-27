@@ -146,5 +146,6 @@ namespace MetaphysicsIndustries.Solus
             get { return GetRegisteredFunction<DistSqFunction>(); }
         }
 
+        public static readonly NegationOperation Negation = new NegationOperation();
     }
 }

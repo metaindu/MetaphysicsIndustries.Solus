@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public abstract class NegationOperation : UnaryOperation
+    public class NegationOperation : UnaryOperation
     {
         public NegationOperation()
         {
