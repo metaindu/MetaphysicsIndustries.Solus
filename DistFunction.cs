@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class DistFunction : DualArgumentFunction
     {
-        public DistFunction()
+        public static readonly DistFunction Value = new DistFunction();
+
+        protected DistFunction()
             : base("Distance")
         {
         }

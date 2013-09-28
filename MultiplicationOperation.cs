@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class MultiplicationOperation : AssociativeCommutativeOperation
     {
-        public MultiplicationOperation()
+        public static readonly MultiplicationOperation Value = new MultiplicationOperation();
+
+        protected MultiplicationOperation()
         {
             Name = "*";
         }

@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class LogicalAndOperation : BinaryOperation
     {
-        public LogicalAndOperation()
+        public static readonly LogicalAndOperation Value = new LogicalAndOperation();
+
+        protected LogicalAndOperation()
         {
             Name = "&&";
         }

@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CeilingFunction : SingleArgumentFunction
 	{
-		public CeilingFunction()
+        public static readonly CeilingFunction Value = new CeilingFunction();
+
+        protected CeilingFunction()
 		{
 			this.Name = "Ceiling";
 		}

@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class NegationOperation : UnaryOperation
     {
-        public NegationOperation()
+        public static readonly NegationOperation Value = new NegationOperation();
+
+        protected NegationOperation()
         {
             Name = "-";
         }

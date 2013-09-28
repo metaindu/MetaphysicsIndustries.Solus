@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class TangentFunction : SingleArgumentFunction
 	{
-		public TangentFunction()
+        public static readonly TangentFunction Value = new TangentFunction();
+
+        protected TangentFunction()
 		{
 			this.Name = "Tangent";
 		}

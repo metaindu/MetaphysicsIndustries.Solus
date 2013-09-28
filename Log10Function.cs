@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class Log10Function : SingleArgumentFunction
     {
-        public Log10Function()
+        public static readonly Log10Function Value = new Log10Function();
+
+        protected Log10Function()
         {
             Name = "Logarithm of base ten";
         }

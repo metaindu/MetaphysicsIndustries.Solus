@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class BitwiseAndOperation : BinaryOperation
     {
-        public BitwiseAndOperation()
+        public static readonly BitwiseAndOperation Value = new BitwiseAndOperation();
+
+        protected BitwiseAndOperation()
         {
             Name = "&";
         }

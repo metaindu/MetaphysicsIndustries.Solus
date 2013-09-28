@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class AdditionOperation : AssociativeCommutativeOperation
     {
-        public AdditionOperation()
+        public static readonly AdditionOperation Value = new AdditionOperation();
+
+        protected AdditionOperation()
         {
             Name = "+";
         }

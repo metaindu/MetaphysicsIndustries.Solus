@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class BitwiseOrOperation : AssociativeCommutativeOperation
     {
-        public BitwiseOrOperation()
+        public static readonly BitwiseOrOperation Value = new BitwiseOrOperation();
+
+        protected BitwiseOrOperation()
         {
             Name = "|";
         }

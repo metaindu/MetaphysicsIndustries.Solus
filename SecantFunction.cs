@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SecantFunction : SingleArgumentFunction
 	{
-		public SecantFunction()
+        public static readonly SecantFunction Value = new SecantFunction();
+
+        protected SecantFunction()
 		{
 			this.Name = "Secant";
 		}

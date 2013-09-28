@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ExponentOperation : BinaryOperation
     {
-        public ExponentOperation()
+        public static readonly ExponentOperation Value = new ExponentOperation();
+
+        protected ExponentOperation()
         {
             Name = "^";
         }

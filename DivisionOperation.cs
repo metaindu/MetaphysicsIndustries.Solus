@@ -6,6 +6,12 @@ namespace MetaphysicsIndustries.Solus
 {
     public class DivisionOperation : BinaryOperation
     {
+        public static readonly DivisionOperation Value = new DivisionOperation();
+
+        protected DivisionOperation()
+        {
+        }
+
         public override OperationPrecedence Precedence
         {
             get { return OperationPrecedence.Division; }

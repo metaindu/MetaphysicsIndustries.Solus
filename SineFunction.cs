@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SineFunction : SingleArgumentFunction
 	{
-		public SineFunction()
+        public static readonly SineFunction Value = new SineFunction();
+
+        protected SineFunction()
 		{
 			this.Name = "Sine";
 		}

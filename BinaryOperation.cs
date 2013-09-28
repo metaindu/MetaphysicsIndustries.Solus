@@ -22,29 +22,12 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class BinaryOperation : Operation
     {
-        public BinaryOperation()
+        protected BinaryOperation()
         {
             Types.Clear();
             Types.Add(typeof(Expression));
             Types.Add(typeof(Expression));
         }
-
-        private static DivisionOperation _division = new DivisionOperation();
-        public static DivisionOperation Division
-        {
-            get { return _division; }
-        }
-
-        private static ExponentOperation _exponent = new ExponentOperation();
-        public static ExponentOperation Exponent
-        {
-            get { return _exponent; }
-        }
-
-        public static readonly BitwiseAndOperation BitwiseAnd = new BitwiseAndOperation();
-        public static readonly ModularDivision ModularDivision = new ModularDivision();
-        public static readonly LogicalAndOperation LogicalAnd = new LogicalAndOperation();
-        public static readonly LogicalOrOperation LogicalOr = new LogicalOrOperation();
 
         protected override void CheckArguments(Expression[] args)
         {

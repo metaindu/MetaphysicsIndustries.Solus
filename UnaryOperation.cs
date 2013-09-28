@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class UnaryOperation : Operation
     {
-        public UnaryOperation()
+        protected UnaryOperation()
         {
             Types.Clear();
             Types.Add(typeof(Expression));

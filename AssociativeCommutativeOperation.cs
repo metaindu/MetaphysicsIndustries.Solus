@@ -6,25 +6,6 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class AssociativeCommutativeOperation : Operation
     {
-        private static AdditionOperation _addition = new AdditionOperation();
-        public static AdditionOperation Addition
-        {
-            get { return _addition; }
-        }
-        private static MultiplicationOperation _multiplication = new MultiplicationOperation();
-        public static MultiplicationOperation Multiplication
-        {
-            get { return _multiplication; }
-        }
-        private static BitwiseOrOperation _bitwiseOr = new BitwiseOrOperation();
-        public static BitwiseOrOperation BitwiseOr
-        {
-            get { return _bitwiseOr; }
-        }
-        //public static readonly BitwiseAndOperation BitwiseAnd = new BitwiseAndOperation();
-
-
-
         protected override void CheckArguments(Expression[] args)
         {
             if (args.Length < 2)

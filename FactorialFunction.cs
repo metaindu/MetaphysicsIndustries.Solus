@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus
             return _presets[p];
         }
 
-        public FactorialFunction()
+        protected FactorialFunction()
         {
             Name = "Factorial";
 

@@ -172,7 +172,7 @@ namespace MetaphysicsIndustries.Solus
 
         public SolusMatrix Convolution(SolusMatrix convolvee)
         {
-            //return AdvancedConvolution(convolvee, AssociativeCommutativeOperation.Multiplication, AssociativeCommutativeOperation.Addition);
+            //return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
             //return AdvancedConvolution(convolvee, SolusEngine.MultiplicationBiMod, SolusEngine.AdditionBiMod);
             throw new NotImplementedException();
         }

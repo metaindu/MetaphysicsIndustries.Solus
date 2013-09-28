@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class LogarithmFunction : DualArgumentFunction
     {
-        public LogarithmFunction()
+        public static readonly LogarithmFunction Value = new LogarithmFunction();
+
+        protected LogarithmFunction()
             : base("Logarithm")
         {
         }

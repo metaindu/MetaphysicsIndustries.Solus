@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class FloorFunction : SingleArgumentFunction
 	{
-		public FloorFunction()
+        public static readonly FloorFunction Value = new FloorFunction();
+
+        protected FloorFunction()
 		{
 			this.Name = "Floor";
 		}

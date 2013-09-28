@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class IfFunction : Function
     {
-        public IfFunction()
+        public static readonly IfFunction Value = new IfFunction();
+
+        protected IfFunction()
             : base("If")
         {
             Types.Clear();

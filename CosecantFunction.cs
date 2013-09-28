@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CosecantFunction : SingleArgumentFunction
 	{
-		public CosecantFunction()
+        public static readonly CosecantFunction Value = new CosecantFunction();
+
+        protected CosecantFunction()
 		{
 			this.Name = "Cosecant";
 		}

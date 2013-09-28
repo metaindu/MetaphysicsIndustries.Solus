@@ -29,30 +29,30 @@ namespace MetaphysicsIndustries.Solus
     {
         private static void RegisterFunctions()
         {
-            RegisterFunctionType(new ArccosecantFunction());
-            RegisterFunctionType(new ArccosineFunction());
-            RegisterFunctionType(new ArccotangentFunction());
-            RegisterFunctionType(new ArcsecantFunction());
-            RegisterFunctionType(new ArcsineFunction());
-            RegisterFunctionType(new ArctangentFunction());
-            RegisterFunctionType(new CeilingFunction());
-            RegisterFunctionType(new CosecantFunction());
-            RegisterFunctionType(new CosineFunction());
-            RegisterFunctionType(new CotangentFunction());
-            RegisterFunctionType(new FloorFunction());
-            RegisterFunctionType(new SecantFunction());
-            RegisterFunctionType(new SineFunction());
-            RegisterFunctionType(new TangentFunction());
-            RegisterFunctionType(new NaturalLogarithmFunction());
-            RegisterFunctionType(new UnitStepFunction());
-            RegisterFunctionType(new Log10Function());
-            RegisterFunctionType(new Log2Function());
-            RegisterFunctionType(new LogarithmFunction());
-            RegisterFunctionType(new AbsoluteValueFunction());
-            RegisterFunctionType(new Arctangent2Function());
-            RegisterFunctionType(new IfFunction());
-            RegisterFunctionType(new DistFunction());
-            RegisterFunctionType(new DistSqFunction());
+            RegisterFunctionType(ArccosecantFunction.Value);
+            RegisterFunctionType(ArccosineFunction.Value);
+            RegisterFunctionType(ArccotangentFunction.Value);
+            RegisterFunctionType(ArcsecantFunction.Value);
+            RegisterFunctionType(ArcsineFunction.Value);
+            RegisterFunctionType(ArctangentFunction.Value);
+            RegisterFunctionType(CeilingFunction.Value);
+            RegisterFunctionType(CosecantFunction.Value);
+            RegisterFunctionType(CosineFunction.Value);
+            RegisterFunctionType(CotangentFunction.Value);
+            RegisterFunctionType(FloorFunction.Value);
+            RegisterFunctionType(SecantFunction.Value);
+            RegisterFunctionType(SineFunction.Value);
+            RegisterFunctionType(TangentFunction.Value);
+            RegisterFunctionType(NaturalLogarithmFunction.Value);
+            RegisterFunctionType(UnitStepFunction.Value);
+            RegisterFunctionType(Log10Function.Value);
+            RegisterFunctionType(Log2Function.Value);
+            RegisterFunctionType(LogarithmFunction.Value);
+            RegisterFunctionType(AbsoluteValueFunction.Value);
+            RegisterFunctionType(Arctangent2Function.Value);
+            RegisterFunctionType(IfFunction.Value);
+            RegisterFunctionType(DistFunction.Value);
+            RegisterFunctionType(DistSqFunction.Value);
         }
 
     }

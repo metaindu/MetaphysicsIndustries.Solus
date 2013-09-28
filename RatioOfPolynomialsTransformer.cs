@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 List<Expression> fargs = ((FunctionCall)expr).Arguments;
 
-                return new FunctionCall(new DivisionOperation(),
+                return new FunctionCall(DivisionOperation.Value,
                     base.Transform(fargs[0], args),
                     base.Transform(fargs[1], args));
             }

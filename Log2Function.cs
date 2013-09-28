@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class Log2Function : SingleArgumentFunction
     {
-        public Log2Function()
+        public static readonly Log2Function Value = new Log2Function();
+
+        protected Log2Function()
         {
             Name = "Logarithm of base two";
         }

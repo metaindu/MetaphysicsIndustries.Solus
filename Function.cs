@@ -26,12 +26,12 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract partial class Function : IDisposable
 	{
-        public Function()
+        protected Function()
             : this(string.Empty)
         {
         }
 
-        public Function(string name)
+        protected Function(string name)
         {
             _name = name;
         }

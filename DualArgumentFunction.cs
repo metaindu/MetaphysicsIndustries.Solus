@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class DualArgumentFunction : Function
     {
-        public DualArgumentFunction(string name)
+        protected DualArgumentFunction(string name)
             : base(name)
         {
             Types.Clear();

@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CotangentFunction : SingleArgumentFunction
 	{
-		public CotangentFunction()
+        public static readonly CotangentFunction Value = new CotangentFunction();
+
+        protected CotangentFunction()
 		{
 			this.Name = "Cotangent";
 		}

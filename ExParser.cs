@@ -471,14 +471,14 @@ namespace MetaphysicsIndustries.Solus
             if (ex.Type == NodeType.Add)
             {
                 return new FunctionCall(
-                    AssociativeCommutativeOperation.Addition, 
+                    AdditionOperation.Value, 
                     leftArg, 
                     rightArg);
             }
             else if (ex.Type == NodeType.BitAnd)
             {
                 return new FunctionCall(
-                    BinaryOperation.BitwiseAnd,
+                    BitwiseAndOperation.Value,
                     leftArg,
                     rightArg);
             }
@@ -488,7 +488,7 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.BitOr)
             {
                 return new FunctionCall(
-                    AssociativeCommutativeOperation.BitwiseOr,
+                    BitwiseOrOperation.Value,
                     leftArg,
                     rightArg);
             }
@@ -511,14 +511,14 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.Div)
             {
                 return new FunctionCall(
-                    BinaryOperation.Division,
+                    DivisionOperation.Value,
                     leftArg,
                     rightArg);
             }
             else if (ex.Type == NodeType.Equal)
             {
                 return new FunctionCall(
-                    ComparisonOperation.Equal,
+                    EqualComparisonOperation.Value,
                     leftArg,
                     rightArg);
             }
@@ -529,14 +529,14 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.GreaterThan)
             {
                 return new FunctionCall(
-                    ComparisonOperation.GreaterThan,
+                    GreaterThanComparisonOperation.Value,
                     leftArg,
                     rightArg);
             }
             else if (ex.Type == NodeType.GreaterThanOrEqual)
             {
                 return new FunctionCall(
-                    ComparisonOperation.GreaterThanOrEqual,
+                    GreaterThanOrEqualComparisonOperation.Value,
                     leftArg,
                     rightArg);
             }
@@ -546,21 +546,21 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.LessThan)
             {
                 return new FunctionCall(
-                    ComparisonOperation.LessThan,
+                    LessThanComparisonOperation.Value,
                     leftArg,
                     rightArg);
             }
             else if (ex.Type == NodeType.LessThanOrEqual)
             {
                 return new FunctionCall(
-                    ComparisonOperation.LessThanOrEqual,
+                    LessThanOrEqualComparisonOperation.Value,
                     leftArg,
                     rightArg);
             }
             else if (ex.Type == NodeType.LogAnd)
             {
                 return new FunctionCall(
-                    BinaryOperation.LogicalAnd,
+                    LogicalAndOperation.Value,
                     leftArg,
                     rightArg);
             }
@@ -570,7 +570,7 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.LogOr)
             {
                 return new FunctionCall(
-                    BinaryOperation.LogicalOr,
+                    LogicalOrOperation.Value,
                     leftArg,
                     rightArg);
             }
@@ -580,21 +580,21 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.Mod)
             {
                 return new FunctionCall(
-                    BinaryOperation.ModularDivision,
+                    ModularDivision.Value,
                     leftArg,
                     rightArg);
             }
             else if (ex.Type == NodeType.Mult)
             {
                 return new FunctionCall(
-                    AssociativeCommutativeOperation.Multiplication,
+                    MultiplicationOperation.Value,
                     leftArg,
                     rightArg);
             }
             else if (ex.Type == NodeType.NotEqual)
             {
                 return new FunctionCall(
-                    ComparisonOperation.NotEqual,
+                    NotEqualComparisonOperation.Value,
                     leftArg,
                     rightArg);
             }
@@ -605,10 +605,10 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.Sub)
             {
                 return new FunctionCall(
-                    AssociativeCommutativeOperation.Addition,
+                    AdditionOperation.Value,
                     leftArg,
                     new FunctionCall(
-                    AssociativeCommutativeOperation.Multiplication,
+                    MultiplicationOperation.Value,
                     new Literal(-1),
                     rightArg));
             }
@@ -639,7 +639,7 @@ namespace MetaphysicsIndustries.Solus
             else if (ex.Type == NodeType.Exponent)
             {
                 return new FunctionCall(
-                    BinaryOperation.Exponent,
+                    ExponentOperation.Value,
                     leftArg,
                     rightArg);
             }

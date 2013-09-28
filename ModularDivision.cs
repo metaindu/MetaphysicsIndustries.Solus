@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ModularDivision : BinaryOperation
     {
-        public ModularDivision()
+        public static readonly ModularDivision Value = new ModularDivision();
+
+        protected ModularDivision()
         {
             Name = "%";
         }

@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class UnitStepFunction : SingleArgumentFunction
     {
-        public UnitStepFunction()
+        public static readonly UnitStepFunction Value = new UnitStepFunction();
+
+        protected UnitStepFunction()
         {
             Name = "UnitStep";
         }

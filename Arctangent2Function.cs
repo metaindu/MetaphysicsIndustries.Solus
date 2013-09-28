@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class Arctangent2Function : DualArgumentFunction
     {
-        public Arctangent2Function()
+        public static readonly Arctangent2Function Value = new Arctangent2Function();
+
+        protected Arctangent2Function()
             : base ("Arctangent 2")
         {
         }

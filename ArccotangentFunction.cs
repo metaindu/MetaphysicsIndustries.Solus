@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArccotangentFunction : SingleArgumentFunction
 	{
-		public ArccotangentFunction()
+        public static readonly ArccotangentFunction Value = new ArccotangentFunction();
+
+		protected ArccotangentFunction()
 		{
 			this.Name = "Arccotangent";
 		}

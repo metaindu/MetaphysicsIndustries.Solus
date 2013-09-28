@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class SingleArgumentFunction : Function
     {
-        public SingleArgumentFunction()
+        protected SingleArgumentFunction()
         {
             Types.Add(typeof(Expression));
         }

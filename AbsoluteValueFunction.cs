@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class AbsoluteValueFunction : SingleArgumentFunction
     {
-        public AbsoluteValueFunction()
+        public static readonly AbsoluteValueFunction Value = new AbsoluteValueFunction();
+
+        protected AbsoluteValueFunction()
         {
             Name = "Absolue Value";
         }

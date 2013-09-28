@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class NaturalLogarithmFunction : SingleArgumentFunction
     {
-        public NaturalLogarithmFunction()
+        public static readonly NaturalLogarithmFunction Value = new NaturalLogarithmFunction();
+
+        protected NaturalLogarithmFunction()
         {
             Name = "Natural Logarithm";
         }

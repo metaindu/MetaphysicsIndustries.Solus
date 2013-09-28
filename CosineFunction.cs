@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CosineFunction : SingleArgumentFunction
 	{
-		public CosineFunction()
+        public static readonly CosineFunction Value = new CosineFunction();
+
+        protected CosineFunction()
 		{
 			this.Name = "Cosine";
 		}

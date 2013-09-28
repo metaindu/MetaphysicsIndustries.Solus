@@ -129,7 +129,7 @@ namespace MetaphysicsIndustries.Solus
 
         public SolusVector Convolution(SolusVector convolvee)
         {
-            return AdvancedConvolution(convolvee, AssociativeCommutativeOperation.Multiplication, AssociativeCommutativeOperation.Addition);
+            return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
         }
 
         public SolusVector AdvancedConvolution(SolusVector convolvee, Operation firstOp, AssociativeCommutativeOperation secondOp)

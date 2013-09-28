@@ -108,13 +108,13 @@ namespace MetaphysicsIndustries.Solus
             Expression h = args.ElementAt(1);
 
             return new FunctionCall(
-                        BinaryOperation.Division,
+                        DivisionOperation.Value,
                         g, 
                         new FunctionCall(
-                            AssociativeCommutativeOperation.Addition, 
+                            AdditionOperation.Value, 
                             new Literal(1),
                             new FunctionCall(
-                                AssociativeCommutativeOperation.Multiplication, 
+                                MultiplicationOperation.Value, 
                                 g, 
                                 h)));
         }
@@ -130,7 +130,7 @@ namespace MetaphysicsIndustries.Solus
 
         static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, VariableTable varTable)
         {
-            return new FunctionCall(BinaryOperation.Exponent, _args.First(), new Literal(0.5f));
+            return new FunctionCall(ExponentOperation.Value, _args.First(), new Literal(0.5f));
         }
 
 

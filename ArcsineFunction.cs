@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArcsineFunction : SingleArgumentFunction
 	{
-		public ArcsineFunction()
+        public static readonly ArcsineFunction Value = new ArcsineFunction();
+
+		protected ArcsineFunction()
 		{
 			this.Name = "Arcsine";
 		}

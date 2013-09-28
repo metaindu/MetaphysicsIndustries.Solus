@@ -21,7 +21,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArcsecantFunction : SingleArgumentFunction
 	{
-		public ArcsecantFunction()
+        public static readonly ArcsecantFunction Value = new ArcsecantFunction();
+
+		protected ArcsecantFunction()
 		{
 			this.Name = "Arcsecant";
 		}

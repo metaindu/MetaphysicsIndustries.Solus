@@ -74,7 +74,7 @@ namespace MetaphysicsIndustries.Solus
 
                 if (function == Function.Cosine)
                 {
-                    functionDerivative = new FunctionCall(AssociativeCommutativeOperation.Multiplication,
+                    functionDerivative = new FunctionCall(MultiplicationOperation.Value,
                         new Literal(-1),
                         new FunctionCall(Function.Sine, functionCall.Arguments[0]));
                 }
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Solus
                     return argumentDerivative;
                 }
 
-                return new FunctionCall(AssociativeCommutativeOperation.Multiplication, functionDerivative, argumentDerivative);
+                return new FunctionCall(MultiplicationOperation.Value, functionDerivative, argumentDerivative);
 
             }
             else
@@ -130,11 +130,11 @@ namespace MetaphysicsIndustries.Solus
         {
 
 
-            if (functionCall.Function == AssociativeCommutativeOperation.Addition)
+            if (functionCall.Function == AdditionOperation.Value)
             {
                 return GetDerivativeOfAdditionOperation(functionCall, var);
             }
-            else if (functionCall.Function == AssociativeCommutativeOperation.Multiplication)
+            else if (functionCall.Function == MultiplicationOperation.Value)
             {
                 return GetDerivativeOfMultiplicationOperation(functionCall, var);
             }
@@ -149,11 +149,11 @@ namespace MetaphysicsIndustries.Solus
 
             BinaryOperation binaryOperation = functionCall.Function as BinaryOperation;
 
-            if (binaryOperation == BinaryOperation.Division)
+            if (binaryOperation == DivisionOperation.Value)
             {
                 return GetDerivativeOfDivisionOperation(functionCall, var);
             }
-            else if (binaryOperation == BinaryOperation.Exponent)
+            else if (binaryOperation == ExponentOperation.Value)
             {
                 return GetDerivativeOfExponentOperation(functionCall, var);
             }
@@ -194,7 +194,7 @@ namespace MetaphysicsIndustries.Solus
             else
             {
                 rightMinusOne =
-                    new FunctionCall(AssociativeCommutativeOperation.Addition,
+                    new FunctionCall(AdditionOperation.Value,
                         rightClone.Clone(),
                         new Literal(-1));
             }
@@ -212,14 +212,14 @@ namespace MetaphysicsIndustries.Solus
                 else
                 {
                     newExponent =
-                        new FunctionCall(BinaryOperation.Exponent,
+                        new FunctionCall(ExponentOperation.Value,
                             leftClone,//.Clone(),
                             rightMinusOne);
                 }
 
                 leftSide =
-                    new FunctionCall(AssociativeCommutativeOperation.Multiplication,
-                        new FunctionCall(AssociativeCommutativeOperation.Multiplication,
+                    new FunctionCall(MultiplicationOperation.Value,
+                        new FunctionCall(MultiplicationOperation.Value,
                             rightClone,
                             newExponent),
                         leftDerivative);
@@ -231,11 +231,11 @@ namespace MetaphysicsIndustries.Solus
             }
 
             Expression rightSide =
-                new FunctionCall(AssociativeCommutativeOperation.Multiplication,
+                new FunctionCall(MultiplicationOperation.Value,
                     new FunctionCall(Function.NaturalLogarithm,
                         leftClone),//.Clone()),
-                    new FunctionCall(AssociativeCommutativeOperation.Multiplication,
-                        new FunctionCall(BinaryOperation.Exponent,
+                    new FunctionCall(MultiplicationOperation.Value,
+                        new FunctionCall(ExponentOperation.Value,
                             leftClone,//.Clone(),
                             rightClone),//.Clone()),
                         rightDerivative));
@@ -245,7 +245,7 @@ namespace MetaphysicsIndustries.Solus
                 return rightSide;
             }
 
-            return new FunctionCall(AssociativeCommutativeOperation.Addition,
+            return new FunctionCall(AdditionOperation.Value,
                 leftSide,
                 rightSide);
         }
@@ -258,17 +258,17 @@ namespace MetaphysicsIndustries.Solus
             Expression highDerivative = GetDerivative(highClone, var);
             Expression lowDerivative = GetDerivative(lowClone, var);
 
-            return new FunctionCall(BinaryOperation.Division,
-                        new FunctionCall(AssociativeCommutativeOperation.Addition,
-                            new FunctionCall(AssociativeCommutativeOperation.Multiplication,
+            return new FunctionCall(DivisionOperation.Value,
+                        new FunctionCall(AdditionOperation.Value,
+                            new FunctionCall(MultiplicationOperation.Value,
                                 highDerivative,
                                 lowClone),
-                            new FunctionCall(AssociativeCommutativeOperation.Multiplication,
+                            new FunctionCall(MultiplicationOperation.Value,
                                 new Literal(-1),
-                                new FunctionCall(AssociativeCommutativeOperation.Multiplication,
+                                new FunctionCall(MultiplicationOperation.Value,
                                     highClone,
                                     lowDerivative))),
-                        new FunctionCall(BinaryOperation.Exponent,
+                        new FunctionCall(ExponentOperation.Value,
                             lowClone,
                             new Literal(2)));
         }
@@ -290,7 +290,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (derivatives.Count > 0)
             {
-                return new FunctionCall(AssociativeCommutativeOperation.Addition, derivatives.ToArray());
+                return new FunctionCall(AdditionOperation.Value, derivatives.ToArray());
             }
             else
             {
@@ -365,7 +365,7 @@ namespace MetaphysicsIndustries.Solus
 
                 if (multTerm.Count >= 2)
                 {
-                    addTerms.Add(new FunctionCall(AssociativeCommutativeOperation.Multiplication, multTerm.ToArray()));
+                    addTerms.Add(new FunctionCall(MultiplicationOperation.Value, multTerm.ToArray()));
                 }
                 else if (multTerm.Count == 1)
                 {
@@ -375,7 +375,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (addTerms.Count >= 2)
             {
-                return new FunctionCall(AssociativeCommutativeOperation.Addition, addTerms.ToArray());
+                return new FunctionCall(AdditionOperation.Value, addTerms.ToArray());
             }
             else if (addTerms.Count == 1)
             {
@@ -383,7 +383,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else
             {
-                return new Literal(AssociativeCommutativeOperation.Addition.IdentityValue);
+                return new Literal(AdditionOperation.Value.IdentityValue);
             }
 
 
