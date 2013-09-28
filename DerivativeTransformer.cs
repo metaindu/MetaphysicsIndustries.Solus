@@ -72,15 +72,15 @@ namespace MetaphysicsIndustries.Solus
 
                 Function function = functionCall.Function;
 
-                if (function == Function.Cosine)
+                if (function == CosineFunction.Value)
                 {
                     functionDerivative = new FunctionCall(MultiplicationOperation.Value,
                         new Literal(-1),
-                        new FunctionCall(Function.Sine, functionCall.Arguments[0]));
+                        new FunctionCall(SineFunction.Value, functionCall.Arguments[0]));
                 }
-                else if (function == Function.Sine)
+                else if (function == SineFunction.Value)
                 {
-                    functionDerivative = new FunctionCall(Function.Cosine, functionCall.Arguments[0]);
+                    functionDerivative = new FunctionCall(CosineFunction.Value, functionCall.Arguments[0]);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ namespace MetaphysicsIndustries.Solus
 
             Expression rightSide =
                 new FunctionCall(MultiplicationOperation.Value,
-                    new FunctionCall(Function.NaturalLogarithm,
+                    new FunctionCall(NaturalLogarithmFunction.Value,
                         leftClone),//.Clone()),
                     new FunctionCall(MultiplicationOperation.Value,
                         new FunctionCall(ExponentOperation.Value,

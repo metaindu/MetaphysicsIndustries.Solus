@@ -79,8 +79,6 @@
     <Compile Include="FactorialFunction.cs" />
     <Compile Include="FloorFunction.cs" />
     <Compile Include="Function.cs" />
-    <Compile Include="Function.RegisteredFunctions.cs" />
-    <Compile Include="Function.Statics.cs" />
     <Compile Include="FunctionCall.cs" />
     <Compile Include="GreaterThanComparisonOperation.cs" />
     <Compile Include="GreaterThanOrEqualComparisonOperation.cs" />

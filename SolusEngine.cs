@@ -144,9 +144,9 @@ namespace MetaphysicsIndustries.Solus
 			
 			
         //    Function[]	functions = {
-        //                                        Function.Cosine,
-        //                                        Function.Sine,
-        //                                        Function.Tangent,
+        //                                        CosineFunction.Value,
+        //                                        SineFunction.Value,
+        //                                        TangentFunction.Value,
         //                                        Function.Cotangent,
         //                                        Function.Secant,
         //                                        Function.Cosecant,
