@@ -129,7 +129,6 @@
     <Compile Include="TangentFunction.cs" />
     <Compile Include="SolusTensor.cs" />
     <Compile Include="UnitStepFunction.cs" />
-    <Compile Include="Variable.cs" />
     <Compile Include="VariableAccess.cs" />
     <Compile Include="VariableTable.cs" />
     <Compile Include="SolusVector.cs" />

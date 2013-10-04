@@ -409,9 +409,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
             VariableTable vars = new VariableTable();
-            Variable pi = new Variable("pi");
-            vars.Add("pi", pi);
-            vars.Add(pi, new Literal((float)Math.PI));
+            vars.Add("pi", new Literal((float)Math.PI));
 
             var expr = parser.Compile("sin(pi)", cleanup:false);
 

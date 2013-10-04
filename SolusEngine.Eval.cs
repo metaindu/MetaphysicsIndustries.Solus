@@ -23,7 +23,7 @@ namespace MetaphysicsIndustries.Solus
     public partial class SolusEngine
     {
         public Expression[] PreliminaryEvalInterval(Expression expr, VariableTable vars,
-                                                    Variable x, float xStart, float xEnd, float xStep)
+                                                    string x, float xStart, float xEnd, float xStep)
         {
             int i;
             float xx;
@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Solus
             Expression[] exprs = new Expression[i];
 
             Expression previousValue = null;
-            if (vars.Contains(x))
+            if (vars.ContainsKey(x))
             {
                 previousValue = vars[x];
                 vars.Remove(x);
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus
         }
 
         public float[] EvalInterval(Expression expr, VariableTable vars,
-                                        Variable x, float xStart, float xEnd, float xStep)
+                                        string x, float xStart, float xEnd, float xStep)
         {
             int i;
             float xx;
@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValue = null;
             bool hasPreviousValue = false;
-            if (vars.Contains(x))
+            if (vars.ContainsKey(x))
             {
                 hasPreviousValue = true;
                 previousValue = vars[x];
@@ -96,8 +96,8 @@ namespace MetaphysicsIndustries.Solus
         }
 
         public float[,] EvalInterval(Expression expr, VariableTable vars,
-                                        Variable x, float xStart, float xEnd, float xStep,
-                                        Variable y, float yStart, float yEnd, float yStep)
+                                        string x, float xStart, float xEnd, float xStep,
+                                        string y, float yStart, float yEnd, float yStep)
         {
             int nx = 0;
             int ny = 0;
@@ -123,7 +123,7 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueX = null;
             bool hasPreviousValueX = false;
-            if (vars.Contains(x))
+            if (vars.ContainsKey(x))
             {
                 hasPreviousValueX = true;
                 previousValueX = vars[x];
@@ -132,7 +132,7 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueY = null;
             bool hasPreviousValueY = false;
-            if (vars.Contains(y))
+            if (vars.ContainsKey(y))
             {
                 hasPreviousValueY = true;
                 previousValueY = vars[y];
@@ -174,9 +174,9 @@ namespace MetaphysicsIndustries.Solus
         }
 
         public float[, ,] EvalInterval(Expression expr, VariableTable vars,
-                                        Variable x, float xStart, float xEnd, float xStep,
-                                        Variable y, float yStart, float yEnd, float yStep,
-                                        Variable z, float zStart, float zEnd, float zStep)
+                                        string x, float xStart, float xEnd, float xStep,
+                                        string y, float yStart, float yEnd, float yStep,
+                                        string z, float zStart, float zEnd, float zStep)
         {
             int nx = 0;
             int ny = 0;
@@ -211,7 +211,7 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueX = null;
             bool hasPreviousValueX = false;
-            if (vars.Contains(x))
+            if (vars.ContainsKey(x))
             {
                 hasPreviousValueX = true;
                 previousValueX = vars[x];
@@ -220,7 +220,7 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueY = null;
             bool hasPreviousValueY = false;
-            if (vars.Contains(y))
+            if (vars.ContainsKey(y))
             {
                 hasPreviousValueY = true;
                 previousValueY = vars[y];
@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueZ = null;
             bool hasPreviousValueZ = false;
-            if (vars.Contains(z))
+            if (vars.ContainsKey(z))
             {
                 hasPreviousValueZ = true;
                 previousValueZ = vars[z];
@@ -281,73 +281,35 @@ namespace MetaphysicsIndustries.Solus
 
         public float[,] EvalMathPaint(Expression expr, VariableTable vars, int width, int height)
         {
-            if (!vars.ContainsKey("x"))
-            {
-                vars.Add("x", new Variable("x"));
-            }
-            if (!vars.ContainsKey("y"))
-            {
-                vars.Add("y", new Variable("y"));
-            }
-
-            if (!vars.ContainsKey("width")) { vars.Add("width", new Variable("width")); }
-            if (!vars.ContainsKey("height")) { vars.Add("height", new Variable("height")); }
-            if (!vars.ContainsKey("theta")) { vars.Add("theta", new Variable("theta")); }
-            if (!vars.ContainsKey("radius")) { vars.Add("radius", new Variable("radius")); }
-            if (!vars.ContainsKey("i")) { vars.Add("i", new Variable("i")); }
-            if (!vars.ContainsKey("j")) { vars.Add("j", new Variable("j")); }
-
             //previous values?
             SolusParser parser = new SolusParser();
-            vars[vars["width"]] = new Literal(width);
-            vars[vars["width"]] = new Literal(width);
-            vars[vars["theta"]] = parser.Compile("atan2(y,x)", vars);
-            vars[vars["radius"]] = parser.Compile("sqrt(x^2+y^2)", vars);
-            vars[vars["i"]] = new VariableAccess(vars["x"].Name);
-            vars[vars["j"]] = new VariableAccess(vars["y"].Name);
+            vars["width"] = new Literal(width);
+            vars["width"] = new Literal(width);
+            vars["theta"] = parser.Compile("atan2(y,x)", vars);
+            vars["radius"] = parser.Compile("sqrt(x^2+y^2)", vars);
+            vars["i"] = new VariableAccess("x");
+            vars["j"] = new VariableAccess("y");
 
-            return EvalInterval(expr, vars, vars["x"], 0, width - 1, 1, vars["y"], 0, height - 1, 1);
+            return EvalInterval(expr, vars, "x", 0, width - 1, 1, "y", 0, height - 1, 1);
         }
 
 
         public float[, ,] EvalMathPaint3D(Expression expr, VariableTable vars, int width, int height, int numframes)
         {
-            if (!vars.ContainsKey("x"))
-            {
-                vars.Add("x", new Variable("x"));
-            }
-            if (!vars.ContainsKey("y"))
-            {
-                vars.Add("y", new Variable("y"));
-            }
-            if (!vars.ContainsKey("z"))
-            {
-                vars.Add("z", new Variable("z"));
-            }
-
-            if (!vars.ContainsKey("width")) { vars.Add("width", new Variable("width")); }
-            if (!vars.ContainsKey("height")) { vars.Add("height", new Variable("height")); }
-            if (!vars.ContainsKey("theta")) { vars.Add("theta", new Variable("theta")); }
-            if (!vars.ContainsKey("radius")) { vars.Add("radius", new Variable("radius")); }
-            if (!vars.ContainsKey("i")) { vars.Add("i", new Variable("i")); }
-            if (!vars.ContainsKey("j")) { vars.Add("j", new Variable("j")); }
-            if (!vars.ContainsKey("numframes")) { vars.Add("numframes", new Variable("numframes")); }
-            if (!vars.ContainsKey("k")) { vars.Add("k", new Variable("k")); }
-            if (!vars.ContainsKey("t")) { vars.Add("t", new Variable("t")); }
 
             //previous values?
             SolusParser parser = new SolusParser();
-            vars[vars["width"]] = new Literal(width);
-            vars[vars["height"]] = new Literal(height);
-            vars[vars["theta"]] = parser.Compile("atan2(y,x)", vars);
-            vars[vars["radius"]] = parser.Compile("sqrt(x^2+y^2)", vars);
-            vars[vars["i"]] = new VariableAccess(vars["x"].Name);
-            vars[vars["j"]] = new VariableAccess(vars["y"].Name);
-            vars[vars["numframes"]] = new Literal(numframes);
-            vars[vars["k"]] = new VariableAccess(vars["z"].Name);
-            vars[vars["t"]] = new VariableAccess(vars["z"].Name);
+            vars["width"] = new Literal(width);
+            vars["height"] = new Literal(height);
+            vars["theta"] = parser.Compile("atan2(y,x)", vars);
+            vars["radius"] = parser.Compile("sqrt(x^2+y^2)", vars);
+            vars["i"] = new VariableAccess("x");
+            vars["j"] = new VariableAccess("y");
+            vars["numframes"] = new Literal(numframes);
+            vars["k"] = new VariableAccess("z");
+            vars["t"] = new VariableAccess("z");
 
-            return EvalInterval(expr, vars, vars["x"], 0, width - 1, 1, vars["y"], 0, height - 1, 1, vars["z"], 0, numframes - 1, 1);
+            return EvalInterval(expr, vars, "x", 0, width - 1, 1, "y", 0, height - 1, 1, "z", 0, numframes - 1, 1);
         }
     }
 }

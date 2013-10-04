@@ -614,11 +614,6 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (ex.Type == NodeType.Var)
             {
-                if (!varTable.ContainsKey(ex.Token))
-                {
-                    varTable.Add(new Variable(ex.Token));
-                }
-
                 return new VariableAccess(ex.Token);
             }
             else if (ex.Type == NodeType.Color)

@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus
         {
             Literal result = Expression.Eval(varTable);
 
-            varTable[varTable[Variable]] = result;//.Value;
+            varTable[Variable] = result;//.Value;
 
             return result;
         }

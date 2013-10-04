@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(d);
         }
 
-        public Expression GetDerivative(Expression expr, Variable var)
+        public Expression GetDerivative(Expression expr, string var)
         {
             Expression derivative;
 
@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Solus
             return derivative;
         }
 
-        private Expression InternalGetDerivative(Expression expr, Variable var)
+        private Expression InternalGetDerivative(Expression expr, string var)
         {
             Expression derivative;
 
@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (expr is DerivativeOfVariable)
             {
-                derivative = new DerivativeOfVariable((DerivativeOfVariable)expr, var.Name);
+                derivative = new DerivativeOfVariable((DerivativeOfVariable)expr, var);
             }
             else if (expr is FunctionCall)
             {
@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Solus
             return derivative;
         }
 
-        protected Expression GetDerivativeOfFunctionCall(FunctionCall functionCall, Variable var)
+        protected Expression GetDerivativeOfFunctionCall(FunctionCall functionCall, string var)
         {
 
             if (functionCall.Function is Operation)
@@ -112,7 +112,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected Expression GetDerivativeOfOperation(FunctionCall functionCall, Variable var)
+        protected Expression GetDerivativeOfOperation(FunctionCall functionCall, string var)
         {
 
 
@@ -130,7 +130,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private Expression GetDerivativeOfAssociativeCommutativOperation(FunctionCall functionCall, Variable var)
+        private Expression GetDerivativeOfAssociativeCommutativOperation(FunctionCall functionCall, string var)
         {
 
 
@@ -148,7 +148,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected Expression GetDerivativeOfBinaryOperation(FunctionCall functionCall, Variable var)
+        protected Expression GetDerivativeOfBinaryOperation(FunctionCall functionCall, string var)
         {
 
             BinaryOperation binaryOperation = functionCall.Function as BinaryOperation;
@@ -167,7 +167,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private Expression GetDerivativeOfExponentOperation(FunctionCall functionCall, Variable var)
+        private Expression GetDerivativeOfExponentOperation(FunctionCall functionCall, string var)
         {
 
             Expression leftClone = functionCall.Arguments[0];//.Clone();
@@ -254,7 +254,7 @@ namespace MetaphysicsIndustries.Solus
                 rightSide);
         }
 
-        private Expression GetDerivativeOfDivisionOperation(FunctionCall functionCall, Variable var)
+        private Expression GetDerivativeOfDivisionOperation(FunctionCall functionCall, string var)
         {
 
             Expression highClone = functionCall.Arguments[0];//.Clone();
@@ -277,7 +277,7 @@ namespace MetaphysicsIndustries.Solus
                             new Literal(2)));
         }
 
-        private Expression GetDerivativeOfAdditionOperation(FunctionCall functionCall, Variable var)
+        private Expression GetDerivativeOfAdditionOperation(FunctionCall functionCall, string var)
         {
 
             List<Expression> derivatives = new List<Expression>();
@@ -302,7 +302,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private Expression GetDerivativeOfMultiplicationOperation(FunctionCall functionCall, Variable var)
+        private Expression GetDerivativeOfMultiplicationOperation(FunctionCall functionCall, string var)
         {
 
             MultiplicationOperation operation = functionCall.Function as MultiplicationOperation;
@@ -443,15 +443,15 @@ namespace MetaphysicsIndustries.Solus
             //                rightDerivative));
         }
 
-        protected Expression GetDerivativeOfVariableAccess(VariableAccess variableAccess, Variable var)
+        protected Expression GetDerivativeOfVariableAccess(VariableAccess variableAccess, string var)
         {
-            if (variableAccess.VariableName == var.Name)
+            if (variableAccess.VariableName == var)
             {
                 return new Literal(1);
             }
             else
             {
-                return new DerivativeOfVariable(variableAccess.VariableName, var.Name);
+                return new DerivativeOfVariable(variableAccess.VariableName, var);
             }
         }
 

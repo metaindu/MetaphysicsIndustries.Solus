@@ -7,7 +7,7 @@ namespace MetaphysicsIndustries.Solus
     {
         public class SubstTransformArgs : TransformArgs
         {
-            public Variable VariableToReplace;
+            public string VariableToReplace;
             public Expression ExpressionToInsert;
         }
 
@@ -21,7 +21,7 @@ namespace MetaphysicsIndustries.Solus
             return Subst(expr, args.VariableToReplace, args.ExpressionToInsert);
         }
 
-        public Expression Subst(Expression exprToTransform, Variable variableToReplace, Expression exprToInsert)
+        public Expression Subst(Expression exprToTransform, string variableToReplace, Expression exprToInsert)
         {
             if (exprToTransform is FunctionCall)
             {
@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (exprToTransform is VariableAccess)
             {
-                if (((VariableAccess)exprToTransform).VariableName == variableToReplace.Name)
+                if (((VariableAccess)exprToTransform).VariableName == variableToReplace)
                 {
                     return exprToInsert;
                 }

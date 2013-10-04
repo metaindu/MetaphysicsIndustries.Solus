@@ -7,10 +7,10 @@ namespace MetaphysicsIndustries.Solus
 {
     public class PolynomialTransformer : ExpressionTransformer<VariableTransformArgs>
     {
-        public static bool ContainsVariable(Expression expr, Variable variable)
+        public static bool ContainsVariable(Expression expr, string variable)
         {
             if (expr is Literal) return false;
-            if (expr is VariableAccess) return ((VariableAccess)expr).VariableName == variable.Name;
+            if (expr is VariableAccess) return ((VariableAccess)expr).VariableName == variable;
             if (expr is FunctionCall)
             {
                 foreach (Expression arg in ((FunctionCall)expr).Arguments)

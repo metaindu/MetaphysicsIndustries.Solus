@@ -27,16 +27,7 @@ namespace MetaphysicsIndustries.Solus
 
         public override Literal Eval(VariableTable varTable)
         {
-            Variable var;
-            if (varTable.ContainsKey(VariableName))
-            {
-                var = varTable[VariableName];
-            }
-            else
-            {
-                throw new InvalidOperationException("Variable not found in variable table: " + VariableName);
-            }
-
+            var var = VariableName;
 
             if (varTable.ContainsKey(var))
             {
@@ -62,7 +53,7 @@ namespace MetaphysicsIndustries.Solus
                 //variable.
                 //we could add (if (varTable[Variable] as VariableAccess).Variable == Variable) { throw }
                 //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
-                var var = varTable[VariableName];
+                var var = VariableName;
                 return varTable[var].PreliminaryEval(varTable);
             }
             else

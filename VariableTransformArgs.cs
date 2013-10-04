@@ -6,15 +6,15 @@ namespace MetaphysicsIndustries.Solus
 {
     public class VariableTransformArgs : TransformArgs
     {
-        public VariableTransformArgs(Variable variable)
+        public VariableTransformArgs(string variable)
         {
             if (variable == null) { throw new ArgumentNullException("variable"); }
 
             _variable = variable;	
         }
 
-        private Variable _variable;
-        public Variable Variable
+        private string _variable;
+        public string Variable
         {
             get { return _variable; }
         }

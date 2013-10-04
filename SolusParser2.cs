@@ -453,11 +453,6 @@ namespace MetaphysicsIndustries.Solus
         {
             string varname = span.Subspans[0].Value;
 
-            if (!vars.ContainsKey(varname))
-            {
-                vars[varname] = new Variable(varname);
-            }
-
             return new VariableAccess(varname);
         }
 

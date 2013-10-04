@@ -103,7 +103,7 @@ namespace MetaphysicsIndustries.Solus
         {
             SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            var var = varTable[((VariableAccess)args.ElementAt(1)).VariableName];
+            var var = ((VariableAccess)args.ElementAt(1)).VariableName;
             return cleanup.CleanUp(subst.Subst(args.First(), var, args.ElementAt(2)));
         }
 
@@ -128,7 +128,7 @@ namespace MetaphysicsIndustries.Solus
         {
             DerivativeTransformer derive = new DerivativeTransformer();
             Expression expr = _args.First();
-            Variable v = varTable[((VariableAccess)_args.ElementAt(1)).VariableName];
+            var v = ((VariableAccess)_args.ElementAt(1)).VariableName;
 
             return derive.Transform(expr, new VariableTransformArgs(v));
         }
