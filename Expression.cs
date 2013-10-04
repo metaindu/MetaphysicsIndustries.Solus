@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Solus
         {
         }
 
-        public abstract Literal Eval(VariableTable varTable);
+        public abstract Literal Eval(Dictionary<string, Expression> varTable);
 
         public abstract Expression Clone();
         public static Expression Clone(Expression expr)
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public virtual Expression PreliminaryEval(VariableTable varTable)
+        public virtual Expression PreliminaryEval(Dictionary<string, Expression> varTable)
         {
             return this;
         }

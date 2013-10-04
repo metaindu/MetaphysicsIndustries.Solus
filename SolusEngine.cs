@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Solus
         //    return e.Eval(varTable);
         //}
 
-        public Expression PreliminaryEval(Expression expr, VariableTable varTable)
+        public Expression PreliminaryEval(Expression expr, Dictionary<string, Expression> varTable)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
             return cleanup.CleanUp(expr.PreliminaryEval(varTable));

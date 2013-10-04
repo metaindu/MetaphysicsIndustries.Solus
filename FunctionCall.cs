@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus
             return ret;
         }
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(Dictionary<string, Expression> varTable)
         {
             return Call(varTable);
         }
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public virtual Literal Call(VariableTable varTable)
+        public virtual Literal Call(Dictionary<string, Expression> varTable)
         {
             return Function.Call(varTable, Arguments.ToArray());
         }
@@ -158,7 +158,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(VariableTable varTable)
+        public override Expression PreliminaryEval(Dictionary<string, Expression> varTable)
         {
             List<Expression> args = new List<Expression>(Arguments.Count);
 

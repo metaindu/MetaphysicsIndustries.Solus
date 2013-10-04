@@ -10,7 +10,7 @@ namespace MetaphysicsIndustries.Solus
 
         float _value = (float)_random.NextDouble();
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(Dictionary<string, Expression> varTable)
         {
             return new Literal(
                 //_value);

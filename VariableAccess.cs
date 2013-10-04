@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Solus
 
         public string VariableName;
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(Dictionary<string, Expression> varTable)
         {
             var var = VariableName;
 
@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(VariableTable varTable)
+        public override Expression PreliminaryEval(Dictionary<string, Expression> varTable)
         {
             if (varTable.ContainsKey(VariableName))
             {

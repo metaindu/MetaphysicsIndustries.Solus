@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
     {
-        public Expression[] PreliminaryEvalInterval(Expression expr, VariableTable vars,
+        public Expression[] PreliminaryEvalInterval(Expression expr, Dictionary<string, Expression> vars,
                                                     string x, float xStart, float xEnd, float xStep)
         {
             int i;
@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Solus
             return exprs;
         }
 
-        public float[] EvalInterval(Expression expr, VariableTable vars,
+        public float[] EvalInterval(Expression expr, Dictionary<string, Expression> vars,
                                         string x, float xStart, float xEnd, float xStep)
         {
             int i;
@@ -95,7 +95,7 @@ namespace MetaphysicsIndustries.Solus
             return values;
         }
 
-        public float[,] EvalInterval(Expression expr, VariableTable vars,
+        public float[,] EvalInterval(Expression expr, Dictionary<string, Expression> vars,
                                         string x, float xStart, float xEnd, float xStep,
                                         string y, float yStart, float yEnd, float yStep)
         {
@@ -173,7 +173,7 @@ namespace MetaphysicsIndustries.Solus
             return values;
         }
 
-        public float[, ,] EvalInterval(Expression expr, VariableTable vars,
+        public float[, ,] EvalInterval(Expression expr, Dictionary<string, Expression> vars,
                                         string x, float xStart, float xEnd, float xStep,
                                         string y, float yStart, float yEnd, float yStep,
                                         string z, float zStart, float zEnd, float zStep)
@@ -279,7 +279,7 @@ namespace MetaphysicsIndustries.Solus
             return values;
         }
 
-        public float[,] EvalMathPaint(Expression expr, VariableTable vars, int width, int height)
+        public float[,] EvalMathPaint(Expression expr, Dictionary<string, Expression> vars, int width, int height)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -294,7 +294,7 @@ namespace MetaphysicsIndustries.Solus
         }
 
 
-        public float[, ,] EvalMathPaint3D(Expression expr, VariableTable vars, int width, int height, int numframes)
+        public float[, ,] EvalMathPaint3D(Expression expr, Dictionary<string, Expression> vars, int width, int height, int numframes)
         {
 
             //previous values?

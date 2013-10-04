@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Addition; }
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
         {
             float sum = 0;
             foreach (Literal arg in args)

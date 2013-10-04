@@ -55,11 +55,11 @@ namespace MetaphysicsIndustries.Solus
             new ParseFunction(){ Token="subst",     Converter=SolusParser1.ConvertSubstExpression,                                  NumArguments=3,  HasVariableNumArgs=false },
         };
 
-        public Expression Compile(string input, VariableTable vars=null, bool cleanup=false)
+        public Expression Compile(string input, Dictionary<string, Expression> vars=null, bool cleanup=false)
         {
             if (vars == null)
             {
-                vars = new VariableTable();
+                vars = new Dictionary<string, Expression>();
             }
 
             return GetExpression(input, vars);
@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Solus
             return _functions[token];
         }
 
-        public Expression GetExpression(string input, VariableTable vars)
+        public Expression GetExpression(string input, Dictionary<string, Expression> vars)
         {
             var errors = new List<Error>();
 
@@ -117,7 +117,7 @@ namespace MetaphysicsIndustries.Solus
             { BitwiseOrOperation.Value, 80 },
         };
 
-        Expression GetExpressionFromExpr(Span span, VariableTable vars)
+        Expression GetExpressionFromExpr(Span span, Dictionary<string, Expression> vars)
         {
             var subexprs = new List<Expression>();
             var operators = new List<Operation>();
@@ -213,7 +213,7 @@ namespace MetaphysicsIndustries.Solus
             return subexprs[0];
         }
 
-        Expression GetExpressionFromSubexpr(Span span, VariableTable vars)
+        Expression GetExpressionFromSubexpr(Span span, Dictionary<string, Expression> vars)
         {
             var sub = span.Subspans[0];
             var defref = sub.DefRef;
@@ -283,7 +283,7 @@ namespace MetaphysicsIndustries.Solus
             throw new InvalidOperationException();
         }
 
-        Expression GetFunctionCallFromFunctioncall(Span span, VariableTable vars)
+        Expression GetFunctionCallFromFunctioncall(Span span, Dictionary<string, Expression> vars)
         {
             var name = span.Subspans[0].Value;
             ParseFunction? pfunc = GetFunction(name);
@@ -437,7 +437,7 @@ namespace MetaphysicsIndustries.Solus
             throw new NotImplementedException();
         }
 
-        Expression GetExpressionFromUnaryop(Span span, VariableTable vars)
+        Expression GetExpressionFromUnaryop(Span span, Dictionary<string, Expression> vars)
         {
             Expression arg = GetExpressionFromSubexpr(span.Subspans[1], vars);
 
@@ -449,7 +449,7 @@ namespace MetaphysicsIndustries.Solus
             return arg;
         }
 
-        VariableAccess GetVariableAccessFromVarref(Span span, VariableTable vars)
+        VariableAccess GetVariableAccessFromVarref(Span span, Dictionary<string, Expression> vars)
         {
             string varname = span.Subspans[0].Value;
 

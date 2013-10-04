@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(Dictionary<string, Expression> varTable)
         {
             throw new InvalidOperationException();
         }

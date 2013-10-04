@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected override sealed Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override sealed Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
         {
             return new Literal(InternalBinaryCall(args[0].Value, args[1].Value));
         }

@@ -25,10 +25,10 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression Compile(string expr, bool cleanup=true)
         {
-            return Compile(expr, new VariableTable(), cleanup);
+            return Compile(expr, new Dictionary<string, Expression>(), cleanup);
         }
 
-        public Expression Compile(string expr, VariableTable varTable, bool cleanup=true)
+        public Expression Compile(string expr, Dictionary<string, Expression> varTable, bool cleanup=true)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -383,7 +383,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private Expression Compile(Ex[] tokens, VariableTable varTable, bool cleanup=true)
+        private Expression Compile(Ex[] tokens, Dictionary<string, Expression> varTable, bool cleanup=true)
         {
             if (varTable == null) throw new ArgumentNullException("varTable");
 
@@ -455,7 +455,7 @@ namespace MetaphysicsIndustries.Solus
             return Compile(tokens, null);
         }
 
-        private Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
+        private Expression ConvertToSolusExpression(Ex ex, Dictionary<string, Expression> varTable)
         {
             Expression leftArg = null;
             Expression rightArg = null;
@@ -666,7 +666,7 @@ namespace MetaphysicsIndustries.Solus
             throw new SolusParseException(ex.Location, error);
         }
 
-        private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
+        private Expression ConvertFunctionExpression(Ex ex, Dictionary<string, Expression> varTable, Expression leftArg, Expression rightArg)
         {
             List<Expression> args = new List<Expression>();
 
@@ -704,7 +704,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
+        private void ConvertCommaToArgs(Ex ex, List<Expression> args, Dictionary<string, Expression> varTable)
         {
             if (ex.Left != null)
             {

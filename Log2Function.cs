@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Solus
             Name = "Logarithm of base two";
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
         {
             return new Literal((float)Math.Log(args[0].Eval(varTable).Value, 2));
         }

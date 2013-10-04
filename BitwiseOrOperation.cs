@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Bitwise; }
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
         {
             long value = 0;
 

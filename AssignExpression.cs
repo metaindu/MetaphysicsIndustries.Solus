@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Solus
             set { _value = value; }
         }
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(Dictionary<string, Expression> varTable)
         {
             return Value;
         }

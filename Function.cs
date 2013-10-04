@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus
 			
 		}
 
-		public virtual Literal Call(VariableTable varTable, params Expression[] args)
+		public virtual Literal Call(Dictionary<string, Expression> varTable, params Expression[] args)
         {
             this.CheckArguments(args);
             List<Literal> evalArgs = new List<Literal>(args.Length);
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Solus
 			}
 		}
 
-        protected abstract Literal InternalCall(VariableTable varTable, Literal[] args);
+        protected abstract Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args);
 
 		protected virtual void CheckArguments(Expression[] args)
 		{

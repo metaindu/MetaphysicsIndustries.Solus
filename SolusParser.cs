@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public delegate Expression FunctionConverter(IEnumerable<Expression> args, VariableTable vars);
+    public delegate Expression FunctionConverter(IEnumerable<Expression> args, Dictionary<string, Expression> vars);
 
     public struct ParseFunction
     {
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Solus
             return _functions[token];
         }
 
-        public static Expression ConvertSubstExpression(IEnumerable<Expression> args, VariableTable varTable)
+        public static Expression ConvertSubstExpression(IEnumerable<Expression> args, Dictionary<string, Expression> varTable)
         {
             SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();
@@ -107,7 +107,7 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(subst.Subst(args.First(), var, args.ElementAt(2)));
         }
 
-        public static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, VariableTable varTable)
+        public static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, Dictionary<string, Expression> varTable)
         {
             Expression g = args.ElementAt(0);
             Expression h = args.ElementAt(1);
@@ -124,7 +124,7 @@ namespace MetaphysicsIndustries.Solus
                                 h)));
         }
 
-        public static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, VariableTable varTable)
+        public static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, Dictionary<string, Expression> varTable)
         {
             DerivativeTransformer derive = new DerivativeTransformer();
             Expression expr = _args.First();
@@ -133,7 +133,7 @@ namespace MetaphysicsIndustries.Solus
             return derive.Transform(expr, new VariableTransformArgs(v));
         }
 
-        public static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, VariableTable varTable)
+        public static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, Dictionary<string, Expression> varTable)
         {
             return new FunctionCall(ExponentOperation.Value, _args.First(), new Literal(0.5f));
         }

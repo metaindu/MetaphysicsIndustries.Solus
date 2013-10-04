@@ -20,7 +20,7 @@ namespace MetaphysicsIndustries.Solus
 
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
         {
             float p = args[0].Value;
 

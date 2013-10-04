@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using MetaphysicsIndustries.Collections;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Test
 {
@@ -11,7 +12,7 @@ namespace MetaphysicsIndustries.Solus.Test
         public void TestNormal()
         {
             SolusParser parser = new SolusParser();
-            VariableTable vars = new VariableTable();
+            Dictionary<string, Expression> vars = new Dictionary<string, Expression>();
 
             var expr = parser.Compile("2 + 2");
             var value = expr.Eval(vars).Value;
@@ -408,7 +409,7 @@ namespace MetaphysicsIndustries.Solus.Test
         public void TestFunctionCall1()
         {
             var parser = new SolusParser();
-            VariableTable vars = new VariableTable();
+            Dictionary<string, Expression> vars = new Dictionary<string, Expression>();
             vars.Add("pi", new Literal((float)Math.PI));
 
             var expr = parser.Compile("sin(pi)", cleanup:false);
@@ -462,7 +463,7 @@ namespace MetaphysicsIndustries.Solus.Test
                 Types.Add(typeof(Expression));
             }
 
-            protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+            protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
             {
                 return new Literal(3);
             }
@@ -490,7 +491,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf<Literal>(fcall.Arguments[1]);
             Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
             Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
-            Assert.AreEqual(3f, expr.Eval(new VariableTable()).Value);
+            Assert.AreEqual(3f, expr.Eval(new Dictionary<string, Expression>()).Value);
 
 
             expr = parser.Compile("asdf(4, 5)");
@@ -511,7 +512,7 @@ namespace MetaphysicsIndustries.Solus.Test
             {
             }
 
-            protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+            protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
             {
                 return new Literal(args.Length);
             }
@@ -532,7 +533,7 @@ namespace MetaphysicsIndustries.Solus.Test
 //                NumArguments = -1,
                 HasVariableNumArgs = true,
             });
-            var vars = new VariableTable();
+            var vars = new Dictionary<string, Expression>();
 
 
             var expr = parser.Compile("count(1, 2, 3)", cleanup:false);
@@ -546,7 +547,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
             Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
             Assert.AreEqual(3f, (fcall.Arguments[2] as Literal).Value);
-            Assert.AreEqual(3f, expr.Eval(new VariableTable()).Value);
+            Assert.AreEqual(3f, expr.Eval(new Dictionary<string, Expression>()).Value);
 
 
             Assert.AreEqual(0, parser.Compile("count()").Eval(vars).Value);

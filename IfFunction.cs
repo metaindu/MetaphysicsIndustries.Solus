@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Solus
             Types.Add(typeof(Expression));
         }
 
-        public override Literal Call(VariableTable varTable, params Expression[] args)
+        public override Literal Call(Dictionary<string, Expression> varTable, params Expression[] args)
         {
             CheckArguments(args);
 
@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
         {
             throw new NotSupportedException();
             //float value = args[0].Value;

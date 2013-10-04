@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
 		{
             return new Literal((float)(1 / Math.Sin(args[0].Eval(varTable).Value)));
         }

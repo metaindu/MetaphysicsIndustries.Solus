@@ -572,7 +572,7 @@ namespace MetaphysicsIndustries.Solus
 
         #endregion
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(Dictionary<string, Expression> varTable)
         {
             return new Literal(0);
         }
@@ -621,7 +621,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(VariableTable varTable)
+        public override Expression PreliminaryEval(Dictionary<string, Expression> varTable)
         {
             SolusMatrix ret = new SolusMatrix(RowCount, ColumnCount);
 

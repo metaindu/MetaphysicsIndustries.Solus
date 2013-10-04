@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus
             get { return _length; }
         }
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(Dictionary<string, Expression> varTable)
         {
             return new Literal(0);
         }
@@ -173,7 +173,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(VariableTable varTable)
+        public override Expression PreliminaryEval(Dictionary<string, Expression> varTable)
         {
             SolusVector ret = new SolusVector(Length);
 
