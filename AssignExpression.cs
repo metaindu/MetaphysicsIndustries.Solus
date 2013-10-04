@@ -6,14 +6,14 @@ namespace MetaphysicsIndustries.Solus
 {
     public class AssignExpression : Expression
     {
-        public AssignExpression(Variable variable, Literal value)
+        public AssignExpression(string variable, Literal value)
         {
             _variable = variable;
             _value = value;
         }
 
-        private Variable _variable;
-        public Variable Variable
+        private string _variable;
+        public string Variable
         {
             get { return _variable; }
             set { _variable = value; }

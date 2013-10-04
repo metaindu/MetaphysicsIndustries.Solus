@@ -650,7 +650,7 @@ namespace MetaphysicsIndustries.Solus
                     throw new SolusParseException(ex.Location, "The left operand of an assignment must be a variable.");
                 }
 
-                return new AssignExpression(varTable[((VariableAccess)leftArg).VariableName], rightArg.Eval(varTable));
+                return new AssignExpression(((VariableAccess)leftArg).VariableName, rightArg.Eval(varTable));
             }
             else if (ex.Type == NodeType.DelayAssign)
             {
