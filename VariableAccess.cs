@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Solus
 
         public VariableAccess(Variable variable)
         {
-            _variable = variable;
+            Variable = variable;
         }
 
         public override Expression Clone()
@@ -21,12 +21,7 @@ namespace MetaphysicsIndustries.Solus
             return new VariableAccess(Variable);
         }
 
-        private Variable _variable;
-
-        public Variable Variable
-        {
-            get { return _variable; }
-        }
+        public Variable Variable;
 
         public override Literal Eval(VariableTable varTable)
         {
