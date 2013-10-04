@@ -25,7 +25,16 @@ namespace MetaphysicsIndustries.Solus
 
         public override Literal Eval(VariableTable varTable)
         {
-            Variable var = Variable;
+            Variable var;
+            if (varTable.ContainsKey(Variable.Name))
+            {
+                var = varTable[Variable.Name];
+            }
+            else
+            {
+                throw new InvalidOperationException("Variable not found in variable table: " + Variable.Name);
+            }
+
 
             if (varTable.ContainsKey(var))
             {
@@ -38,7 +47,6 @@ namespace MetaphysicsIndustries.Solus
             }
             else
             {
-                //return new Literal(0);
                 throw new InvalidOperationException("Variable not found in variable table: " + Variable.Name);
             }
         }
