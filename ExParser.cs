@@ -659,7 +659,7 @@ namespace MetaphysicsIndustries.Solus
                     throw new SolusParseException(ex.Location, "The left operand of an assignment must be a variable.");
                 }
 
-                return new DelayAssignExpression(varTable[((VariableAccess)leftArg).VariableName], rightArg);
+                return new DelayAssignExpression(((VariableAccess)leftArg).VariableName, rightArg);
             }
 
             string error = "Unknown node type: ";

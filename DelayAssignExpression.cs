@@ -6,15 +6,15 @@ namespace MetaphysicsIndustries.Solus
 {
     public class DelayAssignExpression : Expression
     {
-        public DelayAssignExpression(Variable variable, Expression expression)
+        public DelayAssignExpression(string variable, Expression expression)
         {
             _variable = variable;
             _expression = expression;
         }
 
-        private Variable _variable;
+        private string _variable;
 
-        public Variable Variable
+        public string Variable
         {
             get { return _variable; }
             set { _variable = value; }
@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus
         {
             Literal result = Expression.Eval(varTable);
 
-            varTable[Variable] = result;//.Value;
+            varTable[varTable[Variable]] = result;//.Value;
 
             return result;
         }
