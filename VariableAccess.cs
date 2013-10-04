@@ -25,14 +25,16 @@ namespace MetaphysicsIndustries.Solus
 
         public override Literal Eval(VariableTable varTable)
         {
-            if (varTable.ContainsKey(Variable))
+            Variable var = Variable;
+
+            if (varTable.ContainsKey(var))
             {
-                if (varTable[Variable] is Literal)
+                if (varTable[var] is Literal)
                 {
-                    return (Literal)varTable[Variable];
+                    return (Literal)varTable[var];
                 }
 
-                return varTable[Variable].Eval(varTable);
+                return varTable[var].Eval(varTable);
             }
             else
             {
