@@ -36,9 +36,13 @@ namespace MetaphysicsIndustries.Solus
         }
     }
 
-    public partial class SolusParser : ExParser
+    public class SolusParser : SolusParser1
     {
-        public SolusParser()
+    }
+
+    public partial class SolusParser1 : ExParser
+    {
+        public SolusParser1()
         {
             foreach (ParseFunction func in _builtinFunctions)
             {
@@ -95,7 +99,7 @@ namespace MetaphysicsIndustries.Solus
             return _functions[token];
         }
 
-        private static Expression ConvertSubstExpression(IEnumerable<Expression> args, VariableTable varTable)
+        public static Expression ConvertSubstExpression(IEnumerable<Expression> args, VariableTable varTable)
         {
             SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();
@@ -103,7 +107,7 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(subst.Subst(args.First(), var, args.ElementAt(2)));
         }
 
-        private static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, VariableTable varTable)
+        public static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, VariableTable varTable)
         {
             Expression g = args.ElementAt(0);
             Expression h = args.ElementAt(1);
@@ -120,7 +124,7 @@ namespace MetaphysicsIndustries.Solus
                                 h)));
         }
 
-        static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, VariableTable varTable)
+        public static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, VariableTable varTable)
         {
             DerivativeTransformer derive = new DerivativeTransformer();
             Expression expr = _args.First();
@@ -129,7 +133,7 @@ namespace MetaphysicsIndustries.Solus
             return derive.Transform(expr, new VariableTransformArgs(v));
         }
 
-        static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, VariableTable varTable)
+        public static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, VariableTable varTable)
         {
             return new FunctionCall(ExponentOperation.Value, _args.First(), new Literal(0.5f));
         }
