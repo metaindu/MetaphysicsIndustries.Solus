@@ -4,27 +4,32 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public class DerivativeOfVariable : Variable
+    public class DerivativeOfVariable : Expression
     {
-        public DerivativeOfVariable(Variable variable, Variable lowerVariable)
-            : base("d")
+        public DerivativeOfVariable(string variable, string lowerVariable)
         {
-            if (variable is DerivativeOfVariable && (variable as DerivativeOfVariable).LowerVariable == lowerVariable)
+            _variable = variable;
+            _order = 1;
+            _lowerVariable = lowerVariable;
+        }
+        public DerivativeOfVariable(DerivativeOfVariable variable, string lowerVariable)
+        {
+            if (variable.LowerVariable == lowerVariable)
             {
-                _variable = (variable as DerivativeOfVariable).Variable;
-                _order = (variable as DerivativeOfVariable).Order + 1;
+                _variable = variable.Variable;
+                _order = variable.Order + 1;
             }
             else
             {
-                _variable = variable;
+                _variable = variable.Name;
                 _order = 1;
             }
             _lowerVariable = lowerVariable;
         }
 
-        private Variable _variable;
+        private string _variable;
 
-        public Variable Variable
+        public string Variable
         {
             get { return _variable; }
         }
@@ -36,23 +41,28 @@ namespace MetaphysicsIndustries.Solus
             get { return _order; }
         }
 
-        private Variable _lowerVariable;
-        public Variable LowerVariable
+        private string _lowerVariable;
+        public string LowerVariable
         {
             get { return _lowerVariable; }
         }
 
 
-        public override string Name
+        public string Name
         {
             get
             {
-                return "d" + (Order > 1 ? Order.ToString() : "") + Variable.Name + "/d" + LowerVariable.Name + (Order > 1 ? Order.ToString() : "");
+                return "d" + (Order > 1 ? Order.ToString() : "") + Variable + "/d" + LowerVariable + (Order > 1 ? Order.ToString() : "");
             }
-            //set
-            //{
-            //}
         }
 
+        public override Literal Eval(VariableTable varTable)
+        {
+            throw new InvalidOperationException();
+        }
+        public override Expression Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

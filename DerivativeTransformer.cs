@@ -46,6 +46,10 @@ namespace MetaphysicsIndustries.Solus
             {
                 derivative = GetDerivativeOfVariableAccess(expr as VariableAccess, var);
             }
+            else if (expr is DerivativeOfVariable)
+            {
+                derivative = new DerivativeOfVariable((DerivativeOfVariable)expr, var.Name);
+            }
             else if (expr is FunctionCall)
             {
                 derivative = GetDerivativeOfFunctionCall(expr as FunctionCall, var);
@@ -445,14 +449,9 @@ namespace MetaphysicsIndustries.Solus
             {
                 return new Literal(1);
             }
-
-            //if (variableAccess.Variable is DerivativeOfVariable)
-            //{
-            //    return new Literal(0);
-            //}
-            //else
+            else
             {
-                return new VariableAccess(new DerivativeOfVariable(variableAccess.Variable, var));
+                return new DerivativeOfVariable(variableAccess.Variable.Name, var.Name);
             }
         }
 
