@@ -11,28 +11,30 @@ namespace MetaphysicsIndustries.Solus
         {
         }
 
-        public VariableAccess(Variable variable)
+        public VariableAccess(string variableName)
         {
-            Variable = variable;
+            if (string.IsNullOrEmpty(variableName)) throw new ArgumentNullException("variableName");
+
+            VariableName = variableName;
         }
 
         public override Expression Clone()
         {
-            return new VariableAccess(Variable);
+            return new VariableAccess(VariableName);
         }
 
-        public Variable Variable;
+        public string VariableName;
 
         public override Literal Eval(VariableTable varTable)
         {
             Variable var;
-            if (varTable.ContainsKey(Variable.Name))
+            if (varTable.ContainsKey(VariableName))
             {
-                var = varTable[Variable.Name];
+                var = varTable[VariableName];
             }
             else
             {
-                throw new InvalidOperationException("Variable not found in variable table: " + Variable.Name);
+                throw new InvalidOperationException("Variable not found in variable table: " + VariableName);
             }
 
 
@@ -47,20 +49,21 @@ namespace MetaphysicsIndustries.Solus
             }
             else
             {
-                throw new InvalidOperationException("Variable not found in variable table: " + Variable.Name);
+                throw new InvalidOperationException("Variable not found in variable table: " + VariableName);
             }
         }
 
         public override Expression PreliminaryEval(VariableTable varTable)
         {
-            if (varTable.ContainsKey(Variable))
+            if (varTable.ContainsKey(VariableName))
             {
                 //this will cause an infinite recursion if a variable 
                 //is defined in terms of itself or in terms of another 
                 //variable.
                 //we could add (if (varTable[Variable] as VariableAccess).Variable == Variable) { throw }
                 //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
-                return varTable[Variable].PreliminaryEval(varTable);
+                var var = varTable[VariableName];
+                return varTable[var].PreliminaryEval(varTable);
             }
             else
             {
@@ -70,14 +73,7 @@ namespace MetaphysicsIndustries.Solus
 
         public override string ToString()
         {
-            if (Variable != null)
-            {
-                return Variable.Name;
-            }
-            else
-            {
-                return "[unknown variable]";
-            }
+            return VariableName;
         }
     }
 }

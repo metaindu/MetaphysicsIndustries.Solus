@@ -99,7 +99,8 @@ namespace MetaphysicsIndustries.Solus
         {
             SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(subst.Subst(args.First(), ((VariableAccess)args.ElementAt(1)).Variable, args.ElementAt(2)));
+            var var = varTable[((VariableAccess)args.ElementAt(1)).VariableName];
+            return cleanup.CleanUp(subst.Subst(args.First(), var, args.ElementAt(2)));
         }
 
         private static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, VariableTable varTable)
@@ -123,7 +124,7 @@ namespace MetaphysicsIndustries.Solus
         {
             DerivativeTransformer derive = new DerivativeTransformer();
             Expression expr = _args.First();
-            Variable v = ((VariableAccess)_args.ElementAt(1)).Variable;
+            Variable v = varTable[((VariableAccess)_args.ElementAt(1)).VariableName];
 
             return derive.Transform(expr, new VariableTransformArgs(v));
         }

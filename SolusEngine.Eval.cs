@@ -303,8 +303,8 @@ namespace MetaphysicsIndustries.Solus
             vars[vars["width"]] = new Literal(width);
             vars[vars["theta"]] = parser.Compile("atan2(y,x)", vars);
             vars[vars["radius"]] = parser.Compile("sqrt(x^2+y^2)", vars);
-            vars[vars["i"]] = new VariableAccess(vars["x"]);
-            vars[vars["j"]] = new VariableAccess(vars["y"]);
+            vars[vars["i"]] = new VariableAccess(vars["x"].Name);
+            vars[vars["j"]] = new VariableAccess(vars["y"].Name);
 
             return EvalInterval(expr, vars, vars["x"], 0, width - 1, 1, vars["y"], 0, height - 1, 1);
         }
@@ -341,11 +341,11 @@ namespace MetaphysicsIndustries.Solus
             vars[vars["height"]] = new Literal(height);
             vars[vars["theta"]] = parser.Compile("atan2(y,x)", vars);
             vars[vars["radius"]] = parser.Compile("sqrt(x^2+y^2)", vars);
-            vars[vars["i"]] = new VariableAccess(vars["x"]);
-            vars[vars["j"]] = new VariableAccess(vars["y"]);
+            vars[vars["i"]] = new VariableAccess(vars["x"].Name);
+            vars[vars["j"]] = new VariableAccess(vars["y"].Name);
             vars[vars["numframes"]] = new Literal(numframes);
-            vars[vars["k"]] = new VariableAccess(vars["z"]);
-            vars[vars["t"]] = new VariableAccess(vars["z"]);
+            vars[vars["k"]] = new VariableAccess(vars["z"].Name);
+            vars[vars["t"]] = new VariableAccess(vars["z"].Name);
 
             return EvalInterval(expr, vars, vars["x"], 0, width - 1, 1, vars["y"], 0, height - 1, 1, vars["z"], 0, numframes - 1, 1);
         }

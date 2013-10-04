@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (exprToTransform is VariableAccess)
             {
-                if (((VariableAccess)exprToTransform).Variable == variableToReplace)
+                if (((VariableAccess)exprToTransform).VariableName == variableToReplace.Name)
                 {
                     return exprToInsert;
                 }

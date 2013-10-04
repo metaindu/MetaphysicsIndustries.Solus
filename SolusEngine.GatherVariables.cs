@@ -32,21 +32,18 @@ namespace MetaphysicsIndustries.Solus
                 {
                     VariableAccess va = (VariableAccess)expr;
 
-                    if (va.Variable != null)
-                    {
-                        _variables.Add(va.Variable);
-                    }
+                    _variables.Add(va.VariableName);
                 }
             }
 
-            private Set<Variable> _variables = new Set<Variable>();
-            public Set<Variable> Variables
+            private Set<string> _variables = new Set<string>();
+            public Set<string> Variables
             {
                 get { return _variables; }
             }
         }
 
-        public Set<Variable> GatherVariables(Expression expr)
+        public Set<string> GatherVariables(Expression expr)
         {
             VariableGatherer g = new VariableGatherer();
             expr.ApplyToExpressionTree(g.GatherVariable);

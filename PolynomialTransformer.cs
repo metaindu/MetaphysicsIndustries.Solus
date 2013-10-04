@@ -10,7 +10,7 @@ namespace MetaphysicsIndustries.Solus
         public static bool ContainsVariable(Expression expr, Variable variable)
         {
             if (expr is Literal) return false;
-            if (expr is VariableAccess) return ((VariableAccess)expr).Variable == variable;
+            if (expr is VariableAccess) return ((VariableAccess)expr).VariableName == variable.Name;
             if (expr is FunctionCall)
             {
                 foreach (Expression arg in ((FunctionCall)expr).Arguments)

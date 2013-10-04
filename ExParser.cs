@@ -619,7 +619,7 @@ namespace MetaphysicsIndustries.Solus
                     varTable.Add(new Variable(ex.Token));
                 }
 
-                return new VariableAccess(varTable[ex.Token]);
+                return new VariableAccess(ex.Token);
             }
             else if (ex.Type == NodeType.Color)
             {
@@ -650,7 +650,7 @@ namespace MetaphysicsIndustries.Solus
                     throw new SolusParseException(ex.Location, "The left operand of an assignment must be a variable.");
                 }
 
-                return new AssignExpression(((VariableAccess)leftArg).Variable, rightArg.Eval(varTable));
+                return new AssignExpression(varTable[((VariableAccess)leftArg).VariableName], rightArg.Eval(varTable));
             }
             else if (ex.Type == NodeType.DelayAssign)
             {
@@ -659,7 +659,7 @@ namespace MetaphysicsIndustries.Solus
                     throw new SolusParseException(ex.Location, "The left operand of an assignment must be a variable.");
                 }
 
-                return new DelayAssignExpression(((VariableAccess)leftArg).Variable, rightArg);
+                return new DelayAssignExpression(varTable[((VariableAccess)leftArg).VariableName], rightArg);
             }
 
             string error = "Unknown node type: ";

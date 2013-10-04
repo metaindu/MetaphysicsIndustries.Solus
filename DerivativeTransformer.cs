@@ -445,13 +445,13 @@ namespace MetaphysicsIndustries.Solus
 
         protected Expression GetDerivativeOfVariableAccess(VariableAccess variableAccess, Variable var)
         {
-            if (variableAccess.Variable == var)
+            if (variableAccess.VariableName == var.Name)
             {
                 return new Literal(1);
             }
             else
             {
-                return new DerivativeOfVariable(variableAccess.Variable.Name, var.Name);
+                return new DerivativeOfVariable(variableAccess.VariableName, var.Name);
             }
         }
 
