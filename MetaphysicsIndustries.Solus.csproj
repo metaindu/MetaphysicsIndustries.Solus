@@ -130,7 +130,6 @@
     <Compile Include="SolusTensor.cs" />
     <Compile Include="UnitStepFunction.cs" />
     <Compile Include="VariableAccess.cs" />
-    <Compile Include="VariableTable.cs" />
     <Compile Include="SolusVector.cs" />
     <Compile Include="SubstTransformer.cs" />
     <Compile Include="ExParser.cs" />
