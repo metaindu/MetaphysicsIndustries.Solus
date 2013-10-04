@@ -13,8 +13,6 @@ namespace MetaphysicsIndustries.Solus
 
         public VariableAccess(Variable variable)
         {
-            _processVariableChangedDelegate = new EventHandler(ProcessVariableChanged);
-
             Variable = variable;
         }
 
@@ -32,17 +30,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (_variable != value)
                 {
-                    if (_variable != null)
-                    {
-                        _variable.ValueChanged -= _processVariableChangedDelegate;
-                    }
-
                     _variable = value;
-
-                    if (_variable != null)
-                    {
-                        _variable.ValueChanged += _processVariableChangedDelegate;
-                    }
                 }
             }
         }
@@ -63,11 +51,6 @@ namespace MetaphysicsIndustries.Solus
                 //return new Literal(0);
                 throw new InvalidOperationException("Variable not found in variable table: " + Variable.Name);
             }
-        }
-
-        EventHandler _processVariableChangedDelegate;
-        protected void ProcessVariableChanged(object sender, EventArgs e)
-        {
         }
 
         public override Expression PreliminaryEval(VariableTable varTable)
