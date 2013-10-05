@@ -289,7 +289,7 @@ namespace MetaphysicsIndustries.Solus
             ParseFunction? pfunc = GetFunction(name);
             if (pfunc == null)
             {
-                throw new InvalidOperationException("Unknonw function \"" + name + "\"");
+                throw new InvalidOperationException("Unknown function \"" + name + "\"");
             }
 
             var args = new List<Expression>();
