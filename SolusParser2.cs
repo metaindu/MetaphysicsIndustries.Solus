@@ -219,7 +219,7 @@ namespace MetaphysicsIndustries.Solus
             var defref = sub.DefRef;
             if (defref == _grammar.def_paren)
             {
-                return GetExpressionFromExpr(sub.Subspans[0], vars);
+                return GetExpressionFromExpr(sub.Subspans[1], vars);
             }
             else if (defref == _grammar.def_function_002D_call)
             {
@@ -294,7 +294,7 @@ namespace MetaphysicsIndustries.Solus
 
             var args = new List<Expression>();
             int i;
-            for (i = 2; i < span.Subspans.Count; i += 2)
+            for (i = 2; i < span.Subspans.Count - 1; i += 2)
             {
                 args.Add(GetExpressionFromExpr(span.Subspans[i], vars));
             }
