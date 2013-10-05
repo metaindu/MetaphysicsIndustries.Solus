@@ -29,13 +29,13 @@ namespace MetaphysicsIndustries.Solus.Test
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
-            Assert.IsInstanceOf<MultiplicationOperation>(fcall.Function);
+            Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fcall.Arguments[0]);
             Assert.AreEqual("a", (fcall.Arguments[0] as VariableAccess).VariableName);
             Assert.IsInstanceOf<FunctionCall>(fcall.Arguments[1]);
             var fcall2 = (FunctionCall)fcall.Arguments[1];
-            Assert.IsInstanceOf<AdditionOperation>(fcall2.Function);
+            Assert.AreSame(AdditionOperation.Value, fcall2.Function);
             Assert.AreEqual(2, fcall2.Arguments.Count);
             Assert.IsInstanceOf<Literal>(fcall2.Arguments[0]);
             Assert.AreEqual(2.0f, (fcall2.Arguments[0] as Literal).Value);
@@ -370,42 +370,6 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         [Test]
-        public void TestMixedOperands()
-        {
-            var parser = new SolusParser();
-
-            var expr = parser.Compile("1 + a * 2 + b * 3 * c");
-
-            Assert.IsInstanceOf<FunctionCall>(expr);
-            var fcall = (FunctionCall)expr;
-
-            Assert.IsInstanceOf<AdditionOperation>(fcall.Function);
-            Assert.GreaterOrEqual(fcall.Arguments.Count, 4);
-            Assert.LessOrEqual(fcall.Arguments.Count, 6);
-
-            Set<string> varnames = new Set<string>();
-
-            float sum = 0;
-            foreach (var arg in fcall.Arguments)
-            {
-                Assert.That(arg is Literal || arg is VariableAccess);
-                if (arg is Literal)
-                {
-                    sum += (arg as Literal).Value;
-                }
-                else
-                {
-                    varnames.Add((arg as VariableAccess).VariableName);
-                }
-            }
-
-            Assert.AreEqual(6.0f, sum);
-            Assert.That(varnames.Contains("a"));
-            Assert.That(varnames.Contains("b"));
-            Assert.That(varnames.Contains("c"));
-        }
-
-        [Test]
         public void TestFunctionCall1()
         {
             var parser = new SolusParser();
@@ -494,15 +458,9 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3f, expr.Eval(new Dictionary<string, Expression>()).Value);
 
 
-            expr = parser.Compile("asdf(4, 5)");
+            float value = expr.Eval(new Dictionary<string, Expression>()).Value;
 
-            Assert.IsInstanceOf<Literal>(expr);
-            Assert.AreEqual(3f, (expr as Literal).Value);
-
-
-            Assert.Throws<SolusParseException>(() => expr = parser.Compile("asdf(6, 7, 8)", cleanup:false));
-
-
+            Assert.AreEqual(3f, value);
         }
 
         class CountArgsFunction : Function
