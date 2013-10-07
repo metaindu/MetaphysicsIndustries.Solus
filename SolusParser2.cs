@@ -20,6 +20,10 @@ namespace MetaphysicsIndustries.Solus
             {
                 AddFunction(func);
             }
+            foreach (var kvp in _builtinMacros)
+            {
+                AddFunction(new ParseFunction { Token=kvp.Key, Converter=kvp.Value });
+            }
         }
 
         protected static readonly List<ParseFunction> _builtinFunctions = new List<ParseFunction>()
@@ -30,8 +34,6 @@ namespace MetaphysicsIndustries.Solus
             new ParseFunction(){ Token="ln",        Converter=ParseFunction.BasicFunctionConverter(NaturalLogarithmFunction.Value), NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="log2",      Converter=ParseFunction.BasicFunctionConverter(Log2Function.Value),             NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="log10",     Converter=ParseFunction.BasicFunctionConverter(Log10Function.Value),            NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="sqrt",      Converter=SolusParser1.ConvertSqrtFunction,                                     NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="rand",      Converter=(args, vars) => { return new RandomExpression(); },                   NumArguments=0,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="abs",       Converter=ParseFunction.BasicFunctionConverter(AbsoluteValueFunction.Value),    NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="sec",       Converter=ParseFunction.BasicFunctionConverter(SecantFunction.Value),           NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="csc",       Converter=ParseFunction.BasicFunctionConverter(CosecantFunction.Value),         NumArguments=1,  HasVariableNumArgs=false },
@@ -47,12 +49,17 @@ namespace MetaphysicsIndustries.Solus
             new ParseFunction(){ Token="unitstep",  Converter=ParseFunction.BasicFunctionConverter(UnitStepFunction.Value),         NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="atan2",     Converter=ParseFunction.BasicFunctionConverter(Arctangent2Function.Value),      NumArguments=2,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="log",       Converter=ParseFunction.BasicFunctionConverter(LogarithmFunction.Value),        NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="derive",    Converter=SolusParser1.ConvertDeriveExpression,                                 NumArguments=2,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="if",        Converter=ParseFunction.BasicFunctionConverter(IfFunction.Value),               NumArguments=3,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="dist",      Converter=ParseFunction.BasicFunctionConverter(DistFunction.Value),             NumArguments=2,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="distsq",    Converter=ParseFunction.BasicFunctionConverter(DistSqFunction.Value),           NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="feedback",  Converter=SolusParser1.ConvertFeedbackExpression,                               NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="subst",     Converter=SolusParser1.ConvertSubstExpression,                                  NumArguments=3,  HasVariableNumArgs=false },
+        };
+        protected static readonly Dictionary<string, FunctionConverter> _builtinMacros = new Dictionary<string, FunctionConverter>
+        {
+            { "sqrt", SolusParser1.ConvertSqrtFunction },
+            { "rand", (args, vars) => { return new RandomExpression(); } },
+            { "derive", SolusParser1.ConvertDeriveExpression },
+            { "feedback", SolusParser1.ConvertFeedbackExpression },
+            { "subst", SolusParser1.ConvertSubstExpression },
         };
 
         public Expression Compile(string input, Dictionary<string, Expression> vars=null, bool cleanup=false)
