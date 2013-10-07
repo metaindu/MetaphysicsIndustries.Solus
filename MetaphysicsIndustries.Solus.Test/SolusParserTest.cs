@@ -514,6 +514,23 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(4, parser.Compile("count(1, 2, 3, 4)").Eval(vars).Value);
         }
 
+        [Test]
+        public void TestUnaryNegativeVarref()
+        {
+            // setup
+            var parser = new SolusParser();
+
+            // action
+            var expr = parser.Compile("-a");
+
+            // assertions
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var fcall = (expr as FunctionCall);
+            Assert.AreSame(NegationOperation.Value, fcall.Function);
+            Assert.AreEqual(1, fcall.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(fcall.Arguments[0]);
+            Assert.AreEqual("a", (fcall.Arguments[0] as VariableAccess).VariableName);
+        }
     }
 }
 
