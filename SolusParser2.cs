@@ -216,30 +216,36 @@ namespace MetaphysicsIndustries.Solus
         Expression GetExpressionFromSubexpr(Span span, Dictionary<string, Expression> vars)
         {
             var sub = span.Subspans[0];
-            var defref = sub.DefRef;
+
+            return GetExpressionFromSubexprPart(sub, vars);
+        }
+
+        Expression GetExpressionFromSubexprPart(Span span, Dictionary<string, Expression> vars)
+        {
+            var defref = span.DefRef;
             if (defref == _grammar.def_paren)
             {
-                return GetExpressionFromExpr(sub.Subspans[1], vars);
+                return GetExpressionFromExpr(span.Subspans[1], vars);
             }
             else if (defref == _grammar.def_function_002D_call)
             {
-                return GetFunctionCallFromFunctioncall(sub, vars);
+                return GetFunctionCallFromFunctioncall(span, vars);
             }
             else if (defref == _grammar.def_number)
             {
-                return GetLiteralFromNumber(sub);
+                return GetLiteralFromNumber(span);
             }
             else if (defref == _grammar.def_string)
             {
-                return GetStringFromString(sub);
+                return GetStringFromString(span);
             }
             else if (defref == _grammar.def_unary_002D_op)
             {
-                return GetExpressionFromUnaryop(sub, vars);
+                return GetExpressionFromUnaryop(span, vars);
             }
             else if (defref == _grammar.def_varref)
             {
-                return GetVariableAccessFromVarref(sub, vars);
+                return GetVariableAccessFromVarref(span, vars);
             }
 
             throw new NotImplementedException();
@@ -439,7 +445,7 @@ namespace MetaphysicsIndustries.Solus
 
         Expression GetExpressionFromUnaryop(Span span, Dictionary<string, Expression> vars)
         {
-            Expression arg = GetExpressionFromSubexpr(span.Subspans[1], vars);
+            Expression arg = GetExpressionFromSubexprPart(span.Subspans[1], vars);
 
             if (span.Subspans[0].Value == "-")
             {
