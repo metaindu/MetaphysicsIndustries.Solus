@@ -16,9 +16,13 @@ namespace MetaphysicsIndustries.Solus
             _parser = new Parser(_grammar.def_expr);
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
 
-            foreach (ParseFunction func in _builtinFunctions)
+            foreach (Function func in _builtinFunctions)
             {
-                AddFunction(func);
+                AddFunction(
+                    new ParseFunction {
+                        Token=func.DisplayName,
+                        Converter=ParseFunction.BasicFunctionConverter(func),
+                });
             }
             foreach (var kvp in _builtinMacros)
             {
@@ -26,32 +30,32 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected static readonly List<ParseFunction> _builtinFunctions = new List<ParseFunction>()
+        protected static readonly List<Function> _builtinFunctions = new List<Function>()
         {
-            new ParseFunction(){ Token="sin",       Converter=ParseFunction.BasicFunctionConverter(SineFunction.Value),             NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="cos",       Converter=ParseFunction.BasicFunctionConverter(CosineFunction.Value),           NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="tan",       Converter=ParseFunction.BasicFunctionConverter(TangentFunction.Value),          NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="ln",        Converter=ParseFunction.BasicFunctionConverter(NaturalLogarithmFunction.Value), NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="log2",      Converter=ParseFunction.BasicFunctionConverter(Log2Function.Value),             NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="log10",     Converter=ParseFunction.BasicFunctionConverter(Log10Function.Value),            NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="abs",       Converter=ParseFunction.BasicFunctionConverter(AbsoluteValueFunction.Value),    NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="sec",       Converter=ParseFunction.BasicFunctionConverter(SecantFunction.Value),           NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="csc",       Converter=ParseFunction.BasicFunctionConverter(CosecantFunction.Value),         NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="cot",       Converter=ParseFunction.BasicFunctionConverter(CotangentFunction.Value),        NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="acos",      Converter=ParseFunction.BasicFunctionConverter(ArccosineFunction.Value),        NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="asin",      Converter=ParseFunction.BasicFunctionConverter(ArcsineFunction.Value),          NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="atan",      Converter=ParseFunction.BasicFunctionConverter(ArctangentFunction.Value),       NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="asec",      Converter=ParseFunction.BasicFunctionConverter(ArcsecantFunction.Value),        NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="acsc",      Converter=ParseFunction.BasicFunctionConverter(ArccosecantFunction.Value),      NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="acot",      Converter=ParseFunction.BasicFunctionConverter(ArccotangentFunction.Value),     NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="ceil",      Converter=ParseFunction.BasicFunctionConverter(CeilingFunction.Value),          NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="floor",     Converter=ParseFunction.BasicFunctionConverter(FloorFunction.Value),            NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="unitstep",  Converter=ParseFunction.BasicFunctionConverter(UnitStepFunction.Value),         NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="atan2",     Converter=ParseFunction.BasicFunctionConverter(Arctangent2Function.Value),      NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="log",       Converter=ParseFunction.BasicFunctionConverter(LogarithmFunction.Value),        NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="if",        Converter=ParseFunction.BasicFunctionConverter(IfFunction.Value),               NumArguments=3,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="dist",      Converter=ParseFunction.BasicFunctionConverter(DistFunction.Value),             NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="distsq",    Converter=ParseFunction.BasicFunctionConverter(DistSqFunction.Value),           NumArguments=2,  HasVariableNumArgs=false },
+            SineFunction.Value,
+            CosineFunction.Value,
+            TangentFunction.Value,
+            NaturalLogarithmFunction.Value,
+            Log2Function.Value,
+            Log10Function.Value,
+            AbsoluteValueFunction.Value,
+            SecantFunction.Value,
+            CosecantFunction.Value,
+            CotangentFunction.Value,
+            ArccosineFunction.Value,
+            ArcsineFunction.Value,
+            ArctangentFunction.Value,
+            ArcsecantFunction.Value,
+            ArccosecantFunction.Value,
+            ArccotangentFunction.Value,
+            CeilingFunction.Value,
+            FloorFunction.Value,
+            UnitStepFunction.Value,
+            Arctangent2Function.Value,
+            LogarithmFunction.Value,
+            IfFunction.Value,
+            DistFunction.Value,
+            DistSqFunction.Value,
         };
         protected static readonly Dictionary<string, FunctionConverter> _builtinMacros = new Dictionary<string, FunctionConverter>
         {
