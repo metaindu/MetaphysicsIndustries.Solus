@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Solus
         }
     }
 
-    public class SolusParser : SolusParser1
+    public class SolusParser : SolusParser2
     {
     }
 
