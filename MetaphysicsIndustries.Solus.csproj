@@ -68,6 +68,7 @@
     <Compile Include="DelayAssignExpression.cs" />
     <Compile Include="DerivativeOfVariable.cs" />
     <Compile Include="DerivativeTransformer.cs" />
+    <Compile Include="DeriveMacro.cs" />
     <Compile Include="DistFunction.cs" />
     <Compile Include="DistSqFunction.cs" />
     <Compile Include="DivisionOperation.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="ExpressionCollection.cs" />
     <Compile Include="ExpressionTransformer.cs" />
     <Compile Include="FactorialFunction.cs" />
+    <Compile Include="FeedbackMacro.cs" />
     <Compile Include="FloorFunction.cs" />
     <Compile Include="Function.cs" />
     <Compile Include="FunctionCall.cs" />
@@ -97,11 +99,14 @@
     <Compile Include="NegationOperation.cs" />
     <Compile Include="NotEqualComparisonOperation.cs" />
     <Compile Include="PolynomialTransformer.cs" />
+    <Compile Include="RandMacro.cs" />
     <Compile Include="RatioOfPolynomialsTransformer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="PolynomialSimplifier.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
+    <Compile Include="SqrtMacro.cs" />
+    <Compile Include="SubstMacro.cs" />
     <Compile Include="TransformArgs.cs" />
     <Compile Include="UnaryOperation.cs" />
     <Compile Include="VariableTransformArgs.cs" />

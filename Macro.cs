@@ -7,9 +7,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class Macro
     {
-        public string Name;
-        public int NumArguments;
-        public bool HasVariableNumArgs;
+        public string Name = string.Empty;
+        public int NumArguments = 0;
+        public bool HasVariableNumArgs = false;
 
         public abstract Expression InternalCall(IEnumerable<Expression> args, Dictionary<string, Expression> vars);
 
