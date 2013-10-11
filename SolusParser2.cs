@@ -24,9 +24,9 @@ namespace MetaphysicsIndustries.Solus
                         Converter=ParseFunction.BasicFunctionConverter(func),
                 });
             }
-            foreach (var kvp in _builtinMacros)
+            foreach (var macro in _builtinMacros)
             {
-                AddFunction(new ParseFunction { Token=kvp.Key, Converter=kvp.Value });
+                AddFunction(new ParseFunction { Token=macro.Name, Converter=macro.Call });
             }
         }
 
@@ -57,13 +57,13 @@ namespace MetaphysicsIndustries.Solus
             DistFunction.Value,
             DistSqFunction.Value,
         };
-        protected static readonly Dictionary<string, FunctionConverter> _builtinMacros = new Dictionary<string, FunctionConverter>
+        protected static readonly List<Macro> _builtinMacros = new List<Macro>
         {
-            { "sqrt", SolusParser1.ConvertSqrtFunction },
-            { "rand", (args, vars) => { return new RandomExpression(); } },
-            { "derive", SolusParser1.ConvertDeriveExpression },
-            { "feedback", SolusParser1.ConvertFeedbackExpression },
-            { "subst", SolusParser1.ConvertSubstExpression },
+            SqrtMacro.Value,
+            RandMacro.Value,
+            DeriveMacro.Value,
+            FeedbackMacro.Value,
+            SubstMacro.Value,
         };
 
         public Expression Compile(string input, Dictionary<string, Expression> vars=null, bool cleanup=false)
