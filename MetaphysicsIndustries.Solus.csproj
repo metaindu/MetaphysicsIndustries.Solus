@@ -92,6 +92,7 @@
     <Compile Include="LessThanOrEqualComparisonOperation.cs" />
     <Compile Include="LogicalAndOperation.cs" />
     <Compile Include="LogicalOrOperation.cs" />
+    <Compile Include="Macro.cs" />
     <Compile Include="ModularDivision.cs" />
     <Compile Include="NegationOperation.cs" />
     <Compile Include="NotEqualComparisonOperation.cs" />
