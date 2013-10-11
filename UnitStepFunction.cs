@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus
         {
             get
             {
-                return "u";
+                return "unitstep";
             }
         }
     }
