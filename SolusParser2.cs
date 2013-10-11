@@ -328,7 +328,15 @@ namespace MetaphysicsIndustries.Solus
             }
             else
             {
-                throw new InvalidOperationException("Unknown function \"" + name + "\"");
+                var pfunc = GetFunction(name);
+                if (pfunc.HasValue)
+                {
+                    return pfunc.Value.Converter(args, vars);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unknown function \"" + name + "\"");
+                }
             }
         }
 
