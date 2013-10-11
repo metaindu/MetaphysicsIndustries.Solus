@@ -17,7 +17,11 @@ namespace MetaphysicsIndustries.Solus
 
         public override Expression InternalCall(IEnumerable<Expression> args, Dictionary<string, Expression> vars)
         {
-            return SolusParser1.ConvertDeriveExpression(args, vars);
+            DerivativeTransformer derive = new DerivativeTransformer();
+            Expression expr = args.First();
+            var v = ((VariableAccess)args.ElementAt(1)).VariableName;
+
+            return derive.Transform(expr, new VariableTransformArgs(v));
         }
     }
 }

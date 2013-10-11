@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Solus
 
         public override Expression InternalCall(IEnumerable<Expression> args, Dictionary<string, Expression> vars)
         {
-            return SolusParser1.ConvertSqrtFunction(args, vars);
+            return new FunctionCall(ExponentOperation.Value, args.First(), new Literal(0.5f));
         }
     }
 }

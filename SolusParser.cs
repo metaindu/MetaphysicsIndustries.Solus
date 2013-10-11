@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus
             new ParseFunction(){ Token="ln",        Converter=ParseFunction.BasicFunctionConverter(NaturalLogarithmFunction.Value), NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="log2",      Converter=ParseFunction.BasicFunctionConverter(Log2Function.Value),             NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="log10",     Converter=ParseFunction.BasicFunctionConverter(Log10Function.Value),            NumArguments=1,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="sqrt",      Converter=ConvertSqrtFunction,                                                  NumArguments=1,  HasVariableNumArgs=false },
+            //new ParseFunction(){ Token="sqrt",      Converter=ConvertSqrtFunction,                                                  NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="rand",      Converter=(args, vars) => { return new RandomExpression(); },                   NumArguments=0,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="abs",       Converter=ParseFunction.BasicFunctionConverter(AbsoluteValueFunction.Value),    NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="sec",       Converter=ParseFunction.BasicFunctionConverter(SecantFunction.Value),           NumArguments=1,  HasVariableNumArgs=false },
@@ -75,12 +75,12 @@ namespace MetaphysicsIndustries.Solus
             new ParseFunction(){ Token="unitstep",  Converter=ParseFunction.BasicFunctionConverter(UnitStepFunction.Value),         NumArguments=1,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="atan2",     Converter=ParseFunction.BasicFunctionConverter(Arctangent2Function.Value),      NumArguments=2,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="log",       Converter=ParseFunction.BasicFunctionConverter(LogarithmFunction.Value),        NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="derive",    Converter=ConvertDeriveExpression,                                              NumArguments=2,  HasVariableNumArgs=false },
+            //new ParseFunction(){ Token="derive",    Converter=ConvertDeriveExpression,                                              NumArguments=2,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="if",        Converter=ParseFunction.BasicFunctionConverter(IfFunction.Value),               NumArguments=3,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="dist",      Converter=ParseFunction.BasicFunctionConverter(DistFunction.Value),             NumArguments=2,  HasVariableNumArgs=false },
             new ParseFunction(){ Token="distsq",    Converter=ParseFunction.BasicFunctionConverter(DistSqFunction.Value),           NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="feedback",  Converter=ConvertFeedbackExpression,                                            NumArguments=2,  HasVariableNumArgs=false },
-            new ParseFunction(){ Token="subst",     Converter=ConvertSubstExpression,                                               NumArguments=3,  HasVariableNumArgs=false },
+            //new ParseFunction(){ Token="feedback",  Converter=ConvertFeedbackExpression,                                            NumArguments=2,  HasVariableNumArgs=false },
+            //new ParseFunction(){ Token="subst",     Converter=ConvertSubstExpression,                                               NumArguments=3,  HasVariableNumArgs=false },
         };
 
         private Dictionary<string, ParseFunction> _functions = new Dictionary<string, ParseFunction>(StringComparer.CurrentCultureIgnoreCase);
@@ -98,46 +98,5 @@ namespace MetaphysicsIndustries.Solus
 
             return _functions[token];
         }
-
-        public static Expression ConvertSubstExpression(IEnumerable<Expression> args, Dictionary<string, Expression> varTable)
-        {
-            SubstTransformer subst = new SubstTransformer();
-            CleanUpTransformer cleanup = new CleanUpTransformer();
-            var var = ((VariableAccess)args.ElementAt(1)).VariableName;
-            return cleanup.CleanUp(subst.Subst(args.First(), var, args.ElementAt(2)));
-        }
-
-        public static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, Dictionary<string, Expression> varTable)
-        {
-            Expression g = args.ElementAt(0);
-            Expression h = args.ElementAt(1);
-
-            return new FunctionCall(
-                        DivisionOperation.Value,
-                        g, 
-                        new FunctionCall(
-                            AdditionOperation.Value, 
-                            new Literal(1),
-                            new FunctionCall(
-                                MultiplicationOperation.Value, 
-                                g, 
-                                h)));
-        }
-
-        public static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, Dictionary<string, Expression> varTable)
-        {
-            DerivativeTransformer derive = new DerivativeTransformer();
-            Expression expr = _args.First();
-            var v = ((VariableAccess)_args.ElementAt(1)).VariableName;
-
-            return derive.Transform(expr, new VariableTransformArgs(v));
-        }
-
-        public static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, Dictionary<string, Expression> varTable)
-        {
-            return new FunctionCall(ExponentOperation.Value, _args.First(), new Literal(0.5f));
-        }
-
-
     }
 }
