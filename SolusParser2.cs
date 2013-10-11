@@ -23,10 +23,14 @@ namespace MetaphysicsIndustries.Solus
                         Token=func.DisplayName,
                         Converter=ParseFunction.BasicFunctionConverter(func),
                 });
+
+                _functionsByName.Add(func.DisplayName, func);
             }
             foreach (var macro in _builtinMacros)
             {
                 AddFunction(new ParseFunction { Token=macro.Name, Converter=macro.Call });
+
+                _macrosByName.Add(macro.Name, macro);
             }
         }
 
@@ -77,6 +81,9 @@ namespace MetaphysicsIndustries.Solus
         }
 
         private Dictionary<string, ParseFunction> _functions = new Dictionary<string, ParseFunction>(StringComparer.CurrentCultureIgnoreCase);
+
+        Dictionary<string, Function> _functionsByName = new Dictionary<string, Function>();
+        Dictionary<string, Macro> _macrosByName = new Dictionary<string, Macro>();
 
         public void AddFunction(ParseFunction func)
         {
@@ -303,11 +310,6 @@ namespace MetaphysicsIndustries.Solus
         Expression GetFunctionCallFromFunctioncall(Span span, Dictionary<string, Expression> vars)
         {
             var name = span.Subspans[0].Value;
-            ParseFunction? pfunc = GetFunction(name);
-            if (pfunc == null)
-            {
-                throw new InvalidOperationException("Unknown function \"" + name + "\"");
-            }
 
             var args = new List<Expression>();
             int i;
@@ -316,7 +318,18 @@ namespace MetaphysicsIndustries.Solus
                 args.Add(GetExpressionFromExpr(span.Subspans[i], vars));
             }
 
-            return pfunc.Value.Converter(args, vars);
+            if (_functionsByName.ContainsKey(name))
+            {
+                return new FunctionCall(_functionsByName[name], args); 
+            }
+            else if (_macrosByName.ContainsKey(name))
+            {
+                return _macrosByName[name].Call(args, vars);
+            }
+            else
+            {
+                throw new InvalidOperationException("Unknown function \"" + name + "\"");
+            }
         }
 
         Literal GetLiteralFromNumber(Span span)
