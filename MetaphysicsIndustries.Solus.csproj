@@ -73,6 +73,7 @@
     <Compile Include="DistSqFunction.cs" />
     <Compile Include="DivisionOperation.cs" />
     <Compile Include="DualArgumentFunction.cs" />
+    <Compile Include="Environment.cs" />
     <Compile Include="EqualComparisonOperation.cs" />
     <Compile Include="ExponentOperation.cs" />
     <Compile Include="Expression.cs" />

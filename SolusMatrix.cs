@@ -221,10 +221,10 @@ namespace MetaphysicsIndustries.Solus
             int k2;
 
             int[] times = new int[16];
-            int lasttime = Environment.TickCount;
+            int lasttime = System.Environment.TickCount;
             int time;
 
-            time = Environment.TickCount; times[0] += time - lasttime; lasttime = time;
+            time = System.Environment.TickCount; times[0] += time - lasttime; lasttime = time;
             for (n1 = 0; n1 < r; n1++)
             {
                 ////time = Environment.TickCount; times[1] += time - lasttime; lasttime = time;
@@ -284,7 +284,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 ////time = Environment.TickCount; times[14] += time - lasttime; lasttime = time;
             }
-            time = Environment.TickCount; times[15] += time - lasttime; lasttime = time;
+            time = System.Environment.TickCount; times[15] += time - lasttime; lasttime = time;
 
 
 
