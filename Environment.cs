@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus
 
                 foreach (var func in functions)
                 {
-                    Functions.Add(func.DisplayName, func);
+                    AddFunction(func);
                 }
 
                 var macros = new List<Macro>
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus
 
                 foreach (var macro in macros)
                 {
-                    Macros.Add(macro.Name, macro);
+                    AddMacro(macro);
                 }
             }
         }
@@ -63,5 +63,15 @@ namespace MetaphysicsIndustries.Solus
         public readonly Dictionary<string, Expression> Variables = new Dictionary<string, Expression>();
         public readonly Dictionary<string, Function> Functions = new Dictionary<string, Function>();
         public readonly Dictionary<string, Macro> Macros = new Dictionary<string, Macro>();
+
+        public void AddFunction(Function func)
+        {
+            Functions.Add(func.DisplayName, func);
+        }
+
+        public void AddMacro(Macro macro)
+        {
+            Macros.Add(macro.Name, macro);
+        }
     }
 }
