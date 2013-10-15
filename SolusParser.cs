@@ -21,20 +21,6 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public delegate Expression FunctionConverter(IEnumerable<Expression> args, Environment env);
-
-    public struct ParseFunction
-    {
-        public string Token;
-        public FunctionConverter Converter;
-        public int NumArguments;
-        public bool HasVariableNumArgs;
-
-        public static FunctionConverter BasicFunctionConverter(Function function)
-        {
-            return (args, vars) => { return new FunctionCall(function, args); };
-        }
-    }
 
     public class SolusParser : SolusParser2
     {
