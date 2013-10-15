@@ -27,25 +27,6 @@ namespace MetaphysicsIndustries.Solus
             return GetExpression(input, env);
         }
 
-        private Dictionary<string, ParseFunction> _functions = new Dictionary<string, ParseFunction>(StringComparer.CurrentCultureIgnoreCase);
-
-        Dictionary<string, Function> _functionsByName = new Dictionary<string, Function>();
-        Dictionary<string, Macro> _macrosByName = new Dictionary<string, Macro>();
-
-        public void AddFunction(ParseFunction func)
-        {
-            if (_functions.ContainsKey(func.Token)) throw new ArgumentException("A function already uses that token.", "func");
-
-            _functions.Add(func.Token, func);
-        }
-
-        protected ParseFunction? GetFunction(string token)
-        {
-            if (!_functions.ContainsKey(token)) return null;
-
-            return _functions[token];
-        }
-
         public Expression GetExpression(string input, Environment env)
         {
             var errors = new List<Error>();
@@ -273,25 +254,9 @@ namespace MetaphysicsIndustries.Solus
             {
                 return env.Macros[name].Call(args, env);
             }
-            else if (_functionsByName.ContainsKey(name))
-            {
-                return new FunctionCall(_functionsByName[name], args); 
-            }
-            else if (_macrosByName.ContainsKey(name))
-            {
-                return _macrosByName[name].Call(args, env);
-            }
             else
             {
-                var pfunc = GetFunction(name);
-                if (pfunc.HasValue)
-                {
-                    return pfunc.Value.Converter(args, env);
-                }
-                else
-                {
-                    throw new InvalidOperationException("Unknown function \"" + name + "\"");
-                }
+                throw new InvalidOperationException("Unknown function \"" + name + "\"");
             }
         }
 
