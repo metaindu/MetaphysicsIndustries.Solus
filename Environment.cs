@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus
 
                 foreach (var func in functions)
                 {
-                    Functions.Add(func.Name, func);
+                    Functions.Add(func.DisplayName, func);
                 }
 
                 var macros = new List<Macro>
