@@ -84,6 +84,7 @@ namespace MetaphysicsIndustries.Solus
         public CharNode node_unicodechar_5__005C_dabcdef;
         public CharNode node_binop_0__0025__0026__002A__002B__002D__002F__005E__007C_;
         public CharNode node_identifier_0__005C_l;
+        public CharNode node_identifier_1__005C_l_005C_d_005F_;
         public CharNode node__0024_implicit_0020_literal_0020__0028__0_;
         public CharNode node__0024_implicit_0020_literal_0020__002C__0_;
         public CharNode node__0024_implicit_0020_literal_0020__0029__0_;
@@ -384,10 +385,14 @@ namespace MetaphysicsIndustries.Solus
             def_identifier.Directives.Add(DefinitionDirective.Atomic);
             def_identifier.Directives.Add(DefinitionDirective.MindWhitespace);
             node_identifier_0__005C_l = new CharNode(CharClass.FromUndelimitedCharClassText("\\l"), "\\l");
+            node_identifier_1__005C_l_005C_d_005F_ = new CharNode(CharClass.FromUndelimitedCharClassText("\\l\\d_"), "\\l\\d_");
             def_identifier.Nodes.Add(node_identifier_0__005C_l);
+            def_identifier.Nodes.Add(node_identifier_1__005C_l_005C_d_005F_);
             def_identifier.StartNodes.Add(node_identifier_0__005C_l);
+            def_identifier.EndNodes.Add(node_identifier_1__005C_l_005C_d_005F_);
             def_identifier.EndNodes.Add(node_identifier_0__005C_l);
-            node_identifier_0__005C_l.NextNodes.Add(node_identifier_0__005C_l);
+            node_identifier_0__005C_l.NextNodes.Add(node_identifier_1__005C_l_005C_d_005F_);
+            node_identifier_1__005C_l_005C_d_005F_.NextNodes.Add(node_identifier_1__005C_l_005C_d_005F_);
 
             def__0024_implicit_0020_literal_0020__0028_.Directives.Add(DefinitionDirective.Token);
             def__0024_implicit_0020_literal_0020__0028_.Directives.Add(DefinitionDirective.Atomic);

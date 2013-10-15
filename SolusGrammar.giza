@@ -43,5 +43,5 @@ paren = '(' expr ')';
 
 varref = identifier;
 
-<token> identifier = [\w]+;
+<token> identifier = [\w] [\d\w_]*;
 
