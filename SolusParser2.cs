@@ -15,60 +15,7 @@ namespace MetaphysicsIndustries.Solus
         {
             _parser = new Parser(_grammar.def_expr);
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
-
-            foreach (Function func in _builtinFunctions)
-            {
-                AddFunction(
-                    new ParseFunction {
-                        Token=func.DisplayName,
-                        Converter=ParseFunction.BasicFunctionConverter(func),
-                });
-
-                _functionsByName.Add(func.DisplayName, func);
-            }
-            foreach (var macro in _builtinMacros)
-            {
-                AddFunction(new ParseFunction { Token=macro.Name, Converter=macro.Call });
-
-                _macrosByName.Add(macro.Name, macro);
-            }
         }
-
-        protected static readonly List<Function> _builtinFunctions = new List<Function>()
-        {
-            SineFunction.Value,
-            CosineFunction.Value,
-            TangentFunction.Value,
-            NaturalLogarithmFunction.Value,
-            Log2Function.Value,
-            Log10Function.Value,
-            AbsoluteValueFunction.Value,
-            SecantFunction.Value,
-            CosecantFunction.Value,
-            CotangentFunction.Value,
-            ArccosineFunction.Value,
-            ArcsineFunction.Value,
-            ArctangentFunction.Value,
-            ArcsecantFunction.Value,
-            ArccosecantFunction.Value,
-            ArccotangentFunction.Value,
-            CeilingFunction.Value,
-            FloorFunction.Value,
-            UnitStepFunction.Value,
-            Arctangent2Function.Value,
-            LogarithmFunction.Value,
-            IfFunction.Value,
-            DistFunction.Value,
-            DistSqFunction.Value,
-        };
-        protected static readonly List<Macro> _builtinMacros = new List<Macro>
-        {
-            SqrtMacro.Value,
-            RandMacro.Value,
-            DeriveMacro.Value,
-            FeedbackMacro.Value,
-            SubstMacro.Value,
-        };
 
         public Expression Compile(string input, Environment env=null, bool cleanup=false)
         {
