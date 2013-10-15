@@ -318,7 +318,15 @@ namespace MetaphysicsIndustries.Solus
                 args.Add(GetExpressionFromExpr(span.Subspans[i], env));
             }
 
-            if (_functionsByName.ContainsKey(name))
+            if (env.Functions.ContainsKey(name))
+            {
+                return new FunctionCall(env.Functions[name], args); 
+            }
+            else if (env.Macros.ContainsKey(name))
+            {
+                return env.Macros[name].Call(args, env);
+            }
+            else if (_functionsByName.ContainsKey(name))
             {
                 return new FunctionCall(_functionsByName[name], args); 
             }
