@@ -15,7 +15,7 @@ namespace MetaphysicsIndustries.Solus
             NumArguments = 2;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, Dictionary<string, Expression> vars)
+        public override Expression InternalCall(IEnumerable<Expression> args, Environment env)
         {
             Expression g = args.ElementAt(0);
             Expression h = args.ElementAt(1);

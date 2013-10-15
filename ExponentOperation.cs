@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Exponent; }
         }
 
-        //protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        //protected override Literal InternalCall(VariableTable env, Literal[] args)
         //{
         //    return new Literal(Math.Pow(args[0].Value, args[1].Value));
         //}

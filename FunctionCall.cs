@@ -59,9 +59,9 @@ namespace MetaphysicsIndustries.Solus
             return ret;
         }
 
-        public override Literal Eval(Dictionary<string, Expression> varTable)
+        public override Literal Eval(Environment env)
         {
-            return Call(varTable);
+            return Call(env);
         }
 
         //public override Expression CleanUp()
@@ -98,9 +98,9 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public virtual Literal Call(Dictionary<string, Expression> varTable)
+        public virtual Literal Call(Environment env)
         {
-            return Function.Call(varTable, Arguments.ToArray());
+            return Function.Call(env, Arguments.ToArray());
         }
 
         public virtual ExpressionCollection Arguments
@@ -158,14 +158,14 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(Dictionary<string, Expression> varTable)
+        public override Expression PreliminaryEval(Environment env)
         {
             List<Expression> args = new List<Expression>(Arguments.Count);
 
             bool allLiterals = true;
             foreach (Expression arg in Arguments)
             {
-                Expression arg2 = arg.PreliminaryEval(varTable);
+                Expression arg2 = arg.PreliminaryEval(env);
                 if (!(arg2 is Literal))
                 {
                     allLiterals = false;
@@ -175,7 +175,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (allLiterals)
             {
-                return Function.Call(varTable, args.ToArray());
+                return Function.Call(env, args.ToArray());
             }
             else
             {

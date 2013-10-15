@@ -25,17 +25,17 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression Compile(string expr, bool cleanup=true)
         {
-            return Compile(expr, new Dictionary<string, Expression>(), cleanup);
+            return Compile(expr, new Environment(), cleanup);
         }
 
-        public Expression Compile(string expr, Dictionary<string, Expression> varTable, bool cleanup=true)
+        public Expression Compile(string expr, Environment env, bool cleanup=true)
         {
-            if (varTable == null) throw new ArgumentNullException("varTable");
+            if (env == null) throw new ArgumentNullException("env");
 
             Ex[] tokens;
             tokens = Tokenize(expr);
 
-            return Compile(tokens, varTable, cleanup);
+            return Compile(tokens, env, cleanup);
         }
 
         enum NodeType
@@ -383,15 +383,15 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private Expression Compile(Ex[] tokens, Dictionary<string, Expression> varTable, bool cleanup=true)
+        private Expression Compile(Ex[] tokens, Environment env, bool cleanup=true)
         {
-            if (varTable == null) throw new ArgumentNullException("varTable");
+            if (env == null) throw new ArgumentNullException("env");
 
             SyntaxCheck(tokens);
 
             tokens = Arrange(tokens);
             Ex ex = BuildTree(tokens);
-            Expression expr = ConvertToSolusExpression(ex, varTable);
+            Expression expr = ConvertToSolusExpression(ex, env);
             if (cleanup)
             {
                 CleanUpTransformer cut = new CleanUpTransformer();
@@ -455,17 +455,17 @@ namespace MetaphysicsIndustries.Solus
             return Compile(tokens, null);
         }
 
-        private Expression ConvertToSolusExpression(Ex ex, Dictionary<string, Expression> varTable)
+        private Expression ConvertToSolusExpression(Ex ex, Environment env)
         {
             Expression leftArg = null;
             Expression rightArg = null;
             if (ex.Left != null)
             {
-                leftArg = ConvertToSolusExpression(ex.Left, varTable);
+                leftArg = ConvertToSolusExpression(ex.Left, env);
             }
             if (ex.Right != null)
             {
-                rightArg = ConvertToSolusExpression(ex.Right, varTable);
+                rightArg = ConvertToSolusExpression(ex.Right, env);
             }
 
             if (ex.Type == NodeType.Add)
@@ -524,7 +524,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (ex.Type == NodeType.Func)
             {
-                return ConvertFunctionExpression(ex, varTable, leftArg, rightArg);
+                return ConvertFunctionExpression(ex, env, leftArg, rightArg);
             }
             else if (ex.Type == NodeType.GreaterThan)
             {
@@ -645,7 +645,7 @@ namespace MetaphysicsIndustries.Solus
                     throw new SolusParseException(ex.Location, "The left operand of an assignment must be a variable.");
                 }
 
-                return new AssignExpression(((VariableAccess)leftArg).VariableName, rightArg.Eval(varTable));
+                return new AssignExpression(((VariableAccess)leftArg).VariableName, rightArg.Eval(env));
             }
             else if (ex.Type == NodeType.DelayAssign)
             {
@@ -666,7 +666,7 @@ namespace MetaphysicsIndustries.Solus
             throw new SolusParseException(ex.Location, error);
         }
 
-        private Expression ConvertFunctionExpression(Ex ex, Dictionary<string, Expression> varTable, Expression leftArg, Expression rightArg)
+        private Expression ConvertFunctionExpression(Ex ex, Environment env, Expression leftArg, Expression rightArg)
         {
             List<Expression> args = new List<Expression>();
 
@@ -674,7 +674,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (ex.Left.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.Left, args, varTable);
+                    ConvertCommaToArgs(ex.Left, args, env);
                 }
                 else
                 {
@@ -686,7 +686,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (ex.Right.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.Right, args, varTable);
+                    ConvertCommaToArgs(ex.Right, args, env);
                 }
                 else
                 {
@@ -696,7 +696,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (GetFunction(ex.Token).HasValue)
             {
-                return GetFunction(ex.Token).Value.Converter(args,varTable);
+                return GetFunction(ex.Token).Value.Converter(args,env);
             }
             else
             {
@@ -704,17 +704,17 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        private void ConvertCommaToArgs(Ex ex, List<Expression> args, Dictionary<string, Expression> varTable)
+        private void ConvertCommaToArgs(Ex ex, List<Expression> args, Environment env)
         {
             if (ex.Left != null)
             {
                 if (ex.Left.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.Left, args, varTable);
+                    ConvertCommaToArgs(ex.Left, args, env);
                 }
                 else
                 {
-                    args.Add(ConvertToSolusExpression(ex.Left, varTable));
+                    args.Add(ConvertToSolusExpression(ex.Left, env));
                 }
             }
             else
@@ -726,11 +726,11 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (ex.Right.Type == NodeType.Comma)
                 {
-                    ConvertCommaToArgs(ex.Right, args, varTable);
+                    ConvertCommaToArgs(ex.Right, args, env);
                 }
                 else
                 {
-                    args.Add(ConvertToSolusExpression(ex.Right, varTable));
+                    args.Add(ConvertToSolusExpression(ex.Right, env));
                 }
             }
             else

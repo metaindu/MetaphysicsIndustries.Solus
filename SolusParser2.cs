@@ -70,14 +70,14 @@ namespace MetaphysicsIndustries.Solus
             SubstMacro.Value,
         };
 
-        public Expression Compile(string input, Dictionary<string, Expression> vars=null, bool cleanup=false)
+        public Expression Compile(string input, Environment env=null, bool cleanup=false)
         {
-            if (vars == null)
+            if (env == null)
             {
-                vars = new Dictionary<string, Expression>();
+                env = new Environment();
             }
 
-            return GetExpression(input, vars);
+            return GetExpression(input, env);
         }
 
         private Dictionary<string, ParseFunction> _functions = new Dictionary<string, ParseFunction>(StringComparer.CurrentCultureIgnoreCase);
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Solus
             return _functions[token];
         }
 
-        public Expression GetExpression(string input, Dictionary<string, Expression> vars)
+        public Expression GetExpression(string input, Environment env)
         {
             var errors = new List<Error>();
 
@@ -122,7 +122,7 @@ namespace MetaphysicsIndustries.Solus
 
             var span = spans[0];
 
-            return GetExpressionFromExpr(span, vars);
+            return GetExpressionFromExpr(span, env);
         }
 
         Dictionary<Function, int> _operatorPrecedence = new Dictionary<Function, int>() {
@@ -135,19 +135,19 @@ namespace MetaphysicsIndustries.Solus
             { BitwiseOrOperation.Value, 80 },
         };
 
-        Expression GetExpressionFromExpr(Span span, Dictionary<string, Expression> vars)
+        Expression GetExpressionFromExpr(Span span, Environment env)
         {
             var subexprs = new List<Expression>();
             var operators = new List<Operation>();
             var operset = new HashSet<Operation>();
 
-            subexprs.Add(GetExpressionFromSubexpr(span.Subspans[0], vars));
+            subexprs.Add(GetExpressionFromSubexpr(span.Subspans[0], env));
 
             int i;
             for (i = 1; i < span.Subspans.Count; i += 2)
             {
                 Operation op;
-                Expression arg = GetExpressionFromSubexpr(span.Subspans[i + 1], vars);
+                Expression arg = GetExpressionFromSubexpr(span.Subspans[i + 1], env);
                 if (span.Subspans[i].Value == "-")
                 {
                     op = AdditionOperation.Value;
@@ -231,23 +231,23 @@ namespace MetaphysicsIndustries.Solus
             return subexprs[0];
         }
 
-        Expression GetExpressionFromSubexpr(Span span, Dictionary<string, Expression> vars)
+        Expression GetExpressionFromSubexpr(Span span, Environment env)
         {
             var sub = span.Subspans[0];
 
-            return GetExpressionFromSubexprPart(sub, vars);
+            return GetExpressionFromSubexprPart(sub, env);
         }
 
-        Expression GetExpressionFromSubexprPart(Span span, Dictionary<string, Expression> vars)
+        Expression GetExpressionFromSubexprPart(Span span, Environment env)
         {
             var defref = span.DefRef;
             if (defref == _grammar.def_paren)
             {
-                return GetExpressionFromExpr(span.Subspans[1], vars);
+                return GetExpressionFromExpr(span.Subspans[1], env);
             }
             else if (defref == _grammar.def_function_002D_call)
             {
-                return GetFunctionCallFromFunctioncall(span, vars);
+                return GetFunctionCallFromFunctioncall(span, env);
             }
             else if (defref == _grammar.def_number)
             {
@@ -259,11 +259,11 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (defref == _grammar.def_unary_002D_op)
             {
-                return GetExpressionFromUnaryop(span, vars);
+                return GetExpressionFromUnaryop(span, env);
             }
             else if (defref == _grammar.def_varref)
             {
-                return GetVariableAccessFromVarref(span, vars);
+                return GetVariableAccessFromVarref(span, env);
             }
 
             throw new NotImplementedException();
@@ -307,7 +307,7 @@ namespace MetaphysicsIndustries.Solus
             throw new InvalidOperationException();
         }
 
-        Expression GetFunctionCallFromFunctioncall(Span span, Dictionary<string, Expression> vars)
+        Expression GetFunctionCallFromFunctioncall(Span span, Environment env)
         {
             var name = span.Subspans[0].Value;
 
@@ -315,7 +315,7 @@ namespace MetaphysicsIndustries.Solus
             int i;
             for (i = 2; i < span.Subspans.Count - 1; i += 2)
             {
-                args.Add(GetExpressionFromExpr(span.Subspans[i], vars));
+                args.Add(GetExpressionFromExpr(span.Subspans[i], env));
             }
 
             if (_functionsByName.ContainsKey(name))
@@ -324,14 +324,14 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (_macrosByName.ContainsKey(name))
             {
-                return _macrosByName[name].Call(args, vars);
+                return _macrosByName[name].Call(args, env);
             }
             else
             {
                 var pfunc = GetFunction(name);
                 if (pfunc.HasValue)
                 {
-                    return pfunc.Value.Converter(args, vars);
+                    return pfunc.Value.Converter(args, env);
                 }
                 else
                 {
@@ -475,9 +475,9 @@ namespace MetaphysicsIndustries.Solus
             throw new NotImplementedException();
         }
 
-        Expression GetExpressionFromUnaryop(Span span, Dictionary<string, Expression> vars)
+        Expression GetExpressionFromUnaryop(Span span, Environment env)
         {
-            Expression arg = GetExpressionFromSubexprPart(span.Subspans[1], vars);
+            Expression arg = GetExpressionFromSubexprPart(span.Subspans[1], env);
 
             if (span.Subspans[0].Value == "-")
             {
@@ -487,7 +487,7 @@ namespace MetaphysicsIndustries.Solus
             return arg;
         }
 
-        VariableAccess GetVariableAccessFromVarref(Span span, Dictionary<string, Expression> vars)
+        VariableAccess GetVariableAccessFromVarref(Span span, Environment env)
         {
             string varname = span.Subspans[0].Value;
 

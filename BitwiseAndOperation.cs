@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Bitwise; }
         }
 
-        //protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        //protected override Literal InternalCall(VariableTable env, Literal[] args)
         //{
         //    ulong value = 0xffffffffffffffff;
 

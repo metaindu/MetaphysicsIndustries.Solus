@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Solus
         {
         }
 
-        public abstract Literal Eval(Dictionary<string, Expression> varTable);
+        public abstract Literal Eval(Environment env);
 
         public abstract Expression Clone();
         public static Expression Clone(Expression expr)
@@ -34,11 +34,11 @@ namespace MetaphysicsIndustries.Solus
             return expr.Clone();
         }
 
-        //public delegate T Transformer<T>(Expression expr, VariableTable varTable);
-        //public abstract T Transform<T>(VariableTable varTable, Transformer<T> transformer);
-        //public static T Transform<T>(Expression expr, VariableTable varTable, Transformer<T> transformer)
+        //public delegate T Transformer<T>(Expression expr, VariableTable env);
+        //public abstract T Transform<T>(VariableTable env, Transformer<T> transformer);
+        //public static T Transform<T>(Expression expr, VariableTable env, Transformer<T> transformer)
         //{
-        //    expr.Transform<T>(varTable, transformer);
+        //    expr.Transform<T>(env, transformer);
         //}
 
         #region ICloneable Members
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus
         //    return this;
         //}
 
-        //public abstract Expression PreliminaryEval(VariableTable varTable);
+        //public abstract Expression PreliminaryEval(VariableTable env);
         //public abstract GetDerivative(Variable
 
         protected virtual void InternalApplyToExpressionTree(SolusAction action, bool applyToChildrenBeforeParent)
@@ -80,14 +80,14 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public virtual Expression PreliminaryEval(Dictionary<string, Expression> varTable)
+        public virtual Expression PreliminaryEval(Environment env)
         {
             return this;
         }
 
-        //public Expression PreliminaryEval(VariableTable varTable)
+        //public Expression PreliminaryEval(VariableTable env)
         //{
-        //    Expression evalExpr = InternalPreliminaryEval(varTable);
+        //    Expression evalExpr = InternalPreliminaryEval(env);
         //    Expression cleanExpr = evalExpr.CleanUp();
         //    return cleanExpr;
         //}

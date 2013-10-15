@@ -28,11 +28,11 @@ namespace MetaphysicsIndustries.Solus
             set { _expression = value; }
         }
 
-        public override Literal Eval(Dictionary<string, Expression> varTable)
+        public override Literal Eval(Environment env)
         {
-            Literal result = Expression.Eval(varTable);
+            Literal result = Expression.Eval(env);
 
-            varTable[Variable] = result;//.Value;
+            env.Variables[Variable] = result;//.Value;
 
             return result;
         }

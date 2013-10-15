@@ -29,9 +29,9 @@ namespace MetaphysicsIndustries.Solus
 		}
 
 
-        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
+        protected override Literal InternalCall(Environment env, Literal[] args)
 		{
-            return new Literal((float)Math.Cos(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Cos(args[0].Eval(env).Value));
 		}
 
         public override string DisplayName

@@ -15,7 +15,7 @@ namespace MetaphysicsIndustries.Solus
             NumArguments = 3;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, Dictionary<string, Expression> vars)
+        public override Expression InternalCall(IEnumerable<Expression> args, Environment env)
         {
             SubstTransformer subst = new SubstTransformer();
             CleanUpTransformer cleanup = new CleanUpTransformer();

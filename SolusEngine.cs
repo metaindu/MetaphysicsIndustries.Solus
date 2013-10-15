@@ -56,25 +56,25 @@ namespace MetaphysicsIndustries.Solus
         //    return fc;
         //}
 
-        //public  Literal Eval(Expression e, VariableTable varTable)
+        //public  Literal Eval(Expression e, VariableTable env)
         //{
-        //    return e.Eval(varTable);
+        //    return e.Eval(env);
         //}
 
-        public Expression PreliminaryEval(Expression expr, Dictionary<string, Expression> varTable)
+        public Expression PreliminaryEval(Expression expr, Environment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(expr.PreliminaryEval(varTable));
+            return cleanup.CleanUp(expr.PreliminaryEval(env));
         }
 
-        //protected Expression InternalPreliminaryEval(Expression expr, VariableTable varTable)
+        //protected Expression InternalPreliminaryEval(Expression expr, VariableTable env)
         //{
         //    if (expr is VariableAccess)
         //    {
         //        VariableAccess varAccess = expr as VariableAccess;
-        //        if (varTable.ContainsKey(varAccess.Variable))
+        //        if (env.Variables.ContainsKey(varAccess.Variable))
         //        {
-        //            return new Literal(varTable[varAccess.Variable]);
+        //            return new Literal(env.Variables[varAccess.Variable]);
         //        }
         //    }
         //    else if (expr is FunctionCall)
@@ -85,7 +85,7 @@ namespace MetaphysicsIndustries.Solus
         //        bool allLiterals = true;
         //        foreach (Expression arg in call.Arguments)
         //        {
-        //            Expression arg2 = InternalPreliminaryEval(arg, varTable);
+        //            Expression arg2 = InternalPreliminaryEval(arg, env);
         //            if (!(arg2 is Literal))
         //            {
         //                allLiterals = false;
@@ -95,8 +95,8 @@ namespace MetaphysicsIndustries.Solus
 
         //        if (allLiterals)
         //        {
-        //            return call.Function.Call(varTable, args.ToArray());
-        //            //return call.Call(varTable);
+        //            return call.Function.Call(env, args.ToArray());
+        //            //return call.Call(env);
         //        }
         //        else
         //        {
@@ -111,7 +111,7 @@ namespace MetaphysicsIndustries.Solus
         //        int i;
         //        for (i =0; i < vector.Length; i++)
         //        {
-        //            ret[i] = InternalPreliminaryEval(vector[i], varTable);
+        //            ret[i] = InternalPreliminaryEval(vector[i], env);
         //        }
 
         //        return ret;
@@ -127,7 +127,7 @@ namespace MetaphysicsIndustries.Solus
         //        {
         //            for (j = 0; j < matrix.ColumnCount; j++)
         //            {
-        //                ret[i, j] = InternalPreliminaryEval(matrix[i, j], varTable);
+        //                ret[i, j] = InternalPreliminaryEval(matrix[i, j], env);
         //            }
         //        }
 

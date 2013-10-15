@@ -41,15 +41,15 @@ namespace MetaphysicsIndustries.Solus
 			
 		}
 
-		public virtual Literal Call(Dictionary<string, Expression> varTable, params Expression[] args)
+		public virtual Literal Call(Environment env, params Expression[] args)
         {
             this.CheckArguments(args);
             List<Literal> evalArgs = new List<Literal>(args.Length);
             foreach (Expression arg in args)
             {
-                evalArgs.Add(arg.Eval(varTable));
+                evalArgs.Add(arg.Eval(env));
             }
-			return this.InternalCall(varTable, evalArgs.ToArray());
+			return this.InternalCall(env, evalArgs.ToArray());
 		}
 
         //public virtual Expression CleanUp(Expression[] args)
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Solus
 			}
 		}
 
-        protected abstract Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args);
+        protected abstract Literal InternalCall(Environment env, Literal[] args);
 
 		protected virtual void CheckArguments(Expression[] args)
 		{

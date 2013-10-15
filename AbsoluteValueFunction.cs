@@ -13,9 +13,9 @@ namespace MetaphysicsIndustries.Solus
             Name = "Absolue Value";
         }
 
-        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
+        protected override Literal InternalCall(Environment env, Literal[] args)
         {
-            return new Literal(Math.Abs(args[0].Eval(varTable).Value));
+            return new Literal(Math.Abs(args[0].Eval(env).Value));
         }
 
         public override string DisplayName

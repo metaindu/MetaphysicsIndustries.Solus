@@ -17,23 +17,23 @@ namespace MetaphysicsIndustries.Solus
             Types.Add(typeof(Expression));
         }
 
-        public override Literal Call(Dictionary<string, Expression> varTable, params Expression[] args)
+        public override Literal Call(Environment env, params Expression[] args)
         {
             CheckArguments(args);
 
-            float value = args[0].Eval(varTable).Value;
+            float value = args[0].Eval(env).Value;
 
             if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
             {
-                return args[2].Eval(varTable);
+                return args[2].Eval(env);
             }
             else
             {
-                return args[1].Eval(varTable);
+                return args[1].Eval(env);
             }
         }
 
-        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
+        protected override Literal InternalCall(Environment env, Literal[] args)
         {
             throw new NotSupportedException();
             //float value = args[0].Value;

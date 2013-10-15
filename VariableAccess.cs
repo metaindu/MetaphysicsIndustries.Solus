@@ -25,18 +25,18 @@ namespace MetaphysicsIndustries.Solus
 
         public string VariableName;
 
-        public override Literal Eval(Dictionary<string, Expression> varTable)
+        public override Literal Eval(Environment env)
         {
             var var = VariableName;
 
-            if (varTable.ContainsKey(var))
+            if (env.Variables.ContainsKey(var))
             {
-                if (varTable[var] is Literal)
+                if (env.Variables[var] is Literal)
                 {
-                    return (Literal)varTable[var];
+                    return (Literal)env.Variables[var];
                 }
 
-                return varTable[var].Eval(varTable);
+                return env.Variables[var].Eval(env);
             }
             else
             {
@@ -44,21 +44,21 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(Dictionary<string, Expression> varTable)
+        public override Expression PreliminaryEval(Environment env)
         {
-            if (varTable.ContainsKey(VariableName))
+            if (env.Variables.ContainsKey(VariableName))
             {
                 //this will cause an infinite recursion if a variable 
                 //is defined in terms of itself or in terms of another 
                 //variable.
-                //we could add (if (varTable[Variable] as VariableAccess).Variable == Variable) { throw }
+                //we could add (if (env.Variables[Variable] as VariableAccess).Variable == Variable) { throw }
                 //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
                 var var = VariableName;
-                return varTable[var].PreliminaryEval(varTable);
+                return env.Variables[var].PreliminaryEval(env);
             }
             else
             {
-                return base.PreliminaryEval(varTable);
+                return base.PreliminaryEval(env);
             }
         }
 

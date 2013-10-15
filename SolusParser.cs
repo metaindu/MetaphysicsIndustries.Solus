@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public delegate Expression FunctionConverter(IEnumerable<Expression> args, Dictionary<string, Expression> vars);
+    public delegate Expression FunctionConverter(IEnumerable<Expression> args, Environment env);
 
     public struct ParseFunction
     {

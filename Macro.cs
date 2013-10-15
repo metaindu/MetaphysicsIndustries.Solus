@@ -11,9 +11,9 @@ namespace MetaphysicsIndustries.Solus
         public int NumArguments = 0;
         public bool HasVariableNumArgs = false;
 
-        public abstract Expression InternalCall(IEnumerable<Expression> args, Dictionary<string, Expression> vars);
+        public abstract Expression InternalCall(IEnumerable<Expression> args, Environment env);
 
-        public virtual Expression Call(IEnumerable<Expression> args, Dictionary<string, Expression> vars)
+        public virtual Expression Call(IEnumerable<Expression> args, Environment env)
         {
             List<Expression> arglist = new List<Expression>(args);
             if (!HasVariableNumArgs &&
@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Solus
                 throw new ArgumentException("Incorrect number of arguments.", "arg");
             }
 
-            return InternalCall(args, vars);
+            return InternalCall(args, env);
         }
     }
 }

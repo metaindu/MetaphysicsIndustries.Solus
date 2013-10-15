@@ -22,7 +22,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
     {
-        public Expression[] PreliminaryEvalInterval(Expression expr, Dictionary<string, Expression> vars,
+        public Expression[] PreliminaryEvalInterval(Expression expr, Environment env,
                                                     string x, float xStart, float xEnd, float xStep)
         {
             int i;
@@ -36,25 +36,25 @@ namespace MetaphysicsIndustries.Solus
             Expression[] exprs = new Expression[i];
 
             Expression previousValue = null;
-            if (vars.ContainsKey(x))
+            if (env.Variables.ContainsKey(x))
             {
-                previousValue = vars[x];
-                vars.Remove(x);
+                previousValue = env.Variables[x];
+                env.Variables.Remove(x);
             }
-            Expression preeval = expr.PreliminaryEval(vars);
+            Expression preeval = expr.PreliminaryEval(env);
 
             i = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
-                vars[x] = new Literal(xx);
-                exprs[i] = preeval.PreliminaryEval(vars);
+                env.Variables[x] = new Literal(xx);
+                exprs[i] = preeval.PreliminaryEval(env);
                 i++;
             }
 
             return exprs;
         }
 
-        public float[] EvalInterval(Expression expr, Dictionary<string, Expression> vars,
+        public float[] EvalInterval(Expression expr, Environment env,
                                         string x, float xStart, float xEnd, float xStep)
         {
             int i;
@@ -67,13 +67,13 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValue = null;
             bool hasPreviousValue = false;
-            if (vars.ContainsKey(x))
+            if (env.Variables.ContainsKey(x))
             {
                 hasPreviousValue = true;
-                previousValue = vars[x];
-                vars.Remove(x);
+                previousValue = env.Variables[x];
+                env.Variables.Remove(x);
             }
-            Expression preeval = expr.PreliminaryEval(vars);
+            Expression preeval = expr.PreliminaryEval(env);
             //check that all variables in the expression are already in the variable table
 
 
@@ -82,20 +82,20 @@ namespace MetaphysicsIndustries.Solus
             i = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
-                vars[x] = new Literal(xx);
-                values[i] = preeval.Eval(vars).Value;
+                env.Variables[x] = new Literal(xx);
+                values[i] = preeval.Eval(env).Value;
                 i++;
             }
 
             if (hasPreviousValue)
             {
-                vars[x] = previousValue;
+                env.Variables[x] = previousValue;
             }
 
             return values;
         }
 
-        public float[,] EvalInterval(Expression expr, Dictionary<string, Expression> vars,
+        public float[,] EvalInterval(Expression expr, Environment env,
                                         string x, float xStart, float xEnd, float xStep,
                                         string y, float yStart, float yEnd, float yStep)
         {
@@ -123,20 +123,20 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueX = null;
             bool hasPreviousValueX = false;
-            if (vars.ContainsKey(x))
+            if (env.Variables.ContainsKey(x))
             {
                 hasPreviousValueX = true;
-                previousValueX = vars[x];
-                vars.Remove(x);
+                previousValueX = env.Variables[x];
+                env.Variables.Remove(x);
             }
 
             Expression previousValueY = null;
             bool hasPreviousValueY = false;
-            if (vars.ContainsKey(y))
+            if (env.Variables.ContainsKey(y))
             {
                 hasPreviousValueY = true;
-                previousValueY = vars[y];
-                vars.Remove(y);
+                previousValueY = env.Variables[y];
+                env.Variables.Remove(y);
             }
 
             Expression preeval = expr;//.PreliminaryEval(vars);
@@ -148,13 +148,13 @@ namespace MetaphysicsIndustries.Solus
             int ix = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
-                vars[x] = xValues[ix];
+                env.Variables[x] = xValues[ix];
 
                 int iy = 0;
                 for (yy = yStart; yy <= yEnd; yy += yStep)
                 {
-                    vars[y] = yValues[iy];
-                    values[ix, iy] = preeval.Eval(vars).Value;
+                    env.Variables[y] = yValues[iy];
+                    values[ix, iy] = preeval.Eval(env).Value;
                     iy++;
                 }
 
@@ -163,17 +163,17 @@ namespace MetaphysicsIndustries.Solus
 
             if (hasPreviousValueX)
             {
-                vars[x] = previousValueX;
+                env.Variables[x] = previousValueX;
             }
             if (hasPreviousValueY)
             {
-                vars[y] = previousValueY;
+                env.Variables[y] = previousValueY;
             }
 
             return values;
         }
 
-        public float[, ,] EvalInterval(Expression expr, Dictionary<string, Expression> vars,
+        public float[, ,] EvalInterval(Expression expr, Environment env,
                                         string x, float xStart, float xEnd, float xStep,
                                         string y, float yStart, float yEnd, float yStep,
                                         string z, float zStart, float zEnd, float zStep)
@@ -211,29 +211,29 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueX = null;
             bool hasPreviousValueX = false;
-            if (vars.ContainsKey(x))
+            if (env.Variables.ContainsKey(x))
             {
                 hasPreviousValueX = true;
-                previousValueX = vars[x];
-                vars.Remove(x);
+                previousValueX = env.Variables[x];
+                env.Variables.Remove(x);
             }
 
             Expression previousValueY = null;
             bool hasPreviousValueY = false;
-            if (vars.ContainsKey(y))
+            if (env.Variables.ContainsKey(y))
             {
                 hasPreviousValueY = true;
-                previousValueY = vars[y];
-                vars.Remove(y);
+                previousValueY = env.Variables[y];
+                env.Variables.Remove(y);
             }
 
             Expression previousValueZ = null;
             bool hasPreviousValueZ = false;
-            if (vars.ContainsKey(z))
+            if (env.Variables.ContainsKey(z))
             {
                 hasPreviousValueZ = true;
-                previousValueZ = vars[z];
-                vars.Remove(z);
+                previousValueZ = env.Variables[z];
+                env.Variables.Remove(z);
             }
 
             Expression preeval = expr;//.PreliminaryEval(vars);
@@ -247,16 +247,16 @@ namespace MetaphysicsIndustries.Solus
             int iz;
             for (ix = 0; ix < nx; ix++)
             {
-                vars[x] = xValues[ix];
+                env.Variables[x] = xValues[ix];
 
                 for (iy = 0; iy < ny; iy++)
                 {
-                    vars[y] = yValues[iy];
+                    env.Variables[y] = yValues[iy];
 
                     for (iz = 0; iz < nz; iz++)
                     {
-                        vars[z] = zValues[iz];
-                        values[ix, iy, iz] = preeval.Eval(vars).Value;
+                        env.Variables[z] = zValues[iz];
+                        values[ix, iy, iz] = preeval.Eval(env).Value;
                     }
 
                 }
@@ -265,51 +265,51 @@ namespace MetaphysicsIndustries.Solus
 
             if (hasPreviousValueX)
             {
-                vars[x] = previousValueX;
+                env.Variables[x] = previousValueX;
             }
             if (hasPreviousValueY)
             {
-                vars[y] = previousValueY;
+                env.Variables[y] = previousValueY;
             }
             if (hasPreviousValueZ)
             {
-                vars[z] = previousValueZ;
+                env.Variables[z] = previousValueZ;
             }
 
             return values;
         }
 
-        public float[,] EvalMathPaint(Expression expr, Dictionary<string, Expression> vars, int width, int height)
+        public float[,] EvalMathPaint(Expression expr, Environment env, int width, int height)
         {
             //previous values?
             SolusParser parser = new SolusParser();
-            vars["width"] = new Literal(width);
-            vars["width"] = new Literal(width);
-            vars["theta"] = parser.Compile("atan2(y,x)", vars);
-            vars["radius"] = parser.Compile("sqrt(x^2+y^2)", vars);
-            vars["i"] = new VariableAccess("x");
-            vars["j"] = new VariableAccess("y");
+            env.Variables["width"] = new Literal(width);
+            env.Variables["width"] = new Literal(width);
+            env.Variables["theta"] = parser.Compile("atan2(y,x)", env);
+            env.Variables["radius"] = parser.Compile("sqrt(x^2+y^2)", env);
+            env.Variables["i"] = new VariableAccess("x");
+            env.Variables["j"] = new VariableAccess("y");
 
-            return EvalInterval(expr, vars, "x", 0, width - 1, 1, "y", 0, height - 1, 1);
+            return EvalInterval(expr, env, "x", 0, width - 1, 1, "y", 0, height - 1, 1);
         }
 
 
-        public float[, ,] EvalMathPaint3D(Expression expr, Dictionary<string, Expression> vars, int width, int height, int numframes)
+        public float[, ,] EvalMathPaint3D(Expression expr, Environment env, int width, int height, int numframes)
         {
 
             //previous values?
             SolusParser parser = new SolusParser();
-            vars["width"] = new Literal(width);
-            vars["height"] = new Literal(height);
-            vars["theta"] = parser.Compile("atan2(y,x)", vars);
-            vars["radius"] = parser.Compile("sqrt(x^2+y^2)", vars);
-            vars["i"] = new VariableAccess("x");
-            vars["j"] = new VariableAccess("y");
-            vars["numframes"] = new Literal(numframes);
-            vars["k"] = new VariableAccess("z");
-            vars["t"] = new VariableAccess("z");
+            env.Variables["width"] = new Literal(width);
+            env.Variables["height"] = new Literal(height);
+            env.Variables["theta"] = parser.Compile("atan2(y,x)", env);
+            env.Variables["radius"] = parser.Compile("sqrt(x^2+y^2)", env);
+            env.Variables["i"] = new VariableAccess("x");
+            env.Variables["j"] = new VariableAccess("y");
+            env.Variables["numframes"] = new Literal(numframes);
+            env.Variables["k"] = new VariableAccess("z");
+            env.Variables["t"] = new VariableAccess("z");
 
-            return EvalInterval(expr, vars, "x", 0, width - 1, 1, "y", 0, height - 1, 1, "z", 0, numframes - 1, 1);
+            return EvalInterval(expr, env, "x", 0, width - 1, 1, "y", 0, height - 1, 1, "z", 0, numframes - 1, 1);
         }
     }
 }

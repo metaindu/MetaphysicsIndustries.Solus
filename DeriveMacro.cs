@@ -15,7 +15,7 @@ namespace MetaphysicsIndustries.Solus
             NumArguments = 2;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, Dictionary<string, Expression> vars)
+        public override Expression InternalCall(IEnumerable<Expression> args, Environment env)
         {
             DerivativeTransformer derive = new DerivativeTransformer();
             Expression expr = args.First();

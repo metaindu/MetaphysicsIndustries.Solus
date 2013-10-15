@@ -12,10 +12,10 @@ namespace MetaphysicsIndustries.Solus.Test
         public void TestNormal()
         {
             SolusParser parser = new SolusParser();
-            Dictionary<string, Expression> vars = new Dictionary<string, Expression>();
+            Environment env = new Environment();
 
             var expr = parser.Compile("2 + 2");
-            var value = expr.Eval(vars).Value;
+            var value = expr.Eval(env).Value;
 
             Assert.AreEqual(4.0f, value);
         }
@@ -373,8 +373,8 @@ namespace MetaphysicsIndustries.Solus.Test
         public void TestFunctionCall1()
         {
             var parser = new SolusParser();
-            Dictionary<string, Expression> vars = new Dictionary<string, Expression>();
-            vars.Add("pi", new Literal((float)Math.PI));
+            Environment env = new Environment();
+            env.Variables.Add("pi", new Literal((float)Math.PI));
 
             var expr = parser.Compile("sin(pi)", cleanup:false);
 
@@ -384,7 +384,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(1, fcall.Arguments.Count);
 //            Assert.IsInstanceOf<Literal>(fcall.Arguments[0]);
 //            Assert.AreEqual(Math.PI, (fcall.Arguments[0] as Literal).Value, 0.0001f);
-            Assert.AreEqual(0f, fcall.Eval(vars).Value, 0.0001f);
+            Assert.AreEqual(0f, fcall.Eval(env).Value, 0.0001f);
         }
 
         [Test]
@@ -407,7 +407,7 @@ namespace MetaphysicsIndustries.Solus.Test
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
-            Assert.IsInstanceOf<IfFunction>(fcall.Function);;
+            Assert.IsInstanceOf<IfFunction>(fcall.Function);
             Assert.AreEqual(3, fcall.Arguments.Count);
             Assert.IsInstanceOf<Literal>(fcall.Arguments[0]);
             Assert.IsInstanceOf<Literal>(fcall.Arguments[1]);
@@ -427,7 +427,7 @@ namespace MetaphysicsIndustries.Solus.Test
                 Types.Add(typeof(Expression));
             }
 
-            protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
+            protected override Literal InternalCall(Environment env, Literal[] args)
             {
                 return new Literal(3);
             }
@@ -455,10 +455,10 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf<Literal>(fcall.Arguments[1]);
             Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
             Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
-            Assert.AreEqual(3f, expr.Eval(new Dictionary<string, Expression>()).Value);
+            Assert.AreEqual(3f, expr.Eval(new Environment()).Value);
 
 
-            float value = expr.Eval(new Dictionary<string, Expression>()).Value;
+            float value = expr.Eval(new Environment()).Value;
 
             Assert.AreEqual(3f, value);
         }
@@ -470,7 +470,7 @@ namespace MetaphysicsIndustries.Solus.Test
             {
             }
 
-            protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
+            protected override Literal InternalCall(Environment env, Literal[] args)
             {
                 return new Literal(args.Length);
             }
@@ -491,7 +491,7 @@ namespace MetaphysicsIndustries.Solus.Test
 //                NumArguments = -1,
                 HasVariableNumArgs = true,
             });
-            var vars = new Dictionary<string, Expression>();
+            var env = new Environment();
 
 
             var expr = parser.Compile("count(1, 2, 3)", cleanup:false);
@@ -505,13 +505,13 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
             Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
             Assert.AreEqual(3f, (fcall.Arguments[2] as Literal).Value);
-            Assert.AreEqual(3f, expr.Eval(new Dictionary<string, Expression>()).Value);
+            Assert.AreEqual(3f, expr.Eval(env).Value);
 
 
-            Assert.AreEqual(0, parser.Compile("count()").Eval(vars).Value);
-            Assert.AreEqual(1, parser.Compile("count(1)").Eval(vars).Value);
-            Assert.AreEqual(2, parser.Compile("count(1, 2)").Eval(vars).Value);
-            Assert.AreEqual(4, parser.Compile("count(1, 2, 3, 4)").Eval(vars).Value);
+            Assert.AreEqual(0, parser.Compile("count()").Eval(env).Value);
+            Assert.AreEqual(1, parser.Compile("count(1)").Eval(env).Value);
+            Assert.AreEqual(2, parser.Compile("count(1, 2)").Eval(env).Value);
+            Assert.AreEqual(4, parser.Compile("count(1, 2, 3, 4)").Eval(env).Value);
         }
 
         [Test]

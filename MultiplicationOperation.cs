@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Solus
         //    }
         //}
 
-        protected override Literal InternalCall(Dictionary<string, Expression> varTable, Literal[] args)
+        protected override Literal InternalCall(Environment env, Literal[] args)
         {
             float value = 1;
             int i;

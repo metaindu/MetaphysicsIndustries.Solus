@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Solus
 
 
 
-        public override Literal Eval(Dictionary<string, Expression> varTable)
+        public override Literal Eval(Environment env)
         {
             return new Literal(0xFFFFFF & _color.ToArgb());
         }
