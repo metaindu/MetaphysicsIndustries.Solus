@@ -420,7 +420,7 @@ namespace MetaphysicsIndustries.Solus.Test
         public class CustomAsdfFunction : Function
         {
             public CustomAsdfFunction()
-                : base("adsf")
+                : base("asdf")
             {
                 Types.Clear();
                 Types.Add(typeof(Expression));
@@ -438,15 +438,11 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
             var func = new CustomAsdfFunction();
-            parser.AddFunction(new ParseFunction {
-                Token = "asdf",
-                Converter = ParseFunction.BasicFunctionConverter(func),
-                NumArguments = 2,
-                HasVariableNumArgs = false,
-            });
+            Environment env = new Environment();
+            env.AddFunction(func);
 
 
-            var expr = parser.Compile("asdf(1, 2)", cleanup:false);
+            var expr = parser.Compile("asdf(1, 2)", env: env, cleanup:false);
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (expr as FunctionCall);
@@ -455,10 +451,9 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf<Literal>(fcall.Arguments[1]);
             Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
             Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
-            Assert.AreEqual(3f, expr.Eval(new Environment()).Value);
 
 
-            float value = expr.Eval(new Environment()).Value;
+            float value = expr.Eval(env).Value;
 
             Assert.AreEqual(3f, value);
         }
@@ -485,16 +480,11 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
             var func = new CountArgsFunction();
-            parser.AddFunction(new ParseFunction {
-                Token = "count",
-                Converter = ParseFunction.BasicFunctionConverter(func),
-//                NumArguments = -1,
-                HasVariableNumArgs = true,
-            });
             var env = new Environment();
+            env.AddFunction(func);
 
 
-            var expr = parser.Compile("count(1, 2, 3)", cleanup:false);
+            var expr = parser.Compile("count(1, 2, 3)", env: env, cleanup:false);
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (expr as FunctionCall);
@@ -508,10 +498,10 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3f, expr.Eval(env).Value);
 
 
-            Assert.AreEqual(0, parser.Compile("count()").Eval(env).Value);
-            Assert.AreEqual(1, parser.Compile("count(1)").Eval(env).Value);
-            Assert.AreEqual(2, parser.Compile("count(1, 2)").Eval(env).Value);
-            Assert.AreEqual(4, parser.Compile("count(1, 2, 3, 4)").Eval(env).Value);
+            Assert.AreEqual(0, parser.Compile("count()", env).Eval(env).Value);
+            Assert.AreEqual(1, parser.Compile("count(1)", env).Eval(env).Value);
+            Assert.AreEqual(2, parser.Compile("count(1, 2)", env).Eval(env).Value);
+            Assert.AreEqual(4, parser.Compile("count(1, 2, 3, 4)", env).Eval(env).Value);
         }
 
         [Test]
