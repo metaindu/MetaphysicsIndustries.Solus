@@ -139,7 +139,6 @@
     <Compile Include="VariableAccess.cs" />
     <Compile Include="SolusVector.cs" />
     <Compile Include="SubstTransformer.cs" />
-    <Compile Include="ExParser.cs" />
     <Compile Include="SolusGrammar.cs" />
     <Compile Include="SolusParser2.cs" />
   </ItemGroup>
