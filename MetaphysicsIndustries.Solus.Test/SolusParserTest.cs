@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Solus.Test
             SolusParser parser = new SolusParser();
             Environment env = new Environment();
 
-            var expr = parser.Compile("2 + 2");
+            var expr = parser.GetExpression("2 + 2");
             var value = expr.Eval(env).Value;
 
             Assert.AreEqual(4.0f, value);
@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("a * (2+c)");
+            var expr = parser.GetExpression("a * (2+c)");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 + a + 2 + b + 3 + c");
+            var expr = parser.GetExpression("1 + a + 2 + b + 3 + c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 + a + 2 * b * 3 * c");
+            var expr = parser.GetExpression("1 + a + 2 * b * 3 * c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 + a * 2 * b * 3 + c");
+            var expr = parser.GetExpression("1 + a * 2 * b * 3 + c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -160,7 +160,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 * a * 2 * b + 3 + c");
+            var expr = parser.GetExpression("1 * a * 2 * b + 3 + c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -196,7 +196,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 * a * 2 + b + 3 * c");
+            var expr = parser.GetExpression("1 * a * 2 + b + 3 * c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -240,7 +240,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 * a + 2 + b * 3 * c");
+            var expr = parser.GetExpression("1 * a + 2 + b * 3 * c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -283,7 +283,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 | a & 2 + b * 3 ^ c");
+            var expr = parser.GetExpression("1 | a & 2 + b * 3 ^ c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -329,7 +329,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("1 ^ a * 2 + b & 3 | c");
+            var expr = parser.GetExpression("1 ^ a * 2 + b & 3 | c");
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (expr as FunctionCall);
@@ -376,7 +376,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Environment env = new Environment();
             env.Variables.Add("pi", new Literal((float)Math.PI));
 
-            var expr = parser.Compile("sin(pi)", cleanup:false);
+            var expr = parser.GetExpression("sin(pi)", cleanup:false);
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -392,7 +392,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("derive(x, x)", cleanup:false);
+            var expr = parser.GetExpression("derive(x, x)", cleanup:false);
 
             Assert.IsInstanceOf<Literal>(expr);
             Assert.AreEqual(1f, (expr as Literal).Value);
@@ -403,7 +403,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
 
-            var expr = parser.Compile("if(1, 2, 3)", cleanup:false);
+            var expr = parser.GetExpression("if(1, 2, 3)", cleanup:false);
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (FunctionCall)expr;
@@ -442,7 +442,7 @@ namespace MetaphysicsIndustries.Solus.Test
             env.AddFunction(func);
 
 
-            var expr = parser.Compile("asdf(1, 2)", env: env, cleanup:false);
+            var expr = parser.GetExpression("asdf(1, 2)", env: env, cleanup:false);
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (expr as FunctionCall);
@@ -484,7 +484,7 @@ namespace MetaphysicsIndustries.Solus.Test
             env.AddFunction(func);
 
 
-            var expr = parser.Compile("count(1, 2, 3)", env: env, cleanup:false);
+            var expr = parser.GetExpression("count(1, 2, 3)", env: env, cleanup:false);
 
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fcall = (expr as FunctionCall);
@@ -498,10 +498,10 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3f, expr.Eval(env).Value);
 
 
-            Assert.AreEqual(0, parser.Compile("count()", env).Eval(env).Value);
-            Assert.AreEqual(1, parser.Compile("count(1)", env).Eval(env).Value);
-            Assert.AreEqual(2, parser.Compile("count(1, 2)", env).Eval(env).Value);
-            Assert.AreEqual(4, parser.Compile("count(1, 2, 3, 4)", env).Eval(env).Value);
+            Assert.AreEqual(0, parser.GetExpression("count()", env).Eval(env).Value);
+            Assert.AreEqual(1, parser.GetExpression("count(1)", env).Eval(env).Value);
+            Assert.AreEqual(2, parser.GetExpression("count(1, 2)", env).Eval(env).Value);
+            Assert.AreEqual(4, parser.GetExpression("count(1, 2, 3, 4)", env).Eval(env).Value);
         }
 
         [Test]
@@ -511,7 +511,7 @@ namespace MetaphysicsIndustries.Solus.Test
             var parser = new SolusParser();
 
             // action
-            var expr = parser.Compile("-a");
+            var expr = parser.GetExpression("-a");
 
             // assertions
             Assert.IsInstanceOf<FunctionCall>(expr);

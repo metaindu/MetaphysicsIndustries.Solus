@@ -18,18 +18,13 @@ namespace MetaphysicsIndustries.Solus
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
         }
 
-        public Expression Compile(string input, Environment env=null, bool cleanup=false)
+        public Expression GetExpression(string input, Environment env=null, bool cleanup=false)
         {
             if (env == null)
             {
                 env = new Environment();
             }
 
-            return GetExpression(input, env);
-        }
-
-        public Expression GetExpression(string input, Environment env)
-        {
             var errors = new List<Error>();
 
             var spans = _parser.Parse(input, errors);
@@ -51,7 +46,15 @@ namespace MetaphysicsIndustries.Solus
 
             var span = spans[0];
 
-            return GetExpressionFromExpr(span, env);
+            var expr = GetExpressionFromExpr(span, env);
+
+            if (cleanup)
+            {
+                var ct = new CleanUpTransformer();
+                expr = ct.CleanUp(expr);
+            }
+
+            return expr;
         }
 
         Dictionary<Function, int> _operatorPrecedence = new Dictionary<Function, int>() {
