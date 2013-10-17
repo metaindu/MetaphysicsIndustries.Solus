@@ -17,7 +17,7 @@ namespace MetaphysicsIndustries.Solus
             Types.Add(typeof(Expression));
         }
 
-        public override Literal Call(Environment env, params Expression[] args)
+        public override Literal Call(SolusEnvironment env, params Expression[] args)
         {
             CheckArguments(args);
 
@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected override Literal InternalCall(Environment env, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             throw new NotSupportedException();
             //float value = args[0].Value;

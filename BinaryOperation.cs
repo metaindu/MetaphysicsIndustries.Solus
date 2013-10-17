@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        protected override sealed Literal InternalCall(Environment env, Literal[] args)
+        protected override sealed Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             return new Literal(InternalBinaryCall(args[0].Value, args[1].Value));
         }

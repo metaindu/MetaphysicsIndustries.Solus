@@ -11,9 +11,9 @@ namespace MetaphysicsIndustries.Solus
         public int NumArguments = 0;
         public bool HasVariableNumArgs = false;
 
-        public abstract Expression InternalCall(IEnumerable<Expression> args, Environment env);
+        public abstract Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env);
 
-        public virtual Expression Call(IEnumerable<Expression> args, Environment env)
+        public virtual Expression Call(IEnumerable<Expression> args, SolusEnvironment env)
         {
             List<Expression> arglist = new List<Expression>(args);
             if (!HasVariableNumArgs &&

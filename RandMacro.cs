@@ -15,7 +15,7 @@ namespace MetaphysicsIndustries.Solus
             NumArguments = 0;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, Environment env)
+        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
         {
             return new RandomExpression();
         }

@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Solus
             Name = "Natural Logarithm";
         }
 
-        protected override Literal InternalCall(Environment env, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             return new Literal((float)Math.Log(args[0].Eval(env).Value));
         }

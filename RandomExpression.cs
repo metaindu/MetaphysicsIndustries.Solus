@@ -10,7 +10,7 @@ namespace MetaphysicsIndustries.Solus
 
         float _value = (float)_random.NextDouble();
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(
                 //_value);

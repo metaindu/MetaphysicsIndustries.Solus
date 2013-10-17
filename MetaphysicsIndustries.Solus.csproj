@@ -73,7 +73,6 @@
     <Compile Include="DistSqFunction.cs" />
     <Compile Include="DivisionOperation.cs" />
     <Compile Include="DualArgumentFunction.cs" />
-    <Compile Include="Environment.cs" />
     <Compile Include="EqualComparisonOperation.cs" />
     <Compile Include="ExponentOperation.cs" />
     <Compile Include="Expression.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="SolusVector.cs" />
     <Compile Include="SubstTransformer.cs" />
     <Compile Include="SolusGrammar.cs" />
+    <Compile Include="SolusEnvironment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />

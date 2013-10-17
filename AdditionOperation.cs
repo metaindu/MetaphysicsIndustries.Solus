@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Addition; }
         }
 
-        protected override Literal InternalCall(Environment env, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             float sum = 0;
             foreach (Literal arg in args)

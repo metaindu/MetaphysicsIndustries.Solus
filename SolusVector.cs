@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus
             get { return _length; }
         }
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(0);
         }
@@ -173,7 +173,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(Environment env)
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
             SolusVector ret = new SolusVector(Length);
 

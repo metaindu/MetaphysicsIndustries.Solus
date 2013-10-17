@@ -572,7 +572,7 @@ namespace MetaphysicsIndustries.Solus
 
         #endregion
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(0);
         }
@@ -621,7 +621,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(Environment env)
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
             SolusMatrix ret = new SolusMatrix(RowCount, ColumnCount);
 

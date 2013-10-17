@@ -13,7 +13,7 @@ namespace MetaphysicsIndustries.Solus
             Name = "UnitStep";
         }
 
-        protected override Literal InternalCall(Environment env, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             if (args[0].Value >= 0)
             {

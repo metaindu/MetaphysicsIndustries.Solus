@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             throw new InvalidOperationException();
         }

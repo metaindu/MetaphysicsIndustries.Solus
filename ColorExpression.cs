@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Solus
 
 
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(0xFFFFFF & _color.ToArgb());
         }

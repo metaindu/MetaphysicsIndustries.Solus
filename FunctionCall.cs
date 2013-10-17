@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus
             return ret;
         }
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             return Call(env);
         }
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public virtual Literal Call(Environment env)
+        public virtual Literal Call(SolusEnvironment env)
         {
             return Function.Call(env, Arguments.ToArray());
         }
@@ -158,7 +158,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(Environment env)
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
             List<Expression> args = new List<Expression>(Arguments.Count);
 

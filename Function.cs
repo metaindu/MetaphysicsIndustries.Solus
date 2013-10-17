@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus
 			
 		}
 
-		public virtual Literal Call(Environment env, params Expression[] args)
+		public virtual Literal Call(SolusEnvironment env, params Expression[] args)
         {
             this.CheckArguments(args);
             List<Literal> evalArgs = new List<Literal>(args.Length);
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Solus
 			}
 		}
 
-        protected abstract Literal InternalCall(Environment env, Literal[] args);
+        protected abstract Literal InternalCall(SolusEnvironment env, Literal[] args);
 
 		protected virtual void CheckArguments(Expression[] args)
 		{

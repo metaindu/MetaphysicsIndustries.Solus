@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Solus
 
         public string VariableName;
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             var var = VariableName;
 
@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(Environment env)
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
             if (env.Variables.ContainsKey(VariableName))
             {

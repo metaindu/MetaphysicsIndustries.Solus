@@ -28,7 +28,7 @@ namespace MetaphysicsIndustries.Solus
             set { _expression = value; }
         }
 
-        public override Literal Eval(Environment env)
+        public override Literal Eval(SolusEnvironment env)
         {
             Literal result = Expression.Eval(env);
 

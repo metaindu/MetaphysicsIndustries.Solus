@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public class Environment
+    public class SolusEnvironment
     {
-        public Environment(bool useDefaults = true)
+        public SolusEnvironment(bool useDefaults = true)
         {
             if (useDefaults)
             {

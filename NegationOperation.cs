@@ -18,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Negation; }
         }
 
-        protected override Literal InternalCall(Environment env, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             return new Literal(-args[0].Value);
         }

@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Solus
         //    return e.Eval(env);
         //}
 
-        public Expression PreliminaryEval(Expression expr, Environment env)
+        public Expression PreliminaryEval(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
             return cleanup.CleanUp(expr.PreliminaryEval(env));

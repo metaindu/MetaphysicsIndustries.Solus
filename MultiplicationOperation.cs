@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Solus
         //    }
         //}
 
-        protected override Literal InternalCall(Environment env, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             float value = 1;
             int i;

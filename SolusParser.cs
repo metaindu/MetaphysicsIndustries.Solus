@@ -18,11 +18,11 @@ namespace MetaphysicsIndustries.Solus
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
         }
 
-        public Expression GetExpression(string input, Environment env=null, bool cleanup=false)
+        public Expression GetExpression(string input, SolusEnvironment env=null, bool cleanup=false)
         {
             if (env == null)
             {
-                env = new Environment();
+                env = new SolusEnvironment();
             }
 
             var errors = new List<Error>();
@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus
             { BitwiseOrOperation.Value, 80 },
         };
 
-        Expression GetExpressionFromExpr(Span span, Environment env)
+        Expression GetExpressionFromExpr(Span span, SolusEnvironment env)
         {
             var subexprs = new List<Expression>();
             var operators = new List<Operation>();
@@ -163,14 +163,14 @@ namespace MetaphysicsIndustries.Solus
             return subexprs[0];
         }
 
-        Expression GetExpressionFromSubexpr(Span span, Environment env)
+        Expression GetExpressionFromSubexpr(Span span, SolusEnvironment env)
         {
             var sub = span.Subspans[0];
 
             return GetExpressionFromSubexprPart(sub, env);
         }
 
-        Expression GetExpressionFromSubexprPart(Span span, Environment env)
+        Expression GetExpressionFromSubexprPart(Span span, SolusEnvironment env)
         {
             var defref = span.DefRef;
             if (defref == _grammar.def_paren)
@@ -239,7 +239,7 @@ namespace MetaphysicsIndustries.Solus
             throw new InvalidOperationException();
         }
 
-        Expression GetFunctionCallFromFunctioncall(Span span, Environment env)
+        Expression GetFunctionCallFromFunctioncall(Span span, SolusEnvironment env)
         {
             var name = span.Subspans[0].Value;
 
@@ -399,7 +399,7 @@ namespace MetaphysicsIndustries.Solus
             throw new NotImplementedException();
         }
 
-        Expression GetExpressionFromUnaryop(Span span, Environment env)
+        Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)
         {
             Expression arg = GetExpressionFromSubexprPart(span.Subspans[1], env);
 
@@ -411,7 +411,7 @@ namespace MetaphysicsIndustries.Solus
             return arg;
         }
 
-        VariableAccess GetVariableAccessFromVarref(Span span, Environment env)
+        VariableAccess GetVariableAccessFromVarref(Span span, SolusEnvironment env)
         {
             string varname = span.Subspans[0].Value;
 

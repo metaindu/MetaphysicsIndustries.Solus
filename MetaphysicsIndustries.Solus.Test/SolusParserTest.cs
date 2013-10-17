@@ -12,7 +12,7 @@ namespace MetaphysicsIndustries.Solus.Test
         public void TestNormal()
         {
             SolusParser parser = new SolusParser();
-            Environment env = new Environment();
+            SolusEnvironment env = new SolusEnvironment();
 
             var expr = parser.GetExpression("2 + 2");
             var value = expr.Eval(env).Value;
@@ -373,7 +373,7 @@ namespace MetaphysicsIndustries.Solus.Test
         public void TestFunctionCall1()
         {
             var parser = new SolusParser();
-            Environment env = new Environment();
+            SolusEnvironment env = new SolusEnvironment();
             env.Variables.Add("pi", new Literal((float)Math.PI));
 
             var expr = parser.GetExpression("sin(pi)", cleanup:false);
@@ -427,7 +427,7 @@ namespace MetaphysicsIndustries.Solus.Test
                 Types.Add(typeof(Expression));
             }
 
-            protected override Literal InternalCall(Environment env, Literal[] args)
+            protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
             {
                 return new Literal(3);
             }
@@ -438,7 +438,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
             var func = new CustomAsdfFunction();
-            Environment env = new Environment();
+            SolusEnvironment env = new SolusEnvironment();
             env.AddFunction(func);
 
 
@@ -465,7 +465,7 @@ namespace MetaphysicsIndustries.Solus.Test
             {
             }
 
-            protected override Literal InternalCall(Environment env, Literal[] args)
+            protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
             {
                 return new Literal(args.Length);
             }
@@ -480,7 +480,7 @@ namespace MetaphysicsIndustries.Solus.Test
         {
             var parser = new SolusParser();
             var func = new CountArgsFunction();
-            var env = new Environment();
+            var env = new SolusEnvironment();
             env.AddFunction(func);
 
 

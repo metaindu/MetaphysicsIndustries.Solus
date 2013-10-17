@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Solus
             Types.Add(typeof(Expression));
         }
 
-        protected override sealed Literal InternalCall(Environment env, Literal[] args)
+        protected override sealed Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             return new Literal(InternalCall(args[0].Value, args[1].Value));
         }

@@ -25,7 +25,7 @@ namespace MetaphysicsIndustries.Solus
         {
         }
 
-        public abstract Literal Eval(Environment env);
+        public abstract Literal Eval(SolusEnvironment env);
 
         public abstract Expression Clone();
         public static Expression Clone(Expression expr)
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public virtual Expression PreliminaryEval(Environment env)
+        public virtual Expression PreliminaryEval(SolusEnvironment env)
         {
             return this;
         }
