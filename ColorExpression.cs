@@ -78,5 +78,10 @@ namespace MetaphysicsIndustries.Solus
 
             return Color.ToString();
         }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

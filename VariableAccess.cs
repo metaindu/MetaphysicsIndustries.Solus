@@ -66,5 +66,10 @@ namespace MetaphysicsIndustries.Solus
         {
             return VariableName;
         }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

@@ -35,5 +35,10 @@ namespace MetaphysicsIndustries.Solus
         {
             return new AssignExpression(Variable, Value);
         }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -620,6 +620,15 @@ namespace MetaphysicsIndustries.Solus
                 expr.ApplyToExpressionTree(action, applyToChildrenBeforeParent);
             }
         }
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
+
+            foreach (Expression expr in this)
+            {
+                expr.AcceptVisitor(visitor);
+            }
+        }
 
         public override Expression PreliminaryEval(SolusEnvironment env)
         {

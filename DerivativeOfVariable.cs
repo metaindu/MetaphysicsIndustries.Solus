@@ -64,5 +64,10 @@ namespace MetaphysicsIndustries.Solus
         {
             throw new NotImplementedException();
         }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

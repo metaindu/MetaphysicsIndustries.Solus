@@ -21,5 +21,10 @@ namespace MetaphysicsIndustries.Solus
         {
             return new RandomExpression();
         }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

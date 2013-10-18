@@ -158,6 +158,16 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
+
+            foreach (Expression expr in Arguments)
+            {
+                expr.AcceptVisitor(visitor);
+            }
+        }
+
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
             List<Expression> args = new List<Expression>(Arguments.Count);

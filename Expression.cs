@@ -58,6 +58,31 @@ namespace MetaphysicsIndustries.Solus
         //public abstract Expression PreliminaryEval(VariableTable env);
         //public abstract GetDerivative(Variable
 
+        public abstract void AcceptVisitor(IExpressionVisitor visitor);
+
+        public void AcceptVisitor(
+            Action<Literal> literalVisitor = null,
+            Action<FunctionCall> funcVisitor = null,
+            Action<VariableAccess> varVisitor = null,
+            Action<DerivativeOfVariable> dvarVisitor = null)
+        {
+            if (literalVisitor == null) literalVisitor = DelegateExpressionVisitor.DoNothing<Literal>;
+            if (funcVisitor == null) funcVisitor = DelegateExpressionVisitor.DoNothing<FunctionCall>;
+            if (varVisitor == null) varVisitor = DelegateExpressionVisitor.DoNothing<VariableAccess>;
+            if (dvarVisitor == null) dvarVisitor = DelegateExpressionVisitor.DoNothing<DerivativeOfVariable>;
+
+            var visitor = new DelegateExpressionVisitor {
+                LiteralVisitor = literalVisitor,
+                FuncVisitor = funcVisitor,
+                VarVisitor = varVisitor,
+                DvarVisitor = dvarVisitor,
+            };
+
+            AcceptVisitor(visitor);
+        }
+
+
+
         protected virtual void InternalApplyToExpressionTree(SolusAction action, bool applyToChildrenBeforeParent)
         {
         }

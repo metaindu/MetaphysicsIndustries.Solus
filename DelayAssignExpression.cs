@@ -54,5 +54,15 @@ namespace MetaphysicsIndustries.Solus
                 Expression.ApplyToExpressionTree(action, applyToChildrenBeforeParent);
             }
         }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
+
+            if (Expression != null)
+            {
+                Expression.AcceptVisitor(visitor);
+            }
+        }
     }
 }
