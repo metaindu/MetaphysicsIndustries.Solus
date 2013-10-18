@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Solus
             get { return "!"; }
         }
 
-        public override string ToString(ExpressionCollection arguments)
+        public override string ToString(List<Expression> arguments)
         {
             //treat as post-fix unary operator?
 

@@ -23,7 +23,7 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(-args[0].Value);
         }
 
-        public override string ToString(ExpressionCollection arguments)
+        public override string ToString(List<Expression> arguments)
         {
             Expression arg = arguments[0];
 

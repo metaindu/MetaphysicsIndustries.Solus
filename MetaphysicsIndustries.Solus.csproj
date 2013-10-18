@@ -76,7 +76,6 @@
     <Compile Include="EqualComparisonOperation.cs" />
     <Compile Include="ExponentOperation.cs" />
     <Compile Include="Expression.cs" />
-    <Compile Include="ExpressionCollection.cs" />
     <Compile Include="ExpressionTransformer.cs" />
     <Compile Include="FactorialFunction.cs" />
     <Compile Include="FeedbackMacro.cs" />

@@ -142,7 +142,7 @@ namespace MetaphysicsIndustries.Solus
 		private  List<Type> _internaltypes = new List<Type>();
 		private  string     _name;
 
-        public virtual string ToString(ExpressionCollection arguments)
+        public virtual string ToString(List<Expression> arguments)
         {
             Expression[] exprs = arguments.ToArray();
 

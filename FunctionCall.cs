@@ -45,7 +45,6 @@ namespace MetaphysicsIndustries.Solus
         public override void Dispose()
         {
             _arguments.Clear();
-            _arguments.Dispose();
             _arguments = null;
             _function = null;
         }
@@ -103,7 +102,7 @@ namespace MetaphysicsIndustries.Solus
             return Function.Call(env, Arguments.ToArray());
         }
 
-        public virtual ExpressionCollection Arguments
+        public virtual List<Expression> Arguments
         {
             get
             {
@@ -148,7 +147,7 @@ namespace MetaphysicsIndustries.Solus
         }
 
         private Function _function;
-        private ExpressionCollection _arguments = new ExpressionCollection();
+        private List<Expression> _arguments = new List<Expression>();
 
         protected override void InternalApplyToExpressionTree(SolusAction action, bool applyToChildrenBeforeParent)
         {
