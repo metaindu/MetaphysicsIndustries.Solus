@@ -24,7 +24,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
     {
-        public Set<string> GatherVariables(Expression expr)
+        public static Set<string> GatherVariables(Expression expr)
         {
             var names = new Set<string>();
 
