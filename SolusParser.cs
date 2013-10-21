@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus
             { BitwiseOrOperation.Value, 80 },
         };
 
-        Expression GetExpressionFromExpr(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromExpr(Span span, SolusEnvironment env)
         {
             var subexprs = new List<Expression>();
             var operators = new List<Operation>();
@@ -163,14 +163,14 @@ namespace MetaphysicsIndustries.Solus
             return subexprs[0];
         }
 
-        Expression GetExpressionFromSubexpr(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromSubexpr(Span span, SolusEnvironment env)
         {
             var sub = span.Subspans[0];
 
             return GetExpressionFromSubexprPart(sub, env);
         }
 
-        Expression GetExpressionFromSubexprPart(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromSubexprPart(Span span, SolusEnvironment env)
         {
             var defref = span.DefRef;
             if (defref == _grammar.def_paren)
@@ -201,7 +201,7 @@ namespace MetaphysicsIndustries.Solus
             throw new NotImplementedException();
         }
 
-        Operation GetOperationFromBinop(Span span)
+        public Operation GetOperationFromBinop(Span span)
         {
             if (span.Value == "+")
             {
@@ -239,7 +239,7 @@ namespace MetaphysicsIndustries.Solus
             throw new InvalidOperationException();
         }
 
-        Expression GetFunctionCallFromFunctioncall(Span span, SolusEnvironment env)
+        public Expression GetFunctionCallFromFunctioncall(Span span, SolusEnvironment env)
         {
             var name = span.Subspans[0].Value;
 
@@ -264,7 +264,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        Literal GetLiteralFromNumber(Span span)
+        public Literal GetLiteralFromNumber(Span span)
         {
             // thoroughly inexact, not conformant to standards, but will suffice for now.
 
@@ -289,7 +289,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        Literal GetLiteralFromFloatNumber(string value)
+        public Literal GetLiteralFromFloatNumber(string value)
         {
             var errors = new List<Error>();
             var spans = _numberSpanner.Process(value, errors);
@@ -394,12 +394,12 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(fvalue);
         }
 
-        Expression GetStringFromString(Span span)
+        public Expression GetStringFromString(Span span)
         {
             throw new NotImplementedException();
         }
 
-        Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)
         {
             Expression arg = GetExpressionFromSubexprPart(span.Subspans[1], env);
 
@@ -411,7 +411,7 @@ namespace MetaphysicsIndustries.Solus
             return arg;
         }
 
-        VariableAccess GetVariableAccessFromVarref(Span span, SolusEnvironment env)
+        public VariableAccess GetVariableAccessFromVarref(Span span, SolusEnvironment env)
         {
             string varname = span.Subspans[0].Value;
 
