@@ -24,13 +24,13 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
     {
-        public static Set<string> GatherVariables(Expression expr)
+        public static string[] GatherVariables(Expression expr)
         {
             var names = new Set<string>();
 
             expr.AcceptVisitor(varVisitor: (x)=> names.Add(x.VariableName));
 
-            return names;
+            return names.ToArray();
         }
     }
 }
