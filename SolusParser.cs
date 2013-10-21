@@ -391,6 +391,11 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
+            if (isNegative)
+            {
+                fvalue = -fvalue;
+            }
+
             return new Literal(fvalue);
         }
 
