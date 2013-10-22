@@ -8,12 +8,17 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SolusParser
     {
-        SolusGrammar _grammar = new SolusGrammar();
-        Parser _parser;
-        Spanner _numberSpanner;
+        protected SolusGrammar _grammar;
+        protected Parser _parser;
+        protected Spanner _numberSpanner;
 
         public SolusParser()
+            : this (new SolusGrammar())
         {
+        }
+        protected SolusParser(SolusGrammar grammar)
+        {
+            _grammar = grammar;
             _parser = new Parser(_grammar.def_expr);
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
         }
