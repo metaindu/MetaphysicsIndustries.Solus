@@ -30,9 +30,9 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(value);
         }
 
-        public override float IdentityValue
+        public override bool HasIdentityValue
         {
-            get { return 0; }
+            get { return false; }
         }
 
         public override bool Culls
