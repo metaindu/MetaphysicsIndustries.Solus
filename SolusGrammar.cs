@@ -5,6 +5,8 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SolusGrammar : Grammar
     {
+        public static readonly SolusGrammar Instance = new SolusGrammar();
+
         public Definition def_expr = new Definition("expr");
         public Definition def_function_002D_call = new Definition("function-call");
         public Definition def_unary_002D_op = new Definition("unary-op");
