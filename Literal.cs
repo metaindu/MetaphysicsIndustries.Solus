@@ -47,11 +47,11 @@ namespace MetaphysicsIndustries.Solus
 
         public override string ToString()
         {
-            if (Value == Math.E)
+            if (Math.Abs(Value - (float)Math.E) < 1e-6)
             {
                 return "e";
             }
-            else if (Value == Math.PI)
+            else if (Math.Abs(Value - (float)Math.PI) < 1e-6)
             {
                 return "π";
             }
