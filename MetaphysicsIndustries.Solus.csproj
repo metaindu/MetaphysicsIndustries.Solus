@@ -140,6 +140,7 @@
     <Compile Include="SolusGrammar.cs" />
     <Compile Include="SolusEnvironment.cs" />
     <Compile Include="IExpressionVisitor.cs" />
+    <Compile Include="SingleHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
