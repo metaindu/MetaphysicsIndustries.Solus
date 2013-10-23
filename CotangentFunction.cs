@@ -34,5 +34,12 @@ namespace MetaphysicsIndustries.Solus
             return new Literal((float)(1 / Math.Tan(args[0].Eval(env).Value)));
         }
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "cot";
+            }
+        }
     }
 }

@@ -34,5 +34,12 @@ namespace MetaphysicsIndustries.Solus
             return new Literal((float)Math.Floor(args[0].Eval(env).Value));
 		}
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "floor";
+            }
+        }
     }
 }

@@ -33,5 +33,13 @@ namespace MetaphysicsIndustries.Solus
         {
             return new Literal((float)Math.Ceiling(args[0].Eval(env).Value));
         }
+
+        public override string DisplayName
+        {
+            get
+            {
+                return "ceil";
+            }
+        }
     }
 }
