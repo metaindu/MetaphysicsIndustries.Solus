@@ -24,7 +24,7 @@ using MetaphysicsIndustries.Collections;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public abstract partial class Function : IDisposable
+    public abstract partial class Function
 	{
         protected Function()
             : this(string.Empty)
@@ -35,11 +35,6 @@ namespace MetaphysicsIndustries.Solus
         {
             _name = name;
         }
-
-		public virtual void Dispose()
-		{
-			
-		}
 
 		public virtual Literal Call(SolusEnvironment env, params Expression[] args)
         {
