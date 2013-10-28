@@ -41,6 +41,8 @@ namespace MetaphysicsIndustries.Solus
 
         LogicalAnd = 82,
         LogicalOr = 80,
+
+        Assignment = 20,
     }
 
     //we don't think about operator precedence the way c++ and c# 

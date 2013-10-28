@@ -52,7 +52,6 @@
     <Compile Include="ArcsineFunction.cs" />
     <Compile Include="Arctangent2Function.cs" />
     <Compile Include="ArctangentFunction.cs" />
-    <Compile Include="AssignExpression.cs" />
     <Compile Include="AssociativeCommutativeOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
     <Compile Include="BitwiseAndOperation.cs" />
@@ -65,7 +64,6 @@
     <Compile Include="CosecantFunction.cs" />
     <Compile Include="CosineFunction.cs" />
     <Compile Include="CotangentFunction.cs" />
-    <Compile Include="DelayAssignExpression.cs" />
     <Compile Include="DerivativeOfVariable.cs" />
     <Compile Include="DerivativeTransformer.cs" />
     <Compile Include="DeriveMacro.cs" />

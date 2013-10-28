@@ -9,7 +9,6 @@ namespace MetaphysicsIndustries.Solus
         void Visit(VariableAccess var);
         void Visit(DerivativeOfVariable dvar);
 
-        void Visit(DelayAssignExpression dassign);
         void Visit(SolusMatrix matrix);
         void Visit(SolusVector vector);
     }
@@ -22,7 +21,6 @@ namespace MetaphysicsIndustries.Solus
         public Action<FunctionCall> FuncVisitor = DoNothing<FunctionCall>;
         public Action<VariableAccess> VarVisitor = DoNothing<VariableAccess>;
         public Action<DerivativeOfVariable> DvarVisitor = DoNothing<DerivativeOfVariable>;
-        public Action<DelayAssignExpression> DassignVisitor = DoNothing<DelayAssignExpression>;
         public Action<SolusMatrix> MatrixVisitor = DoNothing<SolusMatrix>;
         public Action<SolusVector> VectorVisitor = DoNothing<SolusVector>;
 
@@ -46,10 +44,6 @@ namespace MetaphysicsIndustries.Solus
             DvarVisitor(dvar);
         }
 
-        public void Visit(DelayAssignExpression dassign)
-        {
-            DassignVisitor(dassign);
-        }
         public void Visit(SolusMatrix matrix)
         {
             MatrixVisitor(matrix);
