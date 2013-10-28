@@ -25,5 +25,13 @@ namespace MetaphysicsIndustries.Solus
                 return "abs";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The absolute value function\n  abs(x)\n\nReturns the absolute value of x, x for (x >= 0) and -x for (x < 0).";
+            }
+        }
     }
 }

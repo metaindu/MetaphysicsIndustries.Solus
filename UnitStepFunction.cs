@@ -32,5 +32,13 @@ namespace MetaphysicsIndustries.Solus
                 return "unitstep";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "unit step function";
+            }
+        }
     }
 }

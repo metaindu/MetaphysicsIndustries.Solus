@@ -19,5 +19,13 @@ namespace MetaphysicsIndustries.Solus
         {
             return new FunctionCall(ExponentOperation.Value, args.First(), new Literal(0.5f));
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "square root";
+            }
+        }
     }
 }

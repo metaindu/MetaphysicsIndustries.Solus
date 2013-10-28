@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
+using MetaphysicsIndustries.Giza;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -150,6 +151,11 @@ namespace MetaphysicsIndustries.Solus
             where T : Function
         {
             return this as T;
+        }
+
+        public virtual string DocString
+        {
+            get { return string.Empty; }
         }
     }
 }

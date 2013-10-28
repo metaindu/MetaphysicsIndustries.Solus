@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "csc";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The cosecant function\n  csc(x)\n\nReturns the cosecant of x, which is equal to 1 / sin(x).";
+            }
+        }
     }
 }

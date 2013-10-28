@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "cos";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The cosine function\n  cos(x)\n\nReturns the cosine of x.";
+            }
+        }
     }
 }

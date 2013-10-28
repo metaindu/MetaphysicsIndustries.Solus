@@ -25,5 +25,13 @@ namespace MetaphysicsIndustries.Solus
                 return "ln";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The natural logarithm function";
+            }
+        }
     }
 }

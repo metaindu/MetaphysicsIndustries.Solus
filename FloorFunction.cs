@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "floor";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The floor function\n  floor(x)\n\nReturns the highest integer that is less than or equal to x.";
+            }
+        }
     }
 }

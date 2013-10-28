@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "ceil";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The ceiling function\n  ceil(x)\n\nReturns the lowest integer that is greater than or equal to x.\n";
+            }
+        }
     }
 }

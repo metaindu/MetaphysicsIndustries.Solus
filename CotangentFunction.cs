@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "cot";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The cotangent function\n  cot(x)\n\nReturns the cotangent of x, which is equal to 1 / tan(x).";
+            }
+        }
     }
 }

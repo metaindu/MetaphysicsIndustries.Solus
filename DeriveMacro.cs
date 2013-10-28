@@ -23,5 +23,13 @@ namespace MetaphysicsIndustries.Solus
 
             return derive.Transform(expr, new VariableTransformArgs(v));
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The derive operator\n  derive(f(x), x)\n\nReturns the derivative of f(x) with respect to x.";
+            }
+        }
     }
 }

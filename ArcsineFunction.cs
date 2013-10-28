@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "asin";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arcsine function\n  asin(x)\n\nReturns the arcsine of x. That is, if sin(y) = x, then asin(x) = y.";
+            }
+        }
     }
 }

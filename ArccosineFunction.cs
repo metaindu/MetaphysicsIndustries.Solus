@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "acos";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arccosine function\n  acos(x)\n\nReturns the arccosine of x. That is, if cos(y) = x, then acos(x) = y.";
+            }
+        }
     }
 }

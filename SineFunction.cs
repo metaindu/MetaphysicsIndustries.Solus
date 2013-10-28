@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "sin";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The sine function\n  sin(x)\n\nReturns the sine of x.";
+            }
+        }
     }
 }

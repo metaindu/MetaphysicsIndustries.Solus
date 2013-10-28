@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "atan";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arctangent function\n  atan(x)\n\nReturns the arctangent of x. That is, if tan(y) = x, then atan(x) = y.";
+            }
+        }
     }
 }

@@ -24,5 +24,10 @@ namespace MetaphysicsIndustries.Solus
 
             return InternalCall(args, env);
         }
+
+        public virtual string DocString
+        {
+            get { return string.Empty; }
+        }
     }
 }

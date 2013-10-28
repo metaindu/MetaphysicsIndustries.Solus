@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "acot";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arccotangent function\n  acot(x)\n\nReturns the arccotangent of x. That is, if cot(y) = x, then acot(x) = y.";
+            }
+        }
     }
 }

@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "acsc";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arccosecant function\n  acsc(x)\n\nReturns the arccosecant of x. That is, if csc(y) = x, then acsc(x) = y.";
+            }
+        }
     }
 }

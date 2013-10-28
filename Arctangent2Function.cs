@@ -25,5 +25,13 @@ namespace MetaphysicsIndustries.Solus
                 return "atan2";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The atan2 function\n  atan(y, x)\n\nReturns the arctangent of y/x.";
+            }
+        }
     }
 }

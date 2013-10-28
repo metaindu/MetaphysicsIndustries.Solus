@@ -41,5 +41,13 @@ namespace MetaphysicsIndustries.Solus
                 return "asec";
             }
         }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arcsecant function\n  asec(x)\n\nReturns the arcsecant of x. That is, if sec(y) = x, then asec(x) = y.";
+            }
+        }
     }
 }
