@@ -73,5 +73,27 @@ namespace MetaphysicsIndustries.Solus
         {
             Macros.Add(macro.Name, macro);
         }
+
+        public SolusEnvironment CreateChildEnvironment()
+        {
+            SolusEnvironment env2 = new SolusEnvironment(false);
+
+            foreach (string name in this.Variables.Keys)
+            {
+                env2.Variables[name] = this.Variables[name];
+            }
+
+            foreach (var func in this.Functions.Values)
+            {
+                env2.AddFunction(func);
+            }
+
+            foreach (var macro in this.Macros.Values)
+            {
+                env2.AddMacro(macro);
+            }
+
+            return env2;
+        }
     }
 }
