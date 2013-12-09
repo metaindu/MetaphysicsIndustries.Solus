@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus
 
             var errors = new List<Error>();
 
-            var spans = _parser.Parse(input, errors);
+            var spans = _parser.Parse(input.ToCharacterSource(), errors);
 
             if (errors.ContainsNonWarnings())
             {
@@ -297,7 +297,7 @@ namespace MetaphysicsIndustries.Solus
         public Literal GetLiteralFromFloatNumber(string value)
         {
             var errors = new List<Error>();
-            var spans = _numberSpanner.Process(value, errors);
+            var spans = _numberSpanner.Process(value.ToCharacterSource(), errors);
 
             if (errors.ContainsNonWarnings())
             {
