@@ -157,5 +157,10 @@ namespace MetaphysicsIndustries.Solus
         {
             get { return string.Empty; }
         }
+
+        public virtual IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

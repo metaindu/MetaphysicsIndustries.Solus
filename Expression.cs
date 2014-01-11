@@ -137,5 +137,10 @@ namespace MetaphysicsIndustries.Solus
 
             return expr.ToString();
         }
+
+        public virtual IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

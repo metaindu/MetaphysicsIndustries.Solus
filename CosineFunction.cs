@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -48,6 +49,14 @@ namespace MetaphysicsIndustries.Solus
             {
                 return "The cosine function\n  cos(x)\n\nReturns the cosine of x.";
             }
+        }
+
+        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
+        {
+            List<Instruction> instructions = new List<Instruction>();
+            instructions.AddRange(arguments[0].ConvertToInstructions(varmap));
+            instructions.Add(Instruction.Call(typeof(System.Math).GetMethod("Cosine", new Type[] { typeof(float) })));
+            return instructions;
         }
     }
 }

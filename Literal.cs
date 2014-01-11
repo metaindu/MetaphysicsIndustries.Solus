@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -97,6 +98,11 @@ namespace MetaphysicsIndustries.Solus
         public override void AcceptVisitor(IExpressionVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
+        {
+            return new [] { Instruction.LoadConstant(Value) };
         }
     }
 }

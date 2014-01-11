@@ -205,5 +205,11 @@ namespace MetaphysicsIndustries.Solus
                 return "[unknown function](" + string.Join(", ", strs) + ")";
             }
         }
+
+        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
+        {
+            return Function.ConvertToInstructions(varmap, Arguments);
+
+        }
     }
 }

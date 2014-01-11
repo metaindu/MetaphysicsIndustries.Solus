@@ -40,5 +40,19 @@ namespace MetaphysicsIndustries.Solus
                 return "unit step function";
             }
         }
+
+        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+
+            instructions.AddRange(arguments[0].ConvertToInstructions(varmap));
+
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareLessThan());
+            instructions.Add(Instruction.LoadConstant(1));
+            instructions.Add(Instruction.CompareLessThan());
+
+            return instructions;
+        }
     }
 }
