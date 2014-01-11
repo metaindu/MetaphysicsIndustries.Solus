@@ -19,6 +19,23 @@ namespace MetaphysicsIndustries.Solus
                 return _dictionary[name];
             }
         }
+
+        public string[] GetVariableNamesInIndexOrder()
+        {
+            var names = new string[_dictionary.Count];
+
+            foreach (var kvp in _dictionary)
+            {
+                names[kvp.Value] = kvp.Key;
+            }
+
+            return names;
+        }
+
+        public void Clear()
+        {
+            _dictionary.Clear();
+        }
     }
 }
 
