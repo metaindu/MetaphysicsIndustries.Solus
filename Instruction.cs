@@ -144,6 +144,8 @@ namespace MetaphysicsIndustries.Solus
 
         public static Instruction Call(MethodInfo mi)
         {
+            if (mi == null) throw new ArgumentNullException("mi");
+
             return new Instruction {
                 ArgType = ArgumentType.Method,
                 MethodArg = mi,
@@ -152,6 +154,8 @@ namespace MetaphysicsIndustries.Solus
         }
         public static Instruction CallVirtual(MethodInfo mi)
         {
+            if (mi == null) throw new ArgumentNullException("mi");
+
             return new Instruction {
                 ArgType = ArgumentType.Method,
                 MethodArg = mi,
