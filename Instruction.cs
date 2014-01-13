@@ -239,6 +239,15 @@ namespace MetaphysicsIndustries.Solus
                 OpCode = OpCodes.Stloc
             };
         }
+
+        public static Instruction LoadString(string value)
+        {
+            return new Instruction {
+                ArgType = ArgumentType.String,
+                StringArg = value,
+                OpCode = OpCodes.Ldstr
+            };
+        }
     }
 }
 
