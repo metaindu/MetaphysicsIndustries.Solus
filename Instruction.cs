@@ -16,6 +16,46 @@ namespace MetaphysicsIndustries.Solus
         public float FloatArg;
         public double DoubleArg;
         public MethodInfo MethodArg;
+        public string StringArg;
+
+        public override string ToString()
+        {
+            try
+            {
+                string arg = "";
+                switch (ArgType)
+                {
+                case ArgumentType.I1:
+                case ArgumentType.I2:
+                case ArgumentType.I4:
+                case ArgumentType.I8: arg = string.Format(" {0}", IntArg); break;
+                case ArgumentType.UI1:
+                case ArgumentType.UI2: arg = string.Format(" {0}", UIntArg); break;
+                case ArgumentType.R4: arg = string.Format(" {0}", FloatArg); break;
+                case ArgumentType.R8: arg = string.Format(" {0}", DoubleArg); break;
+                case ArgumentType.Method:
+                    arg = string.Format(" {0}.{1}",
+                        (MethodArg != null ? MethodArg.DeclaringType.Name : "(null)"),
+                        (MethodArg != null ? MethodArg.Name : "(null)"));
+                    break;
+                case ArgumentType.String:
+                    arg = string.Format(" \"{0}\"",
+                        StringArg.
+                            Replace("\\", "\\\\").
+                            Replace("\r", "\\r").
+                            Replace("\n", "\\n").
+                            Replace("\t", "\\t").
+                            Replace("\"", "\\\""));
+                    break;
+                }
+
+                return string.Format("{0} {1}", OpCode.Name, arg);
+            }
+            catch (Exception e)
+            {
+                return string.Format("{0} {1}", OpCode.Name, ArgType.ToString());
+            }
+        }
 
         public void Emit(ILGenerator gen)
         {
