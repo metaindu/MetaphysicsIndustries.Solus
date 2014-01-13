@@ -214,9 +214,10 @@ namespace MetaphysicsIndustries.Solus
                 n++;
             }
 
-            var instructionOffsets = new List<int>();
+            var shutdown = new List<Instruction>();
+            shutdown.Add(Instruction.Return());
 
-            var sb = new StringBuilder();
+            var instructionOffsets = new List<int>();
 
             Logger.Log.Clear();
 
@@ -231,7 +232,13 @@ namespace MetaphysicsIndustries.Solus
             {
                 Logger.WriteLine("[{2}] IL_{0:X4} {1}", gen.ILOffset, instruction.ToString(), instructionOffsets.Count);
                 instructionOffsets.Add(gen.ILOffset);
-//                var s = instruction.ToString();
+                instruction.Emit(gen);
+            }
+
+            foreach (var instruction in shutdown)
+            {
+                Logger.WriteLine("[{2}] IL_{0:X4} {1}", gen.ILOffset, instruction.ToString(), instructionOffsets.Count);
+                instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
             }
 
