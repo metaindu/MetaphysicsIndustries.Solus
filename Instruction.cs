@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public static Instruction LoadArgument(byte argNumber)
+        public static Instruction LoadArgument(ushort argNumber)
         {
             switch (argNumber)
             {
