@@ -288,6 +288,11 @@ namespace MetaphysicsIndustries.Solus
                 OpCode = OpCodes.Ldstr
             };
         }
+
+        public static Instruction ConvertR4()
+        {
+            return new Instruction { OpCode = OpCodes.Conv_R4 };
+        }
     }
 }
 
