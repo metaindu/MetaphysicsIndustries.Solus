@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public struct Instruction
     {
-        public enum ArgumentType { None, I1, I2, I4, I8, UI1, UI2, R4, R8, Method };
+        public enum ArgumentType { None, I1, I2, I4, I8, UI1, UI2, R4, R8, Method, String };
 
         public ArgumentType ArgType;
         public OpCode OpCode;
@@ -50,6 +50,9 @@ namespace MetaphysicsIndustries.Solus
                 break;
             case ArgumentType.Method:
                 gen.Emit(OpCode, MethodArg);
+                break;
+            case ArgumentType.String:
+                gen.Emit(OpCode, StringArg);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
