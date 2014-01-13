@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus
         {
             List<Instruction> instructions = new List<Instruction>();
             instructions.AddRange(arguments[0].ConvertToInstructions(varmap));
-            instructions.Add(Instruction.Call(typeof(System.Math).GetMethod("Cosine", new Type[] { typeof(float) })));
+            instructions.Add(Instruction.Call(typeof(System.Math).GetMethod("Cos", new Type[] { typeof(float) })));
             return instructions;
         }
     }
