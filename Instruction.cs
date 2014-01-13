@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public struct Instruction
     {
-        public enum ArgumentType { None, I1, I2, I4, I8, UI1, R4, R8, Method };
+        public enum ArgumentType { None, I1, I2, I4, I8, UI1, UI2, R4, R8, Method };
 
         public ArgumentType ArgType;
         public OpCode OpCode;
@@ -39,6 +39,9 @@ namespace MetaphysicsIndustries.Solus
             case ArgumentType.UI1:
                 gen.Emit(OpCode, (byte)UIntArg);
                 break;
+            case ArgumentType.UI2:
+                gen.Emit(OpCode, (ushort)UIntArg);
+                break;
             case ArgumentType.R4:
                 gen.Emit(OpCode, FloatArg);
                 break;
@@ -61,13 +64,23 @@ namespace MetaphysicsIndustries.Solus
             case 1: return new Instruction { OpCode = OpCodes.Ldarg_1 };
             case 2: return new Instruction { OpCode = OpCodes.Ldarg_2 };
             case 3: return new Instruction { OpCode = OpCodes.Ldarg_3 };
-            default: 
+            }
+
+            if (argNumber < 256)
+            {
                 return new Instruction {
                     ArgType = ArgumentType.UI1,
-                    IntArg = argNumber,
+                    UIntArg = argNumber,
                     OpCode = OpCodes.Ldarg_S
                 };
             }
+
+            return new Instruction {
+                ArgType = ArgumentType.UI2,
+                UIntArg = argNumber,
+                OpCode = OpCodes.Ldarg
+            };
+
         }
 
         public static Instruction LoadConstant(long value)
@@ -166,6 +179,58 @@ namespace MetaphysicsIndustries.Solus
         public static Instruction CompareLessThan()
         {
             return new Instruction { OpCode = OpCodes.Clt };
+        }
+
+        public static Instruction LoadLocalVariable(ushort varNumber)
+        {
+            switch (varNumber)
+            {
+            case 0: return new Instruction { OpCode = OpCodes.Ldloc_0 };
+            case 1: return new Instruction { OpCode = OpCodes.Ldloc_1 };
+            case 2: return new Instruction { OpCode = OpCodes.Ldloc_2 };
+            case 3: return new Instruction { OpCode = OpCodes.Ldloc_3 };
+            }
+
+            if (varNumber < 256)
+            {
+                return new Instruction {
+                    ArgType = ArgumentType.UI1,
+                    UIntArg = varNumber,
+                OpCode = OpCodes.Ldloc_S
+                };
+            }
+
+            return new Instruction {
+                ArgType = ArgumentType.UI2,
+                UIntArg = varNumber,
+                OpCode = OpCodes.Ldloc
+            };
+        }
+
+        public static Instruction StoreLocalVariable(ushort varNumber)
+        {
+            switch (varNumber)
+            {
+            case 0: return new Instruction { OpCode = OpCodes.Stloc_0 };
+            case 1: return new Instruction { OpCode = OpCodes.Stloc_1 };
+            case 2: return new Instruction { OpCode = OpCodes.Stloc_2 };
+            case 3: return new Instruction { OpCode = OpCodes.Stloc_3 };
+            }
+
+            if (varNumber < 256)
+            {
+                return new Instruction {
+                    ArgType = ArgumentType.UI1,
+                    UIntArg = varNumber,
+                    OpCode = OpCodes.Stloc_S
+                };
+            }
+
+            return new Instruction {
+                ArgType = ArgumentType.UI2,
+                UIntArg = varNumber,
+                OpCode = OpCodes.Stloc
+            };
         }
     }
 }
