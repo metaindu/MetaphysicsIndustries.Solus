@@ -293,6 +293,11 @@ namespace MetaphysicsIndustries.Solus
         {
             return new Instruction { OpCode = OpCodes.Conv_R4 };
         }
+
+        public static Instruction Return()
+        {
+            return new Instruction { OpCode = OpCodes.Ret };
+        }
     }
 }
 
