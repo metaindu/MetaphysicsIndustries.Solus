@@ -74,7 +74,7 @@ namespace MetaphysicsIndustries.Solus
 
         public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
         {
-            return new [] { Instruction.LoadArgument(varmap[VariableName]) };
+            return new [] { Instruction.LoadLocalVariable(varmap[VariableName]) };
         }
     }
 }

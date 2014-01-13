@@ -16,6 +16,8 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
+using System.Reflection.Emit;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -141,6 +143,48 @@ namespace MetaphysicsIndustries.Solus
         public virtual IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
         {
             throw new NotImplementedException();
+        }
+
+        public void Compile()
+        {
+            var varmap = new VariableToArgumentNumberMapper();
+            var instructions = ConvertToInstructions(varmap);
+            var args = varmap.GetVariableNamesInIndexOrder();
+
+            DynamicMethod method =
+                new DynamicMethod(
+                    name: this.ToString(),
+                    returnType: typeof(float),
+                    parameterTypes: new [] { typeof(float) });
+
+            var gen = method.GetILGenerator();
+
+            var env_Variables = typeof(SolusEnvironment).GetField("Variables");
+            var get_Item = typeof(Dictionary<string, Expression>).GetProperty("Item").GetGetMethod();
+            var expr_eval = typeof(Expression).GetMethod("Eval", new Type[] { typeof(SolusEnvironment) });
+            var get_Value = typeof(Literal).GetProperty("Value").GetGetMethod();
+
+            ushort n = 0;
+            foreach (var arg in args)
+            {
+                gen.Emit(OpCodes.Ldarg_0);
+                gen.Emit(OpCodes.Ldfld, env_Variables);
+                gen.Emit(OpCodes.Ldstr, arg);
+                gen.Emit(OpCodes.Call, get_Item);
+                gen.Emit(OpCodes.Ldarg_0);
+                gen.Emit(OpCodes.Callvirt, expr_eval);
+                gen.Emit(OpCodes.Callvirt, get_Value);
+                Instruction.StoreLocalVariable(n).Emit(gen);
+                n++;
+            }
+
+            foreach (var instruction in instructions)
+            {
+                instruction.Emit(gen);
+            }
+
+            var del = method.CreateDelegate(typeof(Func<SolusEnvironment, float>));
+
         }
     }
 }
