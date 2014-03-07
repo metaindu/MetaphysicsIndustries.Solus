@@ -11,12 +11,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Solus
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Solus.Test", "MetaphysicsIndustries.Solus.Test\MetaphysicsIndustries.Solus.Test.csproj", "{AF9AC998-5856-4745-AF8C-D13CC1631D2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solus", "solus\solus.csproj", "{00916C31-5B9C-41F8-938F-DE20063CAD7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{221A3FBA-E14C-4F05-A099-42508116E910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{221A3FBA-E14C-4F05-A099-42508116E910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{221A3FBA-E14C-4F05-A099-42508116E910}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +45,6 @@ Global
 		{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj
+		StartupItem = solus\solus.csproj
 	EndGlobalSection
 EndGlobal
