@@ -9,7 +9,6 @@ namespace solus
     class MainClass
     {
         static OptionSet _options;
-
         static bool showHelp = false;
         static bool showVersion = false;
         static bool verbose = false;
@@ -60,7 +59,36 @@ namespace solus
                 }
                 else
                 {
-                    Console.WriteLine("No input given.");
+                    //repl
+                    var parser = new SolusParser();
+                    var env = new SolusEnvironment();
+
+                    var line = Console.ReadLine();
+
+                    while (line != null)
+                    {
+                        try
+                        {
+                            var expr = parser.GetExpression(line, env);
+                            var result = expr.Eval(env);
+                            Console.WriteLine(result);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.Write("There was an error");
+                            if (verbose)
+                            {
+                                Console.WriteLine(":");
+                                Console.WriteLine(ex.ToString());
+                            }
+                            else
+                            {
+                                Console.WriteLine();
+                            }
+                        }
+
+                        line = Console.ReadLine();
+                    }
                 }
             }
             catch (Exception ex)
