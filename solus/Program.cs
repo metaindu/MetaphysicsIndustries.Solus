@@ -3,6 +3,7 @@ using NDesk.Options;
 using System.Reflection;
 using MetaphysicsIndustries.Solus;
 using System.Collections.Generic;
+using Mono.Terminal;
 
 namespace solus
 {
@@ -63,9 +64,10 @@ namespace solus
                     var parser = new SolusParser();
                     var env = new SolusEnvironment();
 
-                    var line = Console.ReadLine();
+                    var le = new LineEditor("solus");
+                    string line;
 
-                    while (line != null)
+                    while ((line = le.Edit(">>> ", "")) != null)
                     {
                         try
                         {
@@ -86,8 +88,6 @@ namespace solus
                                 Console.WriteLine();
                             }
                         }
-
-                        line = Console.ReadLine();
                     }
                 }
             }
