@@ -12,12 +12,10 @@
     <AssemblyName>MetaphysicsIndustries.Solus</AssemblyName>
     <SignAssembly>false</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -42,6 +40,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbsoluteValueFunction.cs" />
@@ -53,7 +52,6 @@
     <Compile Include="ArcsineFunction.cs" />
     <Compile Include="Arctangent2Function.cs" />
     <Compile Include="ArctangentFunction.cs" />
-    <Compile Include="AssignExpression.cs" />
     <Compile Include="AssociativeCommutativeOperation.cs" />
     <Compile Include="BinaryOperation.cs" />
     <Compile Include="BitwiseAndOperation.cs" />
@@ -66,9 +64,9 @@
     <Compile Include="CosecantFunction.cs" />
     <Compile Include="CosineFunction.cs" />
     <Compile Include="CotangentFunction.cs" />
-    <Compile Include="DelayAssignExpression.cs" />
     <Compile Include="DerivativeOfVariable.cs" />
     <Compile Include="DerivativeTransformer.cs" />
+    <Compile Include="DeriveMacro.cs" />
     <Compile Include="DistFunction.cs" />
     <Compile Include="DistSqFunction.cs" />
     <Compile Include="DivisionOperation.cs" />
@@ -76,13 +74,11 @@
     <Compile Include="EqualComparisonOperation.cs" />
     <Compile Include="ExponentOperation.cs" />
     <Compile Include="Expression.cs" />
-    <Compile Include="ExpressionCollection.cs" />
     <Compile Include="ExpressionTransformer.cs" />
     <Compile Include="FactorialFunction.cs" />
+    <Compile Include="FeedbackMacro.cs" />
     <Compile Include="FloorFunction.cs" />
     <Compile Include="Function.cs" />
-    <Compile Include="Function.RegisteredFunctions.cs" />
-    <Compile Include="Function.Statics.cs" />
     <Compile Include="FunctionCall.cs" />
     <Compile Include="GreaterThanComparisonOperation.cs" />
     <Compile Include="GreaterThanOrEqualComparisonOperation.cs" />
@@ -95,15 +91,19 @@
     <Compile Include="LessThanOrEqualComparisonOperation.cs" />
     <Compile Include="LogicalAndOperation.cs" />
     <Compile Include="LogicalOrOperation.cs" />
+    <Compile Include="Macro.cs" />
     <Compile Include="ModularDivision.cs" />
     <Compile Include="NegationOperation.cs" />
     <Compile Include="NotEqualComparisonOperation.cs" />
     <Compile Include="PolynomialTransformer.cs" />
+    <Compile Include="RandMacro.cs" />
     <Compile Include="RatioOfPolynomialsTransformer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="PolynomialSimplifier.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
+    <Compile Include="SqrtMacro.cs" />
+    <Compile Include="SubstMacro.cs" />
     <Compile Include="TransformArgs.cs" />
     <Compile Include="UnaryOperation.cs" />
     <Compile Include="VariableTransformArgs.cs" />
@@ -129,15 +129,20 @@
     <Compile Include="SolusEngine.Modulators.cs" />
     <Compile Include="SolusParseException.cs" />
     <Compile Include="SolusParser.cs" />
-    <Compile Include="SolusParser.Ex.cs" />
     <Compile Include="TangentFunction.cs" />
     <Compile Include="SolusTensor.cs" />
     <Compile Include="UnitStepFunction.cs" />
-    <Compile Include="Variable.cs" />
     <Compile Include="VariableAccess.cs" />
-    <Compile Include="VariableTable.cs" />
     <Compile Include="SolusVector.cs" />
     <Compile Include="SubstTransformer.cs" />
+    <Compile Include="SolusGrammar.cs" />
+    <Compile Include="SolusEnvironment.cs" />
+    <Compile Include="IExpressionVisitor.cs" />
+    <Compile Include="SingleHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExGrammar.txt" />
+    <None Include="SolusGrammar.giza" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
@@ -151,9 +156,10 @@
       <Project>{221A3FBA-E14C-4F05-A099-42508116E910}</Project>
       <Name>MetaphysicsIndustries.Utilities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SolusGrammar.txt" />
+    <ProjectReference Include="..\MetaphysicsIndustries.Giza\MetaphysicsIndustries.Giza.csproj">
+      <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
+      <Name>MetaphysicsIndustries.Giza</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -21,16 +21,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArcsineFunction : SingleArgumentFunction
 	{
-		public ArcsineFunction()
+        public static readonly ArcsineFunction Value = new ArcsineFunction();
+
+		protected ArcsineFunction()
 		{
 			this.Name = "Arcsine";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Asin(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Asin(args[0].Eval(env).Value));
 		}
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "asin";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arcsine function\n  asin(x)\n\nReturns the arcsine of x. That is, if sin(y) = x, then asin(x) = y.";
+            }
+        }
     }
 }

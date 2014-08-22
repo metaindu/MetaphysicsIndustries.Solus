@@ -1,808 +1,431 @@
-/*****************************************************************************
- *                                                                           *
- *  SolusParser.cs                                                           *
- *  13 July 2006                                                             *
- *  Written by: Richard Sartor                                               *
- *  Copyright © 2006 Metaphysics Industries, Inc.                            *
- *                                                                           *
- *  Converted from C++ to C# on 29 January 2008                              *
- *                                                                           *
- *  A rudimentary parser kludge, taken from MathPaint.                       *
- *                                                                           *
- *****************************************************************************/
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
+using MetaphysicsIndustries.Giza;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public partial class SolusParser
+    public class SolusParser
     {
+        protected SolusGrammar _grammar;
+        protected Parser _parser;
+        protected Spanner _numberSpanner;
+
         public SolusParser()
+            : this (new SolusGrammar())
         {
-            foreach (ExFunction func in _builtinFunctions)
-            {
-                AddFunction(func);
-            }
+        }
+        protected SolusParser(SolusGrammar grammar)
+        {
+            _grammar = grammar;
+            _parser = new Parser(_grammar.def_expr);
+            _numberSpanner = new Spanner(_grammar.def_float_002D_number);
         }
 
-        private Dictionary<string, ExFunction> _functions = new Dictionary<string, ExFunction>(StringComparer.CurrentCultureIgnoreCase);
-
-        public void AddFunction(ExFunction func)
+        public Expression GetExpression(string input, SolusEnvironment env=null, bool cleanup=false)
         {
-            if (_functions.ContainsKey(func.Token)) throw new ArgumentException("A function already uses that token.", "func");
+            if (env == null)
+            {
+                env = new SolusEnvironment();
+            }
 
-            _functions.Add(func.Token, func);
+            var errors = new List<Error>();
+
+            var spans = _parser.Parse(input.ToCharacterSource(), errors);
+
+            if (errors.ContainsNonWarnings())
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (spans.Length < 1)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (spans.Length > 1)
+            {
+                throw new InvalidOperationException();
+            }
+
+            var span = spans[0];
+
+            var expr = GetExpressionFromExpr(span, env);
+
+            if (cleanup)
+            {
+                var ct = new CleanUpTransformer();
+                expr = ct.CleanUp(expr);
+            }
+
+            return expr;
         }
 
-        public ExFunction? GetFunction(string token)
+        Dictionary<Function, int> _operatorPrecedence = new Dictionary<Function, int>() {
+            { AdditionOperation.Value, 120 },
+            { MultiplicationOperation.Value, 130 },
+            { DivisionOperation.Value, 130 },
+            { ModularDivision.Value, 130 },
+            { ExponentOperation.Value, 135 },
+            { BitwiseAndOperation.Value, 100 },
+            { BitwiseOrOperation.Value, 80 },
+        };
+
+        public Expression GetExpressionFromExpr(Span span, SolusEnvironment env)
         {
-            if (!_functions.ContainsKey(token)) return null;
+            var subexprs = new List<Expression>();
+            var operators = new List<Operation>();
+            var operset = new HashSet<Operation>();
 
-            return _functions[token];
-        }
-
-        public Expression Compile(string expr)
-        {
-            return Compile(expr, new VariableTable());
-        }
-
-        public Expression Compile(string expr, VariableTable varTable)
-        {
-            if (varTable == null) throw new ArgumentNullException("varTable");
-
-            Ex[] tokens;
-            tokens = Tokenize(expr);
-
-            return Compile(tokens, varTable);
-        }
-
-        public Expression Compile(Ex[] tokens, VariableTable varTable)
-        {
-            if (varTable == null) throw new ArgumentNullException("varTable");
-
-            SyntaxCheck(tokens);
-
-            tokens = Arrange(tokens);
-            Ex ex = BuildTree(tokens);
-            Expression expr = ConvertToSolusExpression(ex, varTable);
-            CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(expr);
-        }
-
-        protected void SyntaxCheck(Ex[] tokens)
-        {
-            int i;
-            for (i = 0; i < tokens.Length - 1; i++)
-            {
-                if (tokens[i].Type == NodeType.Func &&
-                    tokens[i + 1].Token != "(")
-                {
-                    throw new SolusParseException(tokens[i], "Function call \"" + tokens[i].Token + "\" must include open parenthesis");
-                }
-                //if (tokens[i + 1].Token == "(" &&
-                //    tokens[i].Type != NodeType.Func &&
-                //    tokens[i].Rank != Ranks.Containers)
-                //{
-                //    if (tokens[i].Rank == Ranks.Numbers && tokens[i].Type != NodeType.Num)
-                //    {
-                //        throw new SolusParseException(tokens[i], "Unknown function \"" + tokens[i].Token + "\"");
-                //    }
-                //    else
-                //    {
-                //        throw new SolusParseException(tokens[i], "Syntax error");
-                //    }
-                //}
-            }
-            if (tokens[i].Type == NodeType.Func)
-            {
-                throw new SolusParseException(tokens[i], "Function call \"" + tokens[i].Token + "\" must include open parenthesis");
-            }
-
-            foreach (Ex ex in tokens)
-            {
-                if (ex.Type == NodeType.Unknown)
-                {
-                    throw new SolusParseException(ex, "Unknown token type");
-                }
-                else if (ex.Type == NodeType.Func)
-                {
-                    if (!GetFunction(ex.Token).HasValue)
-                    {
-                        throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
-                    }
-                }
-
-                if (ex.Rank == Ranks.Unknown)
-                {
-                    throw new SolusParseException(ex, "Unknown token type");
-                }
-            }
-        }
-
-        protected Expression Compile(Ex[] tokens)
-        {
-            return Compile(tokens, null);
-        }
-
-        protected Expression ConvertToSolusExpression(Ex ex, VariableTable varTable)
-        {
-            Expression leftArg = null;
-            Expression rightArg = null;
-            if (ex.Left != null)
-            {
-                leftArg = ConvertToSolusExpression(ex.Left, varTable);
-            }
-            if (ex.Right != null)
-            {
-                rightArg = ConvertToSolusExpression(ex.Right, varTable);
-            }
-
-            if (ex.Type == NodeType.Add)
-            {
-                return new FunctionCall(
-                    AssociativeCommutativeOperation.Addition, 
-                    leftArg, 
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.BitAnd)
-            {
-                return new FunctionCall(
-                    BinaryOperation.BitwiseAnd,
-                    leftArg,
-                    rightArg);
-            }
-            //else if (ex.Type == NodeType.BitNot)
-            //{
-            //}
-            else if (ex.Type == NodeType.BitOr)
-            {
-                return new FunctionCall(
-                    AssociativeCommutativeOperation.BitwiseOr,
-                    leftArg,
-                    rightArg);
-            }
-            //else if (ex.Type == NodeType.BitShiftLeft)
-            //{
-            //}
-            //else if (ex.Type == NodeType.BitShiftRight)
-            //{
-            //}
-            //else if (ex.Type == NodeType.BitXor)
-            //{
-            //}
-            else if (ex.Type == NodeType.Comma)
-            {
-                return null;
-            }
-            //else if (ex.Type == NodeType.Conditional)
-            //{
-            //}
-            else if (ex.Type == NodeType.Div)
-            {
-                return new FunctionCall(
-                    BinaryOperation.Division,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.Equal)
-            {
-                return new FunctionCall(
-                    ComparisonOperation.Equal,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.Func)
-            {
-                return ConvertFunctionExpression(ex, varTable, leftArg, rightArg);
-            }
-            else if (ex.Type == NodeType.GreaterThan)
-            {
-                return new FunctionCall(
-                    ComparisonOperation.GreaterThan,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.GreaterThanOrEqual)
-            {
-                return new FunctionCall(
-                    ComparisonOperation.GreaterThanOrEqual,
-                    leftArg,
-                    rightArg);
-            }
-            //else if (ex.Type == NodeType.Index)
-            //{
-            //}
-            else if (ex.Type == NodeType.LessThan)
-            {
-                return new FunctionCall(
-                    ComparisonOperation.LessThan,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.LessThanOrEqual)
-            {
-                return new FunctionCall(
-                    ComparisonOperation.LessThanOrEqual,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.LogAnd)
-            {
-                return new FunctionCall(
-                    BinaryOperation.LogicalAnd,
-                    leftArg,
-                    rightArg);
-            }
-            //else if (ex.Type == NodeType.LogNot)
-            //{
-            //}
-            else if (ex.Type == NodeType.LogOr)
-            {
-                return new FunctionCall(
-                    BinaryOperation.LogicalOr,
-                    leftArg,
-                    rightArg);
-            }
-            //else if (ex.Type == NodeType.LogXor)
-            //{
-            //}
-            else if (ex.Type == NodeType.Mod)
-            {
-                return new FunctionCall(
-                    BinaryOperation.ModularDivision,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.Mult)
-            {
-                return new FunctionCall(
-                    AssociativeCommutativeOperation.Multiplication,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.NotEqual)
-            {
-                return new FunctionCall(
-                    ComparisonOperation.NotEqual,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.Num)
-            {
-                return new Literal(ex.NumValue);
-            }
-            else if (ex.Type == NodeType.Sub)
-            {
-                return new FunctionCall(
-                    AssociativeCommutativeOperation.Addition,
-                    leftArg,
-                    new FunctionCall(
-                        AssociativeCommutativeOperation.Multiplication,
-                        new Literal(-1),
-                        rightArg));
-            }
-            else if (ex.Type == NodeType.Var)
-            {
-                if (!varTable.ContainsKey(ex.Token))
-                {
-                    varTable.Add(new Variable(ex.Token));
-                }
-
-                return new VariableAccess(varTable[ex.Token]);
-            }
-            else if (ex.Type == NodeType.Color)
-            {
-                switch (GetColor(ex.Token))
-                {
-                    case Colors.Black: return ColorExpression.Black;
-                    case Colors.White: return ColorExpression.White;
-                    case Colors.Gray: return ColorExpression.Gray;
-                    case Colors.Red: return ColorExpression.Red;
-                    case Colors.Green: return ColorExpression.Green;
-                    case Colors.Blue: return ColorExpression.Blue;
-                    case Colors.Yellow: return ColorExpression.Yellow;
-                    case Colors.Cyan: return ColorExpression.Cyan;
-                    case Colors.Magenta: return ColorExpression.Magenta;
-                }
-            }
-            else if (ex.Type == NodeType.Exponent)
-            {
-                return new FunctionCall(
-                    BinaryOperation.Exponent,
-                    leftArg,
-                    rightArg);
-            }
-            else if (ex.Type == NodeType.Assign)
-            {
-                if (!(leftArg is VariableAccess))
-                {
-                    throw new SolusParseException(ex, "The left operand of an assignment must be a variable.");
-                }
-
-                return new AssignExpression(((VariableAccess)leftArg).Variable, rightArg.Eval(varTable));
-            }
-            else if (ex.Type == NodeType.DelayAssign)
-            {
-                if (!(leftArg is VariableAccess))
-                {
-                    throw new SolusParseException(ex, "The left operand of an assignment must be a variable.");
-                }
-
-                return new DelayAssignExpression(((VariableAccess)leftArg).Variable, rightArg);
-            }
-
-            string error = "Unknown node type: ";
-            if (ex.Type != NodeType.Unknown)
-            {
-                error += ex.Type;
-            }
-            error += " " + ex.Token;
-            throw new SolusParseException(ex, error);
-        }
-
-        public delegate Expression FunctionConverter(IEnumerable<Expression> args, VariableTable vars);
-
-        public static FunctionConverter BasicFunctionConverter(Function function)
-        {
-            return (args, vars) => { return new FunctionCall(function, args); };
-        }
-
-        private Expression ConvertFunctionExpression(Ex ex, VariableTable varTable, Expression leftArg, Expression rightArg)
-        {
-            List<Expression> args = new List<Expression>();
-
-            if (ex.Left != null)
-            {
-                if (ex.Left.Type == NodeType.Comma)
-                {
-                    ConvertCommaToArgs(ex.Left, args, varTable);
-                }
-                else
-                {
-                    args.Add(leftArg);
-                }
-            }
-
-            if (ex.Right != null)
-            {
-                if (ex.Right.Type == NodeType.Comma)
-                {
-                    ConvertCommaToArgs(ex.Right, args, varTable);
-                }
-                else
-                {
-                    args.Add(rightArg);
-                }
-            }
-
-            if (_functions.ContainsKey(ex.Token))
-            {
-                return _functions[ex.Token].Converter(args,varTable);
-            }
-            else
-            {
-                throw new SolusParseException(ex, "Unknown function \"" + ex.Token + "\"");
-            }
-        }
-
-        private static Expression ConvertSubstExpression(IEnumerable<Expression> args, VariableTable varTable)
-        {
-            SubstTransformer subst = new SubstTransformer();
-            CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(subst.Subst(args.First(), ((VariableAccess)args.ElementAt(1)).Variable, args.ElementAt(2)));
-        }
-
-        private static Expression ConvertFeedbackExpression(IEnumerable<Expression> args, VariableTable varTable)
-        {
-            Expression g = args.ElementAt(0);
-            Expression h = args.ElementAt(1);
-
-            return new FunctionCall(
-                        BinaryOperation.Division,
-                        g, 
-                        new FunctionCall(
-                            AssociativeCommutativeOperation.Addition, 
-                            new Literal(1),
-                            new FunctionCall(
-                                AssociativeCommutativeOperation.Multiplication, 
-                                g, 
-                                h)));
-        }
-
-
-
-        static Expression ConvertDeriveExpression(IEnumerable<Expression> _args, VariableTable varTable)
-        {
-            DerivativeTransformer derive = new DerivativeTransformer();
-            Expression expr = _args.First();
-            Variable v = ((VariableAccess)_args.ElementAt(1)).Variable;
-
-            return derive.Transform(expr, new VariableTransformArgs(v));
-        }
-
-        static Expression ConvertSqrtFunction(IEnumerable<Expression> _args, VariableTable varTable)
-        {
-            return new FunctionCall(BinaryOperation.Exponent, _args.First(), new Literal(0.5f));
-        }
-
-
-        protected void ConvertCommaToArgs(Ex ex, List<Expression> args, VariableTable varTable)
-        {
-            if (ex.Left != null)
-            {
-                if (ex.Left.Type == NodeType.Comma)
-                {
-                    ConvertCommaToArgs(ex.Left, args, varTable);
-                }
-                else
-                {
-                    args.Add(ConvertToSolusExpression(ex.Left, varTable));
-                }
-            }
-            else
-            {
-                Debug.WriteLine("ex.left == null in SolusParser.ConvertCommaToArgs");
-            }
-
-            if (ex.Right != null)
-            {
-                if (ex.Right.Type == NodeType.Comma)
-                {
-                    ConvertCommaToArgs(ex.Right, args, varTable);
-                }
-                else
-                {
-                    args.Add(ConvertToSolusExpression(ex.Right, varTable));
-                }
-            }
-            else
-            {
-                Debug.WriteLine("ex.right == null in SolusParser.ConvertCommaToArgs");
-            }
-        }
-
-        public Ex[] Tokenize(string expr)
-        {
-            string _expr = expr;
-
-            string[] chunks;
-            List<string> chunks2;
-            Ex[] tokens;
-            string pattern;
-
-            pattern = "\\s+";
-            pattern = 
-                "( " +
-                "(?: \\\"[^\\\"]*\\\") | " +
-                //@"(?: (?:(?<=^|[\(\[+\-*/\^,<>&|%~?:])[+-])?[0-9]*\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
-                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?[0-9]*\.[0-9]+(?:[eE][+-]?[0-9]+)?) | " +
-                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?0[xX][0-9a-fA-F]+) | " +
-                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?0[oO][0-7]+) | " +
-                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?0[bB][01]+) | " +
-                @"(?: (?:(?<=^|[\(\[+\-*/\^,]\\s*)[+-])?(?:0[dD])?[0-9]+) | " +
-                @"(?: [*/%]) | " +
-                @"(?: [+\-]) | " +
-                @"(?: [,]) | " +
-                @"(?: \&\&|\|\|) | " +
-                @"(?: [\&\|]) | " +
-                @"(?: [\^]) | " +
-                @"(?: \=\=) | " +
-                @"(?: [=]) | " +
-                @"(?: \:\=) | " +
-                //@"(?: [~%&|!<>?,]) | " +
-                @"(?: [a-zA-Z_]\w*) | " +
-                //@"(?: \<\<|\>\>|\&\&|\|\|) | " +
-                @"(?: \<\=|\>\=|\!\=|\=\=) | " +
-                @"(?: [<>]) | " +
-                @"(?: [\[\]\(\)]) | " +
-                @"\s+ )";
-
-            chunks = Regex.Split(expr, pattern, RegexOptions.Singleline | RegexOptions.IgnorePatternWhitespace);
-            chunks2 = new List<string>();
-
-            int location = 0;
-            List<int> locations = new List<int>();
-
-            foreach (string s in chunks)
-            {
-                if (s.Length > 0 && (Regex.Match(s, "\\s+$")).Length <= 0)
-                {
-                    chunks2.Add(s);
-                    locations.Add(location);
-                }
-
-                location += s.Length;
-            }
+            subexprs.Add(GetExpressionFromSubexpr(span.Subspans[0], env));
 
             int i;
-            int j;
-            j = chunks2.Count;
-            tokens = new Ex[j];
-            for (i = 0; i < j; i++)
+            for (i = 1; i < span.Subspans.Count; i += 2)
             {
-                string token = chunks2[i];
-
-                Ex ex = ExFromToken(token, locations[i]);
-                tokens[i] = ex;
-
-                //if (Ex.GetNodeType(token) == NodeType.Func &&
-                //    Ex.GetFuncType(token) == Func.Unknown)
-                //{
-                //    throw new SolusParseException(ex, "Unknown function: " + ex.Token);
-                //}
-            }
-
-            return tokens;
-        }
-
-        protected Ex[] Arrange(Ex[] intokens)
-        {
-
-
-            Queue<Ex> a;
-            Stack<Ex> b;
-            Stack<Ex> c;
-
-            a = new Queue<Ex>(intokens.Length);
-            foreach (Ex ex in intokens)
-            {
-                a.Enqueue(ex);
-            }
-
-            b = new Stack<Ex>(intokens.Length);
-            c = new Stack<Ex>(intokens.Length);
-
-            while (a.Count > 0)
-            {
-                Ex ex;
-                string cc;
-
-                ex = a.Dequeue();
-
-                if (ex.Token == ")" || ex.Token == "]" || ex.Token == "}")// || ex.Token == ":")
+                Operation op;
+                Expression arg = GetExpressionFromSubexpr(span.Subspans[i + 1], env);
+                if (span.Subspans[i].Value == "-")
                 {
-                    if (ex.Token == ")")
+                    op = AdditionOperation.Value;
+                    arg = new FunctionCall(NegationOperation.Value, arg);
+                }
+                else
+                {
+                    op = GetOperationFromBinop(span.Subspans[i]);
+                }
+                operators.Add(op);
+                subexprs.Add(arg);
+                operset.Add(op);
+            }
+
+            var sortedOperset = new List<Operation>(operset);
+            sortedOperset.Sort((x,y) => -(_operatorPrecedence[x].CompareTo(_operatorPrecedence[y])));
+
+            foreach (var op in sortedOperset)
+            {
+                var indexes = Enumerable.Range(0, operators.Count).Where(ix => operators[ix] == op).ToList();
+                var ranges = new List<Tuple<int, int>>();
+                int start = indexes[0];
+                for (i = 1; i < indexes.Count; i++)
+                {
+                    if (indexes[i] != indexes[i - 1] + 1)
                     {
-                        cc = "(";
+                        ranges.Add(new Tuple<int, int>(start, indexes[i - 1]));
+                        start = indexes[i];
                     }
-                    else if (ex.Token == "]")
+                }
+                ranges.Add(new Tuple<int, int>(start, indexes[indexes.Count-1]));
+
+                Queue<Expression> newExpressions = new Queue<Expression>();
+                foreach (var range in ranges)
+                {
+                    int first = range.Item1;
+                    int last = range.Item2;
+
+                    if (op.IsAssociative && 
+                        op.IsCommutative)
                     {
-                        cc = "[";
+                        int count = last - first + 1;
+                        var fcargs = subexprs.GetRange(first, count + 1);
+                        FunctionCall fcall = new FunctionCall(op, fcargs);
+                        newExpressions.Enqueue(fcall);
                     }
                     else
                     {
-                        cc = "}";
-                    }
-
-                    while (c.Count > 0 && c.Peek().Token != cc)
-                    {
-                        b.Push(c.Pop());
-                    }
-                    if (c.Count < 1)
-                    {
-                        if (cc == "(")
+                        var leftarg = subexprs[first];
+                        for (i = first; i <= last; i++)
                         {
-                            throw new SolusParseException(ex, "No matching left parenthesis");
+                            var rightarg = subexprs[i + 1];
+                            var fcall = new FunctionCall(op, leftarg, rightarg);
+                            leftarg = fcall;
                         }
-                        else if (cc == "[")
-                        {
-                            throw new SolusParseException(ex, "No matching left bracket");
-                        }
-                        else
-                        {
-                            throw new SolusParseException(ex, "No matching left brace");
-                        }
-                    }
-                    Ex cp;
-                    cp = c.Pop();
-                    if (cc == "[" || cc == "{")
-                    {
-                        b.Push(cp);
-                    }
-
-                    if (c.Count > 0 && c.Peek().Type == NodeType.Func)
-                    {
-                        b.Push(c.Pop());
+                        newExpressions.Enqueue(leftarg);
                     }
                 }
-                else if (ex.Rank == Ranks.Values)// == NodeType.Var || ex.Type == NodeType.Num)
+
+                int adjust = 0;
+                foreach (var range in ranges)
                 {
-                    b.Push(ex);
+                    int first = range.Item1 - adjust;
+                    int last = range.Item2 - adjust;
+
+                    int count = last - first + 1;
+
+                    operators.RemoveRange(first, count);
+                    subexprs.RemoveRange(first, count + 1);
+                    subexprs.Insert(first, newExpressions.Dequeue());
+
+                    adjust += count;
+                }
+            }
+
+            if (subexprs.Count != 1)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return subexprs[0];
+        }
+
+        public Expression GetExpressionFromSubexpr(Span span, SolusEnvironment env)
+        {
+            var sub = span.Subspans[0];
+
+            return GetExpressionFromSubexprPart(sub, env);
+        }
+
+        public Expression GetExpressionFromSubexprPart(Span span, SolusEnvironment env)
+        {
+            var defref = span.DefRef;
+            if (defref == _grammar.def_paren)
+            {
+                return GetExpressionFromExpr(span.Subspans[1], env);
+            }
+            else if (defref == _grammar.def_function_002D_call)
+            {
+                return GetFunctionCallFromFunctioncall(span, env);
+            }
+            else if (defref == _grammar.def_number)
+            {
+                return GetLiteralFromNumber(span);
+            }
+            else if (defref == _grammar.def_string)
+            {
+                return GetStringFromString(span);
+            }
+            else if (defref == _grammar.def_unary_002D_op)
+            {
+                return GetExpressionFromUnaryop(span, env);
+            }
+            else if (defref == _grammar.def_varref)
+            {
+                return GetVariableAccessFromVarref(span, env);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        public Operation GetOperationFromBinop(Span span)
+        {
+            if (span.Value == "+")
+            {
+                return AdditionOperation.Value;
+            }
+            else if (span.Value == "-")
+            {
+                throw new NotImplementedException();
+            }
+            else if (span.Value == "*")
+            {
+                return MultiplicationOperation.Value;
+            }
+            else if (span.Value == "/")
+            {
+                return DivisionOperation.Value;
+            }
+            else if (span.Value == "%")
+            {
+                return ModularDivision.Value;
+            }
+            else if (span.Value == "^")
+            {
+                return ExponentOperation.Value;
+            }
+            else if (span.Value == "&")
+            {
+                return BitwiseAndOperation.Value;
+            }
+            else if (span.Value == "|")
+            {
+                return BitwiseOrOperation.Value;
+            }
+
+            throw new InvalidOperationException();
+        }
+
+        public Expression GetFunctionCallFromFunctioncall(Span span, SolusEnvironment env)
+        {
+            var name = span.Subspans[0].Value;
+
+            var args = new List<Expression>();
+            int i;
+            for (i = 2; i < span.Subspans.Count - 1; i += 2)
+            {
+                args.Add(GetExpressionFromExpr(span.Subspans[i], env));
+            }
+
+            if (env.Functions.ContainsKey(name))
+            {
+                return new FunctionCall(env.Functions[name], args); 
+            }
+            else if (env.Macros.ContainsKey(name))
+            {
+                return env.Macros[name].Call(args, env);
+            }
+            else
+            {
+                throw new InvalidOperationException("Unknown function \"" + name + "\"");
+            }
+        }
+
+        public Literal GetLiteralFromNumber(Span span)
+        {
+            // thoroughly inexact, not conformant to standards, but will suffice for now.
+
+            string value = span.Value;
+            string lower = value.ToLower();
+
+            if (value.StartsWith("0b"))
+            {
+                return new Literal(Convert.ToInt32(value.Substring(2), 2));
+            }
+            else if (value.StartsWith("0o"))
+            {
+                return new Literal(Convert.ToInt32(value.Substring(2), 8));
+            }
+            else if (value.StartsWith("0x"))
+            {
+                return new Literal(Convert.ToInt32(value.Substring(2), 16));
+            }
+            else
+            {
+                return GetLiteralFromFloatNumber(value);
+            }
+        }
+
+        public Literal GetLiteralFromFloatNumber(string value)
+        {
+            var errors = new List<Error>();
+            var spans = _numberSpanner.Process(value.ToCharacterSource(), errors);
+
+            if (errors.ContainsNonWarnings())
+            {
+                throw new NotImplementedException();
+            }
+
+            if (spans.Length < 1)
+            {
+                throw new NotImplementedException();
+            }
+
+            if (spans.Length > 1)
+            {
+                throw new NotImplementedException();
+            }
+
+            var s = spans[0];
+            var subs = s.Subspans;
+            int i = 0;
+            int n = subs.Count;
+
+            bool isNegative = false;
+            int integerPart = 0;
+            bool hasFractionalPart = false;
+            int fractionalPart = 0;
+            int fractionalDigits = 0;
+            bool hasExponent = false;
+            bool isExponentNegative = false;
+            int exponentPart = 0;
+            int exponentDigits = 0;
+
+            if (subs[i].Node == _grammar.node_float_002D_number_0__002B__002D_)
+            {
+                if (subs[i].Value == "-")
+                {
+                    isNegative = true;
+                }
+                i++;
+            }
+            while (i < n && subs[i].Node == _grammar.node_float_002D_number_1__005C_d)
+            {
+                integerPart *= 10;
+                integerPart += int.Parse(subs[i].Value);
+                i++;
+            }
+            if (i < n && subs[i].Node == _grammar.node_float_002D_number_2__002E_)
+            {
+                i++;
+                hasFractionalPart = true;
+                while (i < n && subs[i].Node == _grammar.node_float_002D_number_3__005C_d)
+                {
+                    fractionalPart *= 10;
+                    fractionalPart += int.Parse(subs[i].Value);
+                    fractionalDigits++;
+                    i++;
+                }
+            }
+            if (i < n && subs[i].Node == _grammar.node_float_002D_number_4_Ee)
+            {
+                hasExponent = true;
+                i++;
+                if (subs[i].Node == _grammar.node_float_002D_number_5__002B__002D_)
+                {
+                    if (subs[i].Value == "-")
+                    {
+                        isExponentNegative = true;
+                    }
+                    i++;
+                }
+                while (i < n && subs[i].Node == _grammar.node_float_002D_number_6__005C_d)
+                {
+                    exponentPart *= 10;
+                    exponentPart += int.Parse(subs[i].Value);
+                    exponentDigits++;
+                    i++;
+                }
+            }
+
+            float fvalue = integerPart;
+
+            if (hasFractionalPart)
+            {
+                float fractionalValue = (float)(fractionalPart * Math.Pow(10, -fractionalDigits));
+                fvalue += fractionalValue;
+            }
+
+            if (hasExponent)
+            {
+                if (isExponentNegative)
+                {
+                    fvalue = (float)(fvalue * Math.Pow(10, -exponentPart));
                 }
                 else
                 {
-                    Ex cc2;
-                    Ranks cr;
-
-                    if (c.Count > 0)
-                    {
-                        cc2 = c.Peek();
-                        cr = cc2.Rank;
-
-                        while (c.Count > 0 && ex.Rank <= cr && cr < Ranks.Functions)
-                        {
-                            b.Push(c.Pop());
-                            if (c.Count > 0)
-                            {
-                                cc2 = c.Peek();
-                                cr = cc2.Rank;
-                            }
-                        }
-                    }
-                    c.Push(ex);
+                    fvalue = (float)(fvalue * Math.Pow(10, exponentPart));
                 }
             }
-            while (c.Count > 0)
+
+            if (isNegative)
             {
-                b.Push(c.Pop());
+                fvalue = -fvalue;
             }
 
-            int i;
-            int j;
-            Ex[] tokens;
-
-            j = b.Count;
-            tokens = new Ex[j];
-            for (i = 0; i < j; i++)
-            {
-                tokens[i] = b.Pop();
-            }
-
-            return tokens;
+            return new Literal(fvalue);
         }
 
-        protected Ex BuildTree(Ex[] intokens)
+        public Expression GetStringFromString(Span span)
         {
-            Ex[] _intokens = intokens;
-
-            Queue<Ex> b;
-            int i;
-            int j;
-
-            j = intokens.Length;
-            b = new Queue<Ex>(j);
-            for (i = 0; i < j; i++)
-            {
-                b.Enqueue(intokens[i]);
-            }
-
-            Ex ret = BuildTree(b);
-            if (b.Count > 0)
-            {
-                throw new SolusParseException(b.Peek(), "Excess tokens");
-            }
-            return ret;
+            throw new NotImplementedException();
         }
 
-        protected Ex BuildTree(Queue<Ex> b)
+        public Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)
         {
-            Ex ex;
-            Ranks r;
-            NodeType t;
+            Expression arg = GetExpressionFromSubexprPart(span.Subspans[1], env);
 
-            ex = b.Dequeue();
-            r = ex.Rank;
-            t = ex.Type;
-
-            if (t == NodeType.Func) //functions
+            if (span.Subspans[0].Value == "-")
             {
-                //this could be combined with the next section,
-                //but it's a good idea to separate it visually.
-                //we could conceiveably add a for loop here at some 
-                //point in the future, for functions with more than two 
-                //arguments.
-                //
-                //currently, functions with more than one argument in
-                //the expression simply hold a pointer to a comma
-                //operator.
-                //
-                //we'll want to put in some logic to check the number of
-                //cascaded comma operators against the functions'
-                //desired argument counts.
-
-                int funcArgs = GetFunction(ex.Token).Value.NumArguments;
-                if (funcArgs != 0)
-                {
-                    ex.Left = BuildTree(b);
-
-                    if (funcArgs > -1)
-                    {
-                        //check comma operators
-                        //ensure argument count is correct
-
-                        int nargs = CountCommaArguments(ex.Left);
-                        if (nargs > funcArgs)
-                        {
-                            //throw exception
-                            throw new SolusParseException(ex, "Too many arguments");
-                        }
-                        else if (nargs < funcArgs)
-                        {
-                            throw new SolusParseException(ex, "Too few arguments");
-                        }
-                    }
-                }
-            }
-            //else if (t == NodeType.Index) //indexer (we're not sure how many arguments)
-            //{
-            //    //the indexer is kinda like functions in that it can 
-            //    //have a variable number of arguments. However, its 
-            //    //central, important difference is that while all 
-            //    //functions' arguments counts are established at 
-            //    //compile-time, the indexer's argument count is 
-            //    //determined at run-time. The correct count is dependent
-            //    //on the dimensions of the underlying ValueTable from
-            //    //which values are taken.
-            //    //
-            //    //typically, the indexer has two arguments separated by
-            //    //a comma.
-            //    //
-            //    //the count should probably be confirmed during 
-            //    //evaluation of the tree. we don't care about the 
-            //    //number of arguments or commas at this point int the 
-            //    //code.
-
-            //    ex.left = BuildTree(b);
-            //}
-            //else if (IsUnaryOperation(r))
-            //{
-            //    ex.left = BuildTree(b);
-            //}
-            else if (IsBinaryOperation(r))
-            {
-                if (b.Count < 1) { throw new SolusParseException(ex, "Missing right operand"); }
-                ex.Right = BuildTree(b);
-                if (b.Count < 1) { throw new SolusParseException(ex, "Missing left operand"); }
-                ex.Left = BuildTree(b);
+                arg = new FunctionCall(NegationOperation.Value, arg);
             }
 
-
-            return ex;
+            return arg;
         }
 
-        private static bool IsUnaryOperation(Ranks r)
+        public VariableAccess GetVariableAccessFromVarref(Span span, SolusEnvironment env)
         {
-            return false;// r == Ranks.NotCat;
-        }
-        private static bool IsBinaryOperation(Ranks r)
-        {
-            return 
-                r == Ranks.MultCat || 
-                r == Ranks.AddCat ||
-                r == Ranks.Exponent ||
-                //r == Ranks.BitwiseShiftCat ||
-                r == Ranks.CompareCat || 
-                r == Ranks.EqualityCat ||
-                r == Ranks.BitwiseAnd ||
-                //r == Ranks.BitwiseXor || 
-                r == Ranks.BitwiseOr ||
-                r == Ranks.LogicalAnd ||
-                //r == Ranks.LogicalXor || 
-                r == Ranks.LogicalOr || 
-                //r == Ranks.Conditional ||
-                r == Ranks.Comma || 
-                r == Ranks.Assign;
-        }
+            string varname = span.Subspans[0].Value;
 
-        protected int CountCommaArguments(Ex ex)
-        {
-            if (ex == null)
-            {
-                return 0;
-            }
-
-            if (ex.Type == NodeType.Comma)
-            {
-                return CountCommaArguments(ex.Left) + CountCommaArguments(ex.Right);
-            }
-
-            return 1;
+            return new VariableAccess(varname);
         }
     }
 }

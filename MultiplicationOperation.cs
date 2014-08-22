@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class MultiplicationOperation : AssociativeCommutativeOperation
     {
-        public MultiplicationOperation()
+        public static readonly MultiplicationOperation Value = new MultiplicationOperation();
+
+        protected MultiplicationOperation()
         {
             Name = "*";
         }
@@ -32,7 +34,7 @@ namespace MetaphysicsIndustries.Solus
         //    }
         //}
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             float value = 1;
             int i;

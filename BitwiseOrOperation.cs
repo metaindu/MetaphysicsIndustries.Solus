@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class BitwiseOrOperation : AssociativeCommutativeOperation
     {
-        public BitwiseOrOperation()
+        public static readonly BitwiseOrOperation Value = new BitwiseOrOperation();
+
+        protected BitwiseOrOperation()
         {
             Name = "|";
         }
@@ -16,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Bitwise; }
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             long value = 0;
 
@@ -28,9 +30,9 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(value);
         }
 
-        public override float IdentityValue
+        public override bool HasIdentityValue
         {
-            get { return 0; }
+            get { return false; }
         }
 
         public override bool Culls

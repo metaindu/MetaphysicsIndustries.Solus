@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class LessThanComparisonOperation : ComparisonOperation
     {
-        public LessThanComparisonOperation()
+        public static readonly LessThanComparisonOperation Value = new LessThanComparisonOperation();
+
+        protected LessThanComparisonOperation()
             : base("<")
         {
         }

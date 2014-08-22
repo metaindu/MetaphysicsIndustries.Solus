@@ -24,33 +24,13 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class SolusEngine
     {
-        protected class VariableGatherer
+        public static string[] GatherVariables(Expression expr)
         {
-            public void GatherVariable(Expression expr)
-            {
-                if (expr is VariableAccess)
-                {
-                    VariableAccess va = (VariableAccess)expr;
+            var names = new Set<string>();
 
-                    if (va.Variable != null)
-                    {
-                        _variables.Add(va.Variable);
-                    }
-                }
-            }
+            expr.AcceptVisitor(varVisitor: (x)=> names.Add(x.VariableName));
 
-            private Set<Variable> _variables = new Set<Variable>();
-            public Set<Variable> Variables
-            {
-                get { return _variables; }
-            }
-        }
-
-        public Set<Variable> GatherVariables(Expression expr)
-        {
-            VariableGatherer g = new VariableGatherer();
-            expr.ApplyToExpressionTree(g.GatherVariable);
-            return g.Variables;
+            return names.ToArray();
         }
     }
 }

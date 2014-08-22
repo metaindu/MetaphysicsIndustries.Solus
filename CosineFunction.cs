@@ -21,15 +21,17 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CosineFunction : SingleArgumentFunction
 	{
-		public CosineFunction()
+        public static readonly CosineFunction Value = new CosineFunction();
+
+        protected CosineFunction()
 		{
 			this.Name = "Cosine";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Cos(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Cos(args[0].Eval(env).Value));
 		}
 
         public override string DisplayName
@@ -37,6 +39,14 @@ namespace MetaphysicsIndustries.Solus
             get
             {
                 return "cos";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The cosine function\n  cos(x)\n\nReturns the cosine of x.";
             }
         }
     }

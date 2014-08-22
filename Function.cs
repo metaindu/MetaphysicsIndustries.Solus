@@ -21,35 +21,31 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Collections;
+using MetaphysicsIndustries.Giza;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public abstract partial class Function : IDisposable
+    public abstract partial class Function
 	{
-        public Function()
+        protected Function()
             : this(string.Empty)
         {
         }
 
-        public Function(string name)
+        protected Function(string name)
         {
             _name = name;
         }
 
-		public virtual void Dispose()
-		{
-			
-		}
-
-		public virtual Literal Call(VariableTable varTable, params Expression[] args)
+		public virtual Literal Call(SolusEnvironment env, params Expression[] args)
         {
             this.CheckArguments(args);
             List<Literal> evalArgs = new List<Literal>(args.Length);
             foreach (Expression arg in args)
             {
-                evalArgs.Add(arg.Eval(varTable));
+                evalArgs.Add(arg.Eval(env));
             }
-			return this.InternalCall(varTable, evalArgs.ToArray());
+			return this.InternalCall(env, evalArgs.ToArray());
 		}
 
         //public virtual Expression CleanUp(Expression[] args)
@@ -100,7 +96,7 @@ namespace MetaphysicsIndustries.Solus
 			}
 		}
 
-        protected abstract Literal InternalCall(VariableTable varTable, Literal[] args);
+        protected abstract Literal InternalCall(SolusEnvironment env, Literal[] args);
 
 		protected virtual void CheckArguments(Expression[] args)
 		{
@@ -142,7 +138,7 @@ namespace MetaphysicsIndustries.Solus
 		private  List<Type> _internaltypes = new List<Type>();
 		private  string     _name;
 
-        public virtual string ToString(ExpressionCollection arguments)
+        public virtual string ToString(List<Expression> arguments)
         {
             Expression[] exprs = arguments.ToArray();
 
@@ -155,6 +151,11 @@ namespace MetaphysicsIndustries.Solus
             where T : Function
         {
             return this as T;
+        }
+
+        public virtual string DocString
+        {
+            get { return string.Empty; }
         }
     }
 }

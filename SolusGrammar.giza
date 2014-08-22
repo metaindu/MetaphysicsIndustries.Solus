@@ -1,0 +1,47 @@
+
+expr = subexpr ( binop subexpr )*;
+
+function-call = identifier:name '(' ( expr:arg ( ',' expr:arg )* )? ')';
+
+<ignore case, token> number = (
+    '0b' [01]+ | 
+    '0o' [01234567]+ | 
+    '0x' [\dabcdef]+ | 
+     float-number
+);
+
+// non-atomic, usable by the spanner
+<ignore case, subtoken> float-number = [+-]? [\d]+ ( '.' [\d]+ )? ( [eE] [+-]? [\d]+ )? ;
+
+<token> string = (
+    '\'' ( [^\\'] | '\\' [rnt\\'] | unicodechar )+ '\'' |
+    '"' ( [^\\"] | '\\' [rnt\\"] | unicodechar )+ '"'
+);
+
+<ignore case, subtoken> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
+
+<token> binop = [+-*/%^&|];
+
+unary-op = [+-] (
+    paren |
+    function-call |
+    string |
+    unary-op |
+    varref
+);
+
+subexpr = (
+    paren |
+    function-call |
+    number |
+    string |
+    unary-op |
+    varref
+);
+
+paren = '(' expr ')';
+
+varref = identifier;
+
+<token> identifier = [\w] [\d\w_]*;
+

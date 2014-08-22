@@ -21,16 +21,25 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SecantFunction : SingleArgumentFunction
 	{
-		public SecantFunction()
+        public static readonly SecantFunction Value = new SecantFunction();
+
+        protected SecantFunction()
 		{
 			this.Name = "Secant";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)(1 / Math.Cos(args[0].Eval(varTable).Value)));
+            return new Literal((float)(1 / Math.Cos(args[0].Eval(env).Value)));
         }
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "sec";
+            }
+        }
     }
 }

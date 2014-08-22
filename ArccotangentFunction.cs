@@ -21,16 +21,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArccotangentFunction : SingleArgumentFunction
 	{
-		public ArccotangentFunction()
+        public static readonly ArccotangentFunction Value = new ArccotangentFunction();
+
+		protected ArccotangentFunction()
 		{
 			this.Name = "Arccotangent";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Atan2(1, args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Atan2(1, args[0].Eval(env).Value));
         }
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "acot";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arccotangent function\n  acot(x)\n\nReturns the arccotangent of x. That is, if cot(y) = x, then acot(x) = y.";
+            }
+        }
     }
 }

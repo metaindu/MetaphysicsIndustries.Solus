@@ -21,15 +21,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CeilingFunction : SingleArgumentFunction
 	{
-		public CeilingFunction()
+        public static readonly CeilingFunction Value = new CeilingFunction();
+
+        protected CeilingFunction()
 		{
 			this.Name = "Ceiling";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
-            return new Literal((float)Math.Ceiling(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Ceiling(args[0].Eval(env).Value));
+        }
+
+        public override string DisplayName
+        {
+            get
+            {
+                return "ceil";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The ceiling function\n  ceil(x)\n\nReturns the lowest integer that is greater than or equal to x.\n";
+            }
         }
     }
 }

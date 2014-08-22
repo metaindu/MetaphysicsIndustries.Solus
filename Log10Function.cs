@@ -6,14 +6,16 @@ namespace MetaphysicsIndustries.Solus
 {
     public class Log10Function : SingleArgumentFunction
     {
-        public Log10Function()
+        public static readonly Log10Function Value = new Log10Function();
+
+        protected Log10Function()
         {
             Name = "Logarithm of base ten";
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
-            return new Literal((float)Math.Log10(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Log10(args[0].Eval(env).Value));
         }
 
         public override string DisplayName

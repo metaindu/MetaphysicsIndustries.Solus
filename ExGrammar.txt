@@ -1,0 +1,20 @@
+
+identifier = [\l_]:chars [\l\d_]*:chars;
+
+expr = ( paren | function-call | var-access | num-literal | string-literal | unary-op | binary-op );
+paren = '(' expr ')';
+function-call = identifier:name '(' ( expr:args ( ',' expr:args ) * )? ')';
+var-access = identifier:name;
+num-literal = ( dec-literal | hex-literal | oct-literal | bin-literal | float-literal );
+dec-literal = [+-]?:sign ( '0' [dD] )? [\d]+:digits;
+hex-literal = [+-]?:sign '0' [xX] [\dabcdefABCDEF]+:digits;
+oct-literal = [+-]?:sign '0' [oO] [01234567]+:digits;
+bin-literal = [+-]?:sign '0' [bB] [01]+:digits;
+float-literal = [+-]?:sign [\d]*:int-part '.' [\d]+:decimal-part ( [eE][+-]?:exp-sign [\d]+:exponent )? ;
+string-literal = ( '\'' ( [^\\'"]*:chars | '\\' [\\rnt] | '\\\'':chars ) '\'' | 
+                   '"'  ( [^\\'"]*:chars | '\\' [\\rnt] | '\\"':chars  ) '"' );
+unary-op = unary-oper:oper expr:arg;
+unary-oper = [+-];
+binary-op = sub-expr:args ( binary-oper:oper sub-expr:args )+;
+sub-expr = ( paren | function-call | var-access | num-literal | string-literal | unary-op );
+binary-oper = ( '||' | '&&' | '<=' | '>=' | '!=' | ':=' | [*^/%&|+-<>=] );

@@ -21,15 +21,17 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SineFunction : SingleArgumentFunction
 	{
-		public SineFunction()
+        public static readonly SineFunction Value = new SineFunction();
+
+        protected SineFunction()
 		{
 			this.Name = "Sine";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
-            return new Literal((float)Math.Sin(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Sin(args[0].Eval(env).Value));
 		}
 
         public override string DisplayName
@@ -37,6 +39,14 @@ namespace MetaphysicsIndustries.Solus
             get
             {
                 return "sin";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The sine function\n  sin(x)\n\nReturns the sine of x.";
             }
         }
     }

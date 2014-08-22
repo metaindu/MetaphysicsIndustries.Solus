@@ -7,10 +7,10 @@ namespace MetaphysicsIndustries.Solus
 {
     public class PolynomialTransformer : ExpressionTransformer<VariableTransformArgs>
     {
-        public static bool ContainsVariable(Expression expr, Variable variable)
+        public static bool ContainsVariable(Expression expr, string variable)
         {
             if (expr is Literal) return false;
-            if (expr is VariableAccess) return ((VariableAccess)expr).Variable == variable;
+            if (expr is VariableAccess) return ((VariableAccess)expr).VariableName == variable;
             if (expr is FunctionCall)
             {
                 foreach (Expression arg in ((FunctionCall)expr).Arguments)
@@ -61,11 +61,11 @@ namespace MetaphysicsIndustries.Solus
 
             Dictionary<Literal, Set<Expression>> coeffs = new Dictionary<Literal, Set<Expression>>();
 
-            if (expr.IsFunction(BinaryOperation.Division))
+            if (expr.IsFunction(DivisionOperation.Value))
             {
 
             }
-            else if (expr.IsFunction(AssociativeCommutativeOperation.Multiplication))
+            else if (expr.IsFunction(MultiplicationOperation.Value))
             {
                 FunctionCall call = expr.As<FunctionCall>();
 
@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Solus
                 Set<Expression> adds = new Set<Expression>();
                 foreach (Expression arg in call.Arguments)
                 {
-                    if (arg.IsFunction(AssociativeCommutativeOperation.Addition) && ContainsVariable(arg, args.Variable))
+                    if (arg.IsFunction(AdditionOperation.Value) && ContainsVariable(arg, args.Variable))
                     {
                         adds.Add(arg);
                     }

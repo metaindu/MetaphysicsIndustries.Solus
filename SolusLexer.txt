@@ -1,0 +1,28 @@
+
+
+token-sequence = token+;
+
+token = ( num-literal | string-literal | name | symbol );
+
+num-literal = ( dec-literal | hex-literal | oct-literal | bin-literal | float-literal );
+
+<whitespace>
+dec-literal = ( '0' [dD] )? [\d]+;
+<whitespace>
+hex-literal = '0' [xX] [\dabcdefABCDEF]+;
+<whitespace>
+oct-literal = '0' [oO] [01234567]+;
+<whitespace>
+bin-literal = '0' [bB] [01]+;
+<whitespace>
+float-literal = [\d]* '.' [\d]+ ( [eE][+-]? [\d]+ )? ;
+<whitespace>
+string-literal = ( '\'' ( [^\\'"]* | '\\' [\\rnt] | '\\\'' ) '\'' | 
+                   '"'  ( [^\\'"]* | '\\' [\\rnt] | '\\"'  ) '"' );
+
+<whitespace>
+name = [\l_] [\l\d_]*;
+
+<whitespace>
+symbol = ( '||' | '&&' | '<=' | '>=' | '!=' | ':=' | [*^/%&|+-<>=()] );
+

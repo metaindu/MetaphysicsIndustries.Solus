@@ -21,15 +21,17 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArctangentFunction : SingleArgumentFunction
 	{
-		public ArctangentFunction()
+        public static readonly ArctangentFunction Value = new ArctangentFunction();
+
+		protected ArctangentFunction()
 		{
 			this.Name = "Arctangent";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Atan(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Atan(args[0].Eval(env).Value));
 		}
 
         public override string DisplayName
@@ -37,6 +39,14 @@ namespace MetaphysicsIndustries.Solus
             get
             {
                 return "atan";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arctangent function\n  atan(x)\n\nReturns the arctangent of x. That is, if tan(y) = x, then atan(x) = y.";
             }
         }
     }

@@ -21,16 +21,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArccosecantFunction : SingleArgumentFunction
 	{
-		public ArccosecantFunction()
+        public static readonly ArccosecantFunction Value = new ArccosecantFunction();
+
+		protected ArccosecantFunction()
 		{
 			this.Name = "Arccosecant";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Asin(1/args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Asin(1/args[0].Eval(env).Value));
         }
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "acsc";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arccosecant function\n  acsc(x)\n\nReturns the arccosecant of x. That is, if csc(y) = x, then acsc(x) = y.";
+            }
+        }
     }
 }

@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class EqualComparisonOperation : ComparisonOperation
     {
-        public EqualComparisonOperation()
+        public static readonly EqualComparisonOperation Value = new EqualComparisonOperation();
+
+        protected EqualComparisonOperation()
             : base("==")
         {
         }

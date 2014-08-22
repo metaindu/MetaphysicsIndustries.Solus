@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class Arctangent2Function : DualArgumentFunction
     {
-        public Arctangent2Function()
+        public static readonly Arctangent2Function Value = new Arctangent2Function();
+
+        protected Arctangent2Function()
             : base ("Arctangent 2")
         {
         }
@@ -21,6 +23,14 @@ namespace MetaphysicsIndustries.Solus
             get
             {
                 return "atan2";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The atan2 function\n  atan(y, x)\n\nReturns the arctangent of y/x.";
             }
         }
     }

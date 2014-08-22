@@ -4,9 +4,11 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public abstract class NegationOperation : UnaryOperation
+    public class NegationOperation : UnaryOperation
     {
-        public NegationOperation()
+        public static readonly NegationOperation Value = new NegationOperation();
+
+        protected NegationOperation()
         {
             Name = "-";
         }
@@ -16,12 +18,12 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Negation; }
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             return new Literal(-args[0].Value);
         }
 
-        public override string ToString(ExpressionCollection arguments)
+        public override string ToString(List<Expression> arguments)
         {
             Expression arg = arguments[0];
 

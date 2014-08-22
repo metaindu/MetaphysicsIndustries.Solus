@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class LogicalOrOperation : BinaryOperation
     {
-        public LogicalOrOperation()
+        public static readonly LogicalOrOperation Value = new LogicalOrOperation();
+
+        protected LogicalOrOperation()
         {
             Name = "||";
         }

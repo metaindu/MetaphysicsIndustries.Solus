@@ -11,92 +11,65 @@ namespace MetaphysicsIndustries.Solus
         {
         }
 
-        public VariableAccess(Variable variable)
+        public VariableAccess(string variableName)
         {
-            _processVariableChangedDelegate = new EventHandler(ProcessVariableChanged);
+            if (string.IsNullOrEmpty(variableName)) throw new ArgumentNullException("variableName");
 
-            Variable = variable;
+            VariableName = variableName;
         }
 
         public override Expression Clone()
         {
-            return new VariableAccess(Variable);
+            return new VariableAccess(VariableName);
         }
 
-        private Variable _variable;
+        public string VariableName;
 
-        public Variable Variable
+        public override Literal Eval(SolusEnvironment env)
         {
-            get { return _variable; }
-            set
+            var var = VariableName;
+
+            if (env.Variables.ContainsKey(var))
             {
-                if (_variable != value)
+                if (env.Variables[var] is Literal)
                 {
-                    if (_variable != null)
-                    {
-                        _variable.ValueChanged -= _processVariableChangedDelegate;
-                    }
-
-                    _variable = value;
-
-                    if (_variable != null)
-                    {
-                        _variable.ValueChanged += _processVariableChangedDelegate;
-                    }
-                }
-            }
-        }
-
-        public override Literal Eval(VariableTable varTable)
-        {
-            if (varTable.ContainsKey(Variable))
-            {
-                if (varTable[Variable] is Literal)
-                {
-                    return (Literal)varTable[Variable];
+                    return (Literal)env.Variables[var];
                 }
 
-                return varTable[Variable].Eval(varTable);
+                return env.Variables[var].Eval(env);
             }
             else
             {
-                //return new Literal(0);
-                throw new InvalidOperationException("Variable not found in variable table: " + Variable.Name);
+                throw new InvalidOperationException("Variable not found in variable table: " + VariableName);
             }
         }
 
-        EventHandler _processVariableChangedDelegate;
-        protected void ProcessVariableChanged(object sender, EventArgs e)
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
-        }
-
-        public override Expression PreliminaryEval(VariableTable varTable)
-        {
-            if (varTable.ContainsKey(Variable))
+            if (env.Variables.ContainsKey(VariableName))
             {
                 //this will cause an infinite recursion if a variable 
                 //is defined in terms of itself or in terms of another 
                 //variable.
-                //we could add (if (varTable[Variable] as VariableAccess).Variable == Variable) { throw }
+                //we could add (if (env.Variables[Variable] as VariableAccess).Variable == Variable) { throw }
                 //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
-                return varTable[Variable].PreliminaryEval(varTable);
+                var var = VariableName;
+                return env.Variables[var].PreliminaryEval(env);
             }
             else
             {
-                return base.PreliminaryEval(varTable);
+                return base.PreliminaryEval(env);
             }
         }
 
         public override string ToString()
         {
-            if (Variable != null)
-            {
-                return Variable.Name;
-            }
-            else
-            {
-                return "[unknown variable]";
-            }
+            return VariableName;
+        }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class AdditionOperation : AssociativeCommutativeOperation
     {
-        public AdditionOperation()
+        public static readonly AdditionOperation Value = new AdditionOperation();
+
+        protected AdditionOperation()
         {
             Name = "+";
         }
@@ -16,7 +18,7 @@ namespace MetaphysicsIndustries.Solus
             get { return OperationPrecedence.Addition; }
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             float sum = 0;
             foreach (Literal arg in args)

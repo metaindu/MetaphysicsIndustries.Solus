@@ -45,7 +45,6 @@ namespace MetaphysicsIndustries.Solus
         public override void Dispose()
         {
             _arguments.Clear();
-            _arguments.Dispose();
             _arguments = null;
             _function = null;
         }
@@ -59,9 +58,9 @@ namespace MetaphysicsIndustries.Solus
             return ret;
         }
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(SolusEnvironment env)
         {
-            return Call(varTable);
+            return Call(env);
         }
 
         //public override Expression CleanUp()
@@ -98,12 +97,12 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public virtual Literal Call(VariableTable varTable)
+        public virtual Literal Call(SolusEnvironment env)
         {
-            return Function.Call(varTable, Arguments.ToArray());
+            return Function.Call(env, Arguments.ToArray());
         }
 
-        public virtual ExpressionCollection Arguments
+        public virtual List<Expression> Arguments
         {
             get
             {
@@ -148,7 +147,7 @@ namespace MetaphysicsIndustries.Solus
         }
 
         private Function _function;
-        private ExpressionCollection _arguments = new ExpressionCollection();
+        private List<Expression> _arguments = new List<Expression>();
 
         protected override void InternalApplyToExpressionTree(SolusAction action, bool applyToChildrenBeforeParent)
         {
@@ -158,14 +157,24 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public override Expression PreliminaryEval(VariableTable varTable)
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
+
+            foreach (Expression expr in Arguments)
+            {
+                expr.AcceptVisitor(visitor);
+            }
+        }
+
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
             List<Expression> args = new List<Expression>(Arguments.Count);
 
             bool allLiterals = true;
             foreach (Expression arg in Arguments)
             {
-                Expression arg2 = arg.PreliminaryEval(varTable);
+                Expression arg2 = arg.PreliminaryEval(env);
                 if (!(arg2 is Literal))
                 {
                     allLiterals = false;
@@ -175,7 +184,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (allLiterals)
             {
-                return Function.Call(varTable, args.ToArray());
+                return Function.Call(env, args.ToArray());
             }
             else
             {

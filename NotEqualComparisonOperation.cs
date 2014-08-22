@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class NotEqualComparisonOperation : ComparisonOperation
     {
-        public NotEqualComparisonOperation()
+        public static readonly NotEqualComparisonOperation Value = new NotEqualComparisonOperation();
+
+        protected NotEqualComparisonOperation()
             :base("!=")
         {
         }

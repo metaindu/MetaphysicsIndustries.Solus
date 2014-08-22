@@ -21,16 +21,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public class FloorFunction : SingleArgumentFunction
 	{
-		public FloorFunction()
+        public static readonly FloorFunction Value = new FloorFunction();
+
+        protected FloorFunction()
 		{
 			this.Name = "Floor";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Floor(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Floor(args[0].Eval(env).Value));
 		}
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "floor";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The floor function\n  floor(x)\n\nReturns the highest integer that is less than or equal to x.";
+            }
+        }
     }
 }

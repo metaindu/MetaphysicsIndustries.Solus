@@ -6,6 +6,12 @@ namespace MetaphysicsIndustries.Solus
 {
     public class DivisionOperation : BinaryOperation
     {
+        public static readonly DivisionOperation Value = new DivisionOperation();
+
+        protected DivisionOperation()
+        {
+        }
+
         public override OperationPrecedence Precedence
         {
             get { return OperationPrecedence.Division; }
@@ -19,7 +25,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        //protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        //protected override Literal InternalCall(VariableTable env, Literal[] args)
         //{
         //    return new Literal(args[0].Value / args[1].Value);
         //}

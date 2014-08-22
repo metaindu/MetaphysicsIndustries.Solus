@@ -10,7 +10,7 @@ namespace MetaphysicsIndustries.Solus
 
         float _value = (float)_random.NextDouble();
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(
                 //_value);
@@ -20,6 +20,11 @@ namespace MetaphysicsIndustries.Solus
         public override Expression Clone()
         {
             return new RandomExpression();
+        }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

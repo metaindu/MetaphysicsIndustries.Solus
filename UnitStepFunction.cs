@@ -6,12 +6,14 @@ namespace MetaphysicsIndustries.Solus
 {
     public class UnitStepFunction : SingleArgumentFunction
     {
-        public UnitStepFunction()
+        public static readonly UnitStepFunction Value = new UnitStepFunction();
+
+        protected UnitStepFunction()
         {
             Name = "UnitStep";
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             if (args[0].Value >= 0)
             {
@@ -27,7 +29,15 @@ namespace MetaphysicsIndustries.Solus
         {
             get
             {
-                return "u";
+                return "unitstep";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "unit step function";
             }
         }
     }

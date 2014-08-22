@@ -20,7 +20,7 @@ namespace MetaphysicsIndustries.Solus
 
         }
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             float p = args[0].Value;
 
@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus
             return _presets[p];
         }
 
-        public FactorialFunction()
+        protected FactorialFunction()
         {
             Name = "Factorial";
 
@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Solus
             get { return "!"; }
         }
 
-        public override string ToString(ExpressionCollection arguments)
+        public override string ToString(List<Expression> arguments)
         {
             //treat as post-fix unary operator?
 

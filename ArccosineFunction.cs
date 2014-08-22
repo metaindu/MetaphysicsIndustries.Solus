@@ -21,16 +21,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public class ArccosineFunction : SingleArgumentFunction
 	{
-		public ArccosineFunction()
+        public static readonly ArccosineFunction Value = new ArccosineFunction();
+
+		protected ArccosineFunction()
 		{
 			this.Name = "Arccosine";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Acos(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Acos(args[0].Eval(env).Value));
 		}
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "acos";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arccosine function\n  acos(x)\n\nReturns the arccosine of x. That is, if cos(y) = x, then acos(x) = y.";
+            }
+        }
     }
 }

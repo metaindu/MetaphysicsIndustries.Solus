@@ -21,16 +21,33 @@ namespace MetaphysicsIndustries.Solus
 {
     public class CosecantFunction : SingleArgumentFunction
 	{
-		public CosecantFunction()
+        public static readonly CosecantFunction Value = new CosecantFunction();
+
+        protected CosecantFunction()
 		{
 			this.Name = "Cosecant";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)(1 / Math.Sin(args[0].Eval(varTable).Value)));
+            return new Literal((float)(1 / Math.Sin(args[0].Eval(env).Value)));
         }
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "csc";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The cosecant function\n  csc(x)\n\nReturns the cosecant of x, which is equal to 1 / sin(x).";
+            }
+        }
     }
 }

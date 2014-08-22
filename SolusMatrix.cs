@@ -172,7 +172,7 @@ namespace MetaphysicsIndustries.Solus
 
         public SolusMatrix Convolution(SolusMatrix convolvee)
         {
-            //return AdvancedConvolution(convolvee, AssociativeCommutativeOperation.Multiplication, AssociativeCommutativeOperation.Addition);
+            //return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
             //return AdvancedConvolution(convolvee, SolusEngine.MultiplicationBiMod, SolusEngine.AdditionBiMod);
             throw new NotImplementedException();
         }
@@ -221,10 +221,10 @@ namespace MetaphysicsIndustries.Solus
             int k2;
 
             int[] times = new int[16];
-            int lasttime = Environment.TickCount;
+            int lasttime = System.Environment.TickCount;
             int time;
 
-            time = Environment.TickCount; times[0] += time - lasttime; lasttime = time;
+            time = System.Environment.TickCount; times[0] += time - lasttime; lasttime = time;
             for (n1 = 0; n1 < r; n1++)
             {
                 ////time = Environment.TickCount; times[1] += time - lasttime; lasttime = time;
@@ -284,7 +284,7 @@ namespace MetaphysicsIndustries.Solus
                 }
                 ////time = Environment.TickCount; times[14] += time - lasttime; lasttime = time;
             }
-            time = Environment.TickCount; times[15] += time - lasttime; lasttime = time;
+            time = System.Environment.TickCount; times[15] += time - lasttime; lasttime = time;
 
 
 
@@ -572,7 +572,7 @@ namespace MetaphysicsIndustries.Solus
 
         #endregion
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(0);
         }
@@ -620,8 +620,17 @@ namespace MetaphysicsIndustries.Solus
                 expr.ApplyToExpressionTree(action, applyToChildrenBeforeParent);
             }
         }
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
 
-        public override Expression PreliminaryEval(VariableTable varTable)
+            foreach (Expression expr in this)
+            {
+                expr.AcceptVisitor(visitor);
+            }
+        }
+
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
             SolusMatrix ret = new SolusMatrix(RowCount, ColumnCount);
 
@@ -631,7 +640,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 for (j = 0; j < ColumnCount; j++)
                 {
-                    ret[i, j] = this[i, j].PreliminaryEval(varTable);
+                    ret[i, j] = this[i, j].PreliminaryEval(env);
                 }
             }
 

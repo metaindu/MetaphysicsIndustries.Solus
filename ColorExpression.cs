@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Solus
 
 
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(0xFFFFFF & _color.ToArgb());
         }
@@ -77,6 +77,11 @@ namespace MetaphysicsIndustries.Solus
             if (Color == Color.Magenta) { return "Magenta"; }
 
             return Color.ToString();
+        }
+
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

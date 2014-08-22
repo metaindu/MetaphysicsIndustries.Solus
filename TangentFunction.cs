@@ -21,16 +21,25 @@ namespace MetaphysicsIndustries.Solus
 {
     public class TangentFunction : SingleArgumentFunction
 	{
-		public TangentFunction()
+        public static readonly TangentFunction Value = new TangentFunction();
+
+        protected TangentFunction()
 		{
 			this.Name = "Tangent";
 		}
 
 
-        protected override Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
 		{
-            return new Literal((float)Math.Tan(args[0].Eval(varTable).Value));
+            return new Literal((float)Math.Tan(args[0].Eval(env).Value));
 		}
 
+        public override string DisplayName
+        {
+            get
+            {
+                return "tan";
+            }
+        }
     }
 }

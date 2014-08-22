@@ -6,7 +6,7 @@ namespace MetaphysicsIndustries.Solus
 {
     public abstract class DualArgumentFunction : Function
     {
-        public DualArgumentFunction(string name)
+        protected DualArgumentFunction(string name)
             : base(name)
         {
             Types.Clear();
@@ -14,7 +14,7 @@ namespace MetaphysicsIndustries.Solus
             Types.Add(typeof(Expression));
         }
 
-        protected override sealed Literal InternalCall(VariableTable varTable, Literal[] args)
+        protected override sealed Literal InternalCall(SolusEnvironment env, Literal[] args)
         {
             return new Literal(InternalCall(args[0].Value, args[1].Value));
         }

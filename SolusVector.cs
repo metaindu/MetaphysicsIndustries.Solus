@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus
             get { return _length; }
         }
 
-        public override Literal Eval(VariableTable varTable)
+        public override Literal Eval(SolusEnvironment env)
         {
             return new Literal(0);
         }
@@ -129,7 +129,7 @@ namespace MetaphysicsIndustries.Solus
 
         public SolusVector Convolution(SolusVector convolvee)
         {
-            return AdvancedConvolution(convolvee, AssociativeCommutativeOperation.Multiplication, AssociativeCommutativeOperation.Addition);
+            return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
         }
 
         public SolusVector AdvancedConvolution(SolusVector convolvee, Operation firstOp, AssociativeCommutativeOperation secondOp)
@@ -172,15 +172,24 @@ namespace MetaphysicsIndustries.Solus
                 expr.ApplyToExpressionTree(action, applyToChildrenBeforeParent);
             }
         }
+        public override void AcceptVisitor(IExpressionVisitor visitor)
+        {
+            visitor.Visit(this);
 
-        public override Expression PreliminaryEval(VariableTable varTable)
+            foreach (Expression expr in this)
+            {
+                expr.AcceptVisitor(visitor);
+            }
+        }
+
+        public override Expression PreliminaryEval(SolusEnvironment env)
         {
             SolusVector ret = new SolusVector(Length);
 
             int i;
             for (i = 0; i < Length; i++)
             {
-                ret[i] = this[i].PreliminaryEval(varTable);
+                ret[i] = this[i].PreliminaryEval(env);
             }
 
             return ret;

@@ -6,7 +6,9 @@ namespace MetaphysicsIndustries.Solus
 {
     public class DistSqFunction : DualArgumentFunction
     {
-        public DistSqFunction()
+        public static readonly DistSqFunction Value = new DistSqFunction();
+
+        protected DistSqFunction()
             : base("DistanceSquared")
         {
         }

@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Solus
 
         //protected abstract Expression[] InternalCleanUpPartAssociativeOperation(Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals);
 
-        public override string ToString(ExpressionCollection arguments)
+        public override string ToString(List<Expression> arguments)
         {
             string[] strs = Array.ConvertAll<Expression, string>(arguments.ToArray(), Expression.ToString);
 
