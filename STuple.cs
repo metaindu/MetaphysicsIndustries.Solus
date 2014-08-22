@@ -1,6 +1,6 @@
 ﻿
 /*
- *  MetaphysicsIndustries.Collections
+ *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2014 Metaphysics Industries, Inc., Richard Sartor
  *
  *  This program is free software; you can redistribute it and/or modify

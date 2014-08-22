@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.GreaterOrEqual(fcall.Arguments.Count, 4);
             Assert.LessOrEqual(fcall.Arguments.Count, 6);
 
-            Set<string> varnames = new Set<string>();
+            HashSet<string> varnames = new HashSet<string>();
 
             float sum = 0;
             foreach (var arg in fcall.Arguments)
