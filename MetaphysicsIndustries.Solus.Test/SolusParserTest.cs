@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using MetaphysicsIndustries.Collections;
+
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Test

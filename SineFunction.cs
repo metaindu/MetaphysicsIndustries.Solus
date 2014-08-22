@@ -15,7 +15,7 @@
 
 using System;
 using System.Collections.Generic;
-using MetaphysicsIndustries.Collections;
+
 using System.Linq;
 
 namespace MetaphysicsIndustries.Solus

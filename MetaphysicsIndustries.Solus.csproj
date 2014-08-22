@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -141,6 +141,7 @@
     <Compile Include="SingleHelper.cs" />
     <Compile Include="Instruction.cs" />
     <Compile Include="VariableToArgumentNumberMapper.cs" />
+    <Compile Include="STuple.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
@@ -150,10 +151,6 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaphysicsIndustries.Collections\MetaphysicsIndustries.Collections.csproj">
-      <Project>{FF2B8A90-E8D2-4CF6-81E6-4A7BCE1FF900}</Project>
-      <Name>MetaphysicsIndustries.Collections</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MetaphysicsIndustries.Utilities\MetaphysicsIndustries.Utilities.csproj">
       <Project>{221A3FBA-E14C-4F05-A099-42508116E910}</Project>
       <Name>MetaphysicsIndustries.Utilities</Name>

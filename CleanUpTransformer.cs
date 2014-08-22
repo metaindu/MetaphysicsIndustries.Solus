@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MetaphysicsIndustries.Collections;
+
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -93,7 +93,7 @@ namespace MetaphysicsIndustries.Solus
             List<FunctionCall> assocOps = new List<FunctionCall>();
             (new FunctionCall(function, args)).GatherMatchingFunctionCalls(assocOps);
 
-            Set<FunctionCall> assocOpsSet = new Set<FunctionCall>(assocOps);
+            HashSet<FunctionCall> assocOpsSet = new HashSet<FunctionCall>(assocOps);
             Literal combinedLiteral = null;
 
             combinedLiteral = new Literal(function.IdentityValue);

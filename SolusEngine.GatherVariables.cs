@@ -16,9 +16,10 @@
 
 using System;
 using System.Collections.Generic;
-using MetaphysicsIndustries.Collections;
+
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -26,7 +27,7 @@ namespace MetaphysicsIndustries.Solus
     {
         public static string[] GatherVariables(Expression expr)
         {
-            var names = new Set<string>();
+            var names = new HashSet<string>();
 
             expr.AcceptVisitor(varVisitor: (x)=> names.Add(x.VariableName));
 

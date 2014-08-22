@@ -20,7 +20,7 @@
 
 using System;
 using System.Collections.Generic;
-using MetaphysicsIndustries.Collections;
+
 using MetaphysicsIndustries.Giza;
 
 namespace MetaphysicsIndustries.Solus

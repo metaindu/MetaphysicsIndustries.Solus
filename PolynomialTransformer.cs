@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using MetaphysicsIndustries.Collections;
+
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus
         {
             throw new NotImplementedException();
 
-            Dictionary<Literal, Set<Expression>> coeffs = new Dictionary<Literal, Set<Expression>>();
+            Dictionary<Literal, HashSet<Expression>> coeffs = new Dictionary<Literal, HashSet<Expression>>();
 
             if (expr.IsFunction(DivisionOperation.Value))
             {
@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Solus
                 FunctionCall call = expr.As<FunctionCall>();
 
                 
-                Set<Expression> adds = new Set<Expression>();
+                HashSet<Expression> adds = new HashSet<Expression>();
                 foreach (Expression arg in call.Arguments)
                 {
                     if (arg.IsFunction(AdditionOperation.Value) && ContainsVariable(arg, args.Variable))
