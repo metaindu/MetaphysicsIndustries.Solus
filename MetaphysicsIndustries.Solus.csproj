@@ -139,6 +139,8 @@
     <Compile Include="SolusEnvironment.cs" />
     <Compile Include="IExpressionVisitor.cs" />
     <Compile Include="SingleHelper.cs" />
+    <Compile Include="Instruction.cs" />
+    <Compile Include="VariableToArgumentNumberMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />

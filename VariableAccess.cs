@@ -71,5 +71,10 @@ namespace MetaphysicsIndustries.Solus
         {
             visitor.Visit(this);
         }
+
+        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
+        {
+            return new [] { Instruction.LoadLocalVariable(varmap[VariableName]) };
+        }
     }
 }
