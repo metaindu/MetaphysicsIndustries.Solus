@@ -150,16 +150,6 @@
   <ItemGroup>
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MetaphysicsIndustries.Utilities\MetaphysicsIndustries.Utilities.csproj">
-      <Project>{221A3FBA-E14C-4F05-A099-42508116E910}</Project>
-      <Name>MetaphysicsIndustries.Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MetaphysicsIndustries.Giza\MetaphysicsIndustries.Giza.csproj">
-      <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
-      <Name>MetaphysicsIndustries.Giza</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -172,4 +162,14 @@
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="MetaphysicsIndustries.Utilities\MetaphysicsIndustries.Utilities.csproj">
+      <Project>{221A3FBA-E14C-4F05-A099-42508116E910}</Project>
+      <Name>MetaphysicsIndustries.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="MetaphysicsIndustries.Giza\MetaphysicsIndustries.Giza.csproj">
+      <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
+      <Name>MetaphysicsIndustries.Giza</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

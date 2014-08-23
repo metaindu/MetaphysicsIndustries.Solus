@@ -1,0 +1,6 @@
+[submodule "MetaphysicsIndustries.Utilities"]
+	path = MetaphysicsIndustries.Utilities
+	url = https://github.com/metaindu/MetaphysicsIndustries.Utilities.git
+[submodule "MetaphysicsIndustries.Giza"]
+	path = MetaphysicsIndustries.Giza
+	url = https://github.com/metaindu/MetaphysicsIndustries.Giza.git
