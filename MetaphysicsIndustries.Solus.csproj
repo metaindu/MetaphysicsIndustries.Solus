@@ -142,6 +142,9 @@
     <Compile Include="Instruction.cs" />
     <Compile Include="VariableToArgumentNumberMapper.cs" />
     <Compile Include="STuple.cs" />
+    <Compile Include="AssignMacro.cs" />
+    <Compile Include="DeleteMacro.cs" />
+    <Compile Include="UserDefinedFunction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />

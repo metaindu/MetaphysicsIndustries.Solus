@@ -51,6 +51,8 @@ namespace MetaphysicsIndustries.Solus
                     DeriveMacro.Value,
                     FeedbackMacro.Value,
                     SubstMacro.Value,
+                    AssignMacro.Value,
+                    DeleteMacro.Value,
                 };
 
                 foreach (var macro in macros)
