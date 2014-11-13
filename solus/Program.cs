@@ -72,7 +72,7 @@ namespace solus
                         try
                         {
                             var expr = parser.GetExpression(line, env);
-                            var result = expr.Eval(env);
+                            var result = expr.PreliminaryEval(env);
                             Console.WriteLine(result);
                         }
                         catch (Exception ex)
