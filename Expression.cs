@@ -42,9 +42,12 @@ namespace MetaphysicsIndustries.Solus
         public Literal FastEval(SolusEnvironment env)
         {
             Dictionary<string, float> bakedEnv = new Dictionary<string, float>();
-            foreach (var var in _compiled.CompiledVars)
+            if (_compiled != null)
             {
-                bakedEnv[var] = env.Variables[var].Eval(env).Value;
+                foreach (var var in _compiled.CompiledVars)
+                {
+                    bakedEnv[var] = env.Variables[var].Eval(env).Value;
+                }
             }
 
             try
