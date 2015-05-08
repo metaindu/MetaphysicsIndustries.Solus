@@ -145,6 +145,7 @@
     <Compile Include="AssignMacro.cs" />
     <Compile Include="DeleteMacro.cs" />
     <Compile Include="UserDefinedFunction.cs" />
+    <Compile Include="CatmullRomSpline.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
