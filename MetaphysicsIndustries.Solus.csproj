@@ -146,6 +146,7 @@
     <Compile Include="DeleteMacro.cs" />
     <Compile Include="UserDefinedFunction.cs" />
     <Compile Include="CatmullRomSpline.cs" />
+    <Compile Include="MemoryImage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
