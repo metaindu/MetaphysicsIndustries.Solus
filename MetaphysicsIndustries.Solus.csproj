@@ -174,9 +174,5 @@
       <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
       <Name>MetaphysicsIndustries.Giza</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MetaphysicsIndustries.Utilities\MetaphysicsIndustries.Utilities.csproj">
-      <Project>{221A3FBA-E14C-4F05-A099-42508116E910}</Project>
-      <Name>MetaphysicsIndustries.Utilities</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>
