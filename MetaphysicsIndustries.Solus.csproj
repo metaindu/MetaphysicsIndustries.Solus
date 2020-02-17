@@ -175,4 +175,8 @@
       <Name>MetaphysicsIndustries.Giza</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include=".gitmodules" />
+  </ItemGroup>
 </Project>
