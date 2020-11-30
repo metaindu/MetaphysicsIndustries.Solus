@@ -27,7 +27,7 @@ using System.Drawing.Imaging;
 namespace MetaphysicsIndustries.Solus
 {
     /*
-     * A managed class that organizes access to a Bitmap object.
+     * A 2D array of pixel color data.
      * 
      */
 
