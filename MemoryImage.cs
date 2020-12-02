@@ -47,7 +47,9 @@ namespace MetaphysicsIndustries.Solus
         {
             if (bitmap == null) { throw new ArgumentNullException("bitmap"); }
 
-            _bitmap = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), PixelFormat.Format32bppArgb);
+            _bitmap = bitmap.Clone(
+                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                PixelFormat.Format32bppArgb);
 
             _pixels = new Color[bitmap.Height, bitmap.Width];
         }
@@ -57,39 +59,40 @@ namespace MetaphysicsIndustries.Solus
             _bitmap.Dispose();
         }
 
-        //takes the values from the pixel array in memory and puts them into the bitmap object
+        public int[] AllocateArrayForPixels()
+        {
+            return new int[Width * Height];
+        }
+
+        public void CopyPixelsToArray(int[] pixeldata)
+        {
+            int k = 0;
+            for (int row = 0; row < Height; row++)
+            {
+                for (int column = 0; column < Width; column++)
+                {
+                    pixeldata[k] = _pixels[row, column].ToArgb();
+                    k++;
+                }
+            }
+        }
+
+        // takes the values from the pixel array in memory and puts them into
+        // the bitmap object
         public void CopyPixelsToBitmap()
         {
             BitmapData data = null;
-            IntPtr ptr;
-            int[] pixeldata;
-            int count;
-            int column;
-            int row;
-            int k;
-            int ii;
-            int jj;
-            ii = _bitmap.Width;
-            jj = _bitmap.Height;
-            count = ii * jj;
 
             try
             {
                 data = _bitmap.LockBits(new Rectangle(0, 0, Width, Height),
                                                 ImageLockMode.WriteOnly,
                                                 PixelFormat.Format32bppArgb);
-                ptr = data.Scan0;
-                pixeldata = new int[count];
-                k = 0;
-                for (row = 0; row < jj; row++)
-                {
-                    for (column = 0; column < ii; column++)
-                    {
-                        pixeldata[k] = _pixels[row, column].ToArgb();
-                        k++;
-                    }
-                }
-                System.Runtime.InteropServices.Marshal.Copy(pixeldata, 0, ptr, count);
+                IntPtr ptr = data.Scan0;
+                int[] pixeldata = AllocateArrayForPixels();
+                CopyPixelsToArray(pixeldata);
+                System.Runtime.InteropServices.Marshal.Copy(pixeldata, 0, ptr,
+                    Width * Height);
             }
             finally
             {
@@ -100,31 +103,38 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        //takes the values from the bitmap object and puts them into the pixel array in memory
+        public void CopyArrayToPixels(int[] pixeldata)
+        {
+            int k = 0;
+            for (int row = 0; row < Height; row++)
+            {
+                for (int column = 0; column < Width; column++)
+                {
+                    _pixels[row, column] = Color.FromArgb(pixeldata[k]);
+                    k++;
+                }
+            }
+        }
+
+        // takes the values from the bitmap object and puts them into the pixel
+        // array in memory
         public void CopyBitmapToPixels()
         {
             if (Bitmap == null) { throw new InvalidOperationException(); }
 
             BitmapData data = null;
-            IntPtr ptr;
             int[] pixeldata;
-            int count;
-            int column;
-            int row;
-            int k;
-            int ii;
-            int jj;
-
-            count = _bitmap.Width * _bitmap.Height;
 
             try
             {
-                data = _bitmap.LockBits(new Rectangle(0, 0, _bitmap.Width, _bitmap.Height),
-                                                ImageLockMode.ReadOnly,
-                                                PixelFormat.Format32bppArgb);
-                ptr = data.Scan0;
-                pixeldata = new int[count];
-                System.Runtime.InteropServices.Marshal.Copy(ptr, pixeldata, 0, count);
+                data = _bitmap.LockBits(
+                    new Rectangle(0, 0, _bitmap.Width, _bitmap.Height),
+                    ImageLockMode.ReadOnly,
+                    PixelFormat.Format32bppArgb);
+                IntPtr ptr = data.Scan0;
+                pixeldata = AllocateArrayForPixels();
+                System.Runtime.InteropServices.Marshal.Copy(ptr, pixeldata, 0,
+                    Width * Height);
             }
             finally
             {
@@ -134,17 +144,7 @@ namespace MetaphysicsIndustries.Solus
                 }
             }
 
-            k = 0;
-            ii = _bitmap.Width;
-            jj = _bitmap.Height;
-            for (row = 0; row < jj; row++)
-            {
-                for (column = 0; column < ii; column++)
-                {
-                    _pixels[row, column] = Color.FromArgb(pixeldata[k]);
-                    k++;
-                }
-            }
+            CopyArrayToPixels(pixeldata);
         }
 
         public Size Size
