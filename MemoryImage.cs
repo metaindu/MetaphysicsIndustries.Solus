@@ -77,6 +77,27 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public byte[] AllocateByteArrayForPixels()
+        {
+            return new byte[4 * Width * Height];
+        }
+
+        public void CopyPixelsToArray(byte[] pixelbytes)
+        {
+            int k = 0;
+            for (int row = 0; row < Height; row++)
+            {
+                for (int column = 0; column < Width; column++)
+                {
+                    pixelbytes[k + 0] = _pixels[row, column].R;
+                    pixelbytes[k + 1] = _pixels[row, column].G;
+                    pixelbytes[k + 2] = _pixels[row, column].B;
+                    pixelbytes[k + 3] = _pixels[row, column].A;
+                    k += 4;
+                }
+            }
+        }
+
         // takes the values from the pixel array in memory and puts them into
         // the bitmap object
         public void CopyPixelsToBitmap()
