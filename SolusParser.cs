@@ -406,7 +406,7 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression GetStringFromString(Span span)
         {
-            throw new NotImplementedException();
+            return new StringExpression(span.Value);
         }
 
         public Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)
