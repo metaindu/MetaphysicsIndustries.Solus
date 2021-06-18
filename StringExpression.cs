@@ -26,5 +26,10 @@ namespace MetaphysicsIndustries.Solus
         {
             throw new System.NotImplementedException();
         }
+
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }
