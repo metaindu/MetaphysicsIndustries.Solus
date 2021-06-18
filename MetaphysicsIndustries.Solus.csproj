@@ -102,6 +102,7 @@
     <Compile Include="SolusEngine.Statistics.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
     <Compile Include="SqrtMacro.cs" />
+    <Compile Include="StringExpression.cs" />
     <Compile Include="SubstMacro.cs" />
     <Compile Include="TransformArgs.cs" />
     <Compile Include="UnaryOperation.cs" />
