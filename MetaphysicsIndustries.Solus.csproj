@@ -177,6 +177,8 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include=".gitmodules" />
+    <Content Include="MetaphysicsIndustries.Solus.nuspec" />
+    <Content Include="release.sh" />
     <Content Include="render_grammar.sh" />
     <Content Include="todo.txt" />
   </ItemGroup>
