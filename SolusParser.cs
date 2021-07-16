@@ -406,7 +406,12 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression GetStringFromString(Span span)
         {
-            return new StringExpression(span.Value);
+            var value = span.Value;
+            if (value.StartsWith("\""))
+                value = value.Substring(1, value.Length - 2);
+            else if (value.StartsWith("'"))
+                value = value.Substring(1, value.Length - 2);
+            return new StringExpression(value);
         }
 
         public Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)

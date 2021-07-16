@@ -513,6 +513,34 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[0]);
             Assert.AreEqual("a", (fcall.Arguments[0] as VariableAccess).VariableName);
         }
+
+        [Test]
+        public void TestStringParsedAsString()
+        {
+            // given
+            const string input = "\"value\"";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<StringExpression>(result);
+            var se = (StringExpression) result;
+            Assert.AreEqual("value", se.Value);
+        }
+
+        [Test]
+        public void TestStringParsedAsStringSingleQuote()
+        {
+            // given
+            const string input = "'value'";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<StringExpression>(result);
+            var se = (StringExpression) result;
+            Assert.AreEqual("value", se.Value);
+        }
     }
 }
 
