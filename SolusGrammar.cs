@@ -3,26 +3,26 @@ using MetaphysicsIndustries.Giza;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public class SolusGrammar : Grammar
+    public class SolusGrammar : NGrammar
     {
         public static readonly SolusGrammar Instance = new SolusGrammar();
 
-        public Definition def_expr = new Definition("expr");
-        public Definition def_function_002D_call = new Definition("function-call");
-        public Definition def_unary_002D_op = new Definition("unary-op");
-        public Definition def_subexpr = new Definition("subexpr");
-        public Definition def_paren = new Definition("paren");
-        public Definition def_varref = new Definition("varref");
-        public Definition def_number = new Definition("number");
-        public Definition def_float_002D_number = new Definition("float-number");
-        public Definition def_string = new Definition("string");
-        public Definition def_unicodechar = new Definition("unicodechar");
-        public Definition def_binop = new Definition("binop");
-        public Definition def_identifier = new Definition("identifier");
-        public Definition def__0024_implicit_0020_literal_0020__0028_ = new Definition("$implicit literal (");
-        public Definition def__0024_implicit_0020_literal_0020__002C_ = new Definition("$implicit literal ,");
-        public Definition def__0024_implicit_0020_literal_0020__0029_ = new Definition("$implicit literal )");
-        public Definition def__0024_implicit_0020_char_0020_class_0020__002B__002D_ = new Definition("$implicit char class +-");
+        public NDefinition def_expr = new NDefinition("expr");
+        public NDefinition def_function_002D_call = new NDefinition("function-call");
+        public NDefinition def_unary_002D_op = new NDefinition("unary-op");
+        public NDefinition def_subexpr = new NDefinition("subexpr");
+        public NDefinition def_paren = new NDefinition("paren");
+        public NDefinition def_varref = new NDefinition("varref");
+        public NDefinition def_number = new NDefinition("number");
+        public NDefinition def_float_002D_number = new NDefinition("float-number");
+        public NDefinition def_string = new NDefinition("string");
+        public NDefinition def_unicodechar = new NDefinition("unicodechar");
+        public NDefinition def_binop = new NDefinition("binop");
+        public NDefinition def_identifier = new NDefinition("identifier");
+        public NDefinition def__0024_implicit_0020_literal_0020__0028_ = new NDefinition("$implicit literal (");
+        public NDefinition def__0024_implicit_0020_literal_0020__002C_ = new NDefinition("$implicit literal ,");
+        public NDefinition def__0024_implicit_0020_literal_0020__0029_ = new NDefinition("$implicit literal )");
+        public NDefinition def__0024_implicit_0020_char_0020_class_0020__002B__002D_ = new NDefinition("$implicit char class +-");
 
         public DefRefNode node_expr_0_subexpr;
         public DefRefNode node_expr_1_binop;
