@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MetaphysicsIndustries.Giza, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\MetaphysicsIndustries.Giza.0.2.0\lib\net40\MetaphysicsIndustries.Giza.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -150,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
+    <None Include="packages.config" />
     <None Include="SolusGrammar.giza" />
     <None Include="LICENSE" />
     <None Include="README.md" />
@@ -170,13 +175,8 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MetaphysicsIndustries.Giza\MetaphysicsIndustries.Giza.csproj">
-      <Project>{98B42ACF-8370-4428-9D41-73FF1CEFB2E4}</Project>
-      <Name>MetaphysicsIndustries.Giza</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include=".gitmodules" />
+    <Content Include="render_grammar.sh" />
   </ItemGroup>
 </Project>
