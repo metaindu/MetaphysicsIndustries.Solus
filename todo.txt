@@ -1,0 +1,5 @@
+update version number
+update copyright
+update license
+    add license notices to all files
+create nuget package

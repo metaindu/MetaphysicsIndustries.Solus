@@ -178,5 +178,6 @@
     <Content Include=".gitignore" />
     <Content Include=".gitmodules" />
     <Content Include="render_grammar.sh" />
+    <Content Include="todo.txt" />
   </ItemGroup>
 </Project>
