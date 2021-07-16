@@ -1,4 +1,2 @@
 update version number
-update license
-    add license notices to all files
 create nuget package
