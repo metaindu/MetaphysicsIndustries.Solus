@@ -5,7 +5,7 @@
  *  17 November 2006                                                         *
  *  Project: Solus, Ligra                                                    *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2006 Metaphysics Industries, Inc.                            *
+ *  Copyright (c) 2006-2021 Metaphysics Industries, Inc.                     *
  *                                                                           *
  *  Converted from C++ to C# on 29 October 2007                              *
  *                                                                           *

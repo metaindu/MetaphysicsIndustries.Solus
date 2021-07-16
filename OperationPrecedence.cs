@@ -5,7 +5,7 @@
  *  30 November 2007                                                         *
  *  Project: Solus, Ligra                                                    *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2006 Metaphysics Industries, Inc.                            *
+ *  Copyright (c) 2006-2021 Metaphysics Industries, Inc.                     *
  *                                                                           *
  *  See SolusParser.Ex.cs                                                    *
  *                                                                           *
@@ -53,8 +53,8 @@ namespace MetaphysicsIndustries.Solus
     //c++
     //
     //n/a     ::
-    //LtR     . –> [array index] (function call) (member init) postfix++ postfix–– typeid() const_cast dynamic_cast reinterpret_cast static_cast
-    //RtL     sizeof ++prefix ––prefix ~ ! –unary +unary &addressof *indirection new delete (cast)
+    //LtR     . -> [array index] (function call) (member init) postfix++ postfix-- typeid() const_cast dynamic_cast reinterpret_cast static_cast
+    //RtL     sizeof ++prefix --prefix ~ ! -unary +unary &addressof *indirection new delete (cast)
     //LtR     .* ->*
     //LtR     * / %
     //LtR     + - 
@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus
     //LtR     &&
     //LtR     ||
     //RtL     ?:
-    //RtL     = *= /= %= += –= <<= >>= &= |= ^=
+    //RtL     = *= /= %= += -= <<= >>= &= |= ^=
     //RtL     throw
     //LtR     ,
 

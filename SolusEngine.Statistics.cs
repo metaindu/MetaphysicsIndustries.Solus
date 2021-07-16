@@ -5,7 +5,7 @@
  *  16 April 2008                                                            *
  *  Project: Solus, Ligra                                                    *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2008 Metaphysics Industries, Inc.                            *
+ *  Copyright (c) 2008-2021 Metaphysics Industries, Inc.                     *
  *                                                                           *
  *  The central core of processing in Solus. Does some rudimentary parsing   *
  *    and evaluation and stuff.                                              *

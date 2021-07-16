@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Solus")]
-[assembly: AssemblyDescription("Advanced Mathematics Library")]
+[assembly: AssemblyTitle("MetaphysicsIndustries.Solus")]
+[assembly: AssemblyDescription("Mathematics Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Metaphysics Industries, Inc.")]
-[assembly: AssemblyProduct("Solus")]
-[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Inc. 2008")]
+[assembly: AssemblyProduct("MetaphysicsIndustries.Solus")]
+[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Inc. 2008-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

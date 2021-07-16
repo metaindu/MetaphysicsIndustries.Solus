@@ -5,7 +5,7 @@
  *  16 February 2010                                                         *
  *  Project: Solus, Ligra                                                    *
  *  Written by: Richard Sartor                                               *
- *  Copyright © 2010 Metaphysics Industries, Inc.                            *
+ *  Copyright (c) 2010-2021 Metaphysics Industries, Inc.                     *
  *                                                                           *
  *  Some helpful methods for evaluating expressions across intervals.        *
  *                                                                           *

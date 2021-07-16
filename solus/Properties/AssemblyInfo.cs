@@ -4,11 +4,11 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 [assembly: AssemblyTitle("solus")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Mathematics command-line program")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("izrik")]
+[assembly: AssemblyCompany("Metaphysics Industries, Inc.")]
+[assembly: AssemblyProduct("MetaphysicsIndustries.Giza")]
+[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Inc. 2006-2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
