@@ -177,5 +177,6 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include=".gitmodules" />
+    <Content Include="render_grammar.sh" />
   </ItemGroup>
 </Project>
