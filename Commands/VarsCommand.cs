@@ -6,6 +6,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 {
     public class VarsCommand : Command
     {
+        public static readonly VarsCommand Value = new VarsCommand();
+
+        public override string Name => "vars";
         public override string DocString =>
             @"vars - Print a list of all defined variables";
 
@@ -29,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Commands
                 sb.AppendLine($"{name} = {valueString}");
             }
             
-            Console.WriteLine(sb.ToString());
+            Console.Write(sb.ToString());
         }
     }
 }

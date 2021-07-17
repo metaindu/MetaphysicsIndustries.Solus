@@ -5,6 +5,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 {
     public class VarAssignCommand : Command
     {
+        public static readonly VarAssignCommand Value =
+            new VarAssignCommand(null, null);
+
         public VarAssignCommand(string name, Expression expr)
         {
             _name = name;

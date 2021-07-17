@@ -79,6 +79,19 @@ namespace MetaphysicsIndustries.Solus
                 {
                     AddMacro(macro);
                 }
+
+                var commands = new List<Command>
+                {
+                    DeleteCommand.Value,
+                    FuncAssignCommand.Value,
+                    HelpCommand.Value,
+                    VarAssignCommand.Value,
+                    VarsCommand.Value,
+                };
+                foreach (var command in commands)
+                {
+                    AddCommand(command);
+                }
             }
         }
 

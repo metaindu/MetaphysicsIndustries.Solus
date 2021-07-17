@@ -7,6 +7,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 {
     public class DeleteCommand : Command
     {
+        public static readonly DeleteCommand Value =
+            new DeleteCommand(new string[] { });
+
         public DeleteCommand(IEnumerable<string> names)
         {
             _names = names.ToArray();

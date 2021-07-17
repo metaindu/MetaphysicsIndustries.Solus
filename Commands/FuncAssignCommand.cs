@@ -5,6 +5,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 {
     public class FuncAssignCommand : Command
     {
+        public static readonly FuncAssignCommand Value =
+            new FuncAssignCommand(null);
+
         public FuncAssignCommand(UserDefinedFunction func)
         {
             _func = func;
