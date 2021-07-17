@@ -21,6 +21,24 @@
  */
 
 
+commands = ( command ';' )* command ';'? ;
+
+command = (
+    help-command |
+    var-assign-command |
+    func-assign-command |
+    vars-command |
+    delete-command
+);
+
+help-command = 'help' identifier?:topic;
+var-assign-command = varref ':=' expr;
+func-assign-command = identifier:name
+    '(' ( identifier:param ( ',' identifier:param )* )? ')'
+    ':=' expr ;
+vars-command = ( 'vars' | 'variables' );
+delete-command = 'delete' varref varref* ;
+
 expr = subexpr ( binop subexpr )*;
 
 function-call = identifier:name '(' ( expr:arg ( ',' expr:arg )* )? ')';
