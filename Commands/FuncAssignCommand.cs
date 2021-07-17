@@ -11,7 +11,9 @@ namespace MetaphysicsIndustries.Solus.Commands
         }
 
         private readonly UserDefinedFunction _func;
-        
+
+        public override string Name => "func_assign";
+
         public override void Execute(string input, SolusEnvironment env)
         {
             if (env.Functions.ContainsKey(_func.DisplayName))

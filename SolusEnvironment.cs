@@ -20,10 +20,8 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using MetaphysicsIndustries.Solus.Commands;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -87,6 +85,8 @@ namespace MetaphysicsIndustries.Solus
         public readonly Dictionary<string, Expression> Variables = new Dictionary<string, Expression>();
         public readonly Dictionary<string, Function> Functions = new Dictionary<string, Function>();
         public readonly Dictionary<string, Macro> Macros = new Dictionary<string, Macro>();
+        public readonly Dictionary<string, Command> Commands =
+            new Dictionary<string, Command>();
 
         public void AddFunction(Function func)
         {
@@ -96,6 +96,11 @@ namespace MetaphysicsIndustries.Solus
         public void AddMacro(Macro macro)
         {
             Macros.Add(macro.Name, macro);
+        }
+
+        public void AddCommand(Command command)
+        {
+            Commands.Add(command.Name, command);
         }
 
         public SolusEnvironment CreateChildEnvironment()
@@ -115,6 +120,11 @@ namespace MetaphysicsIndustries.Solus
             foreach (var macro in this.Macros.Values)
             {
                 env2.AddMacro(macro);
+            }
+
+            foreach (var command in this.Commands.Values)
+            {
+                env2.AddCommand(command);
             }
 
             return env2;

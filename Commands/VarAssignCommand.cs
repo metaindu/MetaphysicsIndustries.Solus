@@ -13,7 +13,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 
         private readonly string _name;
         private readonly Expression _expr;
-        
+
+        public override string Name => "var_assign";
+
         public override void Execute(string input, SolusEnvironment env)
         {
             env.Variables[_name] = _expr;

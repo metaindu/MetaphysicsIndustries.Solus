@@ -13,7 +13,8 @@ namespace MetaphysicsIndustries.Solus.Commands
         }
 
         private readonly string[] _names;
-        
+
+        public override string Name => "delete";
         public override string DocString =>
             @"delete - Delete one or more object
 

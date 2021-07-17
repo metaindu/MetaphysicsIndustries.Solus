@@ -23,6 +23,7 @@ namespace MetaphysicsIndustries.Solus.Commands
 
         private readonly string _topic;
 
+        public override string Name => "help";
         public override string DocString =>
 @"help - Get help about a topic
 
