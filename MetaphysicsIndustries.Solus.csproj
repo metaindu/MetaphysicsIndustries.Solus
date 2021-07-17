@@ -63,6 +63,12 @@
     <Compile Include="CleanUpTransformer.cs" />
     <Compile Include="CloneTransformer.cs" />
     <Compile Include="ColorExpression.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\DeleteCommand.cs" />
+    <Compile Include="Commands\FuncAssignCommand.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\VarsCommand.cs" />
+    <Compile Include="Commands\VarAssignCommand.cs" />
     <Compile Include="ComparisonOperation.cs" />
     <Compile Include="CosecantFunction.cs" />
     <Compile Include="CosineFunction.cs" />
