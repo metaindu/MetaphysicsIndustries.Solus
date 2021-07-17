@@ -25,6 +25,7 @@ using NDesk.Options;
 using System.Reflection;
 using MetaphysicsIndustries.Solus;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Commands;
 using Mono.Terminal;
 
 namespace solus
@@ -91,13 +92,35 @@ namespace solus
 
                     while ((line = le.Edit(">>> ", "")) != null)
                     {
+                        if (string.IsNullOrWhiteSpace(line)) continue;
+
+                        Command[] commands = null;
+                        Expression expr = null;
+                        Exception ex = null;
+
                         try
                         {
-                            var expr = parser.GetExpression(line, env);
-                            var result = expr.PreliminaryEval(env);
-                            Console.WriteLine(result);
+                            commands = parser.GetCommands(line, env);
                         }
-                        catch (Exception ex)
+                        catch (Exception _ex)
+                        {
+                            ex = _ex;
+                        }
+
+                        if (ex != null)
+                        {
+                            try
+                            {
+                                expr = parser.GetExpression(line, env);
+                                ex = null;
+                            }
+                            catch (Exception _ex)
+                            {
+                                ex = _ex;
+                            }
+                        }
+
+                        if (ex != null)
                         {
                             Console.Write("There was an error");
                             if (verbose)
@@ -106,9 +129,19 @@ namespace solus
                                 Console.WriteLine(ex.ToString());
                             }
                             else
-                            {
                                 Console.WriteLine();
-                            }
+                            continue;
+                        }
+
+                        if (commands != null)
+                        {
+                            foreach (var command in commands)
+                                command.Execute(line, env);
+                        }
+                        else if (expr != null)
+                        {
+                            var result = expr.PreliminaryEval(env);
+                            Console.WriteLine(result);
                         }
                     }
                 }
