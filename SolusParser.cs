@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Giza;
+using MetaphysicsIndustries.Solus.Commands;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -31,6 +32,7 @@ namespace MetaphysicsIndustries.Solus
     {
         protected SolusGrammar _grammar;
         protected Parser _parser;
+        protected Parser _parserC;
         protected Spanner _numberSpanner;
 
         public SolusParser()
@@ -41,6 +43,7 @@ namespace MetaphysicsIndustries.Solus
         {
             _grammar = grammar;
             _parser = new Parser(_grammar.def_expr);
+            _parserC = new Parser(_grammar.def_commands);
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
         }
 
@@ -83,6 +86,29 @@ namespace MetaphysicsIndustries.Solus
             return expr;
         }
 
+        public Command[] GetCommands(string input, SolusEnvironment env = null)
+        {
+            if (env == null)
+                env = new SolusEnvironment();
+            var errors = new List<Error>();
+            var spans = _parserC.Parse(input.ToCharacterSource(), errors);
+            if (errors.ContainsNonWarnings())
+                throw new InvalidOperationException();
+            if (spans.Length < 1)
+                throw new InvalidOperationException();
+            if (spans.Length > 1)
+                throw new InvalidOperationException();
+            var span = spans[0];
+
+            var commands = new List<Command>();
+            foreach (var sub in span.Subspans)
+            {
+                if (sub.DefRef != _grammar.def_command) continue;
+                commands.Add(GetCommandFromCommand(sub, env));
+            }
+            return commands.ToArray();
+        }
+
         Dictionary<Function, int> _operatorPrecedence = new Dictionary<Function, int>() {
             { AdditionOperation.Value, 120 },
             { MultiplicationOperation.Value, 130 },
@@ -92,6 +118,77 @@ namespace MetaphysicsIndustries.Solus
             { BitwiseAndOperation.Value, 100 },
             { BitwiseOrOperation.Value, 80 },
         };
+
+        Command GetCommandFromCommand(Span span, SolusEnvironment env)
+        {
+            var sub = span.Subspans[0];
+            var def = sub.DefRef;
+
+            if (def == _grammar.def_delete_002D_command)
+                return GetDeleteCommandFromSpan(sub, env);
+            if (def == _grammar.def_func_002D_assign_002D_command)
+                return GetFuncAssignCommandFromSpan(sub, env);
+            if (def == _grammar.def_help_002D_command)
+                return GetHelpCommandFromSpan(sub, env);
+            if (def == _grammar.def_var_002D_assign_002D_command)
+                return GetVarAssignCommandFromSpan(sub, env);
+            if (def == _grammar.def_vars_002D_command)
+                return GetVarsCommandFromSpan(sub, env);
+
+            throw new InvalidOperationException();
+        }
+
+        Command GetDeleteCommandFromSpan(Span span, SolusEnvironment env)
+        {
+            var names = span.Subspans.Skip(1).
+                Select(sub => sub.Subspans[0].Value);
+            return new DeleteCommand(names);
+        }
+
+        Command GetFuncAssignCommandFromSpan(Span span, SolusEnvironment env)
+        {
+            var funcname = span.Subspans[0].Value;
+
+            var args = span.Subspans.Skip(1).
+                Where(sub => sub.DefRef == _grammar.def_identifier).
+                Select(sub => sub.Value).
+                ToArray();
+
+            var env2 = env.CreateChildEnvironment();
+
+            // create the function, with no expr
+            var func = new UserDefinedFunction(funcname, args, null);
+            if (env2.Functions.ContainsKey(funcname))
+                env2.Functions.Remove(funcname);
+            env2.AddFunction(func);
+
+            // read the expr. this order of things allows for recursion
+            var expr = GetExpressionFromExpr(span.Subspans.Last(), env2);
+            func.Expression = expr;
+
+            return new FuncAssignCommand(func);
+        }
+
+        Command GetHelpCommandFromSpan(Span span, SolusEnvironment env)
+        {
+            var topic = "help";
+            if (span.Subspans.Count >= 2)
+                topic = span.Subspans[1].Value;
+            return new HelpCommand(topic);
+        }
+
+        Command GetVarAssignCommandFromSpan(Span span, SolusEnvironment env)
+        {
+            var varname = span.Subspans[0].Subspans[0].Value;
+            var expr = GetExpressionFromExpr(span.Subspans[2], env);
+            expr = expr.PreliminaryEval(env);
+            return new VarAssignCommand(varname, expr);
+        }
+
+        Command GetVarsCommandFromSpan(Span span, SolusEnvironment env)
+        {
+            return new VarsCommand();
+        }
 
         public Expression GetExpressionFromExpr(Span span, SolusEnvironment env)
         {
