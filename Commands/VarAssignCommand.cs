@@ -39,6 +39,15 @@ namespace MetaphysicsIndustries.Solus.Commands
         private readonly Expression _expr;
 
         public override string Name => "var_assign";
+        public override string DocString =>
+            @"var assign - store a value as a variable
+
+  <name> := <expr>
+
+  name
+    The name of the variable.
+  expr
+    An expression to evaluate to determine the value of the variable.";
 
         public override void Execute(string input, SolusEnvironment env)
         {

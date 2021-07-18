@@ -38,6 +38,18 @@ namespace MetaphysicsIndustries.Solus.Commands
         private readonly UserDefinedFunction _func;
 
         public override string Name => "func_assign";
+        public override string DocString =>
+            @"function assign - define a new function
+
+  <name>(<p1>, <p2>, <p3>...) := <expr>
+
+  name
+    The name of the function to create.
+  p1, p2, p3...
+    Names of zero or more parameters to the function.
+  expr
+    The body of the function. Occurrences of any parameters will be replaced
+    with the values passed as arguments when the function is called.";
 
         public override void Execute(string input, SolusEnvironment env)
         {
