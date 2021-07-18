@@ -44,7 +44,6 @@ namespace MetaphysicsIndustries.Solus.Commands
             @"delete - Delete one or more object
 
   delete <var> [<var>...]
-  del <var> [<var>...]
 
   var
     The name of a variable, function, or macro.
