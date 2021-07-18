@@ -133,15 +133,31 @@ namespace solus
                             continue;
                         }
 
-                        if (commands != null)
+                        try
                         {
-                            foreach (var command in commands)
-                                command.Execute(line, env);
+                            if (commands != null)
+                            {
+                                foreach (var command in commands)
+                                    command.Execute(line, env);
+                            }
+                            else if (expr != null)
+                            {
+                                var result = expr.PreliminaryEval(env);
+                                Console.WriteLine(result);
+                            }
                         }
-                        else if (expr != null)
+                        catch (Exception _ex)
                         {
-                            var result = expr.PreliminaryEval(env);
-                            Console.WriteLine(result);
+                            Console.Write("There was an error");
+                            if (verbose)
+                            {
+                                Console.WriteLine(":");
+                                Console.WriteLine(_ex.ToString());
+                            }
+                            else
+                            {
+                                Console.WriteLine();
+                            }
                         }
                     }
                 }
