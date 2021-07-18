@@ -1,1 +1,3 @@
-create nuget package
+create nuget package for cli program
+re-org
+    folder for functions, folder for macros, folder for expressions, etc
