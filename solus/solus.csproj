@@ -44,4 +44,7 @@
       <Name>MetaphysicsIndustries.Solus</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="soluscli.nuspec" />
+  </ItemGroup>
 </Project>
