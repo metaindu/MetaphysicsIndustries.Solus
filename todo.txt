@@ -1,4 +1,3 @@
-create nuget package for cli program
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
