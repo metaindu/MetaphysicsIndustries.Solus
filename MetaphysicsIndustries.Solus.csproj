@@ -55,10 +55,8 @@
     <Compile Include="Commands\VarsCommand.cs" />
     <Compile Include="Commands\VarAssignCommand.cs" />
     <Compile Include="DerivativeOfVariable.cs" />
-    <Compile Include="DeriveMacro.cs" />
     <Compile Include="Expression.cs" />
     <Compile Include="ExpressionTransformer.cs" />
-    <Compile Include="FeedbackMacro.cs" />
     <Compile Include="Function.cs" />
     <Compile Include="FunctionCall.cs" />
     <Compile Include="Functions\AbsoluteValueFunction.cs" />
@@ -117,16 +115,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Macro.cs" />
+    <Compile Include="Macros\AssignMacro.cs" />
+    <Compile Include="Macros\DeleteMacro.cs" />
+    <Compile Include="Macros\DeriveMacro.cs" />
+    <Compile Include="Macros\FeedbackMacro.cs" />
+    <Compile Include="Macros\RandMacro.cs" />
+    <Compile Include="Macros\SqrtMacro.cs" />
+    <Compile Include="Macros\SubstMacro.cs" />
     <Compile Include="PolynomialTransformer.cs" />
-    <Compile Include="RandMacro.cs" />
     <Compile Include="RatioOfPolynomialsTransformer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="PolynomialSimplifier.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
-    <Compile Include="SqrtMacro.cs" />
     <Compile Include="StringExpression.cs" />
-    <Compile Include="SubstMacro.cs" />
     <Compile Include="TransformArgs.cs" />
     <Compile Include="VariableTransformArgs.cs" />
     <Compile Include="SolusAction.cs" />
@@ -153,8 +155,6 @@
     <Compile Include="Instruction.cs" />
     <Compile Include="VariableToArgumentNumberMapper.cs" />
     <Compile Include="STuple.cs" />
-    <Compile Include="AssignMacro.cs" />
-    <Compile Include="DeleteMacro.cs" />
     <Compile Include="UserDefinedFunction.cs" />
     <Compile Include="MemoryImage.cs" />
   </ItemGroup>
@@ -187,8 +187,5 @@
     <Content Include="release.sh" />
     <Content Include="render_grammar.sh" />
     <Content Include="todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Macros" />
   </ItemGroup>
 </Project>
