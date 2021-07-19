@@ -30,13 +30,10 @@
 
 using System;
 using System.Collections.Generic;
-
 using System.Reflection.Emit;
-using System.Linq;
-using System.Text;
 using MetaphysicsIndustries.Giza;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
 	public abstract class Expression : IDisposable, ICloneable
 	{

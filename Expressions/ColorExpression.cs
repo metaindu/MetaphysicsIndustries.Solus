@@ -21,11 +21,9 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Drawing;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class ColorExpression : Expression
     {

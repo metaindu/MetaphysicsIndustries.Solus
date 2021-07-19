@@ -22,10 +22,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class SolusMatrix : SolusTensor//, IEnumerable<Expression>
     //, IEnumerable<RowVector>

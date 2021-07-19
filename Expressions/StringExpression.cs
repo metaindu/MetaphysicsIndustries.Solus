@@ -21,9 +21,8 @@
  */
 
 using System;
-using System.Collections.Generic;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class StringExpression : Expression
     {

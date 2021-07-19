@@ -20,6 +20,8 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Expressions;
+
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class BitwiseOrOperation : AssociativeCommutativeOperation

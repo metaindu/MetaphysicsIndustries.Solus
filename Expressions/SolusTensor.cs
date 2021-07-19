@@ -20,11 +20,9 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
     public abstract class SolusTensor : Expression, IEnumerable<Expression>
     {

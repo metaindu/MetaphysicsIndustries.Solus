@@ -22,10 +22,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using MetaphysicsIndustries.Solus.Functions;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class SolusVector : SolusTensor//, IEnumerable<Expression>
     {

@@ -33,6 +33,7 @@ using System;
 using System.Collections.Generic;
 
 using System.Drawing;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus

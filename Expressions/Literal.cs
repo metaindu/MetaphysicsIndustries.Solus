@@ -31,9 +31,7 @@
 using System;
 using System.Collections.Generic;
 
-using System.Linq;
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
 	public class Literal : Expression
 	{

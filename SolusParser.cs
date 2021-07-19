@@ -25,7 +25,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus
 {

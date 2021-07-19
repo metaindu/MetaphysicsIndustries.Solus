@@ -26,6 +26,7 @@ using System.Reflection;
 using MetaphysicsIndustries.Solus;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Expressions;
 using Mono.Terminal;
 
 namespace solus

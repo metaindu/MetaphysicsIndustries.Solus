@@ -37,6 +37,8 @@ using System;
 using System.Collections.Generic;
 
 using MetaphysicsIndustries.Giza;
+using MetaphysicsIndustries.Solus.Expressions;
+using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus
 {
