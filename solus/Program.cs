@@ -25,6 +25,7 @@ using NDesk.Options;
 using System.Reflection;
 using MetaphysicsIndustries.Solus;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Commands;
 using Mono.Terminal;
 
 namespace solus
@@ -82,35 +83,7 @@ namespace solus
                 }
                 else
                 {
-                    //repl
-                    var parser = new SolusParser();
-                    var env = new SolusEnvironment();
-
-                    var le = new LineEditor("solus");
-                    string line;
-
-                    while ((line = le.Edit(">>> ", "")) != null)
-                    {
-                        try
-                        {
-                            var expr = parser.GetExpression(line, env);
-                            var result = expr.PreliminaryEval(env);
-                            Console.WriteLine(result);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.Write("There was an error");
-                            if (verbose)
-                            {
-                                Console.WriteLine(":");
-                                Console.WriteLine(ex.ToString());
-                            }
-                            else
-                            {
-                                Console.WriteLine();
-                            }
-                        }
-                    }
+                    Repl();
                 }
             }
             catch (Exception ex)
@@ -124,6 +97,87 @@ namespace solus
                 else
                 {
                     Console.WriteLine();
+                }
+            }
+        }
+
+        private static void Repl()
+        {
+            var parser = new SolusParser();
+            var env = new SolusEnvironment();
+
+            var le = new LineEditor("solus");
+            string line;
+
+            while ((line = le.Edit(">>> ", "")) != null)
+            {
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                Command[] commands = null;
+                Expression expr = null;
+                Exception ex = null;
+
+                try
+                {
+                    commands = parser.GetCommands(line, env);
+                }
+                catch (Exception _ex)
+                {
+                    ex = _ex;
+                }
+
+                if (ex != null)
+                {
+                    try
+                    {
+                        expr = parser.GetExpression(line, env);
+                        ex = null;
+                    }
+                    catch (Exception _ex)
+                    {
+                        ex = _ex;
+                    }
+                }
+
+                if (ex != null)
+                {
+                    Console.Write("There was an error");
+                    if (verbose)
+                    {
+                        Console.WriteLine(":");
+                        Console.WriteLine(ex.ToString());
+                    }
+                    else
+                        Console.WriteLine();
+
+                    continue;
+                }
+
+                try
+                {
+                    if (commands != null)
+                    {
+                        foreach (var command in commands)
+                            command.Execute(line, env);
+                    }
+                    else if (expr != null)
+                    {
+                        var result = expr.PreliminaryEval(env);
+                        Console.WriteLine(result);
+                    }
+                }
+                catch (Exception _ex)
+                {
+                    Console.Write("There was an error");
+                    if (verbose)
+                    {
+                        Console.WriteLine(":");
+                        Console.WriteLine(_ex.ToString());
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
                 }
             }
         }

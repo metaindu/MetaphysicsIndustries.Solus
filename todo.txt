@@ -1,1 +1,6 @@
-create nuget package
+create nuget package for cli program
+re-org
+    folder for functions, folder for macros, folder for expressions, etc
+unify the namespace
+    so that `vars` and `delete` and friends all work consistently and
+    predictably
