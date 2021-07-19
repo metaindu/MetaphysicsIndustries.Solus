@@ -1,0 +1,127 @@
+
+/*
+ *  MetaphysicsIndustries.Solus
+ *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 3 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ *  USA
+ *
+ */
+
+/*****************************************************************************
+ *                                                                           *
+ *  Operation.cs                                                             *
+ *                                                                           *
+ *  A specialized function which represents simple arithmetical operations   *
+ *    such as addition of two numbers.                                       *
+ *                                                                           *
+ *****************************************************************************/
+
+using System;
+using System.Collections.Generic;
+
+namespace MetaphysicsIndustries.Solus.Functions
+{
+	public abstract class Operation : Function
+	{
+        public abstract OperationPrecedence Precedence
+        {
+            get;
+        }
+
+        //public override Expression CleanUp(Expression[] args)
+        //{
+        //    return InternalCleanUp(args);
+        //}
+
+        public virtual bool IsCommutative   // a @ b == b @ a
+        {
+            get { return false; }
+        }
+        public virtual bool IsAssociative   // (a @ b) @ c == a @ (b @ c)
+        {
+            get { return false; }
+        }
+
+        public virtual bool HasIdentityValue
+        {
+            get { return true; }
+        }
+
+        public virtual float IdentityValue
+        {
+            get { return 1; }
+        }
+
+        //protected abstract Expression InternalCleanUp(Expression[] args);
+
+        //protected Expression[] CleanUpPartAssociativeOperation(Expression[] args)
+        //{
+        //    List<FunctionCall> assocOps = new List<FunctionCall>();
+        //    (new FunctionCall(this, args)).GatherMatchingFunctionCalls(assocOps);
+
+        //    Set<FunctionCall> assocOpsSet = new Set<FunctionCall>(assocOps);
+        //    Literal combinedLiteral = null;
+
+        //    combinedLiteral = new Literal(IdentityValue);
+
+        //    List<Expression> nonLiterals = new List<Expression>(assocOps.Count);
+
+        //    foreach (FunctionCall opToCombine in assocOps)
+        //    {
+        //        foreach (Expression arg in opToCombine.Arguments)
+        //        {
+        //            if (!(arg is FunctionCall) ||
+        //                !(assocOpsSet.Contains(arg as FunctionCall)))
+        //            {
+        //                if (arg is Literal)
+        //                {
+        //                    combinedLiteral = Call(null, combinedLiteral, arg);
+        //                }
+        //                else
+        //                {
+        //                    nonLiterals.Add(arg);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    args = InternalCleanUpPartAssociativeOperation(args, combinedLiteral, nonLiterals);
+
+        //    return args;
+        //}
+
+        //protected abstract Expression[] InternalCleanUpPartAssociativeOperation(Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals);
+
+        public override string ToString(List<Expression> arguments)
+        {
+            string[] strs = Array.ConvertAll<Expression, string>(arguments.ToArray(), Expression.ToString);
+
+            int i;
+            for (i = 0; i < strs.Length; i++)
+            {
+                if (arguments[i] is FunctionCall &&
+                    arguments[i].As<FunctionCall>().Function is Operation &&
+                    arguments[i].As<FunctionCall>().Function.As<Operation>().Precedence < Precedence)
+                {
+                    strs[i] = "(" + strs[i] + ")";
+                }
+            }
+
+            return string.Join(" " + DisplayName + " ", strs);
+        }
+
+    }
+}
