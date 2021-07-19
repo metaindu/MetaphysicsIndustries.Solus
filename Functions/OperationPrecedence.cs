@@ -28,11 +28,7 @@
  *                                                                           *
  *****************************************************************************/
 
-using System;
-using System.Collections.Generic;
-
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Functions
 {
     public enum OperationPrecedence
     {
