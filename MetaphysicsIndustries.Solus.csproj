@@ -46,7 +46,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloneTransformer.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\FuncAssignCommand.cs" />
@@ -64,7 +63,6 @@
     <Compile Include="Expressions\SolusVector.cs" />
     <Compile Include="Expressions\StringExpression.cs" />
     <Compile Include="Expressions\VariableAccess.cs" />
-    <Compile Include="ExpressionTransformer.cs" />
     <Compile Include="Function.cs" />
     <Compile Include="Functions\AbsoluteValueFunction.cs" />
     <Compile Include="Functions\AdditionOperation.cs" />
@@ -81,12 +79,10 @@
     <Compile Include="Functions\BitwiseOrOperation.cs" />
     <Compile Include="Functions\CatmullRomSpline.cs" />
     <Compile Include="Functions\CeilingFunction.cs" />
-    <Compile Include="Functions\CleanUpTransformer.cs" />
     <Compile Include="Functions\ComparisonOperation.cs" />
     <Compile Include="Functions\CosecantFunction.cs" />
     <Compile Include="Functions\CosineFunction.cs" />
     <Compile Include="Functions\CotangentFunction.cs" />
-    <Compile Include="Functions\DerivativeTransformer.cs" />
     <Compile Include="Functions\DistFunction.cs" />
     <Compile Include="Functions\DistSqFunction.cs" />
     <Compile Include="Functions\DivisionOperation.cs" />
@@ -117,7 +113,6 @@
     <Compile Include="Functions\TangentFunction.cs" />
     <Compile Include="Functions\UnaryOperation.cs" />
     <Compile Include="Functions\UnitStepFunction.cs" />
-    <Compile Include="IntegralTransformer.cs" />
     <Compile Include="IPerPixelOperator.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -129,14 +124,19 @@
     <Compile Include="Macros\RandMacro.cs" />
     <Compile Include="Macros\SqrtMacro.cs" />
     <Compile Include="Macros\SubstMacro.cs" />
-    <Compile Include="PolynomialTransformer.cs" />
-    <Compile Include="RatioOfPolynomialsTransformer.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="PolynomialSimplifier.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
-    <Compile Include="TransformArgs.cs" />
-    <Compile Include="VariableTransformArgs.cs" />
+    <Compile Include="Transformers\CleanUpTransformer.cs" />
+    <Compile Include="Transformers\CloneTransformer.cs" />
+    <Compile Include="Transformers\DerivativeTransformer.cs" />
+    <Compile Include="Transformers\ExpressionTransformer.cs" />
+    <Compile Include="Transformers\IntegralTransformer.cs" />
+    <Compile Include="Transformers\PolynomialSimplifier.cs" />
+    <Compile Include="Transformers\PolynomialTransformer.cs" />
+    <Compile Include="Transformers\RatioOfPolynomialsTransformer.cs" />
+    <Compile Include="Transformers\SubstTransformer.cs" />
+    <Compile Include="Transformers\TransformArgs.cs" />
     <Compile Include="SolusAction.cs" />
     <Compile Include="OperationPrecedence.cs" />
     <Compile Include="ProductExpression.cs" />
@@ -147,12 +147,12 @@
     <Compile Include="SolusEngine.Modulators.cs" />
     <Compile Include="SolusParseException.cs" />
     <Compile Include="SolusParser.cs" />
-    <Compile Include="SubstTransformer.cs" />
     <Compile Include="SolusGrammar.cs" />
     <Compile Include="SolusEnvironment.cs" />
     <Compile Include="IExpressionVisitor.cs" />
     <Compile Include="SingleHelper.cs" />
     <Compile Include="Instruction.cs" />
+    <Compile Include="Transformers\VariableTransformArgs.cs" />
     <Compile Include="VariableToArgumentNumberMapper.cs" />
     <Compile Include="STuple.cs" />
     <Compile Include="UserDefinedFunction.cs" />

@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Transformers;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {

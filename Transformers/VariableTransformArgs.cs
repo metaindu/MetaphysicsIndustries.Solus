@@ -21,10 +21,8 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Transformers
 {
     public class VariableTransformArgs : TransformArgs
     {

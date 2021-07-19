@@ -20,23 +20,9 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using MetaphysicsIndustries.Solus.Expressions;
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Transformers
 {
-    public abstract class ExpressionTransformer<T>
-        where T : TransformArgs
+    public abstract class TransformArgs 
     {
-        public abstract bool CanTransform(Expression expr, T args);
-        public abstract Expression Transform(Expression expr, T args);
-    }
-
-    public abstract class ExpressionTransformer
-    {
-        public abstract bool CanTransform(Expression expr);
-        public abstract Expression Transform(Expression expr);
     }
 }

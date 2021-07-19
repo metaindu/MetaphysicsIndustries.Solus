@@ -22,12 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Transformers
 {
     public class PolynomialTransformer : ExpressionTransformer<VariableTransformArgs>
     {

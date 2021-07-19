@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Transformers
 {
     public class SubstTransformer : ExpressionTransformer<SubstTransformer.SubstTransformArgs>
     {

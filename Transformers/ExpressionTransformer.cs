@@ -20,23 +20,20 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using MetaphysicsIndustries.Solus.Expressions;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Transformers
 {
-    public class IntegralTransformer : ExpressionTransformer<VariableTransformArgs>
+    public abstract class ExpressionTransformer<T>
+        where T : TransformArgs
     {
-        public override bool CanTransform(Expression expr, VariableTransformArgs args)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
+        public abstract bool CanTransform(Expression expr, T args);
+        public abstract Expression Transform(Expression expr, T args);
+    }
 
-        public override Expression Transform(Expression expr, VariableTransformArgs args)
-        {
-            throw new Exception("The method or operation is not implemented.");
-        }
+    public abstract class ExpressionTransformer
+    {
+        public abstract bool CanTransform(Expression expr);
+        public abstract Expression Transform(Expression expr);
     }
 }

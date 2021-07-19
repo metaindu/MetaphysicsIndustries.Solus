@@ -21,22 +21,20 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using MetaphysicsIndustries.Solus.Expressions;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Transformers
 {
-    public class CloneTransformer : ExpressionTransformer
+    public class IntegralTransformer : ExpressionTransformer<VariableTransformArgs>
     {
-        public override bool CanTransform(Expression expr)
+        public override bool CanTransform(Expression expr, VariableTransformArgs args)
         {
-            return (expr != null);
+            throw new Exception("The method or operation is not implemented.");
         }
 
-        public override Expression Transform(Expression expr)
+        public override Expression Transform(Expression expr, VariableTransformArgs args)
         {
-            return expr.Clone();
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

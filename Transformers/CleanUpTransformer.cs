@@ -23,8 +23,9 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
-namespace MetaphysicsIndustries.Solus.Functions
+namespace MetaphysicsIndustries.Solus.Transformers
 {
     public class CleanUpTransformer : ExpressionTransformer
     {

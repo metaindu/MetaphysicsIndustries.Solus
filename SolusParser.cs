@@ -27,6 +27,7 @@ using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Transformers;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus
