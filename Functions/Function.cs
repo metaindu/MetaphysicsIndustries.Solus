@@ -35,12 +35,10 @@
 
 using System;
 using System.Collections.Generic;
-
-using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Expressions;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract partial class Function
 	{

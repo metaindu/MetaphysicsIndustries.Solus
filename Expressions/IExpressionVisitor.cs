@@ -21,9 +21,8 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Expressions;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
     public interface IExpressionVisitor
     {

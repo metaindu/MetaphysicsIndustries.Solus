@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
@@ -20,13 +19,12 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-//namespace Solus
+namespace MetaphysicsIndustries.Solus.Expressions
+{
+ //namespace Solus
 //{
 //    public abstract class ProductExpression : MetaphysicsIndustries.Solus.Expression
 //    {
 //    }
 //}
+}

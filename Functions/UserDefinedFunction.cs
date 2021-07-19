@@ -20,10 +20,9 @@
  *
  */
 
-using System;
 using MetaphysicsIndustries.Solus.Expressions;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Functions
 {
     public class UserDefinedFunction : Function
     {

@@ -31,6 +31,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -124,7 +125,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public Solus.Function Function
+        public Function Function
         {
             get
             {
