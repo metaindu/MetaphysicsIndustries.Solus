@@ -32,6 +32,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Giza;
+using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Expressions

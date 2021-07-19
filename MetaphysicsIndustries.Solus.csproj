@@ -52,6 +52,8 @@
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\VarsCommand.cs" />
     <Compile Include="Commands\VarAssignCommand.cs" />
+    <Compile Include="Compiler\Instruction.cs" />
+    <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
     <Compile Include="Expressions\ColorExpression.cs" />
     <Compile Include="Expressions\DerivativeOfVariable.cs" />
     <Compile Include="Expressions\Expression.cs" />
@@ -152,9 +154,7 @@
     <Compile Include="SolusGrammar.cs" />
     <Compile Include="SolusEnvironment.cs" />
     <Compile Include="SingleHelper.cs" />
-    <Compile Include="Instruction.cs" />
     <Compile Include="Transformers\VariableTransformArgs.cs" />
-    <Compile Include="VariableToArgumentNumberMapper.cs" />
     <Compile Include="STuple.cs" />
     <Compile Include="MemoryImage.cs" />
   </ItemGroup>

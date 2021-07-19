@@ -35,6 +35,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 

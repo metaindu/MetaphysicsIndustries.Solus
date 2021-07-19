@@ -24,7 +24,7 @@ using System;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Compiler
 {
     public struct Instruction
     {

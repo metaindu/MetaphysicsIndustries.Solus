@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {

@@ -20,10 +20,9 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Compiler
 {
     public class VariableToArgumentNumberMapper
     {
