@@ -45,6 +45,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="release.sh" />
     <Content Include="soluscli.nuspec" />
   </ItemGroup>
 </Project>
