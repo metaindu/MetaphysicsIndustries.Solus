@@ -22,6 +22,8 @@
 
 using System;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {

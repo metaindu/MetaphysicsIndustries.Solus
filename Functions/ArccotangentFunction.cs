@@ -1,0 +1,67 @@
+
+/*
+ *  MetaphysicsIndustries.Solus
+ *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 3 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ *  USA
+ *
+ */
+
+/*****************************************************************************
+ *                                                                           *
+ *  ArccotangentFunction.cs                                                  *
+ *                                                                           *
+ *  The class for the built-in Arccotangent function.                        *
+ *                                                                           *
+ *****************************************************************************/
+
+using System;
+using MetaphysicsIndustries.Solus.Expressions;
+
+namespace MetaphysicsIndustries.Solus.Functions
+{
+    public class ArccotangentFunction : SingleArgumentFunction
+	{
+        public static readonly ArccotangentFunction Value = new ArccotangentFunction();
+
+		protected ArccotangentFunction()
+		{
+			this.Name = "Arccotangent";
+		}
+
+
+        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+		{
+            return new Literal((float)Math.Atan2(1, args[0].Eval(env).Value));
+        }
+
+        public override string DisplayName
+        {
+            get
+            {
+                return "acot";
+            }
+        }
+
+        public override string DocString
+        {
+            get
+            {
+                return "The arccotangent function\n  acot(x)\n\nReturns the arccotangent of x. That is, if cot(y) = x, then acot(x) = y.";
+            }
+        }
+    }
+}

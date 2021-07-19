@@ -24,6 +24,8 @@ using System;
 using NUnit.Framework;
 
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Test
 {

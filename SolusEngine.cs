@@ -33,6 +33,9 @@ using System;
 using System.Collections.Generic;
 
 using System.Drawing;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Transformers;
 
 namespace MetaphysicsIndustries.Solus
 {

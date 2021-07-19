@@ -22,6 +22,9 @@
 
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus
 {

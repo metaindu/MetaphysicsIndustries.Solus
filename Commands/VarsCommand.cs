@@ -22,6 +22,7 @@
 
 using System;
 using System.Text;
+using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {

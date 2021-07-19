@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus
 {
