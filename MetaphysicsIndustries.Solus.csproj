@@ -97,7 +97,7 @@
     <Compile Include="Functions\Function.cs" />
     <Compile Include="Functions\GreaterThanComparisonOperation.cs" />
     <Compile Include="Functions\GreaterThanOrEqualComparisonOperation.cs" />
-    <Compile Include="Functions\IfFunction.cs" />
+    <Compile Include="Functions\IfMacro.cs" />
     <Compile Include="Functions\LessThanComparisonOperation.cs" />
     <Compile Include="Functions\LessThanOrEqualComparisonOperation.cs" />
     <Compile Include="Functions\Log10Function.cs" />

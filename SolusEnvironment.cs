@@ -75,7 +75,7 @@ namespace MetaphysicsIndustries.Solus
                     SubstMacro.Value,
                     AssignMacro.Value,
                     DeleteMacro.Value,
-                    IfFunction.Value,
+                    IfMacro.Value,
                 };
 
                 foreach (var macro in macros)

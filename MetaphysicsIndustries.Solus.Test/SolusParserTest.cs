@@ -423,7 +423,7 @@ namespace MetaphysicsIndustries.Solus.Test
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.IsInstanceOf(typeof(IfFunction), fcall.Function);
+            Assert.IsInstanceOf(typeof(IfMacro), fcall.Function);
             Assert.AreEqual(3, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);

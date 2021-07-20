@@ -27,11 +27,11 @@ using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class IfFunction : Macro
+    public class IfMacro : Macro
     {
-        public static readonly IfFunction Value = new IfFunction();
+        public static readonly IfMacro Value = new IfMacro();
 
-        protected IfFunction()
+        protected IfMacro()
         {
             Name = "if";
             NumArguments = 3;
