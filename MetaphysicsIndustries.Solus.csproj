@@ -97,7 +97,6 @@
     <Compile Include="Functions\Function.cs" />
     <Compile Include="Functions\GreaterThanComparisonOperation.cs" />
     <Compile Include="Functions\GreaterThanOrEqualComparisonOperation.cs" />
-    <Compile Include="Functions\IfMacro.cs" />
     <Compile Include="Functions\LessThanComparisonOperation.cs" />
     <Compile Include="Functions\LessThanOrEqualComparisonOperation.cs" />
     <Compile Include="Functions\Log10Function.cs" />
@@ -126,6 +125,7 @@
     <Compile Include="Macros\DeleteMacro.cs" />
     <Compile Include="Macros\DeriveMacro.cs" />
     <Compile Include="Macros\FeedbackMacro.cs" />
+    <Compile Include="Macros\IfMacro.cs" />
     <Compile Include="Macros\Macro.cs" />
     <Compile Include="Macros\RandMacro.cs" />
     <Compile Include="Macros\SqrtMacro.cs" />

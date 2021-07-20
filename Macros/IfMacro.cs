@@ -23,9 +23,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
 
-namespace MetaphysicsIndustries.Solus.Functions
+namespace MetaphysicsIndustries.Solus.Macros
 {
     public class IfMacro : Macro
     {
