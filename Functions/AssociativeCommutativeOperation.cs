@@ -21,31 +21,34 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Expressions;
+using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class AssociativeCommutativeOperation : Operation
     {
-        protected override void CheckArguments(IMathObject[] args)
+        protected AssociativeCommutativeOperation()
+            : base(new Types[0])
+        {
+        }
+
+        private List<Types> _lastParamTypes;
+        public override void CheckArguments(IMathObject[] args)
         {
             if (args.Length < 2)
             {
-                throw new InvalidOperationException("Wrong number of arguments given to " + DisplayName + " (given " + args.Length.ToString() + ", require at least 2)");
+                throw new ArgumentException(
+                    $"Wrong number of arguments given to " +
+                    $"{DisplayName} (given {args.Length}, require at least " +
+                    $"2)");
             }
 
-            if (args.Length != Types.Count)
-            {
-                Types.Clear();
-
-                foreach (var arg in args)
-                {
-                    Types.Add(typeof(Expression));
-                }
-            }
-
-            base.CheckArguments(args);
+            if (_lastParamTypes == null ||
+                _lastParamTypes.Count != args.Length)
+                _lastParamTypes = args.Select(_ => Types.Scalar).ToList();
+            CheckArguments(args, _lastParamTypes, DisplayName);
         }
 
         //protected override Expression InternalCleanUp(Expression[] args)

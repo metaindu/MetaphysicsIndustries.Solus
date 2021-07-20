@@ -20,6 +20,7 @@
  *
  */
 
+using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -28,16 +29,11 @@ namespace MetaphysicsIndustries.Solus.Functions
     public class UserDefinedFunction : Function
     {
         public UserDefinedFunction(string name, string[] argnames, Expression expr)
+            : base(argnames.Select(_ => Types.Scalar).ToArray(), name)
         {
             Name = name;
             Argnames = argnames;
             Expression = expr;
-
-            Types.Clear();
-            foreach (var argname in argnames)
-            {
-                Types.Add(typeof(Expression));
-            }
         }
 
         public string[] Argnames;

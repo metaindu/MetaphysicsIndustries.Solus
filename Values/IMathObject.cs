@@ -38,5 +38,13 @@ namespace MetaphysicsIndustries.Solus.Values
         public static Number ToNumber(this float value) => new Number(value);
         public static Number ToNumber(this int value) => new Number(value);
         public static Number ToNumber(this long value) => new Number(value);
+
+        public static Types GetMathType(this IMathObject mo)
+        {
+            if (mo.IsScalar) return Types.Scalar;
+            if (mo.IsVector) return Types.Vector;
+            if (mo.IsMatrix) return Types.Matrix;
+            return Types.Unknown;
+        }
     }
 }

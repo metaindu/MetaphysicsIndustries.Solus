@@ -20,7 +20,6 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -28,11 +27,8 @@ namespace MetaphysicsIndustries.Solus.Functions
     public abstract class DualArgumentFunction : Function
     {
         protected DualArgumentFunction(string name)
-            : base(name)
+            : base(new[] {Types.Scalar, Types.Scalar}, name)
         {
-            Types.Clear();
-            Types.Add(typeof(Expression));
-            Types.Add(typeof(Expression));
         }
 
         protected sealed override IMathObject InternalCall(

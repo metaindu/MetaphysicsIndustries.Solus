@@ -31,8 +31,13 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="FunctionsT\AssociativeCommutativeOperationT\CheckArgumentsTest.cs" />
+    <Compile Include="FunctionsT\FunctionT\CheckArgumentsTest.cs" />
+    <Compile Include="FunctionsT\FunctionT\FunctionTest.cs" />
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
+    <Compile Include="MockMathObject.cs" />
     <Compile Include="SolusParserTest.cs" />
+    <Compile Include="ValuesT\MathObjectHelperT\MathObjectHelperTest.cs" />
     <Compile Include="ValuesT\NumberT\NumberTest.cs" />
   </ItemGroup>
   <ItemGroup>

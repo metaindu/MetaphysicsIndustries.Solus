@@ -430,11 +430,9 @@ namespace MetaphysicsIndustries.Solus.Test
         public class CustomAsdfFunction : Function
         {
             public CustomAsdfFunction()
-                : base("asdf")
+                : base(new Types[] {Types.Scalar, Types.Scalar},
+                    "asdf")
             {
-                Types.Clear();
-                Types.Add(typeof(Expression));
-                Types.Add(typeof(Expression));
             }
 
             protected override IMathObject InternalCall(SolusEnvironment env,
@@ -472,7 +470,7 @@ namespace MetaphysicsIndustries.Solus.Test
         class CountArgsFunction : Function
         {
             public CountArgsFunction()
-                : base("count")
+                : base(new Types[0], "count")
             {
             }
 
@@ -482,7 +480,7 @@ namespace MetaphysicsIndustries.Solus.Test
                 return new Number(args.Length);
             }
 
-            protected override void CheckArguments(IMathObject[] args)
+            public override void CheckArguments(IMathObject[] args)
             {
             }
         }
@@ -571,4 +569,3 @@ namespace MetaphysicsIndustries.Solus.Test
         }
     }
 }
-

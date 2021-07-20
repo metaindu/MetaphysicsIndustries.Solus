@@ -32,11 +32,17 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-	public abstract class Operation : Function
-	{
+    public abstract class Operation : Function
+    {
+        protected Operation(Types[] paramTypes)
+            : base(paramTypes)
+        {
+        }
+
         public abstract OperationPrecedence Precedence
         {
             get;
