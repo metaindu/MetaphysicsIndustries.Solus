@@ -158,6 +158,7 @@
     <Compile Include="STuple.cs" />
     <Compile Include="MemoryImage.cs" />
     <Compile Include="Values\IMathObject.cs" />
+    <Compile Include="Values\Number.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />

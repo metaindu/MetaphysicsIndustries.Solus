@@ -33,6 +33,7 @@
   <ItemGroup>
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
     <Compile Include="SolusParserTest.cs" />
+    <Compile Include="ValuesT\NumberT\NumberTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Solus.csproj">
