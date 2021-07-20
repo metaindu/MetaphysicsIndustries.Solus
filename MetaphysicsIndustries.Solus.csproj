@@ -157,6 +157,7 @@
     <Compile Include="Transformers\VariableTransformArgs.cs" />
     <Compile Include="STuple.cs" />
     <Compile Include="MemoryImage.cs" />
+    <Compile Include="Values\IMathObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
