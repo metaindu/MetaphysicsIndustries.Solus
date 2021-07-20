@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -47,7 +48,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public string VariableName;
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
             var var = VariableName;
 
@@ -55,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 if (env.Variables[var] is Literal)
                 {
-                    return (Literal)env.Variables[var];
+                    return ((Literal)env.Variables[var]).Value.ToNumber();
                 }
 
                 return env.Variables[var].Eval(env);

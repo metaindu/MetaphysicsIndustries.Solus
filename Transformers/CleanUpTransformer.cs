@@ -22,8 +22,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Transformers
 {
@@ -72,19 +74,14 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 return InternalCleanUpOperation((Operation)function, args);
             }
 
-            bool call = true;
-            foreach (Expression arg in args)
-            {
-                if (!(arg is Literal))
-                {
-                    call = false;
-                    break;
-                }
-            }
+            bool call = args.All(arg => arg is Literal);
 
             if (call)
             {
-                return function.Call(null, args);
+                var args2 = args.Select(
+                    a => (IMathObject)((Literal) a).Value.ToNumber());
+                var result = function.Call(null, args2.ToArray());
+                return new Literal(result.ToNumber().Value);
             }
 
             return new FunctionCall(function, args);
@@ -116,10 +113,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
             (new FunctionCall(function, args)).GatherMatchingFunctionCalls(assocOps);
 
             HashSet<FunctionCall> assocOpsSet = new HashSet<FunctionCall>(assocOps);
-            Literal combinedLiteral = null;
-
-            combinedLiteral = new Literal(function.IdentityValue);
-
+            var combinedValue = function.IdentityValue;
             List<Expression> nonLiterals = new List<Expression>(assocOps.Count);
 
             foreach (FunctionCall opToCombine in assocOps)
@@ -131,7 +125,10 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     {
                         if (arg is Literal)
                         {
-                            combinedLiteral = function.Call(null, combinedLiteral, arg);
+                            var result = function.Call(null,
+                                combinedValue.ToNumber(),
+                                ((Literal) arg).Value.ToNumber());
+                            combinedValue = result.ToNumber().Value;
                         }
                         else
                         {
@@ -141,7 +138,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 }
             }
 
-            args = InternalCleanUpPartAssociativeOperation(function, args, combinedLiteral, nonLiterals);
+            args = InternalCleanUpPartAssociativeOperation(function, args,
+                new Literal(combinedValue), nonLiterals);
 
             return args;
         }
@@ -239,7 +237,10 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
             if (call)
             {
-                return function.Call(null, args);
+                var evaledArgs = args.Select(
+                    a => (IMathObject)((Literal) a).Value.ToNumber());
+                var result = function.Call(null, evaledArgs.ToArray());
+                return new Literal(result.ToNumber().Value);
             }
 
             return new FunctionCall(function, args);
@@ -258,7 +259,10 @@ namespace MetaphysicsIndustries.Solus.Transformers
             if (args[0] is Literal &&
                             args[1] is Literal)
             {
-                return function.Call(null, args);
+                IMathObject arg0 = ((Literal) args[0]).Value.ToNumber();
+                IMathObject arg1 = ((Literal) args[1]).Value.ToNumber();
+                var result = function.Call(null, arg0, arg1);
+                return new Literal(result.ToNumber().Value);
             }
 
             if (function.IsAssociative)

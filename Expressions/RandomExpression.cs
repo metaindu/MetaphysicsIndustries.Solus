@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -30,11 +31,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         float _value = (float)_random.NextDouble();
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
-            return new Literal(
-                //_value);
-                (float)_random.NextDouble());
+            return ((float)_random.NextDouble()).ToNumber();
         }
 
         public override Expression Clone()

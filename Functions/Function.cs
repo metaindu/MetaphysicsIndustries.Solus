@@ -37,6 +37,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -53,16 +54,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             _name = name;
         }
 
-		public virtual Literal Call(SolusEnvironment env, params Expression[] args)
+		public virtual IMathObject Call(SolusEnvironment env, params IMathObject[] args)
         {
             this.CheckArguments(args);
-            List<Literal> evalArgs = new List<Literal>(args.Length);
-            foreach (Expression arg in args)
-            {
-                evalArgs.Add(arg.Eval(env));
-            }
-			return this.InternalCall(env, evalArgs.ToArray());
-		}
+            return InternalCall(env, args);
+        }
 
         //public virtual Expression CleanUp(Expression[] args)
         //{
@@ -112,35 +108,36 @@ namespace MetaphysicsIndustries.Solus.Functions
 			}
 		}
 
-        protected abstract Literal InternalCall(SolusEnvironment env, Literal[] args);
+        protected abstract IMathObject InternalCall(SolusEnvironment env, IMathObject[] args);
 
-		protected virtual void CheckArguments(Expression[] args)
+		protected virtual void CheckArguments(IMathObject[] args)
 		{
-			Expression[] _args = args;
-			List<Type>	types;
-			int				i;
-			int				j;
-			
-			types = Types;
-			if (args.Length != types.Count)
-			{
-				throw new InvalidOperationException("Wrong number of arguments given to " + DisplayName + " (given " + args.Length.ToString() + ", require " + Types.Count.ToString() + ")");
-			}
-			Type	e;
-			e = typeof(Expression);
-			j = args.Length;
-			for (i = 0; i < j; i++)
-			{
-				if (!e.IsAssignableFrom(types[i]))
-				{
-					
-					throw new InvalidOperationException("Required argument type " + i.ToString() + " is invalid (given \"" + types[i].Name + "\", require \"" + e.Name + ")");
-				}
-				if (!types[i].IsAssignableFrom(args[i].GetType()))
-				{
-					throw new InvalidOperationException("Argument " + ((i).ToString()) + " of wrong type (given \"" + args.GetType().Name + "\", require \"" + types[i].Name + ")");
-				}
-			}
+			// TODO
+
+			// IMathObject[] _args = args;
+			// List<Type>	types;
+			// int				i;
+			// int				j;
+			//
+			// types = Types;
+			// if (args.Length != types.Count)
+			// {
+			// 	throw new InvalidOperationException("Wrong number of arguments given to " + DisplayName + " (given " + args.Length.ToString() + ", require " + Types.Count.ToString() + ")");
+			// }
+			// Type	e;
+			// e = typeof(Expression);
+			// j = args.Length;
+			// for (i = 0; i < j; i++)
+			// {
+			// 	if (!e.IsAssignableFrom(types[i]))
+			// 	{
+			// 		throw new InvalidOperationException("Required argument type " + i.ToString() + " is invalid (given \"" + types[i].Name + "\", require \"" + e.Name + ")");
+			// 	}
+			// 	if (!types[i].IsAssignableFrom(args[i].GetType()))
+			// 	{
+			// 		throw new InvalidOperationException("Argument " + ((i).ToString()) + " of wrong type (given \"" + args.GetType().Name + "\", require \"" + types[i].Name + ")");
+			// 	}
+			// }
 		}
 
 		protected List<Type> InternalTypes

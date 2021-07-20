@@ -26,6 +26,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Test
 {
@@ -39,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test
             SolusEnvironment env = new SolusEnvironment();
 
             var expr = parser.GetExpression("2 + 2");
-            var value = expr.Eval(env).Value;
+            var value = expr.Eval(env).ToNumber().Value;
 
             Assert.AreEqual(4.0f, value);
         }
@@ -400,7 +401,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(1, fcall.Arguments.Count);
             //            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             //            Assert.AreEqual(Math.PI, (fcall.Arguments[0] as Literal).Value, 0.0001f);
-            Assert.AreEqual(0f, fcall.Eval(env).Value, 0.0001f);
+            Assert.AreEqual(0f, fcall.Eval(env).ToNumber().Value, 0.0001f);
         }
 
         [Test]
@@ -436,9 +437,10 @@ namespace MetaphysicsIndustries.Solus.Test
                 Types.Add(typeof(Expression));
             }
 
-            protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+            protected override IMathObject InternalCall(SolusEnvironment env,
+                IMathObject[] args)
             {
-                return new Literal(3);
+                return new Number(3);
             }
         }
 
@@ -462,7 +464,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
 
 
-            float value = expr.Eval(env).Value;
+            float value = expr.Eval(env).ToNumber().Value;
 
             Assert.AreEqual(3f, value);
         }
@@ -474,12 +476,13 @@ namespace MetaphysicsIndustries.Solus.Test
             {
             }
 
-            protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+            protected override IMathObject InternalCall(SolusEnvironment env,
+                IMathObject[] args)
             {
-                return new Literal(args.Length);
+                return new Number(args.Length);
             }
 
-            protected override void CheckArguments(Expression[] args)
+            protected override void CheckArguments(IMathObject[] args)
             {
             }
         }
@@ -504,13 +507,21 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
             Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
             Assert.AreEqual(3f, (fcall.Arguments[2] as Literal).Value);
-            Assert.AreEqual(3f, expr.Eval(env).Value);
+            Assert.AreEqual(3f, expr.Eval(env).ToNumber().Value);
 
 
-            Assert.AreEqual(0, parser.GetExpression("count()", env).Eval(env).Value);
-            Assert.AreEqual(1, parser.GetExpression("count(1)", env).Eval(env).Value);
-            Assert.AreEqual(2, parser.GetExpression("count(1, 2)", env).Eval(env).Value);
-            Assert.AreEqual(4, parser.GetExpression("count(1, 2, 3, 4)", env).Eval(env).Value);
+            Assert.AreEqual(0,
+                parser.GetExpression("count()", env).
+                    Eval(env).ToNumber().Value);
+            Assert.AreEqual(1,
+                parser.GetExpression("count(1)", env).
+                    Eval(env).ToNumber().Value);
+            Assert.AreEqual(2,
+                parser.GetExpression("count(1, 2)", env).
+                    Eval(env).ToNumber().Value);
+            Assert.AreEqual(4,
+                parser.GetExpression("count(1, 2, 3, 4)", env).
+                    Eval(env).ToNumber().Value);
         }
 
         [Test]

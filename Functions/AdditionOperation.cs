@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -40,14 +41,14 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Addition; }
         }
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
         {
             float sum = 0;
-            foreach (Literal arg in args)
+            foreach (var arg in args)
             {
-                sum += arg.Value;
+                sum += arg.ToNumber().Value;
             }
-            return new Literal(sum);
+            return sum.ToNumber();
         }
 
         public override float IdentityValue

@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -74,7 +75,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return ret;
         }
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
             return Call(env);
         }
@@ -113,9 +114,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public virtual Literal Call(SolusEnvironment env)
+        public virtual IMathObject Call(SolusEnvironment env)
         {
-            return Function.Call(env, Arguments.ToArray());
+            var evaledArgs =
+                Arguments.Select(a => a.Eval(env)).ToArray();
+            return Function.Call(env, evaledArgs);
         }
 
         public virtual List<Expression> Arguments
@@ -185,22 +188,15 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
-            List<Expression> args = new List<Expression>(Arguments.Count);
-
-            bool allLiterals = true;
-            foreach (Expression arg in Arguments)
-            {
-                Expression arg2 = arg.PreliminaryEval(env);
-                if (!(arg2 is Literal))
-                {
-                    allLiterals = false;
-                }
-                args.Add(arg2);
-            }
-
+            var args = Arguments.Select(
+                a => a.PreliminaryEval(env)).ToArray();
+            var allLiterals = args.All(a => a is Literal);
             if (allLiterals)
             {
-                return Function.Call(env, args.ToArray());
+                var args2 = args.Select(
+                    a => (IMathObject)((Literal) a).Value.ToNumber());
+                var result = Function.Call(env, args2.ToArray());
+                return new Literal(result.ToNumber().Value);
             }
             else
             {

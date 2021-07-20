@@ -31,6 +31,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -55,9 +56,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return new Literal(Value);
         }
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
 		{
-			return this;
+			return _value.ToNumber();
 		}
 
         public override string ToString()

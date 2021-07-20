@@ -31,6 +31,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -43,38 +44,42 @@ namespace MetaphysicsIndustries.Solus.Functions
             Types.Add(typeof(Expression));
         }
 
-        protected override void CheckArguments(Expression[] args)
+        protected override void CheckArguments(IMathObject[] args)
         {
-            int i;
-            int j;
-            Type e;
+            // TODO
 
-            if (Types.Count != 2)
-            {
-                throw new InvalidOperationException("Wrong number of types specified internally to BinaryOperation (given " + Types.Count.ToString() + ", require 2)");
-            }
-            if (args.Length != 2)
-            {
-                throw new InvalidOperationException("Wrong number of arguments given to " + this.DisplayName + " (given " + args.Length.ToString() + ", require 2)");
-            }
-            e = typeof(Expression);
-            j = 2;
-            for (i = 0; i < j; i++)
-            {
-                if (!e.IsAssignableFrom(Types[i]))
-                {
-                    throw new InvalidOperationException("Required argument type " + i.ToString() + " is invalid (given \"" + Types[i].Name + "\", require \"" + e.Name + "\")");
-                }
-                if (!Types[i].IsAssignableFrom(args[i].GetType()))
-                {
-                    throw new InvalidOperationException("Argument " + ((i).ToString()) + " of wrong type (given \"" + args[i].GetType().Name + "\", require \"" + Types[i].Name + "\")");
-                }
-            }
+            // int i;
+            // int j;
+            // Type e;
+            //
+            // if (Types.Count != 2)
+            // {
+            //     throw new InvalidOperationException("Wrong number of types specified internally to BinaryOperation (given " + Types.Count.ToString() + ", require 2)");
+            // }
+            // if (args.Length != 2)
+            // {
+            //     throw new InvalidOperationException("Wrong number of arguments given to " + this.DisplayName + " (given " + args.Length.ToString() + ", require 2)");
+            // }
+            // e = typeof(Expression);
+            // j = 2;
+            // for (i = 0; i < j; i++)
+            // {
+            //     if (!e.IsAssignableFrom(Types[i]))
+            //     {
+            //         throw new InvalidOperationException("Required argument type " + i.ToString() + " is invalid (given \"" + Types[i].Name + "\", require \"" + e.Name + "\")");
+            //     }
+            //     if (!Types[i].IsAssignableFrom(args[i].GetType()))
+            //     {
+            //         throw new InvalidOperationException("Argument " + ((i).ToString()) + " of wrong type (given \"" + args[i].GetType().Name + "\", require \"" + Types[i].Name + "\")");
+            //     }
+            // }
         }
 
-        protected override sealed Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override sealed IMathObject InternalCall(
+            SolusEnvironment env, IMathObject[] args)
         {
-            return new Literal(InternalBinaryCall(args[0].Value, args[1].Value));
+            return InternalBinaryCall(args[0].ToNumber().Value,
+                args[1].ToNumber().Value).ToNumber();
         }
         protected abstract float InternalBinaryCall(float x, float y);
 

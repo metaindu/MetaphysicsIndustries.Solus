@@ -1,6 +1,7 @@
 using System;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
@@ -20,13 +21,13 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
 
         class MockExpression : Expression
         {
-            public MockExpression(Func<SolusEnvironment, Literal> evalf)
+            public MockExpression(Func<SolusEnvironment, IMathObject> evalf)
             {
                 EvalF = evalf;
             }
 
-            public Func<SolusEnvironment, Literal> EvalF;
-            public override Literal Eval(SolusEnvironment env)
+            public Func<SolusEnvironment, IMathObject> EvalF;
+            public override IMathObject Eval(SolusEnvironment env)
             {
                 if (EvalF != null) return EvalF(env);
                 throw new System.NotImplementedException();
@@ -48,12 +49,12 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             var thenArg = new MockExpression(_ =>
             {
                 thenEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var elseArg = new MockExpression(_ =>
             {
                 elseEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var condition = new Literal(1);
             var args = new Expression[] {condition, thenArg, elseArg};
@@ -77,12 +78,12 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             var thenArg = new MockExpression(_ =>
             {
                 thenEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var elseArg = new MockExpression(_ =>
             {
                 elseEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var condition = new Literal(0);
             var args = new Expression[] {condition, thenArg, elseArg};
@@ -106,12 +107,12 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             var thenArg = new MockExpression(_ =>
             {
                 thenEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var elseArg = new MockExpression(_ =>
             {
                 elseEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var condition = new Literal(float.NaN);
             var args = new Expression[] {condition, thenArg, elseArg};
@@ -135,12 +136,12 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             var thenArg = new MockExpression(_ =>
             {
                 thenEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var elseArg = new MockExpression(_ =>
             {
                 elseEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var condition = new Literal(float.PositiveInfinity);
             var args = new Expression[] {condition, thenArg, elseArg};
@@ -164,12 +165,12 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             var thenArg = new MockExpression(_ =>
             {
                 thenEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var elseArg = new MockExpression(_ =>
             {
                 elseEvaled = true;
-                return new Literal(0);
+                return new Number(0);
             });
             var condition = new Literal(float.NegativeInfinity);
             var args = new Expression[] {condition, thenArg, elseArg};

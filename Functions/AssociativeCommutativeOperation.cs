@@ -22,12 +22,13 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class AssociativeCommutativeOperation : Operation
     {
-        protected override void CheckArguments(Expression[] args)
+        protected override void CheckArguments(IMathObject[] args)
         {
             if (args.Length < 2)
             {
@@ -38,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 Types.Clear();
 
-                foreach (Expression arg in args)
+                foreach (var arg in args)
                 {
                     Types.Add(typeof(Expression));
                 }

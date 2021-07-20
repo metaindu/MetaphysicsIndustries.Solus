@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -42,14 +43,16 @@ namespace MetaphysicsIndustries.Solus.Functions
         public string[] Argnames;
         public Expression Expression;
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
             SolusEnvironment env2 = env.CreateChildEnvironment();
 
             int i;
             for (i = 0; i < Argnames.Length; i++)
             {
-                env2.Variables[Argnames[i]] = args[i];
+                env2.Variables[Argnames[i]] =
+                    new Literal(args[i].ToNumber().Value);
             }
 
             return Expression.Eval(env2);

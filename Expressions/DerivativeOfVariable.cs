@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -76,7 +77,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
             throw new InvalidOperationException();
         }

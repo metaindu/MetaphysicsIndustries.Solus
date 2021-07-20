@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -41,9 +42,10 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Negation; }
         }
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
-            return new Literal(-args[0].Value);
+            return (-args[0].ToNumber().Value).ToNumber();
         }
 
         public override string ToString(List<Expression> arguments)

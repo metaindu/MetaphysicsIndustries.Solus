@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -32,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public readonly string Value;
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
             throw new System.NotImplementedException(
                 "Strings can not be treated as numbers.");

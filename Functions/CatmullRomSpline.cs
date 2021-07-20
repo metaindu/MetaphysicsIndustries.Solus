@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -57,9 +58,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         readonly float[] Times;
         readonly float[] Values;
             
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
-            return new Literal(Evaluate(args[0].Value));
+            return Evaluate(args[0].ToNumber().Value).ToNumber();
         }
 
         public float Evaluate(float time)

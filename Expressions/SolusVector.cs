@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -91,9 +92,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             get { return _length; }
         }
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
-            return new Literal(0);
+            return new Number(0);
         }
 
         public override Expression Clone()
