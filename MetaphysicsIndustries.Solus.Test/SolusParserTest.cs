@@ -421,16 +421,9 @@ namespace MetaphysicsIndustries.Solus.Test
 
             var expr = parser.GetExpression("if(1, 2, 3)", cleanup: false);
 
-            Assert.IsInstanceOf(typeof(FunctionCall), expr);
-            var fcall = (FunctionCall)expr;
-            Assert.IsInstanceOf(typeof(IfMacro), fcall.Function);
-            Assert.AreEqual(3, fcall.Arguments.Count);
-            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[2]);
-            Assert.AreEqual(1, (fcall.Arguments[0] as Literal).Value);
-            Assert.AreEqual(2, (fcall.Arguments[1] as Literal).Value);
-            Assert.AreEqual(3, (fcall.Arguments[2] as Literal).Value);
+            Assert.IsInstanceOf(typeof(Literal), expr);
+            var literal = (Literal) expr;
+            Assert.AreEqual(2, literal.Value);
         }
 
         public class CustomAsdfFunction : Function
