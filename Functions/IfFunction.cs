@@ -20,57 +20,36 @@
  *
  */
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class IfFunction : Function
+    public class IfFunction : Macro
     {
         public static readonly IfFunction Value = new IfFunction();
 
         protected IfFunction()
-            : base("If")
         {
-            Types.Clear();
-            Types.Add(typeof(Expression));
-            Types.Add(typeof(Expression));
-            Types.Add(typeof(Expression));
+            Name = "if";
+            NumArguments = 3;
         }
 
-        public override Literal Call(SolusEnvironment env, params Expression[] args)
+        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
         {
-            CheckArguments(args);
-
-            float value = args[0].Eval(env).Value;
+            var args2 = args.ToArray();
+            float value = args2[0].Eval(env).Value;
 
             if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
             {
-                return args[2].Eval(env);
+                return args2[2].Eval(env);
             }
             else
             {
-                return args[1].Eval(env);
+                return args2[1].Eval(env);
             }
-        }
-
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
-        {
-            throw new NotSupportedException();
-            //float value = args[0].Value;
-            //if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
-            //{
-            //    return args[2];
-            //}
-            //else
-            //{
-            //    return args[1];
-            //}
-        }
-
-        public override string DisplayName
-        {
-            get { return "if"; }
         }
     }
 }

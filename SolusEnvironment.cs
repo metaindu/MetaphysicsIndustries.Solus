@@ -57,7 +57,6 @@ namespace MetaphysicsIndustries.Solus
                     UnitStepFunction.Value,
                     Arctangent2Function.Value,
                     LogarithmFunction.Value,
-                    IfFunction.Value,
                     DistFunction.Value,
                     DistSqFunction.Value,
                 };
@@ -76,6 +75,7 @@ namespace MetaphysicsIndustries.Solus
                     SubstMacro.Value,
                     AssignMacro.Value,
                     DeleteMacro.Value,
+                    IfFunction.Value,
                 };
 
                 foreach (var macro in macros)
