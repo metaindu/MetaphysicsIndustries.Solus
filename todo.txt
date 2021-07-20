@@ -1,3 +1,4 @@
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
+don't evaluate macros while parsing
