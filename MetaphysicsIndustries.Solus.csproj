@@ -99,6 +99,7 @@
     <Compile Include="Functions\GreaterThanOrEqualComparisonOperation.cs" />
     <Compile Include="Functions\LessThanComparisonOperation.cs" />
     <Compile Include="Functions\LessThanOrEqualComparisonOperation.cs" />
+    <Compile Include="Functions\LoadImageFunction.cs" />
     <Compile Include="Functions\Log10Function.cs" />
     <Compile Include="Functions\Log2Function.cs" />
     <Compile Include="Functions\LogarithmFunction.cs" />
