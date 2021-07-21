@@ -36,6 +36,7 @@ using System.Drawing;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -192,34 +193,23 @@ namespace MetaphysicsIndustries.Solus
         //    return null;
         //}
 
-        public static MatrixExpression LoadImage(string filename)
+        public static Matrix LoadImage(string filename,
+            Func<string, Image> _loader = null)
         {
-            Image fileImage = Image.FromFile(filename);
-            if (!(fileImage is Bitmap))
-            {
-                throw new InvalidOperationException("The file is not in the correct format");
-            }
-
-            Bitmap bitmap = (Bitmap)fileImage;
-            MemoryImage image = new MemoryImage(bitmap);
-
-            int i;
-            int j;
-
+            if (_loader == null)
+                _loader = Image.FromFile;
+            var fileImage = _loader(filename);
+            if (!(fileImage is Bitmap bitmap))
+                throw new InvalidOperationException(
+                    "The file is not in the correct format");
+            var image = new MemoryImage(bitmap);
             image.CopyBitmapToPixels();
 
-            var matrix = new MatrixExpression(image.Height,
-                image.Width);
-
-            for (i = 0; i < image.Width; i++)
-            {
-                for (j = 0; j < image.Height; j++)
-                {
-                    matrix[i, j] = new Literal(image[i, j].ToArgb() & 0x00FFFFFF);
-                }
-            }
-
-            return matrix;
+            var values = new float[image.Height, image.Width];
+            for (var i = 0; i < image.Width; i++)
+            for (var j = 0; j < image.Height; j++)
+                values[i, j] = image[i, j].ToArgb() & 0x00FFFFFF;
+            return new Matrix(values);
         }
 
         public float BinomialCoefficient(int n, int k)
