@@ -50,7 +50,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
         }
 
         [Test]
-        public void FloatToNumberThrows()
+        public void FloatToNumberYieldsNumber()
         {
             // given
             const float value = 123.45f;
@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
         }
 
         [Test]
-        public void IntToNumberThrows()
+        public void IntToNumberYieldsNumber()
         {
             // given
             const int value = 123;
@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
         }
 
         [Test]
-        public void LongToNumberThrows()
+        public void LongToNumberYieldsNumber()
         {
             // given
             const long value = 123L;
@@ -93,7 +93,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
         }
 
         [Test]
-        public void VectorGetMathTypeYieldsScalar()
+        public void VectorGetMathTypeYieldsVector()
         {
             // given
             var mo = new MockMathObject(false, true,
@@ -103,7 +103,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
         }
 
         [Test]
-        public void MatrixGetMathTypeYieldsScalar()
+        public void MatrixGetMathTypeYieldsMatrix()
         {
             // given
             var mo = new MockMathObject(false, false,
@@ -120,6 +120,46 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
                 false, 0);
             // expect
             Assert.AreEqual(Types.Unknown, mo.GetMathType());
+        }
+
+        [Test]
+        public void StringValueToStringValueYieldsStringValue()
+        {
+            // given
+            var mo = new StringValue("abc");
+            // when
+            var result = mo.ToStringValue();
+            // then
+            Assert.AreEqual("abc", result.Value);
+        }
+
+        [Test]
+        public void NonStringValueToStringValueThrows()
+        {
+            // given
+            var mo = new Number(123);
+            // expect
+            Assert.Throws<InvalidCastException>(() => mo.ToStringValue());
+        }
+
+        [Test]
+        public void FloatToStringValueYieldsStringValue()
+        {
+            // given
+            const string value = "def";
+            // when
+            var result = value.ToStringValue();
+            // then
+            Assert.AreEqual("def", result.Value);
+        }
+
+        [Test]
+        public void StringValueGetMathTypeYieldsString()
+        {
+            // given
+            var mo = new MockMathObject(false, isString: true);
+            // expect
+            Assert.AreEqual(Types.String, mo.GetMathType());
         }
     }
 }

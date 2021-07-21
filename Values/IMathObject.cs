@@ -36,15 +36,23 @@ namespace MetaphysicsIndustries.Solus.Values
     public static class MathObjectHelper
     {
         public static Number ToNumber(this IMathObject mo) => (Number) mo;
+
+        public static StringValue ToStringValue(this IMathObject mo) =>
+            (StringValue) mo;
+
         public static Number ToNumber(this float value) => new Number(value);
         public static Number ToNumber(this int value) => new Number(value);
         public static Number ToNumber(this long value) => new Number(value);
+
+        public static StringValue ToStringValue(this string value) =>
+            new StringValue(value);
 
         public static Types GetMathType(this IMathObject mo)
         {
             if (mo.IsScalar) return Types.Scalar;
             if (mo.IsVector) return Types.Vector;
             if (mo.IsMatrix) return Types.Matrix;
+            if (mo.IsString) return Types.String;
             return Types.Unknown;
         }
     }

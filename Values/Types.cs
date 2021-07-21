@@ -30,5 +30,7 @@ namespace MetaphysicsIndustries.Solus.Values
         Scalar,
         Vector,
         Matrix,
+
+        String,
     }
 }
