@@ -159,6 +159,7 @@
     <Compile Include="MemoryImage.cs" />
     <Compile Include="Values\IMathObject.cs" />
     <Compile Include="Values\Number.cs" />
+    <Compile Include="Values\StringValue.cs" />
     <Compile Include="Values\Types.cs" />
   </ItemGroup>
   <ItemGroup>

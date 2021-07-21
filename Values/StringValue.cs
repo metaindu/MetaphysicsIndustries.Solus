@@ -24,31 +24,38 @@ using System;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
-    public readonly struct Number : IMathObject
+    public readonly struct StringValue : IMathObject
     {
-        public Number(float value)
+        public StringValue(string value)
         {
             Value = value;
         }
 
-        public float Value { get; }
+        public readonly string Value;
 
-        public bool IsScalar => true;
+        public bool IsScalar => false;
         public bool IsVector => false;
         public bool IsMatrix => false;
         public int TensorRank => 0;
-        public bool IsString => false;
+        public bool IsString => true;
+        // TODO: IsTuple => true
 
         public int GetDimension(int index = 0)
         {
-            throw new InvalidOperationException(
-                "Scalars do not have dimensions");
+            if (index < 0)
+                throw new ArgumentOutOfRangeException(nameof(index),
+                    "Index must not be negative");
+            if (index > 0)
+                throw new ArgumentOutOfRangeException(nameof(index),
+                    "Strings only have a single dimension");
+            return Length;
         }
 
         public int[] GetDimensions()
         {
-            throw new InvalidOperationException(
-                "Scalars do not have dimensions");
+            return new[] {Length};
         }
+
+        public int Length => Value?.Length ?? 0;
     }
 }

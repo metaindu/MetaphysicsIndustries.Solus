@@ -28,6 +28,7 @@ namespace MetaphysicsIndustries.Solus.Values
         bool IsVector { get; }
         bool IsMatrix { get; }
         int TensorRank { get; }
+        bool IsString { get; }
         int GetDimension(int index = 0);
         int[] GetDimensions();
     }
