@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetaphysicsIndustries.Giza, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\MetaphysicsIndustries.Giza.0.2.0\lib\net40\MetaphysicsIndustries.Giza.dll</HintPath>
+    <Reference Include="MetaphysicsIndustries.Giza, Version=0.3.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\MetaphysicsIndustries.Giza.0.3.0\lib\net40\MetaphysicsIndustries.Giza.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
