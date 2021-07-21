@@ -29,6 +29,16 @@ namespace MetaphysicsIndustries.Solus.Values
         public Vector(IMathObject[] components)
         {
             _components = (IMathObject[]) components.Clone();
+
+            var componentType = _components[0].GetMathType();
+            foreach (var c in _components)
+            {
+                if (c.GetMathType() == componentType) continue;
+                componentType = Types.Mixed;
+                break;
+            }
+
+            ComponentType = componentType;
         }
         public Vector(float[] components)
             : this(components.ToMathObjects())
@@ -38,6 +48,7 @@ namespace MetaphysicsIndustries.Solus.Values
         private readonly IMathObject[] _components;
         public IMathObject this[int index] => _components[index];
         public int Length => _components.Length;
+        public Types ComponentType { get; }
 
         public bool IsScalar => false;
         public bool IsVector => true;

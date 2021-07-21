@@ -26,6 +26,7 @@ namespace MetaphysicsIndustries.Solus.Values
     {
         Unknown,
         Indeterminate,
+        Mixed,
 
         Scalar,
         Vector,

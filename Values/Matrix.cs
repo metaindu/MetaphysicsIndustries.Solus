@@ -29,6 +29,19 @@ namespace MetaphysicsIndustries.Solus.Values
         public Matrix(IMathObject[,] components)
         {
             _components = (IMathObject[,]) components.Clone();
+
+            Types GetComponentType(IMathObject[,] comps)
+            {
+                var componentType = comps[0, 0].GetMathType();
+                for (int i = 0; i < comps.GetLength(0); i++)
+                for (int j = 0; j < comps.GetLength(1); j++)
+                    if (comps[i, j].GetMathType() != componentType)
+                        return Types.Mixed;
+
+                return componentType;
+            }
+
+            ComponentType = GetComponentType(_components);
         }
         public Matrix(float[,] components)
             : this(components.ToMathObjects())
@@ -42,6 +55,7 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public int RowCount => _components.GetLength(0);
         public int ColumnCount => _components.GetLength(1);
+        public Types ComponentType { get; }
 
         public bool IsScalar => false;
         public bool IsVector => false;

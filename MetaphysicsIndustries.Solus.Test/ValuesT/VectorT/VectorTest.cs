@@ -39,6 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             var result = new Vector(values);
             // then
             Assert.AreEqual(3, result.Length);
+            Assert.AreEqual(Types.Scalar, result.ComponentType);
             Assert.AreEqual(1, result[0].ToNumber().Value);
             Assert.AreEqual(2, result[1].ToNumber().Value);
             Assert.AreEqual(3, result[2].ToNumber().Value);
@@ -75,6 +76,21 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             Assert.AreEqual(1, result[0].ToNumber().Value);
             Assert.AreEqual(2, result[1].ToNumber().Value);
             Assert.AreEqual(3, result[2].ToNumber().Value);
+        }
+
+        [Test]
+        public void DifferentComponentTypesYieldsMixed()
+        {
+            // given
+            var values = new IMathObject[]
+            {
+                1.ToNumber(),
+                "abc".ToStringValue()
+            };
+            // when
+            var result = new Vector(values);
+            // then
+            Assert.AreEqual(Types.Mixed, result.ComponentType);
         }
     }
 }

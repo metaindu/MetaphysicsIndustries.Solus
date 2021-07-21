@@ -44,6 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // then
             Assert.AreEqual(2, result.RowCount);
             Assert.AreEqual(2, result.ColumnCount);
+            Assert.AreEqual(Types.Scalar, result.ComponentType);
             Assert.AreEqual(1, result[0, 0].ToNumber().Value);
             Assert.AreEqual(2, result[0, 1].ToNumber().Value);
             Assert.AreEqual(3, result[1, 0].ToNumber().Value);
@@ -111,6 +112,21 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             Assert.AreEqual(4, result[1, 1].ToNumber().Value);
             Assert.AreEqual(5, result[2, 0].ToNumber().Value);
             Assert.AreEqual(6, result[2, 1].ToNumber().Value);
+        }
+
+        [Test]
+        public void DifferentComponentTypesYieldsMixed()
+        {
+            // given
+            var values = new IMathObject[,]
+            {
+                {1.ToNumber(), 2.ToNumber()},
+                {3.ToNumber(), "four".ToStringValue()}
+            };
+            // when
+            var result = new Matrix(values);
+            // then
+            Assert.AreEqual(Types.Mixed, result.ComponentType);
         }
     }
 }
