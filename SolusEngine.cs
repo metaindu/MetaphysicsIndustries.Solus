@@ -192,7 +192,7 @@ namespace MetaphysicsIndustries.Solus
         //    return null;
         //}
 
-        public static SolusMatrix LoadImage(string filename)
+        public static MatrixExpression LoadImage(string filename)
         {
             Image fileImage = Image.FromFile(filename);
             if (!(fileImage is Bitmap))
@@ -208,7 +208,8 @@ namespace MetaphysicsIndustries.Solus
 
             image.CopyBitmapToPixels();
 
-            SolusMatrix matrix = new SolusMatrix(image.Height, image.Width);
+            var matrix = new MatrixExpression(image.Height,
+                image.Width);
 
             for (i = 0; i < image.Width; i++)
             {

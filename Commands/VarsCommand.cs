@@ -42,11 +42,11 @@ namespace MetaphysicsIndustries.Solus.Commands
                 var value = env.Variables[name];
                 var valueString = value.ToString();
 
-                if (value is SolusVector vector)
+                if (value is VectorExpression vector)
                 {
                     valueString = "Vector (" + vector.Length.ToString() + ")";
                 }
-                else if (value is SolusMatrix mat)
+                else if (value is MatrixExpression mat)
                 {
                     valueString = "Matrix (" + mat.RowCount + ", " + mat.ColumnCount + ")";
                 }

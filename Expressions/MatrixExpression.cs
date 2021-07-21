@@ -26,20 +26,20 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public class SolusMatrix : SolusTensor//, IEnumerable<Expression>
-    //, IEnumerable<RowVector>
-    //, IEnumerable<ColumnVector>
+    public class MatrixExpression : TensorExpression
     {
         private static SolusEngine _engine = new SolusEngine();
 
-        public static SolusMatrix FromUniform(float value, int rows, int columns)
+        public static MatrixExpression FromUniform(float value, int rows,
+            int columns)
         {
             return FromUniform(new Literal(value), rows, columns);
         }
 
-        public static SolusMatrix FromUniform(Expression value, int rows, int columns)
+        public static MatrixExpression FromUniform(Expression value, int rows,
+            int columns)
         {
-            SolusMatrix ret = new SolusMatrix(rows, columns);
+            var ret = new MatrixExpression(rows, columns);
 
             int i;
             int j;
@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return ret;
         }
 
-        public SolusMatrix(int rows, int columns)
+        public MatrixExpression(int rows, int columns)
         {
             _rowCount = rows;
             _columnCount = columns;
@@ -72,7 +72,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public SolusMatrix(int rows, int columns, params float[] initialContents)
+        public MatrixExpression(int rows, int columns,
+            params float[] initialContents)
             : this(rows, columns)
         {
             int i;
@@ -89,7 +90,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public SolusMatrix(int rows, int columns, params Expression[] initialContents)
+        public MatrixExpression(int rows, int columns,
+            params Expression[] initialContents)
             : this(rows, columns)
         {
             int i;
@@ -119,9 +121,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public int Count { get { return RowCount * ColumnCount; } }
 
-        public SolusVector GetRow(int row)
+        public VectorExpression GetRow(int row)
         {
-            SolusVector ret = new SolusVector(ColumnCount);
+            var ret = new VectorExpression(ColumnCount);
             int i;
 
             for (i = 0; i < ColumnCount; i++)
@@ -133,9 +135,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return ret;
         }
 
-        public SolusVector GetColumn(int column)
+        public VectorExpression GetColumn(int column)
         {
-            SolusVector ret = new SolusVector(RowCount);
+            VectorExpression ret = new VectorExpression(RowCount);
             int i;
 
             for (i = 0; i < RowCount; i++)
@@ -146,12 +148,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return ret;
         }
 
-        public SolusMatrix GetSlice(int startRow, int startColumn, int numberOfRows, int numberOfColumns)
+        public MatrixExpression GetSlice(int startRow, int startColumn,
+            int numberOfRows, int numberOfColumns)
         {
             int i;
             int j;
 
-            SolusMatrix mat = new SolusMatrix(numberOfRows, numberOfColumns);
+            var mat = new MatrixExpression(numberOfRows, numberOfColumns);
 
             for (i = 0; i < numberOfRows; i++)
             {
@@ -191,14 +194,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
         //{
         //}
 
-        public SolusMatrix Convolution(SolusMatrix convolvee)
+        public MatrixExpression Convolution(MatrixExpression convolvee)
         {
             //return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
             //return AdvancedConvolution(convolvee, SolusEngine.MultiplicationBiMod, SolusEngine.AdditionBiMod);
             throw new NotImplementedException();
         }
 
-        public SolusMatrix AdvancedConvolution(SolusMatrix convolvee,
+        public MatrixExpression AdvancedConvolution(MatrixExpression convolvee,
             BiModulator firstOp, BiModulator secondOp)
         //Operation firstOp, AssociativeCommutativeOperation secondOp)
         {
@@ -208,7 +211,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int r = RowCount + convolvee.RowCount - 1;
             int c = ColumnCount + convolvee.ColumnCount - 1;
 
-            SolusMatrix ret = new SolusMatrix(r, c);
+            var ret = new MatrixExpression(r, c);
 
             //int iiend;
             //int jjend;
@@ -420,12 +423,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return ret;
         }
 
-        public SolusMatrix PerPixelOperation(IPerPixelOperator oper)
+        public MatrixExpression PerPixelOperation(IPerPixelOperator oper)
         {
             //int r = RowCount + oper.GetExtraWidth(this);
             //int c = ColumnCount + oper.GetExtraHeight(this);
 
-            //SolusMatrix ret = new SolusMatrix(r, c);
+            //var ret = new MatrixExpression(r, c);
 
             //float[,] values = new float[RowCount, ColumnCount];
             ////float[,] values2 = new float[convolvee.RowCount, convolvee.ColumnCount];
@@ -485,7 +488,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         protected class MatrixEnumerator : IEnumerator<Expression>
         {
-            public MatrixEnumerator(SolusMatrix matrix)
+            public MatrixEnumerator(MatrixExpression matrix)
             {
                 if (matrix == null) { throw new ArgumentNullException("matrix"); }
 
@@ -494,7 +497,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 _matrix = matrix;
             }
 
-            SolusMatrix _matrix;
+            private readonly MatrixExpression _matrix;
             int _row = -1;
             int _column = 0;
 
@@ -600,7 +603,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression Clone()
         {
-            SolusMatrix ret = new SolusMatrix(RowCount, ColumnCount);
+            var ret = new MatrixExpression(RowCount, ColumnCount);
 
             int i;
             int j;
@@ -618,7 +621,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         //public override Expression CleanUp()
         //{
-        //    SolusMatrix ret = new SolusMatrix(RowCount, ColumnCount);
+        //    var ret = new MatrixExpression(RowCount, ColumnCount);
 
         //    int i;
         //    int j;
@@ -653,7 +656,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
-            SolusMatrix ret = new SolusMatrix(RowCount, ColumnCount);
+            var ret = new MatrixExpression(RowCount, ColumnCount);
 
             int i;
             int j;
@@ -681,7 +684,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public float MeanSquareError(SolusMatrix mat)
+        public float MeanSquareError(MatrixExpression mat)
         {
             int i;
             int j;
