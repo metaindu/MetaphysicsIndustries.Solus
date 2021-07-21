@@ -76,7 +76,8 @@ subexpr = (
     number |
     string |
     unary-op |
-    varref
+    varref |
+    array-literal
 );
 
 paren = '(' expr ')';
@@ -85,3 +86,5 @@ varref = identifier;
 
 <token> identifier = [\w] [\d\w_]*;
 
+array-literal = '[' expr ( ',' expr )* ','?
+              ( ';' expr ( ',' expr )* ','? )* ';'? ']';
