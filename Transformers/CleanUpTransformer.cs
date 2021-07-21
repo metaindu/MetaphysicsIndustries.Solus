@@ -196,7 +196,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 foreach (Expression arg in args)
                 {
-                    if (arg is Literal && (arg as Literal).Value == function.CollapseValue)
+                    if (arg is Literal literal &&
+                        literal.Value.ToFloat() == function.CollapseValue)
                     {
                         return new Literal(function.CollapseValue);
                     }
@@ -208,7 +209,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 List<Expression> args2 = new List<Expression>(args.Length);
                 foreach (Expression arg in args)
                 {
-                    if (!(arg is Literal) || (arg as Literal).Value != function.CullValue)
+                    if (!(arg is Literal literal) ||
+                        literal.Value.ToFloat() != function.CullValue)
                     {
                         args2.Add(arg);
                     }
@@ -273,14 +275,14 @@ namespace MetaphysicsIndustries.Solus.Transformers
             if (function.HasIdentityValue)
             {
                 if (function.IsCommutative &&
-                    args[0] is Literal &&
-                    (args[0] as Literal).Value == function.IdentityValue)
+                    args[0] is Literal literal0 &&
+                    literal0.Value.ToFloat() == function.IdentityValue)
                 {
                     return args[1];
                 }
 
-                if (args[1] is Literal &&
-                    (args[1] as Literal).Value == function.IdentityValue)
+                if (args[1] is Literal literal1 &&
+                    literal1.Value.ToFloat() == function.IdentityValue)
                 {
                     return args[0];
                 }

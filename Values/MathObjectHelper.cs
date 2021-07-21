@@ -16,6 +16,9 @@ namespace MetaphysicsIndustries.Solus.Values
         public static StringValue ToStringValue(this string value) =>
             new StringValue(value);
 
+        public static float ToFloat(this IMathObject value) =>
+            value.ToNumber().Value;
+
         public static Types GetMathType(this IMathObject mo)
         {
             if (mo.IsScalar) return Types.Scalar;

@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test
                 Assert.That(arg is Literal || arg is VariableAccess);
                 if (arg is Literal)
                 {
-                    sum += (arg as Literal).Value;
+                    sum += (arg as Literal).Value.ToFloat();
                 }
                 else
                 {

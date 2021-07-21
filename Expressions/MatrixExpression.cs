@@ -228,14 +228,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 for (j = 0; j < ColumnCount; j++)
                 {
-                    values1[i, j] = (((Literal)this[i, j]).Value);
+                    values1[i, j] = (((Literal)this[i, j]).Value.ToFloat());
                 }
             }
             for (i = 0; i < convolvee.RowCount; i++)
             {
                 for (j = 0; j < convolvee.ColumnCount; j++)
                 {
-                    values2[i, j] = (((Literal)convolvee[i, j]).Value);
+                    values2[i, j] = (((Literal)convolvee[i, j]).Value.ToFloat());
                 }
             }
 
@@ -679,7 +679,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 for (j = 0; j < ColumnCount; j++)
                 {
-                    this[i, j] = new Literal(mod((float)((Literal)this[i, j]).Value));
+                    this[i, j] = new Literal(
+                        mod(((Literal) this[i, j]).Value.ToFloat()));
                 }
             }
         }
@@ -696,7 +697,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 for (j = 0; j < ColumnCount; j++)
                 {
-                    v = ((Literal)this[i, j]).Value - ((Literal)mat[i, j]).Value;
+                    v = ((Literal)this[i, j]).Value.ToFloat() -
+                        ((Literal)mat[i, j]).Value.ToFloat();
                     sum += v * v;
                 }
             }

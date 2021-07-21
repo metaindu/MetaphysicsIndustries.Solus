@@ -41,14 +41,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public static readonly Literal One = new Literal(1);
         public static readonly Literal NegativeOne = new Literal(-1);
 
-		public Literal()
-		{
-			_value = 0;
-		}
-
 		public Literal(float v)
+			: this(v.ToNumber())
 		{
-			_value = v;
+		}
+		public Literal(IMathObject value)
+		{
+			_value = value;
 		}
 
         public override Expression Clone()
@@ -58,31 +57,23 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override IMathObject Eval(SolusEnvironment env)
 		{
-			return _value.ToNumber();
+			return _value;
 		}
 
         public override string ToString()
         {
-            if (Math.Abs(Value - (float)Math.E) < 1e-6)
-            {
-                return "e";
-            }
-            else if (Math.Abs(Value - (float)Math.PI) < 1e-6)
-            {
-                return "π";
-            }
-            else
-            {
-                return Value.ToString("G");
-            }
+	        if (Math.Abs(Value.ToFloat() - (float) Math.E) < 1e-6)
+		        return "e";
+	        if (Math.Abs(Value.ToFloat() - (float) Math.PI) < 1e-6)
+		        return "π";
+	        if (Value.IsScalar)
+		        return Value.ToFloat().ToString("G");
+	        return Value.ToString();
         }
 
-		public virtual float Value
+        public virtual IMathObject Value
 		{
-			get
-			{
-				return _value;
-			}
+			get => _value;
 			set
 			{
                 if (_value != value)
@@ -103,7 +94,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
 		}
 
-        protected float _value;
+        protected IMathObject _value;
 
         public static bool IsInteger(float p)
         {
@@ -115,9 +106,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
+        public override IEnumerable<Instruction> ConvertToInstructions(
+	        VariableToArgumentNumberMapper varmap)
         {
-            return new [] { Instruction.LoadConstant(Value) };
+	        if (Value.IsScalar)
+				return new [] { Instruction.LoadConstant(Value.ToFloat()) };
+	        throw new NotImplementedException(
+		        "currently only implemented for numbers.");
         }
     }
 }

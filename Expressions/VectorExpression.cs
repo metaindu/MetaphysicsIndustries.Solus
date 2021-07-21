@@ -228,7 +228,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int i;
             for (i = 0; i < Length; i++)
             {
-                this[i] = new Literal(mod(((Literal)this[i]).Value));
+                this[i] = new Literal(
+                    mod(((Literal)this[i]).Value.ToFloat()));
             }
         }
 

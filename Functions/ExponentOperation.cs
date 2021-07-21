@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -59,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
             if (arguments[1] is Literal)
             {
-                var value = (arguments[1] as Literal).Value;
+                var value = (arguments[1] as Literal).Value.ToFloat();
 
                 if (value == 1)
                 {
