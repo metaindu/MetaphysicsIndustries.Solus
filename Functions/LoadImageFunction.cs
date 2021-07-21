@@ -36,6 +36,22 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
         }
 
+        public override string DocString =>
+            @"load_image - load an image from disk
+
+  load_image(filename:string) -> matrix
+
+  filename
+    The path to the file to load. Should be a BMP, JPG, GIF, or PNG. Paths are
+    relative to the current working directory of the process.
+
+  returns matrix
+    The result is a matrix. The matrix has as many rows as the image, and as
+    many columns as the image. Each component of the matrix corresponds to the
+    pixel at that location in the image. Incoming pixels are interpreted as
+    24-bit integers, with blue in the low 8 bits, green in the middle 8 bits,
+    and red in the high 8 bits; the value is then cast to a float (32-bit).";
+
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
