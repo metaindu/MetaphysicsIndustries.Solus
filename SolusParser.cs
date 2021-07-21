@@ -65,17 +65,21 @@ namespace MetaphysicsIndustries.Solus
 
             if (errors.ContainsNonWarnings())
             {
-                throw new InvalidOperationException();
+                var error = errors.GetFirstNonWarning();
+                throw new SolusParseException(0, error.Description);
             }
 
             if (spans.Length < 1)
             {
-                throw new InvalidOperationException();
+                throw new SolusParseException(0,
+                    "There were more no valid parses of the input.");
             }
 
             if (spans.Length > 1)
             {
-                throw new InvalidOperationException();
+                throw new SolusParseException(0,
+                    "There were more than one valid parses of the " +
+                    "input. The grammar is ambiguous.");
             }
 
             var span = spans[0];
