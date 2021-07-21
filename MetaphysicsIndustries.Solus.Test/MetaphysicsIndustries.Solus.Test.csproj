@@ -39,8 +39,10 @@
     <Compile Include="MockMathObject.cs" />
     <Compile Include="SolusParserTest.cs" />
     <Compile Include="ValuesT\MathObjectHelperT\MathObjectHelperTest.cs" />
+    <Compile Include="ValuesT\MatrixT\MatrixTest.cs" />
     <Compile Include="ValuesT\NumberT\NumberTest.cs" />
     <Compile Include="ValuesT\StringValueT\StringValueTest.cs" />
+    <Compile Include="ValuesT\VectorT\VectorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Solus.csproj">

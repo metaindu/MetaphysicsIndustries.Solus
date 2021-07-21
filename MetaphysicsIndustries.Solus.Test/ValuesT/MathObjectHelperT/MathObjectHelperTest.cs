@@ -161,5 +161,42 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // expect
             Assert.AreEqual(Types.String, mo.GetMathType());
         }
+
+        [Test]
+        public void ToMathObjects1DConvertsFloats()
+        {
+            // given
+            var values = new[] {1f, 2f, 3f};
+            // when
+            var result = values.ToMathObjects();
+            // then
+            Assert.AreEqual(3, result.Length);
+            Assert.AreEqual(1, result[0].ToNumber().Value);
+            Assert.AreEqual(2, result[1].ToNumber().Value);
+            Assert.AreEqual(3, result[2].ToNumber().Value);
+        }
+
+        [Test]
+        public void ToMathObjects2DConvertsFloats()
+        {
+            // given
+            var values = new[,]
+            {
+                {1f, 2f},
+                {3f, 4f},
+                {5f, 6f}
+            };
+            // when
+            var result = values.ToMathObjects();
+            // then
+            Assert.AreEqual(3, result.GetLength(0));
+            Assert.AreEqual(2, result.GetLength(1));
+            Assert.AreEqual(1, result[0, 0].ToNumber().Value);
+            Assert.AreEqual(2, result[0, 1].ToNumber().Value);
+            Assert.AreEqual(3, result[1, 0].ToNumber().Value);
+            Assert.AreEqual(4, result[1, 1].ToNumber().Value);
+            Assert.AreEqual(5, result[2, 0].ToNumber().Value);
+            Assert.AreEqual(6, result[2, 1].ToNumber().Value);
+        }
     }
 }
