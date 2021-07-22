@@ -194,9 +194,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (allLiterals)
             {
                 var args2 = args.Select(
-                    a => (IMathObject)((Literal) a).Value.ToNumber());
+                    a => ((Literal) a).Value);
                 var result = Function.Call(env, args2.ToArray());
-                return new Literal(result.ToNumber().Value);
+                return new Literal(result);
             }
             else
             {
