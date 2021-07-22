@@ -63,7 +63,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(AdditionOperation.Value, fcall2.Function);
             Assert.AreEqual(2, fcall2.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("c", (fcall2.Arguments[1] as VariableAccess).VariableName);
         }
@@ -118,7 +119,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("a", (fcall.Arguments[1] as VariableAccess).VariableName);
@@ -129,13 +131,15 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(4, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("b", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[2]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[2] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[2]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[3]);
             Assert.AreEqual("c", (fcall2.Arguments[3] as VariableAccess).VariableName);
@@ -155,7 +159,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
 
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
@@ -167,13 +172,15 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual("a", (fcall2.Arguments[0] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[1]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[1] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[1]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[2]);
             Assert.AreEqual("b", (fcall2.Arguments[2] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[3]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[3] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[3]).Value.ToFloat());
 
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[2]);
@@ -198,19 +205,22 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(4, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("a", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[2]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[2] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[2]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[3]);
             Assert.AreEqual("b", (fcall2.Arguments[3] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(3.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[2]);
             Assert.AreEqual("c", (fcall.Arguments[2] as VariableAccess).VariableName);
@@ -234,13 +244,15 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("a", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[2]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[2] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[2]).Value.ToFloat());
 
 
 
@@ -254,7 +266,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("c", (fcall2.Arguments[1] as VariableAccess).VariableName);
@@ -278,14 +291,16 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("a", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(2.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
 
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[2]);
@@ -297,7 +312,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual("b", (fcall2.Arguments[0] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[1]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[1] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[1]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[2]);
             Assert.AreEqual("c", (fcall2.Arguments[2] as VariableAccess).VariableName);
@@ -315,7 +331,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(BitwiseOrOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
             Assert.AreSame(BitwiseAndOperation.Value, fcall.Function);
@@ -327,7 +344,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(AdditionOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(2.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
             Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
@@ -339,7 +357,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(ExponentOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(3.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("c", (fcall.Arguments[1] as VariableAccess).VariableName);
 
@@ -363,7 +382,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(BitwiseAndOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(3.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
             Assert.AreSame(AdditionOperation.Value, fcall.Function);
@@ -375,7 +395,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(2.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
             Assert.AreSame(ExponentOperation.Value, fcall.Function);
@@ -383,7 +404,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("a", (fcall.Arguments[1] as VariableAccess).VariableName);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
         }
 
         [Test]
@@ -412,7 +434,7 @@ namespace MetaphysicsIndustries.Solus.Test
             var expr = parser.GetExpression("derive(x, x)", cleanup: false);
 
             Assert.IsInstanceOf(typeof(Literal), expr);
-            Assert.AreEqual(1f, (expr as Literal).Value);
+            Assert.AreEqual(1f, ((Literal) expr).Value.ToFloat());
         }
 
         [Test]
@@ -424,7 +446,7 @@ namespace MetaphysicsIndustries.Solus.Test
 
             Assert.IsInstanceOf(typeof(Literal), expr);
             var literal = (Literal) expr;
-            Assert.AreEqual(2, literal.Value);
+            Assert.AreEqual(2, literal.Value.ToFloat());
         }
 
         public class CustomAsdfFunction : Function
@@ -458,8 +480,10 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
-            Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(1f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
+            Assert.AreEqual(2f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
 
 
             float value = expr.Eval(env).ToNumber().Value;
@@ -502,9 +526,12 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[2]);
-            Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
-            Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
-            Assert.AreEqual(3f, (fcall.Arguments[2] as Literal).Value);
+            Assert.AreEqual(1f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
+            Assert.AreEqual(2f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
+            Assert.AreEqual(3f,
+                ((Literal) fcall.Arguments[2]).Value.ToFloat());
             Assert.AreEqual(3f, expr.Eval(env).ToNumber().Value);
 
 

@@ -85,7 +85,7 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value);
+            Assert.AreEqual(0, literal.Value.ToFloat());
             // and
             Assert.True(thenEvaled);
             Assert.False(elseEvaled);
@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value);
+            Assert.AreEqual(0, literal.Value.ToFloat());
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);
@@ -143,7 +143,7 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value);
+            Assert.AreEqual(0, literal.Value.ToFloat());
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);
@@ -172,7 +172,7 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value);
+            Assert.AreEqual(0, literal.Value.ToFloat());
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);
@@ -201,7 +201,7 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value);
+            Assert.AreEqual(0, literal.Value.ToFloat());
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);
