@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -726,6 +727,23 @@ namespace MetaphysicsIndustries.Solus.Expressions
             sum /= ColumnCount;
 
             return sum;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("[ ");
+            for (var r = 0; r < RowCount; r++)
+            {
+                if (r > 0) sb.Append("; ");
+                for (var c = 0; c < ColumnCount; c++)
+                {
+                    if (c > 0) sb.Append(", ");
+                    sb.Append(this[r, c]);
+                }
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }

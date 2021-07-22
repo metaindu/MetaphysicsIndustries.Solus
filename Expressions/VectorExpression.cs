@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
@@ -248,6 +249,19 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
 
             return ret;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("[ ");
+            for (var i = 0; i < Length; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                sb.Append(this[i]);
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }
