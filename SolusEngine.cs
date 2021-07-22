@@ -206,9 +206,9 @@ namespace MetaphysicsIndustries.Solus
             image.CopyBitmapToPixels();
 
             var values = new float[image.Height, image.Width];
-            for (var i = 0; i < image.Width; i++)
-            for (var j = 0; j < image.Height; j++)
-                values[i, j] = image[i, j].ToArgb() & 0x00FFFFFF;
+            for (var c = 0; c < image.Width; c++)
+            for (var r = 0; r < image.Height; r++)
+                values[r, c] = image[r, c].ToArgb() & 0x00FFFFFF;
             return new Matrix(values);
         }
 
