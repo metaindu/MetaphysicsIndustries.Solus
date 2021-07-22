@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Text;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
@@ -75,5 +76,23 @@ namespace MetaphysicsIndustries.Solus.Values
         }
 
         public int[] GetDimensions() => new[] {RowCount, ColumnCount};
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("[ ");
+            for (var r = 0; r < RowCount; r++)
+            {
+                if (r > 0) sb.Append("; ");
+                for (var c = 0; c < ColumnCount; c++)
+                {
+                    if (c > 0) sb.Append(", ");
+                    sb.Append(_components[r, c]);
+                }
+            }
+
+            sb.Append("]");
+            return sb.ToString();
+        }
     }
 }

@@ -50,5 +50,14 @@ namespace MetaphysicsIndustries.Solus.Values
             throw new InvalidOperationException(
                 "Scalars do not have dimensions");
         }
+
+        public override string ToString()
+        {
+            if (Math.Abs(Value - (float) Math.E) < 1e-6)
+                return "e";
+            if (Math.Abs(Value - (float) Math.PI) < 1e-6)
+                return "π";
+            return Value.ToString("G");
+        }
     }
 }

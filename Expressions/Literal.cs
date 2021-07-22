@@ -62,12 +62,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override string ToString()
         {
-	        if (Math.Abs(Value.ToFloat() - (float) Math.E) < 1e-6)
-		        return "e";
-	        if (Math.Abs(Value.ToFloat() - (float) Math.PI) < 1e-6)
-		        return "π";
-	        if (Value.IsScalar)
-		        return Value.ToFloat().ToString("G");
 	        return Value.ToString();
         }
 

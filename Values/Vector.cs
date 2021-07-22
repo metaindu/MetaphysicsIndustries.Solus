@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Linq;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
@@ -68,5 +69,12 @@ namespace MetaphysicsIndustries.Solus.Values
         }
 
         public int[] GetDimensions() => new[] {Length};
+
+        public override string ToString()
+        {
+            var inner = string.Join(", ",
+                _components.Select(c => c.ToString()));
+            return $"[{inner}]";
+        }
     }
 }
