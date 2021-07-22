@@ -21,14 +21,13 @@
  */
 
 using System;
-using NUnit.Framework;
-
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
+using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test
+namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 {
     [TestFixture]
     public class SolusParserTest
