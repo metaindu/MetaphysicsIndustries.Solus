@@ -28,6 +28,7 @@ using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
+using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus
@@ -325,7 +326,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (defref == _grammar.def_string)
             {
-                return GetStringFromString(span);
+                return GetLiteralFromString(span);
             }
             else if (defref == _grammar.def_unary_002D_op)
             {
@@ -550,14 +551,14 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(fvalue);
         }
 
-        public Expression GetStringFromString(Span span)
+        public Expression GetLiteralFromString(Span span)
         {
             var value = span.Value;
             if (value.StartsWith("\""))
                 value = value.Substring(1, value.Length - 2);
             else if (value.StartsWith("'"))
                 value = value.Substring(1, value.Length - 2);
-            return new StringExpression(value);
+            return new Literal(value.ToStringValue());
         }
 
         public Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)

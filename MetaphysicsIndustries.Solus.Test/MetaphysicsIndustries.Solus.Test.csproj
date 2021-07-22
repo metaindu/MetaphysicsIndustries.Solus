@@ -31,7 +31,6 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="ExpressionsT\StringExpressionT\SpringExpressionTest.cs" />
     <Compile Include="FunctionsT\AssociativeCommutativeOperationT\CheckArgumentsTest.cs" />
     <Compile Include="FunctionsT\FunctionT\CheckArgumentsTest.cs" />
     <Compile Include="FunctionsT\FunctionT\FunctionTest.cs" />
@@ -62,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ExpressionsT" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

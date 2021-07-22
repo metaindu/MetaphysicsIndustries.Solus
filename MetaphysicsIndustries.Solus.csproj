@@ -66,7 +66,6 @@
     <Compile Include="Expressions\MatrixExpression.cs" />
     <Compile Include="Expressions\TensorExpression.cs" />
     <Compile Include="Expressions\VectorExpression.cs" />
-    <Compile Include="Expressions\StringExpression.cs" />
     <Compile Include="Expressions\VariableAccess.cs" />
     <Compile Include="Functions\AbsoluteValueFunction.cs" />
     <Compile Include="Functions\AdditionOperation.cs" />

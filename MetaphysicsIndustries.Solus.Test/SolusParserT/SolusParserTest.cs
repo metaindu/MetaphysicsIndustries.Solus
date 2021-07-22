@@ -575,9 +575,11 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // when
             var result = parser.GetExpression(input);
             // then
-            Assert.IsInstanceOf<StringExpression>(result);
-            var se = (StringExpression) result;
-            Assert.AreEqual("value", se.Value);
+            Assert.IsInstanceOf<Literal>(result);
+            var literal = (Literal) result;
+            Assert.IsTrue(literal.Value.IsString);
+            Assert.AreEqual("value",
+                literal.Value.ToStringValue().Value);
         }
 
         [Test]
@@ -589,9 +591,11 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // when
             var result = parser.GetExpression(input);
             // then
-            Assert.IsInstanceOf<StringExpression>(result);
-            var se = (StringExpression) result;
-            Assert.AreEqual("value", se.Value);
+            Assert.IsInstanceOf<Literal>(result);
+            var literal = (Literal) result;
+            Assert.IsTrue(literal.Value.IsString);
+            Assert.AreEqual("value",
+                literal.Value.ToStringValue().Value);
         }
 
         [Test]
