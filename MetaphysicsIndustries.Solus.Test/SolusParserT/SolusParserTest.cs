@@ -593,5 +593,25 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var se = (StringExpression) result;
             Assert.AreEqual("value", se.Value);
         }
+
+        [Test]
+        public void TestArrayLiteral()
+        {
+            // given
+            const string input = "[1,2,3]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<VectorExpression>(result);
+            var ve = (VectorExpression) result;
+            Assert.AreEqual(3, ve.Length);
+            Assert.IsInstanceOf<Literal>(ve[0]);
+            Assert.AreEqual(1,((Literal)ve[0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[1]);
+            Assert.AreEqual(2,((Literal)ve[1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[2]);
+            Assert.AreEqual(3,((Literal)ve[2]).Value.ToFloat());
+        }
     }
 }
