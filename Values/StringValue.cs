@@ -57,5 +57,10 @@ namespace MetaphysicsIndustries.Solus.Values
         }
 
         public int Length => Value?.Length ?? 0;
+
+        public override string ToString()
+        {
+            return $"\"{Value}\"";
+        }
     }
 }
