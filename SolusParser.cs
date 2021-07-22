@@ -338,6 +338,8 @@ namespace MetaphysicsIndustries.Solus
 
             if (defref == _grammar.def_array_002D_literal)
                 return GetTensorExpressionFromArrayLiteral(span, env);
+            if (defref == _grammar.def_component_002D_access)
+                return GetComponentAccessFromComponentAccess(span, env);
 
             // TODO: proper exception/message about node type
             throw new NotImplementedException();
@@ -613,6 +615,41 @@ namespace MetaphysicsIndustries.Solus
                 comps.AddRange(cl);
             return new MatrixExpression(components.Count,
                 columnCount, comps.ToArray());
+        }
+
+        public ComponentAccess GetComponentAccessFromComponentAccess(Span span,
+            SolusEnvironment env)
+        {
+            var expr = GetExpressionFromCompSubexpr(span.Subspans[0], env);
+            foreach (var sub in span.Subspans.Skip(1))
+            {
+                var indexes = GetExpressionsFromArrayIndex(sub, env);
+                expr = new ComponentAccess(expr, indexes);
+            }
+
+            return (ComponentAccess) expr;
+        }
+
+        public Expression GetExpressionFromCompSubexpr(Span span,
+            SolusEnvironment env)
+        {
+            return GetExpressionFromSubexprPart(span.Subspans[0], env);
+        }
+
+        public IEnumerable<Expression> GetExpressionsFromArrayIndex(Span span,
+            SolusEnvironment env)
+        {
+            var indexes = new List<Expression>();
+            foreach (var sub in span.Subspans)
+            {
+                if (sub.Node == _grammar.node_array_002D_index_1_expr ||
+                    sub.Node == _grammar.node_array_002D_index_3_expr)
+                {
+                    indexes.Add(GetExpressionFromExpr(sub, env));
+                }
+            }
+
+            return indexes;
         }
     }
 }

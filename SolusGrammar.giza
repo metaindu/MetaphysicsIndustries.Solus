@@ -67,7 +67,9 @@ unary-op = [+-] (
     function-call |
     string |
     unary-op |
-    varref
+    varref |
+    array-literal |
+    component-access
 );
 
 subexpr = (
@@ -77,7 +79,8 @@ subexpr = (
     string |
     unary-op |
     varref |
-    array-literal
+    array-literal |
+    component-access
 );
 
 paren = '(' expr ')';
@@ -88,3 +91,15 @@ varref = identifier;
 
 array-literal = '[' expr ( ',' expr )* ','?
               ( ';' expr ( ',' expr )* ','? )* ';'? ']';
+
+component-access = comp-subexpr array-index+;
+
+comp-subexpr = (
+    paren |
+    function-call |
+    string |
+    varref |
+    array-literal
+);
+
+array-index = '[' expr ( ',' expr )* ','? ']';

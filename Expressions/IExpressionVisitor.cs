@@ -33,6 +33,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         void Visit(MatrixExpression matrix);
         void Visit(VectorExpression vector);
+        void Visit(ComponentAccess ca);
     }
 
     public class DelegateExpressionVisitor : IExpressionVisitor
@@ -45,6 +46,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public Action<DerivativeOfVariable> DvarVisitor = DoNothing<DerivativeOfVariable>;
         public Action<MatrixExpression> MatrixVisitor = DoNothing;
         public Action<VectorExpression> VectorVisitor = DoNothing;
+        public Action<ComponentAccess> ComponentAccessVisitor = DoNothing;
 
         public void Visit(Literal literal)
         {
@@ -74,7 +76,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             VectorVisitor(vector);
         }
-
+        public void Visit(ComponentAccess ca)
+        {
+            ComponentAccessVisitor(ca);
+        }
     }
 }
 

@@ -55,6 +55,7 @@
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
     <Compile Include="Expressions\ColorExpression.cs" />
+    <Compile Include="Expressions\ComponentAccess.cs" />
     <Compile Include="Expressions\DerivativeOfVariable.cs" />
     <Compile Include="Expressions\Expression.cs" />
     <Compile Include="Expressions\FunctionCall.cs" />

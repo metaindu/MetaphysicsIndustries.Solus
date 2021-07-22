@@ -613,5 +613,24 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsInstanceOf<Literal>(ve[2]);
             Assert.AreEqual(3,((Literal)ve[2]).Value.ToFloat());
         }
+
+        [Test]
+        public void TestComponentAccess()
+        {
+            // given
+            const string input = "a[1]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<ComponentAccess>(result);
+            var ca = (ComponentAccess) result;
+            Assert.IsInstanceOf<VariableAccess>(ca.Expr);
+            Assert.AreEqual("a",
+                ((VariableAccess)ca.Expr).VariableName);
+            Assert.AreEqual(1, ca.Indexes.Count);
+            Assert.AreEqual(1,
+                ((Literal)ca.Indexes[0]).Value.ToFloat());
+        }
     }
 }
