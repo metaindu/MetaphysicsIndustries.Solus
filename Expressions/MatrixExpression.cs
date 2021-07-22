@@ -103,8 +103,19 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 {
                     if (x >= initialContents.Length) { break; }
                     this[i, j] = initialContents[x];
+                    x++;
                 }
             }
+        }
+
+        public MatrixExpression(Expression[,] initialContents)
+            : this(initialContents.GetLength(0),
+                initialContents.GetLength(1))
+        {
+            int r, c;
+            for(r=0;r<initialContents.GetLength(0);r++)
+            for (c = 0; c < initialContents.GetLength(1); c++)
+                this[r, c] = initialContents[r, c];
         }
 
         private int _rowCount;
@@ -656,19 +667,27 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
-            var ret = new MatrixExpression(RowCount, ColumnCount);
-
-            int i;
-            int j;
-            for (i = 0; i < RowCount; i++)
+            int r;
+            int c;
+            var values = new Expression[RowCount, ColumnCount];
+            var allLiteral = true;
+            for (r = 0; r < RowCount; r++)
+            for (c = 0; c < ColumnCount; c++)
             {
-                for (j = 0; j < ColumnCount; j++)
-                {
-                    ret[i, j] = this[i, j].PreliminaryEval(env);
-                }
+                var value = this[r, c].PreliminaryEval(env);
+                allLiteral &= value is Literal;
+                values[r, c] = value;
             }
 
-            return ret;
+            if (!allLiteral)
+                return new MatrixExpression(values);
+
+            var values2 = new IMathObject[RowCount, ColumnCount];
+            for (r = 0; r < RowCount; r++)
+            for (c = 0; c < ColumnCount; c++)
+                values2[r, c] = ((Literal) values[r, c]).Value;
+            var matrix = new Matrix(values2);
+            return new Literal(matrix);
         }
 
         public override void ApplyToAll(Modulator mod)

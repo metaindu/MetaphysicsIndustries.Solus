@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
@@ -212,15 +213,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
-            var ret = new VectorExpression(Length);
-
-            int i;
-            for (i = 0; i < Length; i++)
+            var values = _array.Select(
+                e => e.PreliminaryEval(env)).ToArray();
+            if (values.All(e => e is Literal))
             {
-                ret[i] = this[i].PreliminaryEval(env);
+                return new Literal(
+                    new Vector(
+                        values.Select(
+                            e => ((Literal) e).Value).ToArray()));
             }
 
-            return ret;
+            return new VectorExpression(values.Length, values);
         }
 
         public override void ApplyToAll(Modulator mod)
