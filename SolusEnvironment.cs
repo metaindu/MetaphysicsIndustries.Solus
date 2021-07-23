@@ -60,6 +60,7 @@ namespace MetaphysicsIndustries.Solus
                     DistFunction.Value,
                     DistSqFunction.Value,
                     LoadImageFunction.Value,
+                    SizeFunction.Value,
                 };
 
                 foreach (var func in functions)

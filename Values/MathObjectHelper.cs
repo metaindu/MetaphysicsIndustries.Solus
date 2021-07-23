@@ -16,6 +16,12 @@ namespace MetaphysicsIndustries.Solus.Values
         public static Number ToNumber(this int value) => new Number(value);
         public static Number ToNumber(this long value) => new Number(value);
 
+        public static Vector ToVector(this float[] values) =>
+            new Vector(values);
+
+        public static Vector ToVector(this int[] values) =>
+            new Vector(values.Select(v => (float) v).ToArray());
+
         public static StringValue ToStringValue(this string value) =>
             new StringValue(value);
 

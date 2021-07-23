@@ -198,5 +198,33 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             Assert.AreEqual(5, result[2, 0].ToNumber().Value);
             Assert.AreEqual(6, result[2, 1].ToNumber().Value);
         }
+
+        [Test]
+        public void FloatArrayToVectorYieldsVector()
+        {
+            // given
+            var values = new float[] {1.2f, 3.4f, 5.6f};
+            // when
+            var result = values.ToVector();
+            // then
+            Assert.AreEqual(3, result.Length);
+            Assert.AreEqual(1.2f,result[0].ToFloat());
+            Assert.AreEqual(3.4f,result[1].ToFloat());
+            Assert.AreEqual(5.6f,result[2].ToFloat());
+        }
+
+        [Test]
+        public void IntArrayToVectorYieldsVector()
+        {
+            // given
+            var values = new int[] {1, 2, 3};
+            // when
+            var result = values.ToVector();
+            // then
+            Assert.AreEqual(3, result.Length);
+            Assert.AreEqual(1,result[0].ToFloat());
+            Assert.AreEqual(2,result[1].ToFloat());
+            Assert.AreEqual(3,result[2].ToFloat());
+        }
     }
 }

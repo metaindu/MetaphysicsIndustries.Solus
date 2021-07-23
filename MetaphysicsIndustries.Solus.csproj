@@ -115,6 +115,7 @@
     <Compile Include="Functions\SecantFunction.cs" />
     <Compile Include="Functions\SineFunction.cs" />
     <Compile Include="Functions\SingleArgumentFunction.cs" />
+    <Compile Include="Functions\SizeFunction.cs" />
     <Compile Include="Functions\TangentFunction.cs" />
     <Compile Include="Functions\UnaryOperation.cs" />
     <Compile Include="Functions\UnitStepFunction.cs" />
