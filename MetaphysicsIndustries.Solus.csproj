@@ -192,6 +192,7 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include=".gitmodules" />
+    <Content Include="check_code_style.sh" />
     <Content Include="MetaphysicsIndustries.Solus.nuspec" />
     <Content Include="release.sh" />
     <Content Include="render_grammar.sh" />
