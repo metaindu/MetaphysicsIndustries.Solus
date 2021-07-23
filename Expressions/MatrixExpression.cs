@@ -119,6 +119,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 this[r, c] = initialContents[r, c];
         }
 
+        public override int TensorRank => 2;
+
         private int _rowCount;
         public int RowCount
         {

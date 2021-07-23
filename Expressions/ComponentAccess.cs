@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (expr.TensorRank != indexes.Length)
                 throw new IndexOutOfRangeException(
                     "Number of indexes doesn't match the number " +
-                    "required by the expression.");
+                    "required by the expression");
             if (indexes.Any(i => !i.IsScalar))
                 throw new IndexOutOfRangeException(
                     "Indexes must be scalar");
@@ -77,19 +77,53 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 "greater than 2");
         }
 
+        public static Expression AccessComponent(TensorExpression expr,
+            IMathObject[] indexes)
+        {
+            if (expr.TensorRank < 1)
+                throw new ArgumentException(
+                    "Scalars do not have components");
+            if (expr.TensorRank != indexes.Length)
+                throw new IndexOutOfRangeException(
+                    "Number of indexes doesn't match the number " +
+                    "required by the expression");
+            if (indexes.Any(i => !i.IsScalar))
+                throw new IndexOutOfRangeException(
+                    "Indexes must be scalar");
+            if (indexes.Any(i => i.ToNumber().Value < 0))
+                throw new IndexOutOfRangeException(
+                    "Indexes must not be negative");
+
+            var index0 = (int) indexes[0].ToNumber().Value;
+            if (expr is VectorExpression ve)
+                return ve[index0];
+
+            var index1 = (int) indexes[1].ToNumber().Value;
+            if (expr is MatrixExpression me)
+                return me[index0, index1];
+
+            throw new NotImplementedException(
+                "Component access is not implemented for tensor rank " +
+                "greater than 2");
+        }
+
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
             var expr = Expr.PreliminaryEval(env);
             var evaledIndexes =
                 Indexes.Select(i => i.PreliminaryEval(env)).ToList();
-            if (expr is Literal expr2 &&
-                evaledIndexes.All(ei => ei is Literal))
+            if (evaledIndexes.All(ei => ei is Literal))
             {
-                var result = AccessComponent(
-                    expr2.Value,
-                    evaledIndexes.Select(
-                        ei => ((Literal) ei).Value).ToArray());
-                return new Literal(result);
+                var indexes2 = evaledIndexes.Select(
+                    ei => ((Literal) ei).Value).ToArray();
+                switch (expr)
+                {
+                    case Literal lit:
+                        return new Literal(
+                            AccessComponent(lit.Value, indexes2));
+                    case TensorExpression te:
+                        return AccessComponent(te, indexes2);
+                }
             }
 
             return new ComponentAccess(expr, evaledIndexes);

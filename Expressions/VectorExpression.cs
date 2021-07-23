@@ -90,6 +90,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
+        public override int TensorRank => 1;
+
         private Expression[] _array;
         private int _length;
         public int Length

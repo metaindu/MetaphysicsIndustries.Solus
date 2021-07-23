@@ -34,6 +34,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return GetEnumerator();
         }
 
+        public abstract int TensorRank { get; }
+
         public delegate float Modulator(float x);
         public delegate float BiModulator(float x, float y);
         public abstract void ApplyToAll(Modulator mod);
