@@ -55,5 +55,38 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.NumberT
             // then
             Assert.AreEqual(123, result.Value);
         }
+
+        [Test]
+        public void TestToString()
+        {
+            // given
+            var value = (123.45f).ToNumber();
+            // when
+            var result = value.ToString();
+            // then
+            Assert.AreEqual("123.45", result);
+        }
+
+        [Test]
+        public void PiYieldsPiSymbol()
+        {
+            // given
+            var value = ((float) Math.PI).ToNumber();
+            // when
+            var result = value.ToString();
+            // then
+            Assert.AreEqual("π", result);
+        }
+
+        [Test]
+        public void EYieldsESymbol()
+        {
+            // given
+            var value = ((float) Math.E).ToNumber();
+            // when
+            var result = value.ToString();
+            // then
+            Assert.AreEqual("e", result);
+        }
     }
 }

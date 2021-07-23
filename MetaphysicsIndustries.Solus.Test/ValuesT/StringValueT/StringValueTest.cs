@@ -86,5 +86,16 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
                             "Parameter name: index",
                 ex.Message);
         }
+
+        [Test]
+        public void TestToString()
+        {
+            // given
+            var value = new StringValue("abc");
+            // when
+            var result = value.ToString();
+            // then
+            Assert.AreEqual("\"abc\"", result);
+        }
     }
 }

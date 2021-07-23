@@ -128,5 +128,47 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // then
             Assert.AreEqual(Types.Mixed, result.ComponentType);
         }
+
+        [Test]
+        public void TestToString()
+        {
+            // given
+            var value = new Matrix(new IMathObject[,]
+            {
+                {1.ToNumber(), 2.ToNumber()},
+                {3.ToNumber(), 4.ToNumber()},
+                {5.ToNumber(), 6.ToNumber()}
+            });
+            // when
+            var result = value.ToString();
+            // then
+            Assert.AreEqual("[1, 2; 3, 4; 5, 6]", result);
+        }
+
+        [Test]
+        public void TestToStringComplex()
+        {
+            // given
+            var value = new Matrix(new IMathObject[,]
+            {
+                {
+                    "one".ToStringValue(),
+                    new Vector(new float[] {2, 2, 2})
+                },
+                {
+                    3.ToNumber(),
+                    new Matrix(new float[,]
+                    {
+                        {4, 5},
+                        {6, 7}
+                    })
+                }
+            });
+            // when
+            var result = value.ToString();
+            // then
+            Assert.AreEqual("[\"one\", [2, 2, 2]; 3, [4, 5; 6, 7]]",
+                result);
+        }
     }
 }

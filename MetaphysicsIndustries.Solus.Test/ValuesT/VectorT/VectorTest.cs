@@ -92,5 +92,44 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             // then
             Assert.AreEqual(Types.Mixed, result.ComponentType);
         }
+
+        [Test]
+        public void ToStringProducesSimpleStringRepresentation()
+        {
+            // given
+            var v = new Vector(new IMathObject[]
+                {
+                    1.ToNumber(), 2.ToNumber(), 3.ToNumber()
+                });
+            // when
+            var result = v.ToString();
+            // then
+            Assert.AreEqual("[1, 2, 3]", result);
+        }
+
+        [Test]
+        public void ComplexVectorYieldsComplexStringRepresentation()
+        {
+            // given
+            var v = new Vector(new IMathObject[]
+            {
+                1.ToNumber(),
+                "two".ToStringValue(),
+                new Vector(new IMathObject[]
+                {
+                    "t".ToStringValue(),
+                    "h".ToStringValue(),
+                    "r".ToStringValue(),
+                    "e".ToStringValue(),
+                    "e".ToStringValue(),
+                })
+            });
+            // when
+            var result = v.ToString();
+            // then
+            Assert.AreEqual(
+                "[1, \"two\", [\"t\", \"h\", \"r\", \"e\", \"e\"]]",
+                result);
+        }
     }
 }

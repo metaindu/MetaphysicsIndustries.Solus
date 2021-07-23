@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("[ ");
+            sb.Append("[");
             for (var r = 0; r < RowCount; r++)
             {
                 if (r > 0) sb.Append("; ");
