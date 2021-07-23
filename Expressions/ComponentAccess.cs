@@ -51,13 +51,24 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public static IMathObject AccessComponent(IMathObject expr,
             IMathObject[] indexes)
         {
-            if (expr.TensorRank < 1)
-                throw new ArgumentException(
-                    "Scalars do not have components");
-            if (expr.TensorRank != indexes.Length)
-                throw new IndexOutOfRangeException(
-                    "Number of indexes doesn't match the number " +
-                    "required by the expression");
+            if (expr.IsString)
+            {
+                if (1 != indexes.Length)
+                    throw new IndexOutOfRangeException(
+                        "Number of indexes doesn't match the number " +
+                        "required by the expression");
+            }
+            else
+            {
+                if (expr.TensorRank < 1)
+                    throw new ArgumentException(
+                        "Scalars do not have components");
+                if (expr.TensorRank != indexes.Length)
+                    throw new IndexOutOfRangeException(
+                        "Number of indexes doesn't match the number " +
+                        "required by the expression");
+            }
+
             if (indexes.Any(i => !i.IsScalar))
                 throw new IndexOutOfRangeException(
                     "Indexes must be scalar");
@@ -68,6 +79,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var index0 = (int) indexes[0].ToNumber().Value;
             if (expr.IsVector)
                 return expr.ToVector()[index0];
+            if (expr.IsString)
+                return expr.ToStringValue().Value[index0].ToStringValue();
 
             var index1 = (int) indexes[1].ToNumber().Value;
             if (expr.IsMatrix)

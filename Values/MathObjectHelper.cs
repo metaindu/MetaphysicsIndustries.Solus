@@ -19,6 +19,9 @@ namespace MetaphysicsIndustries.Solus.Values
         public static StringValue ToStringValue(this string value) =>
             new StringValue(value);
 
+        public static StringValue ToStringValue(this char value) =>
+            value.ToString().ToStringValue();
+
         public static float ToFloat(this IMathObject value) =>
             value.ToNumber().Value;
 

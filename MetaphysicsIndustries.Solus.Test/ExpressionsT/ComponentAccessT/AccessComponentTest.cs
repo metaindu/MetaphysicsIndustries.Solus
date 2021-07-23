@@ -184,5 +184,36 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 "rank greater than 2",
                 ex.Message);
         }
+
+        [Test]
+        public void StringWithIndexYieldsComponent()
+        {
+            // given
+            var expr = "abc".ToStringValue();
+            var indexes = new IMathObject[] {1.ToNumber()};
+            // when
+            var result = ComponentAccess.AccessComponent(expr, indexes);
+            // then
+            Assert.IsFalse(result.IsVector);
+            Assert.IsFalse(result.IsScalar);
+            Assert.IsTrue(result.IsString);
+            Assert.AreEqual("b", result.ToStringValue().Value);
+        }
+
+        [Test]
+        public void StringWithTooManyIndexesThrows()
+        {
+            // given
+            var expr = "abc".ToStringValue();
+            var indexes = new IMathObject[] {1.ToNumber(), 1.ToNumber()};
+            // when
+            var ex = Assert.Throws<IndexOutOfRangeException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Number of indexes doesn't match the number " +
+                "required by the expression",
+                ex.Message);
+        }
     }
 }
