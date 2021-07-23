@@ -31,8 +31,24 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="ExpressionsT\ComponentAccessT\AccessComponent2Test.cs" />
+    <Compile Include="ExpressionsT\ComponentAccessT\AccessComponentTest.cs" />
+    <Compile Include="ExpressionsT\ComponentAccessT\ComponentAccessTest.cs" />
+    <Compile Include="ExpressionsT\ComponentAccessT\PreliminaryEvalTest.cs" />
+    <Compile Include="FunctionsT\AssociativeCommutativeOperationT\CheckArgumentsTest.cs" />
+    <Compile Include="FunctionsT\FunctionT\CheckArgumentsTest.cs" />
+    <Compile Include="FunctionsT\FunctionT\FunctionTest.cs" />
+    <Compile Include="FunctionsT\LoadImageFunctionT\LoadImageFunctionTest.cs" />
+    <Compile Include="FunctionsT\SizeFunctionT\SizeFunctionTest.cs" />
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
-    <Compile Include="SolusParserTest.cs" />
+    <Compile Include="MockMathObject.cs" />
+    <Compile Include="SolusEngineT\LoadImageTest.cs" />
+    <Compile Include="SolusParserT\SolusParserTest.cs" />
+    <Compile Include="ValuesT\MathObjectHelperT\MathObjectHelperTest.cs" />
+    <Compile Include="ValuesT\MatrixT\MatrixTest.cs" />
+    <Compile Include="ValuesT\NumberT\NumberTest.cs" />
+    <Compile Include="ValuesT\StringValueT\StringValueTest.cs" />
+    <Compile Include="ValuesT\VectorT\VectorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Solus.csproj">
@@ -46,6 +62,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

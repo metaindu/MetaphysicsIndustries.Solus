@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -35,15 +36,16 @@ namespace MetaphysicsIndustries.Solus.Functions
             Name = "UnitStep";
         }
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
-            if (args[0].Value >= 0)
+            if (args[0].ToNumber().Value >= 0)
             {
-                return new Literal(1);
+                return new Number(1);
             }
             else
             {
-                return new Literal(0);
+                return new Number(0);
             }
         }
 

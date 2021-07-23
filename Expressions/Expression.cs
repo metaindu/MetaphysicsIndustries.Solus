@@ -34,6 +34,7 @@ using System.Reflection.Emit;
 using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -43,7 +44,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
         }
 
-        public abstract Literal Eval(SolusEnvironment env);
+        public abstract IMathObject Eval(SolusEnvironment env);
 
         public class CompiledExpression
         {
@@ -53,20 +54,21 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         CompiledExpression _compiled;
 
-        public Literal FastEval(SolusEnvironment env)
+        public IMathObject FastEval(SolusEnvironment env)
         {
             Dictionary<string, float> bakedEnv = new Dictionary<string, float>();
             if (_compiled != null)
             {
                 foreach (var var in _compiled.CompiledVars)
                 {
-                    bakedEnv[var] = env.Variables[var].Eval(env).Value;
+                    bakedEnv[var] =
+                        env.Variables[var].Eval(env).ToNumber().Value;
                 }
             }
 
             try
             {
-                return new Literal(FastEval(bakedEnv));
+                return FastEval(bakedEnv).ToNumber();
             }
             catch (Exception ignored)
             {

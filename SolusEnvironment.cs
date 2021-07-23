@@ -59,6 +59,8 @@ namespace MetaphysicsIndustries.Solus
                     LogarithmFunction.Value,
                     DistFunction.Value,
                     DistSqFunction.Value,
+                    LoadImageFunction.Value,
+                    SizeFunction.Value,
                 };
 
                 foreach (var func in functions)

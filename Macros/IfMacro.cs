@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Macros
 {
@@ -39,15 +40,15 @@ namespace MetaphysicsIndustries.Solus.Macros
         public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
         {
             var args2 = args.ToArray();
-            float value = args2[0].Eval(env).Value;
+            float value = args2[0].Eval(env).ToNumber().Value;
 
             if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
             {
-                return args2[2].Eval(env);
+                return new Literal(args2[2].Eval(env).ToNumber().Value);
             }
             else
             {
-                return args2[1].Eval(env);
+                return new Literal(args2[1].Eval(env).ToNumber().Value);
             }
         }
     }

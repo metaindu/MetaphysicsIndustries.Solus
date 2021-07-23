@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -42,13 +43,14 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         }
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
-            float p = args[0].Value;
+            float p = args[0].ToNumber().Value;
 
             if (p != (int)p) throw new ArgumentException("Argument must be an integer");
 
-            return new Literal(GetValue((int)p));
+            return GetValue((int)p).ToNumber();
         }
 
         private float GetValue(int p)

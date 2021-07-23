@@ -30,6 +30,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -43,9 +44,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 		}
 
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
 		{
-            return new Literal((float)Math.Atan2(1, args[0].Eval(env).Value));
+            return ((float)Math.Atan2(1, args[0].ToNumber().Value)).ToNumber();
         }
 
         public override string DisplayName

@@ -35,34 +35,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MetaphysicsIndustries.Solus.Compiler;
-using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract partial class Function
-	{
-        protected Function()
-            : this(string.Empty)
+    public abstract class Function
+    {
+        protected Function(Types[] paramTypes, string name="")
         {
-        }
-
-        protected Function(string name)
-        {
+            if (paramTypes == null)
+                throw new ArgumentNullException(nameof(paramTypes));
             _name = name;
+            ParamTypes = Array.AsReadOnly(paramTypes);
         }
 
-		public virtual Literal Call(SolusEnvironment env, params Expression[] args)
+		public virtual IMathObject Call(SolusEnvironment env, params IMathObject[] args)
         {
             this.CheckArguments(args);
-            List<Literal> evalArgs = new List<Literal>(args.Length);
-            foreach (Expression arg in args)
-            {
-                evalArgs.Add(arg.Eval(env));
-            }
-			return this.InternalCall(env, evalArgs.ToArray());
-		}
+            return InternalCall(env, args);
+        }
 
         //public virtual Expression CleanUp(Expression[] args)
         //{
@@ -104,55 +98,36 @@ namespace MetaphysicsIndustries.Solus.Functions
 			}
 		}
 
-		public List<Type> Types
-		{
-			get
-			{
-				return InternalTypes;
-			}
-		}
+        protected abstract IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args);
 
-        protected abstract Literal InternalCall(SolusEnvironment env, Literal[] args);
+        public virtual void CheckArguments(IMathObject[] args) =>
+            CheckArguments(args, ParamTypes, DisplayName);
 
-		protected virtual void CheckArguments(Expression[] args)
-		{
-			Expression[] _args = args;
-			List<Type>	types;
-			int				i;
-			int				j;
-			
-			types = Types;
-			if (args.Length != types.Count)
-			{
-				throw new InvalidOperationException("Wrong number of arguments given to " + DisplayName + " (given " + args.Length.ToString() + ", require " + Types.Count.ToString() + ")");
-			}
-			Type	e;
-			e = typeof(Expression);
-			j = args.Length;
-			for (i = 0; i < j; i++)
-			{
-				if (!e.IsAssignableFrom(types[i]))
-				{
-					
-					throw new InvalidOperationException("Required argument type " + i.ToString() + " is invalid (given \"" + types[i].Name + "\", require \"" + e.Name + ")");
-				}
-				if (!types[i].IsAssignableFrom(args[i].GetType()))
-				{
-					throw new InvalidOperationException("Argument " + ((i).ToString()) + " of wrong type (given \"" + args.GetType().Name + "\", require \"" + types[i].Name + ")");
-				}
-			}
-		}
+        public static void CheckArguments(IMathObject[] args,
+            IList<Types> paramTypes, string displayName)
+        {
+            if (args.Length != paramTypes.Count)
+            {
+                throw new ArgumentException(
+                    $"Wrong number of arguments given to " +
+                    $"{displayName} (expected {paramTypes.Count} but got " +
+                    $"{args.Length})");
+            }
+            for (var i = 0; i < args.Length; i++)
+            {
+                var argtype = args[i].GetMathType();
+                if (argtype != paramTypes[i])
+                {
+                    throw new ArgumentException(
+                        $"Argument {i} wrong type: expected " +
+                        $"{paramTypes[i]} but got {argtype}");
+                }
+            }
+        }
 
-		protected List<Type> InternalTypes
-		{
-			get
-			{
-				return _internaltypes;
-			}
-		}
-
-		private  List<Type> _internaltypes = new List<Type>();
-		private  string     _name;
+        public ReadOnlyCollection<Types> ParamTypes { get; }
+        private string _name;
 
         public virtual string ToString(List<Expression> arguments)
         {

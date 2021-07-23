@@ -24,7 +24,8 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public abstract class SolusTensor : Expression, IEnumerable<Expression>
+    public abstract class TensorExpression : Expression,
+        IEnumerable<Expression>
     {
         public abstract IEnumerator<Expression> GetEnumerator();
 
@@ -32,6 +33,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             return GetEnumerator();
         }
+
+        public abstract int TensorRank { get; }
 
         public delegate float Modulator(float x);
         public delegate float BiModulator(float x, float y);

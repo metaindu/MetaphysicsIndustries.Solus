@@ -67,7 +67,9 @@ unary-op = [+-] (
     function-call |
     string |
     unary-op |
-    varref
+    varref |
+    array-literal |
+    component-access
 );
 
 subexpr = (
@@ -76,7 +78,9 @@ subexpr = (
     number |
     string |
     unary-op |
-    varref
+    varref |
+    array-literal |
+    component-access
 );
 
 paren = '(' expr ')';
@@ -85,3 +89,17 @@ varref = identifier;
 
 <token> identifier = [\w] [\d\w_]*;
 
+array-literal = '[' expr ( ',' expr )* ','?
+              ( ';' expr ( ',' expr )* ','? )* ';'? ']';
+
+component-access = comp-subexpr array-index+;
+
+comp-subexpr = (
+    paren |
+    function-call |
+    string |
+    varref |
+    array-literal
+);
+
+array-index = '[' expr ( ',' expr )* ','? ']';

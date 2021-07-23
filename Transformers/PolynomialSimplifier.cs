@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Transformers
 {
@@ -51,7 +52,9 @@ namespace MetaphysicsIndustries.Solus.Transformers
         {
             if (fc.Function is ExponentOperation)
             {
-                if (fc.Arguments[1] is Literal && Literal.IsInteger(((Literal)fc.Arguments[1]).Value) &&
+                var arg1 = fc.Arguments[1];
+                if (arg1 is Literal literal &&
+                    Literal.IsInteger(literal.Value.ToFloat()) &&
                     fc.Arguments[0] is FunctionCall)
                 {
                     FunctionCall fcarg = (FunctionCall)fc.Arguments[0];
@@ -69,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                         FunctionCall newfc = new FunctionCall();
                         newfc.Function = fcarg.Function;
 
-                        int n = (int)(((Literal)fc.Arguments[1]).Value);
+                        int n = (int)((Literal)arg1).Value.ToFloat();
                         int i;
                         for (i = 0; i < n; i++)
                         {

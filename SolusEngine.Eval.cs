@@ -31,6 +31,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -97,7 +98,7 @@ namespace MetaphysicsIndustries.Solus
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
                 env.Variables[x] = new Literal(xx);
-                values[i] = preeval.Eval(env).Value;
+                values[i] = preeval.Eval(env).ToNumber().Value;
                 i++;
             }
 
@@ -168,7 +169,7 @@ namespace MetaphysicsIndustries.Solus
                 for (yy = yStart; yy <= yEnd; yy += yStep)
                 {
                     env.Variables[y] = yValues[iy];
-                    values[ix, iy] = preeval.Eval(env).Value;
+                    values[ix, iy] = preeval.Eval(env).ToNumber().Value;
                     iy++;
                 }
 
@@ -270,7 +271,7 @@ namespace MetaphysicsIndustries.Solus
                     for (iz = 0; iz < nz; iz++)
                     {
                         env.Variables[z] = zValues[iz];
-                        values[ix, iy, iz] = preeval.Eval(env).Value;
+                        values[ix, iy, iz] = preeval.Eval(env).ToNumber().Value;
                     }
 
                 }

@@ -21,13 +21,13 @@
  */
 
 using System;
-using NUnit.Framework;
-
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
+using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test
+namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 {
     [TestFixture]
     public class SolusParserTest
@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test
             SolusEnvironment env = new SolusEnvironment();
 
             var expr = parser.GetExpression("2 + 2");
-            var value = expr.Eval(env).Value;
+            var value = expr.Eval(env).ToNumber().Value;
 
             Assert.AreEqual(4.0f, value);
         }
@@ -62,7 +62,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(AdditionOperation.Value, fcall2.Function);
             Assert.AreEqual(2, fcall2.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("c", (fcall2.Arguments[1] as VariableAccess).VariableName);
         }
@@ -89,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test
                 Assert.That(arg is Literal || arg is VariableAccess);
                 if (arg is Literal)
                 {
-                    sum += (arg as Literal).Value;
+                    sum += (arg as Literal).Value.ToFloat();
                 }
                 else
                 {
@@ -117,7 +118,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("a", (fcall.Arguments[1] as VariableAccess).VariableName);
@@ -128,13 +130,15 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(4, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("b", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[2]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[2] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[2]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[3]);
             Assert.AreEqual("c", (fcall2.Arguments[3] as VariableAccess).VariableName);
@@ -154,7 +158,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
 
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
@@ -166,13 +171,15 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual("a", (fcall2.Arguments[0] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[1]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[1] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[1]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[2]);
             Assert.AreEqual("b", (fcall2.Arguments[2] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[3]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[3] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[3]).Value.ToFloat());
 
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[2]);
@@ -197,19 +204,22 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(4, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("a", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[2]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[2] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[2]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[3]);
             Assert.AreEqual("b", (fcall2.Arguments[3] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(3.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[2]);
             Assert.AreEqual("c", (fcall.Arguments[2] as VariableAccess).VariableName);
@@ -233,13 +243,15 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(3, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("a", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[2]);
-            Assert.AreEqual(2.0f, (fcall2.Arguments[2] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall2.Arguments[2]).Value.ToFloat());
 
 
 
@@ -253,7 +265,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("c", (fcall2.Arguments[1] as VariableAccess).VariableName);
@@ -277,14 +290,16 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall2.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall2.Arguments[0]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[1]);
             Assert.AreEqual("a", (fcall2.Arguments[1] as VariableAccess).VariableName);
 
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(2.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
 
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[2]);
@@ -296,7 +311,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual("b", (fcall2.Arguments[0] as VariableAccess).VariableName);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[1]);
-            Assert.AreEqual(3.0f, (fcall2.Arguments[1] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall2.Arguments[1]).Value.ToFloat());
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[2]);
             Assert.AreEqual("c", (fcall2.Arguments[2] as VariableAccess).VariableName);
@@ -314,7 +330,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(BitwiseOrOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
             Assert.AreSame(BitwiseAndOperation.Value, fcall.Function);
@@ -326,7 +343,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(AdditionOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(2.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
             Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
@@ -338,7 +356,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(ExponentOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(3.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("c", (fcall.Arguments[1] as VariableAccess).VariableName);
 
@@ -362,7 +381,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(BitwiseAndOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(3.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(3.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
             Assert.AreSame(AdditionOperation.Value, fcall.Function);
@@ -374,7 +394,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(2.0f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(2.0f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
             Assert.AreSame(ExponentOperation.Value, fcall.Function);
@@ -382,7 +403,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("a", (fcall.Arguments[1] as VariableAccess).VariableName);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.AreEqual(1.0f, (fcall.Arguments[0] as Literal).Value);
+            Assert.AreEqual(1.0f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
         }
 
         [Test]
@@ -400,7 +422,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(1, fcall.Arguments.Count);
             //            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             //            Assert.AreEqual(Math.PI, (fcall.Arguments[0] as Literal).Value, 0.0001f);
-            Assert.AreEqual(0f, fcall.Eval(env).Value, 0.0001f);
+            Assert.AreEqual(0f, fcall.Eval(env).ToNumber().Value, 0.0001f);
         }
 
         [Test]
@@ -411,7 +433,7 @@ namespace MetaphysicsIndustries.Solus.Test
             var expr = parser.GetExpression("derive(x, x)", cleanup: false);
 
             Assert.IsInstanceOf(typeof(Literal), expr);
-            Assert.AreEqual(1f, (expr as Literal).Value);
+            Assert.AreEqual(1f, ((Literal) expr).Value.ToFloat());
         }
 
         [Test]
@@ -423,22 +445,21 @@ namespace MetaphysicsIndustries.Solus.Test
 
             Assert.IsInstanceOf(typeof(Literal), expr);
             var literal = (Literal) expr;
-            Assert.AreEqual(2, literal.Value);
+            Assert.AreEqual(2, literal.Value.ToFloat());
         }
 
         public class CustomAsdfFunction : Function
         {
             public CustomAsdfFunction()
-                : base("asdf")
+                : base(new Types[] {Types.Scalar, Types.Scalar},
+                    "asdf")
             {
-                Types.Clear();
-                Types.Add(typeof(Expression));
-                Types.Add(typeof(Expression));
             }
 
-            protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+            protected override IMathObject InternalCall(SolusEnvironment env,
+                IMathObject[] args)
             {
-                return new Literal(3);
+                return new Number(3);
             }
         }
 
@@ -458,11 +479,13 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
-            Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
+            Assert.AreEqual(1f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
+            Assert.AreEqual(2f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
 
 
-            float value = expr.Eval(env).Value;
+            float value = expr.Eval(env).ToNumber().Value;
 
             Assert.AreEqual(3f, value);
         }
@@ -470,16 +493,17 @@ namespace MetaphysicsIndustries.Solus.Test
         class CountArgsFunction : Function
         {
             public CountArgsFunction()
-                : base("count")
+                : base(new Types[0], "count")
             {
             }
 
-            protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+            protected override IMathObject InternalCall(SolusEnvironment env,
+                IMathObject[] args)
             {
-                return new Literal(args.Length);
+                return new Number(args.Length);
             }
 
-            protected override void CheckArguments(Expression[] args)
+            public override void CheckArguments(IMathObject[] args)
             {
             }
         }
@@ -501,16 +525,27 @@ namespace MetaphysicsIndustries.Solus.Test
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[2]);
-            Assert.AreEqual(1f, (fcall.Arguments[0] as Literal).Value);
-            Assert.AreEqual(2f, (fcall.Arguments[1] as Literal).Value);
-            Assert.AreEqual(3f, (fcall.Arguments[2] as Literal).Value);
-            Assert.AreEqual(3f, expr.Eval(env).Value);
+            Assert.AreEqual(1f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
+            Assert.AreEqual(2f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
+            Assert.AreEqual(3f,
+                ((Literal) fcall.Arguments[2]).Value.ToFloat());
+            Assert.AreEqual(3f, expr.Eval(env).ToNumber().Value);
 
 
-            Assert.AreEqual(0, parser.GetExpression("count()", env).Eval(env).Value);
-            Assert.AreEqual(1, parser.GetExpression("count(1)", env).Eval(env).Value);
-            Assert.AreEqual(2, parser.GetExpression("count(1, 2)", env).Eval(env).Value);
-            Assert.AreEqual(4, parser.GetExpression("count(1, 2, 3, 4)", env).Eval(env).Value);
+            Assert.AreEqual(0,
+                parser.GetExpression("count()", env).
+                    Eval(env).ToNumber().Value);
+            Assert.AreEqual(1,
+                parser.GetExpression("count(1)", env).
+                    Eval(env).ToNumber().Value);
+            Assert.AreEqual(2,
+                parser.GetExpression("count(1, 2)", env).
+                    Eval(env).ToNumber().Value);
+            Assert.AreEqual(4,
+                parser.GetExpression("count(1, 2, 3, 4)", env).
+                    Eval(env).ToNumber().Value);
         }
 
         [Test]
@@ -540,9 +575,11 @@ namespace MetaphysicsIndustries.Solus.Test
             // when
             var result = parser.GetExpression(input);
             // then
-            Assert.IsInstanceOf<StringExpression>(result);
-            var se = (StringExpression) result;
-            Assert.AreEqual("value", se.Value);
+            Assert.IsInstanceOf<Literal>(result);
+            var literal = (Literal) result;
+            Assert.IsTrue(literal.Value.IsString);
+            Assert.AreEqual("value",
+                literal.Value.ToStringValue().Value);
         }
 
         [Test]
@@ -554,10 +591,229 @@ namespace MetaphysicsIndustries.Solus.Test
             // when
             var result = parser.GetExpression(input);
             // then
-            Assert.IsInstanceOf<StringExpression>(result);
-            var se = (StringExpression) result;
-            Assert.AreEqual("value", se.Value);
+            Assert.IsInstanceOf<Literal>(result);
+            var literal = (Literal) result;
+            Assert.IsTrue(literal.Value.IsString);
+            Assert.AreEqual("value",
+                literal.Value.ToStringValue().Value);
+        }
+
+        [Test]
+        public void TestVectorLiteral()
+        {
+            // given
+            const string input = "[1,2,3]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<VectorExpression>(result);
+            var ve = (VectorExpression) result;
+            Assert.AreEqual(3, ve.Length);
+            Assert.IsInstanceOf<Literal>(ve[0]);
+            Assert.AreEqual(1,((Literal)ve[0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[1]);
+            Assert.AreEqual(2,((Literal)ve[1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[2]);
+            Assert.AreEqual(3,((Literal)ve[2]).Value.ToFloat());
+        }
+
+        [Test]
+        public void VectorLiteralWithTrailingCommaAddsNoComponents()
+        {
+            // given
+            const string input = "[1,2,3,]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<VectorExpression>(result);
+            var ve = (VectorExpression) result;
+            Assert.AreEqual(3, ve.Length);
+            Assert.IsInstanceOf<Literal>(ve[0]);
+            Assert.AreEqual(1,((Literal)ve[0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[1]);
+            Assert.AreEqual(2,((Literal)ve[1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[2]);
+            Assert.AreEqual(3,((Literal)ve[2]).Value.ToFloat());
+        }
+
+        [Test]
+        public void TestMatrixLiteral()
+        {
+            // given
+            const string input = "[1,2;3,4]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralWithTrailingCommaAddsNoComponents1()
+        {
+            // given
+            const string input = "[1,2;3,4,]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralWithTrailingCommaAddsNoComponents2()
+        {
+            // given
+            const string input = "[1,2,;3,4]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralWithTrailingSemicolonAddsNoComponents()
+        {
+            // given
+            const string input = "[1,2;3,4;]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixWithTrailingCommaAndSemicolonAddsNoComponents()
+        {
+            // given
+            const string input = "[1,2;3,4,;]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralMissingComponentsTreatedAsZero()
+        {
+            // given
+            const string input = "[1;3,4]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(0, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void SingleRowWithTrailingSemicolonYieldsMatrix()
+        {
+            // given
+            const string input = "[1,2,3;]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(1, me.RowCount);
+            Assert.AreEqual(3, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 2]);
+            Assert.AreEqual(3, ((Literal) me[0, 2]).Value.ToFloat());
+        }
+
+        [Test]
+        public void TestComponentAccess()
+        {
+            // given
+            const string input = "a[1]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<ComponentAccess>(result);
+            var ca = (ComponentAccess) result;
+            Assert.IsInstanceOf<VariableAccess>(ca.Expr);
+            Assert.AreEqual("a",
+                ((VariableAccess)ca.Expr).VariableName);
+            Assert.AreEqual(1, ca.Indexes.Count);
+            Assert.AreEqual(1,
+                ((Literal)ca.Indexes[0]).Value.ToFloat());
         }
     }
 }
-

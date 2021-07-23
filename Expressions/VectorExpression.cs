@@ -22,23 +22,28 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public class SolusVector : SolusTensor//, IEnumerable<Expression>
+    public class VectorExpression : TensorExpression
     {
         private static SolusEngine _engine = new SolusEngine();
 
-        public static SolusVector FromUniformSequence(float value, int length)
+        public static VectorExpression FromUniformSequence(float value,
+            int length)
         {
             return FromUniformSequence(new Literal(value), length);
         }
 
-        public static SolusVector FromUniformSequence(Expression value, int length)
+        public static VectorExpression FromUniformSequence(Expression value,
+            int length)
         {
-            SolusVector ret = new SolusVector(length);
+            var ret = new VectorExpression(length);
 
             int i;
             for (i = 0; i < length; i++)
@@ -49,7 +54,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return ret;
         }
 
-        public SolusVector(int length)
+        public VectorExpression(int length)
         {
             _length = length;
             _array = new Expression[_length];
@@ -62,7 +67,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public SolusVector(int length, params float[] initialContents)
+        public VectorExpression(int length, params float[] initialContents)
             : this(length)
         {
             int i;
@@ -73,7 +78,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public SolusVector(int length, params Expression[] initialContents)
+        public VectorExpression(int length,
+            params Expression[] initialContents)
             : this(length)
         {
             int i;
@@ -84,6 +90,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
+        public override int TensorRank => 1;
+
         private Expression[] _array;
         private int _length;
         public int Length
@@ -91,14 +99,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             get { return _length; }
         }
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
-            return new Literal(0);
+            return new Number(0);
         }
 
         public override Expression Clone()
         {
-            SolusVector ret = new SolusVector(Length);
+            var ret = new VectorExpression(Length);
 
             int i;
             for (i = 0; i < Length; i++)
@@ -111,7 +119,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         //public override Expression CleanUp()
         //{
-        //    SolusVector ret = new SolusVector(Length);
+        //    var ret = new VectorExpression(Length);
 
         //    int i;
         //    for (i = 0; i < Length; i++)
@@ -150,16 +158,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         //methods and overloaded operators
 
-        public SolusVector Convolution(SolusVector convolvee)
+        public VectorExpression Convolution(VectorExpression convolvee)
         {
             return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
         }
 
-        public SolusVector AdvancedConvolution(SolusVector convolvee, Operation firstOp, AssociativeCommutativeOperation secondOp)
+        public VectorExpression AdvancedConvolution(VectorExpression convolvee,
+            Operation firstOp, AssociativeCommutativeOperation secondOp)
         {
             int r = Length + convolvee.Length - 1;
 
-            SolusVector ret = new SolusVector(r);
+            var ret = new VectorExpression(r);
 
             List<Expression> group = new List<Expression>();
 
@@ -207,15 +216,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
-            SolusVector ret = new SolusVector(Length);
-
-            int i;
-            for (i = 0; i < Length; i++)
+            var values = _array.Select(
+                e => e.PreliminaryEval(env)).ToArray();
+            if (values.All(e => e is Literal))
             {
-                ret[i] = this[i].PreliminaryEval(env);
+                return new Literal(
+                    new Vector(
+                        values.Select(
+                            e => ((Literal) e).Value).ToArray()));
             }
 
-            return ret;
+            return new VectorExpression(values.Length, values);
         }
 
         public override void ApplyToAll(Modulator mod)
@@ -223,13 +234,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int i;
             for (i = 0; i < Length; i++)
             {
-                this[i] = new Literal(mod(((Literal)this[i]).Value));
+                this[i] = new Literal(
+                    mod(((Literal)this[i]).Value.ToFloat()));
             }
         }
 
-        public SolusVector GetSlice(int startIndex, int length)
+        public VectorExpression GetSlice(int startIndex, int length)
         {
-            SolusVector ret = new SolusVector(length);
+            var ret = new VectorExpression(length);
 
             int i;
             int j = Math.Min(length, Length - startIndex);
@@ -239,6 +251,19 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
 
             return ret;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("[ ");
+            for (var i = 0; i < Length; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                sb.Append(this[i]);
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }

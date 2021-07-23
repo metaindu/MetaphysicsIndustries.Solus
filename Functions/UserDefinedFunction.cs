@@ -20,36 +20,35 @@
  *
  */
 
+using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class UserDefinedFunction : Function
     {
         public UserDefinedFunction(string name, string[] argnames, Expression expr)
+            : base(argnames.Select(_ => Types.Scalar).ToArray(), name)
         {
             Name = name;
             Argnames = argnames;
             Expression = expr;
-
-            Types.Clear();
-            foreach (var argname in argnames)
-            {
-                Types.Add(typeof(Expression));
-            }
         }
 
         public string[] Argnames;
         public Expression Expression;
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
             SolusEnvironment env2 = env.CreateChildEnvironment();
 
             int i;
             for (i = 0; i < Argnames.Length; i++)
             {
-                env2.Variables[Argnames[i]] = args[i];
+                env2.Variables[Argnames[i]] =
+                    new Literal(args[i].ToNumber().Value);
             }
 
             return Expression.Eval(env2);

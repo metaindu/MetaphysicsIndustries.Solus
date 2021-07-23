@@ -20,15 +20,15 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class SingleArgumentFunction : Function
     {
         protected SingleArgumentFunction()
+            : base(new[] {Types.Scalar})
         {
-            Types.Add(typeof(Expression));
         }
     }
 }

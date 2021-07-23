@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Transformers
 {
@@ -114,16 +115,18 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     throw new NotImplementedException("Can't derive \"" + function.Name + "\"");
                 }
 
-                if (functionDerivative is Literal && (functionDerivative as Literal).Value == 0)
+                if (functionDerivative is Literal fdliteral &&
+                    fdliteral.Value.ToFloat() == 0)
                 {
-                    return functionDerivative;
+                    return fdliteral;
                 }
 
                 argumentDerivative = GetDerivative(functionCall.Arguments[0], var);
 
-                if (argumentDerivative is Literal && (argumentDerivative as Literal).Value == 0)
+                if (argumentDerivative is Literal adliteral &&
+                    adliteral.Value.ToFloat() == 0)
                 {
-                    return argumentDerivative;
+                    return adliteral;
                 }
 
                 return new FunctionCall(MultiplicationOperation.Value, functionDerivative, argumentDerivative);
@@ -198,14 +201,17 @@ namespace MetaphysicsIndustries.Solus.Transformers
             Expression leftDerivative = GetDerivative(leftClone, var);
             Expression rightDerivative = GetDerivative(rightClone, var);
 
-            if (leftClone is Literal && (leftClone as Literal).Value == 0)
+            if (leftClone is Literal lliteral && lliteral.Value.ToFloat() == 0)
             {
-                return leftClone;
+                return lliteral;
             }
 
-            bool leftDerivZero = (leftDerivative is Literal && (leftDerivative as Literal).Value == 0);
-            bool rightDerivZero = (rightDerivative is Literal && (rightDerivative as Literal).Value == 0);
-            bool rightCloneZero = (rightClone is Literal && (rightClone as Literal).Value == 0);
+            bool leftDerivZero = (leftDerivative is Literal ldlit &&
+                                  ldlit.Value.ToFloat() == 0);
+            bool rightDerivZero = rightDerivative is Literal rdlit &&
+                                  rdlit.Value.ToFloat() == 0;
+            bool rightCloneZero = rightClone is Literal rlit &&
+                                  rlit.Value.ToFloat() == 0;
 
             if ((leftDerivZero || rightCloneZero) && rightDerivZero)
             {
@@ -213,10 +219,9 @@ namespace MetaphysicsIndustries.Solus.Transformers
             }
 
             Expression rightMinusOne;
-            if (rightClone is Literal)
+            if (rightClone is Literal litrc)
             {
-                rightMinusOne = rightClone.Clone();
-                (rightMinusOne as Literal).Value--;
+                rightMinusOne = new Literal(litrc.Value.ToFloat() - 1);
             }
             else
             {
@@ -232,7 +237,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 Expression newExponent;
 
-                if (rightMinusOne is Literal && (rightMinusOne as Literal).Value == 1)
+                if (rightMinusOne is Literal rmlit &&
+                    rmlit.Value.ToFloat() == 1)
                 {
                     newExponent = leftClone;//.Clone();
                 }
@@ -309,7 +315,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 Expression deriv = GetDerivative(arg, var);
 
-                if (!(deriv is Literal) || (deriv as Literal).Value != 0)
+                if (!(deriv is Literal literal) ||
+                    literal.Value.ToFloat() != 0)
                 {
                     derivatives.Add(deriv);
                 }
@@ -340,7 +347,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 //of just 0
                 foreach (Expression arg in args)
                 {
-                    if (arg is Literal && (arg as Literal).Value == operation.CollapseValue)
+                    if (arg is Literal literal &&
+                        literal.Value.ToFloat() == operation.CollapseValue)
                     {
                         return new Literal(operation.CollapseValue);
                     }
@@ -368,14 +376,16 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     if (argd == arg)
                     {
                         Expression deriv = derivs[argd];
-                        if (operation.Collapses && deriv is Literal &&
-                            (deriv as Literal).Value == operation.CollapseValue)
+                        if (operation.Collapses &&
+                            deriv is Literal literal &&
+                            literal.Value.ToFloat() == operation.CollapseValue)
                         {
                             multTerm.Clear();
                             break;
                         }
-                        else if (operation.Culls && deriv is Literal &&
-                                (deriv as Literal).Value == operation.CullValue)
+                        if (operation.Culls &&
+                            deriv is Literal literal1 &&
+                            literal1.Value.ToFloat() == operation.CullValue)
                         {
                             //a*1 = a, do nothing
                         }

@@ -22,6 +22,7 @@
 
 using System;
 using System.Drawing;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -74,9 +75,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
 
 
-        public override Literal Eval(SolusEnvironment env)
+        public override IMathObject Eval(SolusEnvironment env)
         {
-            return new Literal(0xFFFFFF & _color.ToArgb());
+            return new Number(0xFFFFFF & _color.ToArgb());
         }
 
         public override Expression Clone()

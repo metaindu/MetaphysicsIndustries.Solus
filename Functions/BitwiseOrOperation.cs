@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -38,16 +39,16 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Bitwise; }
         }
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
         {
             long value = 0;
 
-            foreach (Literal arg in args)
+            foreach (var arg in args)
             {
-                value |= (long)(arg.Value);
+                value |= (long) arg.ToNumber().Value;
             }
 
-            return new Literal(value);
+            return value.ToNumber();
         }
 
         public override bool HasIdentityValue

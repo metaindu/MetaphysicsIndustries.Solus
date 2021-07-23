@@ -35,8 +35,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MetaphysicsIndustries.Giza, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>packages\MetaphysicsIndustries.Giza.0.2.0\lib\net40\MetaphysicsIndustries.Giza.dll</HintPath>
+    <Reference Include="MetaphysicsIndustries.Giza, Version=0.3.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>packages\MetaphysicsIndustries.Giza.0.3.0\lib\net40\MetaphysicsIndustries.Giza.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -55,6 +55,7 @@
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
     <Compile Include="Expressions\ColorExpression.cs" />
+    <Compile Include="Expressions\ComponentAccess.cs" />
     <Compile Include="Expressions\DerivativeOfVariable.cs" />
     <Compile Include="Expressions\Expression.cs" />
     <Compile Include="Expressions\FunctionCall.cs" />
@@ -62,10 +63,9 @@
     <Compile Include="Expressions\Literal.cs" />
     <Compile Include="Expressions\ProductExpression.cs" />
     <Compile Include="Expressions\RandomExpression.cs" />
-    <Compile Include="Expressions\SolusMatrix.cs" />
-    <Compile Include="Expressions\SolusTensor.cs" />
-    <Compile Include="Expressions\SolusVector.cs" />
-    <Compile Include="Expressions\StringExpression.cs" />
+    <Compile Include="Expressions\MatrixExpression.cs" />
+    <Compile Include="Expressions\TensorExpression.cs" />
+    <Compile Include="Expressions\VectorExpression.cs" />
     <Compile Include="Expressions\VariableAccess.cs" />
     <Compile Include="Functions\AbsoluteValueFunction.cs" />
     <Compile Include="Functions\AdditionOperation.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="Functions\GreaterThanOrEqualComparisonOperation.cs" />
     <Compile Include="Functions\LessThanComparisonOperation.cs" />
     <Compile Include="Functions\LessThanOrEqualComparisonOperation.cs" />
+    <Compile Include="Functions\LoadImageFunction.cs" />
     <Compile Include="Functions\Log10Function.cs" />
     <Compile Include="Functions\Log2Function.cs" />
     <Compile Include="Functions\LogarithmFunction.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Functions\SecantFunction.cs" />
     <Compile Include="Functions\SineFunction.cs" />
     <Compile Include="Functions\SingleArgumentFunction.cs" />
+    <Compile Include="Functions\SizeFunction.cs" />
     <Compile Include="Functions\TangentFunction.cs" />
     <Compile Include="Functions\UnaryOperation.cs" />
     <Compile Include="Functions\UnitStepFunction.cs" />
@@ -157,6 +159,13 @@
     <Compile Include="Transformers\VariableTransformArgs.cs" />
     <Compile Include="STuple.cs" />
     <Compile Include="MemoryImage.cs" />
+    <Compile Include="Values\IMathObject.cs" />
+    <Compile Include="Values\MathObjectHelper.cs" />
+    <Compile Include="Values\Matrix.cs" />
+    <Compile Include="Values\Number.cs" />
+    <Compile Include="Values\StringValue.cs" />
+    <Compile Include="Values\Types.cs" />
+    <Compile Include="Values\Vector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
@@ -183,6 +192,7 @@
   <ItemGroup>
     <Content Include=".gitignore" />
     <Content Include=".gitmodules" />
+    <Content Include="check_code_style.sh" />
     <Content Include="MetaphysicsIndustries.Solus.nuspec" />
     <Content Include="release.sh" />
     <Content Include="render_grammar.sh" />

@@ -22,13 +22,15 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class CatmullRomSpline : Function
     {
-        public CatmullRomSpline(IEnumerable<float> times, IEnumerable<float> values)
+        public CatmullRomSpline(IEnumerable<float> times,
+            IEnumerable<float> values)
+            : base(paramTypes: new Types[] {Solus.Values.Types.Scalar})
         {
             var times2 = times.ToList();
             var values2 = values.ToList();
@@ -49,17 +51,15 @@ namespace MetaphysicsIndustries.Solus.Functions
 
             Times = times2.ToArray();
             Values = values2.ToArray();
-
-            InternalTypes.Clear();
-            InternalTypes.Add(typeof(Expression));
         }
 
         readonly float[] Times;
         readonly float[] Values;
             
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
-            return new Literal(Evaluate(args[0].Value));
+            return Evaluate(args[0].ToNumber().Value).ToNumber();
         }
 
         public float Evaluate(float time)

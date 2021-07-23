@@ -23,6 +23,7 @@
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -56,15 +57,16 @@ namespace MetaphysicsIndustries.Solus.Functions
         //    }
         //}
 
-        protected override Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
             float value = 1;
             int i;
             for (i = 0; i < args.Length; i++)
             {
-                value *= args[i].Value;
+                value *= args[i].ToNumber().Value;
             }
-            return new Literal(value);
+            return value.ToNumber();
         }
 
         public override bool Collapses

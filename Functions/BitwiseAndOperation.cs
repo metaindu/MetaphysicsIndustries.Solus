@@ -50,7 +50,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         //}
         protected override float InternalBinaryCall(float x, float y)
         {
-            return ((long)x) & ((long)y);   
+            return (long)x & (long)y;
         }
 
         //public override float IdentityValue

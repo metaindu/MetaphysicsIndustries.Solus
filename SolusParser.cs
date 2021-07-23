@@ -28,6 +28,7 @@ using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
+using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus
@@ -40,9 +41,10 @@ namespace MetaphysicsIndustries.Solus
         protected Spanner _numberSpanner;
 
         public SolusParser()
-            : this (new SolusGrammar())
+            : this(new SolusGrammar())
         {
         }
+
         protected SolusParser(SolusGrammar grammar)
         {
             _grammar = grammar;
@@ -51,7 +53,7 @@ namespace MetaphysicsIndustries.Solus
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
         }
 
-        public Expression GetExpression(string input, SolusEnvironment env=null, bool cleanup=false)
+        public Expression GetExpression(string input, SolusEnvironment env = null, bool cleanup = false)
         {
             if (env == null)
             {
@@ -64,17 +66,21 @@ namespace MetaphysicsIndustries.Solus
 
             if (errors.ContainsNonWarnings())
             {
-                throw new InvalidOperationException();
+                var error = errors.GetFirstNonWarning();
+                throw new SolusParseException(0, error.Description);
             }
 
             if (spans.Length < 1)
             {
-                throw new InvalidOperationException();
+                throw new SolusParseException(0,
+                    "There were more no valid parses of the input.");
             }
 
             if (spans.Length > 1)
             {
-                throw new InvalidOperationException();
+                throw new SolusParseException(0,
+                    "There were more than one valid parses of the " +
+                    "input. The grammar is ambiguous.");
             }
 
             var span = spans[0];
@@ -110,17 +116,19 @@ namespace MetaphysicsIndustries.Solus
                 if (sub.DefRef != _grammar.def_command) continue;
                 commands.Add(GetCommandFromCommand(sub, env));
             }
+
             return commands.ToArray();
         }
 
-        Dictionary<Function, int> _operatorPrecedence = new Dictionary<Function, int>() {
-            { AdditionOperation.Value, 120 },
-            { MultiplicationOperation.Value, 130 },
-            { DivisionOperation.Value, 130 },
-            { ModularDivision.Value, 130 },
-            { ExponentOperation.Value, 135 },
-            { BitwiseAndOperation.Value, 100 },
-            { BitwiseOrOperation.Value, 80 },
+        Dictionary<Function, int> _operatorPrecedence = new Dictionary<Function, int>()
+        {
+            {AdditionOperation.Value, 120},
+            {MultiplicationOperation.Value, 130},
+            {DivisionOperation.Value, 130},
+            {ModularDivision.Value, 130},
+            {ExponentOperation.Value, 135},
+            {BitwiseAndOperation.Value, 100},
+            {BitwiseOrOperation.Value, 80},
         };
 
         Command GetCommandFromCommand(Span span, SolusEnvironment env)
@@ -216,13 +224,15 @@ namespace MetaphysicsIndustries.Solus
                 {
                     op = GetOperationFromBinop(span.Subspans[i]);
                 }
+
                 operators.Add(op);
                 subexprs.Add(arg);
                 operset.Add(op);
             }
 
             var sortedOperset = new List<Operation>(operset);
-            sortedOperset.Sort((x,y) => -(_operatorPrecedence[x].CompareTo(_operatorPrecedence[y])));
+            sortedOperset.Sort((x, y) =>
+                -_operatorPrecedence[x].CompareTo(_operatorPrecedence[y]));
 
             foreach (var op in sortedOperset)
             {
@@ -237,7 +247,8 @@ namespace MetaphysicsIndustries.Solus
                         start = indexes[i];
                     }
                 }
-                ranges.Add(new Tuple<int, int>(start, indexes[indexes.Count-1]));
+
+                ranges.Add(new Tuple<int, int>(start, indexes[indexes.Count - 1]));
 
                 Queue<Expression> newExpressions = new Queue<Expression>();
                 foreach (var range in ranges)
@@ -245,7 +256,7 @@ namespace MetaphysicsIndustries.Solus
                     int first = range.Item1;
                     int last = range.Item2;
 
-                    if (op.IsAssociative && 
+                    if (op.IsAssociative &&
                         op.IsCommutative)
                     {
                         int count = last - first + 1;
@@ -262,6 +273,7 @@ namespace MetaphysicsIndustries.Solus
                             var fcall = new FunctionCall(op, leftarg, rightarg);
                             leftarg = fcall;
                         }
+
                         newExpressions.Enqueue(leftarg);
                     }
                 }
@@ -314,7 +326,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (defref == _grammar.def_string)
             {
-                return GetStringFromString(span);
+                return GetLiteralFromString(span);
             }
             else if (defref == _grammar.def_unary_002D_op)
             {
@@ -325,6 +337,12 @@ namespace MetaphysicsIndustries.Solus
                 return GetVariableAccessFromVarref(span, env);
             }
 
+            if (defref == _grammar.def_array_002D_literal)
+                return GetTensorExpressionFromArrayLiteral(span, env);
+            if (defref == _grammar.def_component_002D_access)
+                return GetComponentAccessFromComponentAccess(span, env);
+
+            // TODO: proper exception/message about node type
             throw new NotImplementedException();
         }
 
@@ -379,7 +397,7 @@ namespace MetaphysicsIndustries.Solus
 
             if (env.Functions.ContainsKey(name))
             {
-                return new FunctionCall(env.Functions[name], args); 
+                return new FunctionCall(env.Functions[name], args);
             }
             else if (env.Macros.ContainsKey(name))
             {
@@ -457,14 +475,17 @@ namespace MetaphysicsIndustries.Solus
                 {
                     isNegative = true;
                 }
+
                 i++;
             }
+
             while (i < n && subs[i].Node == _grammar.node_float_002D_number_1__005C_d)
             {
                 integerPart *= 10;
                 integerPart += int.Parse(subs[i].Value);
                 i++;
             }
+
             if (i < n && subs[i].Node == _grammar.node_float_002D_number_2__002E_)
             {
                 i++;
@@ -477,6 +498,7 @@ namespace MetaphysicsIndustries.Solus
                     i++;
                 }
             }
+
             if (i < n && subs[i].Node == _grammar.node_float_002D_number_4_Ee)
             {
                 hasExponent = true;
@@ -487,8 +509,10 @@ namespace MetaphysicsIndustries.Solus
                     {
                         isExponentNegative = true;
                     }
+
                     i++;
                 }
+
                 while (i < n && subs[i].Node == _grammar.node_float_002D_number_6__005C_d)
                 {
                     exponentPart *= 10;
@@ -502,7 +526,8 @@ namespace MetaphysicsIndustries.Solus
 
             if (hasFractionalPart)
             {
-                float fractionalValue = (float)(fractionalPart * Math.Pow(10, -fractionalDigits));
+                float fractionalValue =
+                    (float) (fractionalPart * Math.Pow(10, -fractionalDigits));
                 fvalue += fractionalValue;
             }
 
@@ -510,11 +535,11 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (isExponentNegative)
                 {
-                    fvalue = (float)(fvalue * Math.Pow(10, -exponentPart));
+                    fvalue = (float) (fvalue * Math.Pow(10, -exponentPart));
                 }
                 else
                 {
-                    fvalue = (float)(fvalue * Math.Pow(10, exponentPart));
+                    fvalue = (float) (fvalue * Math.Pow(10, exponentPart));
                 }
             }
 
@@ -526,14 +551,14 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(fvalue);
         }
 
-        public Expression GetStringFromString(Span span)
+        public Expression GetLiteralFromString(Span span)
         {
             var value = span.Value;
             if (value.StartsWith("\""))
                 value = value.Substring(1, value.Length - 2);
             else if (value.StartsWith("'"))
                 value = value.Substring(1, value.Length - 2);
-            return new StringExpression(value);
+            return new Literal(value.ToStringValue());
         }
 
         public Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)
@@ -553,6 +578,84 @@ namespace MetaphysicsIndustries.Solus
             string varname = span.Subspans[0].Value;
 
             return new VariableAccess(varname);
+        }
+
+        public TensorExpression GetTensorExpressionFromArrayLiteral(Span span,
+            SolusEnvironment env)
+        {
+            var components = new List<List<Expression>>();
+
+            void AddComponent(Expression expr)
+            {
+                if (components.Count < 1)
+                    components.Add(new List<Expression>());
+                components[components.Count - 1].Add(expr);
+            }
+
+            foreach (var sub in span.Subspans)
+            {
+                if (sub.Node is DefRefNode defref &&
+                    defref.DefRef == _grammar.def_expr)
+                    AddComponent(GetExpressionFromExpr(sub, env));
+                if (sub.Node == _grammar.node_array_002D_literal_5__003B_ ||
+                    sub.Node == _grammar.node_array_002D_literal_10__003B_)
+                    components.Add(new List<Expression>());
+            }
+
+            if (components.Count < 1)
+                return new VectorExpression(0);
+            if (components.Count == 1)
+                return new VectorExpression(components[0].Count,
+                    components[0].ToArray());
+
+            if (components[components.Count - 1].Count < 1)
+                components.RemoveAt(components.Count - 1);
+            var columnCount = components.Max(cl => cl.Count);
+            var comps = new List<Expression>();
+            foreach (var cl in components)
+            {
+                while (cl.Count < columnCount)
+                    cl.Add(new Literal(0));
+                comps.AddRange(cl);
+            }
+
+            return new MatrixExpression(components.Count,
+                columnCount, comps.ToArray());
+        }
+
+        public ComponentAccess GetComponentAccessFromComponentAccess(Span span,
+            SolusEnvironment env)
+        {
+            var expr = GetExpressionFromCompSubexpr(span.Subspans[0], env);
+            foreach (var sub in span.Subspans.Skip(1))
+            {
+                var indexes = GetExpressionsFromArrayIndex(sub, env);
+                expr = new ComponentAccess(expr, indexes);
+            }
+
+            return (ComponentAccess) expr;
+        }
+
+        public Expression GetExpressionFromCompSubexpr(Span span,
+            SolusEnvironment env)
+        {
+            return GetExpressionFromSubexprPart(span.Subspans[0], env);
+        }
+
+        public IEnumerable<Expression> GetExpressionsFromArrayIndex(Span span,
+            SolusEnvironment env)
+        {
+            var indexes = new List<Expression>();
+            foreach (var sub in span.Subspans)
+            {
+                if (sub.Node == _grammar.node_array_002D_index_1_expr ||
+                    sub.Node == _grammar.node_array_002D_index_3_expr)
+                {
+                    indexes.Add(GetExpressionFromExpr(sub, env));
+                }
+            }
+
+            return indexes;
         }
     }
 }

@@ -22,35 +22,42 @@
 
 using System;
 
-namespace MetaphysicsIndustries.Solus.Expressions
+namespace MetaphysicsIndustries.Solus.Values
 {
-    public class StringExpression : Expression
+    public readonly struct Number : IMathObject
     {
-        public StringExpression(string value)
+        public Number(float value)
         {
-            Value = value ?? throw new ArgumentNullException(nameof(value));
+            Value = value;
         }
 
-        public readonly string Value;
-        public override Literal Eval(SolusEnvironment env)
+        public float Value { get; }
+
+        public bool IsScalar => true;
+        public bool IsVector => false;
+        public bool IsMatrix => false;
+        public int TensorRank => 0;
+        public bool IsString => false;
+
+        public int GetDimension(int index = 0)
         {
-            throw new System.NotImplementedException(
-                "Strings can not be treated as numbers.");
+            throw new InvalidOperationException(
+                "Scalars do not have dimensions");
         }
 
-        public override Expression Clone()
+        public int[] GetDimensions()
         {
-            return new StringExpression(Value);
-        }
-
-        public override void AcceptVisitor(IExpressionVisitor visitor)
-        {
-            throw new System.NotImplementedException();
+            throw new InvalidOperationException(
+                "Scalars do not have dimensions");
         }
 
         public override string ToString()
         {
-            return Value;
+            if (Math.Abs(Value - (float) Math.E) < 1e-6)
+                return "e";
+            if (Math.Abs(Value - (float) Math.PI) < 1e-6)
+                return "π";
+            return Value.ToString("G");
         }
     }
 }

@@ -20,23 +20,22 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class DualArgumentFunction : Function
     {
         protected DualArgumentFunction(string name)
-            : base(name)
+            : base(new[] {Types.Scalar, Types.Scalar}, name)
         {
-            Types.Clear();
-            Types.Add(typeof(Expression));
-            Types.Add(typeof(Expression));
         }
 
-        protected override sealed Literal InternalCall(SolusEnvironment env, Literal[] args)
+        protected sealed override IMathObject InternalCall(
+            SolusEnvironment env, IMathObject[] args)
         {
-            return new Literal(InternalCall(args[0].Value, args[1].Value));
+            return InternalCall(args[0].ToNumber().Value,
+                args[1].ToNumber().Value).ToNumber();
         }
 
         protected abstract float InternalCall(float arg0, float arg1);
