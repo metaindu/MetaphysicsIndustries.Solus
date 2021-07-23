@@ -599,7 +599,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
-        public void TestArrayLiteral()
+        public void TestArrayLiteral()  // TODO: rename to TestVectorLiteral
         {
             // given
             const string input = "[1,2,3]";
@@ -617,6 +617,12 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsInstanceOf<Literal>(ve[2]);
             Assert.AreEqual(3,((Literal)ve[2]).Value.ToFloat());
         }
+
+        // TODO: test vector literal with trailing comma
+        // TODO: test matrix literal
+        // TODO: test matrix literal with trailing comma
+        // TODO: test matrix literal with trailing semicolon
+        // TODO: test missing matrix components, e.g. [1;3,4]
 
         [Test]
         public void TestComponentAccess()
