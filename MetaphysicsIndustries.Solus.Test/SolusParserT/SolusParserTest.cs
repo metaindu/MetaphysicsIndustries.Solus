@@ -599,7 +599,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
-        public void TestArrayLiteral()  // TODO: rename to TestVectorLiteral
+        public void TestVectorLiteral()
         {
             // given
             const string input = "[1,2,3]";
