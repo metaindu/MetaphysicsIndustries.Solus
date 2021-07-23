@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -141,6 +142,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
             Expr.AcceptVisitor(visitor);
             foreach (var index in Indexes)
                 index.AcceptVisitor(visitor);
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append(Expr);
+            sb.Append("[");
+            for (var i = 0; i < Indexes.Count; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                sb.Append(Indexes[i]);
+            }
+            sb.Append("]");
+            return sb.ToString();
         }
     }
 }

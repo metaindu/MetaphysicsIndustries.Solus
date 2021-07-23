@@ -106,5 +106,22 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             Assert.AreSame(indexes[0], exprs[2]);
             Assert.AreSame(indexes[1], exprs[3]);
         }
+
+        [Test]
+        public void TestToString()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var indexes = new Expression[]
+            {
+                new VariableAccess("b"),
+                new VariableAccess("c")
+            };
+            var ca = new ComponentAccess(expr, indexes);
+            // when
+            var result = ca.ToString();
+            // then
+            Assert.AreEqual("a[b, c]", result);
+        }
     }
 }
