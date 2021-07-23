@@ -613,7 +613,12 @@ namespace MetaphysicsIndustries.Solus
             var columnCount = components.Max(cl => cl.Count);
             var comps = new List<Expression>();
             foreach (var cl in components)
+            {
+                while (cl.Count < columnCount)
+                    cl.Add(new Literal(0));
                 comps.AddRange(cl);
+            }
+
             return new MatrixExpression(components.Count,
                 columnCount, comps.ToArray());
         }

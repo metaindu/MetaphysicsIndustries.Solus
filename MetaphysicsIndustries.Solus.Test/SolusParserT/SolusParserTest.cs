@@ -618,11 +618,184 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.AreEqual(3,((Literal)ve[2]).Value.ToFloat());
         }
 
-        // TODO: test vector literal with trailing comma
-        // TODO: test matrix literal
-        // TODO: test matrix literal with trailing comma
-        // TODO: test matrix literal with trailing semicolon
-        // TODO: test missing matrix components, e.g. [1;3,4]
+        [Test]
+        public void VectorLiteralWithTrailingCommaAddsNoComponents()
+        {
+            // given
+            const string input = "[1,2,3,]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<VectorExpression>(result);
+            var ve = (VectorExpression) result;
+            Assert.AreEqual(3, ve.Length);
+            Assert.IsInstanceOf<Literal>(ve[0]);
+            Assert.AreEqual(1,((Literal)ve[0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[1]);
+            Assert.AreEqual(2,((Literal)ve[1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(ve[2]);
+            Assert.AreEqual(3,((Literal)ve[2]).Value.ToFloat());
+        }
+
+        [Test]
+        public void TestMatrixLiteral()
+        {
+            // given
+            const string input = "[1,2;3,4]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralWithTrailingCommaAddsNoComponents1()
+        {
+            // given
+            const string input = "[1,2;3,4,]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralWithTrailingCommaAddsNoComponents2()
+        {
+            // given
+            const string input = "[1,2,;3,4]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralWithTrailingSemicolonAddsNoComponents()
+        {
+            // given
+            const string input = "[1,2;3,4;]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixWithTrailingCommaAndSemicolonAddsNoComponents()
+        {
+            // given
+            const string input = "[1,2;3,4,;]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void MatrixLiteralMissingComponentsTreatedAsZero()
+        {
+            // given
+            const string input = "[1;3,4]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(2, me.RowCount);
+            Assert.AreEqual(2, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(0, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 0]);
+            Assert.AreEqual(3, ((Literal) me[1, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[1, 1]);
+            Assert.AreEqual(4, ((Literal) me[1, 1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void SingleRowWithTrailingSemicolonYieldsMatrix()
+        {
+            // given
+            const string input = "[1,2,3;]";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<MatrixExpression>(result);
+            var me = (MatrixExpression) result;
+            Assert.AreEqual(1, me.RowCount);
+            Assert.AreEqual(3, me.ColumnCount);
+            Assert.IsInstanceOf<Literal>(me[0, 0]);
+            Assert.AreEqual(1, ((Literal) me[0, 0]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 1]);
+            Assert.AreEqual(2, ((Literal) me[0, 1]).Value.ToFloat());
+            Assert.IsInstanceOf<Literal>(me[0, 2]);
+            Assert.AreEqual(3, ((Literal) me[0, 2]).Value.ToFloat());
+        }
 
         [Test]
         public void TestComponentAccess()
