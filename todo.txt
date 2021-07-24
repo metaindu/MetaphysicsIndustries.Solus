@@ -1,4 +1,22 @@
+proper exception type and consistent error handling
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
 don't evaluate macros while parsing
+don't require the SolusEnvironment while parsing
+arbitrary rules for function arguments, e.g.:
+    - like GreaterThanZero or
+    - Matrix sized NxM
+    - multiplication operator require that subsequent matrix arguments have
+      matching inner dimenions, to perform typical matrix multiplication
+similar checks on inputs to expression
+a type system to support the above
+maybe a "property system" in addition to, or in place of, said type system
+markers of the type of the result of an expression (or return value of a
+    function), based on inputs
+simple sets and intervals as IMathObject
+more complicated expression-based sets
+complex numbers
+tensors of rank 3 or more
+boolean true and false
+piece-wise functions
