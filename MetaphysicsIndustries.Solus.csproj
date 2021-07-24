@@ -54,6 +54,7 @@
     <Compile Include="Commands\VarAssignCommand.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
+    <Compile Include="Exceptions\SolusException.cs" />
     <Compile Include="Expressions\ColorExpression.cs" />
     <Compile Include="Expressions\ComponentAccess.cs" />
     <Compile Include="Expressions\DerivativeOfVariable.cs" />
