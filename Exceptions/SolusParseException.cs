@@ -21,12 +21,10 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Exceptions
 {
-    public class SolusParseException : ApplicationException
+    public class SolusParseException : SolusException
     {
         public SolusParseException(int location, string error)
         {

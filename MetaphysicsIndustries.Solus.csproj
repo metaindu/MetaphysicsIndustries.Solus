@@ -55,6 +55,7 @@
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
     <Compile Include="Exceptions\SolusException.cs" />
+    <Compile Include="Exceptions\SolusParseException.cs" />
     <Compile Include="Expressions\ColorExpression.cs" />
     <Compile Include="Expressions\ComponentAccess.cs" />
     <Compile Include="Expressions\DerivativeOfVariable.cs" />
@@ -152,7 +153,6 @@
     <Compile Include="SolusEngine.GatherVariables.cs" />
     <Compile Include="SolusEngine.Integral.cs" />
     <Compile Include="SolusEngine.Modulators.cs" />
-    <Compile Include="SolusParseException.cs" />
     <Compile Include="SolusParser.cs" />
     <Compile Include="SolusGrammar.cs" />
     <Compile Include="SolusEnvironment.cs" />

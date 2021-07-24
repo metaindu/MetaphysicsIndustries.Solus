@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
