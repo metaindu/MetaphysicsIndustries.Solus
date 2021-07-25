@@ -8,7 +8,7 @@ arbitrary rules for function arguments, e.g.:
     - like GreaterThanZero or
     - Matrix sized NxM
     - multiplication operator require that subsequent matrix arguments have
-      matching inner dimenions, to perform typical matrix multiplication
+      matching inner dimensions, to perform typical matrix multiplication
 similar checks on inputs to expression
 a type system to support the above
 maybe a "property system" in addition to, or in place of, said type system
@@ -18,5 +18,33 @@ simple sets and intervals as IMathObject
 more complicated expression-based sets
 complex numbers
 tensors of rank 3 or more
+    including syntax
 boolean true and false
 piece-wise functions
+parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
+sum function that can operate on parametrics. the big sigma symbol.
+single component assignment?
+    "c[2,3] := 4"
+parametric array assignment
+    "c[i,j] := sum(a[i][k]*b[k][j] for k=[0..n-1]) for i=[0..m-1],j=[0..p-1]"
+    possible ambiguity:
+        1 for i=... for j=...
+        (1 for i=...) for j=...
+        1 for i=(... for j=...)
+    possible ambiguity:
+        1 for i=... for j=...,k=...
+        (1 for i=...) for j=...,k=...
+        1 for i=(... for j=...),k=...
+        1 for i=(... for j=...,k=...)
+"help syntax" topics
+    "help syntax array-literal"
+    "help syntax component-access"
+syntax for user-defined functions
+    type checks/requirements
+    return types
+    docstrings
+    `f(a:scalar) "calculate the thing" -> vector := [a, a+1, a+2]`
+repl line continuation, so it doesn't all have to go on a single line
+    wodehouse can do that, but that's python, so not much help
+update IL compilation
+syntax for variable number of arguments to a function
