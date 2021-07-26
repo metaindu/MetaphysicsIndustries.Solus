@@ -24,9 +24,9 @@ using System;
 
 namespace MetaphysicsIndustries.Solus.Exceptions
 {
-    public class IndexException : SolusException
+    public class OperandException : SolusException
     {
-        public IndexException(string message="The index was incorrect",
+        public OperandException(string message="The operand was incorrect",
             Exception innerException=null)
             : base(message, innerException)
         {

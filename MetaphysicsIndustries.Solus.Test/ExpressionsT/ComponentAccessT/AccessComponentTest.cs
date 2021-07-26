@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = 1.ToNumber();
             var indexes = new IMathObject[] {1.ToNumber()};
             // expect
-            var ex = Assert.Throws<ArgumentException>(
+            var ex = Assert.Throws<OperandException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Scalars do not have components",

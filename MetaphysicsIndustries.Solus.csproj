@@ -57,6 +57,7 @@
     <Compile Include="Exceptions\ArgumentNullException.cs" />
     <Compile Include="Exceptions\ArgumentTypeException.cs" />
     <Compile Include="Exceptions\IndexException.cs" />
+    <Compile Include="Exceptions\OperandException.cs" />
     <Compile Include="Exceptions\SolusException.cs" />
     <Compile Include="Exceptions\SolusParseException.cs" />
     <Compile Include="Expressions\ColorExpression.cs" />

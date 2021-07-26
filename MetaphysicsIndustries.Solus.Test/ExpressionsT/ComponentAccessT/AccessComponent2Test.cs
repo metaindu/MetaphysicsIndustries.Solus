@@ -109,7 +109,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new MockTensorExpression(0);
             var indexes = mkindexes(1);
             // expect
-            var ex = Assert.Throws<ArgumentException>(
+            var ex = Assert.Throws<OperandException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Scalars do not have components",

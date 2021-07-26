@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             else
             {
                 if (expr.TensorRank < 1)
-                    throw new ArgumentException(
+                    throw new OperandException(
                         "Scalars do not have components");
                 if (expr.TensorRank != indexes.Length)
                     throw new IndexException(
@@ -118,7 +118,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             IMathObject[] indexes)
         {
             if (expr.TensorRank < 1)
-                throw new ArgumentException(
+                throw new OperandException(
                     "Scalars do not have components");
             if (expr.TensorRank != indexes.Length)
                 throw new IndexException(
