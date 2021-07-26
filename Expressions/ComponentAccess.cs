@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -54,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (expr.IsString)
             {
                 if (1 != indexes.Length)
-                    throw new IndexOutOfRangeException(
+                    throw new IndexException(
                         "Number of indexes doesn't match the number " +
                         "required by the expression");
             }
@@ -64,27 +65,49 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     throw new ArgumentException(
                         "Scalars do not have components");
                 if (expr.TensorRank != indexes.Length)
-                    throw new IndexOutOfRangeException(
+                    throw new IndexException(
                         "Number of indexes doesn't match the number " +
                         "required by the expression");
             }
 
             if (indexes.Any(i => !i.IsScalar))
-                throw new IndexOutOfRangeException(
+                throw new IndexException(
                     "Indexes must be scalar");
             if (indexes.Any(i => i.ToNumber().Value < 0))
-                throw new IndexOutOfRangeException(
+                throw new IndexException(
                     "Indexes must not be negative");
 
             var index0 = (int) indexes[0].ToNumber().Value;
             if (expr.IsVector)
-                return expr.ToVector()[index0];
+            {
+                var v = expr.ToVector();
+                if (index0 >= v.Length)
+                    throw new IndexException(
+                        "Index exceeds the size of the vector");
+                return v[index0];
+            }
+
             if (expr.IsString)
-                return expr.ToStringValue().Value[index0].ToStringValue();
+            {
+                var sv = expr.ToStringValue();
+                if (index0 >= sv.Length)
+                    throw new IndexException(
+                        "Index exceeds the size of the string");
+                return sv.Value[index0].ToStringValue();
+            }
 
             var index1 = (int) indexes[1].ToNumber().Value;
             if (expr.IsMatrix)
-                return expr.ToMatrix()[index0, index1];
+            {
+                var m = expr.ToMatrix();
+                if (index0 >= m.RowCount)
+                    throw new IndexException(
+                        "Index exceeds number of rows of the matrix");
+                if (index1 >= m.ColumnCount)
+                    throw new IndexException(
+                        "Index exceeds number of columns of the matrix");
+                return m[index0, index1];
+            }
 
             throw new NotImplementedException(
                 "Component access is not implemented for tensor rank " +
@@ -98,23 +121,38 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException(
                     "Scalars do not have components");
             if (expr.TensorRank != indexes.Length)
-                throw new IndexOutOfRangeException(
+                throw new IndexException(
                     "Number of indexes doesn't match the number " +
                     "required by the expression");
             if (indexes.Any(i => !i.IsScalar))
-                throw new IndexOutOfRangeException(
+                throw new IndexException(
                     "Indexes must be scalar");
             if (indexes.Any(i => i.ToNumber().Value < 0))
-                throw new IndexOutOfRangeException(
+                throw new IndexException(
                     "Indexes must not be negative");
 
             var index0 = (int) indexes[0].ToNumber().Value;
             if (expr is VectorExpression ve)
+            {
+                if (index0 >= ve.Length)
+                    throw new IndexException(
+                        "Index exceeds the size of the vector");
                 return ve[index0];
+            }
+
+            // TODO: Literal with value of string?
 
             var index1 = (int) indexes[1].ToNumber().Value;
             if (expr is MatrixExpression me)
+            {
+                if (index0 >= me.RowCount)
+                    throw new IndexException(
+                        "Index exceeds number of rows of the matrix");
+                if (index1 >= me.ColumnCount)
+                    throw new IndexException(
+                        "Index exceeds number of columns of the matrix");
                 return me[index0, index1];
+            }
 
             throw new NotImplementedException(
                 "Component access is not implemented for tensor rank " +

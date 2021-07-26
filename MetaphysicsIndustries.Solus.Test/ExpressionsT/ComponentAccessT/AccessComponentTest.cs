@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
@@ -79,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new Vector(new float[] {1, 2, 3});
             var indexes = new IMathObject[] {1.ToNumber(), 1.ToNumber()};
             // when
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual(
@@ -95,7 +96,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new Matrix(new float[,] {{1, 2}, {3, 4}});
             var indexes = new IMathObject[] {1.ToNumber()};
             // when
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual(
@@ -113,7 +114,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             {
                 new Vector(new float[] {4, 5, 6})
             };
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
@@ -128,7 +129,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             {
                 new Matrix(new float[,] {{1, 2}, {3, 4}})
             };
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
@@ -140,7 +141,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new Vector(new float[] {1, 2, 3});
             var indexes = new IMathObject[] {"abc".ToStringValue()};
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
@@ -153,7 +154,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new Vector(new float[] {1, 2, 3});
             var indexes = new IMathObject[] {(-1).ToNumber()};
             // expect
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual(
@@ -207,12 +208,72 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = "abc".ToStringValue();
             var indexes = new IMathObject[] {1.ToNumber(), 1.ToNumber()};
             // when
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual(
                 "Number of indexes doesn't match the number " +
                 "required by the expression",
+                ex.Message);
+        }
+
+        [Test]
+        public void VectorWithTooLargeAnIndexThrows()
+        {
+            // given
+            var expr = new Vector(new float[] {1, 2, 3});
+            var indexes = new IMathObject[] {3.ToNumber()};
+            // when
+            var ex = Assert.Throws<IndexException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Index exceeds the size of the vector",
+                ex.Message);
+        }
+
+        [Test]
+        public void StringWithTooLargeAnIndexThrows()
+        {
+            // given
+            var expr = "abc".ToStringValue();
+            var indexes = new IMathObject[] {3.ToNumber()};
+            // when
+            var ex = Assert.Throws<IndexException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Index exceeds the size of the string",
+                ex.Message);
+        }
+
+        [Test]
+        public void MatrixWithTooLargeRowIndexThrows()
+        {
+            // given
+            var expr = new Matrix(new float[,] {{1, 2}, {3, 4}});
+            var indexes = new IMathObject[] {2.ToNumber(), 0.ToNumber()};
+            // when
+            var ex = Assert.Throws<IndexException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Index exceeds number of rows of the matrix",
+                ex.Message);
+        }
+
+        [Test]
+        public void MatrixWithTooLargeColumnIndexThrows()
+        {
+            // given
+            var expr = new Matrix(new float[,] {{1, 2}, {3, 4}});
+            var indexes = new IMathObject[] {0.ToNumber(), 2.ToNumber()};
+            // when
+            var ex = Assert.Throws<IndexException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Index exceeds number of columns of the matrix",
                 ex.Message);
         }
     }
