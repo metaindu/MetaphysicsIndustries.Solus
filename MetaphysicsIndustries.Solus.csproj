@@ -54,8 +54,6 @@
     <Compile Include="Commands\VarAssignCommand.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
-    <Compile Include="Exceptions\ArgumentNullException.cs" />
-    <Compile Include="Exceptions\ArgumentTypeException.cs" />
     <Compile Include="Exceptions\IndexException.cs" />
     <Compile Include="Exceptions\NameException.cs" />
     <Compile Include="Exceptions\OperandException.cs" />
