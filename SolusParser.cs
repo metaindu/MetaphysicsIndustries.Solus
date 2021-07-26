@@ -396,6 +396,9 @@ namespace MetaphysicsIndustries.Solus
                 args.Add(GetExpressionFromExpr(span.Subspans[i], env));
             }
 
+            // TODO: don't do name lookup while parsing. use a VariableAccess
+            // instead
+
             if (env.Functions.ContainsKey(name))
             {
                 return new FunctionCall(env.Functions[name], args);
@@ -406,7 +409,8 @@ namespace MetaphysicsIndustries.Solus
             }
             else
             {
-                throw new InvalidOperationException("Unknown function \"" + name + "\"");
+                throw new NameException(
+                    $"Unknown function, \"{name}\"");
             }
         }
 
