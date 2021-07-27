@@ -58,7 +58,7 @@
     <Compile Include="Exceptions\NameException.cs" />
     <Compile Include="Exceptions\OperandException.cs" />
     <Compile Include="Exceptions\SolusException.cs" />
-    <Compile Include="Exceptions\SolusParseException.cs" />
+    <Compile Include="Exceptions\ParseException.cs" />
     <Compile Include="Expressions\ColorExpression.cs" />
     <Compile Include="Expressions\ComponentAccess.cs" />
     <Compile Include="Expressions\DerivativeOfVariable.cs" />

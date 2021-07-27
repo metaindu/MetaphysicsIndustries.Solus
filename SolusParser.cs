@@ -68,18 +68,18 @@ namespace MetaphysicsIndustries.Solus
             if (errors.ContainsNonWarnings())
             {
                 var error = errors.GetFirstNonWarning();
-                throw new SolusParseException(0, error.Description);
+                throw new ParseException(0, error.Description);
             }
 
             if (spans.Length < 1)
             {
-                throw new SolusParseException(0,
+                throw new ParseException(0,
                     "There were more no valid parses of the input.");
             }
 
             if (spans.Length > 1)
             {
-                throw new SolusParseException(0,
+                throw new ParseException(0,
                     "There were more than one valid parses of the input.");
             }
 
@@ -105,14 +105,14 @@ namespace MetaphysicsIndustries.Solus
             if (errors.ContainsNonWarnings())
             {
                 var error = errors.GetFirstNonWarning();
-                throw new SolusParseException(-1, error.Description);
+                throw new ParseException(-1, error.Description);
             }
 
             if (spans.Length < 1)
-                throw new SolusParseException(0,
+                throw new ParseException(0,
                     "There were more no valid parses of the input.");
             if (spans.Length > 1)
-                throw new SolusParseException(0,
+                throw new ParseException(0,
                     "There were more than one valid parses of the input.");
             var span = spans[0];
 
@@ -153,7 +153,7 @@ namespace MetaphysicsIndustries.Solus
             if (def == _grammar.def_vars_002D_command)
                 return GetVarsCommandFromSpan(sub, env);
 
-            throw new SolusParseException(-1,
+            throw new ParseException(-1,
                 $"Unknown command, \"{def}");
         }
 
@@ -353,7 +353,7 @@ namespace MetaphysicsIndustries.Solus
                 return GetComponentAccessFromComponentAccess(span, env);
 
             // TODO: proper exception/message about node type
-            throw new SolusParseException(-1,
+            throw new ParseException(-1,
                 $"Unknown subexpression, \"{defref}\"");
         }
 
@@ -405,7 +405,7 @@ namespace MetaphysicsIndustries.Solus
             if (span.Value == ">=")
                 return GreaterThanOrEqualComparisonOperation.Value;
 
-            throw new SolusParseException(-1,
+            throw new ParseException(-1,
                 $"Unknown binary operator, \"{span.Value}\"");
         }
 
@@ -469,13 +469,13 @@ namespace MetaphysicsIndustries.Solus
             var spans = _numberSpanner.Process(value.ToCharacterSource(), errors);
 
             if (errors.ContainsNonWarnings())
-                throw new SolusParseException(-1,
+                throw new ParseException(-1,
                     errors.GetFirstNonWarning().Description);
             if (spans.Length < 1)
-                throw new SolusParseException(-1,
+                throw new ParseException(-1,
                     "There were more no valid parses of the input.");
             if (spans.Length > 1)
-                throw new SolusParseException(-1,
+                throw new ParseException(-1,
                     "There were more than one valid parses of the input.");
 
             var s = spans[0];
