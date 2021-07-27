@@ -392,6 +392,18 @@ namespace MetaphysicsIndustries.Solus
             {
                 return BitwiseOrOperation.Value;
             }
+            if (span.Value == "=")
+                return EqualComparisonOperation.Value;
+            if (span.Value == "!=")
+                return NotEqualComparisonOperation.Value;
+            if (span.Value == "<")
+                return LessThanComparisonOperation.Value;
+            if (span.Value == "<=")
+                return LessThanOrEqualComparisonOperation.Value;
+            if (span.Value == ">")
+                return GreaterThanComparisonOperation.Value;
+            if (span.Value == ">=")
+                return GreaterThanOrEqualComparisonOperation.Value;
 
             throw new SolusParseException(-1,
                 $"Unknown binary operator, \"{span.Value}\"");
