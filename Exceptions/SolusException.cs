@@ -24,7 +24,7 @@ using System;
 
 namespace MetaphysicsIndustries.Solus.Exceptions
 {
-    public class SolusException : ApplicationException
+    public abstract class SolusException : ApplicationException
     {
         public SolusException(string message, Exception innerException = null)
             : base(message, innerException)
