@@ -140,8 +140,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return ve[index0];
             }
 
-            // TODO: Literal with value of string?
-
             var index1 = (int) indexes[1].ToNumber().Value;
             if (expr is MatrixExpression me)
             {
