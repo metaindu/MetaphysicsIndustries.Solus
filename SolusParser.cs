@@ -68,18 +68,18 @@ namespace MetaphysicsIndustries.Solus
             if (errors.ContainsNonWarnings())
             {
                 var error = errors.GetFirstNonWarning();
-                throw new ParseException(0, error.Description);
+                throw new ParseException(-1, error.Description);
             }
 
             if (spans.Length < 1)
             {
-                throw new ParseException(0,
+                throw new ParseException(-1,
                     "There were more no valid parses of the input.");
             }
 
             if (spans.Length > 1)
             {
-                throw new ParseException(0,
+                throw new ParseException(-1,
                     "There were more than one valid parses of the input.");
             }
 
@@ -109,10 +109,10 @@ namespace MetaphysicsIndustries.Solus
             }
 
             if (spans.Length < 1)
-                throw new ParseException(0,
+                throw new ParseException(-1,
                     "There were more no valid parses of the input.");
             if (spans.Length > 1)
-                throw new ParseException(0,
+                throw new ParseException(-1,
                     "There were more than one valid parses of the input.");
             var span = spans[0];
 
