@@ -1,4 +1,3 @@
-proper exception type and consistent error handling
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
