@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
@@ -108,7 +109,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new MockTensorExpression(0);
             var indexes = mkindexes(1);
             // expect
-            var ex = Assert.Throws<ArgumentException>(
+            var ex = Assert.Throws<OperandException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Scalars do not have components",
@@ -122,7 +123,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = vector("a","b","c");
             var indexes = mkindexes(1, 1);
             // when
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual(
@@ -140,7 +141,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 "c", "d");
             var indexes = mkindexes(1);
             // when
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual(
@@ -158,7 +159,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             {
                 new Vector(new float[] {4, 5, 6})
             };
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
@@ -173,7 +174,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             {
                 new Matrix(new float[,] {{1, 2}, {3, 4}})
             };
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
@@ -185,7 +186,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = vector("a","b","c");
             var indexes = new IMathObject[] {"abc".ToStringValue()};
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
@@ -198,7 +199,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = vector("a","b","c");
             var indexes = mkindexes(-1);
             // expect
-            var ex = Assert.Throws<IndexOutOfRangeException>(
+            var ex = Assert.Throws<IndexException>(
                 () => ComponentAccess.AccessComponent(expr, indexes));
             // and
             Assert.AreEqual(
@@ -222,6 +223,55 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             Assert.AreEqual(
                 "Component access is not implemented for tensor " +
                 "rank greater than 2",
+                ex.Message);
+        }
+
+        [Test]
+        public void VectorWithTooLargeAnIndexThrows()
+        {
+            // given
+            var expr = vector("a","b","c");
+            var indexes = mkindexes(3);
+            // when
+            var ex = Assert.Throws<IndexException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Index exceeds the size of the vector",
+                ex.Message);
+        }
+
+        [Test]
+        public void MatrixWithTooLargeRowIndexThrows()
+        {
+            // given
+            var expr = matrix(2,
+                "a", "b",
+                "c", "d");
+            var indexes = mkindexes(2, 0);
+            // when
+            var ex = Assert.Throws<IndexException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Index exceeds number of rows of the matrix",
+                ex.Message);
+        }
+
+        [Test]
+        public void MatrixWithTooLargeColumnIndexThrows()
+        {
+            // given
+            var expr = matrix(2,
+                "a", "b",
+                "c", "d");
+            var indexes = mkindexes(0, 2);
+            // when
+            var ex = Assert.Throws<IndexException>(
+                () => ComponentAccess.AccessComponent(expr, indexes));
+            // and
+            Assert.AreEqual(
+                "Index exceeds number of columns of the matrix",
                 ex.Message);
         }
     }

@@ -815,5 +815,134 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.AreEqual(1,
                 ((Literal)ca.Indexes[0]).Value.ToFloat());
         }
+
+        [Test]
+        public void TestEqualComparison()
+        {
+            // given
+            const string input = "a = b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.AreSame(EqualComparisonOperation.Value, fc.Function);
+            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.AreEqual("a",
+                ((VariableAccess)fc.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.AreEqual("b",
+                ((VariableAccess)fc.Arguments[1]).VariableName);
+        }
+
+        [Test]
+        public void TestNotEqualComparison()
+        {
+            // given
+            const string input = "a != b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.AreSame(NotEqualComparisonOperation.Value, fc.Function);
+            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.AreEqual("a",
+                ((VariableAccess)fc.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.AreEqual("b",
+                ((VariableAccess)fc.Arguments[1]).VariableName);
+        }
+
+        [Test]
+        public void TestLessThanComparison()
+        {
+            // given
+            const string input = "a < b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.AreSame(LessThanComparisonOperation.Value, fc.Function);
+            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.AreEqual("a",
+                ((VariableAccess)fc.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.AreEqual("b",
+                ((VariableAccess)fc.Arguments[1]).VariableName);
+        }
+
+        [Test]
+        public void TestLessEqualComparison()
+        {
+            // given
+            const string input = "a <= b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.AreSame(LessThanOrEqualComparisonOperation.Value,
+                fc.Function);
+            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.AreEqual("a",
+                ((VariableAccess)fc.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.AreEqual("b",
+                ((VariableAccess)fc.Arguments[1]).VariableName);
+        }
+
+        [Test]
+        public void TestGreaterThanComparison()
+        {
+            // given
+            const string input = "a > b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.AreSame(GreaterThanComparisonOperation.Value,
+                fc.Function);
+            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.AreEqual("a",
+                ((VariableAccess)fc.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.AreEqual("b",
+                ((VariableAccess)fc.Arguments[1]).VariableName);
+        }
+
+        [Test]
+        public void TestGreaterEqualComparison()
+        {
+            // given
+            const string input = "a >= b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.AreSame(GreaterThanOrEqualComparisonOperation.Value,
+                fc.Function);
+            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.AreEqual("a",
+                ((VariableAccess)fc.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.AreEqual("b",
+                ((VariableAccess)fc.Arguments[1]).VariableName);
+        }
     }
 }

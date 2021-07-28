@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
@@ -67,20 +68,19 @@ namespace MetaphysicsIndustries.Solus
             if (errors.ContainsNonWarnings())
             {
                 var error = errors.GetFirstNonWarning();
-                throw new SolusParseException(0, error.Description);
+                throw new ParseException(-1, error.Description);
             }
 
             if (spans.Length < 1)
             {
-                throw new SolusParseException(0,
+                throw new ParseException(-1,
                     "There were more no valid parses of the input.");
             }
 
             if (spans.Length > 1)
             {
-                throw new SolusParseException(0,
-                    "There were more than one valid parses of the " +
-                    "input. The grammar is ambiguous.");
+                throw new ParseException(-1,
+                    "There were more than one valid parses of the input.");
             }
 
             var span = spans[0];
@@ -103,11 +103,17 @@ namespace MetaphysicsIndustries.Solus
             var errors = new List<Error>();
             var spans = _parserC.Parse(input.ToCharacterSource(), errors);
             if (errors.ContainsNonWarnings())
-                throw new InvalidOperationException();
+            {
+                var error = errors.GetFirstNonWarning();
+                throw new ParseException(-1, error.Description);
+            }
+
             if (spans.Length < 1)
-                throw new InvalidOperationException();
+                throw new ParseException(-1,
+                    "There were more no valid parses of the input.");
             if (spans.Length > 1)
-                throw new InvalidOperationException();
+                throw new ParseException(-1,
+                    "There were more than one valid parses of the input.");
             var span = spans[0];
 
             var commands = new List<Command>();
@@ -147,7 +153,8 @@ namespace MetaphysicsIndustries.Solus
             if (def == _grammar.def_vars_002D_command)
                 return GetVarsCommandFromSpan(sub, env);
 
-            throw new InvalidOperationException();
+            throw new ParseException(-1,
+                $"Unknown command, \"{def}");
         }
 
         Command GetDeleteCommandFromSpan(Span span, SolusEnvironment env)
@@ -296,7 +303,10 @@ namespace MetaphysicsIndustries.Solus
 
             if (subexprs.Count != 1)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(
+                    $"The expressions should have been combined " +
+                    $"into a single tree, but for some reason, there are " +
+                    $"{subexprs.Count} separate expressions.");
             }
 
             return subexprs[0];
@@ -342,8 +352,8 @@ namespace MetaphysicsIndustries.Solus
             if (defref == _grammar.def_component_002D_access)
                 return GetComponentAccessFromComponentAccess(span, env);
 
-            // TODO: proper exception/message about node type
-            throw new NotImplementedException();
+            throw new ParseException(-1,
+                $"Unknown subexpression, \"{defref}\"");
         }
 
         public Operation GetOperationFromBinop(Span span)
@@ -354,7 +364,9 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (span.Value == "-")
             {
-                throw new NotImplementedException();
+                // NOTE: the "-" case is already covered by
+                // GetExpressionFromExpr
+                return null;
             }
             else if (span.Value == "*")
             {
@@ -380,8 +392,21 @@ namespace MetaphysicsIndustries.Solus
             {
                 return BitwiseOrOperation.Value;
             }
+            if (span.Value == "=")
+                return EqualComparisonOperation.Value;
+            if (span.Value == "!=")
+                return NotEqualComparisonOperation.Value;
+            if (span.Value == "<")
+                return LessThanComparisonOperation.Value;
+            if (span.Value == "<=")
+                return LessThanOrEqualComparisonOperation.Value;
+            if (span.Value == ">")
+                return GreaterThanComparisonOperation.Value;
+            if (span.Value == ">=")
+                return GreaterThanOrEqualComparisonOperation.Value;
 
-            throw new InvalidOperationException();
+            throw new ParseException(-1,
+                $"Unknown binary operator, \"{span.Value}\"");
         }
 
         public Expression GetFunctionCallFromFunctioncall(Span span, SolusEnvironment env)
@@ -395,6 +420,9 @@ namespace MetaphysicsIndustries.Solus
                 args.Add(GetExpressionFromExpr(span.Subspans[i], env));
             }
 
+            // TODO: don't do name lookup while parsing. use a VariableAccess
+            // instead
+
             if (env.Functions.ContainsKey(name))
             {
                 return new FunctionCall(env.Functions[name], args);
@@ -405,7 +433,8 @@ namespace MetaphysicsIndustries.Solus
             }
             else
             {
-                throw new InvalidOperationException("Unknown function \"" + name + "\"");
+                throw new NameException(
+                    $"Unknown function, \"{name}\"");
             }
         }
 
@@ -440,19 +469,14 @@ namespace MetaphysicsIndustries.Solus
             var spans = _numberSpanner.Process(value.ToCharacterSource(), errors);
 
             if (errors.ContainsNonWarnings())
-            {
-                throw new NotImplementedException();
-            }
-
+                throw new ParseException(-1,
+                    errors.GetFirstNonWarning().Description);
             if (spans.Length < 1)
-            {
-                throw new NotImplementedException();
-            }
-
+                throw new ParseException(-1,
+                    "There were more no valid parses of the input.");
             if (spans.Length > 1)
-            {
-                throw new NotImplementedException();
-            }
+                throw new ParseException(-1,
+                    "There were more than one valid parses of the input.");
 
             var s = spans[0];
             var subs = s.Subspans;

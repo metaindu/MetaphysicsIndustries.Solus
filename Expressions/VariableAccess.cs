@@ -20,10 +20,11 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
+using ArgumentNullException = System.ArgumentNullException;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -63,7 +64,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
             else
             {
-                throw new InvalidOperationException("Variable not found in variable table: " + VariableName);
+                throw new NameException(
+                    "Variable not found in variable table: " +
+                    VariableName);
             }
         }
 

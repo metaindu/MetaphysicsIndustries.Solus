@@ -60,7 +60,7 @@ function-call = identifier:name '(' ( expr:arg ( ',' expr:arg )* )? ')';
 
 <ignore case, subtoken> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
 
-<token> binop = [+-*/%^&|];
+<token> binop = ( [+-*/%^&|=<>] | '!=' | '<=' | '>=' );
 
 unary-op = [+-] (
     paren |

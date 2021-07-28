@@ -26,6 +26,7 @@ using System.Reflection;
 using MetaphysicsIndustries.Solus;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using Mono.Terminal;
 
@@ -87,6 +88,16 @@ namespace solus
                     Repl();
                 }
             }
+            catch (SolusException se)
+            {
+                Console.Write("There was an error with the calculation");
+                if (verbose)
+                {
+                    Console.WriteLine(":");
+                    Console.Write(se.Message);
+                }
+                Console.WriteLine();
+            }
             catch (Exception ex)
             {
                 Console.Write("There was an internal error");
@@ -142,14 +153,28 @@ namespace solus
 
                 if (ex != null)
                 {
-                    Console.Write("There was an error");
-                    if (verbose)
+                    if (ex is SolusException se)
                     {
-                        Console.WriteLine(":");
-                        Console.WriteLine(ex.ToString());
+                        Console.Write(
+                            $"There was an error with the input: " +
+                            $"{se.Message}");
+                        if (verbose)
+                        {
+                            Console.WriteLine();
+                            Console.Write(se.ToString());
+                        }
                     }
                     else
-                        Console.WriteLine();
+                    {
+                        Console.Write("There was an error");
+                        if (verbose)
+                        {
+                            Console.WriteLine(":");
+                            Console.Write(ex.ToString());
+                        }
+                    }
+
+                    Console.WriteLine();
 
                     continue;
                 }
@@ -166,6 +191,19 @@ namespace solus
                         var result = expr.PreliminaryEval(env);
                         Console.WriteLine(result);
                     }
+                }
+                catch (SolusException se)
+                {
+                    Console.Write(
+                        $"There was an error with the calculation: " +
+                        $"{se.Message}");
+                    if (verbose)
+                    {
+                        Console.WriteLine();
+                        Console.Write(se.ToString());
+                    }
+
+                    Console.WriteLine();
                 }
                 catch (Exception _ex)
                 {
