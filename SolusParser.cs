@@ -352,7 +352,6 @@ namespace MetaphysicsIndustries.Solus
             if (defref == _grammar.def_component_002D_access)
                 return GetComponentAccessFromComponentAccess(span, env);
 
-            // TODO: proper exception/message about node type
             throw new ParseException(-1,
                 $"Unknown subexpression, \"{defref}\"");
         }
