@@ -364,7 +364,8 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (span.Value == "-")
             {
-                // NOTE: the "-" case is already covered by GetExpressionFromExpr
+                // NOTE: the "-" case is already covered by
+                // GetExpressionFromExpr
                 return null;
             }
             else if (span.Value == "*")
