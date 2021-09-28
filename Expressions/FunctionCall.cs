@@ -114,11 +114,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
+        private IMathObject[] _evaledArgs;
         public virtual IMathObject Call(SolusEnvironment env)
         {
-            var evaledArgs =
-                Arguments.Select(a => a.Eval(env)).ToArray();
-            return Function.Call(env, evaledArgs);
+            if (_evaledArgs == null || _evaledArgs.Length < Arguments.Count)
+                _evaledArgs = new IMathObject[Arguments.Count];
+            for (var i = 0; i < Arguments.Count; i++)
+                _evaledArgs[i] = Arguments[i].Eval(env);
+            return Function.Call(env, _evaledArgs);
         }
 
         public virtual List<Expression> Arguments
