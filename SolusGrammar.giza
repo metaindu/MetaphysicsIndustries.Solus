@@ -43,7 +43,8 @@ expr = subexpr ( binop subexpr )*;
 
 function-call = identifier:name '(' ( expr:arg ( ',' expr:arg )* )? ')';
 
-<ignore case, token> number = (
+<ignore case, token>
+number = (
     '0b' [01]+ | 
     '0o' [01234567]+ | 
     '0x' [\dabcdef]+ | 
@@ -51,16 +52,20 @@ function-call = identifier:name '(' ( expr:arg ( ',' expr:arg )* )? ')';
 );
 
 // non-atomic, usable by the spanner
-<ignore case, subtoken> float-number = [+-]? [\d]+ ( '.' [\d]+ )? ( [eE] [+-]? [\d]+ )? ;
+<ignore case, subtoken>
+float-number = [+-]? [\d]+ ( '.' [\d]+ )? ( [eE] [+-]? [\d]+ )? ;
 
-<token> string = (
+<token>
+string = (
     '\'' ( [^\\'] | '\\' [rnt\\'] | unicodechar )+ '\'' |
     '"' ( [^\\"] | '\\' [rnt\\"] | unicodechar )+ '"'
 );
 
-<ignore case, subtoken> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
+<ignore case, subtoken>
+unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
 
-<token> binop = ( [+-*/%^&|=<>] | '!=' | '<=' | '>=' );
+<token>
+binop = ( [+-*/%^&|=<>] | '!=' | '<=' | '>=' );
 
 unary-op = [+-] (
     paren |
@@ -87,7 +92,8 @@ paren = '(' expr ')';
 
 varref = identifier;
 
-<token> identifier = [\w] [\d\w_]*;
+<token>
+identifier = [\w] [\d\w_]*;
 
 array-literal = '[' expr ( ',' expr )* ','?
               ( ';' expr ( ',' expr )* ','? )* ';'? ']';
