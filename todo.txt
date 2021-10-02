@@ -27,6 +27,9 @@ parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
         varref 'in' expr
         varref ('<'|'<='|'>='|'>') expr
         expr ('<'|'<='|'>='|'>') expr
+proper interval
+    ( '(' | '[' ) expr ',' expr ( ')' | ']' )
+    "for x in (2.5,7)"
 sum function that can operate on parametrics. the big sigma symbol.
 single component assignment?
     "c[2,3] := 4"
