@@ -106,20 +106,28 @@ namespace MetaphysicsIndustries.Solus
         public readonly Dictionary<string, Command> Commands =
             new Dictionary<string, Command>();
 
+        public Expression GetVariable(string name) => Variables[name];
+
         public void AddFunction(Function func)
         {
             Functions.Add(func.DisplayName, func);
         }
+
+        public Function GetFunction(string name) => Functions[name];
 
         public void AddMacro(Macro macro)
         {
             Macros.Add(macro.Name, macro);
         }
 
+        public Macro GetMacro(string name) => Macros[name];
+
         public void AddCommand(Command command)
         {
             Commands.Add(command.Name, command);
         }
+
+        public Command GetCommand(string name) => Commands[name];
 
         public SolusEnvironment Clone()
         {
