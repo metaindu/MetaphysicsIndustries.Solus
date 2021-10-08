@@ -32,71 +32,70 @@ namespace MetaphysicsIndustries.Solus
     {
         public SolusEnvironment(bool useDefaults = true)
         {
-            if (useDefaults)
+            if (!useDefaults) return;
+
+            var functions = new List<Function>()
             {
-                var functions = new List<Function>()
-                {
-                    SineFunction.Value,
-                    CosineFunction.Value,
-                    TangentFunction.Value,
-                    NaturalLogarithmFunction.Value,
-                    Log2Function.Value,
-                    Log10Function.Value,
-                    AbsoluteValueFunction.Value,
-                    SecantFunction.Value,
-                    CosecantFunction.Value,
-                    CotangentFunction.Value,
-                    ArccosineFunction.Value,
-                    ArcsineFunction.Value,
-                    ArctangentFunction.Value,
-                    ArcsecantFunction.Value,
-                    ArccosecantFunction.Value,
-                    ArccotangentFunction.Value,
-                    CeilingFunction.Value,
-                    FloorFunction.Value,
-                    UnitStepFunction.Value,
-                    Arctangent2Function.Value,
-                    LogarithmFunction.Value,
-                    DistFunction.Value,
-                    DistSqFunction.Value,
-                    LoadImageFunction.Value,
-                    SizeFunction.Value,
-                };
+                SineFunction.Value,
+                CosineFunction.Value,
+                TangentFunction.Value,
+                NaturalLogarithmFunction.Value,
+                Log2Function.Value,
+                Log10Function.Value,
+                AbsoluteValueFunction.Value,
+                SecantFunction.Value,
+                CosecantFunction.Value,
+                CotangentFunction.Value,
+                ArccosineFunction.Value,
+                ArcsineFunction.Value,
+                ArctangentFunction.Value,
+                ArcsecantFunction.Value,
+                ArccosecantFunction.Value,
+                ArccotangentFunction.Value,
+                CeilingFunction.Value,
+                FloorFunction.Value,
+                UnitStepFunction.Value,
+                Arctangent2Function.Value,
+                LogarithmFunction.Value,
+                DistFunction.Value,
+                DistSqFunction.Value,
+                LoadImageFunction.Value,
+                SizeFunction.Value,
+            };
 
-                foreach (var func in functions)
-                {
-                    AddFunction(func);
-                }
+            foreach (var func in functions)
+            {
+                AddFunction(func);
+            }
 
-                var macros = new List<Macro>
-                {
-                    SqrtMacro.Value,
-                    RandMacro.Value,
-                    DeriveMacro.Value,
-                    FeedbackMacro.Value,
-                    SubstMacro.Value,
-                    AssignMacro.Value,
-                    DeleteMacro.Value,
-                    IfMacro.Value,
-                };
+            var macros = new List<Macro>
+            {
+                SqrtMacro.Value,
+                RandMacro.Value,
+                DeriveMacro.Value,
+                FeedbackMacro.Value,
+                SubstMacro.Value,
+                AssignMacro.Value,
+                DeleteMacro.Value,
+                IfMacro.Value,
+            };
 
-                foreach (var macro in macros)
-                {
-                    AddMacro(macro);
-                }
+            foreach (var macro in macros)
+            {
+                AddMacro(macro);
+            }
 
-                var commands = new List<Command>
-                {
-                    DeleteCommand.Value,
-                    FuncAssignCommand.Value,
-                    HelpCommand.Value,
-                    VarAssignCommand.Value,
-                    VarsCommand.Value,
-                };
-                foreach (var command in commands)
-                {
-                    AddCommand(command);
-                }
+            var commands = new List<Command>
+            {
+                DeleteCommand.Value,
+                FuncAssignCommand.Value,
+                HelpCommand.Value,
+                VarAssignCommand.Value,
+                VarsCommand.Value,
+            };
+            foreach (var command in commands)
+            {
+                AddCommand(command);
             }
         }
 
