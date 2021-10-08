@@ -241,5 +241,28 @@ namespace MetaphysicsIndustries.Solus
 
             return res;
         }
+
+        public static int CountUnboundVariables(Expression expr,
+            SolusEnvironment env, HashSet<string> unboundVars=null)
+        {
+            int count = 0;
+            if (unboundVars == null)
+                unboundVars = new HashSet<string>();
+            var visitor = new DelegateExpressionVisitor
+            {
+                VarVisitor = va =>
+                {
+                    if (env.ContainsVariable(va.VariableName))
+                        CountUnboundVariables(
+                            env.GetVariable(va.VariableName),
+                            env,
+                            unboundVars);
+                    else
+                        unboundVars.Add(va.VariableName);
+                }
+            };
+            expr.AcceptVisitor(visitor);
+            return unboundVars.Count;
+        }
     }
 }

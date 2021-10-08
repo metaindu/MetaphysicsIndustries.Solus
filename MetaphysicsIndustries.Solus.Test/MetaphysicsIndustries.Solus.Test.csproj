@@ -48,6 +48,7 @@
     <Compile Include="FunctionsT\SizeFunctionT\SizeFunctionTest.cs" />
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
     <Compile Include="MockMathObject.cs" />
+    <Compile Include="SolusEngineT\CountUnboundVariablesTest.cs" />
     <Compile Include="SolusEngineT\LoadImageTest.cs" />
     <Compile Include="SolusParserT\SolusParserTest.cs" />
     <Compile Include="ValuesT\MathObjectHelperT\MathObjectHelperTest.cs" />
