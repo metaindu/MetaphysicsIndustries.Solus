@@ -20,21 +20,25 @@ tensors of rank 3 or more
     including syntax
 boolean true and false
 piece-wise functions
-parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
+parametrics
+    parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
     parameters
         varref '=' '[' expr '..' expr ']'
         expr ('<'|'<=') varref ('<'|'<=') expr
         varref 'in' expr
         varref ('<'|'<='|'>='|'>') expr
         expr ('<'|'<='|'>='|'>') expr
-proper interval
-    ( '(' | '[' ) expr ',' expr ( ')' | ']' )
-    "for x in (2.5,7)"
-sum function that can operate on parametrics. the big sigma symbol.
-single component assignment?
-    "c[2,3] := 4"
-parametric array assignment
-    "c[i,j] := sum(a[i][k]*b[k][j] for k=[0..n-1]) for i=[0..m-1],j=[0..p-1]"
+    proper interval
+        ( '(' | '[' ) expr ',' expr ( ')' | ']' )
+        "for x in (2.5,7)"
+    sum function that can operate on parametrics. the big sigma symbol.
+    single component assignment?
+        "c[2,3] := 4"
+    parametric array assignment
+        "c[i,j] := sum(a[i][k]*b[k][j] for k=[0..n-1]) for i=[0..m-1],j=[0..p-1]"
+        a[i,j] := f(i,j) for i=[0..7],j=[0..7]   ?
+        b := f(i,j) for i=[0..7],j=[0..7]   ?
+        a[i,j] := b   ???
     possible ambiguity:
         1 for i=... for j=...
         (1 for i=...) for j=...
@@ -44,12 +48,23 @@ parametric array assignment
         (1 for i=...) for j=...,k=...
         1 for i=(... for j=...),k=...
         1 for i=(... for j=...,k=...)
-    a[i,j] := f(i,j) for i=[0..7],j=[0..7]   ?
-    b := f(i,j) for i=[0..7],j=[0..7]   ?
-    a[i,j] := b   ???
-parametric array literals
-    [ f(i,j) for i=[0..7],j=[0..7] ]   ???
-    the comma may be ambiguous: does it separate intervals or array elements?
+    parametric array literals
+        [ f(i,j) for i=[0..7],j=[0..7] ]   ???
+        the comma may be ambiguous: does it separate intervals or array elements?
+    if we require parentheses around multiple parameters, that should solve a 
+            lot of the ambiguities
+        "parametric = opexr 'for' ( parameter | '(' parameter ( ',' parameter )* ')'* );"
+        "[ f(i,j) for i=[0..7],j=[0..7] ]" is then a syntax error, because
+                "j=[0..7]" is not a valid array element
+    Forms like "1 for i=... for (j=...,k=...)" can be resolved by saying that a
+            parameteric expression is not a valid parameter
+    "[ y+3 for y in a*a for a in [1,2,3,4,5]]"
+    "[ y+3 for y in (a*a for a in [1,2,3,4,5])]"
+    "i|j for i=[0..255] for j=[0..255]"
+    "(i|j for i=[0..255]) for j=[0..255]"
+    There is a subtle distinction between "f(x)" and "f(x) for x=...", in that
+            the latter ascribes particular boundaries for the variable. The "x"
+            is not an input, per se, but it still can affect graph dimensions.
 "help syntax" topics
     "help syntax array-literal"
     "help syntax component-access"
