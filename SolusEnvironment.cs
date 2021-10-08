@@ -123,29 +123,27 @@ namespace MetaphysicsIndustries.Solus
 
         public SolusEnvironment Clone()
         {
-            SolusEnvironment env2 = new SolusEnvironment(false);
+            var clone = InstantiateForClone(false);
+            PopulateClone(clone);
+            return clone;
+        }
 
-            foreach (string name in this.Variables.Keys)
-            {
-                env2.Variables[name] = this.Variables[name];
-            }
+        protected virtual SolusEnvironment InstantiateForClone(
+            bool useDefaults=false)
+        {
+            return new SolusEnvironment(useDefaults);
+        }
 
-            foreach (var func in this.Functions.Values)
-            {
-                env2.AddFunction(func);
-            }
-
-            foreach (var macro in this.Macros.Values)
-            {
-                env2.AddMacro(macro);
-            }
-
-            foreach (var command in this.Commands.Values)
-            {
-                env2.AddCommand(command);
-            }
-
-            return env2;
+        protected virtual void PopulateClone(SolusEnvironment clone)
+        {
+            foreach (var name in Variables.Keys)
+                clone.Variables[name] = Variables[name];
+            foreach (var func in Functions.Values)
+                clone.AddFunction(func);
+            foreach (var macro in Macros.Values)
+                clone.AddMacro(macro);
+            foreach (var command in Commands.Values)
+                clone.AddCommand(command);
         }
     }
 }
