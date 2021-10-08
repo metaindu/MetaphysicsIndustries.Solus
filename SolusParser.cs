@@ -173,7 +173,7 @@ namespace MetaphysicsIndustries.Solus
                 Select(sub => sub.Value).
                 ToArray();
 
-            var env2 = env.CreateChildEnvironment();
+            var env2 = env.Clone();
 
             // create the function, with no expr
             var func = new UserDefinedFunction(funcname, args, null);

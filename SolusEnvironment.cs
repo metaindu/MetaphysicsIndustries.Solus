@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Solus
             Commands.Add(command.Name, command);
         }
 
-        public SolusEnvironment CreateChildEnvironment()
+        public SolusEnvironment Clone()
         {
             SolusEnvironment env2 = new SolusEnvironment(false);
 
