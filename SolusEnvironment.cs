@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -144,5 +145,8 @@ namespace MetaphysicsIndustries.Solus
             foreach (var command in Commands.Values)
                 clone.AddCommand(command);
         }
+
+        public SolusEnvironment CreateChildEnvironment() =>
+            throw new NotImplementedException();
     }
 }
