@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 foreach (var var in _compiled.CompiledVars)
                 {
                     bakedEnv[var] =
-                        env.Variables[var].Eval(env).ToNumber().Value;
+                        env.GetVariable(var).Eval(env).ToNumber().Value;
                 }
             }
 

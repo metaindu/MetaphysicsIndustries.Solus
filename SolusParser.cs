@@ -425,11 +425,11 @@ namespace MetaphysicsIndustries.Solus
 
             if (env.Functions.ContainsKey(name))
             {
-                return new FunctionCall(env.Functions[name], args);
+                return new FunctionCall(env.GetFunction(name), args);
             }
             else if (env.Macros.ContainsKey(name))
             {
-                return env.Macros[name].Call(args, env);
+                return env.GetMacro(name).Call(args, env);
             }
             else
             {

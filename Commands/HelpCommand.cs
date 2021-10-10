@@ -76,22 +76,25 @@ List the available topics:
 
             if (env.Commands.ContainsKey(topic))
             {
-                if (!string.IsNullOrEmpty(env.Commands[topic].DocString))
-                    return env.Commands[topic].DocString;
+                var command = env.GetCommand(topic);
+                if (!string.IsNullOrEmpty(command.DocString))
+                    return command.DocString;
                 return "This command does not provide any information.";
             }
 
             if (env.Functions.ContainsKey(topic))
             {
-                if (!string.IsNullOrEmpty(env.Functions[topic].DocString))
-                    return env.Functions[topic].DocString;
+                var f = env.GetFunction(topic);
+                if (!string.IsNullOrEmpty(f.DocString))
+                    return f.DocString;
                 return "This function does not provide any information.";
             }
 
             if (env.Macros.ContainsKey(topic))
             {
-                if (!string.IsNullOrEmpty(env.Macros[topic].DocString))
-                    return env.Macros[topic].DocString;
+                var m = env.GetMacro(topic);
+                if (!string.IsNullOrEmpty(m.DocString))
+                    return m.DocString;
                 return "This macro does not provide any information.";
             }
 

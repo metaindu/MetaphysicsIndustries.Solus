@@ -53,7 +53,7 @@ namespace MetaphysicsIndustries.Solus
             Expression previousValue = null;
             if (env.Variables.ContainsKey(x))
             {
-                previousValue = env.Variables[x];
+                previousValue = env.GetVariable(x);
                 env.Variables.Remove(x);
             }
             Expression preeval = expr.PreliminaryEval(env);
@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Solus
             i = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
-                env.Variables[x] = new Literal(xx);
+                env.SetVariable(x, new Literal(xx));
                 exprs[i] = preeval.PreliminaryEval(env);
                 i++;
             }
@@ -85,7 +85,7 @@ namespace MetaphysicsIndustries.Solus
             if (env.Variables.ContainsKey(x))
             {
                 hasPreviousValue = true;
-                previousValue = env.Variables[x];
+                previousValue = env.GetVariable(x);
                 env.Variables.Remove(x);
             }
             Expression preeval = expr.PreliminaryEval(env);
@@ -97,14 +97,14 @@ namespace MetaphysicsIndustries.Solus
             i = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
-                env.Variables[x] = new Literal(xx);
+                env.SetVariable(x, new Literal(xx));
                 values[i] = preeval.Eval(env).ToNumber().Value;
                 i++;
             }
 
             if (hasPreviousValue)
             {
-                env.Variables[x] = previousValue;
+                env.SetVariable(x, previousValue);
             }
 
             return values;
@@ -141,7 +141,7 @@ namespace MetaphysicsIndustries.Solus
             if (env.Variables.ContainsKey(x))
             {
                 hasPreviousValueX = true;
-                previousValueX = env.Variables[x];
+                previousValueX = env.GetVariable(x);
                 env.Variables.Remove(x);
             }
 
@@ -150,7 +150,7 @@ namespace MetaphysicsIndustries.Solus
             if (env.Variables.ContainsKey(y))
             {
                 hasPreviousValueY = true;
-                previousValueY = env.Variables[y];
+                previousValueY = env.GetVariable(y);
                 env.Variables.Remove(y);
             }
 
@@ -163,12 +163,12 @@ namespace MetaphysicsIndustries.Solus
             int ix = 0;
             for (xx = xStart; xx <= xEnd; xx += xStep)
             {
-                env.Variables[x] = xValues[ix];
+                env.SetVariable(x, xValues[ix]);
 
                 int iy = 0;
                 for (yy = yStart; yy <= yEnd; yy += yStep)
                 {
-                    env.Variables[y] = yValues[iy];
+                    env.SetVariable(y, yValues[iy]);
                     values[ix, iy] = preeval.Eval(env).ToNumber().Value;
                     iy++;
                 }
@@ -178,11 +178,11 @@ namespace MetaphysicsIndustries.Solus
 
             if (hasPreviousValueX)
             {
-                env.Variables[x] = previousValueX;
+                env.SetVariable(x, previousValueX);
             }
             if (hasPreviousValueY)
             {
-                env.Variables[y] = previousValueY;
+                env.SetVariable(y, previousValueY);
             }
 
             return values;
@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Solus
             if (env.Variables.ContainsKey(x))
             {
                 hasPreviousValueX = true;
-                previousValueX = env.Variables[x];
+                previousValueX = env.GetVariable(x);
                 env.Variables.Remove(x);
             }
 
@@ -238,7 +238,7 @@ namespace MetaphysicsIndustries.Solus
             if (env.Variables.ContainsKey(y))
             {
                 hasPreviousValueY = true;
-                previousValueY = env.Variables[y];
+                previousValueY = env.GetVariable(y);
                 env.Variables.Remove(y);
             }
 
@@ -247,7 +247,7 @@ namespace MetaphysicsIndustries.Solus
             if (env.Variables.ContainsKey(z))
             {
                 hasPreviousValueZ = true;
-                previousValueZ = env.Variables[z];
+                previousValueZ = env.GetVariable(z);
                 env.Variables.Remove(z);
             }
 
@@ -262,15 +262,15 @@ namespace MetaphysicsIndustries.Solus
             int iz;
             for (ix = 0; ix < nx; ix++)
             {
-                env.Variables[x] = xValues[ix];
+                env.SetVariable(x, xValues[ix]);
 
                 for (iy = 0; iy < ny; iy++)
                 {
-                    env.Variables[y] = yValues[iy];
+                    env.SetVariable(y, yValues[iy]);
 
                     for (iz = 0; iz < nz; iz++)
                     {
-                        env.Variables[z] = zValues[iz];
+                        env.SetVariable(z, zValues[iz]);
                         values[ix, iy, iz] = preeval.Eval(env).ToNumber().Value;
                     }
 
@@ -280,15 +280,15 @@ namespace MetaphysicsIndustries.Solus
 
             if (hasPreviousValueX)
             {
-                env.Variables[x] = previousValueX;
+                env.SetVariable(x, previousValueX);
             }
             if (hasPreviousValueY)
             {
-                env.Variables[y] = previousValueY;
+                env.SetVariable(y, previousValueY);
             }
             if (hasPreviousValueZ)
             {
-                env.Variables[z] = previousValueZ;
+                env.SetVariable(z, previousValueZ);
             }
 
             return values;
@@ -298,12 +298,12 @@ namespace MetaphysicsIndustries.Solus
         {
             //previous values?
             SolusParser parser = new SolusParser();
-            env.Variables["width"] = new Literal(width);
-            env.Variables["width"] = new Literal(width);
-            env.Variables["theta"] = parser.GetExpression("atan2(y,x)", env);
-            env.Variables["radius"] = parser.GetExpression("sqrt(x^2+y^2)", env);
-            env.Variables["i"] = new VariableAccess("x");
-            env.Variables["j"] = new VariableAccess("y");
+            env.SetVariable("width", new Literal(width));
+            env.SetVariable("width", new Literal(width));
+            env.SetVariable("theta", parser.GetExpression("atan2(y,x)", env));
+            env.SetVariable("radius", parser.GetExpression("sqrt(x^2+y^2)", env));
+            env.SetVariable("i", new VariableAccess("x"));
+            env.SetVariable("j", new VariableAccess("y"));
 
             return EvalInterval(expr, env, "x", 0, width - 1, 1, "y", 0, height - 1, 1);
         }
@@ -314,15 +314,15 @@ namespace MetaphysicsIndustries.Solus
 
             //previous values?
             SolusParser parser = new SolusParser();
-            env.Variables["width"] = new Literal(width);
-            env.Variables["height"] = new Literal(height);
-            env.Variables["theta"] = parser.GetExpression("atan2(y,x)", env);
-            env.Variables["radius"] = parser.GetExpression("sqrt(x^2+y^2)", env);
-            env.Variables["i"] = new VariableAccess("x");
-            env.Variables["j"] = new VariableAccess("y");
-            env.Variables["numframes"] = new Literal(numframes);
-            env.Variables["k"] = new VariableAccess("z");
-            env.Variables["t"] = new VariableAccess("z");
+            env.SetVariable("width", new Literal(width));
+            env.SetVariable("height", new Literal(height));
+            env.SetVariable("theta", parser.GetExpression("atan2(y,x)", env));
+            env.SetVariable("radius", parser.GetExpression("sqrt(x^2+y^2)", env));
+            env.SetVariable("i", new VariableAccess("x"));
+            env.SetVariable("j", new VariableAccess("y"));
+            env.SetVariable("numframes", new Literal(numframes));
+            env.SetVariable("k", new VariableAccess("z"));
+            env.SetVariable("t", new VariableAccess("z"));
 
             return EvalInterval(expr, env, "x", 0, width - 1, 1, "y", 0, height - 1, 1, "z", 0, numframes - 1, 1);
         }

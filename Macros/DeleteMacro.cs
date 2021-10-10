@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Solus
             Expression retval = new Literal(0);
             if (env.Variables.ContainsKey(v))
             {
-                retval = env.Variables[v];
+                retval = env.GetVariable(v);
                 env.Variables.Remove(v);
             }
             else if (env.Functions.ContainsKey(v))

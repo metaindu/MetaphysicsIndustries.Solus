@@ -108,12 +108,18 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression GetVariable(string name) => Variables[name];
 
+        public void SetVariable(string name, Expression value) =>
+            Variables[name] = value;
+
         public void AddFunction(Function func)
         {
             Functions.Add(func.DisplayName, func);
         }
 
         public Function GetFunction(string name) => Functions[name];
+
+        public void SetFunction(string name, Function value) =>
+            Functions[name] = value;
 
         public void AddMacro(Macro macro)
         {
@@ -122,12 +128,18 @@ namespace MetaphysicsIndustries.Solus
 
         public Macro GetMacro(string name) => Macros[name];
 
+        public void SetMacro(string name, Macro value) =>
+            Macros[name] = value;
+
         public void AddCommand(Command command)
         {
             Commands.Add(command.Name, command);
         }
 
         public Command GetCommand(string name) => Commands[name];
+
+        public void SetCommand(string name, Command value) =>
+            Commands[name] = value;
 
         public SolusEnvironment Clone()
         {

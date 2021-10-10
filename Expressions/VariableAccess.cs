@@ -55,12 +55,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             if (env.Variables.ContainsKey(var))
             {
-                if (env.Variables[var] is Literal)
-                {
-                    return ((Literal)env.Variables[var]).Value.ToNumber();
-                }
+                if (env.GetVariable(var) is Literal literal)
+                    return literal.Value.ToNumber();
 
-                return env.Variables[var].Eval(env);
+                return env.GetVariable(var).Eval(env);
             }
             else
             {
@@ -80,7 +78,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 //we could add (if (env.Variables[Variable] as VariableAccess).Variable == Variable) { throw }
                 //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
                 var var = VariableName;
-                return env.Variables[var].PreliminaryEval(env);
+                return env.GetVariable(var).PreliminaryEval(env);
             }
             else
             {

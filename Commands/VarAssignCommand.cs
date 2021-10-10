@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Commands
 
         public override void Execute(string input, SolusEnvironment env)
         {
-            env.Variables[_name] = _expr;
+            env.SetVariable(_name, _expr);
             Console.WriteLine($"{_name} := {_expr}");
         }
     }

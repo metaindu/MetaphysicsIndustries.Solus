@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Commands
             var sb = new StringBuilder();
             foreach (var name in env.Variables.Keys)
             {
-                var value = env.Variables[name];
+                var value = env.GetVariable(name);
                 var valueString = value.ToString();
 
                 if (value is VectorExpression vector)
