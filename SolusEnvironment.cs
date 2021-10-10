@@ -118,10 +118,8 @@ namespace MetaphysicsIndustries.Solus
         public int CountVariables() => Variables.Count;
         public IEnumerable<string> GetVariableNames() => Variables.Keys;
 
-        public void AddFunction(Function func)
-        {
-            Functions.Add(func.DisplayName, func);
-        }
+        public void AddFunction(Function func) =>
+            SetFunction(func.DisplayName, func);
 
         public Function GetFunction(string name) => Functions[name];
 
@@ -135,10 +133,8 @@ namespace MetaphysicsIndustries.Solus
         public int CountFunctions() => Functions.Count;
         public IEnumerable<string> GetFunctionNames() => Functions.Keys;
 
-        public void AddMacro(Macro macro)
-        {
-            Macros.Add(macro.Name, macro);
-        }
+        public void AddMacro(Macro macro) =>
+            SetMacro(macro.Name, macro);
 
         public Macro GetMacro(string name) => Macros[name];
 
@@ -152,10 +148,8 @@ namespace MetaphysicsIndustries.Solus
         public int CountMacros() => Macros.Count;
         public IEnumerable<string> GetMacroNames() => Macros.Keys;
 
-        public void AddCommand(Command command)
-        {
-            Commands.Add(command.Name, command);
-        }
+        public void AddCommand(Command command) =>
+            SetCommand(command.Name, command);
 
         public Command GetCommand(string name) => Commands[name];
 
