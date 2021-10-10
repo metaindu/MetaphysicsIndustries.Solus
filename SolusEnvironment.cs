@@ -100,10 +100,10 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public readonly Dictionary<string, Expression> Variables = new Dictionary<string, Expression>();
-        public readonly Dictionary<string, Function> Functions = new Dictionary<string, Function>();
-        public readonly Dictionary<string, Macro> Macros = new Dictionary<string, Macro>();
-        public readonly Dictionary<string, Command> Commands =
+        protected readonly Dictionary<string, Expression> Variables = new Dictionary<string, Expression>();
+        protected readonly Dictionary<string, Function> Functions = new Dictionary<string, Function>();
+        protected readonly Dictionary<string, Macro> Macros = new Dictionary<string, Macro>();
+        protected readonly Dictionary<string, Command> Commands =
             new Dictionary<string, Command>();
 
         public Expression GetVariable(string name) => Variables[name];
