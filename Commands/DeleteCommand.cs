@@ -52,9 +52,9 @@ namespace MetaphysicsIndustries.Solus.Commands
         public override void Execute(string input, SolusEnvironment env)
         {
             var unknown = _names.Where(name => 
-                !env.Variables.ContainsKey(name) && 
-                !env.Functions.ContainsKey(name) && 
-                !env.Macros.ContainsKey(name)).ToList();
+                !env.ContainsVariable(name) &&
+                !env.ContainsFunction(name) &&
+                !env.ContainsMacro(name)).ToList();
 
             if (unknown.Count > 0)
             {
@@ -68,9 +68,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 
             foreach (var name in _names)
             {
-                env.Variables.Remove(name);
-                env.Functions.Remove(name);
-                env.Macros.Remove(name);
+                env.RemoveVariable(name);
+                env.RemoveFunction(name);
+                env.RemoveMacro(name);
             }
             
             Console.WriteLine("The variables were deleted successfully.");

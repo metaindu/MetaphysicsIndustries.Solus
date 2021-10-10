@@ -111,6 +111,13 @@ namespace MetaphysicsIndustries.Solus
         public void SetVariable(string name, Expression value) =>
             Variables[name] = value;
 
+        public bool ContainsVariable(string name) =>
+            Variables.ContainsKey(name);
+
+        public void RemoveVariable(string name) => Variables.Remove(name);
+        public int CountVariables() => Variables.Count;
+        public IEnumerable<string> GetVariableNames() => Variables.Keys;
+
         public void AddFunction(Function func)
         {
             Functions.Add(func.DisplayName, func);
@@ -120,6 +127,13 @@ namespace MetaphysicsIndustries.Solus
 
         public void SetFunction(string name, Function value) =>
             Functions[name] = value;
+
+        public bool ContainsFunction(string name) =>
+            Functions.ContainsKey(name);
+
+        public void RemoveFunction(string name) => Functions.Remove(name);
+        public int CountFunctions() => Functions.Count;
+        public IEnumerable<string> GetFunctionNames() => Functions.Keys;
 
         public void AddMacro(Macro macro)
         {
@@ -131,6 +145,13 @@ namespace MetaphysicsIndustries.Solus
         public void SetMacro(string name, Macro value) =>
             Macros[name] = value;
 
+        public bool ContainsMacro(string name) =>
+            Macros.ContainsKey(name);
+
+        public void RemoveMacro(string name) => Macros.Remove(name);
+        public int CountMacros() => Macros.Count;
+        public IEnumerable<string> GetMacroNames() => Macros.Keys;
+
         public void AddCommand(Command command)
         {
             Commands.Add(command.Name, command);
@@ -140,6 +161,13 @@ namespace MetaphysicsIndustries.Solus
 
         public void SetCommand(string name, Command value) =>
             Commands[name] = value;
+
+        public bool ContainsCommand(string name) =>
+            Commands.ContainsKey(name);
+
+        public bool RemoveCommand(string name) => Commands.Remove(name);
+        public int CountCommands() => Commands.Count;
+        public IEnumerable<string> GetCommandNames() => Commands.Keys;
 
         public SolusEnvironment Clone()
         {

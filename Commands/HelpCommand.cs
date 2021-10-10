@@ -74,7 +74,7 @@ List the available topics:
             if (topic == "help")
                 return DocString;
 
-            if (env.Commands.ContainsKey(topic))
+            if (env.ContainsCommand(topic))
             {
                 var command = env.GetCommand(topic);
                 if (!string.IsNullOrEmpty(command.DocString))
@@ -82,7 +82,7 @@ List the available topics:
                 return "This command does not provide any information.";
             }
 
-            if (env.Functions.ContainsKey(topic))
+            if (env.ContainsFunction(topic))
             {
                 var f = env.GetFunction(topic);
                 if (!string.IsNullOrEmpty(f.DocString))
@@ -90,7 +90,7 @@ List the available topics:
                 return "This function does not provide any information.";
             }
 
-            if (env.Macros.ContainsKey(topic))
+            if (env.ContainsMacro(topic))
             {
                 var m = env.GetMacro(topic);
                 if (!string.IsNullOrEmpty(m.DocString))
@@ -125,11 +125,11 @@ List the available topics:
                 line += item;
             }
 
-            if (env.Commands.Count > 0)
+            if (env.CountCommands() > 0)
             {
                 sb.AppendLine("Commands:");
                 line = "";
-                var commands = env.Commands.Keys.ToList();
+                var commands = env.GetCommandNames().ToList();
                 commands.Sort();
                 foreach (var c in commands)
                     AddItem(c);
@@ -141,11 +141,11 @@ List the available topics:
             if (newline) sb.AppendLine();
             newline = false;
 
-            if (env.Functions.Count > 0)
+            if (env.CountFunctions() > 0)
             {
                 sb.AppendLine("Functions:");
                 line = "";
-                var functions = env.Functions.Keys.ToList();
+                var functions = env.GetFunctionNames().ToList();
                 functions.Sort();
                 foreach (var f in functions)
                     AddItem(f);
@@ -157,11 +157,11 @@ List the available topics:
             if (newline) sb.AppendLine();
             newline = false;
 
-            if (env.Macros.Count > 0)
+            if (env.CountMacros() > 0)
             {
                 sb.AppendLine("Macros:");
                 line = "";
-                var macros = env.Macros.Keys.ToList();
+                var macros = env.GetMacroNames().ToList();
                 macros.Sort();
                 foreach (var m in macros)
                     AddItem(m);
@@ -173,11 +173,11 @@ List the available topics:
             if (newline) sb.AppendLine();
             newline = false;
 
-            if (env.Variables.Count > 0)
+            if (env.CountVariables() > 0)
             {
                 sb.AppendLine("Variables:");
                 line = "";
-                var variables = env.Variables.Keys.ToList();
+                var variables = env.GetVariableNames().ToList();
                 variables.Sort();
                 foreach (var v in variables)
                     AddItem(v);

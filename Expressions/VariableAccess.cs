@@ -53,7 +53,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             var var = VariableName;
 
-            if (env.Variables.ContainsKey(var))
+            if (env.ContainsVariable(var))
             {
                 if (env.GetVariable(var) is Literal literal)
                     return literal.Value.ToNumber();
@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
-            if (env.Variables.ContainsKey(VariableName))
+            if (env.ContainsVariable(VariableName))
             {
                 //this will cause an infinite recursion if a variable 
                 //is defined in terms of itself or in terms of another 

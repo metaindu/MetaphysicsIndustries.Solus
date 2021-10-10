@@ -51,10 +51,10 @@ namespace MetaphysicsIndustries.Solus
             Expression[] exprs = new Expression[i];
 
             Expression previousValue = null;
-            if (env.Variables.ContainsKey(x))
+            if (env.ContainsVariable(x))
             {
                 previousValue = env.GetVariable(x);
-                env.Variables.Remove(x);
+                env.RemoveVariable(x);
             }
             Expression preeval = expr.PreliminaryEval(env);
 
@@ -82,11 +82,11 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValue = null;
             bool hasPreviousValue = false;
-            if (env.Variables.ContainsKey(x))
+            if (env.ContainsVariable(x))
             {
                 hasPreviousValue = true;
                 previousValue = env.GetVariable(x);
-                env.Variables.Remove(x);
+                env.RemoveVariable(x);
             }
             Expression preeval = expr.PreliminaryEval(env);
             //check that all variables in the expression are already in the variable table
@@ -138,20 +138,20 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueX = null;
             bool hasPreviousValueX = false;
-            if (env.Variables.ContainsKey(x))
+            if (env.ContainsVariable(x))
             {
                 hasPreviousValueX = true;
                 previousValueX = env.GetVariable(x);
-                env.Variables.Remove(x);
+                env.RemoveVariable(x);
             }
 
             Expression previousValueY = null;
             bool hasPreviousValueY = false;
-            if (env.Variables.ContainsKey(y))
+            if (env.ContainsVariable(y))
             {
                 hasPreviousValueY = true;
                 previousValueY = env.GetVariable(y);
-                env.Variables.Remove(y);
+                env.RemoveVariable(y);
             }
 
             Expression preeval = expr;//.PreliminaryEval(vars);
@@ -226,29 +226,29 @@ namespace MetaphysicsIndustries.Solus
 
             Expression previousValueX = null;
             bool hasPreviousValueX = false;
-            if (env.Variables.ContainsKey(x))
+            if (env.ContainsVariable(x))
             {
                 hasPreviousValueX = true;
                 previousValueX = env.GetVariable(x);
-                env.Variables.Remove(x);
+                env.RemoveVariable(x);
             }
 
             Expression previousValueY = null;
             bool hasPreviousValueY = false;
-            if (env.Variables.ContainsKey(y))
+            if (env.ContainsVariable(y))
             {
                 hasPreviousValueY = true;
                 previousValueY = env.GetVariable(y);
-                env.Variables.Remove(y);
+                env.RemoveVariable(y);
             }
 
             Expression previousValueZ = null;
             bool hasPreviousValueZ = false;
-            if (env.Variables.ContainsKey(z))
+            if (env.ContainsVariable(z))
             {
                 hasPreviousValueZ = true;
                 previousValueZ = env.GetVariable(z);
-                env.Variables.Remove(z);
+                env.RemoveVariable(z);
             }
 
             Expression preeval = expr;//.PreliminaryEval(vars);

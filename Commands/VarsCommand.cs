@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Commands
         public override void Execute(string input, SolusEnvironment env)
         {
             var sb = new StringBuilder();
-            foreach (var name in env.Variables.Keys)
+            foreach (var name in env.GetVariableNames())
             {
                 var value = env.GetVariable(name);
                 var valueString = value.ToString();

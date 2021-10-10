@@ -412,7 +412,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             var parser = new SolusParser();
             SolusEnvironment env = new SolusEnvironment();
-            env.Variables.Add("pi", new Literal((float)Math.PI));
+            env.SetVariable("pi", new Literal((float) Math.PI));
 
             var expr = parser.GetExpression("sin(pi)", cleanup: false);
 
