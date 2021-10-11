@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -30,122 +31,342 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SolusEnvironment
     {
-        public SolusEnvironment(bool useDefaults = true)
+        public SolusEnvironment(bool useDefaults = true,
+            SolusEnvironment parent = null)
         {
-            if (useDefaults)
+            Parent = parent;
+
+            if (!useDefaults) return;
+
+            var functions = new List<Function>()
             {
-                var functions = new List<Function>()
-                {
-                    SineFunction.Value,
-                    CosineFunction.Value,
-                    TangentFunction.Value,
-                    NaturalLogarithmFunction.Value,
-                    Log2Function.Value,
-                    Log10Function.Value,
-                    AbsoluteValueFunction.Value,
-                    SecantFunction.Value,
-                    CosecantFunction.Value,
-                    CotangentFunction.Value,
-                    ArccosineFunction.Value,
-                    ArcsineFunction.Value,
-                    ArctangentFunction.Value,
-                    ArcsecantFunction.Value,
-                    ArccosecantFunction.Value,
-                    ArccotangentFunction.Value,
-                    CeilingFunction.Value,
-                    FloorFunction.Value,
-                    UnitStepFunction.Value,
-                    Arctangent2Function.Value,
-                    LogarithmFunction.Value,
-                    DistFunction.Value,
-                    DistSqFunction.Value,
-                    LoadImageFunction.Value,
-                    SizeFunction.Value,
-                };
+                SineFunction.Value,
+                CosineFunction.Value,
+                TangentFunction.Value,
+                NaturalLogarithmFunction.Value,
+                Log2Function.Value,
+                Log10Function.Value,
+                AbsoluteValueFunction.Value,
+                SecantFunction.Value,
+                CosecantFunction.Value,
+                CotangentFunction.Value,
+                ArccosineFunction.Value,
+                ArcsineFunction.Value,
+                ArctangentFunction.Value,
+                ArcsecantFunction.Value,
+                ArccosecantFunction.Value,
+                ArccotangentFunction.Value,
+                CeilingFunction.Value,
+                FloorFunction.Value,
+                UnitStepFunction.Value,
+                Arctangent2Function.Value,
+                LogarithmFunction.Value,
+                DistFunction.Value,
+                DistSqFunction.Value,
+                LoadImageFunction.Value,
+                SizeFunction.Value,
+            };
 
-                foreach (var func in functions)
-                {
-                    AddFunction(func);
-                }
+            foreach (var func in functions)
+            {
+                AddFunction(func);
+            }
 
-                var macros = new List<Macro>
-                {
-                    SqrtMacro.Value,
-                    RandMacro.Value,
-                    DeriveMacro.Value,
-                    FeedbackMacro.Value,
-                    SubstMacro.Value,
-                    AssignMacro.Value,
-                    DeleteMacro.Value,
-                    IfMacro.Value,
-                };
+            var macros = new List<Macro>
+            {
+                SqrtMacro.Value,
+                RandMacro.Value,
+                DeriveMacro.Value,
+                FeedbackMacro.Value,
+                SubstMacro.Value,
+                AssignMacro.Value,
+                DeleteMacro.Value,
+                IfMacro.Value,
+            };
 
-                foreach (var macro in macros)
-                {
-                    AddMacro(macro);
-                }
+            foreach (var macro in macros)
+            {
+                AddMacro(macro);
+            }
 
-                var commands = new List<Command>
-                {
-                    DeleteCommand.Value,
-                    FuncAssignCommand.Value,
-                    HelpCommand.Value,
-                    VarAssignCommand.Value,
-                    VarsCommand.Value,
-                };
-                foreach (var command in commands)
-                {
-                    AddCommand(command);
-                }
+            var commands = new List<Command>
+            {
+                DeleteCommand.Value,
+                FuncAssignCommand.Value,
+                HelpCommand.Value,
+                VarAssignCommand.Value,
+                VarsCommand.Value,
+            };
+            foreach (var command in commands)
+            {
+                AddCommand(command);
             }
         }
 
-        public readonly Dictionary<string, Expression> Variables = new Dictionary<string, Expression>();
-        public readonly Dictionary<string, Function> Functions = new Dictionary<string, Function>();
-        public readonly Dictionary<string, Macro> Macros = new Dictionary<string, Macro>();
-        public readonly Dictionary<string, Command> Commands =
+        protected readonly SolusEnvironment Parent;
+
+        protected readonly Dictionary<string, Expression> Variables =
+            new Dictionary<string, Expression>();
+
+        protected readonly HashSet<string> RemovedVariables =
+            new HashSet<string>();
+
+        protected readonly Dictionary<string, Function> Functions =
+            new Dictionary<string, Function>();
+
+        protected readonly HashSet<string> RemovedFunctions =
+            new HashSet<string>();
+
+        protected readonly Dictionary<string, Macro> Macros =
+            new Dictionary<string, Macro>();
+
+        protected readonly HashSet<string> RemovedMacros =
+            new HashSet<string>();
+
+        protected readonly Dictionary<string, Command> Commands =
             new Dictionary<string, Command>();
 
-        public void AddFunction(Function func)
+        protected readonly HashSet<string> RemovedCommands =
+            new HashSet<string>();
+
+        public Expression GetVariable(string name)
         {
-            Functions.Add(func.DisplayName, func);
+            if (RemovedVariables.Contains(name))
+                return null;
+            if (Variables.ContainsKey(name))
+                return Variables[name];
+            if (Parent != null)
+                return Parent.GetVariable(name);
+            return null;
         }
 
-        public void AddMacro(Macro macro)
+        public void SetVariable(string name, Expression value)
         {
-            Macros.Add(macro.Name, macro);
+            RemovedVariables.Remove(name);
+            Variables[name] = value;
         }
 
-        public void AddCommand(Command command)
+        public bool ContainsVariable(string name)
         {
-            Commands.Add(command.Name, command);
+            if (RemovedVariables.Contains(name)) return false;
+            if (Variables.ContainsKey(name)) return true;
+            if (Parent != null) return Parent.ContainsVariable(name);
+            return false;
         }
 
-        public SolusEnvironment CreateChildEnvironment()
+        public void RemoveVariable(string name)
         {
-            SolusEnvironment env2 = new SolusEnvironment(false);
-
-            foreach (string name in this.Variables.Keys)
-            {
-                env2.Variables[name] = this.Variables[name];
-            }
-
-            foreach (var func in this.Functions.Values)
-            {
-                env2.AddFunction(func);
-            }
-
-            foreach (var macro in this.Macros.Values)
-            {
-                env2.AddMacro(macro);
-            }
-
-            foreach (var command in this.Commands.Values)
-            {
-                env2.AddCommand(command);
-            }
-
-            return env2;
+            Variables.Remove(name);
+            RemovedVariables.Add(name);
         }
+
+        public int CountVariables()
+        {
+            return GetVariableNames().Count();
+        }
+
+        private HashSet<string> __GetVariableNames_cache;
+
+        public IEnumerable<string> GetVariableNames()
+        {
+            if (__GetVariableNames_cache == null)
+                __GetVariableNames_cache = new HashSet<string>();
+            __GetVariableNames_cache.AddRange(Variables.Keys);
+            if (Parent != null)
+                __GetVariableNames_cache.AddRange(Parent.GetVariableNames());
+            bool isRemoved(string name) => RemovedVariables.Contains(name);
+            __GetVariableNames_cache.RemoveWhere(isRemoved);
+            return __GetVariableNames_cache;
+        }
+
+        public void AddFunction(Function func) =>
+            SetFunction(func.DisplayName, func);
+
+        public Function GetFunction(string name)
+        {
+            if (RemovedFunctions.Contains(name))
+                return null;
+            if (Functions.ContainsKey(name))
+                return Functions[name];
+            if (Parent != null)
+                return Parent.GetFunction(name);
+            return null;
+        }
+
+        public void SetFunction(string name, Function value)
+        {
+            RemovedFunctions.Remove(name);
+            Functions[name] = value;
+        }
+
+        public bool ContainsFunction(string name)
+        {
+            if (RemovedFunctions.Contains(name)) return false;
+            if (Functions.ContainsKey(name)) return true;
+            if (Parent != null) return Parent.ContainsFunction(name);
+            return false;
+        }
+
+        public void RemoveFunction(string name)
+        {
+            Functions.Remove(name);
+            RemovedFunctions.Add(name);
+        }
+
+        public int CountFunctions()
+        {
+            return GetFunctionNames().Count();
+        }
+
+        private HashSet<string> __GetFunctionNames_cache;
+
+        public IEnumerable<string> GetFunctionNames()
+        {
+            if (__GetFunctionNames_cache == null)
+                __GetFunctionNames_cache = new HashSet<string>();
+            __GetFunctionNames_cache.Clear();
+            __GetFunctionNames_cache.AddRange(Functions.Keys);
+            if (Parent != null)
+                __GetFunctionNames_cache.AddRange(Parent.GetFunctionNames());
+            bool isRemoved(string name) => RemovedFunctions.Contains(name);
+            __GetFunctionNames_cache.RemoveWhere(isRemoved);
+            return __GetFunctionNames_cache;
+        }
+
+        public void AddMacro(Macro macro) =>
+            SetMacro(macro.Name, macro);
+
+        public Macro GetMacro(string name)
+        {
+            if (RemovedMacros.Contains(name))
+                return null;
+            if (Macros.ContainsKey(name))
+                return Macros[name];
+            if (Parent != null)
+                return Parent.GetMacro(name);
+            return null;
+        }
+
+        public void SetMacro(string name, Macro value)
+        {
+            RemovedMacros.Remove(name);
+            Macros[name] = value;
+        }
+
+        public bool ContainsMacro(string name)
+        {
+            if (RemovedMacros.Contains(name)) return false;
+            if (Macros.ContainsKey(name)) return true;
+            if (Parent != null) return Parent.ContainsMacro(name);
+            return false;
+        }
+
+        public void RemoveMacro(string name)
+        {
+            Macros.Remove(name);
+            RemovedMacros.Add(name);
+        }
+
+        public int CountMacros()
+        {
+            return GetMacroNames().Count();
+        }
+
+        private HashSet<string> __GetMacroNames_cache;
+
+        public IEnumerable<string> GetMacroNames()
+        {
+            if (__GetMacroNames_cache == null)
+                __GetMacroNames_cache = new HashSet<string>();
+            __GetMacroNames_cache.Clear();
+            __GetMacroNames_cache.AddRange(Macros.Keys);
+            if (Parent != null)
+                __GetMacroNames_cache.AddRange(Parent.GetMacroNames());
+            bool isRemoved(string name) => RemovedMacros.Contains(name);
+            __GetMacroNames_cache.RemoveWhere(isRemoved);
+            return __GetMacroNames_cache;
+        }
+
+        public void AddCommand(Command command) =>
+            SetCommand(command.Name, command);
+
+        public Command GetCommand(string name)
+        {
+            if (RemovedCommands.Contains(name))
+                return null;
+            if (Commands.ContainsKey(name))
+                return Commands[name];
+            if (Parent != null)
+                return Parent.GetCommand(name);
+            return null;
+        }
+
+        public void SetCommand(string name, Command value)
+        {
+            RemovedCommands.Remove(name);
+            Commands[name] = value;
+        }
+
+        public bool ContainsCommand(string name)
+        {
+            if (RemovedCommands.Contains(name)) return false;
+            if (Commands.ContainsKey(name)) return true;
+            if (Parent != null) return Parent.ContainsCommand(name);
+            return false;
+        }
+
+        public void RemoveCommand(string name)
+        {
+            Commands.Remove(name);
+            RemovedCommands.Add(name);
+        }
+
+        public int CountCommands()
+        {
+            return GetCommandNames().Count();
+        }
+
+        private HashSet<string> __GetCommandNames_cache;
+
+        public IEnumerable<string> GetCommandNames()
+        {
+            if (__GetCommandNames_cache == null)
+                __GetCommandNames_cache = new HashSet<string>();
+            __GetCommandNames_cache.Clear();
+            __GetCommandNames_cache.AddRange(Commands.Keys);
+            if (Parent != null)
+                __GetCommandNames_cache.AddRange(Parent.GetCommandNames());
+            bool isRemoved(string name) => RemovedCommands.Contains(name);
+            __GetCommandNames_cache.RemoveWhere(isRemoved);
+            return __GetCommandNames_cache;
+        }
+
+        public SolusEnvironment Clone()
+        {
+            var clone = Instantiate(false);
+            PopulateClone(clone);
+            return clone;
+        }
+
+        protected virtual SolusEnvironment Instantiate(
+            bool useDefaults = false, SolusEnvironment parent = null)
+        {
+            return new SolusEnvironment(useDefaults, parent);
+        }
+
+        protected virtual void PopulateClone(SolusEnvironment clone)
+        {
+            foreach (var name in GetVariableNames())
+                clone.SetVariable(name, GetVariable(name));
+            foreach (var name in GetFunctionNames())
+                clone.SetFunction(name, GetFunction(name));
+            foreach (var name in GetMacroNames())
+                clone.SetMacro(name, GetMacro(name));
+            foreach (var name in GetCommandNames())
+                clone.SetCommand(name, GetCommand(name));
+        }
+
+        public SolusEnvironment CreateChildEnvironment() =>
+            Instantiate(false, this);
     }
 }

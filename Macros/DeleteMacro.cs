@@ -43,14 +43,14 @@ namespace MetaphysicsIndustries.Solus
             var v = ((VariableAccess)args.First()).VariableName;
 
             Expression retval = new Literal(0);
-            if (env.Variables.ContainsKey(v))
+            if (env.ContainsVariable(v))
             {
-                retval = env.Variables[v];
-                env.Variables.Remove(v);
+                retval = env.GetVariable(v);
+                env.RemoveVariable(v);
             }
-            else if (env.Functions.ContainsKey(v))
+            else if (env.ContainsFunction(v))
             {
-                env.Functions.Remove(v);
+                env.RemoveFunction(v);
             }
 
             return retval;

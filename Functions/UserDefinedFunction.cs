@@ -42,13 +42,13 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
-            SolusEnvironment env2 = env.CreateChildEnvironment();
+            SolusEnvironment env2 = env.Clone();
 
             int i;
             for (i = 0; i < Argnames.Length; i++)
             {
-                env2.Variables[Argnames[i]] =
-                    new Literal(args[i].ToNumber().Value);
+                env2.SetVariable(Argnames[i],
+                    new Literal(args[i].ToNumber().Value));
             }
 
             return Expression.Eval(env2);

@@ -55,8 +55,8 @@ namespace MetaphysicsIndustries.Solus.Commands
 
         public override void Execute(string input, SolusEnvironment env)
         {
-            if (env.Functions.ContainsKey(_func.DisplayName))
-                env.Functions.Remove(_func.DisplayName);
+            if (env.ContainsFunction(_func.DisplayName))
+                env.RemoveFunction(_func.DisplayName);
             env.AddFunction(_func);
             
             var varrefs = _func.Argnames.Select(x => new VariableAccess(x));

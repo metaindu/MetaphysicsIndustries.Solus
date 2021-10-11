@@ -173,12 +173,12 @@ namespace MetaphysicsIndustries.Solus
                 Select(sub => sub.Value).
                 ToArray();
 
-            var env2 = env.CreateChildEnvironment();
+            var env2 = env.Clone();
 
             // create the function, with no expr
             var func = new UserDefinedFunction(funcname, args, null);
-            if (env2.Functions.ContainsKey(funcname))
-                env2.Functions.Remove(funcname);
+            if (env2.ContainsFunction(funcname))
+                env2.RemoveFunction(funcname);
             env2.AddFunction(func);
 
             // read the expr. this order of things allows for recursion
@@ -423,13 +423,13 @@ namespace MetaphysicsIndustries.Solus
             // TODO: don't do name lookup while parsing. use a VariableAccess
             // instead
 
-            if (env.Functions.ContainsKey(name))
+            if (env.ContainsFunction(name))
             {
-                return new FunctionCall(env.Functions[name], args);
+                return new FunctionCall(env.GetFunction(name), args);
             }
-            else if (env.Macros.ContainsKey(name))
+            else if (env.ContainsMacro(name))
             {
-                return env.Macros[name].Call(args, env);
+                return env.GetMacro(name).Call(args, env);
             }
             else
             {
