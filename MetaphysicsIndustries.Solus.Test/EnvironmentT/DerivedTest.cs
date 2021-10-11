@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
 {
@@ -52,11 +51,11 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var clone = original.Clone();
             // then
-            var dclone = (DerivedEnvironment) clone;
-            Assert.AreEqual(3, dclone.Items.Count);
-            Assert.AreEqual("one", dclone.Items[0]);
-            Assert.AreEqual("two", dclone.Items[1]);
-            Assert.AreEqual("three", dclone.Items[2]);
+            var derived = (DerivedEnvironment) clone;
+            Assert.AreEqual(3, derived.Items.Count);
+            Assert.AreEqual("one", derived.Items[0]);
+            Assert.AreEqual("two", derived.Items[1]);
+            Assert.AreEqual("three", derived.Items[2]);
         }
 
         [Test]
