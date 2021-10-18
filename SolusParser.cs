@@ -156,7 +156,7 @@ namespace MetaphysicsIndustries.Solus
                 return GetVarsCommandFromSpan(sub, env);
 
             throw new ParseException(-1,
-                $"Unknown command, \"{def}");
+                $"Unknown command, \"{def}\"");
         }
 
         ICommandData GetDeleteCommandFromSpan(Span span, SolusEnvironment env)
