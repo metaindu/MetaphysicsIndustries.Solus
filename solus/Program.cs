@@ -189,8 +189,8 @@ namespace solus
                 {
                     if (commandDatas != null)
                     {
-                        foreach (var command in commandDatas)
-                            command.Command.Execute(line, env);
+                        foreach (var cdata in commandDatas)
+                            cdata.Command.Execute(line, env, cdata);
                     }
                     else if (expr != null)
                     {

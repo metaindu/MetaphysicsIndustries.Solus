@@ -26,7 +26,8 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
                 Name = name;
             }
 
-            public override void Execute(string input, SolusEnvironment env)
+            public override void Execute(string input, SolusEnvironment env,
+                ICommandData data)
             {
                 throw new System.NotImplementedException();
             }

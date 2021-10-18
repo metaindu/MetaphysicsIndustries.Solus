@@ -49,7 +49,8 @@ namespace MetaphysicsIndustries.Solus.Commands
     The name of a variable, function, or macro.
 ";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
             var unknown = _names.Where(name => 
                 !env.ContainsVariable(name) &&

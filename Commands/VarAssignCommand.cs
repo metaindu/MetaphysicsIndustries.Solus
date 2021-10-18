@@ -50,7 +50,8 @@ namespace MetaphysicsIndustries.Solus.Commands
   expr
     An expression to evaluate to determine the value of the variable.";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
             env.SetVariable(_name, _expr);
             Console.WriteLine($"{_name} := {_expr}");

@@ -61,7 +61,8 @@ List the available topics:
   help list
 ";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
             var topic = _topic;
             if (string.IsNullOrEmpty(topic))

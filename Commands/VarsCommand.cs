@@ -34,7 +34,8 @@ namespace MetaphysicsIndustries.Solus.Commands
         public override string DocString =>
             @"vars - Print a list of all defined variables";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
             var sb = new StringBuilder();
             foreach (var name in env.GetVariableNames())

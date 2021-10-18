@@ -53,7 +53,8 @@ namespace MetaphysicsIndustries.Solus.Commands
     The body of the function. Occurrences of any parameters will be replaced
     with the values passed as arguments when the function is called.";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
             if (env.ContainsFunction(_func.DisplayName))
                 env.RemoveFunction(_func.DisplayName);
