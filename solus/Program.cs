@@ -131,13 +131,13 @@ namespace solus
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
-                Command[] commands = null;
+                ICommandData[] commandDatas = null;
                 Expression expr = null;
                 Exception ex = null;
 
                 try
                 {
-                    commands = parser.GetCommands(line, env, cs);
+                    commandDatas = parser.GetCommands(line, env, cs);
                 }
                 catch (Exception _ex)
                 {
@@ -187,10 +187,10 @@ namespace solus
 
                 try
                 {
-                    if (commands != null)
+                    if (commandDatas != null)
                     {
-                        foreach (var command in commands)
-                            command.Execute(line, env);
+                        foreach (var command in commandDatas)
+                            command.Command.Execute(line, env);
                     }
                     else if (expr != null)
                     {

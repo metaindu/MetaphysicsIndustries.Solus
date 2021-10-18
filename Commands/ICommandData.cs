@@ -26,4 +26,14 @@ namespace MetaphysicsIndustries.Solus.Commands
     {
         Command Command { get; }
     }
+
+    public class SimpleCommandData : ICommandData
+    {
+        public SimpleCommandData(Command command)
+        {
+            Command = command;
+        }
+
+        public Command Command { get; }
+    }
 }
