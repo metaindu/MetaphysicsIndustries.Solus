@@ -120,18 +120,25 @@ namespace solus
 
             var le = new LineEditor("solus");
             string line;
+            var cs = new CommandSet();
+            cs.AddCommand(DeleteCommand.Value);
+            cs.AddCommand(FuncAssignCommand.Value);
+            cs.AddCommand(HelpCommand.Value);
+            cs.AddCommand(VarAssignCommand.Value);
+            cs.AddCommand(VarsCommand.Value);
+            HelpCommand.SetCommands(cs);
 
             while ((line = le.Edit(">>> ", "")) != null)
             {
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
-                Command[] commands = null;
+                ICommandData[] commandDatas = null;
                 Expression expr = null;
                 Exception ex = null;
 
                 try
                 {
-                    commands = parser.GetCommands(line, env);
+                    commandDatas = parser.GetCommands(line, env, cs);
                 }
                 catch (Exception _ex)
                 {
@@ -181,10 +188,10 @@ namespace solus
 
                 try
                 {
-                    if (commands != null)
+                    if (commandDatas != null)
                     {
-                        foreach (var command in commands)
-                            command.Execute(line, env);
+                        foreach (var cdata in commandDatas)
+                            cdata.Command.Execute(line, env, cdata);
                     }
                     else if (expr != null)
                     {

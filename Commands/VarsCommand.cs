@@ -31,10 +31,12 @@ namespace MetaphysicsIndustries.Solus.Commands
         public static readonly VarsCommand Value = new VarsCommand();
 
         public override string Name => "vars";
+
         public override string DocString =>
             @"vars - Print a list of all defined variables";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
             var sb = new StringBuilder();
             foreach (var name in env.GetVariableNames())
@@ -53,8 +55,13 @@ namespace MetaphysicsIndustries.Solus.Commands
 
                 sb.AppendLine($"{name} = {valueString}");
             }
-            
+
             Console.Write(sb.ToString());
         }
+    }
+
+    public class VarsCommandData : ICommandData
+    {
+        public Command Command => VarsCommand.Value;
     }
 }

@@ -30,16 +30,10 @@ namespace MetaphysicsIndustries.Solus.Commands
     public class FuncAssignCommand : Command
     {
         public static readonly FuncAssignCommand Value =
-            new FuncAssignCommand(null);
-
-        public FuncAssignCommand(UserDefinedFunction func)
-        {
-            _func = func;
-        }
-
-        private readonly UserDefinedFunction _func;
+            new FuncAssignCommand();
 
         public override string Name => "func_assign";
+
         public override string DocString =>
             @"function assign - define a new function
 
@@ -53,15 +47,28 @@ namespace MetaphysicsIndustries.Solus.Commands
     The body of the function. Occurrences of any parameters will be replaced
     with the values passed as arguments when the function is called.";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
-            if (env.ContainsFunction(_func.DisplayName))
-                env.RemoveFunction(_func.DisplayName);
-            env.AddFunction(_func);
-            
-            var varrefs = _func.Argnames.Select(x => new VariableAccess(x));
-            var fcall = new FunctionCall(_func, varrefs);
-            Console.WriteLine($"{fcall} := {_func.Expression}");
+            var func = ((FuncAssignCommandData) data).Func;
+            if (env.ContainsFunction(func.DisplayName))
+                env.RemoveFunction(func.DisplayName);
+            env.AddFunction(func);
+
+            var varrefs = func.Argnames.Select(x => new VariableAccess(x));
+            var fcall = new FunctionCall(func, varrefs);
+            Console.WriteLine($"{fcall} := {func.Expression}");
         }
+    }
+
+    public class FuncAssignCommandData : ICommandData
+    {
+        public FuncAssignCommandData(UserDefinedFunction func)
+        {
+            Func = func;
+        }
+
+        public Command Command => FuncAssignCommand.Value;
+        public UserDefinedFunction Func { get; }
     }
 }

@@ -28,18 +28,10 @@ namespace MetaphysicsIndustries.Solus.Commands
     public class VarAssignCommand : Command
     {
         public static readonly VarAssignCommand Value =
-            new VarAssignCommand(null, null);
-
-        public VarAssignCommand(string name, Expression expr)
-        {
-            _name = name;
-            _expr = expr;
-        }
-
-        private readonly string _name;
-        private readonly Expression _expr;
+            new VarAssignCommand();
 
         public override string Name => "var_assign";
+
         public override string DocString =>
             @"var assign - store a value as a variable
 
@@ -50,10 +42,25 @@ namespace MetaphysicsIndustries.Solus.Commands
   expr
     An expression to evaluate to determine the value of the variable.";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
-            env.SetVariable(_name, _expr);
-            Console.WriteLine($"{_name} := {_expr}");
+            var data2 = (VarAssignCommandData) data;
+            env.SetVariable(data2.Name, data2.Expr);
+            Console.WriteLine($"{data2.Name} := {data2.Expr}");
         }
+    }
+
+    public class VarAssignCommandData : ICommandData
+    {
+        public VarAssignCommandData(string name, Expression expr)
+        {
+            Name = name;
+            Expr = expr;
+        }
+
+        public Command Command => VarAssignCommand.Value;
+        public string Name { get; }
+        public Expression Expr { get; }
     }
 }

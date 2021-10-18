@@ -19,7 +19,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("a", original.GetVariableNames().ToList());
             Assert.AreEqual(0, original.CountFunctions());
             Assert.AreEqual(0, original.CountMacros());
-            Assert.AreEqual(0, original.CountCommands());
             // when
             var clone = original.Clone();
             // then
@@ -27,13 +26,11 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("a", original.GetVariableNames().ToList());
             Assert.AreEqual(0, original.CountFunctions());
             Assert.AreEqual(0, original.CountMacros());
-            Assert.AreEqual(0, original.CountCommands());
             
             Assert.AreEqual(1, clone.CountVariables());
             Assert.Contains("a", clone.GetVariableNames().ToList());
             Assert.AreEqual(0, clone.CountFunctions());
             Assert.AreEqual(0, clone.CountMacros());
-            Assert.AreEqual(0, clone.CountCommands());
         }
 
         [Test]

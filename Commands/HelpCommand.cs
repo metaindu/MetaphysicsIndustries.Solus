@@ -29,9 +29,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 {
     public class HelpCommand : Command
     {
-        public static readonly HelpCommand Value = new HelpCommand(null);
+        public static readonly HelpCommand Value = new HelpCommand();
 
-        private static Dictionary<string, string> _helpLookups = 
+        private static Dictionary<string, string> _helpLookups =
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
         static HelpCommand()
@@ -40,16 +40,16 @@ namespace MetaphysicsIndustries.Solus.Commands
             _helpLookups["t"] = "default time variable";
         }
 
-        public HelpCommand(string topic)
+        public static void SetCommands(CommandSet commandSet)
         {
-            _topic = topic;
+            _commands = commandSet;
         }
-
-        private readonly string _topic;
+        private static CommandSet _commands;
 
         public override string Name => "help";
+
         public override string DocString =>
-@"help - Get help about a topic
+            @"help - Get help about a topic
 
 Get info about an object or topic:
   help <topic>
@@ -58,9 +58,10 @@ List the available topics:
   help list
 ";
 
-        public override void Execute(string input, SolusEnvironment env)
+        public override void Execute(string input, SolusEnvironment env,
+            ICommandData data)
         {
-            var topic = _topic;
+            var topic = ((HelpCommandData) data).Topic;
             if (string.IsNullOrEmpty(topic))
                 topic = "help";
             var text = ConstructText(env, topic);
@@ -68,15 +69,15 @@ List the available topics:
             if (!text.EndsWith("\n"))
                 Console.WriteLine();
         }
-        
+
         public string ConstructText(SolusEnvironment env, string topic = "help")
         {
             if (topic == "help")
                 return DocString;
 
-            if (env.ContainsCommand(topic))
+            if (_commands.ContainsCommand(topic))
             {
-                var command = env.GetCommand(topic);
+                var command = _commands.GetCommand(topic);
                 if (!string.IsNullOrEmpty(command.DocString))
                     return command.DocString;
                 return "This command does not provide any information.";
@@ -102,12 +103,13 @@ List the available topics:
                 return _helpLookups[topic];
 
             if (topic == "list")
-                return ConstructListText(env);
+                return ConstructListText(env, _commands);
 
             return "Unknown topic \"" + topic + "\"";
         }
 
-        public static string ConstructListText(SolusEnvironment env)
+        public static string ConstructListText(SolusEnvironment env,
+            CommandSet commandSet)
         {
             var sb = new StringBuilder();
             var line = "";
@@ -125,11 +127,11 @@ List the available topics:
                 line += item;
             }
 
-            if (env.CountCommands() > 0)
+            if (commandSet.CountCommands() > 0)
             {
                 sb.AppendLine("Commands:");
                 line = "";
-                var commands = env.GetCommandNames().ToList();
+                var commands = commandSet.GetCommandNames().ToList();
                 commands.Sort();
                 foreach (var c in commands)
                     AddItem(c);
@@ -203,5 +205,17 @@ List the available topics:
 
             return sb.ToString();
         }
+    }
+
+    public class HelpCommandData : ICommandData
+    {
+
+        public HelpCommandData(string topic)
+        {
+            Topic = topic;
+        }
+
+        public Command Command => HelpCommand.Value;
+        public string Topic { get; }
     }
 }

@@ -20,7 +20,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("a", parent.GetVariableNames().ToList());
             Assert.AreEqual(0, parent.CountFunctions());
             Assert.AreEqual(0, parent.CountMacros());
-            Assert.AreEqual(0, parent.CountCommands());
             // when
             var child = parent.CreateChildEnvironment();
             // then
@@ -28,13 +27,11 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("a", parent.GetVariableNames().ToList());
             Assert.AreEqual(0, parent.CountFunctions());
             Assert.AreEqual(0, parent.CountMacros());
-            Assert.AreEqual(0, parent.CountCommands());
             
             Assert.AreEqual(1, child.CountVariables());
             Assert.Contains("a", child.GetVariableNames().ToList());
             Assert.AreEqual(0, child.CountFunctions());
             Assert.AreEqual(0, child.CountMacros());
-            Assert.AreEqual(0, child.CountCommands());
         }
 
         [Test]

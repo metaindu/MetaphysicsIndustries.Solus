@@ -96,7 +96,8 @@ namespace MetaphysicsIndustries.Solus
             return expr;
         }
 
-        public Command[] GetCommands(string input, SolusEnvironment env = null)
+        public ICommandData[] GetCommands(string input,
+            SolusEnvironment env = null, CommandSet commandSet = null)
         {
             if (env == null)
                 env = new SolusEnvironment();
@@ -116,11 +117,11 @@ namespace MetaphysicsIndustries.Solus
                     "There were more than one valid parses of the input.");
             var span = spans[0];
 
-            var commands = new List<Command>();
+            var commands = new List<ICommandData>();
             foreach (var sub in span.Subspans)
             {
                 if (sub.DefRef != _grammar.def_command) continue;
-                commands.Add(GetCommandFromCommand(sub, env));
+                commands.Add(GetCommandFromCommand(sub, env, commandSet));
             }
 
             return commands.ToArray();
@@ -137,7 +138,8 @@ namespace MetaphysicsIndustries.Solus
             {BitwiseOrOperation.Value, 80},
         };
 
-        Command GetCommandFromCommand(Span span, SolusEnvironment env)
+        ICommandData GetCommandFromCommand(Span span, SolusEnvironment env,
+            CommandSet commandSet)
         {
             var sub = span.Subspans[0];
             var def = sub.DefRef;
@@ -147,24 +149,25 @@ namespace MetaphysicsIndustries.Solus
             if (def == _grammar.def_func_002D_assign_002D_command)
                 return GetFuncAssignCommandFromSpan(sub, env);
             if (def == _grammar.def_help_002D_command)
-                return GetHelpCommandFromSpan(sub, env);
+                return GetHelpCommandFromSpan(sub, commandSet);
             if (def == _grammar.def_var_002D_assign_002D_command)
                 return GetVarAssignCommandFromSpan(sub, env);
             if (def == _grammar.def_vars_002D_command)
                 return GetVarsCommandFromSpan(sub, env);
 
             throw new ParseException(-1,
-                $"Unknown command, \"{def}");
+                $"Unknown command, \"{def}\"");
         }
 
-        Command GetDeleteCommandFromSpan(Span span, SolusEnvironment env)
+        ICommandData GetDeleteCommandFromSpan(Span span, SolusEnvironment env)
         {
             var names = span.Subspans.Skip(1).
                 Select(sub => sub.Subspans[0].Value);
-            return new DeleteCommand(names);
+            return new DeleteCommandData(names);
         }
 
-        Command GetFuncAssignCommandFromSpan(Span span, SolusEnvironment env)
+        ICommandData GetFuncAssignCommandFromSpan(Span span,
+            SolusEnvironment env)
         {
             var funcname = span.Subspans[0].Value;
 
@@ -185,28 +188,29 @@ namespace MetaphysicsIndustries.Solus
             var expr = GetExpressionFromExpr(span.Subspans.Last(), env2);
             func.Expression = expr;
 
-            return new FuncAssignCommand(func);
+            return new FuncAssignCommandData(func);
         }
 
-        Command GetHelpCommandFromSpan(Span span, SolusEnvironment env)
+        ICommandData GetHelpCommandFromSpan(Span span, CommandSet commandSet)
         {
             var topic = "help";
             if (span.Subspans.Count >= 2)
                 topic = span.Subspans[1].Value;
-            return new HelpCommand(topic);
+            return new HelpCommandData(topic);
         }
 
-        Command GetVarAssignCommandFromSpan(Span span, SolusEnvironment env)
+        ICommandData GetVarAssignCommandFromSpan(Span span,
+            SolusEnvironment env)
         {
             var varname = span.Subspans[0].Subspans[0].Value;
             var expr = GetExpressionFromExpr(span.Subspans[2], env);
             expr = expr.PreliminaryEval(env);
-            return new VarAssignCommand(varname, expr);
+            return new VarAssignCommandData(varname, expr);
         }
 
-        Command GetVarsCommandFromSpan(Span span, SolusEnvironment env)
+        ICommandData GetVarsCommandFromSpan(Span span, SolusEnvironment env)
         {
-            return new VarsCommand();
+            return new VarsCommandData();
         }
 
         public Expression GetExpressionFromExpr(Span span, SolusEnvironment env)

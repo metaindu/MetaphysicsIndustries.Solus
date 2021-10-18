@@ -22,12 +22,8 @@
 
 namespace MetaphysicsIndustries.Solus.Commands
 {
-    public abstract class Command
+    public interface ICommandData
     {
-        public abstract void Execute(string input, SolusEnvironment env,
-            ICommandData data);
-
-        public abstract string Name { get; }
-        public virtual string DocString => "";
+        Command Command { get; }
     }
 }
