@@ -37,7 +37,7 @@ USA
         <tags>math numeric algebra</tags>
         <dependencies>
             <group>
-                <dependency id="MetaphysicsIndustries.Solus" version="0.4.0" />
+                <dependency id="MetaphysicsIndustries.Solus" version="0.5.0" />
             </group>
             <group targetFramework=".NETFramework4.0" />
         </dependencies>
