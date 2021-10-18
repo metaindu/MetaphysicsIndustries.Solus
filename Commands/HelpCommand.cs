@@ -29,10 +29,9 @@ namespace MetaphysicsIndustries.Solus.Commands
 {
     public class HelpCommand : Command
     {
-        public static readonly HelpCommand Value = new HelpCommand(null,
-            null);
+        public static readonly HelpCommand Value = new HelpCommand();
 
-        private static Dictionary<string, string> _helpLookups = 
+        private static Dictionary<string, string> _helpLookups =
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
 
         static HelpCommand()
@@ -41,18 +40,16 @@ namespace MetaphysicsIndustries.Solus.Commands
             _helpLookups["t"] = "default time variable";
         }
 
-        public HelpCommand(string topic, CommandSet commands)
+        public static void SetCommands(CommandSet commandSet)
         {
-            _topic = topic;
-            _commands = commands;
+            _commands = commandSet;
         }
-
-        private readonly string _topic;
-        private readonly CommandSet _commands;
+        private static CommandSet _commands;
 
         public override string Name => "help";
+
         public override string DocString =>
-@"help - Get help about a topic
+            @"help - Get help about a topic
 
 Get info about an object or topic:
   help <topic>
@@ -64,7 +61,7 @@ List the available topics:
         public override void Execute(string input, SolusEnvironment env,
             ICommandData data)
         {
-            var topic = _topic;
+            var topic = ((HelpCommandData) data).Topic;
             if (string.IsNullOrEmpty(topic))
                 topic = "help";
             var text = ConstructText(env, topic);
@@ -72,7 +69,7 @@ List the available topics:
             if (!text.EndsWith("\n"))
                 Console.WriteLine();
         }
-        
+
         public string ConstructText(SolusEnvironment env, string topic = "help")
         {
             if (topic == "help")
@@ -208,5 +205,17 @@ List the available topics:
 
             return sb.ToString();
         }
+    }
+
+    public class HelpCommandData : ICommandData
+    {
+
+        public HelpCommandData(string topic)
+        {
+            Topic = topic;
+        }
+
+        public Command Command => HelpCommand.Value;
+        public string Topic { get; }
     }
 }

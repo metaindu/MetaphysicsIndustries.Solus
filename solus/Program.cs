@@ -126,6 +126,7 @@ namespace solus
             cs.AddCommand(HelpCommand.Value);
             cs.AddCommand(VarAssignCommand.Value);
             cs.AddCommand(VarsCommand.Value);
+            HelpCommand.SetCommands(cs);
 
             while ((line = le.Edit(">>> ", "")) != null)
             {

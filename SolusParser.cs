@@ -188,7 +188,7 @@ namespace MetaphysicsIndustries.Solus
             var expr = GetExpressionFromExpr(span.Subspans.Last(), env2);
             func.Expression = expr;
 
-            return new SimpleCommandData(new FuncAssignCommand(func));
+            return new FuncAssignCommandData(func);
         }
 
         ICommandData GetHelpCommandFromSpan(Span span, CommandSet commandSet)
@@ -196,7 +196,7 @@ namespace MetaphysicsIndustries.Solus
             var topic = "help";
             if (span.Subspans.Count >= 2)
                 topic = span.Subspans[1].Value;
-            return new SimpleCommandData(new HelpCommand(topic, commandSet));
+            return new HelpCommandData(topic);
         }
 
         ICommandData GetVarAssignCommandFromSpan(Span span,
@@ -205,12 +205,12 @@ namespace MetaphysicsIndustries.Solus
             var varname = span.Subspans[0].Subspans[0].Value;
             var expr = GetExpressionFromExpr(span.Subspans[2], env);
             expr = expr.PreliminaryEval(env);
-            return new SimpleCommandData(new VarAssignCommand(varname, expr));
+            return new VarAssignCommandData(varname, expr);
         }
 
         ICommandData GetVarsCommandFromSpan(Span span, SolusEnvironment env)
         {
-            return new SimpleCommandData(new VarsCommand());
+            return new VarsCommandData();
         }
 
         public Expression GetExpressionFromExpr(Span span, SolusEnvironment env)
