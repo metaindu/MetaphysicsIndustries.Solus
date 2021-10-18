@@ -96,7 +96,8 @@ namespace MetaphysicsIndustries.Solus
             return expr;
         }
 
-        public Command[] GetCommands(string input, SolusEnvironment env = null)
+        public Command[] GetCommands(string input, SolusEnvironment env = null,
+            CommandSet commandSet = null)
         {
             if (env == null)
                 env = new SolusEnvironment();
@@ -120,7 +121,7 @@ namespace MetaphysicsIndustries.Solus
             foreach (var sub in span.Subspans)
             {
                 if (sub.DefRef != _grammar.def_command) continue;
-                commands.Add(GetCommandFromCommand(sub, env));
+                commands.Add(GetCommandFromCommand(sub, env, commandSet));
             }
 
             return commands.ToArray();
@@ -137,7 +138,8 @@ namespace MetaphysicsIndustries.Solus
             {BitwiseOrOperation.Value, 80},
         };
 
-        Command GetCommandFromCommand(Span span, SolusEnvironment env)
+        Command GetCommandFromCommand(Span span, SolusEnvironment env,
+            CommandSet commandSet)
         {
             var sub = span.Subspans[0];
             var def = sub.DefRef;
@@ -147,7 +149,7 @@ namespace MetaphysicsIndustries.Solus
             if (def == _grammar.def_func_002D_assign_002D_command)
                 return GetFuncAssignCommandFromSpan(sub, env);
             if (def == _grammar.def_help_002D_command)
-                return GetHelpCommandFromSpan(sub, env);
+                return GetHelpCommandFromSpan(sub, commandSet);
             if (def == _grammar.def_var_002D_assign_002D_command)
                 return GetVarAssignCommandFromSpan(sub, env);
             if (def == _grammar.def_vars_002D_command)
@@ -188,12 +190,12 @@ namespace MetaphysicsIndustries.Solus
             return new FuncAssignCommand(func);
         }
 
-        Command GetHelpCommandFromSpan(Span span, SolusEnvironment env)
+        Command GetHelpCommandFromSpan(Span span, CommandSet commandSet)
         {
             var topic = "help";
             if (span.Subspans.Count >= 2)
                 topic = span.Subspans[1].Value;
-            return new HelpCommand(topic);
+            return new HelpCommand(topic, commandSet);
         }
 
         Command GetVarAssignCommandFromSpan(Span span, SolusEnvironment env)

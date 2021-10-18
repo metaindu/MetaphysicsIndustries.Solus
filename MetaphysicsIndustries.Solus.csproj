@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="CollectionHelper.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandSet.cs" />
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\FuncAssignCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />

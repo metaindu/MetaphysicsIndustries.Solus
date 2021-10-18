@@ -88,19 +88,6 @@ namespace MetaphysicsIndustries.Solus
             {
                 AddMacro(macro);
             }
-
-            var commands = new List<Command>
-            {
-                DeleteCommand.Value,
-                FuncAssignCommand.Value,
-                HelpCommand.Value,
-                VarAssignCommand.Value,
-                VarsCommand.Value,
-            };
-            foreach (var command in commands)
-            {
-                AddCommand(command);
-            }
         }
 
         protected readonly SolusEnvironment Parent;
@@ -287,60 +274,6 @@ namespace MetaphysicsIndustries.Solus
             return __GetMacroNames_cache;
         }
 
-        public void AddCommand(Command command) =>
-            SetCommand(command.Name, command);
-
-        public Command GetCommand(string name)
-        {
-            if (RemovedCommands.Contains(name))
-                return null;
-            if (Commands.ContainsKey(name))
-                return Commands[name];
-            if (Parent != null)
-                return Parent.GetCommand(name);
-            return null;
-        }
-
-        public void SetCommand(string name, Command value)
-        {
-            RemovedCommands.Remove(name);
-            Commands[name] = value;
-        }
-
-        public bool ContainsCommand(string name)
-        {
-            if (RemovedCommands.Contains(name)) return false;
-            if (Commands.ContainsKey(name)) return true;
-            if (Parent != null) return Parent.ContainsCommand(name);
-            return false;
-        }
-
-        public void RemoveCommand(string name)
-        {
-            Commands.Remove(name);
-            RemovedCommands.Add(name);
-        }
-
-        public int CountCommands()
-        {
-            return GetCommandNames().Count();
-        }
-
-        private HashSet<string> __GetCommandNames_cache;
-
-        public IEnumerable<string> GetCommandNames()
-        {
-            if (__GetCommandNames_cache == null)
-                __GetCommandNames_cache = new HashSet<string>();
-            __GetCommandNames_cache.Clear();
-            __GetCommandNames_cache.AddRange(Commands.Keys);
-            if (Parent != null)
-                __GetCommandNames_cache.AddRange(Parent.GetCommandNames());
-            bool isRemoved(string name) => RemovedCommands.Contains(name);
-            __GetCommandNames_cache.RemoveWhere(isRemoved);
-            return __GetCommandNames_cache;
-        }
-
         public SolusEnvironment Clone()
         {
             var clone = Instantiate(false);
@@ -362,8 +295,6 @@ namespace MetaphysicsIndustries.Solus
                 clone.SetFunction(name, GetFunction(name));
             foreach (var name in GetMacroNames())
                 clone.SetMacro(name, GetMacro(name));
-            foreach (var name in GetCommandNames())
-                clone.SetCommand(name, GetCommand(name));
         }
 
         public SolusEnvironment CreateChildEnvironment() =>

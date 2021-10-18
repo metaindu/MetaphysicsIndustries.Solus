@@ -29,7 +29,8 @@ namespace MetaphysicsIndustries.Solus.Commands
 {
     public class HelpCommand : Command
     {
-        public static readonly HelpCommand Value = new HelpCommand(null);
+        public static readonly HelpCommand Value = new HelpCommand(null,
+            null);
 
         private static Dictionary<string, string> _helpLookups = 
             new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
@@ -40,12 +41,14 @@ namespace MetaphysicsIndustries.Solus.Commands
             _helpLookups["t"] = "default time variable";
         }
 
-        public HelpCommand(string topic)
+        public HelpCommand(string topic, CommandSet commands)
         {
             _topic = topic;
+            _commands = commands;
         }
 
         private readonly string _topic;
+        private readonly CommandSet _commands;
 
         public override string Name => "help";
         public override string DocString =>
@@ -74,9 +77,9 @@ List the available topics:
             if (topic == "help")
                 return DocString;
 
-            if (env.ContainsCommand(topic))
+            if (_commands.ContainsCommand(topic))
             {
-                var command = env.GetCommand(topic);
+                var command = _commands.GetCommand(topic);
                 if (!string.IsNullOrEmpty(command.DocString))
                     return command.DocString;
                 return "This command does not provide any information.";
@@ -102,12 +105,13 @@ List the available topics:
                 return _helpLookups[topic];
 
             if (topic == "list")
-                return ConstructListText(env);
+                return ConstructListText(env, _commands);
 
             return "Unknown topic \"" + topic + "\"";
         }
 
-        public static string ConstructListText(SolusEnvironment env)
+        public static string ConstructListText(SolusEnvironment env,
+            CommandSet commandSet)
         {
             var sb = new StringBuilder();
             var line = "";
@@ -125,11 +129,11 @@ List the available topics:
                 line += item;
             }
 
-            if (env.CountCommands() > 0)
+            if (commandSet.CountCommands() > 0)
             {
                 sb.AppendLine("Commands:");
                 line = "";
-                var commands = env.GetCommandNames().ToList();
+                var commands = commandSet.GetCommandNames().ToList();
                 commands.Sort();
                 foreach (var c in commands)
                     AddItem(c);

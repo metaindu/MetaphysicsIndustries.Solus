@@ -120,6 +120,12 @@ namespace solus
 
             var le = new LineEditor("solus");
             string line;
+            var cs = new CommandSet();
+            cs.AddCommand(DeleteCommand.Value);
+            cs.AddCommand(FuncAssignCommand.Value);
+            cs.AddCommand(HelpCommand.Value);
+            cs.AddCommand(VarAssignCommand.Value);
+            cs.AddCommand(VarsCommand.Value);
 
             while ((line = le.Edit(">>> ", "")) != null)
             {
@@ -131,7 +137,7 @@ namespace solus
 
                 try
                 {
-                    commands = parser.GetCommands(line, env);
+                    commands = parser.GetCommands(line, env, cs);
                 }
                 catch (Exception _ex)
                 {

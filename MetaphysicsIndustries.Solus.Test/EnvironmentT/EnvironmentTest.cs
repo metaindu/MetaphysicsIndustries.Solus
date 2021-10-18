@@ -26,7 +26,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.AreEqual(0, result.CountVariables());
             Assert.AreEqual(0, result.CountFunctions());
             Assert.AreEqual(0, result.CountMacros());
-            Assert.AreEqual(0, result.CountCommands());
         }
 
         [Test]
@@ -38,7 +37,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.AreEqual(0, env.CountVariables());
             Assert.AreEqual(0, env.CountFunctions());
             Assert.AreEqual(0, env.CountMacros());
-            Assert.AreEqual(0, env.CountCommands());
             // when
             env.SetVariable("a", new Literal(1));
             // then
@@ -46,7 +44,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("a", env.GetVariableNames().ToList());
             Assert.AreEqual(0, env.CountFunctions());
             Assert.AreEqual(0, env.CountMacros());
-            Assert.AreEqual(0, env.CountCommands());
         }
 
         [Test]
@@ -95,14 +92,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("assign", macros);
             Assert.Contains("delete", macros);
             Assert.Contains("if", macros);
-
-            Assert.AreEqual(5, result.CountCommands());
-            var commands = result.GetCommandNames().ToList();
-            Assert.Contains("delete", commands);
-            Assert.Contains("func_assign", commands);
-            Assert.Contains("var_assign", commands);
-            Assert.Contains("vars", commands);
-            Assert.Contains("help", commands);
         }
     }
 }
