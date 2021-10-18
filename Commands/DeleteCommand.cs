@@ -30,16 +30,10 @@ namespace MetaphysicsIndustries.Solus.Commands
     public class DeleteCommand : Command
     {
         public static readonly DeleteCommand Value =
-            new DeleteCommand(new string[] { });
-
-        public DeleteCommand(IEnumerable<string> names)
-        {
-            _names = names.ToArray();
-        }
-
-        private readonly string[] _names;
+            new DeleteCommand();
 
         public override string Name => "delete";
+
         public override string DocString =>
             @"delete - Delete one or more object
 
@@ -52,7 +46,8 @@ namespace MetaphysicsIndustries.Solus.Commands
         public override void Execute(string input, SolusEnvironment env,
             ICommandData data)
         {
-            var unknown = _names.Where(name => 
+            var data2 = (DeleteCommandData) data;
+            var unknown = data2.Names.Where(name =>
                 !env.ContainsVariable(name) &&
                 !env.ContainsFunction(name) &&
                 !env.ContainsMacro(name)).ToList();
@@ -67,14 +62,25 @@ namespace MetaphysicsIndustries.Solus.Commands
                 return;
             }
 
-            foreach (var name in _names)
+            foreach (var name in data2.Names)
             {
                 env.RemoveVariable(name);
                 env.RemoveFunction(name);
                 env.RemoveMacro(name);
             }
-            
+
             Console.WriteLine("The variables were deleted successfully.");
         }
+    }
+
+    public class DeleteCommandData : ICommandData
+    {
+        public DeleteCommandData(IEnumerable<string> names)
+        {
+            Names = names.ToArray();
+        }
+
+        public Command Command => DeleteCommand.Value;
+        public string[] Names { get; }
     }
 }

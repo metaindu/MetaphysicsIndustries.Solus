@@ -163,7 +163,7 @@ namespace MetaphysicsIndustries.Solus
         {
             var names = span.Subspans.Skip(1).
                 Select(sub => sub.Subspans[0].Value);
-            return new SimpleCommandData(new DeleteCommand(names));
+            return new DeleteCommandData(names);
         }
 
         ICommandData GetFuncAssignCommandFromSpan(Span span,
