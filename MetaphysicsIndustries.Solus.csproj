@@ -52,6 +52,7 @@
     <Compile Include="Commands\DeleteCommand.cs" />
     <Compile Include="Commands\FuncAssignCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\ICommandData.cs" />
     <Compile Include="Commands\VarsCommand.cs" />
     <Compile Include="Commands\VarAssignCommand.cs" />
     <Compile Include="Compiler\Instruction.cs" />
