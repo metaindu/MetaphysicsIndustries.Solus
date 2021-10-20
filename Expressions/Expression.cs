@@ -84,21 +84,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public abstract Expression Clone();
 
-        //public delegate T Transformer<T>(Expression expr, VariableTable env);
-        //public abstract T Transform<T>(VariableTable env, Transformer<T> transformer);
-        //public static T Transform<T>(Expression expr, VariableTable env, Transformer<T> transformer)
-        //{
-        //    expr.Transform<T>(env, transformer);
-        //}
-
-        //public virtual Expression CleanUp()
-        //{
-        //    return this;
-        //}
-
-        //public abstract Expression PreliminaryEval(VariableTable env);
-        //public abstract GetDerivative(Variable
-
         public abstract void AcceptVisitor(IExpressionVisitor visitor);
 
         public void AcceptVisitor(
@@ -151,13 +136,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return this;
         }
 
-        //public Expression PreliminaryEval(VariableTable env)
-        //{
-        //    Expression evalExpr = InternalPreliminaryEval(env);
-        //    Expression cleanExpr = evalExpr.CleanUp();
-        //    return cleanExpr;
-        //}
-
         public bool IsFunction(Function function)
         {
             return (this is FunctionCall && ((FunctionCall)this).Function == function);
@@ -198,7 +176,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             var gen = method.GetILGenerator();
 
-//            var env_Variables = typeof(SolusEnvironment).GetField("Variables");
             var get_Item = typeof(Dictionary<string, float>).GetProperty("Item").GetGetMethod();
 
             ushort n = 0;
