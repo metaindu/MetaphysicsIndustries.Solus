@@ -101,7 +101,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override IMathObject Eval(SolusEnvironment env)
         {
-            return new Number(0);
+            var values = new IMathObject[Length];
+            for (int i = 0; i < Length; i++)
+                values[i] = this[i].Eval(env);
+            return new Vector(values);
         }
 
         public override Expression Clone()

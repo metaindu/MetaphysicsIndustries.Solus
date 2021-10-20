@@ -612,7 +612,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override IMathObject Eval(SolusEnvironment env)
         {
-            return new Number(0);
+            var values = new IMathObject[RowCount, ColumnCount];
+            for (int r = 0; r < RowCount; r++)
+                for (int c = 0; c < ColumnCount; c++)
+                    values[r, c] = this[r, c].Eval(env);
+            return new Matrix(values);
         }
 
         public override Expression Clone()
