@@ -44,9 +44,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override IMathObject Eval(SolusEnvironment env)
         {
             var value = Expr.Eval(env);
-            var evaledIndexes =
-                Indexes.Select(e => e.Eval(env)).ToArray();
+            var evaledIndexes = GetEvaledIndexes(env);
             return AccessComponent(value, evaledIndexes);
+        }
+
+        private IMathObject[] GetEvaledIndexes(SolusEnvironment env)
+        {
+            // TODO: caching, eventually, so as to not repeat so much
+            // evaluation. But that is a non-starter at the moment, because
+            // the contents of the env can change at any time.
+
+            return Indexes.Select(e => e.Eval(env)).ToArray();
         }
 
         public static IMathObject AccessComponent(IMathObject expr,
