@@ -83,11 +83,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public abstract Expression Clone();
-        public static Expression Clone(Expression expr)
-        {
-            //used by Array.ConvertAll
-            return expr.Clone();
-        }
 
         //public delegate T Transformer<T>(Expression expr, VariableTable env);
         //public abstract T Transform<T>(VariableTable env, Transformer<T> transformer);

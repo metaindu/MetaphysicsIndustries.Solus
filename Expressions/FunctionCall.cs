@@ -63,10 +63,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             FunctionCall ret = new FunctionCall(Function,
                                     Array.ConvertAll<Expression, Expression>(
-                                        Arguments.ToArray(), Expression.Clone));
+                                        Arguments.ToArray(), CloneExpr));
 
             return ret;
         }
+
+        private static Expression CloneExpr(Expression expr) => expr.Clone();
 
         public override IMathObject Eval(SolusEnvironment env)
         {
