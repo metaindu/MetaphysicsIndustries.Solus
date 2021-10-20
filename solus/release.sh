@@ -65,10 +65,14 @@ if [ -z "$NUGET_API_KEY" ]; then
     exit 1
 fi
 
-echo 'Uploading the package to nuget...'
-if ! nuget push soluscli.$DVERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
-    echo 'Error uploading the package. Quitting.'
-    exit 1
+if [ -n "$DRY_RUN" ]; then
+    echo 'This is a dry run. The package will not be uploaded.'
+else
+    echo 'Uploading the package to nuget...'
+    if ! nuget push soluscli.$DVERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
+        echo 'Error uploading the package. Quitting.'
+        exit 1
+    fi
 fi
 
 echo 'Done.'
