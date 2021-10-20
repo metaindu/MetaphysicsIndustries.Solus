@@ -38,12 +38,8 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-	public abstract class Expression : IDisposable, ICloneable
+	public abstract class Expression
 	{
-        public virtual void Dispose()
-        {
-        }
-
         public abstract IMathObject Eval(SolusEnvironment env);
 
         public class CompiledExpression
@@ -99,15 +95,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         //{
         //    expr.Transform<T>(env, transformer);
         //}
-
-        #region ICloneable Members
-
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
-
-        #endregion
 
         //public virtual Expression CleanUp()
         //{

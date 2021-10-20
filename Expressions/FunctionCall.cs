@@ -59,13 +59,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             Init(function, args);
         }
 
-        public override void Dispose()
-        {
-            _arguments.Clear();
-            _arguments = null;
-            _function = null;
-        }
-
         public override Expression Clone()
         {
             FunctionCall ret = new FunctionCall(Function,
