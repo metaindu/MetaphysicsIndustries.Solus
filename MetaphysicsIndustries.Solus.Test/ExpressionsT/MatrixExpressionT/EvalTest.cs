@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.MatrixExpressionT
                 new Literal(3),
                 new VariableAccess("a"));
             var env = new SolusEnvironment();
-            env.Variables["a"] = new Literal(5);
+            env.SetVariable("a", new Literal(5));
             // when
             var result = expr.Eval(env);
             // then
