@@ -2,6 +2,7 @@
 
 1. Create a `prep-release` branch, or similar
 2. In that branch:
+   * Check `todo.txt` for anythin important, or anything already completed
    * Bump the version numbers
    * Bump the dependency version in `soluscli.nuspec`
    * Check files for license notices
