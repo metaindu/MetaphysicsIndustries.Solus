@@ -56,8 +56,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public VectorExpression(int length)
         {
-            _length = length;
-            _array = new Expression[_length];
+            _array = new Expression[length];
 
             int i;
 
@@ -93,11 +92,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override int TensorRank => 1;
 
         private Expression[] _array;
-        private int _length;
-        public int Length
-        {
-            get { return _length; }
-        }
+        public int Length => _array.Length;
 
         public override IMathObject Eval(SolusEnvironment env)
         {
