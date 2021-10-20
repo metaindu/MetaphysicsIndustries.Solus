@@ -5,6 +5,7 @@
    * Bump the version numbers
    * Check files for license notices
    * Check any other code formatting or static analysis
+   * Update the release notes in the nuspec files
    * Do a dry run of `release.sh` (both of them), without pushing to nuget
      gallery (Use the `DRY_RUN` envvar)
 3. Once everything looks good, open a PR for the branch
