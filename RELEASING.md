@@ -3,6 +3,7 @@
 1. Create a `prep-release` branch, or similar
 2. In that branch:
    * Bump the version numbers
+   * Bump the dependency version in `soluscli.nuspec`
    * Check files for license notices
    * Check any other code formatting or static analysis
    * Update the release notes in the nuspec files
