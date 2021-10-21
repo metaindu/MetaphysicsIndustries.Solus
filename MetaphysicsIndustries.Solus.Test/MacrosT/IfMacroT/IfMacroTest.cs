@@ -41,27 +41,6 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             Assert.False(result.HasVariableNumArgs);
         }
 
-        class MockExpression : Expression
-        {
-            public MockExpression(Func<SolusEnvironment, IMathObject> evalf)
-            {
-                EvalF = evalf;
-            }
-
-            public Func<SolusEnvironment, IMathObject> EvalF;
-            public override IMathObject Eval(SolusEnvironment env)
-            {
-                if (EvalF != null) return EvalF(env);
-                throw new System.NotImplementedException();
-            }
-
-            public override Expression Clone() =>
-                throw new NotImplementedException();
-
-            public override void AcceptVisitor(IExpressionVisitor visitor) =>
-                throw new NotImplementedException();
-        }
-
         [Test]
         public void TrueConditionEvaluatesSecondArgButNotThirdArg()
         {
