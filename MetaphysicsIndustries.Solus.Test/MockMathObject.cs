@@ -20,7 +20,7 @@
  *
  */
 
-using System;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Test
@@ -28,13 +28,17 @@ namespace MetaphysicsIndustries.Solus.Test
     public readonly struct MockMathObject : IMathObject
     {
         public MockMathObject(bool isScalar = true, bool isVector = false,
-            bool isMatrix = false, int tensorRank = 0, bool isString = false)
+            bool isMatrix = false, int tensorRank = 0, bool isString = false,
+            int[] dimensions = null)
         {
             IsScalar = isScalar;
             IsVector = isVector;
             IsMatrix = isMatrix;
             TensorRank = tensorRank;
             IsString = isString;
+            if (dimensions == null)
+                dimensions = Enumerable.Repeat(1, tensorRank).ToArray();
+            _dimensions = dimensions;
         }
 
         public bool IsScalar { get; }
@@ -43,14 +47,10 @@ namespace MetaphysicsIndustries.Solus.Test
         public int TensorRank { get; }
         public bool IsString { get; }
 
-        public int GetDimension(int index = 0)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly int[] _dimensions;
 
-        public int[] GetDimensions()
-        {
-            throw new NotImplementedException();
-        }
+        public int GetDimension(int index = 0) => _dimensions[index];
+
+        public int[] GetDimensions() => _dimensions;
     }
 }

@@ -57,10 +57,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return Indexes.Select(e => e.Eval(env)).ToArray();
         }
 
-        public static IMathObject AccessComponent(IMathObject expr,
-            IMathObject[] indexes)
+        private static void CheckIndexes(IMathObject[] indexes,
+            bool exprIsScalar, bool exprIsVector, bool exprIsMatrix,
+            int exprTensorRank, bool exprIsString, int? exprLength,
+            int? exprRowCount, int? exprColumnCount)
         {
-            if (expr.IsString)
+            if (exprIsString)
             {
                 if (1 != indexes.Length)
                     throw new IndexException(
@@ -69,10 +71,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
             else
             {
-                if (expr.TensorRank < 1)
+                if (exprIsScalar || exprTensorRank < 1)
                     throw new OperandException(
                         "Scalars do not have components");
-                if (expr.TensorRank != indexes.Length)
+                if (exprTensorRank != indexes.Length)
                     throw new IndexException(
                         "Number of indexes doesn't match the number " +
                         "required by the expression");
@@ -86,21 +88,61 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     "Indexes must not be negative");
 
             var index0 = (int) indexes[0].ToNumber().Value;
+            if (exprIsVector)
+            {
+                if (index0 >= exprLength.Value)
+                    throw new IndexException(
+                        "Index exceeds the size of the vector");
+                return;
+            }
+
+            if (exprIsString)
+            {
+                if (index0 >= exprLength.Value)
+                    throw new IndexException(
+                        "Index exceeds the size of the string");
+                return;
+            }
+
+            var index1 = (int) indexes[1].ToNumber().Value;
+            if (exprIsMatrix)
+            {
+                if (index0 >= exprRowCount)
+                    throw new IndexException(
+                        "Index exceeds number of rows of the matrix");
+                if (index1 >= exprColumnCount)
+                    throw new IndexException(
+                        "Index exceeds number of columns of the matrix");
+                return;
+            }
+
+            throw new NotImplementedException(
+                "Component access is not implemented for tensor rank " +
+                "greater than 2");
+        }
+
+        public static IMathObject AccessComponent(IMathObject expr,
+            IMathObject[] indexes)
+        {
+            int? length = null;
+            if (expr.IsVector) length = expr.ToVector().Length;
+            else if (expr.IsString) length = expr.ToStringValue().Length;
+            CheckIndexes(indexes, expr.IsScalar, expr.IsVector, expr.IsMatrix,
+                expr.TensorRank, expr.IsString,
+                length,
+                expr.TensorRank > 1 ? new int?(expr.GetDimension(0)) : null,
+                expr.TensorRank > 1 ? new int?(expr.GetDimension(1)) : null);
+
+            var index0 = (int) indexes[0].ToNumber().Value;
             if (expr.IsVector)
             {
                 var v = expr.ToVector();
-                if (index0 >= v.Length)
-                    throw new IndexException(
-                        "Index exceeds the size of the vector");
                 return v[index0];
             }
 
             if (expr.IsString)
             {
                 var sv = expr.ToStringValue();
-                if (index0 >= sv.Length)
-                    throw new IndexException(
-                        "Index exceeds the size of the string");
                 return sv.Value[index0].ToStringValue();
             }
 
@@ -108,12 +150,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (expr.IsMatrix)
             {
                 var m = expr.ToMatrix();
-                if (index0 >= m.RowCount)
-                    throw new IndexException(
-                        "Index exceeds number of rows of the matrix");
-                if (index1 >= m.ColumnCount)
-                    throw new IndexException(
-                        "Index exceeds number of columns of the matrix");
                 return m[index0, index1];
             }
 
@@ -122,43 +158,36 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 "greater than 2");
         }
 
-        public static Expression AccessComponent(TensorExpression expr,
-            IMathObject[] indexes)
+        public static Expression AccessComponent(Expression expr,
+            IMathObject[] indexes, SolusEnvironment env)
         {
-            if (expr.TensorRank < 1)
-                throw new OperandException(
-                    "Scalars do not have components");
-            if (expr.TensorRank != indexes.Length)
-                throw new IndexException(
-                    "Number of indexes doesn't match the number " +
-                    "required by the expression");
-            if (indexes.Any(i => !i.IsScalar))
-                throw new IndexException(
-                    "Indexes must be scalar");
-            if (indexes.Any(i => i.ToNumber().Value < 0))
-                throw new IndexException(
-                    "Indexes must not be negative");
+            int? length = null;
+            if (expr.IsResultVector(env))
+                length = expr.GetResultVectorLength(env);
+            else if (expr.IsResultString(env))
+                length = expr.GetResultStringLength(env);
+
+            int exprTensorRank = expr.GetResultTensorRank(env);
+            int? exprRowCount = null;
+            int? exprColumnCount = null;
+            if (exprTensorRank == 2)
+            {
+                exprRowCount = expr.GetResultDimension(env, 0);
+                exprColumnCount = expr.GetResultDimension(env, 1);
+            }
+
+            CheckIndexes(indexes, expr.IsResultScalar(env),
+                expr.IsResultVector(env), expr.IsResultMatrix(env),
+                exprTensorRank, expr.IsResultString(env),
+                length, exprRowCount, exprColumnCount);
 
             var index0 = (int) indexes[0].ToNumber().Value;
             if (expr is VectorExpression ve)
-            {
-                if (index0 >= ve.Length)
-                    throw new IndexException(
-                        "Index exceeds the size of the vector");
                 return ve[index0];
-            }
 
             var index1 = (int) indexes[1].ToNumber().Value;
             if (expr is MatrixExpression me)
-            {
-                if (index0 >= me.RowCount)
-                    throw new IndexException(
-                        "Index exceeds number of rows of the matrix");
-                if (index1 >= me.ColumnCount)
-                    throw new IndexException(
-                        "Index exceeds number of columns of the matrix");
                 return me[index0, index1];
-            }
 
             throw new NotImplementedException(
                 "Component access is not implemented for tensor rank " +
@@ -180,7 +209,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         return new Literal(
                             AccessComponent(lit.Value, indexes2));
                     case TensorExpression te:
-                        return AccessComponent(te, indexes2);
+                        return AccessComponent(te, indexes2, env);
                 }
             }
 
@@ -213,6 +242,69 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
             sb.Append("]");
             return sb.ToString();
+        }
+
+        public override bool IsResultScalar(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.IsResultScalar(env);
+        }
+
+        public override bool IsResultVector(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.IsResultVector(env);
+        }
+
+        public override bool IsResultMatrix(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.IsResultMatrix(env);
+        }
+
+        public override int GetResultTensorRank(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.GetResultTensorRank(env);
+        }
+
+        public override bool IsResultString(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.IsResultString(env);
+        }
+
+        public override int GetResultDimension(SolusEnvironment env, int index)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.GetResultDimension(env, index);
+        }
+
+        public override int[] GetResultDimensions(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.GetResultDimensions(env);
+        }
+
+        public override int GetResultVectorLength(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.GetResultVectorLength(env);
+        }
+
+        public override int GetResultStringLength(SolusEnvironment env)
+        {
+            var evaledIndexes = GetEvaledIndexes(env);
+            var expr = AccessComponent(Expr, evaledIndexes, env);
+            return expr.GetResultStringLength(env);
         }
     }
 }

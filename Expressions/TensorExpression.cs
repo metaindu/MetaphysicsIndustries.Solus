@@ -35,6 +35,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public abstract int TensorRank { get; }
+        public override int GetResultTensorRank(SolusEnvironment env) =>
+            TensorRank;
 
         public delegate float Modulator(float x);
         public delegate float BiModulator(float x, float y);

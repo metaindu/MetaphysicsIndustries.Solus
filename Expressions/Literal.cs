@@ -108,5 +108,42 @@ namespace MetaphysicsIndustries.Solus.Expressions
 	        throw new NotImplementedException(
 		        "currently only implemented for numbers.");
         }
+
+        public override bool IsResultScalar(SolusEnvironment env) =>
+            Value.IsScalar;
+
+        public override bool IsResultVector(SolusEnvironment env) =>
+            Value.IsVector;
+
+        public override bool IsResultMatrix(SolusEnvironment env) =>
+            Value.IsMatrix;
+
+        public override int GetResultTensorRank(SolusEnvironment env) =>
+            Value.TensorRank;
+
+        public override bool IsResultString(SolusEnvironment env) =>
+            Value.IsString;
+
+        public override int GetResultDimension(SolusEnvironment env,
+            int index) => Value.GetDimension(index);
+
+        public override int[] GetResultDimensions(SolusEnvironment env) =>
+            Value.GetDimensions();
+
+        public override int GetResultVectorLength(SolusEnvironment env)
+        {
+            if (Value.IsVector)
+                return Value.ToVector().Length;
+            throw new InvalidOperationException(
+                "The value is not a vector");
+        }
+
+        public override int GetResultStringLength(SolusEnvironment env)
+        {
+            if (Value.IsString)
+                return Value.ToStringValue().Length;
+            throw new InvalidOperationException(
+                "The value is not a string");
+        }
     }
 }

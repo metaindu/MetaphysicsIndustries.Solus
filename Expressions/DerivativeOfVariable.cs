@@ -90,5 +90,32 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             visitor.Visit(this);
         }
+
+        public override bool IsResultScalar(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public override bool IsResultVector(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public override bool IsResultMatrix(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public override int GetResultTensorRank(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public override bool IsResultString(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public override int GetResultDimension(SolusEnvironment env, int index) =>
+            throw new NotImplementedException();
+
+        public override int[] GetResultDimensions(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public override int GetResultVectorLength(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public override int GetResultStringLength(SolusEnvironment env) =>
+            throw new NotImplementedException();
     }
 }

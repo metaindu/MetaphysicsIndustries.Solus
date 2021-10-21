@@ -216,7 +216,52 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
         {
             return Function.ConvertToInstructions(varmap, Arguments);
+        }
 
+        public override bool IsResultScalar(SolusEnvironment env)
+        {
+            // return Function.IsResultScalar(env, Arguments);
+            throw new NotImplementedException();
+        }
+
+        public override bool IsResultVector(SolusEnvironment env)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsResultMatrix(SolusEnvironment env)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetResultTensorRank(SolusEnvironment env)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool IsResultString(SolusEnvironment env)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetResultDimension(SolusEnvironment env, int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int[] GetResultDimensions(SolusEnvironment env)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetResultVectorLength(SolusEnvironment env)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetResultStringLength(SolusEnvironment env)
+        {
+            throw new NotImplementedException();
         }
     }
 }

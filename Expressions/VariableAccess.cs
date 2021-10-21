@@ -100,5 +100,78 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             return new [] { Instruction.LoadLocalVariable(varmap[VariableName]) };
         }
+
+        public override bool IsResultScalar(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).IsResultScalar(env);
+        }
+
+        public override bool IsResultVector(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).IsResultVector(env);
+        }
+
+        public override bool IsResultMatrix(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).IsResultMatrix(env);
+        }
+
+        public override int GetResultTensorRank(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).GetResultTensorRank(env);
+        }
+
+        public override bool IsResultString(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).IsResultString(env);
+        }
+
+        public override int GetResultDimension(SolusEnvironment env, int index)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).GetResultDimension(env,
+                index);
+        }
+
+        public override int[] GetResultDimensions(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).GetResultDimensions(env);
+        }
+
+        public override int GetResultVectorLength(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).GetResultVectorLength(env);
+        }
+
+        public override int GetResultStringLength(SolusEnvironment env)
+        {
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found in the environment: {VariableName}");
+            return env.GetVariable(VariableName).GetResultStringLength(env);
+        }
     }
 }

@@ -263,5 +263,33 @@ namespace MetaphysicsIndustries.Solus.Expressions
             sb.Append("]");
             return sb.ToString();
         }
+
+        public override bool IsResultScalar(SolusEnvironment env) => false;
+        public override bool IsResultVector(SolusEnvironment env) => true;
+        public override bool IsResultMatrix(SolusEnvironment env) => false;
+        public override bool IsResultString(SolusEnvironment env) => false;
+
+        public override int GetResultDimension(SolusEnvironment env, int index)
+        {
+            if (index == 0) return Length;
+            throw new IndexOutOfRangeException(
+                "The index must be zero for a vector");
+        }
+
+        private int[] __GetResultDimensions;
+        public override int[] GetResultDimensions(SolusEnvironment env)
+        {
+            if (__GetResultDimensions == null)
+                __GetResultDimensions = new[] { Length };
+            return __GetResultDimensions;
+        }
+
+        public override int GetResultVectorLength(SolusEnvironment env) =>
+            Length;
+
+        public override int GetResultStringLength(SolusEnvironment env)
+        {
+            throw new InvalidOperationException("A vector is not a string");
+        }
     }
 }

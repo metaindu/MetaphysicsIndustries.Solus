@@ -45,5 +45,35 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             throw new NotImplementedException();
         }
+
+        public override bool IsResultScalar(SolusEnvironment env) => true;
+        public override bool IsResultVector(SolusEnvironment env) => false;
+        public override bool IsResultMatrix(SolusEnvironment env) => false;
+        public override int GetResultTensorRank(SolusEnvironment env) => 0;
+        public override bool IsResultString(SolusEnvironment env) => false;
+
+        public override int GetResultDimension(SolusEnvironment env, int index)
+        {
+            throw new IndexOutOfRangeException(
+                "Random expressions do not have dimensions");
+        }
+
+        public override int[] GetResultDimensions(SolusEnvironment env)
+        {
+            throw new IndexOutOfRangeException(
+                "Random expressions do not have dimensions");
+        }
+
+        public override int GetResultVectorLength(SolusEnvironment env)
+        {
+            throw new InvalidOperationException(
+                "Random expressions do not have a length");
+        }
+
+        public override int GetResultStringLength(SolusEnvironment env)
+        {
+            throw new InvalidOperationException(
+                "Random expressions do not have a length");
+        }
     }
 }

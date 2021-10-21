@@ -751,5 +751,36 @@ namespace MetaphysicsIndustries.Solus.Expressions
             sb.Append("]");
             return sb.ToString();
         }
+
+        public override bool IsResultScalar(SolusEnvironment env) => false;
+        public override bool IsResultVector(SolusEnvironment env) => false;
+        public override bool IsResultMatrix(SolusEnvironment env) => true;
+        public override bool IsResultString(SolusEnvironment env) => false;
+
+        public override int GetResultDimension(SolusEnvironment env, int index)
+        {
+            if (index == 0) return RowCount;
+            if (index == 1) return ColumnCount;
+            throw new IndexOutOfRangeException(
+                "The index must be zero or one for a matrix");
+        }
+
+        private int[] __GetResultDimensions;
+        public override int[] GetResultDimensions(SolusEnvironment env)
+        {
+            if (__GetResultDimensions == null)
+                __GetResultDimensions = new[] { RowCount, ColumnCount };
+            return __GetResultDimensions;
+        }
+
+        public override int GetResultVectorLength(SolusEnvironment env)
+        {
+            throw new InvalidOperationException("A matrix is not a vector");
+        }
+
+        public override int GetResultStringLength(SolusEnvironment env)
+        {
+            throw new InvalidOperationException("A matrix is not a string");
+        }
     }
 }
