@@ -87,8 +87,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 
         class MockTensorExpression : TensorExpression
         {
-            public MockTensorExpression(int tensorRank) =>
+            public MockTensorExpression(int tensorRank)
+            {
                 TensorRank = tensorRank;
+                Result = new MockEnvMathObject(
+                    isScalarF: e => TensorRank == 0,
+                    isVectorF: e => TensorRank == 1,
+                    isMatrixF: e => TensorRank == 2,
+                    getTensorRankF: e => TensorRank,
+                    isStringF: e => false);
+            }
 
             public override int TensorRank { get; }
 
@@ -103,28 +111,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             public override void ApplyToAll(Modulator mod) =>
                 throw new NotImplementedException();
 
-            public override bool IsResultScalar(SolusEnvironment env) =>
-                TensorRank == 0;
-
-            public override bool IsResultVector(SolusEnvironment env) =>
-                TensorRank == 1;
-
-            public override bool IsResultMatrix(SolusEnvironment env) =>
-                TensorRank == 2;
-
-            public override bool IsResultString(SolusEnvironment env) => false;
-
-            public override int GetResultDimension(SolusEnvironment env,
-                int index) => throw new NotImplementedException();
-
-            public override int[] GetResultDimensions(SolusEnvironment env) =>
-                throw new NotImplementedException();
-
-            public override int GetResultVectorLength(SolusEnvironment env) =>
-                throw new NotImplementedException();
-
-            public override int GetResultStringLength(SolusEnvironment env) =>
-                throw new NotImplementedException();
+            public override IEnvMathObject Result { get; }
         }
 
         [Test]

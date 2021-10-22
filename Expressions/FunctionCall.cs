@@ -31,7 +31,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -213,50 +212,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override bool IsResultScalar(SolusEnvironment env)
-        {
-            // return Function.IsResultScalar(env, Arguments);
+        public override IEnvMathObject Result =>
             throw new NotImplementedException();
-        }
-
-        public override bool IsResultVector(SolusEnvironment env)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsResultMatrix(SolusEnvironment env)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetResultTensorRank(SolusEnvironment env)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool IsResultString(SolusEnvironment env)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetResultDimension(SolusEnvironment env, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int[] GetResultDimensions(SolusEnvironment env)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetResultVectorLength(SolusEnvironment env)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int GetResultStringLength(SolusEnvironment env)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

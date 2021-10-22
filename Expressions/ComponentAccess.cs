@@ -36,6 +36,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Expr = expr;
             Indexes = new ReadOnlyCollection<Expression>(indexes.ToList());
+            Result = new ResultC(this);
         }
 
         public readonly Expression Expr;
@@ -162,23 +163,23 @@ namespace MetaphysicsIndustries.Solus.Expressions
             IMathObject[] indexes, SolusEnvironment env)
         {
             int? length = null;
-            if (expr.IsResultVector(env))
-                length = expr.GetResultVectorLength(env);
-            else if (expr.IsResultString(env))
-                length = expr.GetResultStringLength(env);
+            if (expr.Result.IsVector(env))
+                length = expr.Result.GetVectorLength(env);
+            else if (expr.Result.IsString(env))
+                length = expr.Result.GetStringLength(env);
 
-            int exprTensorRank = expr.GetResultTensorRank(env);
+            int exprTensorRank = expr.Result.GetTensorRank(env);
             int? exprRowCount = null;
             int? exprColumnCount = null;
             if (exprTensorRank == 2)
             {
-                exprRowCount = expr.GetResultDimension(env, 0);
-                exprColumnCount = expr.GetResultDimension(env, 1);
+                exprRowCount = expr.Result.GetDimension(env, 0);
+                exprColumnCount = expr.Result.GetDimension(env, 1);
             }
 
-            CheckIndexes(indexes, expr.IsResultScalar(env),
-                expr.IsResultVector(env), expr.IsResultMatrix(env),
-                exprTensorRank, expr.IsResultString(env),
+            CheckIndexes(indexes, expr.Result.IsScalar(env),
+                expr.Result.IsVector(env), expr.Result.IsMatrix(env),
+                exprTensorRank, expr.Result.IsString(env),
                 length, exprRowCount, exprColumnCount);
 
             var index0 = (int) indexes[0].ToNumber().Value;
@@ -244,67 +245,74 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override bool IsResultScalar(SolusEnvironment env)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.IsResultScalar(env);
-        }
+        public override IEnvMathObject Result { get; }
 
-        public override bool IsResultVector(SolusEnvironment env)
+        private class ResultC : IEnvMathObject
         {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.IsResultVector(env);
-        }
+            public ResultC(ComponentAccess ca) => _ca = ca;
+            private readonly ComponentAccess _ca;
+            public bool IsScalar(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.IsScalar(env);
+            }
 
-        public override bool IsResultMatrix(SolusEnvironment env)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.IsResultMatrix(env);
-        }
+            public bool IsVector(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.IsVector(env);
+            }
 
-        public override int GetResultTensorRank(SolusEnvironment env)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.GetResultTensorRank(env);
-        }
+            public bool IsMatrix(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.IsMatrix(env);
+            }
 
-        public override bool IsResultString(SolusEnvironment env)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.IsResultString(env);
-        }
+            public int GetTensorRank(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.GetTensorRank(env);
+            }
 
-        public override int GetResultDimension(SolusEnvironment env, int index)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.GetResultDimension(env, index);
-        }
+            public bool IsString(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.IsString(env);
+            }
 
-        public override int[] GetResultDimensions(SolusEnvironment env)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.GetResultDimensions(env);
-        }
+            public int GetDimension(SolusEnvironment env, int index)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.GetDimension(env, index);
+            }
 
-        public override int GetResultVectorLength(SolusEnvironment env)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.GetResultVectorLength(env);
-        }
+            public int[] GetDimensions(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.GetDimensions(env);
+            }
 
-        public override int GetResultStringLength(SolusEnvironment env)
-        {
-            var evaledIndexes = GetEvaledIndexes(env);
-            var expr = AccessComponent(Expr, evaledIndexes, env);
-            return expr.GetResultStringLength(env);
+            public int GetVectorLength(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.GetVectorLength(env);
+            }
+
+            public int GetStringLength(SolusEnvironment env)
+            {
+                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
+                return expr.Result.GetStringLength(env);
+            }
         }
     }
 }

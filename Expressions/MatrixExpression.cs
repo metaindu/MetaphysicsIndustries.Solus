@@ -71,6 +71,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     _array[i, j] = Literal.Zero;
                 }
             }
+
+            Result = new ResultC(this);
         }
 
         public MatrixExpression(int rows, int columns,
@@ -752,35 +754,44 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override bool IsResultScalar(SolusEnvironment env) => false;
-        public override bool IsResultVector(SolusEnvironment env) => false;
-        public override bool IsResultMatrix(SolusEnvironment env) => true;
-        public override bool IsResultString(SolusEnvironment env) => false;
+        public override IEnvMathObject Result { get; }
 
-        public override int GetResultDimension(SolusEnvironment env, int index)
+        private class ResultC : IEnvMathObject
         {
-            if (index == 0) return RowCount;
-            if (index == 1) return ColumnCount;
-            throw new IndexOutOfRangeException(
-                "The index must be zero or one for a matrix");
-        }
+            public ResultC(MatrixExpression me) => _me = me;
+            private readonly MatrixExpression _me;
+            public bool IsScalar(SolusEnvironment env) => false;
+            public bool IsVector(SolusEnvironment env) => false;
+            public bool IsMatrix(SolusEnvironment env) => true;
+            public int GetTensorRank(SolusEnvironment env) => _me.TensorRank;
+            public bool IsString(SolusEnvironment env) => false;
 
-        private int[] __GetResultDimensions;
-        public override int[] GetResultDimensions(SolusEnvironment env)
-        {
-            if (__GetResultDimensions == null)
-                __GetResultDimensions = new[] { RowCount, ColumnCount };
-            return __GetResultDimensions;
-        }
+            public int GetDimension(SolusEnvironment env, int index)
+            {
+                if (index == 0) return _me.RowCount;
+                if (index == 1) return _me.ColumnCount;
+                throw new IndexOutOfRangeException(
+                    "The index must be zero or one for a matrix");
+            }
 
-        public override int GetResultVectorLength(SolusEnvironment env)
-        {
-            throw new InvalidOperationException("A matrix is not a vector");
-        }
+            private int[] __GetDimensions;
 
-        public override int GetResultStringLength(SolusEnvironment env)
-        {
-            throw new InvalidOperationException("A matrix is not a string");
+            public int[] GetDimensions(SolusEnvironment env)
+            {
+                if (__GetDimensions == null)
+                    __GetDimensions = new[] { _me.RowCount, _me.ColumnCount };
+                return __GetDimensions;
+            }
+
+            public int GetVectorLength(SolusEnvironment env)
+            {
+                throw new InvalidOperationException("A matrix is not a vector");
+            }
+
+            public int GetStringLength(SolusEnvironment env)
+            {
+                throw new InvalidOperationException("A matrix is not a string");
+            }
         }
     }
 }

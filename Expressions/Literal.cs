@@ -29,8 +29,6 @@
  *****************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -48,7 +46,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
 		public Literal(IMathObject value)
 		{
 			_value = value;
-		}
+            Result = new ResultC(this);
+        }
 
         public override Expression Clone()
         {
@@ -100,41 +99,49 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override bool IsResultScalar(SolusEnvironment env) =>
-            Value.IsScalar;
+        public override IEnvMathObject Result { get; }
 
-        public override bool IsResultVector(SolusEnvironment env) =>
-            Value.IsVector;
-
-        public override bool IsResultMatrix(SolusEnvironment env) =>
-            Value.IsMatrix;
-
-        public override int GetResultTensorRank(SolusEnvironment env) =>
-            Value.TensorRank;
-
-        public override bool IsResultString(SolusEnvironment env) =>
-            Value.IsString;
-
-        public override int GetResultDimension(SolusEnvironment env,
-            int index) => Value.GetDimension(index);
-
-        public override int[] GetResultDimensions(SolusEnvironment env) =>
-            Value.GetDimensions();
-
-        public override int GetResultVectorLength(SolusEnvironment env)
+        private class ResultC : IEnvMathObject
         {
-            if (Value.IsVector)
-                return Value.ToVector().Length;
-            throw new InvalidOperationException(
-                "The value is not a vector");
-        }
+            public ResultC(Literal lit) => _lit = lit;
+            private readonly Literal _lit;
 
-        public override int GetResultStringLength(SolusEnvironment env)
-        {
-            if (Value.IsString)
-                return Value.ToStringValue().Length;
-            throw new InvalidOperationException(
-                "The value is not a string");
+            public bool IsScalar(SolusEnvironment env) =>
+                _lit.Value.IsScalar;
+
+            public bool IsVector(SolusEnvironment env) =>
+                _lit.Value.IsVector;
+
+            public bool IsMatrix(SolusEnvironment env) =>
+                _lit.Value.IsMatrix;
+
+            public int GetTensorRank(SolusEnvironment env) =>
+                _lit.Value.TensorRank;
+
+            public bool IsString(SolusEnvironment env) =>
+                _lit.Value.IsString;
+
+            public int GetDimension(SolusEnvironment env,
+                int index) => _lit.Value.GetDimension(index);
+
+            public int[] GetDimensions(SolusEnvironment env) =>
+                _lit.Value.GetDimensions();
+
+            public int GetVectorLength(SolusEnvironment env)
+            {
+                if (_lit.Value.IsVector)
+                    return _lit.Value.ToVector().Length;
+                throw new InvalidOperationException(
+                    "The value is not a vector");
+            }
+
+            public int GetStringLength(SolusEnvironment env)
+            {
+                if (_lit.Value.IsString)
+                    return _lit.Value.ToStringValue().Length;
+                throw new InvalidOperationException(
+                    "The value is not a string");
+            }
         }
     }
 }

@@ -46,34 +46,39 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override bool IsResultScalar(SolusEnvironment env) => true;
-        public override bool IsResultVector(SolusEnvironment env) => false;
-        public override bool IsResultMatrix(SolusEnvironment env) => false;
-        public override int GetResultTensorRank(SolusEnvironment env) => 0;
-        public override bool IsResultString(SolusEnvironment env) => false;
+        public override IEnvMathObject Result { get; } = new ResultC();
 
-        public override int GetResultDimension(SolusEnvironment env, int index)
+        private class ResultC : IEnvMathObject
         {
-            throw new IndexOutOfRangeException(
-                "Random expressions do not have dimensions");
-        }
+            public bool IsScalar(SolusEnvironment env) => true;
+            public bool IsVector(SolusEnvironment env) => false;
+            public bool IsMatrix(SolusEnvironment env) => false;
+            public int GetTensorRank(SolusEnvironment env) => 0;
+            public bool IsString(SolusEnvironment env) => false;
 
-        public override int[] GetResultDimensions(SolusEnvironment env)
-        {
-            throw new IndexOutOfRangeException(
-                "Random expressions do not have dimensions");
-        }
+            public int GetDimension(SolusEnvironment env, int index)
+            {
+                throw new IndexOutOfRangeException(
+                    "Random expressions do not have dimensions");
+            }
 
-        public override int GetResultVectorLength(SolusEnvironment env)
-        {
-            throw new InvalidOperationException(
-                "Random expressions do not have a length");
-        }
+            public int[] GetDimensions(SolusEnvironment env)
+            {
+                throw new IndexOutOfRangeException(
+                    "Random expressions do not have dimensions");
+            }
 
-        public override int GetResultStringLength(SolusEnvironment env)
-        {
-            throw new InvalidOperationException(
-                "Random expressions do not have a length");
+            public int GetVectorLength(SolusEnvironment env)
+            {
+                throw new InvalidOperationException(
+                    "Random expressions do not have a length");
+            }
+
+            public int GetStringLength(SolusEnvironment env)
+            {
+                throw new InvalidOperationException(
+                    "Random expressions do not have a length");
+            }
         }
     }
 }

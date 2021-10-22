@@ -1,5 +1,26 @@
+
+/*
+ *  MetaphysicsIndustries.Solus
+ *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 3 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ *  USA
+ *
+ */
+
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
@@ -13,13 +34,17 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultScalarF: e => false),
-                    new MockExpression(isResultScalarF: e => true),
-                    new MockExpression(isResultScalarF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isScalarF: e => false)),
+                    new MockExpression(result: new MockEnvMathObject(
+                        isScalarF: e => true)),
+                    new MockExpression(result: new MockEnvMathObject(
+                        isScalarF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultScalar(env);
+            var result = expr.Result.IsScalar(env);
             // then
             Assert.IsTrue(result);
         }
@@ -30,13 +55,17 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultScalarF: e => true),
-                    new MockExpression(isResultScalarF: e => false),
-                    new MockExpression(isResultScalarF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isScalarF: e => true)),
+                    new MockExpression(result: new MockEnvMathObject(
+                        isScalarF: e => false)),
+                    new MockExpression(result: new MockEnvMathObject(
+                        isScalarF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultScalar(env);
+            var result = expr.Result.IsScalar(env);
             // then
             Assert.IsFalse(result);
         }
@@ -47,13 +76,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultVectorF: e => false),
-                    new MockExpression(isResultVectorF: e => true),
-                    new MockExpression(isResultVectorF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isVectorF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isVectorF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isVectorF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultVector(env);
+            var result = expr.Result.IsVector(env);
             // then
             Assert.IsTrue(result);
         }
@@ -64,13 +99,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultVectorF: e => true),
-                    new MockExpression(isResultVectorF: e => false),
-                    new MockExpression(isResultVectorF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isVectorF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isVectorF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isVectorF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultVector(env);
+            var result = expr.Result.IsVector(env);
             // then
             Assert.IsFalse(result);
         }
@@ -81,13 +122,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultMatrixF: e => false),
-                    new MockExpression(isResultMatrixF: e => true),
-                    new MockExpression(isResultMatrixF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isMatrixF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isMatrixF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isMatrixF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultMatrix(env);
+            var result = expr.Result.IsMatrix(env);
             // then
             Assert.IsTrue(result);
         }
@@ -98,13 +145,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultMatrixF: e => true),
-                    new MockExpression(isResultMatrixF: e => false),
-                    new MockExpression(isResultMatrixF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isMatrixF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isMatrixF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isMatrixF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultMatrix(env);
+            var result = expr.Result.IsMatrix(env);
             // then
             Assert.IsFalse(result);
         }
@@ -115,13 +168,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultStringF: e => false),
-                    new MockExpression(isResultStringF: e => true),
-                    new MockExpression(isResultStringF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isStringF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isStringF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isStringF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultString(env);
+            var result = expr.Result.IsString(env);
             // then
             Assert.IsTrue(result);
         }
@@ -132,13 +191,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(isResultStringF: e => true),
-                    new MockExpression(isResultStringF: e => false),
-                    new MockExpression(isResultStringF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isStringF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isStringF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isStringF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultString(env);
+            var result = expr.Result.IsString(env);
             // then
             Assert.IsFalse(result);
         }
@@ -149,13 +214,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(getResultTensorRankF: e => 1),
-                    new MockExpression(getResultTensorRankF: e => 2),
-                    new MockExpression(getResultTensorRankF: e => 1)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getTensorRankF: e => 1)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getTensorRankF: e => 2)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getTensorRankF: e => 1))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultTensorRank(env);
+            var result = expr.Result.GetTensorRank(env);
             // then
             Assert.AreEqual(2, result);
         }
@@ -166,13 +237,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(getResultTensorRankF: e => 2),
-                    new MockExpression(getResultTensorRankF: e => 1),
-                    new MockExpression(getResultTensorRankF: e => 2)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getTensorRankF: e => 2)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getTensorRankF: e => 1)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getTensorRankF: e => 2))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultTensorRank(env);
+            var result = expr.Result.GetTensorRank(env);
             // then
             Assert.AreEqual(1, result);
         }
@@ -183,13 +260,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(getResultDimensionF: (e, i) => 1),
-                    new MockExpression(getResultDimensionF: (e, i) => 2),
-                    new MockExpression(getResultDimensionF: (e, i) => 1)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getDimensionF: (e, i) => 1)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getDimensionF: (e, i) => 2)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getDimensionF: (e, i) => 1))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultDimension(env, 0);
+            var result = expr.Result.GetDimension(env, 0);
             // then
             Assert.AreEqual(2, result);
         }
@@ -202,13 +285,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var two = new[] { 2, 2, 2 };
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(getResultDimensionsF: e => one),
-                    new MockExpression(getResultDimensionsF: e => two),
-                    new MockExpression(getResultDimensionsF: e => one)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getDimensionsF: e => one)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getDimensionsF: e => two)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getDimensionsF: e => one))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultDimensions(env);
+            var result = expr.Result.GetDimensions(env);
             // then
             Assert.AreEqual(new[] { 2, 2, 2 }, result);
         }
@@ -219,13 +308,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(getResultVectorLengthF: e => 1),
-                    new MockExpression(getResultVectorLengthF: e => 2),
-                    new MockExpression(getResultVectorLengthF: e => 3)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getVectorLengthF: e => 1)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getVectorLengthF: e => 2)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getVectorLengthF: e => 3))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultVectorLength(env);
+            var result = expr.Result.GetVectorLength(env);
             // then
             Assert.AreEqual(2, result);
         }
@@ -236,13 +331,19 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(getResultStringLengthF: e => 1),
-                    new MockExpression(getResultStringLengthF: e => 2),
-                    new MockExpression(getResultStringLengthF: e => 3)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getStringLengthF: e => 1)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getStringLengthF: e => 2)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            getStringLengthF: e => 3))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultStringLength(env);
+            var result = expr.Result.GetStringLength(env);
             // then
             Assert.AreEqual(2, result);
         }
@@ -254,14 +355,22 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new MatrixExpression(2, 2,
-                    new MockExpression(isResultScalarF: e => false),
-                    new MockExpression(isResultScalarF: e => true),
-                    new MockExpression(isResultScalarF: e => false),
-                    new MockExpression(isResultScalarF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isScalarF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isScalarF: e => true)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isScalarF: e => false)),
+                    new MockExpression(
+                        result: new MockEnvMathObject(
+                            isScalarF: e => false))),
                 new[] { new Literal(0), new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultScalar(env);
+            var result = expr.Result.IsScalar(env);
             // then
             Assert.IsTrue(result);
         }
@@ -272,16 +381,17 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new MockExpression(
-                    isResultScalarF: e => false,
-                    isResultVectorF: e => false,
-                    isResultMatrixF: e => false,
-                    getResultTensorRankF: e => 0,
-                    isResultStringF: e => true,
-                    getResultStringLengthF: e => 3),
+                    result: new MockEnvMathObject(
+                        isScalarF: e => false,
+                        isVectorF: e => false,
+                        isMatrixF: e => false,
+                        getTensorRankF: e => 0,
+                        isStringF: e => true,
+                        getStringLengthF: e => 3)),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.IsResultString(env);
+            var result = expr.Result.IsString(env);
             // then
             Assert.IsTrue(result);
         }

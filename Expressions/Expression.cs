@@ -30,9 +30,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection.Emit;
-using MetaphysicsIndustries.Giza;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -123,14 +120,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return expr.ToString();
         }
 
-        public abstract bool IsResultScalar(SolusEnvironment env);
-        public abstract bool IsResultVector(SolusEnvironment env);
-        public abstract bool IsResultMatrix (SolusEnvironment env);
-        public abstract int GetResultTensorRank(SolusEnvironment env);
-        public abstract bool IsResultString(SolusEnvironment env);
-        public abstract int GetResultDimension(SolusEnvironment env, int index);
-        public abstract int[] GetResultDimensions(SolusEnvironment env);
-        public abstract int GetResultVectorLength(SolusEnvironment env);
-        public abstract int GetResultStringLength(SolusEnvironment env);
+        public abstract IEnvMathObject Result { get; }
     }
 }

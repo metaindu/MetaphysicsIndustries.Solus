@@ -64,6 +64,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 _array[i] = Literal.Zero;
             }
+
+            Result = new ResultC(this);
         }
 
         public VectorExpression(int length, params float[] initialContents)
@@ -264,32 +266,40 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override bool IsResultScalar(SolusEnvironment env) => false;
-        public override bool IsResultVector(SolusEnvironment env) => true;
-        public override bool IsResultMatrix(SolusEnvironment env) => false;
-        public override bool IsResultString(SolusEnvironment env) => false;
+        public override IEnvMathObject Result { get; }
 
-        public override int GetResultDimension(SolusEnvironment env, int index)
+        private class ResultC : IEnvMathObject
         {
-            if (index == 0) return Length;
-            throw new IndexOutOfRangeException(
-                "The index must be zero for a vector");
-        }
+            public ResultC(VectorExpression ve) => _ve = ve;
+            private readonly VectorExpression _ve;
+            public bool IsScalar(SolusEnvironment env) => false;
+            public bool IsVector(SolusEnvironment env) => true;
+            public bool IsMatrix(SolusEnvironment env) => false;
+            public int GetTensorRank(SolusEnvironment env) => 1;
+            public bool IsString(SolusEnvironment env) => false;
 
-        private int[] __GetResultDimensions;
-        public override int[] GetResultDimensions(SolusEnvironment env)
-        {
-            if (__GetResultDimensions == null)
-                __GetResultDimensions = new[] { Length };
-            return __GetResultDimensions;
-        }
+            public int GetDimension(SolusEnvironment env, int index)
+            {
+                if (index == 0) return _ve.Length;
+                throw new IndexOutOfRangeException(
+                    "The index must be zero for a vector");
+            }
 
-        public override int GetResultVectorLength(SolusEnvironment env) =>
-            Length;
+            private int[] __GetDimensions;
 
-        public override int GetResultStringLength(SolusEnvironment env)
-        {
-            throw new InvalidOperationException("A vector is not a string");
+            public int[] GetDimensions(SolusEnvironment env)
+            {
+                if (__GetDimensions == null)
+                    __GetDimensions = new[] { _ve.Length };
+                return __GetDimensions;
+            }
+
+            public int GetVectorLength(SolusEnvironment env) => _ve.Length;
+
+            public int GetStringLength(SolusEnvironment env)
+            {
+                throw new InvalidOperationException("A vector is not a string");
+            }
         }
     }
 }

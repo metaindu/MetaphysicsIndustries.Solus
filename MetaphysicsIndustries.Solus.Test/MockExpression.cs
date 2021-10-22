@@ -1,3 +1,25 @@
+
+/*
+ *  MetaphysicsIndustries.Solus
+ *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 3 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ *  USA
+ *
+ */
+
 using System;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
@@ -10,28 +32,14 @@ namespace MetaphysicsIndustries.Solus.Test
             Func<SolusEnvironment, IMathObject> evalf=null,
             Func<Expression> cloneF=null,
             Action<IExpressionVisitor> acceptVisitorF=null,
-            Func<SolusEnvironment, bool> isResultScalarF=null,
-            Func<SolusEnvironment, bool> isResultVectorF=null,
-            Func<SolusEnvironment, bool> isResultMatrixF=null,
-            Func<SolusEnvironment, int> getResultTensorRankF=null,
-            Func<SolusEnvironment, bool> isResultStringF=null,
-            Func<SolusEnvironment, int, int> getResultDimensionF=null,
-            Func<SolusEnvironment, int[]> getResultDimensionsF=null,
-            Func<SolusEnvironment, int> getResultVectorLengthF=null,
-            Func<SolusEnvironment, int> getResultStringLengthF=null)
+            IEnvMathObject result=null)
         {
             EvalF = evalf;
             CloneF = cloneF;
             AcceptVisitorF = acceptVisitorF;
-            IsResultScalarF = isResultScalarF;
-            IsResultVectorF = isResultVectorF;
-            IsResultMatrixF = isResultMatrixF;
-            GetResultTensorRankF = getResultTensorRankF;
-            IsResultStringF = isResultStringF;
-            GetResultDimensionF = getResultDimensionF;
-            GetResultDimensionsF = getResultDimensionsF;
-            GetResultVectorLengthF = getResultVectorLengthF;
-            GetResultStringLengthF = getResultStringLengthF;
+            if (result == null)
+                result = new MockEnvMathObject();
+            _result = result;
         }
 
         public Func<SolusEnvironment, IMathObject> EvalF;
@@ -60,67 +68,8 @@ namespace MetaphysicsIndustries.Solus.Test
             throw new NotImplementedException();
         }
 
-        public Func<SolusEnvironment, bool> IsResultScalarF;
-        public override bool IsResultScalar(SolusEnvironment env)
-        {
-            if (IsResultScalarF != null) return IsResultScalarF(env);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, bool> IsResultVectorF;
-        public override bool IsResultVector(SolusEnvironment env)
-        {
-            if (IsResultVectorF != null) return IsResultVectorF(env);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, bool> IsResultMatrixF;
-        public override bool IsResultMatrix(SolusEnvironment env)
-        {
-            if (IsResultMatrixF != null) return IsResultMatrixF(env);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, int> GetResultTensorRankF;
-        public override int GetResultTensorRank(SolusEnvironment env)
-        {
-            if (GetResultTensorRankF != null) return GetResultTensorRankF(env);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, bool> IsResultStringF;
-        public override bool IsResultString(SolusEnvironment env) 
-        {
-            if (IsResultStringF != null) return IsResultStringF(env);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, int, int> GetResultDimensionF;
-        public override int GetResultDimension(SolusEnvironment env, int index)
-        {
-            if (GetResultDimensionF != null) return GetResultDimensionF(env, index);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, int[]> GetResultDimensionsF;
-        public override int[] GetResultDimensions(SolusEnvironment env)
-        {
-            if (GetResultDimensionsF != null) return GetResultDimensionsF(env);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, int> GetResultVectorLengthF;
-        public override int GetResultVectorLength(SolusEnvironment env)
-        {
-            if (GetResultVectorLengthF != null) return GetResultVectorLengthF(env);
-            throw new NotImplementedException();
-        }
-
-        public Func<SolusEnvironment, int> GetResultStringLengthF;
-        public override int GetResultStringLength(SolusEnvironment env)
-        {
-            if (GetResultStringLengthF != null) return GetResultStringLengthF(env);
-            throw new NotImplementedException();
-        }
+        private IEnvMathObject _result;
+        public override IEnvMathObject Result => _result;
+        public void SetResult(IEnvMathObject value) => _result = value;
     }
 }
