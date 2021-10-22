@@ -49,11 +49,11 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             Assert.AreEqual(2, result[0, 1].ToNumber().Value);
             Assert.AreEqual(3, result[1, 0].ToNumber().Value);
             Assert.AreEqual(4, result[1, 1].ToNumber().Value);
-            Assert.IsFalse(result.IsScalar);
-            Assert.IsFalse(result.IsVector);
-            Assert.IsTrue(result.IsMatrix);
-            Assert.AreEqual(2, result.TensorRank);
-            Assert.IsFalse(result.IsString);
+            Assert.IsFalse(result.IsScalar());
+            Assert.IsFalse(result.IsVector());
+            Assert.IsTrue(result.IsMatrix());
+            Assert.AreEqual(2, result.GetTensorRank());
+            Assert.IsFalse(result.IsString());
             Assert.AreEqual(2, result.GetDimension(0));
             Assert.AreEqual(2, result.GetDimension(1));
             var ex = Assert.Throws<ArgumentOutOfRangeException>(

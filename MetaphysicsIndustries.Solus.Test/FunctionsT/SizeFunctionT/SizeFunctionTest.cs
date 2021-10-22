@@ -130,7 +130,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             // when
             var result = SizeFunction.Value.Call(empty, args);
             // then
-            Assert.IsTrue(result.IsScalar);
+            Assert.IsTrue(result.IsScalar());
             Assert.AreEqual(2, result.ToFloat());
         }
 
@@ -149,7 +149,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             // when
             var result = SizeFunction.Value.Call(empty, args);
             // then
-            Assert.IsTrue(result.IsVector);
+            Assert.IsTrue(result.IsVector());
             var v = result.ToVector();
             Assert.AreEqual(2, v.Length);
             Assert.AreEqual(2, v[0].ToFloat());
@@ -164,7 +164,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             // when
             var result = SizeFunction.Value.Call(empty, args);
             // then
-            Assert.IsTrue(result.IsScalar);
+            Assert.IsTrue(result.IsScalar());
             Assert.AreEqual(3, result.ToFloat());
         }
     }

@@ -40,8 +40,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ComponentAccess.AccessComponent(expr, indexes);
             // then
-            Assert.IsFalse(result.IsVector);
-            Assert.IsTrue(result.IsScalar);
+            Assert.IsFalse(result.IsVector());
+            Assert.IsTrue(result.IsScalar());
             Assert.AreEqual(2, result.ToFloat());
         }
 
@@ -54,8 +54,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ComponentAccess.AccessComponent(expr, indexes);
             // then
-            Assert.IsFalse(result.IsVector);
-            Assert.IsTrue(result.IsScalar);
+            Assert.IsFalse(result.IsVector());
+            Assert.IsTrue(result.IsScalar());
             Assert.AreEqual(4, result.ToFloat());
         }
 
@@ -195,9 +195,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ComponentAccess.AccessComponent(expr, indexes);
             // then
-            Assert.IsFalse(result.IsVector);
-            Assert.IsFalse(result.IsScalar);
-            Assert.IsTrue(result.IsString);
+            Assert.IsFalse(result.IsVector());
+            Assert.IsFalse(result.IsScalar());
+            Assert.IsTrue(result.IsString());
             Assert.AreEqual("b", result.ToStringValue().Value);
         }
 

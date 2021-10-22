@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         "required by the expression");
             }
 
-            if (indexes.Any(i => !i.IsScalar))
+            if (indexes.Any(i => !i.IsScalar()))
                 throw new IndexException(
                     "Indexes must be scalar");
             if (indexes.Any(i => i.ToNumber().Value < 0))
@@ -126,29 +126,29 @@ namespace MetaphysicsIndustries.Solus.Expressions
             IMathObject[] indexes)
         {
             int? length = null;
-            if (expr.IsVector) length = expr.ToVector().Length;
-            else if (expr.IsString) length = expr.ToStringValue().Length;
-            CheckIndexes(indexes, expr.IsScalar, expr.IsVector, expr.IsMatrix,
-                expr.TensorRank, expr.IsString,
+            if (expr.IsVector()) length = expr.ToVector().Length;
+            else if (expr.IsString()) length = expr.ToStringValue().Length;
+            CheckIndexes(indexes, expr.IsScalar(), expr.IsVector(), expr.IsMatrix(),
+                expr.GetTensorRank(), expr.IsString(),
                 length,
-                expr.TensorRank > 1 ? new int?(expr.GetDimension(0)) : null,
-                expr.TensorRank > 1 ? new int?(expr.GetDimension(1)) : null);
+                expr.GetTensorRank() > 1 ? new int?(expr.GetDimension(0)) : null,
+                expr.GetTensorRank() > 1 ? new int?(expr.GetDimension(1)) : null);
 
             var index0 = (int) indexes[0].ToNumber().Value;
-            if (expr.IsVector)
+            if (expr.IsVector())
             {
                 var v = expr.ToVector();
                 return v[index0];
             }
 
-            if (expr.IsString)
+            if (expr.IsString())
             {
                 var sv = expr.ToStringValue();
                 return sv.Value[index0].ToStringValue();
             }
 
             var index1 = (int) indexes[1].ToNumber().Value;
-            if (expr.IsMatrix)
+            if (expr.IsMatrix())
             {
                 var m = expr.ToMatrix();
                 return m[index0, index1];

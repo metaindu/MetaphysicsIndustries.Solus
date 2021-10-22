@@ -55,10 +55,10 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public static Types GetMathType(this IMathObject mo)
         {
-            if (mo.IsScalar) return Types.Scalar;
-            if (mo.IsVector) return Types.Vector;
-            if (mo.IsMatrix) return Types.Matrix;
-            if (mo.IsString) return Types.String;
+            if (mo.IsScalar()) return Types.Scalar;
+            if (mo.IsVector()) return Types.Vector;
+            if (mo.IsMatrix()) return Types.Matrix;
+            if (mo.IsString()) return Types.String;
             return Types.Unknown;
         }
 

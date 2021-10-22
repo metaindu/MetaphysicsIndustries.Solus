@@ -31,26 +31,33 @@ namespace MetaphysicsIndustries.Solus.Test
             bool isMatrix = false, int tensorRank = 0, bool isString = false,
             int[] dimensions = null)
         {
-            IsScalar = isScalar;
-            IsVector = isVector;
-            IsMatrix = isMatrix;
-            TensorRank = tensorRank;
-            IsString = isString;
+            _isScalar = isScalar;
+            _isVector = isVector;
+            _isMatrix = isMatrix;
+            _tensorRank = tensorRank;
+            _isString = isString;
             if (dimensions == null)
                 dimensions = Enumerable.Repeat(1, tensorRank).ToArray();
             _dimensions = dimensions;
         }
 
-        public bool IsScalar { get; }
-        public bool IsVector { get; }
-        public bool IsMatrix { get; }
-        public int TensorRank { get; }
-        public bool IsString { get; }
+        private readonly bool _isScalar;
+        public bool IsScalar() => _isScalar;
+
+        private readonly bool _isVector;
+        public bool IsVector() => _isVector;
+
+        private readonly bool _isMatrix;
+        public bool IsMatrix() => _isMatrix;
+
+        private readonly int _tensorRank;
+        public int GetTensorRank() => _tensorRank;
+
+        private readonly bool _isString;
+        public bool IsString() => _isString;
 
         private readonly int[] _dimensions;
-
         public int GetDimension(int index = 0) => _dimensions[index];
-
         public int[] GetDimensions() => _dimensions;
     }
 }

@@ -51,11 +51,11 @@ namespace MetaphysicsIndustries.Solus.Values
         public int Length => _components.Length;
         public Types ComponentType { get; }
 
-        public bool IsScalar => false;
-        public bool IsVector => true;
-        public bool IsMatrix => false;
-        public int TensorRank => 1;
-        public bool IsString => false;
+        public bool IsScalar() => false;
+        public bool IsVector() => true;
+        public bool IsMatrix() => false;
+        public int GetTensorRank() => 1;
+        public bool IsString() => false;
 
         public int GetDimension(int index = 0)
         {

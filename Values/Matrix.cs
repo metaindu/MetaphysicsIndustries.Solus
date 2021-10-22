@@ -58,11 +58,11 @@ namespace MetaphysicsIndustries.Solus.Values
         public int ColumnCount => _components.GetLength(1);
         public Types ComponentType { get; }
 
-        public bool IsScalar => false;
-        public bool IsVector => false;
-        public bool IsMatrix => true;
-        public int TensorRank => 2;
-        public bool IsString => false;
+        public bool IsScalar() => false;
+        public bool IsVector() => false;
+        public bool IsMatrix() => true;
+        public int GetTensorRank() => 2;
+        public bool IsString() => false;
 
         public int GetDimension(int index = 0)
         {

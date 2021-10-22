@@ -166,7 +166,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IEnumerable<Instruction> ConvertToInstructions(
             Literal expr, VariableToArgumentNumberMapper varmap)
         {
-            if (expr.Value.IsScalar)
+            if (expr.Value.IsScalar())
                 return new []
                 {
                     Instruction.LoadConstant(expr.Value.ToFloat())

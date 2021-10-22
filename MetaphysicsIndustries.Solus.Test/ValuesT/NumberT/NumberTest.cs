@@ -36,11 +36,11 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.NumberT
             var result = new Number();
             // then
             Assert.AreEqual(0, result.Value);
-            Assert.IsTrue(result.IsScalar);
-            Assert.IsFalse(result.IsVector);
-            Assert.IsFalse(result.IsMatrix);
-            Assert.AreEqual(0, result.TensorRank);
-            Assert.IsFalse(result.IsString);
+            Assert.IsTrue(result.IsScalar());
+            Assert.IsFalse(result.IsVector());
+            Assert.IsFalse(result.IsMatrix());
+            Assert.AreEqual(0, result.GetTensorRank());
+            Assert.IsFalse(result.IsString());
             Assert.Throws<InvalidOperationException>(
                 () => result.GetDimension(0));
             Assert.Throws<InvalidOperationException>(

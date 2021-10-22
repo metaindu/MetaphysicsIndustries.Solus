@@ -37,11 +37,11 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             var result = new StringValue();
             // then
             Assert.IsNull(result.Value);
-            Assert.IsFalse(result.IsScalar);
-            Assert.IsFalse(result.IsVector);
-            Assert.IsFalse(result.IsMatrix);
-            Assert.AreEqual(0, result.TensorRank);
-            Assert.IsTrue(result.IsString);
+            Assert.IsFalse(result.IsScalar());
+            Assert.IsFalse(result.IsVector());
+            Assert.IsFalse(result.IsMatrix());
+            Assert.AreEqual(0, result.GetTensorRank());
+            Assert.IsTrue(result.IsString());
             Assert.AreEqual(0, result.GetDimension(0));
             Assert.AreEqual(new[] {0}, result.GetDimensions());
         }

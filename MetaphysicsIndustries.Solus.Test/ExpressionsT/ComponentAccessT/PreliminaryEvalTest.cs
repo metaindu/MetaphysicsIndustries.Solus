@@ -78,7 +78,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var lit = (Literal) result;
-            Assert.IsTrue(lit.Value.IsScalar);
+            Assert.IsTrue(lit.Value.IsScalar());
             Assert.AreEqual(5, lit.Value.ToFloat());
         }
 

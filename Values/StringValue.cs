@@ -33,11 +33,12 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public readonly string Value;
 
-        public bool IsScalar => false;
-        public bool IsVector => false;
-        public bool IsMatrix => false;
-        public int TensorRank => 0;
-        public bool IsString => true;
+        public bool IsScalar() => false;
+        public bool IsVector() => false;
+        public bool IsMatrix() => false;
+        public int GetTensorRank() => 0;
+
+        public bool IsString() => true;
         // TODO: IsTuple => true
 
         public int GetDimension(int index = 0)

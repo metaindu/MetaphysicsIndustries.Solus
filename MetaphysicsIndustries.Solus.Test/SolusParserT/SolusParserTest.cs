@@ -577,7 +577,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.IsTrue(literal.Value.IsString);
+            Assert.IsTrue(literal.Value.IsString());
             Assert.AreEqual("value",
                 literal.Value.ToStringValue().Value);
         }
@@ -593,7 +593,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.IsTrue(literal.Value.IsString);
+            Assert.IsTrue(literal.Value.IsString());
             Assert.AreEqual("value",
                 literal.Value.ToStringValue().Value);
         }
