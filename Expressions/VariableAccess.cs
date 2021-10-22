@@ -96,11 +96,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
-        {
-            return new [] { Instruction.LoadLocalVariable(varmap[VariableName]) };
-        }
-
         public override bool IsResultScalar(SolusEnvironment env)
         {
             if (!env.ContainsVariable(VariableName))

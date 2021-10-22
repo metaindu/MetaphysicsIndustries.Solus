@@ -100,15 +100,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(
-	        VariableToArgumentNumberMapper varmap)
-        {
-	        if (Value.IsScalar)
-				return new [] { Instruction.LoadConstant(Value.ToFloat()) };
-	        throw new NotImplementedException(
-		        "currently only implemented for numbers.");
-        }
-
         public override bool IsResultScalar(SolusEnvironment env) =>
             Value.IsScalar;
 

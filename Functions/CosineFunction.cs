@@ -29,9 +29,6 @@
  *****************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
-using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -66,14 +63,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return "The cosine function\n  cos(x)\n\nReturns the cosine of x.";
             }
-        }
-
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
-        {
-            List<Instruction> instructions = new List<Instruction>();
-            instructions.AddRange(arguments[0].ConvertToInstructions(varmap));
-            instructions.Add(Instruction.Call(typeof(System.Math).GetMethod("Cos", new Type[] { typeof(float) })));
-            return instructions;
         }
     }
 }

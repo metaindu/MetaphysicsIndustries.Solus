@@ -213,11 +213,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
-        {
-            return Function.ConvertToInstructions(varmap, Arguments);
-        }
-
         public override bool IsResultScalar(SolusEnvironment env)
         {
             // return Function.IsResultScalar(env, Arguments);

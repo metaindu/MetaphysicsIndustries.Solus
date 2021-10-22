@@ -20,9 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
-using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -63,21 +60,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return "unit step function";
             }
-        }
-
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
-        {
-            var instructions = new List<Instruction>();
-
-            instructions.AddRange(arguments[0].ConvertToInstructions(varmap));
-
-            instructions.Add(Instruction.LoadConstant(0.0f));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.LoadConstant(1));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.ConvertR4());
-
-            return instructions;
         }
     }
 }

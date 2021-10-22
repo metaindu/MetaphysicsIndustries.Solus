@@ -20,9 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
-using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -83,24 +80,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return 0;
             }
-        }
-
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
-        {
-            var instructions = new List<Instruction>();
-
-            foreach (var arg in arguments)
-            {
-                instructions.AddRange(arg.ConvertToInstructions(varmap));
-            }
-
-            int i;
-            for (i = 1; i < arguments.Count; i++)
-            {
-                instructions.Add(Instruction.Mul());
-            }
-
-            return instructions;
         }
     }
 }

@@ -36,7 +36,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
@@ -147,11 +146,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         public virtual string DocString
         {
             get { return string.Empty; }
-        }
-
-        public virtual IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
-        {
-            throw new NotImplementedException();
         }
     }
 }

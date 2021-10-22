@@ -55,6 +55,7 @@
     <Compile Include="Commands\ICommandData.cs" />
     <Compile Include="Commands\VarsCommand.cs" />
     <Compile Include="Commands\VarAssignCommand.cs" />
+    <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
     <Compile Include="Exceptions\IndexException.cs" />

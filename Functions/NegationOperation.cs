@@ -21,8 +21,6 @@
  */
 
 using System.Collections.Generic;
-using System.Reflection.Emit;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -74,17 +72,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override float IdentityValue
         {
             get { return 0; }
-        }
-
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
-        {
-            List<Instruction> instructions = new List<Instruction>();
-            instructions.AddRange(arguments[0].ConvertToInstructions(varmap));
-            instructions.Add(new Instruction {
-                ArgType=Instruction.ArgumentType.None,
-                OpCode=OpCodes.Neg
-            });
-            return instructions;
         }
     }
 }
