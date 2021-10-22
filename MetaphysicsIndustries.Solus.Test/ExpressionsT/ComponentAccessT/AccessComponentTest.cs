@@ -169,7 +169,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void HigherTensorRankObjectThrows()
         {
             // given
-            var expr = new MockMathObject(tensorRank: 3);
+            var expr = new MockMathObject(isScalar: false, tensorRank: 3);
             var indexes = new IMathObject[]
             {
                 1.ToNumber(),
