@@ -120,6 +120,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return expr.ToString();
         }
 
-        public abstract IEnvMathObject Result { get; }
+        public abstract IMathObject Result { get; }
     }
 }

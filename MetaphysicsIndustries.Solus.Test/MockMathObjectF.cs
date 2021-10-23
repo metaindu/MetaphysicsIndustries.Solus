@@ -21,13 +21,13 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Test
 {
-    public class MockEnvMathObject : IEnvMathObject
+    public class MockMathObjectF : IMathObject
     {
-        public MockEnvMathObject(
+        public MockMathObjectF(
             Func<SolusEnvironment, bool> isScalarF = null,
             Func<SolusEnvironment, bool> isVectorF = null,
             Func<SolusEnvironment, bool> isMatrixF = null,

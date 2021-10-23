@@ -105,8 +105,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override IEnvMathObject Result { get; } = new ResultC();
-        private class ResultC : IEnvMathObject
+        public override IMathObject Result { get; } = new ResultC();
+        private class ResultC : IMathObject
         {
             public bool IsScalar(SolusEnvironment env) => true;
             public bool IsVector(SolusEnvironment env) => false;

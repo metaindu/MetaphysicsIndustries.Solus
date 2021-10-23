@@ -212,7 +212,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IEnvMathObject Result =>
+        public override IMathObject Result =>
             throw new NotImplementedException();
     }
 }

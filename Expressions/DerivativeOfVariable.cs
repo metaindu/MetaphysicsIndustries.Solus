@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnvMathObject Result =>
+        public override IMathObject Result =>
             throw new NotImplementedException();
     }
 }

@@ -95,9 +95,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnvMathObject Result { get; }
+        public override IMathObject Result { get; }
 
-        private class ResultC : IEnvMathObject
+        private class ResultC : IMathObject
         {
             public ResultC(VariableAccess va) => _va = va;
             private readonly VariableAccess _va;

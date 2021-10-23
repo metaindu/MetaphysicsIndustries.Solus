@@ -754,9 +754,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IEnvMathObject Result { get; }
+        public override IMathObject Result { get; }
 
-        private class ResultC : IEnvMathObject
+        private class ResultC : IMathObject
         {
             public ResultC(MatrixExpression me) => _me = me;
             private readonly MatrixExpression _me;

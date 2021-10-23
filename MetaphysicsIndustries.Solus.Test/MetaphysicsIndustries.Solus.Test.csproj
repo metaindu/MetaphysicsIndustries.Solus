@@ -49,7 +49,7 @@
     <Compile Include="FunctionsT\LoadImageFunctionT\LoadImageFunctionTest.cs" />
     <Compile Include="FunctionsT\SizeFunctionT\SizeFunctionTest.cs" />
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
-    <Compile Include="MockEnvMathObject.cs" />
+    <Compile Include="MockMathObjectF.cs" />
     <Compile Include="MockExpression.cs" />
     <Compile Include="MockMathObject.cs" />
     <Compile Include="SolusEngineT\LoadImageTest.cs" />

@@ -253,9 +253,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IEnvMathObject Result { get; }
+        public override IMathObject Result { get; }
 
-        private class ResultC : IEnvMathObject
+        private class ResultC : IMathObject
         {
             public ResultC(ComponentAccess ca) => _ca = ca;
             private readonly ComponentAccess _ca;

@@ -104,9 +104,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnvMathObject Result { get; }
+        public override IMathObject Result { get; }
 
-        private class ResultC : IEnvMathObject
+        private class ResultC : IMathObject
         {
             public ResultC(Literal lit) => _lit = lit;
             private readonly Literal _lit;

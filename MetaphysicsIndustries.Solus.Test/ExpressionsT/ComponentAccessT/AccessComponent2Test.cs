@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 
         static IMathObject[] mkindexes(params int[] indexes)
         {
-            return indexes.Select(i => (IMathObject) i.ToNumber()).ToArray();
+            return indexes.Select(i => (IMathObject)i.ToNumber()).ToArray();
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             public MockTensorExpression(int tensorRank)
             {
                 TensorRank = tensorRank;
-                Result = new MockEnvMathObject(
+                Result = new MockMathObjectF(
                     isScalarF: e => TensorRank == 0,
                     isVectorF: e => TensorRank == 1,
                     isMatrixF: e => TensorRank == 2,
@@ -111,7 +111,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             public override void ApplyToAll(Modulator mod) =>
                 throw new NotImplementedException();
 
-            public override IEnvMathObject Result { get; }
+            public override IMathObject Result { get; }
         }
 
         [Test]

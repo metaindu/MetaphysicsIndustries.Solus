@@ -35,11 +35,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isScalarF: e => false)),
-                    new MockExpression(result: new MockEnvMathObject(
+                    new MockExpression(result: new MockMathObjectF(
                         isScalarF: e => true)),
-                    new MockExpression(result: new MockEnvMathObject(
+                    new MockExpression(result: new MockMathObjectF(
                         isScalarF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -56,11 +56,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isScalarF: e => true)),
-                    new MockExpression(result: new MockEnvMathObject(
+                    new MockExpression(result: new MockMathObjectF(
                         isScalarF: e => false)),
-                    new MockExpression(result: new MockEnvMathObject(
+                    new MockExpression(result: new MockMathObjectF(
                         isScalarF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -77,13 +77,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isVectorF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isVectorF: e => true)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isVectorF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -100,13 +100,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isVectorF: e => true)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isVectorF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isVectorF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -123,13 +123,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isMatrixF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isMatrixF: e => true)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isMatrixF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -146,13 +146,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isMatrixF: e => true)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isMatrixF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isMatrixF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -169,13 +169,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isStringF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isStringF: e => true)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isStringF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -192,13 +192,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isStringF: e => true)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isStringF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isStringF: e => true))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -215,13 +215,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getTensorRankF: e => 1)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getTensorRankF: e => 2)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getTensorRankF: e => 1))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -238,13 +238,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getTensorRankF: e => 2)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getTensorRankF: e => 1)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getTensorRankF: e => 2))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -261,13 +261,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getDimensionF: (e, i) => 1)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getDimensionF: (e, i) => 2)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getDimensionF: (e, i) => 1))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -286,13 +286,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getDimensionsF: e => one)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getDimensionsF: e => two)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getDimensionsF: e => one))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -309,13 +309,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getVectorLengthF: e => 1)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getVectorLengthF: e => 2)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getVectorLengthF: e => 3))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -332,13 +332,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new VectorExpression(3,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getStringLengthF: e => 1)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getStringLengthF: e => 2)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             getStringLengthF: e => 3))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
@@ -356,16 +356,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var expr = new ComponentAccess(
                 new MatrixExpression(2, 2,
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isScalarF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isScalarF: e => true)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isScalarF: e => false)),
                     new MockExpression(
-                        result: new MockEnvMathObject(
+                        result: new MockMathObjectF(
                             isScalarF: e => false))),
                 new[] { new Literal(0), new Literal(1) });
             var env = new SolusEnvironment();
@@ -381,7 +381,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new ComponentAccess(
                 new MockExpression(
-                    result: new MockEnvMathObject(
+                    result: new MockMathObjectF(
                         isScalarF: e => false,
                         isVectorF: e => false,
                         isMatrixF: e => false,
