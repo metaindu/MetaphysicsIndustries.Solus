@@ -785,12 +785,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             public int GetVectorLength(SolusEnvironment env)
             {
-                throw new InvalidOperationException("A matrix is not a vector");
+                throw new InvalidOperationException(
+                    "A matrix is not a vector");
             }
 
             public int GetStringLength(SolusEnvironment env)
             {
-                throw new InvalidOperationException("A matrix is not a string");
+                throw new InvalidOperationException(
+                    "A matrix is not a string");
             }
         }
     }

@@ -298,7 +298,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             public int GetStringLength(SolusEnvironment env)
             {
-                throw new InvalidOperationException("A vector is not a string");
+                throw new InvalidOperationException(
+                    "A vector is not a string");
             }
         }
     }

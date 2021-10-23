@@ -43,7 +43,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new DynamicMethod(
                     name: this.ToString(),
                     returnType: typeof(float),
-                    parameterTypes: new [] { typeof(Dictionary<string, float>) });
+                    parameterTypes: new []
+                    {
+                        typeof(Dictionary<string, float>)
+                    });
 
             var gen = method.GetILGenerator();
 
@@ -121,7 +124,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IMathObject FastEval(Expression expr, SolusEnvironment env,
             ref Expression.CompiledExpression compiled)
         {
-            Dictionary<string, float> bakedEnv = new Dictionary<string, float>();
+            var bakedEnv = new Dictionary<string, float>();
             if (compiled != null)
             {
                 foreach (var var in compiled.CompiledVars)
@@ -320,7 +323,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 {
                     instructions.Add(
                         Instruction.Call(
-                            typeof(System.Math).GetMethod("Sqrt", new Type[] { typeof(float) })));
+                            typeof(System.Math).GetMethod(
+                                "Sqrt", new Type[] { typeof(float) })));
 
                     return instructions;
                 }
