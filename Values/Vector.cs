@@ -69,6 +69,12 @@ namespace MetaphysicsIndustries.Solus.Values
         }
 
         public int[] GetDimensions(SolusEnvironment env) => new[] {Length};
+        public int GetVectorLength(SolusEnvironment env) => Length;
+
+        public int GetStringLength(SolusEnvironment env) =>
+            throw new InvalidOperationException(
+                "A vector is not a string");
+
         public bool IsConcrete => true;
 
         public override string ToString()

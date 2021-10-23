@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -61,6 +62,12 @@ namespace MetaphysicsIndustries.Solus.Test
         public int GetDimension(SolusEnvironment env, int index) =>
             _dimensions[index];
         public int[] GetDimensions(SolusEnvironment env) => _dimensions;
+
+        public int GetVectorLength(SolusEnvironment env) =>
+            throw new NotImplementedException();
+
+        public int GetStringLength(SolusEnvironment env) =>
+            throw new NotImplementedException();
 
         private readonly bool _isConcrete;
         public bool IsConcrete => _isConcrete;

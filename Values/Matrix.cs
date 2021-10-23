@@ -76,7 +76,15 @@ namespace MetaphysicsIndustries.Solus.Values
         }
 
         public int[] GetDimensions(SolusEnvironment env) =>
-            new[] {RowCount, ColumnCount};
+            new[] { RowCount, ColumnCount };
+
+        public int GetVectorLength(SolusEnvironment env) =>
+            throw new InvalidOperationException(
+                "A matrix is not a vector");
+
+        public int GetStringLength(SolusEnvironment env) =>
+            throw new InvalidOperationException(
+                "A matrix is not a string");
 
         public bool IsConcrete => true;
 
