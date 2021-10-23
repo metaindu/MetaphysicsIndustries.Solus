@@ -32,4 +32,6 @@ git diff -U0 | \
 echo ""
 echo "Files missing license notices:"
 grep -L 'GNU Lesser General Public' \
-    $(find . -name \*.cs -o -name \*.sh -o -name \*.giza)
+    $(find . -name \*.cs -o -name \*.sh -o -name \*.giza |
+        grep -v -e '^./solus/NDesk' -e '^./solus/getline' -e '^./obj/' \
+            -e '^./solus/obj/' -e '^./MetaphysicsIndustries.Solus.Test/obj/' )
