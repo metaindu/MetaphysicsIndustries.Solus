@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             var value = Expr.Eval(env);
             var evaledIndexes = GetEvaledIndexes(env);
-            return AccessComponent(value, evaledIndexes);
+            return AccessComponent(value, evaledIndexes, env);
         }
 
         private IMathObject[] GetEvaledIndexes(SolusEnvironment env)
@@ -81,7 +81,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         "required by the expression");
             }
 
-            if (indexes.Any(i => !i.IsScalar()))
+            // TODO: maybe pass the env, and then we don't have to eval the
+            // indexes before-hand?
+            if (indexes.Any(i => !i.IsScalar(null)))
                 throw new IndexException(
                     "Indexes must be scalar");
             if (indexes.Any(i => i.ToNumber().Value < 0))
@@ -123,32 +125,38 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public static IMathObject AccessComponent(IMathObject expr,
-            IMathObject[] indexes)
+            IMathObject[] indexes, SolusEnvironment env)
         {
             int? length = null;
-            if (expr.IsVector()) length = expr.ToVector().Length;
-            else if (expr.IsString()) length = expr.ToStringValue().Length;
-            CheckIndexes(indexes, expr.IsScalar(), expr.IsVector(), expr.IsMatrix(),
-                expr.GetTensorRank(), expr.IsString(),
-                length,
-                expr.GetTensorRank() > 1 ? new int?(expr.GetDimension(0)) : null,
-                expr.GetTensorRank() > 1 ? new int?(expr.GetDimension(1)) : null);
+            if (expr.IsVector(env)) length = expr.ToVector().Length;
+            else if (expr.IsString(env)) length = expr.ToStringValue().Length;
+            int? exprRowCount = null;
+            int? exprColumnCount = null;
+            if (expr.GetTensorRank(env) > 1)
+            {
+                exprRowCount = new int?(expr.GetDimension(env, 0));
+                exprColumnCount = new int?(expr.GetDimension(env, 1));
+            }
+            CheckIndexes(indexes, expr.IsScalar(env), expr.IsVector(env),
+                expr.IsMatrix(env), expr.GetTensorRank(env),
+                expr.IsString(env), length,
+                exprRowCount, exprColumnCount);
 
             var index0 = (int) indexes[0].ToNumber().Value;
-            if (expr.IsVector())
+            if (expr.IsVector(env))
             {
                 var v = expr.ToVector();
                 return v[index0];
             }
 
-            if (expr.IsString())
+            if (expr.IsString(env))
             {
                 var sv = expr.ToStringValue();
                 return sv.Value[index0].ToStringValue();
             }
 
             var index1 = (int) indexes[1].ToNumber().Value;
-            if (expr.IsMatrix())
+            if (expr.IsMatrix(env))
             {
                 var m = expr.ToMatrix();
                 return m[index0, index1];
@@ -208,7 +216,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 {
                     case Literal lit:
                         return new Literal(
-                            AccessComponent(lit.Value, indexes2));
+                            AccessComponent(lit.Value, indexes2, env));
                     case TensorExpression te:
                         return AccessComponent(te, indexes2, env);
                 }

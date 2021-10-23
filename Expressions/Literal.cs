@@ -107,29 +107,29 @@ namespace MetaphysicsIndustries.Solus.Expressions
             private readonly Literal _lit;
 
             public bool IsScalar(SolusEnvironment env) =>
-                _lit.Value.IsScalar();
+                _lit.Value.IsScalar(env);
 
             public bool IsVector(SolusEnvironment env) =>
-                _lit.Value.IsVector();
+                _lit.Value.IsVector(env);
 
             public bool IsMatrix(SolusEnvironment env) =>
-                _lit.Value.IsMatrix();
+                _lit.Value.IsMatrix(env);
 
             public int GetTensorRank(SolusEnvironment env) =>
-                _lit.Value.GetTensorRank();
+                _lit.Value.GetTensorRank(env);
 
             public bool IsString(SolusEnvironment env) =>
-                _lit.Value.IsString();
+                _lit.Value.IsString(env);
 
             public int GetDimension(SolusEnvironment env,
-                int index) => _lit.Value.GetDimension(index);
+                int index) => _lit.Value.GetDimension(env, index);
 
             public int[] GetDimensions(SolusEnvironment env) =>
-                _lit.Value.GetDimensions();
+                _lit.Value.GetDimensions(env);
 
             public int GetVectorLength(SolusEnvironment env)
             {
-                if (_lit.Value.IsVector())
+                if (_lit.Value.IsVector(env))
                     return _lit.Value.ToVector().Length;
                 throw new InvalidOperationException(
                     "The value is not a vector");
@@ -137,7 +137,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             public int GetStringLength(SolusEnvironment env)
             {
-                if (_lit.Value.IsString())
+                if (_lit.Value.IsString(env))
                     return _lit.Value.ToStringValue().Length;
                 throw new InvalidOperationException(
                     "The value is not a string");

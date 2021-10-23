@@ -42,22 +42,23 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         private readonly bool _isScalar;
-        public bool IsScalar() => _isScalar;
+        public bool IsScalar(SolusEnvironment env) => _isScalar;
 
         private readonly bool _isVector;
-        public bool IsVector() => _isVector;
+        public bool IsVector(SolusEnvironment env) => _isVector;
 
         private readonly bool _isMatrix;
-        public bool IsMatrix() => _isMatrix;
+        public bool IsMatrix(SolusEnvironment env) => _isMatrix;
 
         private readonly int _tensorRank;
-        public int GetTensorRank() => _tensorRank;
+        public int GetTensorRank(SolusEnvironment env) => _tensorRank;
 
         private readonly bool _isString;
-        public bool IsString() => _isString;
+        public bool IsString(SolusEnvironment env) => _isString;
 
         private readonly int[] _dimensions;
-        public int GetDimension(int index = 0) => _dimensions[index];
-        public int[] GetDimensions() => _dimensions;
+        public int GetDimension(SolusEnvironment env, int index) =>
+            _dimensions[index];
+        public int[] GetDimensions(SolusEnvironment env) => _dimensions;
     }
 }

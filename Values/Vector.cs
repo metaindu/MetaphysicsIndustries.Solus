@@ -51,13 +51,13 @@ namespace MetaphysicsIndustries.Solus.Values
         public int Length => _components.Length;
         public Types ComponentType { get; }
 
-        public bool IsScalar() => false;
-        public bool IsVector() => true;
-        public bool IsMatrix() => false;
-        public int GetTensorRank() => 1;
-        public bool IsString() => false;
+        public bool IsScalar(SolusEnvironment env) => false;
+        public bool IsVector(SolusEnvironment env) => true;
+        public bool IsMatrix(SolusEnvironment env) => false;
+        public int GetTensorRank(SolusEnvironment env) => 1;
+        public bool IsString(SolusEnvironment env) => false;
 
-        public int GetDimension(int index = 0)
+        public int GetDimension(SolusEnvironment env, int index)
         {
             if (index < 0)
                 throw new ArgumentOutOfRangeException(nameof(index),
@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Values
             return Length;
         }
 
-        public int[] GetDimensions() => new[] {Length};
+        public int[] GetDimensions(SolusEnvironment env) => new[] {Length};
 
         public override string ToString()
         {

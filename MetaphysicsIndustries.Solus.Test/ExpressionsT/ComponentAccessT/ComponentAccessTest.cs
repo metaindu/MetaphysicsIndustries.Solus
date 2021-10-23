@@ -59,8 +59,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.Eval(null);
             // then
-            Assert.IsFalse(result.IsVector());
-            Assert.IsTrue(result.IsScalar());
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsTrue(result.IsScalar(null));
             Assert.AreEqual(2, result.ToFloat());
         }
 

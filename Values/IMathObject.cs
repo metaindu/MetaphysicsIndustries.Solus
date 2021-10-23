@@ -24,12 +24,12 @@ namespace MetaphysicsIndustries.Solus.Values
 {
     public interface IMathObject
     {
-        bool IsScalar();
-        bool IsVector();
-        bool IsMatrix();
-        int GetTensorRank();
-        bool IsString();
-        int GetDimension(int index = 0);
-        int[] GetDimensions();
+        bool IsScalar(SolusEnvironment env);
+        bool IsVector(SolusEnvironment env);
+        bool IsMatrix(SolusEnvironment env);
+        int GetTensorRank(SolusEnvironment env);
+        bool IsString(SolusEnvironment env);
+        int GetDimension(SolusEnvironment env, int index);
+        int[] GetDimensions(SolusEnvironment env);
     }
 }

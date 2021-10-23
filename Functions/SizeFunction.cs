@@ -58,9 +58,9 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: this function should be able to operate on things that
             // aren't IMathObject, namely TensorExpression
             var arg = args[0];
-            if (arg.IsString() || arg.IsVector())
-                return arg.GetDimension().ToNumber();
-            return arg.GetDimensions().ToVector();
+            if (arg.IsString(env) || arg.IsVector(env))
+                return arg.GetDimension(env, 0).ToNumber();
+            return arg.GetDimensions(env).ToVector();
         }
     }
 }

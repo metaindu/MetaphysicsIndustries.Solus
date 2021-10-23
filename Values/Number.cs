@@ -33,19 +33,19 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public float Value { get; }
 
-        public bool IsScalar() => true;
-        public bool IsVector() => false;
-        public bool IsMatrix() => false;
-        public int GetTensorRank() => 0;
-        public bool IsString() => false;
+        public bool IsScalar(SolusEnvironment env) => true;
+        public bool IsVector(SolusEnvironment env) => false;
+        public bool IsMatrix(SolusEnvironment env) => false;
+        public int GetTensorRank(SolusEnvironment env) => 0;
+        public bool IsString(SolusEnvironment env) => false;
 
-        public int GetDimension(int index = 0)
+        public int GetDimension(SolusEnvironment env, int index)
         {
             throw new InvalidOperationException(
                 "Scalars do not have dimensions");
         }
 
-        public int[] GetDimensions()
+        public int[] GetDimensions(SolusEnvironment env)
         {
             throw new InvalidOperationException(
                 "Scalars do not have dimensions");

@@ -33,15 +33,15 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public readonly string Value;
 
-        public bool IsScalar() => false;
-        public bool IsVector() => false;
-        public bool IsMatrix() => false;
-        public int GetTensorRank() => 0;
+        public bool IsScalar(SolusEnvironment env) => false;
+        public bool IsVector(SolusEnvironment env) => false;
+        public bool IsMatrix(SolusEnvironment env) => false;
+        public int GetTensorRank(SolusEnvironment env) => 0;
 
-        public bool IsString() => true;
+        public bool IsString(SolusEnvironment env) => true;
         // TODO: IsTuple => true
 
-        public int GetDimension(int index = 0)
+        public int GetDimension(SolusEnvironment env, int index)
         {
             if (index < 0)
                 throw new ArgumentOutOfRangeException(nameof(index),
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Values
             return Length;
         }
 
-        public int[] GetDimensions()
+        public int[] GetDimensions(SolusEnvironment env)
         {
             return new[] {Length};
         }

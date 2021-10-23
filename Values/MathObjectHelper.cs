@@ -53,12 +53,13 @@ namespace MetaphysicsIndustries.Solus.Values
         public static float ToFloat(this IMathObject value) =>
             value.ToNumber().Value;
 
-        public static Types GetMathType(this IMathObject mo)
+        public static Types GetMathType(this IMathObject mo,
+            SolusEnvironment env=null)
         {
-            if (mo.IsScalar()) return Types.Scalar;
-            if (mo.IsVector()) return Types.Vector;
-            if (mo.IsMatrix()) return Types.Matrix;
-            if (mo.IsString()) return Types.String;
+            if (mo.IsScalar(env)) return Types.Scalar;
+            if (mo.IsVector(env)) return Types.Vector;
+            if (mo.IsMatrix(env)) return Types.Matrix;
+            if (mo.IsString(env)) return Types.String;
             return Types.Unknown;
         }
 
