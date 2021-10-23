@@ -137,6 +137,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new InvalidOperationException(
                     "Color expressions do not have a length");
             }
+
+            public bool IsConcrete => false;
         }
     }
 }

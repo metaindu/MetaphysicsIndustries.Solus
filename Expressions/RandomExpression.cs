@@ -79,6 +79,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new InvalidOperationException(
                     "Random expressions do not have a length");
             }
+
+            public bool IsConcrete => false;
         }
     }
 }

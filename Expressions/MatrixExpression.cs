@@ -794,6 +794,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new InvalidOperationException(
                     "A matrix is not a string");
             }
+
+            public bool IsConcrete => false;
         }
     }
 }

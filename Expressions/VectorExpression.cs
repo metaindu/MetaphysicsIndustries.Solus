@@ -301,6 +301,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new InvalidOperationException(
                     "A vector is not a string");
             }
+
+            public bool IsConcrete => false;
         }
     }
 }

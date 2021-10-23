@@ -321,6 +321,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
                 return expr.Result.GetStringLength(env);
             }
+
+            public bool IsConcrete => false;
         }
     }
 }

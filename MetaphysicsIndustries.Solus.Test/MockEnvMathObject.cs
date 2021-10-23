@@ -36,7 +36,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Func<SolusEnvironment, int, int> getDimensionF = null,
             Func<SolusEnvironment, int[]> getDimensionsF = null,
             Func<SolusEnvironment, int> getVectorLengthF = null,
-            Func<SolusEnvironment, int> getStringLengthF = null)
+            Func<SolusEnvironment, int> getStringLengthF = null,
+            bool isConcreteV = false)
         {
             IsScalarF = isScalarF;
             IsVectorF = isVectorF;
@@ -47,6 +48,7 @@ namespace MetaphysicsIndustries.Solus.Test
             GetDimensionsF = getDimensionsF;
             GetVectorLengthF = getVectorLengthF;
             GetStringLengthF = getStringLengthF;
+            IsConcreteV = isConcreteV;
         }
 
         public Func<SolusEnvironment, bool> IsScalarF;
@@ -111,5 +113,8 @@ namespace MetaphysicsIndustries.Solus.Test
             if (GetStringLengthF != null) return GetStringLengthF(env);
             throw new NotImplementedException();
         }
+
+        public bool IsConcreteV;
+        public bool IsConcrete => IsConcreteV;
     }
 }

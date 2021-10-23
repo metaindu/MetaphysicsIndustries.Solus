@@ -147,6 +147,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new InvalidOperationException(
                     "The value is not a string");
             }
+
+            public bool IsConcrete => false;
         }
     }
 }

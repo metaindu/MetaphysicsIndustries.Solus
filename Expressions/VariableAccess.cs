@@ -172,6 +172,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.GetStringLength(env);
             }
+
+            public bool IsConcrete => false;
         }
     }
 }
