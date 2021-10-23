@@ -51,7 +51,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     nameof(value));
 
 			_value = value;
-            Result = new ResultC(this);
         }
 
         public override Expression Clone()
@@ -104,51 +103,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IMathObject Result { get; }
-
-        private class ResultC : IMathObject
-        {
-            public ResultC(Literal lit) => _lit = lit;
-            private readonly Literal _lit;
-
-            public bool IsScalar(SolusEnvironment env) =>
-                _lit.Value.IsScalar(env);
-
-            public bool IsVector(SolusEnvironment env) =>
-                _lit.Value.IsVector(env);
-
-            public bool IsMatrix(SolusEnvironment env) =>
-                _lit.Value.IsMatrix(env);
-
-            public int GetTensorRank(SolusEnvironment env) =>
-                _lit.Value.GetTensorRank(env);
-
-            public bool IsString(SolusEnvironment env) =>
-                _lit.Value.IsString(env);
-
-            public int GetDimension(SolusEnvironment env,
-                int index) => _lit.Value.GetDimension(env, index);
-
-            public int[] GetDimensions(SolusEnvironment env) =>
-                _lit.Value.GetDimensions(env);
-
-            public int GetVectorLength(SolusEnvironment env)
-            {
-                if (_lit.Value.IsVector(env))
-                    return _lit.Value.ToVector().Length;
-                throw new InvalidOperationException(
-                    "The value is not a vector");
-            }
-
-            public int GetStringLength(SolusEnvironment env)
-            {
-                if (_lit.Value.IsString(env))
-                    return _lit.Value.ToStringValue().Length;
-                throw new InvalidOperationException(
-                    "The value is not a string");
-            }
-
-            public bool IsConcrete => false;
-        }
+        public override IMathObject Result => Value;
     }
 }
