@@ -69,6 +69,7 @@ namespace MetaphysicsIndustries.Solus.Values
         }
 
         public int[] GetDimensions(SolusEnvironment env) => new[] {Length};
+        public bool IsConcrete => true;
 
         public override string ToString()
         {

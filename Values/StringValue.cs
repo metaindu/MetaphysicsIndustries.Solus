@@ -57,6 +57,8 @@ namespace MetaphysicsIndustries.Solus.Values
             return new[] {Length};
         }
 
+        public bool IsConcrete => true;
+
         public int Length => Value?.Length ?? 0;
 
         public override string ToString()

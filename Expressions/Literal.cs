@@ -44,7 +44,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
 		{
 		}
 		public Literal(IMathObject value)
-		{
+        {
+            if (!value.IsConcrete)
+                throw new ArgumentException(
+                    "Literal expressions can only hold concrete values",
+                    nameof(value));
+
 			_value = value;
             Result = new ResultC(this);
         }

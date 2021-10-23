@@ -78,6 +78,8 @@ namespace MetaphysicsIndustries.Solus.Values
         public int[] GetDimensions(SolusEnvironment env) =>
             new[] {RowCount, ColumnCount};
 
+        public bool IsConcrete => true;
+
         public override string ToString()
         {
             var sb = new StringBuilder();

@@ -51,6 +51,8 @@ namespace MetaphysicsIndustries.Solus.Values
                 "Scalars do not have dimensions");
         }
 
+        public bool IsConcrete => true;
+
         public override string ToString()
         {
             if (Math.Abs(Value - (float) Math.E) < 1e-6)

@@ -31,5 +31,7 @@ namespace MetaphysicsIndustries.Solus.Values
         bool IsString(SolusEnvironment env);
         int GetDimension(SolusEnvironment env, int index);
         int[] GetDimensions(SolusEnvironment env);
+
+        bool IsConcrete { get; }
     }
 }

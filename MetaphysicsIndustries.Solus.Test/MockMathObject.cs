@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus.Test
     {
         public MockMathObject(bool isScalar = true, bool isVector = false,
             bool isMatrix = false, int tensorRank = 0, bool isString = false,
-            int[] dimensions = null)
+            int[] dimensions = null, bool isConcrete = false)
         {
             _isScalar = isScalar;
             _isVector = isVector;
@@ -39,6 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test
             if (dimensions == null)
                 dimensions = Enumerable.Repeat(1, tensorRank).ToArray();
             _dimensions = dimensions;
+            _isConcrete = isConcrete;
         }
 
         private readonly bool _isScalar;
@@ -60,5 +61,8 @@ namespace MetaphysicsIndustries.Solus.Test
         public int GetDimension(SolusEnvironment env, int index) =>
             _dimensions[index];
         public int[] GetDimensions(SolusEnvironment env) => _dimensions;
+
+        private readonly bool _isConcrete;
+        public bool IsConcrete => _isConcrete;
     }
 }
