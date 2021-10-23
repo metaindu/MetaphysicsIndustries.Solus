@@ -20,7 +20,7 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Values
+namespace MetaphysicsIndustries.Solus
 {
     public interface IMathObject
     {

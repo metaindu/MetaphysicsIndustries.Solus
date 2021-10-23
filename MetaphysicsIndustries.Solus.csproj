@@ -129,6 +129,7 @@
     <Compile Include="Functions\UnaryOperation.cs" />
     <Compile Include="Functions\UnitStepFunction.cs" />
     <Compile Include="Functions\UserDefinedFunction.cs" />
+    <Compile Include="IMathObject.cs" />
     <Compile Include="IPerPixelOperator.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -167,7 +168,6 @@
     <Compile Include="Transformers\VariableTransformArgs.cs" />
     <Compile Include="STuple.cs" />
     <Compile Include="MemoryImage.cs" />
-    <Compile Include="Values\IMathObject.cs" />
     <Compile Include="Values\MathObjectHelper.cs" />
     <Compile Include="Values\Matrix.cs" />
     <Compile Include="Values\Number.cs" />
