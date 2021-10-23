@@ -18,7 +18,11 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-grep -n '................................................................................' $(find . -name \*.cs)
+#grep -n '................................................................................' $(find . -name \*.cs)
+git diff -U0 | \
+    grep -v -e '^@@' -e '^diff --git' -e '^+++' -e '^---' -e '^- ' | \
+    grep -n '[-+]................................................................................'
+
 
 # TODO: check for tabs rather than spaces
 # TODO: check for trailing whitespace on lines
