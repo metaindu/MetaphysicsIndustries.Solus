@@ -55,10 +55,6 @@ namespace MetaphysicsIndustries.Solus.Values
             throw new InvalidOperationException(
                 "A number is not a vector");
 
-        public int GetStringLength(SolusEnvironment env) =>
-            throw new InvalidOperationException(
-                "A number is not a string");
-
         public bool IsConcrete => true;
 
         public override string ToString()

@@ -66,9 +66,6 @@ namespace MetaphysicsIndustries.Solus.Test
         public int GetVectorLength(SolusEnvironment env) =>
             throw new NotImplementedException();
 
-        public int GetStringLength(SolusEnvironment env) =>
-            throw new NotImplementedException();
-
         private readonly bool _isConcrete;
         public bool IsConcrete => _isConcrete;
     }

@@ -74,12 +74,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     "Random expressions do not have a length");
             }
 
-            public int GetStringLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "Random expressions do not have a length");
-            }
-
             public bool IsConcrete => false;
         }
     }

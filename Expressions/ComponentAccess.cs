@@ -101,9 +101,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             if (exprIsString)
             {
-                if (index0 >= exprLength.Value)
-                    throw new IndexException(
-                        "Index exceeds the size of the string");
+                // TODO: check index for string
+                // if (!exprLength.HasValue)
+                //     throw new OperandException(
+                //         "Expression does not have a length");
+                // if (index0 >= exprLength.Value)
+                //     throw new IndexException(
+                //         "Index exceeds the size of the string");
                 return;
             }
 
@@ -173,8 +177,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int? length = null;
             if (expr.Result.IsVector(env))
                 length = expr.Result.GetVectorLength(env);
-            else if (expr.Result.IsString(env))
-                length = expr.Result.GetStringLength(env);
 
             int exprTensorRank = expr.Result.GetTensorRank(env);
             int? exprRowCount = null;
@@ -313,28 +315,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 var evaledIndexes = _ca.GetEvaledIndexes(env);
                 var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
                 return expr.Result.GetVectorLength(env);
-            }
-
-            public int GetStringLength(SolusEnvironment env)
-            {
-                if (_ca.Indexes.Count != 1)
-                    throw new IndexException(
-                        "Wrong number of indexes for a string");
-                var index = InterrogateIndexValue(_ca.Indexes[0], env);
-                if (!index.IsScalar(env))
-                    throw new IndexException(
-                        "Wrong type of index for a string");
-                var index2 = index.ToNumber().Value;
-                if (index2 != index2.RoundInt())
-                    throw new IndexException(
-                        "Index is not an integer");
-                if (index2 < 0 ||
-                    index2 > _ca.Expr.Result.GetStringLength(env))
-                    throw new IndexException(
-                        "Index out of range");
-                var evaledIndexes = new IMathObject[] { index };
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.GetStringLength(env);
             }
 
             public bool IsConcrete => false;

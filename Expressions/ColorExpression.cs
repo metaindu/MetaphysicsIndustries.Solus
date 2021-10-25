@@ -132,12 +132,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     "Color expressions do not have a length");
             }
 
-            public int GetStringLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "Color expressions do not have a length");
-            }
-
             public bool IsConcrete => false;
         }
     }

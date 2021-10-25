@@ -326,30 +326,6 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         }
 
         [Test]
-        public void GetResultStringLengthDelegatesToComponent()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getStringLengthF: e => 1)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getStringLengthF: e => 2)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getStringLengthF: e => 3))),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.Result.GetStringLength(env);
-            // then
-            Assert.AreEqual(2, result);
-        }
-
-
-        [Test]
         public void DelegatesToMatrixComponent()
         {
             // given
@@ -386,8 +362,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                         isVectorF: e => false,
                         isMatrixF: e => false,
                         getTensorRankF: e => 0,
-                        isStringF: e => true,
-                        getStringLengthF: e => 3)),
+                        isStringF: e => true)),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when

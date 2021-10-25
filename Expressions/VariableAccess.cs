@@ -166,13 +166,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return varexpr.Result.GetVectorLength(env);
             }
 
-            public int GetStringLength(SolusEnvironment env)
-            {
-                Check(env);
-                var varexpr = env.GetVariable(_va.VariableName);
-                return varexpr.Result.GetStringLength(env);
-            }
-
             public bool IsConcrete => false;
         }
     }

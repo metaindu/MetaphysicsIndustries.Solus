@@ -296,12 +296,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             public int GetVectorLength(SolusEnvironment env) => _ve.Length;
 
-            public int GetStringLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "A vector is not a string");
-            }
-
             public bool IsConcrete => false;
         }
     }

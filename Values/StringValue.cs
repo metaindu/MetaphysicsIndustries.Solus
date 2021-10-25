@@ -61,8 +61,6 @@ namespace MetaphysicsIndustries.Solus.Values
             throw new InvalidOperationException(
                 "A string is not a vector");
 
-        public int GetStringLength(SolusEnvironment env) => Length;
-
         public bool IsConcrete => true;
 
         public int Length => Value?.Length ?? 0;

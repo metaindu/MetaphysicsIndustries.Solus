@@ -789,12 +789,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     "A matrix is not a vector");
             }
 
-            public int GetStringLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "A matrix is not a string");
-            }
-
             public bool IsConcrete => false;
         }
     }
