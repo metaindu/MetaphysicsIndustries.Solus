@@ -317,12 +317,45 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             public int GetStringLength(SolusEnvironment env)
             {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
+                if (_ca.Indexes.Count != 1)
+                    throw new IndexException(
+                        "Wrong number of indexes for a string");
+                var index = InterrogateIndexValue(_ca.Indexes[0], env);
+                if (!index.IsScalar(env))
+                    throw new IndexException(
+                        "Wrong type of index for a string");
+                var index2 = index.ToNumber().Value;
+                if (index2 != index2.RoundInt())
+                    throw new IndexException(
+                        "Index is not an integer");
+                if (index2 < 0 ||
+                    index2 > _ca.Expr.Result.GetStringLength(env))
+                    throw new IndexException(
+                        "Index out of range");
+                var evaledIndexes = new IMathObject[] { index };
                 var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
                 return expr.Result.GetStringLength(env);
             }
 
             public bool IsConcrete => false;
+        }
+
+        private static IMathObject InterrogateIndexValue(Expression expr,
+            SolusEnvironment env)
+        {
+            if (expr is Literal lit) return lit.Value;
+            if (expr is VariableAccess va)
+            {
+                if (!env.ContainsVariable(va.VariableName))
+                    throw new NameException(
+                        $"Variable not found: {va.VariableName}");
+                var expr2 = env.GetVariable(va.VariableName);
+                // TODO: don't get stuck in an infinite loop, e.g. a:=b, b:=a
+                return InterrogateIndexValue(expr2, env);
+            }
+            // TODO: other expression types
+
+            throw new RequiresEvaluationException();
         }
     }
 }
