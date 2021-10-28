@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -44,6 +45,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override float InternalCall(float arg0, float arg1)
         {
             return (float)Math.Log(arg0, arg1);
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

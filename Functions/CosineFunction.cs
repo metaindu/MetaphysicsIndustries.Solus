@@ -29,6 +29,7 @@
  *****************************************************************************/
 
 using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -63,6 +64,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return "The cosine function\n  cos(x)\n\nReturns the cosine of x.";
             }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

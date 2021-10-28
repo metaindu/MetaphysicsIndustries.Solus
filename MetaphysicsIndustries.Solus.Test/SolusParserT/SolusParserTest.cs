@@ -461,6 +461,12 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             {
                 return new Number(3);
             }
+
+            public override IMathObject GetResult(
+                IEnumerable<IMathObject> args)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         [Test]
@@ -505,6 +511,12 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             public override void CheckArguments(IMathObject[] args)
             {
+            }
+
+            public override IMathObject GetResult(
+                IEnumerable<IMathObject> args)
+            {
+                throw new NotImplementedException();
             }
         }
 

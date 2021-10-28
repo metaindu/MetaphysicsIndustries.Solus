@@ -124,6 +124,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
             return v;
         }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
+        }
     }
 }
 

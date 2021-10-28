@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -46,6 +47,12 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override float InternalBinaryCall(float x, float y)
         {
             return (float)Math.Pow(x, y);
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            // TODO: square matrix
+            return ScalarMathObject.Value;
         }
     }
 }

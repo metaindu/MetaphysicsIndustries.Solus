@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -41,6 +42,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override string DisplayName
         {
             get { return "dist"; }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

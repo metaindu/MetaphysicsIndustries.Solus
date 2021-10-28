@@ -20,6 +20,7 @@
  *
  */
 
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -63,6 +64,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override float CullValue
         {
             get { return 0; }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -52,6 +53,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return "The atan2 function\n  atan(y, x)\n\nReturns the arctangent of y/x.";
             }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

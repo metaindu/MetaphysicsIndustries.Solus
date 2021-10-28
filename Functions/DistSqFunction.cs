@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class DistSqFunction : DualArgumentFunction
@@ -39,6 +41,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override float InternalCall(float arg0, float arg1)
         {
             return arg0 * arg0 + arg1 * arg1;
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

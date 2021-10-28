@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
@@ -41,6 +42,12 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
                 IMathObject[] args)
             {
                 throw new System.NotImplementedException();
+            }
+
+            public override IMathObject GetResult(
+                IEnumerable<IMathObject> args)
+            {
+                throw new NotImplementedException();
             }
         }
 

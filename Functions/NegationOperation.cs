@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -72,6 +73,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override float IdentityValue
         {
             get { return 0; }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return args.First();
         }
     }
 }

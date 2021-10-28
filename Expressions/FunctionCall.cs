@@ -211,7 +211,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IMathObject Result =>
-            throw new NotImplementedException();
+        public override IMathObject Result => Function.GetResult(Arguments);
     }
 }

@@ -81,5 +81,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
             return base.ToString(arguments);
         }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
+        }
     }
 }

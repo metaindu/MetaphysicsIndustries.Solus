@@ -36,4 +36,18 @@ namespace MetaphysicsIndustries.Solus
 
         bool IsConcrete { get; }
     }
+
+    public class ScalarMathObject : IMathObject
+    {
+        public static readonly ScalarMathObject Value = new ScalarMathObject();
+        public bool IsScalar(SolusEnvironment env) => true;
+        public bool IsVector(SolusEnvironment env) => false;
+        public bool IsMatrix(SolusEnvironment env) => false;
+        public int GetTensorRank(SolusEnvironment env) => 0;
+        public bool IsString(SolusEnvironment env) => false;
+        public int GetDimension(SolusEnvironment env, int index) => 0;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int GetVectorLength(SolusEnvironment env) => 0;
+        public bool IsConcrete => false;
+    }
 }

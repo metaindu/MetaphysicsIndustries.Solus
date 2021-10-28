@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -80,6 +82,15 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return 0;
             }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            // TODO: matrix multiplication
+            // TODO: matrix times scalar and vice-verse
+            // TODO: matrix times vector and vice-verse
+            // TODO: vector times scalar
+            return args.First();
         }
     }
 }
