@@ -42,6 +42,9 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
         {
+            // TODO: vector
+            // TODO: matrix
+            // TODO: string?
             float sum = 0;
             foreach (var arg in args)
             {
