@@ -20,6 +20,8 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
@@ -27,5 +29,50 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
     [TestFixture]
     public class GetResultTest
     {
+        [Test]
+        public void ResultMatchesFirstArg1()
+        {
+            // given
+            var arg1 = 1.ToNumber();
+            var arg2 = 1.ToNumber();
+            var args = new IMathObject[] { arg1, arg2 };
+            // precondition
+            Assert.IsTrue(arg1.IsScalar(null));
+            Assert.IsFalse(arg1.IsVector(null));
+            Assert.IsFalse(arg1.IsMatrix(null));
+            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.IsFalse(arg1.IsString(null));
+            // when
+            var result = AdditionOperation.Value.GetResult(args);
+            // then
+            Assert.IsTrue(result.IsScalar(null));
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsFalse(result.IsMatrix(null));
+            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.IsFalse(result.IsString(null));
+        }
+
+        [Test]
+        public void ResultMatchesFirstArg2()
+        {
+            // given
+            var arg1 = "abc".ToStringValue();
+            var arg2 = "def".ToStringValue();
+            var args = new IMathObject[] { arg1, arg2 };
+            // precondition
+            Assert.IsFalse(arg1.IsScalar(null));
+            Assert.IsFalse(arg1.IsVector(null));
+            Assert.IsFalse(arg1.IsMatrix(null));
+            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.IsTrue(arg1.IsString(null));
+            // when
+            var result = AdditionOperation.Value.GetResult(args);
+            // then
+            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsFalse(result.IsMatrix(null));
+            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.IsTrue(result.IsString(null));
+        }
     }
 }

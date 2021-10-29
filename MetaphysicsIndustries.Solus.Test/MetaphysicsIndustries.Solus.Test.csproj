@@ -63,9 +63,7 @@
     <Compile Include="FunctionsT\ArctangentFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\AssociativeCommutativeOperationT\AssociativeCommutativeOperationTest.cs" />
     <Compile Include="FunctionsT\AssociativeCommutativeOperationT\CheckArgumentsTest.cs" />
-    <Compile Include="FunctionsT\AssociativeCommutativeOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\BinaryOperationT\BinaryOperationTest.cs" />
-    <Compile Include="FunctionsT\BinaryOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\BitwiseAndOperationT\BitwiseAndOperationTest.cs" />
     <Compile Include="FunctionsT\BitwiseAndOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\BitwiseOrOperationT\BitwiseOrOperationTest.cs" />
@@ -75,7 +73,6 @@
     <Compile Include="FunctionsT\CeilingFunctionT\CeilingFunctionTest.cs" />
     <Compile Include="FunctionsT\CeilingFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\ComparisonOperationT\ComparisonOperationTest.cs" />
-    <Compile Include="FunctionsT\ComparisonOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\CosecantFunctionT\CosecantFunctionTest.cs" />
     <Compile Include="FunctionsT\CosecantFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\CosineFunctionT\CosineFunctionTest.cs" />
@@ -89,7 +86,6 @@
     <Compile Include="FunctionsT\DivisionOperationT\DivisionOperationTest.cs" />
     <Compile Include="FunctionsT\DivisionOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\DualArgumentFunctionT\DualArgumentFunctionTest.cs" />
-    <Compile Include="FunctionsT\DualArgumentFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\EqualComparisonOperationT\EqualComparisonOperationTest.cs" />
     <Compile Include="FunctionsT\EqualComparisonOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\ExponentOperationT\ExponentOperationTest.cs" />
@@ -100,7 +96,6 @@
     <Compile Include="FunctionsT\FloorFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\FunctionT\CheckArgumentsTest.cs" />
     <Compile Include="FunctionsT\FunctionT\FunctionTest.cs" />
-    <Compile Include="FunctionsT\FunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\GreaterThanComparisonOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\GreaterThanComparisonOperationT\GreaterThanComparisonOperationTest.cs" />
     <Compile Include="FunctionsT\GreaterThanOrEqualComparisonOperationT\GetResultTest.cs" />
@@ -131,21 +126,17 @@
     <Compile Include="FunctionsT\NegationOperationT\NegationOperationTest.cs" />
     <Compile Include="FunctionsT\NotEqualComparisonOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\NotEqualComparisonOperationT\NotEqualComparisonOperationTest.cs" />
-    <Compile Include="FunctionsT\OperationPrecedenceT\GetResultTest.cs" />
     <Compile Include="FunctionsT\OperationPrecedenceT\OperationPrecedenceTest.cs" />
-    <Compile Include="FunctionsT\OperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\OperationT\OperationTest.cs" />
     <Compile Include="FunctionsT\SecantFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\SecantFunctionT\SecantFunctionTest.cs" />
     <Compile Include="FunctionsT\SineFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\SineFunctionT\SineFunctionTest.cs" />
-    <Compile Include="FunctionsT\SingleArgumentFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\SingleArgumentFunctionT\SingleArgumentFunctionTest.cs" />
     <Compile Include="FunctionsT\SizeFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\SizeFunctionT\SizeFunctionTest.cs" />
     <Compile Include="FunctionsT\TangentFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\TangentFunctionT\TangentFunctionTest.cs" />
-    <Compile Include="FunctionsT\UnaryOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\UnaryOperationT\UnaryOperationTest.cs" />
     <Compile Include="FunctionsT\UnitStepFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\UnitStepFunctionT\UnitStepFunctionTest.cs" />

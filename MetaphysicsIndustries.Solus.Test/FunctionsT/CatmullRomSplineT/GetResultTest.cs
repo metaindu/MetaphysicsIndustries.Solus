@@ -20,6 +20,8 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CatmullRomSplineT
@@ -27,5 +29,28 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CatmullRomSplineT
     [TestFixture]
     public class GetResultTest
     {
+        [Test]
+        public void ResultIsScalar()
+        {
+            // given
+            var f = new CatmullRomSpline(new float[] { 1, 2, 3 },
+                new float[] { 4, 5, 6 });
+            var arg1 = 1.ToNumber();
+            var args = new IMathObject[] { arg1 };
+            // precondition
+            Assert.IsTrue(arg1.IsScalar(null));
+            Assert.IsFalse(arg1.IsVector(null));
+            Assert.IsFalse(arg1.IsMatrix(null));
+            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.IsFalse(arg1.IsString(null));
+            // when
+            var result = f.GetResult(args);
+            // then
+            Assert.IsTrue(result.IsScalar(null));
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsFalse(result.IsMatrix(null));
+            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.IsFalse(result.IsString(null));
+        }
     }
 }

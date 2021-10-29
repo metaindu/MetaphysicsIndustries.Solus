@@ -20,6 +20,9 @@
  *
  */
 
+using System;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
@@ -27,5 +30,21 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
     [TestFixture]
     public class GetResultTest
     {
+        [Test]
+        public void ResultIsScalar()
+        {
+            // given
+            var arg1 = 1.ToNumber();
+            var args = new IMathObject[] { arg1 };
+            // precondition
+            Assert.IsTrue(arg1.IsScalar(null));
+            Assert.IsFalse(arg1.IsVector(null));
+            Assert.IsFalse(arg1.IsMatrix(null));
+            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.IsFalse(arg1.IsString(null));
+            // expect
+            Assert.Throws<NotImplementedException>(
+                () => LoadImageFunction.Value.GetResult(args));
+        }
     }
 }

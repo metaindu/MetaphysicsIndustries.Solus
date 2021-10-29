@@ -20,6 +20,8 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NegationOperationT
@@ -27,5 +29,48 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NegationOperationT
     [TestFixture]
     public class GetResultTest
     {
+        [Test]
+        public void ResultMatchesFirstArg1()
+        {
+            // given
+            var arg1 = 1.ToNumber();
+            var args = new IMathObject[] { arg1 };
+            // precondition
+            Assert.IsTrue(arg1.IsScalar(null));
+            Assert.IsFalse(arg1.IsVector(null));
+            Assert.IsFalse(arg1.IsMatrix(null));
+            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.IsFalse(arg1.IsString(null));
+            // when
+            var result = NegationOperation.Value.GetResult(args);
+            // then
+            Assert.IsTrue(result.IsScalar(null));
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsFalse(result.IsMatrix(null));
+            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.IsFalse(result.IsString(null));
+        }
+
+        [Test]
+        public void ResultMatchesFirstArg2()
+        {
+            // given
+            var arg1 = new Vector(new float[] { 1, 2, 3 });
+            var args = new IMathObject[] { arg1 };
+            // precondition
+            Assert.IsFalse(arg1.IsScalar(null));
+            Assert.IsTrue(arg1.IsVector(null));
+            Assert.IsFalse(arg1.IsMatrix(null));
+            Assert.AreEqual(1, arg1.GetTensorRank(null));
+            Assert.IsFalse(arg1.IsString(null));
+            // when
+            var result = NegationOperation.Value.GetResult(args);
+            // then
+            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsTrue(result.IsVector(null));
+            Assert.IsFalse(result.IsMatrix(null));
+            Assert.AreEqual(1, result.GetTensorRank(null));
+            Assert.IsFalse(result.IsString(null));
+        }
     }
 }
