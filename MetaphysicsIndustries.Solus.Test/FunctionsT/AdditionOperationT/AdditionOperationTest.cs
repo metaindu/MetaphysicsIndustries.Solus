@@ -20,6 +20,9 @@
  *
  */
 
+using System;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
@@ -27,5 +30,76 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
     [TestFixture]
     public class AdditionOperationTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.IsNotNull(AdditionOperation.Value);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.AreEqual("+", AdditionOperation.Value.Name);
+        }
+
+        [Test]
+        public void PrecedenceIsSet()
+        {
+            // expect
+            Assert.AreEqual(OperationPrecedence.Addition,
+                AdditionOperation.Value.Precedence);
+        }
+
+        [Test]
+        public void IdentityValueIsSet()
+        {
+            // expect
+            Assert.AreEqual(0, AdditionOperation.Value.IdentityValue);
+        }
+
+        [Test]
+        public void CallWithNoArgsThrows()
+        {
+            // given
+            var args = new IMathObject[] { };
+            // expect
+            Assert.Throws<ArgumentException>(() =>
+                AdditionOperation.Value.Call(null, args));
+        }
+
+        [Test]
+        public void CallWithOneArgThrows()
+        {
+            // given
+            var args = new IMathObject[] { 1.ToNumber() };
+            // expect
+            Assert.Throws<ArgumentException>(() =>
+                AdditionOperation.Value.Call(null, args));
+        }
+
+        [Test]
+        public void CallWithTwoArgsYieldsSum()
+        {
+            // given
+            var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber() };
+            // when
+            var result = AdditionOperation.Value.Call(null, args);
+            // then
+            Assert.AreEqual(3, result.ToNumber().Value);
+        }
+
+        [Test]
+        public void CallWithThreeArgsYieldsSum()
+        {
+            // given
+            var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber(),
+                4.ToNumber() };
+            // when
+            var result = AdditionOperation.Value.Call(null, args);
+            // then
+            Assert.AreEqual(7, result.ToNumber().Value);
+        }
     }
 }
