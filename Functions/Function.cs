@@ -150,8 +150,5 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         public abstract IMathObject GetResult(IEnumerable<IMathObject> args);
-
-        public virtual IMathObject GetResult(IEnumerable<Expression> args) =>
-            GetResult(args.Select(a => a.Result));
     }
 }

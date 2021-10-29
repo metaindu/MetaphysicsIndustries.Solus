@@ -211,6 +211,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IMathObject Result => Function.GetResult(Arguments);
+        public override IMathObject Result =>
+            Function.GetResult(Arguments.Select(a => a.Result));
     }
 }
