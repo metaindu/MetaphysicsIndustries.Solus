@@ -87,8 +87,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             // TODO: matrix multiplication
-            // TODO: matrix times scalar and vice-verse
-            // TODO: matrix times vector and vice-verse
+            // TODO: matrix times scalar and vice-versa
+            // TODO: matrix times vector and vice-versa
             // TODO: vector times scalar
             return args.First();
         }
