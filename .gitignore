@@ -119,3 +119,4 @@ UpgradeLog*.XML
 [Tt]humbs.db
 
 .idea/
+instance/
