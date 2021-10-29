@@ -145,6 +145,7 @@
     <Compile Include="FunctionsT\UserDefinedFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\UserDefinedFunctionT\UserDefinedFunctionTest.cs" />
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
+    <Compile Include="MockFunction.cs" />
     <Compile Include="MockMathObjectF.cs" />
     <Compile Include="MockExpression.cs" />
     <Compile Include="MockMathObject.cs" />

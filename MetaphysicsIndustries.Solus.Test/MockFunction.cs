@@ -21,37 +21,29 @@
  */
 
 using System;
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
-using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
+namespace MetaphysicsIndustries.Solus.Test
 {
-    [TestFixture]
-    public class FunctionTest
+    public class MockFunction : Function
     {
-        [Test]
-        public void CreateSetsProperties()
+        public MockFunction(Types[] paramTypes, string name = "")
+            : base(paramTypes, name)
         {
-            // given
-            var paramTypes = new[] {Types.Scalar};
-            // when
-            var f = new MockFunction(paramTypes, "func1");
-            // then
-            Assert.AreEqual("func1", f.Name);
-            Assert.AreEqual("func1", f.DisplayName);
-            Assert.IsNotNull(f.ParamTypes);
-            Assert.AreEqual(1, f.ParamTypes.Count);
-            Assert.AreEqual(Types.Scalar, f.ParamTypes[0]);
         }
 
-        [Test]
-        public void NullParamTypesThrows()
+        protected override IMathObject InternalCall(SolusEnvironment env,
+            IMathObject[] args)
         {
-            // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new MockFunction(null, "func2"));
-            // and
-            Assert.AreEqual("paramTypes", ex.ParamName);
+            throw new NotImplementedException();
+        }
+
+        public override IMathObject GetResult(
+            IEnumerable<IMathObject> args)
+        {
+            throw new NotImplementedException();
         }
     }
 }
