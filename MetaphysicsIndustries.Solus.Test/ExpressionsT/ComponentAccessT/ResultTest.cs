@@ -26,7 +26,7 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 {
     [TestFixture]
-    public class ResultAttributesTest
+    public class ResultTest
     {
         [Test]
         public void IsResultScalarDelegatesToComponent1()

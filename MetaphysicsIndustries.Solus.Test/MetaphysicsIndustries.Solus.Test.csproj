@@ -40,7 +40,7 @@
     <Compile Include="ExpressionsT\ComponentAccessT\AccessComponentTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ComponentAccessTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\PreliminaryEvalTest.cs" />
-    <Compile Include="ExpressionsT\ComponentAccessT\ResultAttributesTest.cs" />
+    <Compile Include="ExpressionsT\ComponentAccessT\ResultTest.cs" />
     <Compile Include="ExpressionsT\MatrixExpressionT\EvalTest.cs" />
     <Compile Include="ExpressionsT\VectorExpressionT\EvalTest.cs" />
     <Compile Include="FunctionsT\AbsoluteValueFunctionT\AbsoluteValueFunctionTest.cs" />
