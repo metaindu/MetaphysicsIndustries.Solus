@@ -29,6 +29,9 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public class FactorialFunction : SingleArgumentFunction
     {
+        public static readonly FactorialFunction Value =
+            new FactorialFunction();
+
         private static Dictionary<int, float> _presets = new Dictionary<int, float>();
 
         static FactorialFunction()
@@ -57,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             if (!_presets.ContainsKey(p))
             {
-                _presets[p] = GetValue(p - 1);
+                _presets[p] = p * GetValue(p - 1);
             }
 
             return _presets[p];
@@ -66,8 +69,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected FactorialFunction()
         {
             Name = "Factorial";
-
-            throw new NotImplementedException();
         }
 
         public override string DisplayName
