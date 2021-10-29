@@ -44,6 +44,7 @@
     <Compile Include="ExpressionsT\MatrixExpressionT\EvalTest.cs" />
     <Compile Include="ExpressionsT\MatrixExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\VectorExpressionT\EvalTest.cs" />
+    <Compile Include="ExpressionsT\VectorExpressionT\ResultTest.cs" />
     <Compile Include="FunctionsT\AbsoluteValueFunctionT\AbsoluteValueFunctionTest.cs" />
     <Compile Include="FunctionsT\AbsoluteValueFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\AdditionOperationT\AdditionOperationTest.cs" />
