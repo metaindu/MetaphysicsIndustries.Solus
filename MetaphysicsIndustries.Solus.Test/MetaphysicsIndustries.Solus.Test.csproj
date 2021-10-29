@@ -42,6 +42,7 @@
     <Compile Include="ExpressionsT\ComponentAccessT\PreliminaryEvalTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ResultTest.cs" />
     <Compile Include="ExpressionsT\MatrixExpressionT\EvalTest.cs" />
+    <Compile Include="ExpressionsT\MatrixExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\VectorExpressionT\EvalTest.cs" />
     <Compile Include="FunctionsT\AbsoluteValueFunctionT\AbsoluteValueFunctionTest.cs" />
     <Compile Include="FunctionsT\AbsoluteValueFunctionT\GetResultTest.cs" />
