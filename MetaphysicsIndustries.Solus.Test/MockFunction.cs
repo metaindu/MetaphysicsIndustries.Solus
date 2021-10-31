@@ -40,9 +40,12 @@ namespace MetaphysicsIndustries.Solus.Test
             throw new NotImplementedException();
         }
 
+        public Func<IEnumerable<IMathObject>, IMathObject> GetResultF;
         public override IMathObject GetResult(
             IEnumerable<IMathObject> args)
         {
+            if (GetResultF != null)
+                return GetResultF(args);
             throw new NotImplementedException();
         }
     }
