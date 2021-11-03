@@ -22,7 +22,8 @@
 
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.FunctionsT.EqualComparisonOperationT
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
+    EqualComparisonOperationT
 {
     [TestFixture]
     public class EqualComparisonOperationTest

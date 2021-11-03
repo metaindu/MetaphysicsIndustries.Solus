@@ -22,7 +22,8 @@
 
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.FunctionsT.GreaterThanOrEqualComparisonOperationT
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
+    GreaterThanOrEqualComparisonOperationT
 {
     [TestFixture]
     public class GreaterThanOrEqualComparisonOperationTest

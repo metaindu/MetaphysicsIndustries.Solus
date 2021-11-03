@@ -24,7 +24,8 @@ using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.FunctionsT.EqualComparisonOperationT
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
+    EqualComparisonOperationT
 {
     [TestFixture]
     public class GetResultTest
