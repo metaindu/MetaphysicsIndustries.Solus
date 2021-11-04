@@ -1,5 +1,5 @@
-when assigning a variable, any variables in its expression are automatically
-        substituted if they already have values assigned. So:
+bug: when assigning a variable, any variables in its expression are
+        automatically substituted if they already have values assigned. So:
     >>> x := y + z
     >>> y := a + b
     >>> w := y + z
