@@ -49,26 +49,26 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             Assert.AreEqual(2, result[0, 1].ToNumber().Value);
             Assert.AreEqual(3, result[1, 0].ToNumber().Value);
             Assert.AreEqual(4, result[1, 1].ToNumber().Value);
-            Assert.IsFalse(result.IsScalar);
-            Assert.IsFalse(result.IsVector);
-            Assert.IsTrue(result.IsMatrix);
-            Assert.AreEqual(2, result.TensorRank);
-            Assert.IsFalse(result.IsString);
-            Assert.AreEqual(2, result.GetDimension(0));
-            Assert.AreEqual(2, result.GetDimension(1));
+            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsTrue(result.IsMatrix(null));
+            Assert.AreEqual(2, result.GetTensorRank(null));
+            Assert.IsFalse(result.IsString(null));
+            Assert.AreEqual(2, result.GetDimension(null, 0));
+            Assert.AreEqual(2, result.GetDimension(null, 1));
             var ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => result.GetDimension(-1));
+                () => result.GetDimension(null, -1));
             Assert.AreEqual("index", ex.ParamName);
             Assert.AreEqual("Index must not be negative\n" +
                             "Parameter name: index",
                 ex.Message);
             ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => result.GetDimension(3));
+                () => result.GetDimension(null, 3));
             Assert.AreEqual("index", ex.ParamName);
             Assert.AreEqual("Matrices only have two dimensions\n" +
                             "Parameter name: index",
                 ex.Message);
-            Assert.AreEqual(new[] {2, 2}, result.GetDimensions());
+            Assert.AreEqual(new[] {2, 2}, result.GetDimensions(null));
         }
 
         [Test]

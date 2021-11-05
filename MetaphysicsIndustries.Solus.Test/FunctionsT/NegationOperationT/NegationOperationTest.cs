@@ -20,16 +20,12 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Values
+using NUnit.Framework;
+
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NegationOperationT
 {
-    public interface IMathObject
+    [TestFixture]
+    public class NegationOperationTest
     {
-        bool IsScalar { get; }
-        bool IsVector { get; }
-        bool IsMatrix { get; }
-        int TensorRank { get; }
-        bool IsString { get; }
-        int GetDimension(int index = 0);
-        int[] GetDimensions();
     }
 }

@@ -71,6 +71,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     _array[i, j] = Literal.Zero;
                 }
             }
+
+            Result = new ResultC(this);
         }
 
         public MatrixExpression(int rows, int columns,
@@ -750,6 +752,44 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
             sb.Append("]");
             return sb.ToString();
+        }
+
+        public override IMathObject Result { get; }
+
+        private class ResultC : IMathObject
+        {
+            public ResultC(MatrixExpression me) => _me = me;
+            private readonly MatrixExpression _me;
+            public bool IsScalar(SolusEnvironment env) => false;
+            public bool IsVector(SolusEnvironment env) => false;
+            public bool IsMatrix(SolusEnvironment env) => true;
+            public int GetTensorRank(SolusEnvironment env) => _me.TensorRank;
+            public bool IsString(SolusEnvironment env) => false;
+
+            public int GetDimension(SolusEnvironment env, int index)
+            {
+                if (index == 0) return _me.RowCount;
+                if (index == 1) return _me.ColumnCount;
+                throw new IndexOutOfRangeException(
+                    "The index must be zero or one for a matrix");
+            }
+
+            private int[] __GetDimensions;
+
+            public int[] GetDimensions(SolusEnvironment env)
+            {
+                if (__GetDimensions == null)
+                    __GetDimensions = new[] { _me.RowCount, _me.ColumnCount };
+                return __GetDimensions;
+            }
+
+            public int GetVectorLength(SolusEnvironment env)
+            {
+                throw new InvalidOperationException(
+                    "A matrix is not a vector");
+            }
+
+            public bool IsConcrete => false;
         }
     }
 }

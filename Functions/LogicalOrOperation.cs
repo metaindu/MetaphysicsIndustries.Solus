@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class LogicalOrOperation : BinaryOperation
@@ -39,6 +41,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override float InternalBinaryCall(float x, float y)
         {
             return ((((long)x) != 0) || (((long)y) != 0)) ? 1 : 0;
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

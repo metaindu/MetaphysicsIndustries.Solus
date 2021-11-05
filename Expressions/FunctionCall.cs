@@ -31,9 +31,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -59,21 +57,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
             Init(function, args);
         }
 
-        public override void Dispose()
-        {
-            _arguments.Clear();
-            _arguments = null;
-            _function = null;
-        }
-
         public override Expression Clone()
         {
             FunctionCall ret = new FunctionCall(Function,
                                     Array.ConvertAll<Expression, Expression>(
-                                        Arguments.ToArray(), Expression.Clone));
+                                        Arguments.ToArray(), CloneExpr));
 
             return ret;
         }
+
+        private static Expression CloneExpr(Expression expr) => expr.Clone();
 
         public override IMathObject Eval(SolusEnvironment env)
         {
@@ -218,10 +211,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
-        {
-            return Function.ConvertToInstructions(varmap, Arguments);
-
-        }
+        public override IMathObject Result =>
+            Function.GetResult(Arguments.Select(a => a.Result));
     }
 }

@@ -37,13 +37,13 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             var result = new StringValue();
             // then
             Assert.IsNull(result.Value);
-            Assert.IsFalse(result.IsScalar);
-            Assert.IsFalse(result.IsVector);
-            Assert.IsFalse(result.IsMatrix);
-            Assert.AreEqual(0, result.TensorRank);
-            Assert.IsTrue(result.IsString);
-            Assert.AreEqual(0, result.GetDimension(0));
-            Assert.AreEqual(new[] {0}, result.GetDimensions());
+            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsFalse(result.IsMatrix(null));
+            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.IsTrue(result.IsString(null));
+            Assert.AreEqual(0, result.GetDimension(null, 0));
+            Assert.AreEqual(new[] {0}, result.GetDimensions(null));
         }
 
         [Test]
@@ -53,8 +53,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             var result = new StringValue("abc");
             // then
             Assert.AreEqual("abc", result.Value);
-            Assert.AreEqual(3, result.GetDimension(0));
-            Assert.AreEqual(new[] {3}, result.GetDimensions());
+            Assert.AreEqual(3, result.GetDimension(null, 0));
+            Assert.AreEqual(new[] {3}, result.GetDimensions(null));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             var value = new StringValue("abc");
             // expect
             var ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => value.GetDimension(-1));
+                () => value.GetDimension(null, -1));
             // and
             Assert.AreEqual("index", ex.ParamName);
             Assert.AreEqual("Index must not be negative\n" +
@@ -79,7 +79,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             var value = new StringValue("abc");
             // expect
             var ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => value.GetDimension(1));
+                () => value.GetDimension(null, 1));
             // and
             Assert.AreEqual("index", ex.ParamName);
             Assert.AreEqual("Strings only have a single dimension\n" +

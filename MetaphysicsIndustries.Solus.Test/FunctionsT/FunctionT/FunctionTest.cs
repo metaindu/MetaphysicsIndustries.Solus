@@ -21,7 +21,6 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -30,20 +29,6 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
     [TestFixture]
     public class FunctionTest
     {
-        class MockFunction : Function
-        {
-            public MockFunction(Types[] paramTypes, string name = "")
-                : base(paramTypes, name)
-            {
-            }
-
-            protected override IMathObject InternalCall(SolusEnvironment env,
-                IMathObject[] args)
-            {
-                throw new System.NotImplementedException();
-            }
-        }
-
         [Test]
         public void CreateSetsProperties()
         {

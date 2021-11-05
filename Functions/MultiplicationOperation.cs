@@ -21,8 +21,7 @@
  */
 
 using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
-using MetaphysicsIndustries.Solus.Expressions;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -85,22 +84,13 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
-            var instructions = new List<Instruction>();
-
-            foreach (var arg in arguments)
-            {
-                instructions.AddRange(arg.ConvertToInstructions(varmap));
-            }
-
-            int i;
-            for (i = 1; i < arguments.Count; i++)
-            {
-                instructions.Add(Instruction.Mul());
-            }
-
-            return instructions;
+            // TODO: matrix multiplication
+            // TODO: matrix times scalar and vice-versa
+            // TODO: matrix times vector and vice-versa
+            // TODO: vector times scalar
+            return args.First();
         }
     }
 }

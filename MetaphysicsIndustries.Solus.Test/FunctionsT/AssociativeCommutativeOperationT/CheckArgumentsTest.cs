@@ -25,7 +25,8 @@ using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AssociativeCommutativeOperationT
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
+    AssociativeCommutativeOperationT
 {
     [TestFixture]
     public class CheckArgumentsTest

@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class LessThanOrEqualComparisonOperation : ComparisonOperation
@@ -34,6 +36,12 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override bool Compare(float x, float y)
         {
             return x <= y;
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            // TODO: boolean
+            return ScalarMathObject.Value;
         }
     }
 }

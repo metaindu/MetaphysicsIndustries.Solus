@@ -29,7 +29,7 @@
  *****************************************************************************/
 
 using System;
-using MetaphysicsIndustries.Solus.Expressions;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -63,6 +63,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return "The arctangent function\n  atan(x)\n\nReturns the arctangent of x. That is, if tan(y) = x, then atan(x) = y.";
             }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

@@ -36,7 +36,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using MetaphysicsIndustries.Solus.Compiler;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
@@ -149,9 +149,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return string.Empty; }
         }
 
-        public virtual IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract IMathObject GetResult(IEnumerable<IMathObject> args);
     }
 }

@@ -12,6 +12,9 @@
    * Do a dry run of `release.sh` (both of them), without pushing to nuget
      gallery (Use the `DRY_RUN` envvar)
 3. Once everything looks good, open a PR for the branch
-4. After the PR is merged, switch to `master` and run `release.sh` (both of them) to create the package and upload it
+4. After the PR is merged, release the nuget packages:
+   1. switch to `master` and `git pull`
+   2. Clean, build, and run tests
+   3. run `release.sh` (both of them) to create the packages and upload them
 5. Create a release in github, including the nupkg files as attached binaries
 6. `git fetch --tags`

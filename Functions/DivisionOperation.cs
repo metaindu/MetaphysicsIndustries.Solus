@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class DivisionOperation : BinaryOperation
@@ -51,6 +53,13 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override float InternalBinaryCall(float x, float y)
         {
             return x / y;
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            // TODO: vector divided by scalar
+            // TODO: matrix divided by scalar
+            return ScalarMathObject.Value;
         }
     }
 }

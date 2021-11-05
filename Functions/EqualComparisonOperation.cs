@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class EqualComparisonOperation : ComparisonOperation
@@ -47,6 +49,12 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return true;
             }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            // TODO: boolean
+            return ScalarMathObject.Value;
         }
     }
 }

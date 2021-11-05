@@ -20,8 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 using ArgumentNullException = System.ArgumentNullException;
@@ -40,6 +38,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (string.IsNullOrEmpty(variableName)) throw new ArgumentNullException("variableName");
 
             VariableName = variableName;
+            Result = new ResultC(this);
         }
 
         public override Expression Clone()
@@ -96,9 +95,78 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap)
+        public override IMathObject Result { get; }
+
+        private class ResultC : IMathObject
         {
-            return new [] { Instruction.LoadLocalVariable(varmap[VariableName]) };
+            public ResultC(VariableAccess va) => _va = va;
+            private readonly VariableAccess _va;
+
+            private void Check(SolusEnvironment env)
+            {
+                if (!env.ContainsVariable(_va.VariableName))
+                    throw new NameException(
+                        $"Variable not found in the environment: " +
+                        _va.VariableName);
+            }
+
+            public bool IsScalar(SolusEnvironment env)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.IsScalar(env);
+            }
+
+            public bool IsVector(SolusEnvironment env)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.IsVector(env);
+            }
+
+            public bool IsMatrix(SolusEnvironment env)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.IsMatrix(env);
+            }
+
+            public int GetTensorRank(SolusEnvironment env)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.GetTensorRank(env);
+            }
+
+            public bool IsString(SolusEnvironment env)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.IsString(env);
+            }
+
+            public int GetDimension(SolusEnvironment env, int index)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.GetDimension(env, index);
+            }
+
+            public int[] GetDimensions(SolusEnvironment env)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.GetDimensions(env);
+            }
+
+            public int GetVectorLength(SolusEnvironment env)
+            {
+                Check(env);
+                var varexpr = env.GetVariable(_va.VariableName);
+                return varexpr.Result.GetVectorLength(env);
+            }
+
+            public bool IsConcrete => false;
         }
     }
 }

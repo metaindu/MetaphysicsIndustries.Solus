@@ -21,8 +21,7 @@
  */
 
 using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
-using MetaphysicsIndustries.Solus.Expressions;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -43,6 +42,9 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
         {
+            // TODO: vector
+            // TODO: matrix
+            // TODO: string?
             float sum = 0;
             foreach (var arg in args)
             {
@@ -59,32 +61,9 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
-            var instructions = new List<Instruction>();
-
-            bool first = true;
-            foreach (var arg in arguments)
-            {
-                if (!first &&
-                    arg is FunctionCall &&
-                    (arg as FunctionCall).Function == NegationOperation.Value)
-                {
-                    instructions.AddRange((arg as FunctionCall).Arguments[0].ConvertToInstructions(varmap));
-                    instructions.Add(Instruction.Sub());
-                }
-                else
-                {
-                    instructions.AddRange(arg.ConvertToInstructions(varmap));
-                    if (!first)
-                    {
-                        instructions.Add(Instruction.Add());
-                    }
-                    first = false;
-                }
-            }
-
-            return instructions;
+            return args.First();
         }
     }
 }

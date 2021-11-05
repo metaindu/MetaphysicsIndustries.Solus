@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             var result =
                 LoadImageFunction.Value.CallWithLoader(null, args, loader);
             // then
-            Assert.IsTrue(result.IsMatrix);
+            Assert.IsTrue(result.IsMatrix(null));
             Assert.IsInstanceOf<Matrix>(result);
             var matrix = (Matrix) result;
             Assert.AreEqual(2, matrix.RowCount);

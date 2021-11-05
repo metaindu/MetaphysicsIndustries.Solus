@@ -21,6 +21,9 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -58,9 +61,45 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: this function should be able to operate on things that
             // aren't IMathObject, namely TensorExpression
             var arg = args[0];
-            if (arg.IsString || arg.IsVector)
-                return arg.GetDimension().ToNumber();
-            return arg.GetDimensions().ToVector();
+            if (arg.IsString(env) || arg.IsVector(env))
+                return arg.GetDimension(env, 0).ToNumber();
+            return arg.GetDimensions(env).ToVector();
+        }
+
+        private class ResultC : IMathObject
+        {
+            public ResultC(IMathObject obj) => _obj = obj;
+            private readonly IMathObject _obj;
+            public bool IsScalar(SolusEnvironment env) => false;
+            public bool IsVector(SolusEnvironment env) => true;
+            public bool IsMatrix(SolusEnvironment env) => false;
+            public int GetTensorRank(SolusEnvironment env) => 1;
+            public bool IsString(SolusEnvironment env) => false;
+
+            public int GetDimension(SolusEnvironment env, int index)
+            {
+                if (index != 0) throw new IndexException();
+                return _obj.GetTensorRank(env);
+            }
+
+            public int[] GetDimensions(SolusEnvironment env)
+            {
+                var n = _obj.GetTensorRank(env);
+                var dimensions = new int[n];
+                for (var i = 0; i < n; i++)
+                    dimensions[i] = _obj.GetDimension(env, i);
+                return dimensions;
+            }
+
+            public int GetVectorLength(SolusEnvironment env) =>
+                GetDimension(env, 0);
+
+            public bool IsConcrete => false;
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return new ResultC(args.First());
         }
     }
 }

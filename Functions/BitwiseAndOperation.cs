@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class BitwiseAndOperation : BinaryOperation
@@ -62,5 +64,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         //{
         //    get { return false; }
         //}
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
+        }
     }
 }

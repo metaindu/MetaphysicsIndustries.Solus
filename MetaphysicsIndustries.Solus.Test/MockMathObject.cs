@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Test
@@ -28,29 +29,44 @@ namespace MetaphysicsIndustries.Solus.Test
     public readonly struct MockMathObject : IMathObject
     {
         public MockMathObject(bool isScalar = true, bool isVector = false,
-            bool isMatrix = false, int tensorRank = 0, bool isString = false)
+            bool isMatrix = false, int tensorRank = 0, bool isString = false,
+            int[] dimensions = null, bool isConcrete = false)
         {
-            IsScalar = isScalar;
-            IsVector = isVector;
-            IsMatrix = isMatrix;
-            TensorRank = tensorRank;
-            IsString = isString;
+            _isScalar = isScalar;
+            _isVector = isVector;
+            _isMatrix = isMatrix;
+            _tensorRank = tensorRank;
+            _isString = isString;
+            if (dimensions == null)
+                dimensions = Enumerable.Repeat(1, tensorRank).ToArray();
+            _dimensions = dimensions;
+            _isConcrete = isConcrete;
         }
 
-        public bool IsScalar { get; }
-        public bool IsVector { get; }
-        public bool IsMatrix { get; }
-        public int TensorRank { get; }
-        public bool IsString { get; }
+        private readonly bool _isScalar;
+        public bool IsScalar(SolusEnvironment env) => _isScalar;
 
-        public int GetDimension(int index = 0)
-        {
+        private readonly bool _isVector;
+        public bool IsVector(SolusEnvironment env) => _isVector;
+
+        private readonly bool _isMatrix;
+        public bool IsMatrix(SolusEnvironment env) => _isMatrix;
+
+        private readonly int _tensorRank;
+        public int GetTensorRank(SolusEnvironment env) => _tensorRank;
+
+        private readonly bool _isString;
+        public bool IsString(SolusEnvironment env) => _isString;
+
+        private readonly int[] _dimensions;
+        public int GetDimension(SolusEnvironment env, int index) =>
+            _dimensions[index];
+        public int[] GetDimensions(SolusEnvironment env) => _dimensions;
+
+        public int GetVectorLength(SolusEnvironment env) =>
             throw new NotImplementedException();
-        }
 
-        public int[] GetDimensions()
-        {
-            throw new NotImplementedException();
-        }
+        private readonly bool _isConcrete;
+        public bool IsConcrete => _isConcrete;
     }
 }

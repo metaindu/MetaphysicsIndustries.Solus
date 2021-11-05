@@ -18,7 +18,16 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
-grep -n '................................................................................' $(find . -name \*.cs)
+#grep -n '................................................................................' $(find . -name \*.cs)
+git diff -U0 | \
+    grep -v -e '^@@' -e '^diff --git' -e '^+++' -e '^---' -e '^-' | \
+    grep -n '[-+]................................................................................'
+#                12345678901234567890123456789012345678901234567890123456789012345678901234567890
+git diff --cached -U0 | \
+    grep -v -e '^@@' -e '^diff --git' -e '^+++' -e '^---' -e '^-' | \
+    grep -n '[-+]................................................................................'
+#                12345678901234567890123456789012345678901234567890123456789012345678901234567890
+
 
 # TODO: check for tabs rather than spaces
 # TODO: check for trailing whitespace on lines
@@ -28,4 +37,6 @@ grep -n '.......................................................................
 echo ""
 echo "Files missing license notices:"
 grep -L 'GNU Lesser General Public' \
-    $(find . -name \*.cs -o -name \*.sh -o -name \*.giza)
+    $(find . -name \*.cs -o -name \*.sh -o -name \*.giza |
+        grep -v -e '^./solus/NDesk' -e '^./solus/getline' -e '^./obj/' \
+            -e '^./solus/obj/' -e '^./MetaphysicsIndustries.Solus.Test/obj/' )

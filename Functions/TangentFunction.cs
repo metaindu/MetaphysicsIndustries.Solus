@@ -29,7 +29,7 @@
  *****************************************************************************/
 
 using System;
-using MetaphysicsIndustries.Solus.Expressions;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -56,6 +56,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return "tan";
             }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

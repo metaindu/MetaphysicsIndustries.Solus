@@ -21,8 +21,7 @@
  */
 
 using System.Collections.Generic;
-using System.Reflection.Emit;
-using MetaphysicsIndustries.Solus.Compiler;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -76,15 +75,9 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return 0; }
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(VariableToArgumentNumberMapper varmap, List<Expression> arguments)
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
-            List<Instruction> instructions = new List<Instruction>();
-            instructions.AddRange(arguments[0].ConvertToInstructions(varmap));
-            instructions.Add(new Instruction {
-                ArgType=Instruction.ArgumentType.None,
-                OpCode=OpCodes.Neg
-            });
-            return instructions;
+            return args.First();
         }
     }
 }

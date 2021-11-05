@@ -21,7 +21,6 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -90,5 +89,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             visitor.Visit(this);
         }
+
+        public override IMathObject Result =>
+            throw new NotImplementedException();
     }
 }

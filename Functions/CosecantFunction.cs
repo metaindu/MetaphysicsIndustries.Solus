@@ -29,7 +29,7 @@
  *****************************************************************************/
 
 using System;
-using MetaphysicsIndustries.Solus.Expressions;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -63,6 +63,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 return "The cosecant function\n  csc(x)\n\nReturns the cosecant of x, which is equal to 1 / sin(x).";
             }
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            return ScalarMathObject.Value;
         }
     }
 }

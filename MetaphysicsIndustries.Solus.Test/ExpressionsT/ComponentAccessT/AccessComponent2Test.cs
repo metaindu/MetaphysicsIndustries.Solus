@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 
         static IMathObject[] mkindexes(params int[] indexes)
         {
-            return indexes.Select(i => (IMathObject) i.ToNumber()).ToArray();
+            return indexes.Select(i => (IMathObject)i.ToNumber()).ToArray();
         }
 
         [Test]
@@ -61,8 +61,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = vector("a", "b", "c");
             var indexes = mkindexes(1);
+            var env = new SolusEnvironment();
             // when
-            var result = ComponentAccess.AccessComponent(expr, indexes);
+            var result = ComponentAccess.AccessComponent(expr, indexes, env);
             // then
             Assert.IsInstanceOf<VariableAccess>(result);
             Assert.AreEqual("b", ((VariableAccess)result).VariableName);
@@ -76,8 +77,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 "a", "b",
                 "c", "d");
             var indexes = mkindexes(1,1);
+            var env = new SolusEnvironment();
             // when
-            var result = ComponentAccess.AccessComponent(expr, indexes);
+            var result = ComponentAccess.AccessComponent(expr, indexes, env);
             // then
             Assert.IsInstanceOf<VariableAccess>(result);
             Assert.AreEqual("d", ((VariableAccess)result).VariableName);
@@ -85,8 +87,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 
         class MockTensorExpression : TensorExpression
         {
-            public MockTensorExpression(int tensorRank) =>
+            public MockTensorExpression(int tensorRank)
+            {
                 TensorRank = tensorRank;
+                Result = new MockMathObjectF(
+                    isScalarF: e => TensorRank == 0,
+                    isVectorF: e => TensorRank == 1,
+                    isMatrixF: e => TensorRank == 2,
+                    getTensorRankF: e => TensorRank,
+                    isStringF: e => false);
+            }
 
             public override int TensorRank { get; }
 
@@ -100,6 +110,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 throw new NotImplementedException();
             public override void ApplyToAll(Modulator mod) =>
                 throw new NotImplementedException();
+
+            public override IMathObject Result { get; }
         }
 
         [Test]
@@ -108,9 +120,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new MockTensorExpression(0);
             var indexes = mkindexes(1);
+            var env = new SolusEnvironment();
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual("Scalars do not have components",
                 ex.Message);
@@ -122,9 +135,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = vector("a","b","c");
             var indexes = mkindexes(1, 1);
+            var env = new SolusEnvironment();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual(
                 "Number of indexes doesn't match the number " +
@@ -140,9 +154,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 "a", "b",
                 "c", "d");
             var indexes = mkindexes(1);
+            var env = new SolusEnvironment();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual(
                 "Number of indexes doesn't match the number " +
@@ -159,8 +174,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             {
                 new Vector(new float[] {4, 5, 6})
             };
+            var env = new SolusEnvironment();
+            // expect
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
         }
@@ -174,8 +191,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             {
                 new Matrix(new float[,] {{1, 2}, {3, 4}})
             };
+            var env = new SolusEnvironment();
+            // expect
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
         }
@@ -186,8 +205,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = vector("a","b","c");
             var indexes = new IMathObject[] {"abc".ToStringValue()};
+            var env = new SolusEnvironment();
+            // expect
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
         }
@@ -198,9 +219,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = vector("a","b","c");
             var indexes = mkindexes(-1);
+            var env = new SolusEnvironment();
             // expect
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual(
                 "Indexes must not be negative",
@@ -216,9 +238,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = new MockTensorExpression(3);
             var indexes = mkindexes(1, 2, 3);
+            var env = new SolusEnvironment();
             // expect
             var ex = Assert.Throws<NotImplementedException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual(
                 "Component access is not implemented for tensor " +
@@ -232,9 +255,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // given
             var expr = vector("a","b","c");
             var indexes = mkindexes(3);
+            var env = new SolusEnvironment();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual(
                 "Index exceeds the size of the vector",
@@ -249,9 +273,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 "a", "b",
                 "c", "d");
             var indexes = mkindexes(2, 0);
+            var env = new SolusEnvironment();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual(
                 "Index exceeds number of rows of the matrix",
@@ -266,9 +291,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 "a", "b",
                 "c", "d");
             var indexes = mkindexes(0, 2);
+            var env = new SolusEnvironment();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes));
+                () => ComponentAccess.AccessComponent(expr, indexes, env));
             // and
             Assert.AreEqual(
                 "Index exceeds number of columns of the matrix",

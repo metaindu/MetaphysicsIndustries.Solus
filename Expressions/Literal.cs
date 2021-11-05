@@ -29,8 +29,6 @@
  *****************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -46,9 +44,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
 		{
 		}
 		public Literal(IMathObject value)
-		{
+        {
+            if (!value.IsConcrete)
+                throw new ArgumentException(
+                    "Literal expressions can only hold concrete values",
+                    nameof(value));
+
 			_value = value;
-		}
+        }
 
         public override Expression Clone()
         {
@@ -100,13 +103,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IEnumerable<Instruction> ConvertToInstructions(
-	        VariableToArgumentNumberMapper varmap)
-        {
-	        if (Value.IsScalar)
-				return new [] { Instruction.LoadConstant(Value.ToFloat()) };
-	        throw new NotImplementedException(
-		        "currently only implemented for numbers.");
-        }
+        public override IMathObject Result => Value;
     }
 }

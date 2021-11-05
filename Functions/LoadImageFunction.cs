@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -63,6 +64,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             return SolusEngine.LoadImage(args[0].ToStringValue().Value,
                 loader);
+        }
+
+        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        {
+            throw new NotImplementedException();
         }
     }
 }
