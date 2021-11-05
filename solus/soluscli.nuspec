@@ -32,12 +32,12 @@ USA
         <!-- TODO: <icon>images/logo.png</icon> -->
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Solus command-line interface</description>
-        <releaseNotes>Eval for matrix and vector expressions</releaseNotes>
+        <releaseNotes>Expression and function interrogation.</releaseNotes>
         <copyright>Copyright 2021 izrik and Metaphysics Industries, Inc.</copyright>
         <tags>math numeric algebra</tags>
         <dependencies>
             <group>
-                <dependency id="MetaphysicsIndustries.Solus" version="0.6.0" />
+                <dependency id="MetaphysicsIndustries.Solus" version="0.7.0" />
             </group>
             <group targetFramework=".NETFramework4.0" />
         </dependencies>
