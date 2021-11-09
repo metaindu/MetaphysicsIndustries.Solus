@@ -104,7 +104,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 _evalValuesCache = new IMathObject[Length];
             for (int i = 0; i < Length; i++)
                 _evalValuesCache[i] = this[i].Eval(env);
-            return new Vector(_evalValuesCache);
+            return new Vector(_evalValuesCache);  // TODO: don't box here
         }
 
         public override Expression Clone()
