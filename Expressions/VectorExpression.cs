@@ -101,7 +101,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var values = new IMathObject[Length];
             for (int i = 0; i < Length; i++)
                 values[i] = this[i].Eval(env);
-            return new Vector(values);
+            return new Vector(values);  // TODO: don't box here
         }
 
         public override Expression Clone()
