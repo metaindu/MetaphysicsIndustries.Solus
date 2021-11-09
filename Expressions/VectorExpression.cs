@@ -96,15 +96,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
         private Expression[] _array;
         public int Length => _array.Length;
 
-        private IMathObject[] _evalValuesCache = new IMathObject[0];
-        // Warning: Not thread-safe
         public override IMathObject Eval(SolusEnvironment env)
         {
-            if (_evalValuesCache.Length < Length)
-                _evalValuesCache = new IMathObject[Length];
+            var values = new IMathObject[Length];
             for (int i = 0; i < Length; i++)
-                _evalValuesCache[i] = this[i].Eval(env);
-            return new Vector(_evalValuesCache);
+                values[i] = this[i].Eval(env);
+            return new Vector(values);
         }
 
         public override Expression Clone()
