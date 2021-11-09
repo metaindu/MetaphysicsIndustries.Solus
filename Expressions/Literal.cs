@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (_value != value)
 				{
                     _value = value;
-					this.OnValueChanged(new EventArgs());
+					this.OnValueChanged(EventArgs.Empty);
 				}
 			}
 		}
