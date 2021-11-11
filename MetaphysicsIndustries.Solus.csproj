@@ -144,6 +144,7 @@
     <Compile Include="Macros\RandMacro.cs" />
     <Compile Include="Macros\SqrtMacro.cs" />
     <Compile Include="Macros\SubstMacro.cs" />
+    <Compile Include="MathObjectHelper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SolusEngine.Statistics.cs" />
     <Compile Include="SolusEngine.Eval.cs" />
@@ -170,7 +171,6 @@
     <Compile Include="Transformers\VariableTransformArgs.cs" />
     <Compile Include="STuple.cs" />
     <Compile Include="MemoryImage.cs" />
-    <Compile Include="Values\MathObjectHelper.cs" />
     <Compile Include="Values\Matrix.cs" />
     <Compile Include="Values\Number.cs" />
     <Compile Include="Values\StringValue.cs" />

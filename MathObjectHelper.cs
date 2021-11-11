@@ -21,8 +21,9 @@
  */
 
 using System.Linq;
+using MetaphysicsIndustries.Solus.Values;
 
-namespace MetaphysicsIndustries.Solus.Values
+namespace MetaphysicsIndustries.Solus
 {
     public static class MathObjectHelper
     {
