@@ -66,21 +66,15 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public int? GetDimension(SolusEnvironment env, int index)
         {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException(nameof(index),
-                    "Index must not be negative");
-            if (index > 1)
-                throw new ArgumentOutOfRangeException(nameof(index),
-                    "Matrices only have two dimensions");
+            if (index < 0) return null;
+            if (index > 1) return null;
             return _components.GetLength(index);
         }
 
         public int[] GetDimensions(SolusEnvironment env) =>
             new[] { RowCount, ColumnCount };
 
-        public int? GetVectorLength(SolusEnvironment env) =>
-            throw new InvalidOperationException(
-                "A matrix is not a vector");
+        public int? GetVectorLength(SolusEnvironment env) => null;
 
         public bool IsConcrete => true;
 

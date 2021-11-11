@@ -60,12 +60,8 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public int? GetDimension(SolusEnvironment env, int index)
         {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException(nameof(index),
-                    "Index must not be negative");
-            if (index > 0)
-                throw new ArgumentOutOfRangeException(nameof(index),
-                    "Vectors only have a single dimension");
+            if (index < 0) return null;
+            if (index > 0) return null;
             return Length;
         }
 
