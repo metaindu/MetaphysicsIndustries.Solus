@@ -18,6 +18,9 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
+echo ""
+echo "Long lines:"
+
 #grep -n '................................................................................' $(find . -name \*.cs)
 git diff -U0 | \
     grep -v -e '^@@' -e '^diff --git' -e '^+++' -e '^---' -e '^-' | \
@@ -28,6 +31,17 @@ git diff --cached -U0 | \
     grep -n '[-+]................................................................................'
 #                12345678901234567890123456789012345678901234567890123456789012345678901234567890
 
+echo ""
+echo "Trailing whitespace:"
+
+git diff -U0 | \
+    grep -v -e '^@@' -e '^diff --git' -e '^+++' -e '^---' -e '^-' | \
+    grep -n '[ 	]$'  # space or literal tab
+git diff --cached -U0 | \
+    grep -v -e '^@@' -e '^diff --git' -e '^+++' -e '^---' -e '^-' | \
+    grep -n '[ 	]$'  # space or literal tab
+#grep -rnE '[ 	]$' \
+# $(git ls-files | grep -v -e 'solus/getline.cs' -e 'solus/NDesk.Options.cs')
 
 # TODO: check for tabs rather than spaces
 # TODO: check for trailing whitespace on lines
