@@ -133,15 +133,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
             IMathObject[] indexes, SolusEnvironment env)
         {
             int? length = null;
-            if (expr.IsIsVector(env)) length = expr.ToVector().Length;
-            else if (expr.IsIsString(env)) length = expr.ToStringValue().Length;
-            int? exprRowCount = null;
-            int? exprColumnCount = null;
-            if (expr.GetTensorRank(env) > 1)
-            {
-                exprRowCount = expr.GetDimension(env, 0);
-                exprColumnCount = expr.GetDimension(env, 1);
-            }
+            if (expr.IsIsVector(env))
+                length = expr.ToVector().Length;
+            else if (expr.IsIsString(env))
+                length = expr.ToStringValue().Length;
+            var exprRowCount = expr.GetDimension(env, 0);
+            var exprColumnCount = expr.GetDimension(env, 1);
             CheckIndexes(indexes, expr.IsScalar(env), expr.IsVector(env),
                 expr.IsMatrix(env), expr.GetTensorRank(env),
                 expr.IsString(env), length,
