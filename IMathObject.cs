@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Solus
 
         bool IsConcrete { get; }
     }
-    
+
     public class ScalarMathObject : IMathObject
     {
         public static readonly ScalarMathObject Value = new ScalarMathObject();

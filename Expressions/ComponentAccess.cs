@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
             else
             {
-                if ((exprIsScalar.HasValue && exprIsScalar.Value) || 
+                if ((exprIsScalar.HasValue && exprIsScalar.Value) ||
                     exprTensorRank < 1)
                     throw new OperandException(
                         "Scalars do not have components");
@@ -236,7 +236,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override void AcceptVisitor(IExpressionVisitor visitor)
         {
             visitor.Visit(this);
-            
+
             Expr.AcceptVisitor(visitor);
             foreach (var index in Indexes)
                 index.AcceptVisitor(visitor);

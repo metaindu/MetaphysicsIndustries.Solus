@@ -27,7 +27,6 @@ namespace MetaphysicsIndustries.Solus
 {
     public static class MathObjectHelper
     {
-        
         public static bool IsIsScalar(this IMathObject mo,
             SolusEnvironment env)
         {
@@ -98,7 +97,7 @@ namespace MetaphysicsIndustries.Solus
 
         public static IMathObject[,] ToMathObjects(this float[,] values)
         {
-            var result = new IMathObject[values.GetLength(0), 
+            var result = new IMathObject[values.GetLength(0),
                 values.GetLength(1)];
             // TODO: faster
             // TODO: row first or column first?

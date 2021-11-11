@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("a", original.GetVariableNames().ToList());
             Assert.AreEqual(0, original.CountFunctions());
             Assert.AreEqual(0, original.CountMacros());
-            
+
             Assert.AreEqual(1, clone.CountVariables());
             Assert.Contains("a", clone.GetVariableNames().ToList());
             Assert.AreEqual(0, clone.CountFunctions());
@@ -63,16 +63,16 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             original.SetVariable("a", new Literal(1));
             var clone = original.Clone();
             // precondition
-            Assert.AreEqual(1, 
+            Assert.AreEqual(1,
                 ((Literal)original.GetVariable("a")).Value.ToFloat());
-            Assert.AreEqual(1, 
+            Assert.AreEqual(1,
                 ((Literal)clone.GetVariable("a")).Value.ToFloat());
             // when
             ((Literal) original.GetVariable("a")).Value = 2.ToNumber();
             // then
-            Assert.AreEqual(2, 
+            Assert.AreEqual(2,
                 ((Literal)original.GetVariable("a")).Value.ToFloat());
-            Assert.AreEqual(2, 
+            Assert.AreEqual(2,
                 ((Literal)clone.GetVariable("a")).Value.ToFloat());
         }
 
