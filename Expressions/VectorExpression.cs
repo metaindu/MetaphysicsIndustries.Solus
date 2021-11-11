@@ -101,6 +101,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var values = new IMathObject[Length];
             for (int i = 0; i < Length; i++)
                 values[i] = this[i].Eval(env);
+            // Vector will take ownership of array
             return new Vector(values);  // TODO: don't box here
         }
 
@@ -214,19 +215,30 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
+        private Expression[] _valuesCache = null;
         public override Expression PreliminaryEval(SolusEnvironment env)
         {
-            var values = _array.Select(
-                e => e.PreliminaryEval(env)).ToArray();
-            if (values.All(e => e is Literal))
+            if (_valuesCache == null ||
+                _valuesCache.Length < _array.Length)
+                _valuesCache = new Expression[_array.Length];
+
+            bool allLiterals = true;
+            int i;
+            for (i = 0; i < _array.Length; i++)
             {
-                return new Literal(
-                    new Vector(
-                        values.Select(
-                            e => ((Literal) e).Value).ToArray()));
+                var e = _valuesCache[i] = _array[i].PreliminaryEval(env);
+                allLiterals &= e is Literal;
+            }
+            if (allLiterals)
+            {
+                var values = new IMathObject[_valuesCache.Length];
+                for (i = 0; i < _array.Length; i++)
+                    values[i] = ((Literal)_valuesCache[i]).Value;
+                // Vector will take ownership of array
+                return new Literal(new Vector(values));
             }
 
-            return new VectorExpression(values.Length, values);
+            return new VectorExpression(_valuesCache.Length, _valuesCache);
         }
 
         public override void ApplyToAll(Modulator mod)
