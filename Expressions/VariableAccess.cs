@@ -102,66 +102,58 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public ResultC(VariableAccess va) => _va = va;
             private readonly VariableAccess _va;
 
-            private void Check(SolusEnvironment env)
-            {
-                if (!env.ContainsVariable(_va.VariableName))
-                    throw new NameException(
-                        $"Variable not found in the environment: " +
-                        _va.VariableName);
-            }
-
             public bool? IsScalar(SolusEnvironment env)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsScalar(env);
             }
 
             public bool? IsVector(SolusEnvironment env)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsVector(env);
             }
 
             public bool? IsMatrix(SolusEnvironment env)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsMatrix(env);
             }
 
             public int? GetTensorRank(SolusEnvironment env)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.GetTensorRank(env);
             }
 
             public bool? IsString(SolusEnvironment env)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsString(env);
             }
 
             public int? GetDimension(SolusEnvironment env, int index)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.GetDimension(env, index);
             }
 
             public int[] GetDimensions(SolusEnvironment env)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.GetDimensions(env);
             }
 
             public int? GetVectorLength(SolusEnvironment env)
             {
-                Check(env);
+                if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.GetVectorLength(env);
             }

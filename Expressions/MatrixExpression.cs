@@ -770,8 +770,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 if (index == 0) return _me.RowCount;
                 if (index == 1) return _me.ColumnCount;
-                throw new IndexOutOfRangeException(
-                    "The index must be zero or one for a matrix");
+                return null;
             }
 
             private int[] __GetDimensions;
@@ -783,11 +782,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return __GetDimensions;
             }
 
-            public int? GetVectorLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "A matrix is not a vector");
-            }
+            public int? GetVectorLength(SolusEnvironment env) => null;
 
             public bool IsConcrete => false;
         }

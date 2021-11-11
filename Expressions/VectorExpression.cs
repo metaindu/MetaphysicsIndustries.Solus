@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
@@ -289,14 +288,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public bool? IsMatrix(SolusEnvironment env) => false;
             public int? GetTensorRank(SolusEnvironment env) => 1;
             public bool? IsString(SolusEnvironment env) => false;
-
-            public int? GetDimension(SolusEnvironment env, int index)
-            {
-                if (index == 0) return _ve.Length;
-                throw new IndexOutOfRangeException(
-                    "The index must be zero for a vector");
-            }
-
+            public int? GetDimension(SolusEnvironment env, int index) => null;
             private int[] __GetDimensions;
 
             public int[] GetDimensions(SolusEnvironment env)
