@@ -26,6 +26,32 @@ namespace MetaphysicsIndustries.Solus.Values
 {
     public static class MathObjectHelper
     {
+        
+        public static bool IsIsScalar(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsScalar(env);
+            return iss.HasValue && iss.Value;
+        }
+        public static bool IsIsVector(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsVector(env);
+            return iss.HasValue && iss.Value;
+        }
+        public static bool IsIsMatrix(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsMatrix(env);
+            return iss.HasValue && iss.Value;
+        }
+        public static bool IsIsString(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsString(env);
+            return iss.HasValue && iss.Value;
+        }
+
         public static Number ToNumber(this IMathObject mo) => (Number) mo;
 
         public static StringValue ToStringValue(this IMathObject mo) =>
@@ -56,10 +82,10 @@ namespace MetaphysicsIndustries.Solus.Values
         public static Types GetMathType(this IMathObject mo,
             SolusEnvironment env=null)
         {
-            if (mo.IsScalar(env)) return Types.Scalar;
-            if (mo.IsVector(env)) return Types.Vector;
-            if (mo.IsMatrix(env)) return Types.Matrix;
-            if (mo.IsString(env)) return Types.String;
+            if (mo.IsIsScalar(env)) return Types.Scalar;
+            if (mo.IsIsVector(env)) return Types.Vector;
+            if (mo.IsIsMatrix(env)) return Types.Matrix;
+            if (mo.IsIsString(env)) return Types.String;
             return Types.Unknown;
         }
 

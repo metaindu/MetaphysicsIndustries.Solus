@@ -61,8 +61,13 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: this function should be able to operate on things that
             // aren't IMathObject, namely TensorExpression
             var arg = args[0];
-            if (arg.IsString(env) || arg.IsVector(env))
-                return arg.GetDimension(env, 0).ToNumber();
+            if (arg.IsIsString(env) || arg.IsIsVector(env))
+            {
+                var dim = arg.GetDimension(env, 0);
+                if (dim.HasValue)
+                    return dim.Value.ToNumber();
+            }
+
             return arg.GetDimensions(env).ToVector();
         }
 
@@ -70,13 +75,13 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             public ResultC(IMathObject obj) => _obj = obj;
             private readonly IMathObject _obj;
-            public bool IsScalar(SolusEnvironment env) => false;
-            public bool IsVector(SolusEnvironment env) => true;
-            public bool IsMatrix(SolusEnvironment env) => false;
-            public int GetTensorRank(SolusEnvironment env) => 1;
-            public bool IsString(SolusEnvironment env) => false;
+            public bool? IsScalar(SolusEnvironment env) => false;
+            public bool? IsVector(SolusEnvironment env) => true;
+            public bool? IsMatrix(SolusEnvironment env) => false;
+            public int? GetTensorRank(SolusEnvironment env) => 1;
+            public bool? IsString(SolusEnvironment env) => false;
 
-            public int GetDimension(SolusEnvironment env, int index)
+            public int? GetDimension(SolusEnvironment env, int index)
             {
                 if (index != 0) throw new IndexException();
                 return _obj.GetTensorRank(env);
@@ -85,13 +90,21 @@ namespace MetaphysicsIndustries.Solus.Functions
             public int[] GetDimensions(SolusEnvironment env)
             {
                 var n = _obj.GetTensorRank(env);
-                var dimensions = new int[n];
+                if (!n.HasValue)
+                    return null;
+                var dimensions = new int[n.Value];
                 for (var i = 0; i < n; i++)
-                    dimensions[i] = _obj.GetDimension(env, i);
+                {
+                    var dim = _obj.GetDimension(env, i);
+                    if (!dim.HasValue)
+                        return null;
+                    dimensions[i] = dim.Value;
+                }
+
                 return dimensions;
             }
 
-            public int GetVectorLength(SolusEnvironment env) =>
+            public int? GetVectorLength(SolusEnvironment env) =>
                 GetDimension(env, 0);
 
             public bool IsConcrete => false;

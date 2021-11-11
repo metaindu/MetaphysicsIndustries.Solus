@@ -33,15 +33,15 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public readonly string Value;
 
-        public bool IsScalar(SolusEnvironment env) => false;
-        public bool IsVector(SolusEnvironment env) => false;
-        public bool IsMatrix(SolusEnvironment env) => false;
-        public int GetTensorRank(SolusEnvironment env) => 0;
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => 0;
 
-        public bool IsString(SolusEnvironment env) => true;
+        public bool? IsString(SolusEnvironment env) => true;
         // TODO: IsTuple => true
 
-        public int GetDimension(SolusEnvironment env, int index)
+        public int? GetDimension(SolusEnvironment env, int index)
         {
             if (index < 0)
                 throw new ArgumentOutOfRangeException(nameof(index),
@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Values
             return new[] {Length};
         }
 
-        public int GetVectorLength(SolusEnvironment env) =>
+        public int? GetVectorLength(SolusEnvironment env) =>
             throw new InvalidOperationException(
                 "A string is not a vector");
 

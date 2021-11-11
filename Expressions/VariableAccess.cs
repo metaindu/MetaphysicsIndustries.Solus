@@ -110,42 +110,42 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         _va.VariableName);
             }
 
-            public bool IsScalar(SolusEnvironment env)
+            public bool? IsScalar(SolusEnvironment env)
             {
                 Check(env);
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsScalar(env);
             }
 
-            public bool IsVector(SolusEnvironment env)
+            public bool? IsVector(SolusEnvironment env)
             {
                 Check(env);
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsVector(env);
             }
 
-            public bool IsMatrix(SolusEnvironment env)
+            public bool? IsMatrix(SolusEnvironment env)
             {
                 Check(env);
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsMatrix(env);
             }
 
-            public int GetTensorRank(SolusEnvironment env)
+            public int? GetTensorRank(SolusEnvironment env)
             {
                 Check(env);
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.GetTensorRank(env);
             }
 
-            public bool IsString(SolusEnvironment env)
+            public bool? IsString(SolusEnvironment env)
             {
                 Check(env);
                 var varexpr = env.GetVariable(_va.VariableName);
                 return varexpr.Result.IsString(env);
             }
 
-            public int GetDimension(SolusEnvironment env, int index)
+            public int? GetDimension(SolusEnvironment env, int index)
             {
                 Check(env);
                 var varexpr = env.GetVariable(_va.VariableName);
@@ -159,7 +159,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return varexpr.Result.GetDimensions(env);
             }
 
-            public int GetVectorLength(SolusEnvironment env)
+            public int? GetVectorLength(SolusEnvironment env)
             {
                 Check(env);
                 var varexpr = env.GetVariable(_va.VariableName);

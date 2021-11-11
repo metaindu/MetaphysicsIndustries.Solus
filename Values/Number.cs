@@ -33,13 +33,13 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public float Value { get; }
 
-        public bool IsScalar(SolusEnvironment env) => true;
-        public bool IsVector(SolusEnvironment env) => false;
-        public bool IsMatrix(SolusEnvironment env) => false;
-        public int GetTensorRank(SolusEnvironment env) => 0;
-        public bool IsString(SolusEnvironment env) => false;
+        public bool? IsScalar(SolusEnvironment env) => true;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => 0;
+        public bool? IsString(SolusEnvironment env) => false;
 
-        public int GetDimension(SolusEnvironment env, int index)
+        public int? GetDimension(SolusEnvironment env, int index)
         {
             throw new InvalidOperationException(
                 "Scalars do not have dimensions");
@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Solus.Values
                 "Scalars do not have dimensions");
         }
 
-        public int GetVectorLength(SolusEnvironment env) =>
+        public int? GetVectorLength(SolusEnvironment env) =>
             throw new InvalidOperationException(
                 "A number is not a vector");
 

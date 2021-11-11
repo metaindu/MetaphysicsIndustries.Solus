@@ -58,13 +58,13 @@ namespace MetaphysicsIndustries.Solus.Values
         public int ColumnCount => _components.GetLength(1);
         public Types ComponentType { get; }
 
-        public bool IsScalar(SolusEnvironment env) => false;
-        public bool IsVector(SolusEnvironment env) => false;
-        public bool IsMatrix(SolusEnvironment env) => true;
-        public int GetTensorRank(SolusEnvironment env) => 2;
-        public bool IsString(SolusEnvironment env) => false;
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => true;
+        public int? GetTensorRank(SolusEnvironment env) => 2;
+        public bool? IsString(SolusEnvironment env) => false;
 
-        public int GetDimension(SolusEnvironment env, int index)
+        public int? GetDimension(SolusEnvironment env, int index)
         {
             if (index < 0)
                 throw new ArgumentOutOfRangeException(nameof(index),
@@ -78,7 +78,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public int[] GetDimensions(SolusEnvironment env) =>
             new[] { RowCount, ColumnCount };
 
-        public int GetVectorLength(SolusEnvironment env) =>
+        public int? GetVectorLength(SolusEnvironment env) =>
             throw new InvalidOperationException(
                 "A matrix is not a vector");
 
