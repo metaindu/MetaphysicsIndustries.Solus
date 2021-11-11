@@ -121,6 +121,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public virtual List<Expression> Arguments
         {
+            // TODO: make this immutable
             get
             {
                 return _arguments;
@@ -217,6 +218,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public override IMathObject Result =>
+            // TODO: don't use linq
             Function.GetResult(Arguments.Select(a => a.Result));
     }
 }

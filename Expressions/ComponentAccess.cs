@@ -260,6 +260,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         private class ResultC : IMathObject
         {
+            // TODO: really, we can only interrogate the component if the
+            // object is known to have components all of a particular type,
+            // e.g. 3-vector in R^3. otherwise, we have to evaluate the
+            // indexes.
             public ResultC(ComponentAccess ca) => _ca = ca;
             private readonly ComponentAccess _ca;
             public bool? IsScalar(SolusEnvironment env)
