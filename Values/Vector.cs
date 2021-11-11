@@ -29,6 +29,7 @@ namespace MetaphysicsIndustries.Solus.Values
     {
         public Vector(IMathObject[] components)
         {
+            // TODO: don't clone here
             _components = (IMathObject[]) components.Clone();
 
             var componentType = _components[0].GetMathType();

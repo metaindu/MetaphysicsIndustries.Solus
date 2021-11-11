@@ -107,11 +107,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
+        private IMathObject[] _evaledArgsCache = new IMathObject[0];
+        // Warning: Not thread-safe
         public virtual IMathObject Call(SolusEnvironment env)
         {
-            var evaledArgs =
-                Arguments.Select(a => a.Eval(env)).ToArray();
-            return Function.Call(env, evaledArgs);
+            if (_evaledArgsCache.Length < Arguments.Count)
+                _evaledArgsCache = new IMathObject[Arguments.Count];
+            int i;
+            for (i = 0; i < Arguments.Count; i++)
+                _evaledArgsCache[i] = Arguments[i].Eval(env);
+            return Function.Call(env, _evaledArgsCache);
         }
 
         public virtual List<Expression> Arguments

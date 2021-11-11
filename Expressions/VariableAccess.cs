@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (env.ContainsVariable(var))
             {
                 if (env.GetVariable(var) is Literal literal)
-                    return literal.Value.ToNumber();
+                    return literal.Value;
 
                 return env.GetVariable(var).Eval(env);
             }
