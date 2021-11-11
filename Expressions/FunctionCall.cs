@@ -217,8 +217,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IMathObject Result =>
-            // TODO: don't use linq
-            Function.GetResult(Arguments.Select(a => a.Result));
+        private IMathObject[] _argumentResultCache;
+
+        public override IMathObject Result
+        {
+            get
+            {
+                if (_argumentResultCache == null ||
+                    _argumentResultCache.Length < Arguments.Count)
+                    _argumentResultCache = new IMathObject[Arguments.Count];
+                int i;
+                for (i = 0; i < Arguments.Count; i++)
+                    _argumentResultCache[i] = Arguments[i].Result;
+                Function.GetResult(_argumentResultCache);
+            }
+        }
     }
 }
