@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 int i;
                 for (i = 0; i < Arguments.Count; i++)
                     _argumentResultCache[i] = Arguments[i].Result;
-                Function.GetResult(_argumentResultCache);
+                return Function.GetResult(_argumentResultCache);
             }
         }
     }
