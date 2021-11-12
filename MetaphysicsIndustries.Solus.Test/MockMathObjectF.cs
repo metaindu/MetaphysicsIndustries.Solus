@@ -50,42 +50,42 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         public Func<SolusEnvironment, bool> IsScalarF;
-        public bool IsScalar(SolusEnvironment env)
+        public bool? IsScalar(SolusEnvironment env)
         {
             if (IsScalarF != null) return IsScalarF(env);
             throw new NotImplementedException();
         }
 
         public Func<SolusEnvironment, bool> IsVectorF;
-        public bool IsVector(SolusEnvironment env)
+        public bool? IsVector(SolusEnvironment env)
         {
             if (IsVectorF != null) return IsVectorF(env);
             throw new NotImplementedException();
         }
 
         public Func<SolusEnvironment, bool> IsMatrixF;
-        public bool IsMatrix(SolusEnvironment env)
+        public bool? IsMatrix(SolusEnvironment env)
         {
             if (IsMatrixF != null) return IsMatrixF(env);
             throw new NotImplementedException();
         }
 
         public Func<SolusEnvironment, int> GetTensorRankF;
-        public int GetTensorRank(SolusEnvironment env)
+        public int? GetTensorRank(SolusEnvironment env)
         {
             if (GetTensorRankF != null) return GetTensorRankF(env);
             throw new NotImplementedException();
         }
 
         public Func<SolusEnvironment, bool> IsStringF;
-        public bool IsString(SolusEnvironment env)
+        public bool? IsString(SolusEnvironment env)
         {
             if (IsStringF != null) return IsStringF(env);
             throw new NotImplementedException();
         }
 
         public Func<SolusEnvironment, int, int> GetDimensionF;
-        public int GetDimension(SolusEnvironment env, int index)
+        public int? GetDimension(SolusEnvironment env, int index)
         {
             if (GetDimensionF != null) return GetDimensionF(env, index);
             throw new NotImplementedException();
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         public Func<SolusEnvironment, int> GetVectorLengthF;
-        public int GetVectorLength(SolusEnvironment env)
+        public int? GetVectorLength(SolusEnvironment env)
         {
             if (GetVectorLengthF != null) return GetVectorLengthF(env);
             throw new NotImplementedException();

@@ -41,10 +41,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.NumberT
             Assert.IsFalse(result.IsMatrix(null));
             Assert.AreEqual(0, result.GetTensorRank(null));
             Assert.IsFalse(result.IsString(null));
-            Assert.Throws<InvalidOperationException>(
-                () => result.GetDimension(null, 0));
-            Assert.Throws<InvalidOperationException>(
-                () => result.GetDimensions(null));
+            Assert.IsNull(result.GetDimension(null, 0));
+            Assert.IsNull(result.GetDimensions(null));
         }
 
         [Test]

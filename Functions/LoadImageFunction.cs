@@ -66,9 +66,24 @@ namespace MetaphysicsIndustries.Solus.Functions
                 loader);
         }
 
+        private class ResultC : IMathObject
+        {
+            public bool? IsScalar(SolusEnvironment env) => false;
+            public bool? IsVector(SolusEnvironment env) => false;
+            public bool? IsMatrix(SolusEnvironment env) => true;
+            public int? GetTensorRank(SolusEnvironment env) => 2;
+            public bool? IsString(SolusEnvironment env) => false;
+            public int? GetDimension(SolusEnvironment env, int index) => null;
+            public int[] GetDimensions(SolusEnvironment env) => null;
+            public int? GetVectorLength(SolusEnvironment env) => null;
+            public bool IsConcrete => false;
+        }
+
+        private readonly ResultC _result = new ResultC();
+
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
-            throw new NotImplementedException();
+            return _result;
         }
     }
 }

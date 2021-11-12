@@ -44,26 +44,26 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         private readonly bool _isScalar;
-        public bool IsScalar(SolusEnvironment env) => _isScalar;
+        public bool? IsScalar(SolusEnvironment env) => _isScalar;
 
         private readonly bool _isVector;
-        public bool IsVector(SolusEnvironment env) => _isVector;
+        public bool? IsVector(SolusEnvironment env) => _isVector;
 
         private readonly bool _isMatrix;
-        public bool IsMatrix(SolusEnvironment env) => _isMatrix;
+        public bool? IsMatrix(SolusEnvironment env) => _isMatrix;
 
         private readonly int _tensorRank;
-        public int GetTensorRank(SolusEnvironment env) => _tensorRank;
+        public int? GetTensorRank(SolusEnvironment env) => _tensorRank;
 
         private readonly bool _isString;
-        public bool IsString(SolusEnvironment env) => _isString;
+        public bool? IsString(SolusEnvironment env) => _isString;
 
         private readonly int[] _dimensions;
-        public int GetDimension(SolusEnvironment env, int index) =>
+        public int? GetDimension(SolusEnvironment env, int index) =>
             _dimensions[index];
         public int[] GetDimensions(SolusEnvironment env) => _dimensions;
 
-        public int GetVectorLength(SolusEnvironment env) =>
+        public int? GetVectorLength(SolusEnvironment env) =>
             throw new NotImplementedException();
 
         private readonly bool _isConcrete;

@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
     public class GetResultTest
     {
         [Test]
-        public void ResultIsScalar()
+        public void ResultIsMatrixOfUnknownSize()
         {
             // given
             var arg1 = 1.ToNumber();
@@ -42,9 +42,20 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             Assert.IsFalse(arg1.IsMatrix(null));
             Assert.AreEqual(0, arg1.GetTensorRank(null));
             Assert.IsFalse(arg1.IsString(null));
-            // expect
-            Assert.Throws<NotImplementedException>(
-                () => LoadImageFunction.Value.GetResult(args));
+            // when
+            var result = LoadImageFunction.Value.GetResult(args);
+            // then
+            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsTrue(result.IsMatrix(null));
+            Assert.AreEqual(2, result.GetTensorRank(null));
+            Assert.IsFalse(result.IsString(null));
+            Assert.IsNull(result.GetDimension(null, -1));
+            Assert.IsNull(result.GetDimension(null, 0));
+            Assert.IsNull(result.GetDimension(null, 1));
+            Assert.IsNull(result.GetDimension(null, 2));
+            Assert.IsNull(result.GetDimensions(null));
+            Assert.IsNull(result.GetVectorLength(null));
         }
     }
 }

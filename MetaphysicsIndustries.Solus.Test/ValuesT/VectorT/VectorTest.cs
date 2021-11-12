@@ -49,18 +49,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             Assert.AreEqual(1, result.GetTensorRank(null));
             Assert.IsFalse(result.IsString(null));
             Assert.AreEqual(3, result.GetDimension(null, 0));
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => result.GetDimension(null, -1));
-            Assert.AreEqual("index", ex.ParamName);
-            Assert.AreEqual("Index must not be negative\n" +
-                            "Parameter name: index",
-                ex.Message);
-            ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => result.GetDimension(null, 2));
-            Assert.AreEqual("index", ex.ParamName);
-            Assert.AreEqual("Vectors only have a single dimension\n" +
-                            "Parameter name: index",
-                ex.Message);
+            Assert.IsNull(result.GetDimension(null, -1));
+            Assert.IsNull(result.GetDimension(null, 2));
             Assert.AreEqual(new[] {3}, result.GetDimensions(null));
         }
 

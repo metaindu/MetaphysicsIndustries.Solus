@@ -121,6 +121,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public virtual List<Expression> Arguments
         {
+            // TODO: make this immutable
             get
             {
                 return _arguments;
@@ -216,7 +217,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IMathObject Result =>
-            Function.GetResult(Arguments.Select(a => a.Result));
+        private IMathObject[] _argumentResultCache;
+
+        public override IMathObject Result
+        {
+            get
+            {
+                if (_argumentResultCache == null ||
+                    _argumentResultCache.Length < Arguments.Count)
+                    _argumentResultCache = new IMathObject[Arguments.Count];
+                int i;
+                for (i = 0; i < Arguments.Count; i++)
+                    _argumentResultCache[i] = Arguments[i].Result;
+                return Function.GetResult(_argumentResultCache);
+            }
+        }
     }
 }

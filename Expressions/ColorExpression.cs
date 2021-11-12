@@ -105,34 +105,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override IMathObject Result { get; } = new ResultC();
-        private class ResultC : IMathObject
-        {
-            public bool IsScalar(SolusEnvironment env) => true;
-            public bool IsVector(SolusEnvironment env) => false;
-            public bool IsMatrix(SolusEnvironment env) => false;
-            public int GetTensorRank(SolusEnvironment env) => 0;
-            public bool IsString(SolusEnvironment env) => false;
-
-            public int GetDimension(SolusEnvironment env, int index)
-            {
-                throw new IndexOutOfRangeException(
-                    "Color expressions do not have dimensions");
-            }
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                throw new IndexOutOfRangeException(
-                    "Color expressions do not have dimensions");
-            }
-
-            public int GetVectorLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "Color expressions do not have a length");
-            }
-
-            public bool IsConcrete => false;
-        }
+        public override IMathObject Result => ScalarMathObject.Value;
     }
 }

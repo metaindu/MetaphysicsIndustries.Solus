@@ -760,18 +760,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             public ResultC(MatrixExpression me) => _me = me;
             private readonly MatrixExpression _me;
-            public bool IsScalar(SolusEnvironment env) => false;
-            public bool IsVector(SolusEnvironment env) => false;
-            public bool IsMatrix(SolusEnvironment env) => true;
-            public int GetTensorRank(SolusEnvironment env) => _me.TensorRank;
-            public bool IsString(SolusEnvironment env) => false;
+            public bool? IsScalar(SolusEnvironment env) => false;
+            public bool? IsVector(SolusEnvironment env) => false;
+            public bool? IsMatrix(SolusEnvironment env) => true;
+            public int? GetTensorRank(SolusEnvironment env) => _me.TensorRank;
+            public bool? IsString(SolusEnvironment env) => false;
 
-            public int GetDimension(SolusEnvironment env, int index)
+            public int? GetDimension(SolusEnvironment env, int index)
             {
                 if (index == 0) return _me.RowCount;
                 if (index == 1) return _me.ColumnCount;
-                throw new IndexOutOfRangeException(
-                    "The index must be zero or one for a matrix");
+                return null;
             }
 
             private int[] __GetDimensions;
@@ -783,11 +782,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return __GetDimensions;
             }
 
-            public int GetVectorLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "A matrix is not a vector");
-            }
+            public int? GetVectorLength(SolusEnvironment env) => null;
 
             public bool IsConcrete => false;
         }

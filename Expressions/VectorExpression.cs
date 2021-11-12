@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
@@ -284,17 +283,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             public ResultC(VectorExpression ve) => _ve = ve;
             private readonly VectorExpression _ve;
-            public bool IsScalar(SolusEnvironment env) => false;
-            public bool IsVector(SolusEnvironment env) => true;
-            public bool IsMatrix(SolusEnvironment env) => false;
-            public int GetTensorRank(SolusEnvironment env) => 1;
-            public bool IsString(SolusEnvironment env) => false;
+            public bool? IsScalar(SolusEnvironment env) => false;
+            public bool? IsVector(SolusEnvironment env) => true;
+            public bool? IsMatrix(SolusEnvironment env) => false;
+            public int? GetTensorRank(SolusEnvironment env) => 1;
+            public bool? IsString(SolusEnvironment env) => false;
 
-            public int GetDimension(SolusEnvironment env, int index)
+            public int? GetDimension(SolusEnvironment env, int index)
             {
                 if (index == 0) return _ve.Length;
-                throw new IndexOutOfRangeException(
-                    "The index must be zero for a vector");
+                return null;
             }
 
             private int[] __GetDimensions;
@@ -306,7 +304,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return __GetDimensions;
             }
 
-            public int GetVectorLength(SolusEnvironment env) => _ve.Length;
+            public int? GetVectorLength(SolusEnvironment env) => _ve.Length;
 
             public bool IsConcrete => false;
         }

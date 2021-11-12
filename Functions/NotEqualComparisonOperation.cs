@@ -56,6 +56,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             // TODO: boolean
+            // TODO: matrix
+            // TODO: vector
+            // TODO: string
+            // TODO: complex
             return ScalarMathObject.Value;
         }
     }

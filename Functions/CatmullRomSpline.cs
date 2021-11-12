@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         readonly float[] Times;
         readonly float[] Values;
-            
+
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {

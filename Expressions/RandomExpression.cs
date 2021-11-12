@@ -50,30 +50,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         private class ResultC : IMathObject
         {
-            public bool IsScalar(SolusEnvironment env) => true;
-            public bool IsVector(SolusEnvironment env) => false;
-            public bool IsMatrix(SolusEnvironment env) => false;
-            public int GetTensorRank(SolusEnvironment env) => 0;
-            public bool IsString(SolusEnvironment env) => false;
-
-            public int GetDimension(SolusEnvironment env, int index)
-            {
-                throw new IndexOutOfRangeException(
-                    "Random expressions do not have dimensions");
-            }
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                throw new IndexOutOfRangeException(
-                    "Random expressions do not have dimensions");
-            }
-
-            public int GetVectorLength(SolusEnvironment env)
-            {
-                throw new InvalidOperationException(
-                    "Random expressions do not have a length");
-            }
-
+            public bool? IsScalar(SolusEnvironment env) => true;
+            public bool? IsVector(SolusEnvironment env) => false;
+            public bool? IsMatrix(SolusEnvironment env) => false;
+            public int? GetTensorRank(SolusEnvironment env) => 0;
+            public bool? IsString(SolusEnvironment env) => false;
+            public int? GetDimension(SolusEnvironment env, int index) => null;
+            public int[] GetDimensions(SolusEnvironment env) => null;
+            public int? GetVectorLength(SolusEnvironment env) => null;
             public bool IsConcrete => false;
         }
     }

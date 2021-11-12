@@ -30,7 +30,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
     [TestFixture]
     public class ChildTest
     {
-        
         [Test]
         public void CreateChildEnvironmentCreatesChildEnvironment()
         {
@@ -49,7 +48,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("a", parent.GetVariableNames().ToList());
             Assert.AreEqual(0, parent.CountFunctions());
             Assert.AreEqual(0, parent.CountMacros());
-            
+
             Assert.AreEqual(1, child.CountVariables());
             Assert.Contains("a", child.GetVariableNames().ToList());
             Assert.AreEqual(0, child.CountFunctions());

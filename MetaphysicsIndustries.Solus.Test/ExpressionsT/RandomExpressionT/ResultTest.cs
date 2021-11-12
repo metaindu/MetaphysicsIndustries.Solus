@@ -42,6 +42,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.RandomExpressionT
             Assert.IsFalse(result.IsMatrix(env));
             Assert.AreEqual(0, result.GetTensorRank(env));
             Assert.IsFalse(result.IsString(env));
+            Assert.IsNull(result.GetDimension(env, 0));
+            Assert.IsNull(result.GetDimensions(env));
+            Assert.IsNull(result.GetVectorLength(env));
         }
     }
 }

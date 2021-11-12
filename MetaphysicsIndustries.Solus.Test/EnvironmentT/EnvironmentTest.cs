@@ -71,7 +71,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
         [Test]
         public void UseDefaultsTrueAddsDefaultItems()
         {
-            // when 
+            // when
             var result = new SolusEnvironment(useDefaults: true);
             // then
             Assert.AreEqual(0, result.CountVariables());

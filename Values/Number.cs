@@ -33,28 +33,14 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public float Value { get; }
 
-        public bool IsScalar(SolusEnvironment env) => true;
-        public bool IsVector(SolusEnvironment env) => false;
-        public bool IsMatrix(SolusEnvironment env) => false;
-        public int GetTensorRank(SolusEnvironment env) => 0;
-        public bool IsString(SolusEnvironment env) => false;
-
-        public int GetDimension(SolusEnvironment env, int index)
-        {
-            throw new InvalidOperationException(
-                "Scalars do not have dimensions");
-        }
-
-        public int[] GetDimensions(SolusEnvironment env)
-        {
-            throw new InvalidOperationException(
-                "Scalars do not have dimensions");
-        }
-
-        public int GetVectorLength(SolusEnvironment env) =>
-            throw new InvalidOperationException(
-                "A number is not a vector");
-
+        public bool? IsScalar(SolusEnvironment env) => true;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => 0;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
         public bool IsConcrete => true;
 
         public override string ToString()
