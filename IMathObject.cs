@@ -45,9 +45,9 @@ namespace MetaphysicsIndustries.Solus
         public bool? IsMatrix(SolusEnvironment env) => false;
         public int? GetTensorRank(SolusEnvironment env) => 0;
         public bool? IsString(SolusEnvironment env) => false;
-        public int? GetDimension(SolusEnvironment env, int index) => 0;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
         public int[] GetDimensions(SolusEnvironment env) => null;
-        public int? GetVectorLength(SolusEnvironment env) => 0;
+        public int? GetVectorLength(SolusEnvironment env) => null;
         public bool IsConcrete => false;
     }
 }
