@@ -105,18 +105,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override IMathObject Result { get; } = new ResultC();
-        private class ResultC : IMathObject
-        {
-            public bool? IsScalar(SolusEnvironment env) => true;
-            public bool? IsVector(SolusEnvironment env) => false;
-            public bool? IsMatrix(SolusEnvironment env) => false;
-            public int? GetTensorRank(SolusEnvironment env) => 0;
-            public bool? IsString(SolusEnvironment env) => false;
-            public int? GetDimension(SolusEnvironment env, int index) => null;
-            public int[] GetDimensions(SolusEnvironment env) => null;
-            public int? GetVectorLength(SolusEnvironment env) => null;
-            public bool IsConcrete => false;
-        }
+        public override IMathObject Result => ScalarMathObject.Value;
     }
 }
