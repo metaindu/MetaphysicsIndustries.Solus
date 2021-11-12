@@ -263,62 +263,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             // indexes.
             public ResultC(ComponentAccess ca) => _ca = ca;
             private readonly ComponentAccess _ca;
-            public bool? IsScalar(SolusEnvironment env)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.IsScalar(env);
-            }
-
-            public bool? IsVector(SolusEnvironment env)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.IsVector(env);
-            }
-
-            public bool? IsMatrix(SolusEnvironment env)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.IsMatrix(env);
-            }
-
-            public int? GetTensorRank(SolusEnvironment env)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.GetTensorRank(env);
-            }
-
-            public bool? IsString(SolusEnvironment env)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.IsString(env);
-            }
-
-            public int? GetDimension(SolusEnvironment env, int index)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.GetDimension(env, index);
-            }
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.GetDimensions(env);
-            }
-
-            public int? GetVectorLength(SolusEnvironment env)
-            {
-                var evaledIndexes = _ca.GetEvaledIndexes(env);
-                var expr = AccessComponent(_ca.Expr, evaledIndexes, env);
-                return expr.Result.GetVectorLength(env);
-            }
-
+            public bool? IsScalar(SolusEnvironment env) => null;
+            public bool? IsVector(SolusEnvironment env) => null;
+            public bool? IsMatrix(SolusEnvironment env) => null;
+            public int? GetTensorRank(SolusEnvironment env) => null;
+            public bool? IsString(SolusEnvironment env) => null;
+            public int? GetDimension(SolusEnvironment env, int index) => null;
+            public int[] GetDimensions(SolusEnvironment env) => null;
+            public int? GetVectorLength(SolusEnvironment env) => null;
             public bool IsConcrete => false;
         }
 

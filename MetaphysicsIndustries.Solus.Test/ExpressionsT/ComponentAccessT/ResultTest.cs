@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
     public class ResultTest
     {
         [Test]
-        public void IsResultScalarDelegatesToComponent1()
+        public void IsResultScalarYieldsNull1()
         {
             // given
             var expr = new ComponentAccess(
@@ -37,20 +37,22 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                     new MockExpression(
                         result: new MockMathObjectF(
                             isScalarF: e => false)),
-                    new MockExpression(result: new MockMathObjectF(
-                        isScalarF: e => true)),
-                    new MockExpression(result: new MockMathObjectF(
-                        isScalarF: e => false))),
+                    new MockExpression(
+                        result: new MockMathObjectF(
+                            isScalarF: e => true)),
+                    new MockExpression(
+                        result: new MockMathObjectF(
+                            isScalarF: e => false))),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
             var result = expr.Result.IsScalar(env);
             // then
-            Assert.IsTrue(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void IsResultScalarDelegatesToComponent2()
+        public void IsResultScalarYieldsNull2()
         {
             // given
             var expr = new ComponentAccess(
@@ -67,11 +69,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsScalar(env);
             // then
-            Assert.IsFalse(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void IsResultVectorDelegatesToComponent1()
+        public void IsResultVectorYieldsNull1()
         {
             // given
             var expr = new ComponentAccess(
@@ -90,11 +92,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsVector(env);
             // then
-            Assert.IsTrue(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void IsResultVectorDelegatesToComponent2()
+        public void IsResultVectorYieldsNull2()
         {
             // given
             var expr = new ComponentAccess(
@@ -113,11 +115,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsVector(env);
             // then
-            Assert.IsFalse(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void IsResultMatrixDelegatesToComponent1()
+        public void IsResultMatrixYieldsNull1()
         {
             // given
             var expr = new ComponentAccess(
@@ -136,11 +138,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsMatrix(env);
             // then
-            Assert.IsTrue(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void IsResultMatrixDelegatesToComponent2()
+        public void IsResultMatrixYieldsNull2()
         {
             // given
             var expr = new ComponentAccess(
@@ -159,11 +161,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsMatrix(env);
             // then
-            Assert.IsFalse(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void IsResultStringDelegatesToComponent1()
+        public void IsResultStringYieldsNull1()
         {
             // given
             var expr = new ComponentAccess(
@@ -182,11 +184,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsString(env);
             // then
-            Assert.IsTrue(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void IsResultStringDelegatesToComponent2()
+        public void IsResultStringYieldsNull2()
         {
             // given
             var expr = new ComponentAccess(
@@ -205,11 +207,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsString(env);
             // then
-            Assert.IsFalse(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void GetResultTensorRankDelegatesToComponent1()
+        public void GetResultTensorRankYieldsNull1()
         {
             // given
             var expr = new ComponentAccess(
@@ -228,11 +230,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.GetTensorRank(env);
             // then
-            Assert.AreEqual(2, result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void GetResultTensorRankDelegatesToComponent2()
+        public void GetResultTensorRankYieldsNull2()
         {
             // given
             var expr = new ComponentAccess(
@@ -251,11 +253,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.GetTensorRank(env);
             // then
-            Assert.AreEqual(1, result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void GetResultDimensionDelegatesToComponent()
+        public void GetResultDimensionYieldsNull()
         {
             // given
             var expr = new ComponentAccess(
@@ -274,11 +276,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.GetDimension(env, 0);
             // then
-            Assert.AreEqual(2, result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void GetResultDimensionsDelegatesToComponent()
+        public void GetResultDimensionsYieldsNull()
         {
             // given
             var one = new[] { 1, 1, 1 };
@@ -299,11 +301,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.GetDimensions(env);
             // then
-            Assert.AreEqual(new[] { 2, 2, 2 }, result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void GetResultVectorLengthDelegatesToComponent()
+        public void GetResultVectorLengthYieldsNull()
         {
             // given
             var expr = new ComponentAccess(
@@ -322,11 +324,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.GetVectorLength(env);
             // then
-            Assert.AreEqual(2, result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        public void DelegatesToMatrixComponent()
+        public void MatrixComponentYieldsNull()
         {
             // given
             var expr = new ComponentAccess(
@@ -348,12 +350,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsScalar(env);
             // then
-            Assert.IsTrue(result);
+            Assert.IsNull(result);
         }
 
         [Test]
-        [Ignore("Can't check index against string length yet")]
-        public void DelegatesToStringComponent()
+        public void StringComponentYieldsNull()
         {
             // given
             var expr = new ComponentAccess(
@@ -369,13 +370,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsString(env);
             // then
-            Assert.IsTrue(result);
+            Assert.IsNull(result);
         }
+
         // scalar?
         // vector
         // matrix
         // mock tensor?
         // Literal with string value
-
     }
 }
