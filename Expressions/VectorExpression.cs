@@ -288,7 +288,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public bool? IsMatrix(SolusEnvironment env) => false;
             public int? GetTensorRank(SolusEnvironment env) => 1;
             public bool? IsString(SolusEnvironment env) => false;
-            public int? GetDimension(SolusEnvironment env, int index) => null;
+
+            public int? GetDimension(SolusEnvironment env, int index)
+            {
+                if (index == 0) return _ve.Length;
+                return null;
+            }
+
             private int[] __GetDimensions;
 
             public int[] GetDimensions(SolusEnvironment env)
