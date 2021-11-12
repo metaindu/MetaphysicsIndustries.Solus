@@ -108,5 +108,24 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.AreEqual(0, result.GetTensorRank(env));
             Assert.IsTrue(result.IsString(env));
         }
+
+        [Test]
+        public void MissingVariableYieldsNull()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var env = new SolusEnvironment();  // no "a"
+            // when
+            var result = expr.Result;
+            // then
+            Assert.IsNull(result.IsScalar(env));
+            Assert.IsNull(result.IsVector(env));
+            Assert.IsNull(result.IsMatrix(env));
+            Assert.IsNull(result.GetTensorRank(env));
+            Assert.IsNull(result.IsString(env));
+            Assert.IsNull(result.GetDimension(env, 0));
+            Assert.IsNull(result.GetDimensions(env));
+            Assert.IsNull(result.GetVectorLength(env));
+        }
     }
 }

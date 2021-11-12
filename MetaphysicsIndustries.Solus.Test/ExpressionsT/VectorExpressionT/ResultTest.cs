@@ -46,7 +46,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VectorExpressionT
             Assert.IsFalse(result.IsMatrix(env));
             Assert.AreEqual(1, result.GetTensorRank(env));
             Assert.IsFalse(result.IsString(env));
+            Assert.IsNull(result.GetDimension(env, -1));
             Assert.AreEqual(4, result.GetDimension(env, 0));
+            Assert.IsNull(result.GetDimension(env, 1));
             Assert.AreEqual(new int[] { 4 },
                 result.GetDimensions(env));
             Assert.AreEqual(4, result.GetVectorLength(env));
