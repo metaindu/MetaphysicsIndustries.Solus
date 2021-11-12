@@ -4,6 +4,8 @@
 2. In that branch:
    * Check `todo.txt` for anything important, or anything already completed
    * Bump the version numbers
+     * `Properties/AssemblyInfo.cs`
+     * `solus/Properties/AssemblyInfo.cs`
    * Bump the dependency version in `soluscli.nuspec`
    * Check files for license notices
    * Check any other code formatting or static analysis
