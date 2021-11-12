@@ -63,28 +63,16 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             // given
             var value = new StringValue("abc");
             // expect
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => value.GetDimension(null, -1));
-            // and
-            Assert.AreEqual("index", ex.ParamName);
-            Assert.AreEqual("Index must not be negative\n" +
-                            "Parameter name: index",
-                ex.Message);
+            Assert.IsNull(value.GetDimension(null, -1));
         }
 
         [Test]
-        public void GetDimensionIndexTooLargeThrows()
+        public void GetDimensionIndexTooLargeYieldsNull()
         {
             // given
             var value = new StringValue("abc");
             // expect
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => value.GetDimension(null, 1));
-            // and
-            Assert.AreEqual("index", ex.ParamName);
-            Assert.AreEqual("Strings only have a single dimension\n" +
-                            "Parameter name: index",
-                ex.Message);
+            Assert.IsNull(value.GetDimension(null, 1));
         }
 
         [Test]

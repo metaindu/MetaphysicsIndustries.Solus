@@ -56,18 +56,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             Assert.IsFalse(result.IsString(null));
             Assert.AreEqual(2, result.GetDimension(null, 0));
             Assert.AreEqual(2, result.GetDimension(null, 1));
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => result.GetDimension(null, -1));
-            Assert.AreEqual("index", ex.ParamName);
-            Assert.AreEqual("Index must not be negative\n" +
-                            "Parameter name: index",
-                ex.Message);
-            ex = Assert.Throws<ArgumentOutOfRangeException>(
-                () => result.GetDimension(null, 3));
-            Assert.AreEqual("index", ex.ParamName);
-            Assert.AreEqual("Matrices only have two dimensions\n" +
-                            "Parameter name: index",
-                ex.Message);
+            Assert.IsNull(result.GetDimension(null, -1));
+            Assert.IsNull(result.GetDimension(null, 3));
             Assert.AreEqual(new[] {2, 2}, result.GetDimensions(null));
         }
 
