@@ -12,6 +12,9 @@ bug: when assigning a variable, any variables in its expression are
         because y was already defined when w was defined. That is not true for
         x, which remains exactly how it was defined. This discrepancy would
         likely be a surprise to the user.
+    Basically, this is caused by calling PreliminaryEval on inputs. Probably
+        we should call PreliminaryEval and just pass it an empty environment.
+        That way, it wouldn't automatically resolve variable references.
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
@@ -27,6 +30,8 @@ a type system to support the above
 maybe a "property system" in addition to, or in place of, said type system
 markers of the type of the result of an expression (or return value of a
     function), based on inputs
+figure out some solution to the problem of values being boxed and unboxed so
+    much. It's causing lots of allocations and is just slow in general.
 simple sets and intervals as IMathObject
 more complicated expression-based sets
 complex numbers
