@@ -62,8 +62,27 @@ namespace MetaphysicsIndustries.Solus.Functions
         public IMathObject CallWithLoader(SolusEnvironment env,
             IMathObject[] args, Func<string, Image> loader)
         {
-            return Evaluator.LoadImage(args[0].ToStringValue().Value,
+            return LoadImage(args[0].ToStringValue().Value,
                 loader);
+        }
+
+        public static Matrix LoadImage(string filename,
+            Func<string, Image> _loader = null)
+        {
+            if (_loader == null)
+                _loader = Image.FromFile;
+            var fileImage = _loader(filename);
+            if (!(fileImage is Bitmap bitmap))
+                throw new InvalidOperationException(
+                    "The file is not in the correct format");
+            var image = new MemoryImage(bitmap);
+            image.CopyBitmapToPixels();
+
+            var values = new float[image.Height, image.Width];
+            for (var c = 0; c < image.Width; c++)
+            for (var r = 0; r < image.Height; r++)
+                values[r, c] = image[r, c].ToArgb() & 0x00FFFFFF;
+            return new Matrix(values);
         }
 
         private class ResultC : IMathObject

@@ -146,25 +146,6 @@ namespace MetaphysicsIndustries.Solus
         //    return null;
         //}
 
-        public static Matrix LoadImage(string filename,
-            Func<string, Image> _loader = null)
-        {
-            if (_loader == null)
-                _loader = Image.FromFile;
-            var fileImage = _loader(filename);
-            if (!(fileImage is Bitmap bitmap))
-                throw new InvalidOperationException(
-                    "The file is not in the correct format");
-            var image = new MemoryImage(bitmap);
-            image.CopyBitmapToPixels();
-
-            var values = new float[image.Height, image.Width];
-            for (var c = 0; c < image.Width; c++)
-            for (var r = 0; r < image.Height; r++)
-                values[r, c] = image[r, c].ToArgb() & 0x00FFFFFF;
-            return new Matrix(values);
-        }
-
         public float BinomialCoefficient(int n, int k)
         {
             if (k > n) return 0;
