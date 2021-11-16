@@ -20,18 +20,8 @@
  *
  */
 
-/*****************************************************************************
- *                                                                           *
- *  Evaluator.Eval.cs                                                      *
- *                                                                           *
- *  Some helpful methods for evaluating expressions across intervals.        *
- *                                                                           *
- *****************************************************************************/
-
-using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {

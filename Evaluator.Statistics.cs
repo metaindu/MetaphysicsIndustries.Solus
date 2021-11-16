@@ -20,16 +20,6 @@
  *
  */
 
-/*****************************************************************************
- *                                                                           *
- *  Evaluator.Statistics.cs                                                *
- *                                                                           *
- *  The central core of processing in Solus. Does some rudimentary parsing   *
- *    and evaluation and stuff.                                              *
- *                                                                           *
- *****************************************************************************/
-
-using System;
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus

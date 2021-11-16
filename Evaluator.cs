@@ -20,21 +20,10 @@
  *
  */
 
-/*****************************************************************************
- *                                                                           *
- *  Evaluator.cs                                                           *
- *                                                                           *
- *  The central core of processing in Solus. Does some rudimentary parsing   *
- *    and evaluation and stuff.                                              *
- *                                                                           *
- *****************************************************************************/
-
 using System;
-using System.Collections.Generic;
 
 using System.Drawing;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -42,42 +31,6 @@ namespace MetaphysicsIndustries.Solus
 {
     public partial class Evaluator
 	{
-		public Evaluator()
-		{
-			
-		}
-
-        //public  void Dispose()
-        //{
-			
-        //}
-
-        //public  Expression Parse(string s)
-        //{
-        //    string[]	tokens;
-        //    FunctionCall	fc;
-        //    int				i;
-        //    int				j;
-        //    fc = new FunctionCall();
-        //    tokens = s.Split(' ');
-        //    j = tokens.Length;
-        //    for (i = 1; i < j; i++)
-        //    {
-        //        float		fl;
-        //        Expression	e;
-        //        fl = float.Parse(tokens[i]);
-        //        e = new Literal(fl);
-        //        fc.Arguments.Add(e);
-        //    }
-        //    fc.Function = GetFunctionByName(tokens[0]);
-        //    return fc;
-        //}
-
-        //public  Literal Eval(Expression e, VariableTable env)
-        //{
-        //    return e.Eval(env);
-        //}
-
         public Expression PreliminaryEval(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();

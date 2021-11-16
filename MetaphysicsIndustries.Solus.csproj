@@ -163,7 +163,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="Evaluator.GatherVariables.cs" />
-    <Compile Include="Evaluator.Integral.cs" />
     <Compile Include="Evaluator.Modulators.cs" />
     <Compile Include="SolusParser.cs" />
     <Compile Include="SolusGrammar.cs" />

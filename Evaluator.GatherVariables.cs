@@ -20,20 +20,8 @@
  *
  */
 
-/*****************************************************************************
- *                                                                           *
- *  Evaluator.cs                                                           *
- *                                                                           *
- *  The central core of processing in Solus. Does some rudimentary parsing   *
- *    and evaluation and stuff.                                              *
- *                                                                           *
- *****************************************************************************/
-
-using System;
 using System.Collections.Generic;
 
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 
