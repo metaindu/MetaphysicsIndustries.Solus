@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -29,6 +30,11 @@ namespace MetaphysicsIndustries.Solus
 {
     public class Evaluator
 	{
+        public IMathObject Eval(Expression expr, SolusEnvironment env)
+        {
+            throw new NotImplementedException();
+        }
+
         public Expression PreliminaryEval(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
