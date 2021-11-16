@@ -104,44 +104,5 @@ namespace MetaphysicsIndustries.Solus
 
         //    return expr.Clone();
         //}
-
-        //protected  Function GetFunctionByName(string s)
-        //{
-			
-			
-			
-			
-        //    Function[]	functions = {
-        //                                        CosineFunction.Value,
-        //                                        SineFunction.Value,
-        //                                        TangentFunction.Value,
-        //                                        Function.Cotangent,
-        //                                        Function.Secant,
-        //                                        Function.Cosecant,
-        //                                        Function.Arccosine,
-        //                                        Function.Arcsine,
-        //                                        Function.Arctangent,
-        //                                        Function.Arccotangent,
-        //                                        Function.Arcsecant,
-        //                                        Function.Arccosecant,
-        //                                        Function.Floor,
-        //                                        Function.Ceiling,
-        //                                    };
-        //    foreach (Function f in functions)
-        //    {
-        //        if (s == f.Name)
-        //        {
-        //            return f;
-        //        }
-        //    }
-        //    foreach (Function f in functions)
-        //    {
-        //        if (s == f.DisplayName)
-        //        {
-        //            return f;
-        //        }
-        //    }
-        //    return null;
-        //}
     }
 }
