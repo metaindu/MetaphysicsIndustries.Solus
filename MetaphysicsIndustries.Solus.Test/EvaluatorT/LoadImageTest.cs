@@ -22,10 +22,9 @@
 
 using System;
 using System.Drawing;
-using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.SolusEngineT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
 {
     [TestFixture]
     public class LoadImageTest
@@ -42,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusEngineT
             mi.CopyPixelsToBitmap();
             Func<string, Image> loader = filename => mi.Bitmap;
             // when
-            var result = SolusEngine.LoadImage("filename", loader);
+            var result = Evaluator.LoadImage("filename", loader);
             // then
             Assert.AreEqual(2, result.RowCount);
             Assert.AreEqual(2, result.ColumnCount);

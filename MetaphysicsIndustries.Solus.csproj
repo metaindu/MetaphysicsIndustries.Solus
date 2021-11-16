@@ -147,8 +147,8 @@
     <Compile Include="Macros\SubstMacro.cs" />
     <Compile Include="MathObjectHelper.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="SolusEngine.Statistics.cs" />
-    <Compile Include="SolusEngine.Eval.cs" />
+    <Compile Include="Evaluator.Statistics.cs" />
+    <Compile Include="Evaluator.Eval.cs" />
     <Compile Include="Transformers\CleanUpTransformer.cs" />
     <Compile Include="Transformers\CloneTransformer.cs" />
     <Compile Include="Transformers\DerivativeTransformer.cs" />
@@ -161,10 +161,10 @@
     <Compile Include="Transformers\TransformArgs.cs" />
     <Compile Include="SolusAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolusEngine.cs" />
-    <Compile Include="SolusEngine.GatherVariables.cs" />
-    <Compile Include="SolusEngine.Integral.cs" />
-    <Compile Include="SolusEngine.Modulators.cs" />
+    <Compile Include="Evaluator.cs" />
+    <Compile Include="Evaluator.GatherVariables.cs" />
+    <Compile Include="Evaluator.Integral.cs" />
+    <Compile Include="Evaluator.Modulators.cs" />
     <Compile Include="SolusParser.cs" />
     <Compile Include="SolusGrammar.cs" />
     <Compile Include="SolusEnvironment.cs" />

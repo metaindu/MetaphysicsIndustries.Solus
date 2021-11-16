@@ -22,7 +22,7 @@
 
 /*****************************************************************************
  *                                                                           *
- *  SolusEngine.cs                                                           *
+ *  Evaluator.cs                                                           *
  *                                                                           *
  *  The central core of processing in Solus. Does some rudimentary parsing   *
  *    and evaluation and stuff.                                              *
@@ -40,9 +40,9 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public partial class SolusEngine
+    public partial class Evaluator
 	{
-		public SolusEngine()
+		public Evaluator()
 		{
 			
 		}

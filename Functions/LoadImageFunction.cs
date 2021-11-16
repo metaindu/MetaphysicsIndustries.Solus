@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public IMathObject CallWithLoader(SolusEnvironment env,
             IMathObject[] args, Func<string, Image> loader)
         {
-            return SolusEngine.LoadImage(args[0].ToStringValue().Value,
+            return Evaluator.LoadImage(args[0].ToStringValue().Value,
                 loader);
         }
 

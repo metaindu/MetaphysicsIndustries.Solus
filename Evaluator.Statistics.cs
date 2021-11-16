@@ -22,7 +22,7 @@
 
 /*****************************************************************************
  *                                                                           *
- *  SolusEngine.Statistics.cs                                                *
+ *  Evaluator.Statistics.cs                                                *
  *                                                                           *
  *  The central core of processing in Solus. Does some rudimentary parsing   *
  *    and evaluation and stuff.                                              *
@@ -34,7 +34,7 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public partial class SolusEngine
+    public partial class Evaluator
 	{
         public static float CalculateVariance(IEnumerable<float> measures)
         {

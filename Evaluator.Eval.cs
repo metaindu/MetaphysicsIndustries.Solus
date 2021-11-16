@@ -22,7 +22,7 @@
 
 /*****************************************************************************
  *                                                                           *
- *  SolusEngine.Eval.cs                                                      *
+ *  Evaluator.Eval.cs                                                      *
  *                                                                           *
  *  Some helpful methods for evaluating expressions across intervals.        *
  *                                                                           *
@@ -35,7 +35,7 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public partial class SolusEngine
+    public partial class Evaluator
     {
         public Expression[] PreliminaryEvalInterval(Expression expr, SolusEnvironment env,
                                                     string x, float xStart, float xEnd, float xStep)

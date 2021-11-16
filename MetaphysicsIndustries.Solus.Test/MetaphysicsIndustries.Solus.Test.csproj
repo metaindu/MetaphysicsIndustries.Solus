@@ -158,7 +158,7 @@
     <Compile Include="MockMathObjectF.cs" />
     <Compile Include="MockExpression.cs" />
     <Compile Include="MockMathObject.cs" />
-    <Compile Include="SolusEngineT\LoadImageTest.cs" />
+    <Compile Include="EvaluatorT\LoadImageTest.cs" />
     <Compile Include="SolusParserT\SolusParserTest.cs" />
     <Compile Include="ValuesT\IntervalT\ContainsTest.cs" />
     <Compile Include="ValuesT\IntervalT\EmptyDegenerateTest.cs" />

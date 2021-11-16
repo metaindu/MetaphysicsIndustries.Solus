@@ -22,7 +22,7 @@
 
 /*****************************************************************************
  *                                                                           *
- *  SolusEngine.cs                                                           *
+ *  Evaluator.cs                                                           *
  *                                                                           *
  *  The central core of processing in Solus. Does some rudimentary parsing   *
  *    and evaluation and stuff.                                              *
@@ -33,10 +33,21 @@ using System;
 using System.Collections.Generic;
 
 using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public partial class SolusEngine
+    public partial class Evaluator
     {
+        public static string[] GatherVariables(Expression expr)
+        {
+            var names = new HashSet<string>();
+
+            expr.AcceptVisitor(varVisitor: (x)=> names.Add(x.VariableName));
+
+            return names.ToArray();
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class VectorExpression : TensorExpression
     {
-        private static SolusEngine _engine = new SolusEngine();
+        private static Evaluator _evaluator = new Evaluator();
 
         public static VectorExpression FromUniformSequence(float value,
             int length)

@@ -230,7 +230,7 @@ namespace solus
 
         static void ShowVersion()
         {
-            var assembly = Assembly.GetAssembly(typeof(SolusEngine));
+            var assembly = Assembly.GetAssembly(typeof(Evaluator));
             var name = assembly.GetName();
             var version = name.Version;
             var versionString = version.ToString();
