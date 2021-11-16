@@ -19,6 +19,7 @@
  *  USA
  *
  */
+
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Extra
@@ -109,5 +110,67 @@ namespace MetaphysicsIndustries.Solus.Extra
 
             return 0;
         }
+
+        // public static float MeanSquareError(Matrix a, Matrix b)
+        // {
+        //     if (a == null) { throw new ArgumentNullException("a"); }
+        //     if (b == null) { throw new ArgumentNullException("b"); }
+        //     if (a.RowCount != b.RowCount ||
+        //         a.ColumnCount != b.ColumnCount)
+        //     {
+        //         throw new ArgumentException(
+        //             "Matrix sizes do not match",
+        //             "matrixToCompare");
+        //     }
+        //
+        //     int i;
+        //     int j;
+        //
+        //     float sum = 0;
+        //     float rect;
+        //
+        //     for (i = 0; i < a.RowCount; i++)
+        //     {
+        //         for (j = 0; j < a.ColumnCount; j++)
+        //         {
+        //             rect = a[i, j] - b[i, j];
+        //             sum += rect * rect;
+        //         }
+        //     }
+        //
+        //     sum /= a.RowCount;
+        //     sum /= a.ColumnCount;
+        //
+        //     return sum;
+        // }
+
+        // public static float MaxError(Matrix a, Matrix b)
+        // {
+        //     if (a == null) { throw new ArgumentNullException("a"); }
+        //     if (b == null) { throw new ArgumentNullException("b"); }
+        //     if (a.RowCount != b.RowCount ||
+        //         a.ColumnCount != b.ColumnCount)
+        //     {
+        //         throw new ArgumentException(
+        //             "Matrix sizes do not match",
+        //             "matrixToCompare");
+        //     }
+        //
+        //     int i;
+        //     int j;
+        //
+        //     float max = 0;
+        //
+        //     for (i = 0; i < a.RowCount; i++)
+        //     {
+        //         for (j = 0; j < a.ColumnCount; j++)
+        //         {
+        //             max = Math.Max(Math.Abs(a[i, j] - b[i, j]), max);
+        //         }
+        //     }
+        //
+        //     return max;
+        // }
+
     }
 }

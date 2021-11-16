@@ -80,7 +80,11 @@
     <Compile Include="Expressions\VectorExpression.cs" />
     <Compile Include="Expressions\VariableAccess.cs" />
     <Compile Include="Extra\Algebra.cs" />
+    <Compile Include="Extra\Color.cs" />
+    <Compile Include="Extra\Complex.cs" />
+    <Compile Include="Extra\ConvertOnInterval.cs" />
     <Compile Include="Extra\PascalTriangle.cs" />
+    <Compile Include="Extra\Polar.cs" />
     <Compile Include="Extra\Statistics.cs" />
     <Compile Include="Functions\AbsoluteValueFunction.cs" />
     <Compile Include="Functions\AdditionOperation.cs" />
@@ -165,7 +169,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Evaluator.cs" />
     <Compile Include="Evaluator.GatherVariables.cs" />
-    <Compile Include="Evaluator.Modulators.cs" />
     <Compile Include="SolusParser.cs" />
     <Compile Include="SolusGrammar.cs" />
     <Compile Include="SolusEnvironment.cs" />
