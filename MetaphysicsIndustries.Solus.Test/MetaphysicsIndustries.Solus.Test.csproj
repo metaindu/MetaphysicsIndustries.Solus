@@ -157,10 +157,12 @@
     <Compile Include="MockMathObject.cs" />
     <Compile Include="SolusEngineT\LoadImageTest.cs" />
     <Compile Include="SolusParserT\SolusParserTest.cs" />
+    <Compile Include="ValuesT\IntervalT\IntervalTest.cs" />
     <Compile Include="ValuesT\MathObjectHelperT\MathObjectHelperTest.cs" />
     <Compile Include="ValuesT\MatrixT\MatrixTest.cs" />
     <Compile Include="ValuesT\NumberT\NumberTest.cs" />
     <Compile Include="ValuesT\StringValueT\StringValueTest.cs" />
+    <Compile Include="ValuesT\VarIntervalT\VarIntervalTest.cs" />
     <Compile Include="ValuesT\VectorT\VectorTest.cs" />
   </ItemGroup>
   <ItemGroup>

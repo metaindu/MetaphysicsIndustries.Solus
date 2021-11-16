@@ -171,10 +171,12 @@
     <Compile Include="Transformers\VariableTransformArgs.cs" />
     <Compile Include="STuple.cs" />
     <Compile Include="MemoryImage.cs" />
+    <Compile Include="Values\Interval.cs" />
     <Compile Include="Values\Matrix.cs" />
     <Compile Include="Values\Number.cs" />
     <Compile Include="Values\StringValue.cs" />
     <Compile Include="Values\Types.cs" />
+    <Compile Include="Values\VarInterval.cs" />
     <Compile Include="Values\Vector.cs" />
   </ItemGroup>
   <ItemGroup>
