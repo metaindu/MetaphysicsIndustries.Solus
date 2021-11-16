@@ -22,10 +22,8 @@
 
 using System;
 
-using System.Drawing;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Transformers;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -145,35 +143,5 @@ namespace MetaphysicsIndustries.Solus
         //    }
         //    return null;
         //}
-
-        public float BinomialCoefficient(int n, int k)
-        {
-            if (k > n) return 0;
-            if (k > n / 2) k = n - k;
-
-            float prod = 1;
-            int i;
-
-            for (i = 1; i <= k; i++)
-            {
-                prod *= (n - k + i) / (float)i;
-            }
-
-            return prod;
-        }
-
-        public float[] PascalsTriangle(int row)
-        {
-            float[] res = new float[row + 1];
-
-            int i;
-
-            for (i = 0; i < row; i++)
-            {
-                res[i] = BinomialCoefficient(row, i);
-            }
-
-            return res;
-        }
     }
 }

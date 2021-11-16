@@ -79,6 +79,7 @@
     <Compile Include="Expressions\TensorExpression.cs" />
     <Compile Include="Expressions\VectorExpression.cs" />
     <Compile Include="Expressions\VariableAccess.cs" />
+    <Compile Include="Extra\PascalTriangle.cs" />
     <Compile Include="Functions\AbsoluteValueFunction.cs" />
     <Compile Include="Functions\AdditionOperation.cs" />
     <Compile Include="Functions\ArccosecantFunction.cs" />
