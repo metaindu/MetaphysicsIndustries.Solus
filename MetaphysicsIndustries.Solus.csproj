@@ -79,7 +79,9 @@
     <Compile Include="Expressions\TensorExpression.cs" />
     <Compile Include="Expressions\VectorExpression.cs" />
     <Compile Include="Expressions\VariableAccess.cs" />
+    <Compile Include="Extra\Algebra.cs" />
     <Compile Include="Extra\PascalTriangle.cs" />
+    <Compile Include="Extra\Statistics.cs" />
     <Compile Include="Functions\AbsoluteValueFunction.cs" />
     <Compile Include="Functions\AdditionOperation.cs" />
     <Compile Include="Functions\ArccosecantFunction.cs" />
@@ -148,7 +150,6 @@
     <Compile Include="Macros\SubstMacro.cs" />
     <Compile Include="MathObjectHelper.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Evaluator.Statistics.cs" />
     <Compile Include="Evaluator.Eval.cs" />
     <Compile Include="Transformers\CleanUpTransformer.cs" />
     <Compile Include="Transformers\CloneTransformer.cs" />
