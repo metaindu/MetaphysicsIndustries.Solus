@@ -103,7 +103,6 @@ namespace MetaphysicsIndustries.Solus.Values
         // TODO: interval closure/interval span (may require sets)
         // TODO: is subinterval of
         // TODO: is proper subinterval of
-        // TODO: equality, hash code
         // TODO: bounded vs unbounded (requires infinity)
 
         public bool IsEmpty
@@ -126,6 +125,49 @@ namespace MetaphysicsIndustries.Solus.Values
                 if (LowerBound < UpperBound) return false;
                 return !OpenLowerBound && !OpenUpperBound;
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Interval interval)
+                return Equals(interval);
+            return false;
+        }
+
+        public bool Equals(Interval other)
+        {
+            return LowerBound <= other.LowerBound &&
+                   LowerBound >= other.LowerBound &&
+                   OpenLowerBound == other.OpenLowerBound &&
+                   UpperBound <= other.UpperBound &&
+                   UpperBound >= other.UpperBound &&
+                   OpenUpperBound == other.OpenUpperBound &&
+                   IsIntegerInterval == other.IsIntegerInterval;
+        }
+
+        public override int GetHashCode()
+        {
+            var s1 = (19 * LowerBound).GetHashCode();
+            s1 ^= (23 * UpperBound).GetHashCode();
+            float s2;
+            if (OpenLowerBound && OpenUpperBound && IsIntegerInterval)
+                s2 = 29;
+            else if (OpenLowerBound && OpenUpperBound)
+                s2 = 31;
+            else if (OpenLowerBound && IsIntegerInterval)
+                s2 = 37;
+            else if (OpenUpperBound && IsIntegerInterval)
+                s2 = 41;
+            else if (OpenLowerBound)
+                s2 = 43;
+            else if (OpenUpperBound)
+                s2 = 47;
+            else if (IsIntegerInterval)
+                s2 = 53;
+            else
+                s2 = 59;
+            s1 ^= s2.GetHashCode();
+            return s1;
         }
 
         public bool? IsScalar(SolusEnvironment env) => false;

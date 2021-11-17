@@ -159,6 +159,7 @@
     <Compile Include="SolusParserT\SolusParserTest.cs" />
     <Compile Include="ValuesT\IntervalT\ContainsTest.cs" />
     <Compile Include="ValuesT\IntervalT\EmptyDegenerateTest.cs" />
+    <Compile Include="ValuesT\IntervalT\EqualsTest.cs" />
     <Compile Include="ValuesT\IntervalT\IntervalTest.cs" />
     <Compile Include="ValuesT\MathObjectHelperT\MathObjectHelperTest.cs" />
     <Compile Include="ValuesT\MatrixT\MatrixTest.cs" />
