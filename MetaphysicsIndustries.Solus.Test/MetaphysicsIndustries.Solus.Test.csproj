@@ -44,6 +44,9 @@
     <Compile Include="ExpressionsT\ComponentAccessT\ResultTest.cs" />
     <Compile Include="ExpressionsT\DerivativeOfVariableT\ResultTest.cs" />
     <Compile Include="ExpressionsT\FunctionCallT\ResultTest.cs" />
+    <Compile Include="ExpressionsT\IntervalExpressionT\CloneTest.cs" />
+    <Compile Include="ExpressionsT\IntervalExpressionT\EvalTest.cs" />
+    <Compile Include="ExpressionsT\IntervalExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\LiteralT\ResultTest.cs" />
     <Compile Include="ExpressionsT\MatrixExpressionT\EvalTest.cs" />
     <Compile Include="ExpressionsT\MatrixExpressionT\ResultTest.cs" />

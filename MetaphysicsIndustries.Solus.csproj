@@ -71,6 +71,7 @@
     <Compile Include="Expressions\Expression.cs" />
     <Compile Include="Expressions\FunctionCall.cs" />
     <Compile Include="Expressions\IExpressionVisitor.cs" />
+    <Compile Include="Expressions\IntervalExpression.cs" />
     <Compile Include="Expressions\Literal.cs" />
     <Compile Include="Expressions\ProductExpression.cs" />
     <Compile Include="Expressions\RandomExpression.cs" />
