@@ -32,7 +32,16 @@ markers of the type of the result of an expression (or return value of a
     function), based on inputs
 figure out some solution to the problem of values being boxed and unboxed so
     much. It's causing lots of allocations and is just slow in general.
-simple sets and intervals as IMathObject
+simple sets as IMathObject
+intervals
+    intersects other interval
+    interior
+    closure
+    interval closure/interval span (may require sets)
+    is subinterval of
+    is proper subinterval of
+    bounded vs unbounded (requires infinity)
+
 more complicated expression-based sets
 complex numbers
 tensors of rank 3 or more

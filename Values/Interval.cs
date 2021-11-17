@@ -97,14 +97,6 @@ namespace MetaphysicsIndustries.Solus.Values
             return !OpenLowerBound || !OpenUpperBound;
         }
 
-        // TODO: intersects other interval
-        // TODO: interior
-        // TODO: closure
-        // TODO: interval closure/interval span (may require sets)
-        // TODO: is subinterval of
-        // TODO: is proper subinterval of
-        // TODO: bounded vs unbounded (requires infinity)
-
         public bool IsEmpty
         {
             get
