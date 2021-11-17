@@ -41,7 +41,8 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(expr.PreliminaryEval(env));
         }
 
-        //protected Expression InternalPreliminaryEval(Expression expr, VariableTable env)
+        //protected Expression InternalPreliminaryEval(Expression expr,
+        //    SolusEnvironment env)
         //{
         //    if (expr is VariableAccess)
         //    {

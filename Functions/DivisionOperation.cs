@@ -45,7 +45,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        //protected override Literal InternalCall(VariableTable env, Literal[] args)
+        //protected override Literal InternalCall(SolusEnvironment env,
+        //    Literal[] args)
         //{
         //    return new Literal(args[0].Value / args[1].Value);
         //}
