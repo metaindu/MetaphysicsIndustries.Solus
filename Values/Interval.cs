@@ -59,7 +59,24 @@ namespace MetaphysicsIndustries.Solus.Values
         public float CalcDelta(int numSteps) =>
             (UpperBound - LowerBound) / (numSteps - 1);
 
-        // TODO: Contains number
+        public bool Contains(float value)
+        {
+            if (float.IsNaN(value)) return false;
+            if (float.IsInfinity(value)) return false;
+            if (value < LowerBound) return false;
+            if (value > UpperBound) return false;
+            if (value > LowerBound && value < UpperBound) return true;
+            if (LowerBound < UpperBound) // not degenerate
+            {
+                if (value < UpperBound) // equal to lower
+                    return !OpenLowerBound;
+                // equal to upper
+                return !OpenUpperBound;
+            }
+            // interval is degenerate, lower == upper
+            return !OpenLowerBound || !OpenUpperBound;
+        }
+
         // TODO: intersects other interval
         // TODO: interior
         // TODO: closure
