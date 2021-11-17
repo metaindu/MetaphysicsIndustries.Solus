@@ -51,6 +51,12 @@ namespace MetaphysicsIndustries.Solus
             var iss = mo.IsString(env);
             return iss.HasValue && iss.Value;
         }
+        public static bool IsIsInterval(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsInterval(env);
+            return iss.HasValue && iss.Value;
+        }
 
         public static Number ToNumber(this IMathObject mo) => (Number) mo;
 

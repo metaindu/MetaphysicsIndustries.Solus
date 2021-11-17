@@ -783,6 +783,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
 
             public int? GetVectorLength(SolusEnvironment env) => null;
+            public bool? IsInterval(SolusEnvironment env) => false;
 
             public bool IsConcrete => false;
         }

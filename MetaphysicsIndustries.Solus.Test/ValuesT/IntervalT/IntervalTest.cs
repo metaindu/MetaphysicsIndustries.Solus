@@ -130,5 +130,22 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // then
             Assert.AreEqual(0.02f, result, 0.000001f);
         }
+
+        [Test]
+        public void MathObjectIsInterval()
+        {
+            // given
+            var interval = new Interval(1, false, 2, false, false);
+            // expect
+            Assert.IsFalse(interval.IsScalar(null));
+            Assert.IsFalse(interval.IsVector(null));
+            Assert.IsFalse(interval.IsMatrix(null));
+            Assert.IsNull(interval.GetTensorRank(null));
+            Assert.IsFalse(interval.IsString(null));
+            Assert.IsNull(interval.GetDimension(null, 0));
+            Assert.IsNull(interval.GetDimensions(null));
+            Assert.IsNull(interval.GetVectorLength(null));
+            Assert.IsTrue(interval.IsConcrete);
+        }
     }
 }

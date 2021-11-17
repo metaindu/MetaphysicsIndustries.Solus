@@ -22,7 +22,7 @@
 
 namespace MetaphysicsIndustries.Solus.Values
 {
-    public readonly struct Interval
+    public readonly struct Interval : IMathObject
     {
         public Interval(float lowerBound, bool openLowerBound,
             float upperBound, bool openUpperBound, bool isIntegerInterval)
@@ -61,6 +61,16 @@ namespace MetaphysicsIndustries.Solus.Values
 
         // TODO: Contains number
         // TODO: intersects other interval
-        // TODO: IMathObject
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => true;
+        public bool IsConcrete => true;
     }
 }
