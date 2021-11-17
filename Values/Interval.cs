@@ -20,6 +20,8 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Values
 {
     public readonly struct Interval : IMathObject
@@ -27,6 +29,24 @@ namespace MetaphysicsIndustries.Solus.Values
         public Interval(float lowerBound, bool openLowerBound,
             float upperBound, bool openUpperBound, bool isIntegerInterval)
         {
+            if (float.IsNaN(lowerBound))
+                throw new ArgumentOutOfRangeException(
+                    nameof(lowerBound), "Not a number");
+            if (float.IsNaN(upperBound))
+                throw new ArgumentOutOfRangeException(
+                    nameof(upperBound), "Not a number");
+
+            if (lowerBound > upperBound)
+            {
+                var tempf = upperBound;
+                upperBound = lowerBound;
+                lowerBound = tempf;
+
+                var tempb = openUpperBound;
+                openUpperBound = openLowerBound;
+                openLowerBound = tempb;
+            }
+
             LowerBound = lowerBound;
             OpenLowerBound = openLowerBound;
             UpperBound = upperBound;

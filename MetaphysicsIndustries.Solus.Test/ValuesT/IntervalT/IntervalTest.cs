@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -39,6 +40,72 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             Assert.AreEqual(2, result.UpperBound);
             Assert.IsTrue(result.OpenUpperBound);
             Assert.IsFalse(result.IsIntegerInterval);
+        }
+
+        [Test]
+        public void CreateWithNaNLowerThrows()
+        {
+            // expect
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(
+                () =>
+                {
+                    var i = new Interval(float.NaN, false, 1, false, false);
+                });
+            // and
+            Assert.AreEqual("lowerBound", ex.ParamName);
+            Assert.AreEqual(
+                "Not a number\nParameter name: lowerBound", ex.Message);
+        }
+
+        [Test]
+        public void CreateWithNaNUpperThrows()
+        {
+            // expect
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(
+                () =>
+                {
+                    var i = new Interval(1, false, float.NaN, false, false);
+                });
+            // and
+            Assert.AreEqual("upperBound", ex.ParamName);
+            Assert.AreEqual(
+                "Not a number\nParameter name: upperBound", ex.Message);
+        }
+
+        [Test]
+        public void CreateWithInfinityLowerDoesNotThrow()
+        {
+            // expect
+            Assert.DoesNotThrow(
+                () =>
+                {
+                    var i = new Interval(float.NegativeInfinity, false,
+                        1, false, false);
+                });
+        }
+
+        [Test]
+        public void CreateWithInfinityUpperDoesNotThrow()
+        {
+            // expect
+            Assert.DoesNotThrow(
+                () =>
+                {
+                    var i = new Interval(1, false,
+                        float.PositiveInfinity, false, false);
+                });
+        }
+
+        [Test]
+        public void LowerGreaterThanHigherYieldsBoundsReversed()
+        {
+            // when
+            var result = new Interval(2, false, 1, true, false);
+            // then
+            Assert.AreEqual(1, result.LowerBound);
+            Assert.IsTrue(result.OpenLowerBound);
+            Assert.AreEqual(2, result.UpperBound);
+            Assert.IsFalse(result.OpenUpperBound);
         }
 
         [Test]
