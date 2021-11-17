@@ -34,10 +34,12 @@ namespace MetaphysicsIndustries.Solus.Test
         {
         }
 
+        public Func<IEnumerable<IMathObject>, IMathObject> CallF;
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
-            throw new NotImplementedException();
+            if (CallF == null) throw new NotImplementedException();
+            return CallF(args);
         }
 
         public Func<IEnumerable<IMathObject>, IMathObject> GetResultF;

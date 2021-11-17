@@ -36,6 +36,7 @@
     <Compile Include="EnvironmentT\CloneTest.cs" />
     <Compile Include="EnvironmentT\DerivedTest.cs" />
     <Compile Include="EnvironmentT\EnvironmentTest.cs" />
+    <Compile Include="EvaluatorT\EvalTest.cs" />
     <Compile Include="ExpressionsT\ColorExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\AccessComponent2Test.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\AccessComponentTest.cs" />
@@ -187,9 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EvaluatorT" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
