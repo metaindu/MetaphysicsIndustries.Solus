@@ -61,6 +61,14 @@ namespace MetaphysicsIndustries.Solus.Values
 
         // TODO: Contains number
         // TODO: intersects other interval
+        // TODO: interior
+        // TODO: closure
+        // TODO: interval closure/interval span (may require sets)
+        // TODO: is subinterval of
+        // TODO: is proper subinterval of
+        // TODO: equality, hash code
+        // TODO: bounded vs unbounded (requires infinity)
+        // TODO: degenerate intervals
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
