@@ -15,6 +15,8 @@ bug: when assigning a variable, any variables in its expression are
     Basically, this is caused by calling PreliminaryEval on inputs. Probably
         we should call PreliminaryEval and just pass it an empty environment.
         That way, it wouldn't automatically resolve variable references.
+should Expression.Clone be shallow or deep?
+    or should it be removed altogether?
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
@@ -32,7 +34,18 @@ markers of the type of the result of an expression (or return value of a
     function), based on inputs
 figure out some solution to the problem of values being boxed and unboxed so
     much. It's causing lots of allocations and is just slow in general.
-simple sets and intervals as IMathObject
+simple sets as IMathObject
+intervals
+    syntax
+    intersects other interval
+    interior
+    closure
+    interval closure/interval span (may require sets)
+    is subinterval of
+    is proper subinterval of
+    bounded vs unbounded (requires infinity)
+    IMathObject.IsSet(env) => true
+
 more complicated expression-based sets
 complex numbers
 tensors of rank 3 or more

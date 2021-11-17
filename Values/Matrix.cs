@@ -75,6 +75,7 @@ namespace MetaphysicsIndustries.Solus.Values
             new[] { RowCount, ColumnCount };
 
         public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
 
         public bool IsConcrete => true;
 

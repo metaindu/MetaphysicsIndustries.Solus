@@ -20,37 +20,28 @@
  *
  */
 
-using System;
-
 namespace MetaphysicsIndustries.Solus.Values
 {
-    public readonly struct Number : IMathObject
+    public readonly struct VarInterval
     {
-        public Number(float value)
+        public VarInterval(string variable, Interval interval)
         {
-            Value = value;
+            Variable = variable;
+            Interval = interval;
         }
 
-        public float Value { get; }
-
-        public bool? IsScalar(SolusEnvironment env) => true;
-        public bool? IsVector(SolusEnvironment env) => false;
-        public bool? IsMatrix(SolusEnvironment env) => false;
-        public int? GetTensorRank(SolusEnvironment env) => 0;
-        public bool? IsString(SolusEnvironment env) => false;
-        public int? GetDimension(SolusEnvironment env, int index) => null;
-        public int[] GetDimensions(SolusEnvironment env) => null;
-        public int? GetVectorLength(SolusEnvironment env) => null;
-        public bool? IsInterval(SolusEnvironment env) => false;
-        public bool IsConcrete => true;
+        public readonly string Variable;
+        public readonly Interval Interval;
 
         public override string ToString()
         {
-            if (Math.Abs(Value - (float) Math.E) < 1e-6)
-                return "e";
-            if (Math.Abs(Value - (float) Math.PI) < 1e-6)
-                return "π";
-            return Value.ToString("G");
+            return string.Format(
+                "{0} {1} {2} {3} {4}",
+                Interval.LowerBound,
+                (Interval.OpenLowerBound ? "<" : "<="),
+                Variable,
+                (Interval.OpenUpperBound ? "<" : "<="),
+                Interval.UpperBound);
         }
     }
 }

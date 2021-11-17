@@ -103,3 +103,11 @@ comp-subexpr = (
 );
 
 array-index = '[' expr ( ',' expr )* ','? ']';
+
+// TODO: <expr> instead of <number> -> requires taking env out of parsing
+interval = [\[(] number ',' number [\])];
+
+var-interval = (
+    varref 'in' interval |
+    expr ( '<' | '<=' ) varref ( '<' | '<=' ) expr
+);

@@ -685,5 +685,54 @@ namespace MetaphysicsIndustries.Solus
 
             return indexes;
         }
+
+        public VarInterval GetVarIntervalFromVarInterval(Span span,
+            SolusEnvironment env)
+        {
+            if (span.Subspans[0].Node ==
+                _grammar.node_var_002D_interval_0_varref)
+            {
+                // var in [lower,upper)
+                var varname = span.Subspans[0].Subspans[0].Value;
+                var interval = GetIntervalFromInterval(span.Subspans[2]);
+                return new VarInterval(varname, interval);
+            }
+            else
+            {
+                // lower <= var <= upper
+
+                var lower = GetExpressionFromExpr(span.Subspans[0], env);
+                var lowerf = (float)Math.Round(
+                    lower.Eval(env).ToNumber().Value);
+
+                var openLower = (span.Subspans[1].Value == "<");
+
+                string varname = span.Subspans[2].Subspans[0].Value;
+
+                var openUpper = (span.Subspans[3].Value == "<");
+
+                var upper = GetExpressionFromExpr(span.Subspans[4], env);
+                var upperf = (float)Math.Round(
+                    upper.Eval(env).ToNumber().Value);
+
+                return new VarInterval(
+                    varname,
+                    new Interval(lowerf, openLower,
+                        upperf, openUpper, false));
+            }
+        }
+
+        public Interval GetIntervalFromInterval(Span span)
+        {
+            var openLower = (span.Subspans[0].Value == "(");
+            var lower =
+                GetLiteralFromNumber(span.Subspans[1]).Value.ToNumber();
+            var upper =
+                GetLiteralFromNumber(span.Subspans[3]).Value.ToNumber();
+            var openUpper = (span.Subspans[4].Value == ")");
+
+            return new Interval(lower.Value, openLower,
+                upper.Value, openUpper, false);
+        }
     }
 }

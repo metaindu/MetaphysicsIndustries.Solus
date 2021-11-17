@@ -54,6 +54,7 @@ namespace MetaphysicsIndustries.Solus.Values
         }
 
         public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
         public bool IsConcrete => true;
 
         public int Length => Value?.Length ?? 0;
