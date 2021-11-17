@@ -29,16 +29,21 @@ namespace MetaphysicsIndustries.Solus
     {
         public static readonly SolusGrammar Instance = new SolusGrammar();
 
+        public NDefinition def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_ = new NDefinition("$implicit char class (\\[");
+        public NDefinition def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_ = new NDefinition("$implicit char class )\\]");
         public NDefinition def__0024_implicit_0020_char_0020_class_0020__002B__002D_ = new NDefinition("$implicit char class +-");
         public NDefinition def__0024_implicit_0020_literal_0020__0028_ = new NDefinition("$implicit literal (");
         public NDefinition def__0024_implicit_0020_literal_0020__0029_ = new NDefinition("$implicit literal )");
         public NDefinition def__0024_implicit_0020_literal_0020__002C_ = new NDefinition("$implicit literal ,");
         public NDefinition def__0024_implicit_0020_literal_0020__003A__003D_ = new NDefinition("$implicit literal :=");
         public NDefinition def__0024_implicit_0020_literal_0020__003B_ = new NDefinition("$implicit literal ;");
+        public NDefinition def__0024_implicit_0020_literal_0020__003C_ = new NDefinition("$implicit literal <");
+        public NDefinition def__0024_implicit_0020_literal_0020__003C__003D_ = new NDefinition("$implicit literal <=");
         public NDefinition def__0024_implicit_0020_literal_0020__005B_ = new NDefinition("$implicit literal [");
         public NDefinition def__0024_implicit_0020_literal_0020__005D_ = new NDefinition("$implicit literal ]");
         public NDefinition def__0024_implicit_0020_literal_0020_delete = new NDefinition("$implicit literal delete");
         public NDefinition def__0024_implicit_0020_literal_0020_help = new NDefinition("$implicit literal help");
+        public NDefinition def__0024_implicit_0020_literal_0020_in = new NDefinition("$implicit literal in");
         public NDefinition def__0024_implicit_0020_literal_0020_variables = new NDefinition("$implicit literal variables");
         public NDefinition def__0024_implicit_0020_literal_0020_vars = new NDefinition("$implicit literal vars");
         public NDefinition def_array_002D_index = new NDefinition("array-index");
@@ -55,6 +60,7 @@ namespace MetaphysicsIndustries.Solus
         public NDefinition def_function_002D_call = new NDefinition("function-call");
         public NDefinition def_help_002D_command = new NDefinition("help-command");
         public NDefinition def_identifier = new NDefinition("identifier");
+        public NDefinition def_interval = new NDefinition("interval");
         public NDefinition def_number = new NDefinition("number");
         public NDefinition def_paren = new NDefinition("paren");
         public NDefinition def_string = new NDefinition("string");
@@ -62,9 +68,12 @@ namespace MetaphysicsIndustries.Solus
         public NDefinition def_unary_002D_op = new NDefinition("unary-op");
         public NDefinition def_unicodechar = new NDefinition("unicodechar");
         public NDefinition def_var_002D_assign_002D_command = new NDefinition("var-assign-command");
+        public NDefinition def_var_002D_interval = new NDefinition("var-interval");
         public NDefinition def_varref = new NDefinition("varref");
         public NDefinition def_vars_002D_command = new NDefinition("vars-command");
 
+        public CharNode node__0024_implicit_0020_char_0020_class_0020__0028__005C__005B__0_;
+        public CharNode node__0024_implicit_0020_char_0020_class_0020__0029__005C__005D__0_;
         public CharNode node__0024_implicit_0020_char_0020_class_0020__002B__002D__0_;
         public CharNode node__0024_implicit_0020_literal_0020__0028__0_;
         public CharNode node__0024_implicit_0020_literal_0020__0029__0_;
@@ -72,6 +81,9 @@ namespace MetaphysicsIndustries.Solus
         public CharNode node__0024_implicit_0020_literal_0020__003A__003D__0_;
         public CharNode node__0024_implicit_0020_literal_0020__003A__003D__1_;
         public CharNode node__0024_implicit_0020_literal_0020__003B__0_;
+        public CharNode node__0024_implicit_0020_literal_0020__003C__0_;
+        public CharNode node__0024_implicit_0020_literal_0020__003C__003D__0_;
+        public CharNode node__0024_implicit_0020_literal_0020__003C__003D__1_;
         public CharNode node__0024_implicit_0020_literal_0020__005B__0_;
         public CharNode node__0024_implicit_0020_literal_0020__005D__0_;
         public CharNode node__0024_implicit_0020_literal_0020_delete_0_;
@@ -84,6 +96,8 @@ namespace MetaphysicsIndustries.Solus
         public CharNode node__0024_implicit_0020_literal_0020_help_1_;
         public CharNode node__0024_implicit_0020_literal_0020_help_2_;
         public CharNode node__0024_implicit_0020_literal_0020_help_3_;
+        public CharNode node__0024_implicit_0020_literal_0020_in_0_;
+        public CharNode node__0024_implicit_0020_literal_0020_in_1_;
         public CharNode node__0024_implicit_0020_literal_0020_variables_0_;
         public CharNode node__0024_implicit_0020_literal_0020_variables_1_;
         public CharNode node__0024_implicit_0020_literal_0020_variables_2_;
@@ -169,6 +183,11 @@ namespace MetaphysicsIndustries.Solus
         public DefRefNode node_help_002D_command_1_topic;
         public CharNode node_identifier_0__005C_l;
         public CharNode node_identifier_1__005C_l_005C_d_005F_;
+        public DefRefNode node_interval_0__0028__005C__005B_;
+        public DefRefNode node_interval_1_number;
+        public DefRefNode node_interval_2__002C_;
+        public DefRefNode node_interval_3_number;
+        public DefRefNode node_interval_4__0029__005C__005D_;
         public CharNode node_number_0_0b;
         public CharNode node_number_1_0b;
         public CharNode node_number_2_01;
@@ -219,22 +238,37 @@ namespace MetaphysicsIndustries.Solus
         public DefRefNode node_var_002D_assign_002D_command_0_varref;
         public DefRefNode node_var_002D_assign_002D_command_1__003A__003D_;
         public DefRefNode node_var_002D_assign_002D_command_2_expr;
+        public DefRefNode node_var_002D_interval_0_varref;
+        public DefRefNode node_var_002D_interval_1_in;
+        public DefRefNode node_var_002D_interval_2_interval;
+        public DefRefNode node_var_002D_interval_3_expr;
+        public DefRefNode node_var_002D_interval_4__003C_;
+        public DefRefNode node_var_002D_interval_5__003C__003D_;
+        public DefRefNode node_var_002D_interval_6_varref;
+        public DefRefNode node_var_002D_interval_7__003C_;
+        public DefRefNode node_var_002D_interval_8__003C__003D_;
+        public DefRefNode node_var_002D_interval_9_expr;
         public DefRefNode node_varref_0_identifier;
         public DefRefNode node_vars_002D_command_0_vars;
         public DefRefNode node_vars_002D_command_1_variables;
 
         public SolusGrammar()
         {
+            Definitions.Add(def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_);
+            Definitions.Add(def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_);
             Definitions.Add(def__0024_implicit_0020_char_0020_class_0020__002B__002D_);
             Definitions.Add(def__0024_implicit_0020_literal_0020__0028_);
             Definitions.Add(def__0024_implicit_0020_literal_0020__0029_);
             Definitions.Add(def__0024_implicit_0020_literal_0020__002C_);
             Definitions.Add(def__0024_implicit_0020_literal_0020__003A__003D_);
             Definitions.Add(def__0024_implicit_0020_literal_0020__003B_);
+            Definitions.Add(def__0024_implicit_0020_literal_0020__003C_);
+            Definitions.Add(def__0024_implicit_0020_literal_0020__003C__003D_);
             Definitions.Add(def__0024_implicit_0020_literal_0020__005B_);
             Definitions.Add(def__0024_implicit_0020_literal_0020__005D_);
             Definitions.Add(def__0024_implicit_0020_literal_0020_delete);
             Definitions.Add(def__0024_implicit_0020_literal_0020_help);
+            Definitions.Add(def__0024_implicit_0020_literal_0020_in);
             Definitions.Add(def__0024_implicit_0020_literal_0020_variables);
             Definitions.Add(def__0024_implicit_0020_literal_0020_vars);
             Definitions.Add(def_array_002D_index);
@@ -251,6 +285,7 @@ namespace MetaphysicsIndustries.Solus
             Definitions.Add(def_function_002D_call);
             Definitions.Add(def_help_002D_command);
             Definitions.Add(def_identifier);
+            Definitions.Add(def_interval);
             Definitions.Add(def_number);
             Definitions.Add(def_paren);
             Definitions.Add(def_string);
@@ -258,8 +293,25 @@ namespace MetaphysicsIndustries.Solus
             Definitions.Add(def_unary_002D_op);
             Definitions.Add(def_unicodechar);
             Definitions.Add(def_var_002D_assign_002D_command);
+            Definitions.Add(def_var_002D_interval);
             Definitions.Add(def_varref);
             Definitions.Add(def_vars_002D_command);
+
+            def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_.Directives.Add(DefinitionDirective.Token);
+            def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_.Directives.Add(DefinitionDirective.Atomic);
+            def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_.Directives.Add(DefinitionDirective.MindWhitespace);
+            node__0024_implicit_0020_char_0020_class_0020__0028__005C__005B__0_ = new CharNode(CharClass.FromUndelimitedCharClassText("(\\["), "");
+            def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_.Nodes.Add(node__0024_implicit_0020_char_0020_class_0020__0028__005C__005B__0_);
+            def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_.StartNodes.Add(node__0024_implicit_0020_char_0020_class_0020__0028__005C__005B__0_);
+            def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_.EndNodes.Add(node__0024_implicit_0020_char_0020_class_0020__0028__005C__005B__0_);
+
+            def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_.Directives.Add(DefinitionDirective.Token);
+            def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_.Directives.Add(DefinitionDirective.Atomic);
+            def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_.Directives.Add(DefinitionDirective.MindWhitespace);
+            node__0024_implicit_0020_char_0020_class_0020__0029__005C__005D__0_ = new CharNode(CharClass.FromUndelimitedCharClassText(")\\]"), "");
+            def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_.Nodes.Add(node__0024_implicit_0020_char_0020_class_0020__0029__005C__005D__0_);
+            def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_.StartNodes.Add(node__0024_implicit_0020_char_0020_class_0020__0029__005C__005D__0_);
+            def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_.EndNodes.Add(node__0024_implicit_0020_char_0020_class_0020__0029__005C__005D__0_);
 
             def__0024_implicit_0020_char_0020_class_0020__002B__002D_.Directives.Add(DefinitionDirective.Token);
             def__0024_implicit_0020_char_0020_class_0020__002B__002D_.Directives.Add(DefinitionDirective.Atomic);
@@ -311,6 +363,25 @@ namespace MetaphysicsIndustries.Solus
             def__0024_implicit_0020_literal_0020__003B_.Nodes.Add(node__0024_implicit_0020_literal_0020__003B__0_);
             def__0024_implicit_0020_literal_0020__003B_.StartNodes.Add(node__0024_implicit_0020_literal_0020__003B__0_);
             def__0024_implicit_0020_literal_0020__003B_.EndNodes.Add(node__0024_implicit_0020_literal_0020__003B__0_);
+
+            def__0024_implicit_0020_literal_0020__003C_.Directives.Add(DefinitionDirective.Token);
+            def__0024_implicit_0020_literal_0020__003C_.Directives.Add(DefinitionDirective.Atomic);
+            def__0024_implicit_0020_literal_0020__003C_.Directives.Add(DefinitionDirective.MindWhitespace);
+            node__0024_implicit_0020_literal_0020__003C__0_ = new CharNode(CharClass.FromUndelimitedCharClassText("<"), "");
+            def__0024_implicit_0020_literal_0020__003C_.Nodes.Add(node__0024_implicit_0020_literal_0020__003C__0_);
+            def__0024_implicit_0020_literal_0020__003C_.StartNodes.Add(node__0024_implicit_0020_literal_0020__003C__0_);
+            def__0024_implicit_0020_literal_0020__003C_.EndNodes.Add(node__0024_implicit_0020_literal_0020__003C__0_);
+
+            def__0024_implicit_0020_literal_0020__003C__003D_.Directives.Add(DefinitionDirective.Token);
+            def__0024_implicit_0020_literal_0020__003C__003D_.Directives.Add(DefinitionDirective.Atomic);
+            def__0024_implicit_0020_literal_0020__003C__003D_.Directives.Add(DefinitionDirective.MindWhitespace);
+            node__0024_implicit_0020_literal_0020__003C__003D__0_ = new CharNode(CharClass.FromUndelimitedCharClassText("<"), "");
+            node__0024_implicit_0020_literal_0020__003C__003D__1_ = new CharNode(CharClass.FromUndelimitedCharClassText("="), "");
+            def__0024_implicit_0020_literal_0020__003C__003D_.Nodes.Add(node__0024_implicit_0020_literal_0020__003C__003D__0_);
+            def__0024_implicit_0020_literal_0020__003C__003D_.Nodes.Add(node__0024_implicit_0020_literal_0020__003C__003D__1_);
+            def__0024_implicit_0020_literal_0020__003C__003D_.StartNodes.Add(node__0024_implicit_0020_literal_0020__003C__003D__0_);
+            def__0024_implicit_0020_literal_0020__003C__003D_.EndNodes.Add(node__0024_implicit_0020_literal_0020__003C__003D__1_);
+            node__0024_implicit_0020_literal_0020__003C__003D__0_.NextNodes.Add(node__0024_implicit_0020_literal_0020__003C__003D__1_);
 
             def__0024_implicit_0020_literal_0020__005B_.Directives.Add(DefinitionDirective.Token);
             def__0024_implicit_0020_literal_0020__005B_.Directives.Add(DefinitionDirective.Atomic);
@@ -367,6 +438,17 @@ namespace MetaphysicsIndustries.Solus
             node__0024_implicit_0020_literal_0020_help_0_.NextNodes.Add(node__0024_implicit_0020_literal_0020_help_1_);
             node__0024_implicit_0020_literal_0020_help_1_.NextNodes.Add(node__0024_implicit_0020_literal_0020_help_2_);
             node__0024_implicit_0020_literal_0020_help_2_.NextNodes.Add(node__0024_implicit_0020_literal_0020_help_3_);
+
+            def__0024_implicit_0020_literal_0020_in.Directives.Add(DefinitionDirective.Token);
+            def__0024_implicit_0020_literal_0020_in.Directives.Add(DefinitionDirective.Atomic);
+            def__0024_implicit_0020_literal_0020_in.Directives.Add(DefinitionDirective.MindWhitespace);
+            node__0024_implicit_0020_literal_0020_in_0_ = new CharNode(CharClass.FromUndelimitedCharClassText("i"), "");
+            node__0024_implicit_0020_literal_0020_in_1_ = new CharNode(CharClass.FromUndelimitedCharClassText("n"), "");
+            def__0024_implicit_0020_literal_0020_in.Nodes.Add(node__0024_implicit_0020_literal_0020_in_0_);
+            def__0024_implicit_0020_literal_0020_in.Nodes.Add(node__0024_implicit_0020_literal_0020_in_1_);
+            def__0024_implicit_0020_literal_0020_in.StartNodes.Add(node__0024_implicit_0020_literal_0020_in_0_);
+            def__0024_implicit_0020_literal_0020_in.EndNodes.Add(node__0024_implicit_0020_literal_0020_in_1_);
+            node__0024_implicit_0020_literal_0020_in_0_.NextNodes.Add(node__0024_implicit_0020_literal_0020_in_1_);
 
             def__0024_implicit_0020_literal_0020_variables.Directives.Add(DefinitionDirective.Token);
             def__0024_implicit_0020_literal_0020_variables.Directives.Add(DefinitionDirective.Atomic);
@@ -730,6 +812,23 @@ namespace MetaphysicsIndustries.Solus
             node_identifier_0__005C_l.NextNodes.Add(node_identifier_1__005C_l_005C_d_005F_);
             node_identifier_1__005C_l_005C_d_005F_.NextNodes.Add(node_identifier_1__005C_l_005C_d_005F_);
 
+            node_interval_0__0028__005C__005B_ = new DefRefNode(def__0024_implicit_0020_char_0020_class_0020__0028__005C__005B_, "(\\[");
+            node_interval_1_number = new DefRefNode(def_number, "number");
+            node_interval_2__002C_ = new DefRefNode(def__0024_implicit_0020_literal_0020__002C_, ",");
+            node_interval_3_number = new DefRefNode(def_number, "number");
+            node_interval_4__0029__005C__005D_ = new DefRefNode(def__0024_implicit_0020_char_0020_class_0020__0029__005C__005D_, ")\\]");
+            def_interval.Nodes.Add(node_interval_0__0028__005C__005B_);
+            def_interval.Nodes.Add(node_interval_1_number);
+            def_interval.Nodes.Add(node_interval_2__002C_);
+            def_interval.Nodes.Add(node_interval_3_number);
+            def_interval.Nodes.Add(node_interval_4__0029__005C__005D_);
+            def_interval.StartNodes.Add(node_interval_0__0028__005C__005B_);
+            def_interval.EndNodes.Add(node_interval_4__0029__005C__005D_);
+            node_interval_0__0028__005C__005B_.NextNodes.Add(node_interval_1_number);
+            node_interval_1_number.NextNodes.Add(node_interval_2__002C_);
+            node_interval_2__002C_.NextNodes.Add(node_interval_3_number);
+            node_interval_3_number.NextNodes.Add(node_interval_4__0029__005C__005D_);
+
             def_number.Directives.Add(DefinitionDirective.IgnoreCase);
             def_number.Directives.Add(DefinitionDirective.Token);
             def_number.Directives.Add(DefinitionDirective.Atomic);
@@ -945,6 +1044,41 @@ namespace MetaphysicsIndustries.Solus
             def_var_002D_assign_002D_command.EndNodes.Add(node_var_002D_assign_002D_command_2_expr);
             node_var_002D_assign_002D_command_0_varref.NextNodes.Add(node_var_002D_assign_002D_command_1__003A__003D_);
             node_var_002D_assign_002D_command_1__003A__003D_.NextNodes.Add(node_var_002D_assign_002D_command_2_expr);
+
+            node_var_002D_interval_0_varref = new DefRefNode(def_varref, "varref");
+            node_var_002D_interval_1_in = new DefRefNode(def__0024_implicit_0020_literal_0020_in, "in");
+            node_var_002D_interval_2_interval = new DefRefNode(def_interval, "interval");
+            node_var_002D_interval_3_expr = new DefRefNode(def_expr, "expr");
+            node_var_002D_interval_4__003C_ = new DefRefNode(def__0024_implicit_0020_literal_0020__003C_, "<");
+            node_var_002D_interval_5__003C__003D_ = new DefRefNode(def__0024_implicit_0020_literal_0020__003C__003D_, "<=");
+            node_var_002D_interval_6_varref = new DefRefNode(def_varref, "varref");
+            node_var_002D_interval_7__003C_ = new DefRefNode(def__0024_implicit_0020_literal_0020__003C_, "<");
+            node_var_002D_interval_8__003C__003D_ = new DefRefNode(def__0024_implicit_0020_literal_0020__003C__003D_, "<=");
+            node_var_002D_interval_9_expr = new DefRefNode(def_expr, "expr");
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_0_varref);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_1_in);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_2_interval);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_3_expr);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_4__003C_);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_5__003C__003D_);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_6_varref);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_7__003C_);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_8__003C__003D_);
+            def_var_002D_interval.Nodes.Add(node_var_002D_interval_9_expr);
+            def_var_002D_interval.StartNodes.Add(node_var_002D_interval_0_varref);
+            def_var_002D_interval.StartNodes.Add(node_var_002D_interval_3_expr);
+            def_var_002D_interval.EndNodes.Add(node_var_002D_interval_2_interval);
+            def_var_002D_interval.EndNodes.Add(node_var_002D_interval_9_expr);
+            node_var_002D_interval_0_varref.NextNodes.Add(node_var_002D_interval_1_in);
+            node_var_002D_interval_1_in.NextNodes.Add(node_var_002D_interval_2_interval);
+            node_var_002D_interval_3_expr.NextNodes.Add(node_var_002D_interval_4__003C_);
+            node_var_002D_interval_3_expr.NextNodes.Add(node_var_002D_interval_5__003C__003D_);
+            node_var_002D_interval_4__003C_.NextNodes.Add(node_var_002D_interval_6_varref);
+            node_var_002D_interval_5__003C__003D_.NextNodes.Add(node_var_002D_interval_6_varref);
+            node_var_002D_interval_6_varref.NextNodes.Add(node_var_002D_interval_7__003C_);
+            node_var_002D_interval_6_varref.NextNodes.Add(node_var_002D_interval_8__003C__003D_);
+            node_var_002D_interval_7__003C_.NextNodes.Add(node_var_002D_interval_9_expr);
+            node_var_002D_interval_8__003C__003D_.NextNodes.Add(node_var_002D_interval_9_expr);
 
             node_varref_0_identifier = new DefRefNode(def_identifier, "identifier");
             def_varref.Nodes.Add(node_varref_0_identifier);
