@@ -20,9 +20,11 @@
  *
  */
 
+using System;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -31,6 +33,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
     [TestFixture]
     public class EvalTest
     {
+        //// Expressions
         // ComponentAccess
 
         [Test]
@@ -296,8 +299,10 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
         public void FunctionCallYieldsReturnValue()
         {
             // given
-            var mf = new MockFunction(new[] { Types.Scalar }, "f");
-            mf.CallF = args => args.First();
+            var mf = new MockFunction(new[] { Types.Scalar }, "f")
+            {
+                CallF = args => args.First()
+            };
             var expr = new FunctionCall(mf, new Literal(5));
             var eval = new Evaluator();
             // when
@@ -343,5 +348,331 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             // and
             Assert.AreEqual("Variable not found: a", ex.Message);
         }
+
+        //// Functions
+        // AbsoluteValueFunction
+
+        [Test]
+        public void AbsoluteValueFunctionPositiveYieldsPositive()
+        {
+            // given
+            var expr = new FunctionCall(AbsoluteValueFunction.Value,
+                new Literal(1));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(1, result.ToNumber().Value);
+        }
+
+        [Test]
+        public void AbsoluteValueFunctionNegativeYieldsNegative()
+        {
+            // given
+            var expr = new FunctionCall(AbsoluteValueFunction.Value,
+                new Literal(-1));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(1, result.ToNumber().Value);
+        }
+
+        // AdditionOperation
+
+        [Test]
+        public void AdditionOperationCallWithNoArgsThrows()
+        {
+            // given
+            var expr = new FunctionCall(AdditionOperation.Value,
+                new Literal(1));
+            var eval = new Evaluator();
+            // expect
+            Assert.Throws<ArgumentException>(
+                () => eval.Eval(expr, null));
+        }
+
+        [Test]
+        public void AdditionOperationCallWithOneArgThrows()
+        {
+            // given
+            var expr = new FunctionCall(AdditionOperation.Value,
+                new Literal(1));
+            var eval = new Evaluator();
+            // expect
+            Assert.Throws<ArgumentException>(
+                () => eval.Eval(expr, null));
+        }
+
+        [Test]
+        public void AdditionOperationCallWithTwoArgsYieldsSum()
+        {
+            // given
+            var expr = new FunctionCall(AdditionOperation.Value,
+                new Literal(1), new Literal(2));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(3, result.ToNumber().Value);
+        }
+
+        [Test]
+        public void AdditionOperationCallWithThreeArgsYieldsSum()
+        {
+            // given
+            var expr = new FunctionCall(AdditionOperation.Value,
+                new Literal(1), new Literal(2), new Literal(4));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(7, result.ToNumber().Value);
+        }
+        // ArccosecantFunction
+        // ArccosineFunction
+        // ArccotangentFunction
+        // ArcsecantFunction
+        // ArcsineFunction
+        // Arctangent2Function
+        // ArctangentFunction
+        // AssociativeCommutativeOperation
+        // BitwiseAndOperation
+        // BitwiseOrOperation
+        // CatmullRomSpline
+        // CeilingFunction
+        // CosecantFunction
+        // CosineFunction
+        // CotangentFunction
+        // DistFunction
+        // DistSqFunction
+        // DivisionOperation
+        // EqualComparisonOperation
+        // ExponentOperation
+        // FactorialFunction
+
+        [Test]
+        public void FactorialFunctionCallWithNoArgsThrows()
+        {
+            // given
+            var expr = new FunctionCall(FactorialFunction.Value);
+            var eval = new Evaluator();
+            // expect
+            Assert.Throws<ArgumentException>(() =>
+                eval.Eval(expr, null));
+        }
+
+        [Test]
+        public void FactorialFunctionCallWithTwoArgsThrows()
+        {
+            // given
+            var expr = new FunctionCall(FactorialFunction.Value,
+                new Literal(1), new Literal(2));
+            var eval = new Evaluator();
+            // expect
+            Assert.Throws<ArgumentException>(() =>
+                eval.Eval(expr, null));
+        }
+
+        [Test]
+        public void FactorialFunctionCallWithThreeArgsThrows()
+        {
+            // given
+            var expr = new FunctionCall(FactorialFunction.Value,
+                new Literal(1), new Literal(2), new Literal(4));
+            var eval = new Evaluator();
+            // expect
+            Assert.Throws<ArgumentException>(() =>
+                eval.Eval(expr, null));
+        }
+
+        [Test]
+        [TestCase(0, 1)]
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        [TestCase(3, 6)]
+        [TestCase(4, 24)]
+        [TestCase(5, 120)]
+        [TestCase(6, 720)]
+        [TestCase(7, 5040)]
+        [TestCase(8, 40320)]
+        [TestCase(9, 362880)]
+        [TestCase(10, 3628800)]
+        [TestCase(11, 39916800)]
+        public void FactorialFunctionValueYieldsValue(
+            float arg, float expected)
+        {
+            // given
+            var expr = new FunctionCall(FactorialFunction.Value,
+                new Literal(arg));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(expected, result.ToNumber().Value);
+        }
+
+        // FloorFunction
+        // GreaterThanComparisonOperation
+        // GreaterThanOrEqualComparisonOperation
+        // LessThanComparisonOperation
+        // LessThanOrEqualComparisonOperation
+        // LoadImageFunction
+        // Log10Function
+        // Log2Function
+        // LogarithmFunction
+        // LogicalAndOperation
+        // LogicalOrOperation
+        // ModularDivision
+        // MultiplicationOperation
+        // NaturalLogarithmFunction
+        // NegationOperation
+        // NotEqualComparisonOperation
+        // SecantFunction
+        // SineFunction
+        // SizeFunction
+
+        [Test]
+        public void SizeFunctionZeroArgumentsThrows()
+        {
+            // given
+            var expr = new FunctionCall(SizeFunction.Value);
+            var eval = new Evaluator();
+            // expect
+            var ex = Assert.Throws<ArgumentException>(
+                () => eval.Eval(expr, null));
+            // and
+            Assert.AreEqual("Wrong number of arguments given to " +
+                            "size (expected 1 but got 0)",
+                ex.Message);
+        }
+
+        [Test]
+        public void SizeFunctionTwoArgumentsThrows()
+        {
+            // given
+            var expr = new FunctionCall(SizeFunction.Value,
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Literal(new Vector(new float[] { 4, 5, 6 })));
+            var eval = new Evaluator();
+            // expect
+            var ex = Assert.Throws<ArgumentException>(
+                () => eval.Eval(expr, null));
+            // and
+            Assert.AreEqual("Wrong number of arguments given to " +
+                            "size (expected 1 but got 2)",
+                ex.Message);
+        }
+
+        [Test]
+        public void SizeFunctionNonTensorThrows()
+        {
+            // given
+            var expr = new FunctionCall(SizeFunction.Value,
+                new Literal(1));
+            var eval = new Evaluator();
+            // expect
+            var ex = Assert.Throws<ArgumentException>(
+                () => eval.Eval(expr, null));
+            // and
+            Assert.AreEqual("Argument wrong type: expected " +
+                            "Vector or Matrix or String but got Scalar",
+                ex.Message);
+        }
+
+        [Test]
+        public void SizeFunctionVectorYieldsLength()
+        {
+
+            // given
+            var expr = new FunctionCall(SizeFunction.Value,
+                new Literal(new float[] { 1, 2 }.ToVector()));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsTrue(result.IsScalar(null));
+            Assert.AreEqual(2, result.ToFloat());
+        }
+
+        [Test]
+        public void SizeFunctionMatrixYieldsRowAndColumnCounts()
+        {
+            // given
+            var expr = new FunctionCall(SizeFunction.Value,
+                new Literal(
+                    new Matrix(new float[,]
+                    {
+                        { 1, 2, 3 },
+                        { 4, 5, 6 }
+                    })));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsTrue(result.IsVector(null));
+            var v = result.ToVector();
+            Assert.AreEqual(2, v.Length);
+            Assert.AreEqual(2, v[0].ToFloat());
+            Assert.AreEqual(3, v[1].ToFloat());
+        }
+
+        [Test]
+        public void SizeFunctionStringYieldsLength()
+        {
+            // given
+            var expr = new FunctionCall(SizeFunction.Value,
+                new Literal("abc".ToStringValue()));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsTrue(result.IsScalar(null));
+            Assert.AreEqual(3, result.ToFloat());
+        }
+
+        // TangentFunction
+        // UnitStepFunction
+
+        [Test]
+        public void UnitStepFunctionPositiveYieldsOne()
+        {
+            // given
+            var expr = new FunctionCall(UnitStepFunction.Value,
+                new Literal(1));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(1, result.ToNumber().Value);
+        }
+
+        [Test]
+        public void UnitStepFunctionZeroYieldsOne()
+        {
+            // given
+            var expr = new FunctionCall(UnitStepFunction.Value,
+                new Literal(0));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(1, result.ToNumber().Value);
+        }
+
+        [Test]
+        public void UnitStepFunctionNegativeYieldsZero()
+        {
+            // given
+            var expr = new FunctionCall(UnitStepFunction.Value,
+                new Literal(-1));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.AreEqual(0, result.ToNumber().Value);
+        }
+
+        // UserDefinedFunction
     }
 }
