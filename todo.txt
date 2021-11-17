@@ -36,6 +36,7 @@ figure out some solution to the problem of values being boxed and unboxed so
     much. It's causing lots of allocations and is just slow in general.
 simple sets as IMathObject
 intervals
+    syntax
     intersects other interval
     interior
     closure
@@ -43,6 +44,7 @@ intervals
     is subinterval of
     is proper subinterval of
     bounded vs unbounded (requires infinity)
+    IMathObject.IsSet(env) => true
 
 more complicated expression-based sets
 complex numbers
