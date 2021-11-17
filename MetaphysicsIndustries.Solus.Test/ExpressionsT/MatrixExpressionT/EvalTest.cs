@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.MatrixExpressionT
             // expect
             var exc = Assert.Throws<NameException>(() => expr.Eval(env));
             // and
-            Assert.AreEqual("Variable not found in variable table: a",
+            Assert.AreEqual("Variable not found: a",
                 exc.Message);
         }
 

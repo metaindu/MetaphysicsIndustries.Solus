@@ -59,12 +59,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
                 return env.GetVariable(var).Eval(env);
             }
-            else
-            {
-                throw new NameException(
-                    "Variable not found in variable table: " +
-                    VariableName);
-            }
+
+            throw new NameException(
+                $"Variable not found: {VariableName}");
         }
 
         public override Expression PreliminaryEval(SolusEnvironment env)
