@@ -17,6 +17,10 @@ bug: when assigning a variable, any variables in its expression are
         That way, it wouldn't automatically resolve variable references.
 should Expression.Clone be shallow or deep?
     or should it be removed altogether?
+distinguish between tensors (vectors, matrices) and simple arrays
+should arrays be indexed starting at zero or one?
+    currently zero. that is common in programming.
+    starting at one is common in mathematics
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
