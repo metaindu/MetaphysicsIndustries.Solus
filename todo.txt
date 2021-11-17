@@ -15,6 +15,8 @@ bug: when assigning a variable, any variables in its expression are
     Basically, this is caused by calling PreliminaryEval on inputs. Probably
         we should call PreliminaryEval and just pass it an empty environment.
         That way, it wouldn't automatically resolve variable references.
+should Expression.Clone be shallow or deep?
+    or should it be removed altogether?
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
