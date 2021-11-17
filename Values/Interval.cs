@@ -105,7 +105,28 @@ namespace MetaphysicsIndustries.Solus.Values
         // TODO: is proper subinterval of
         // TODO: equality, hash code
         // TODO: bounded vs unbounded (requires infinity)
-        // TODO: degenerate intervals
+
+        public bool IsEmpty
+        {
+            get
+            {
+                // assuming that neither bound is NaN
+                if (UpperBound < LowerBound) return true;
+                if (LowerBound < UpperBound) return false;
+                return OpenLowerBound || OpenUpperBound;
+            }
+        }
+
+        public bool IsDegenerate
+        {
+            get
+            {
+                // assuming that neither bound is NaN
+                if (UpperBound < LowerBound) return false;
+                if (LowerBound < UpperBound) return false;
+                return !OpenLowerBound && !OpenUpperBound;
+            }
+        }
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
