@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus
 	{
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
-            throw new NotImplementedException();
+            return expr.Eval(env);
         }
 
         public Expression PreliminaryEval(Expression expr, SolusEnvironment env)
