@@ -60,6 +60,7 @@ parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
 sum function that can operate on parametrics. the big sigma symbol.
 single component assignment?
     "c[2,3] := 4"
+    varref array-index ':=' expr;
 parametric array assignment
     "c[i,j] := sum(a[i][k]*b[k][j] for k=[0..n-1]) for i=[0..m-1],j=[0..p-1]"
     possible ambiguity:
@@ -71,6 +72,15 @@ parametric array assignment
         (1 for i=...) for j=...,k=...
         1 for i=(... for j=...),k=...
         1 for i=(... for j=...,k=...)
+    "c[i,j] for i=[0..m-1],j=[0..p-1] := sum(a[i][k]*b[k][j] for k=[0..n-1])"
+    varref array-index 'for' var-interval (',' var-interval) ':=' expr;
+array comprehension
+    "[ x*x for x=[1..5] ]" -> 1d array or vector
+    "[ i*j for i=[1..w],j=[1..h] ]" -> 2d array or matrix
+    "[ i*j*k for i=...,j=...,k=... ]" -> 3d array
+    etc.
+    array-comprehension = '[' expr 'for'
+        var-interval ( ',' var-interval )* ']';
 "help syntax" topics
     "help syntax array-literal"
     "help syntax component-access"
