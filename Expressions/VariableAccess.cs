@@ -64,24 +64,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 $"Variable not found: {VariableName}");
         }
 
-        public override Expression Simplify(SolusEnvironment env)
-        {
-            if (env.ContainsVariable(VariableName))
-            {
-                //this will cause an infinite recursion if a variable 
-                //is defined in terms of itself or in terms of another 
-                //variable.
-                //we could add (if (env.Variables[Variable] as VariableAccess).Variable == Variable) { throw }
-                //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
-                var var = VariableName;
-                return env.GetVariable(var).Simplify(env);
-            }
-            else
-            {
-                return base.Simplify(env);
-            }
-        }
-
         public override string ToString()
         {
             return VariableName;
