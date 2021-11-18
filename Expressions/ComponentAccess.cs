@@ -290,7 +290,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
             // TODO: other expression types
 
-            throw new RequiresEvaluationException();
+            return null;
         }
     }
 }
