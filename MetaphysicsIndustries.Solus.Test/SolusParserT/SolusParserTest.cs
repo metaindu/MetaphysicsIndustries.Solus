@@ -35,22 +35,31 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         [Test]
         public void TestNormal()
         {
+            //given
             SolusParser parser = new SolusParser();
             SolusEnvironment env = new SolusEnvironment();
-
+            // when
             var expr = parser.GetExpression("2 + 2");
-            var value = expr.Eval(env).ToNumber().Value;
-
-            Assert.AreEqual(4.0f, value);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var fc = (FunctionCall)expr;
+            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
+            Assert.AreEqual(2,
+                ((Literal)fc.Arguments[0]).Value.ToNumber().Value);
+            Assert.IsInstanceOf<Literal>(fc.Arguments[1]);
+            Assert.AreEqual(2,
+                ((Literal)fc.Arguments[1]).Value.ToNumber().Value);
         }
 
         [Test]
         public void TestParensAndOperators()
         {
+            // given
             var parser = new SolusParser();
-
+            // when
             var expr = parser.GetExpression("a * (2+c)");
-
+            // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
             Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
@@ -420,9 +429,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var fcall = (FunctionCall)expr;
             Assert.IsInstanceOf(typeof(SineFunction), fcall.Function);
             Assert.AreEqual(1, fcall.Arguments.Count);
-            //            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            //            Assert.AreEqual(Math.PI, (fcall.Arguments[0] as Literal).Value, 0.0001f);
-            Assert.AreEqual(0f, fcall.Eval(env).ToNumber().Value, 0.0001f);
+            Assert.IsInstanceOf<VariableAccess>(fcall.Arguments[0]);
+            var va = (VariableAccess)fcall.Arguments[0];
+            Assert.AreEqual("pi", va.VariableName);
         }
 
         [Test]
@@ -489,11 +498,6 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
                 ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.AreEqual(2f,
                 ((Literal) fcall.Arguments[1]).Value.ToFloat());
-
-
-            float value = expr.Eval(env).ToNumber().Value;
-
-            Assert.AreEqual(3f, value);
         }
 
         class CountArgsFunction : Function
@@ -521,43 +525,118 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
-        public void TestVarArgFunctionCalls()
+        public void TestVarArgFunctionCalls0()
         {
+            // given
             var parser = new SolusParser();
             var func = new CountArgsFunction();
             var env = new SolusEnvironment();
             env.AddFunction(func);
-
-
-            var expr = parser.GetExpression("count(1, 2, 3)", env: env, cleanup: false);
-
+            // when
+            var expr = parser.GetExpression("count()", env: env,
+                cleanup: false);
+            // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
-            var fcall = (expr as FunctionCall);
+            var fcall = (FunctionCall)expr;
+            Assert.AreEqual(0, fcall.Arguments.Count);
+        }
+
+        [Test]
+        public void TestVarArgFunctionCalls1()
+        {
+            // given
+            var parser = new SolusParser();
+            var func = new CountArgsFunction();
+            var env = new SolusEnvironment();
+            env.AddFunction(func);
+            // when
+            var expr = parser.GetExpression("count(1)", env: env,
+                cleanup: false);
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var fcall = (FunctionCall)expr;
+            Assert.AreEqual(1, fcall.Arguments.Count);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[0]);
+            Assert.AreEqual(1f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
+        }
+
+        [Test]
+        public void TestVarArgFunctionCalls2()
+        {
+            // given
+            var parser = new SolusParser();
+            var func = new CountArgsFunction();
+            var env = new SolusEnvironment();
+            env.AddFunction(func);
+            // when
+            var expr = parser.GetExpression("count(1, 2)", env: env,
+                cleanup: false);
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var fcall = (FunctionCall)expr;
+            Assert.AreEqual(2, fcall.Arguments.Count);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[0]);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[1]);
+            Assert.AreEqual(1f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
+            Assert.AreEqual(2f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
+        }
+
+        [Test]
+        public void TestVarArgFunctionCalls3()
+        {
+            // given
+            var parser = new SolusParser();
+            var func = new CountArgsFunction();
+            var env = new SolusEnvironment();
+            env.AddFunction(func);
+            // when
+            var expr = parser.GetExpression("count(1, 2, 3)", env: env,
+                cleanup: false);
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var fcall = (FunctionCall)expr;
             Assert.AreEqual(3, fcall.Arguments.Count);
-            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
-            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
-            Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[2]);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[0]);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[1]);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[2]);
             Assert.AreEqual(1f,
                 ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.AreEqual(2f,
                 ((Literal) fcall.Arguments[1]).Value.ToFloat());
             Assert.AreEqual(3f,
                 ((Literal) fcall.Arguments[2]).Value.ToFloat());
-            Assert.AreEqual(3f, expr.Eval(env).ToNumber().Value);
+        }
 
-
-            Assert.AreEqual(0,
-                parser.GetExpression("count()", env).
-                    Eval(env).ToNumber().Value);
-            Assert.AreEqual(1,
-                parser.GetExpression("count(1)", env).
-                    Eval(env).ToNumber().Value);
-            Assert.AreEqual(2,
-                parser.GetExpression("count(1, 2)", env).
-                    Eval(env).ToNumber().Value);
-            Assert.AreEqual(4,
-                parser.GetExpression("count(1, 2, 3, 4)", env).
-                    Eval(env).ToNumber().Value);
+        [Test]
+        public void TestVarArgFunctionCalls4()
+        {
+            // given
+            var parser = new SolusParser();
+            var func = new CountArgsFunction();
+            var env = new SolusEnvironment();
+            env.AddFunction(func);
+            // when
+            var expr = parser.GetExpression("count(1, 2, 3, 4)", env: env,
+                cleanup: false);
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var fcall = (FunctionCall)expr;
+            Assert.AreEqual(4, fcall.Arguments.Count);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[0]);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[1]);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[2]);
+            Assert.IsInstanceOf<Literal>(fcall.Arguments[3]);
+            Assert.AreEqual(1f,
+                ((Literal) fcall.Arguments[0]).Value.ToFloat());
+            Assert.AreEqual(2f,
+                ((Literal) fcall.Arguments[1]).Value.ToFloat());
+            Assert.AreEqual(3f,
+                ((Literal) fcall.Arguments[2]).Value.ToFloat());
+            Assert.AreEqual(4f,
+                ((Literal) fcall.Arguments[2]).Value.ToFloat());
         }
 
         [Test]
