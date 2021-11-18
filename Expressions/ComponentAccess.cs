@@ -203,11 +203,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 "greater than 2");
         }
 
-        public override Expression PreliminaryEval(SolusEnvironment env)
+        public override Expression Simplify(SolusEnvironment env)
         {
-            var expr = Expr.PreliminaryEval(env);
+            var expr = Expr.Simplify(env);
             var evaledIndexes =
-                Indexes.Select(i => i.PreliminaryEval(env)).ToList();
+                Indexes.Select(i => i.Simplify(env)).ToList();
             if (evaledIndexes.All(ei => ei is Literal))
             {
                 var indexes2 = evaledIndexes.Select(

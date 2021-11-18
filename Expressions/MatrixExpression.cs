@@ -676,7 +676,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override Expression PreliminaryEval(SolusEnvironment env)
+        public override Expression Simplify(SolusEnvironment env)
         {
             int r;
             int c;
@@ -685,7 +685,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (r = 0; r < RowCount; r++)
             for (c = 0; c < ColumnCount; c++)
             {
-                var value = this[r, c].PreliminaryEval(env);
+                var value = this[r, c].Simplify(env);
                 allLiteral &= value is Literal;
                 values[r, c] = value;
             }

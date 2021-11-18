@@ -42,7 +42,7 @@
     <Compile Include="ExpressionsT\ComponentAccessT\AccessComponent2Test.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\AccessComponentTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ComponentAccessTest.cs" />
-    <Compile Include="ExpressionsT\ComponentAccessT\PreliminaryEvalTest.cs" />
+    <Compile Include="ExpressionsT\ComponentAccessT\SimplifyTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ResultTest.cs" />
     <Compile Include="ExpressionsT\DerivativeOfVariableT\ResultTest.cs" />
     <Compile Include="ExpressionsT\FunctionCallT\ResultTest.cs" />

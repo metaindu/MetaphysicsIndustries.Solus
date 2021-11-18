@@ -204,7 +204,7 @@ namespace MetaphysicsIndustries.Solus
         {
             var varname = span.Subspans[0].Subspans[0].Value;
             var expr = GetExpressionFromExpr(span.Subspans[2], env);
-            expr = expr.PreliminaryEval(env);
+            expr = expr.Simplify(env);
             return new VarAssignCommandData(varname, expr);
         }
 

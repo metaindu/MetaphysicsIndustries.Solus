@@ -12,9 +12,9 @@ bug: when assigning a variable, any variables in its expression are
         because y was already defined when w was defined. That is not true for
         x, which remains exactly how it was defined. This discrepancy would
         likely be a surprise to the user.
-    Basically, this is caused by calling PreliminaryEval on inputs. Probably
-        we should call PreliminaryEval and just pass it an empty environment.
-        That way, it wouldn't automatically resolve variable references.
+    Basically, this is caused by calling Simplify on inputs. Probably we
+        should call Simplify and just pass it an empty environment. That way,
+        it wouldn't automatically resolve variable references.
 should Expression.Clone be shallow or deep?
     or should it be removed altogether?
 distinguish between tensors (vectors, matrices) and simple arrays

@@ -35,10 +35,10 @@ namespace MetaphysicsIndustries.Solus
             return expr.Eval(env);
         }
 
-        public Expression PreliminaryEval(Expression expr, SolusEnvironment env)
+        public Expression Simplify(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(expr.PreliminaryEval(env));
+            return cleanup.CleanUp(expr.Simplify(env));
         }
 
         public void EvalInterval(Expression expr, SolusEnvironment env,
@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Solus
 
             var env2 = env.CreateChildEnvironment();
             env2.RemoveVariable(interval.Variable);
-            var expr2 = expr.PreliminaryEval(env2);
+            var expr2 = expr.Simplify(env2);
 
             var literal = new Literal(0);
             env2.SetVariable(interval.Variable, literal);
@@ -77,7 +77,7 @@ namespace MetaphysicsIndustries.Solus
             var env2 = env.CreateChildEnvironment();
             env2.RemoveVariable(interval1.Variable);
             env2.RemoveVariable(interval2.Variable);
-            var expr2 = expr.PreliminaryEval(env2);
+            var expr2 = expr.Simplify(env2);
 
             var inputs1 = new IMathObject[numSteps1];
             var inputs2 = new IMathObject[numSteps2];
@@ -129,7 +129,7 @@ namespace MetaphysicsIndustries.Solus
             env2.RemoveVariable(interval1.Variable);
             env2.RemoveVariable(interval2.Variable);
             env2.RemoveVariable(interval3.Variable);
-            var expr2 = expr.PreliminaryEval(env2);
+            var expr2 = expr.Simplify(env2);
 
             var inputs1 = new IMathObject[numSteps1];
             var inputs2 = new IMathObject[numSteps2];

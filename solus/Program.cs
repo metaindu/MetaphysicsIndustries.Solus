@@ -195,7 +195,7 @@ namespace solus
                     }
                     else if (expr != null)
                     {
-                        var result = expr.PreliminaryEval(env);
+                        var result = expr.Simplify(env);
                         Console.WriteLine(result);
                     }
                 }
