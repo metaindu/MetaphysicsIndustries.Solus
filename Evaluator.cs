@@ -24,11 +24,12 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Transformers;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
     public class Evaluator
-	{
+    {
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
             return expr.Eval(env);
@@ -131,6 +132,7 @@ namespace MetaphysicsIndustries.Solus
                 previousValue = env.GetVariable(x);
                 env.RemoveVariable(x);
             }
+
             Expression preeval = expr.PreliminaryEval(env);
 
             i = 0;
@@ -144,237 +146,145 @@ namespace MetaphysicsIndustries.Solus
             return exprs;
         }
 
-        public float[] EvalInterval(Expression expr, SolusEnvironment env,
-            string x, float xStart, float xEnd, float xStep)
+        public void EvalInterval(Expression expr, SolusEnvironment env,
+            VarInterval interval, int numSteps, ref float[] values)
         {
+            var delta = interval.Interval.CalcDelta(numSteps);
+
+            var env2 = env.CreateChildEnvironment();
+            env2.RemoveVariable(interval.Variable);
+            var expr2 = expr.PreliminaryEval(env2);
+
+            var literal = new Literal(0);
+            env2.SetVariable(interval.Variable, literal);
+
+            if (values == null || values.Length < numSteps)
+                values = new float[numSteps];
+
             int i;
-            float xx;
-            i = 0;
-            for (xx = xStart; xx <= xEnd; xx += xStep)
+            for (i = 0; i < numSteps; i++)
             {
-                i++;
+                var xx = delta * i + interval.Interval.LowerBound;
+                literal.Value = xx.ToNumber();
+                values[i] = Eval(expr2, env2).ToNumber().Value;
             }
-
-            Expression previousValue = null;
-            bool hasPreviousValue = false;
-            if (env.ContainsVariable(x))
-            {
-                hasPreviousValue = true;
-                previousValue = env.GetVariable(x);
-                env.RemoveVariable(x);
-            }
-            Expression preeval = expr.PreliminaryEval(env);
-            //check that all variables in the expression are already in the
-            //environment
-
-
-            float[] values = new float[i];
-
-            i = 0;
-            for (xx = xStart; xx <= xEnd; xx += xStep)
-            {
-                env.SetVariable(x, new Literal(xx));
-                values[i] = preeval.Eval(env).ToNumber().Value;
-                i++;
-            }
-
-            if (hasPreviousValue)
-            {
-                env.SetVariable(x, previousValue);
-            }
-
-            return values;
         }
 
-        public float[,] EvalInterval(Expression expr, SolusEnvironment env,
-            string x, float xStart, float xEnd, float xStep,
-            string y, float yStart, float yEnd, float yStep)
+        public void EvalInterval(
+            Expression expr, SolusEnvironment env,
+            VarInterval interval1, int numSteps1,
+            VarInterval interval2, int numSteps2,
+            ref float[,] values)
         {
-            int nx = 0;
-            int ny = 0;
+            var delta1 = interval1.Interval.CalcDelta(numSteps1);
+            var delta2 = interval2.Interval.CalcDelta(numSteps2);
 
-            float xx;
-            float yy;
+            var env2 = env.CreateChildEnvironment();
+            env2.RemoveVariable(interval1.Variable);
+            env2.RemoveVariable(interval2.Variable);
+            var expr2 = expr.PreliminaryEval(env2);
 
-            List<Literal> xValues = new List<Literal>();
-            List<Literal> yValues = new List<Literal>();
+            var inputs1 = new IMathObject[numSteps1];
+            var inputs2 = new IMathObject[numSteps2];
 
-            nx = 0;
-            for (xx = xStart; xx <= xEnd; xx += xStep)
+            int i;
+            for (i = 0; i < numSteps1; i++)
+                inputs1[i] =
+                    (delta1 * i + interval1.Interval.LowerBound).ToNumber();
+            for (i = 0; i < numSteps2; i++)
+                inputs2[i] =
+                    (delta2 * i + interval2.Interval.LowerBound).ToNumber();
+
+            var literal1 = new Literal(0);
+            var literal2 = new Literal(0);
+            env2.SetVariable(interval1.Variable, literal1);
+            env2.SetVariable(interval2.Variable, literal2);
+
+            if (values == null ||
+                values.GetLength(0) < numSteps1 ||
+                values.GetLength(1) < numSteps2)
             {
-                xValues.Add(new Literal(xx));
-                nx++;
-            }
-            ny = 0;
-            for (yy = yStart; yy <= yEnd; yy += yStep)
-            {
-                yValues.Add(new Literal(yy));
-                ny++;
-            }
-
-            Expression previousValueX = null;
-            bool hasPreviousValueX = false;
-            if (env.ContainsVariable(x))
-            {
-                hasPreviousValueX = true;
-                previousValueX = env.GetVariable(x);
-                env.RemoveVariable(x);
-            }
-
-            Expression previousValueY = null;
-            bool hasPreviousValueY = false;
-            if (env.ContainsVariable(y))
-            {
-                hasPreviousValueY = true;
-                previousValueY = env.GetVariable(y);
-                env.RemoveVariable(y);
+                values = new float[numSteps1, numSteps2];
             }
 
-            Expression preeval = expr;//.PreliminaryEval(vars);
-            //check that all variables in the expression are already in the
-            //environment
-
-
-            float[,] values = new float[nx, ny];
-
-            int ix = 0;
-            for (xx = xStart; xx <= xEnd; xx += xStep)
+            for (i = 0; i < numSteps1; i++)
             {
-                env.SetVariable(x, xValues[ix]);
-
-                int iy = 0;
-                for (yy = yStart; yy <= yEnd; yy += yStep)
+                literal1.Value = inputs1[i];
+                int j;
+                for (j = 0; j < numSteps2; j++)
                 {
-                    env.SetVariable(y, yValues[iy]);
-                    values[ix, iy] = preeval.Eval(env).ToNumber().Value;
-                    iy++;
+                    literal2.Value = inputs2[j];
+                    values[i, j] = Eval(expr2, env2).ToNumber().Value;
                 }
-
-                ix++;
             }
-
-            if (hasPreviousValueX)
-            {
-                env.SetVariable(x, previousValueX);
-            }
-            if (hasPreviousValueY)
-            {
-                env.SetVariable(y, previousValueY);
-            }
-
-            return values;
         }
 
-        public float[, ,] EvalInterval(Expression expr, SolusEnvironment env,
-            string x, float xStart, float xEnd, float xStep,
-            string y, float yStart, float yEnd, float yStep,
-            string z, float zStart, float zEnd, float zStep)
+        public void EvalInterval(
+            Expression expr, SolusEnvironment env,
+            VarInterval interval1, int numSteps1,
+            VarInterval interval2, int numSteps2,
+            VarInterval interval3, int numSteps3,
+            ref float[,,] values)
         {
-            int nx = 0;
-            int ny = 0;
-            int nz = 0;
+            var delta1 = interval1.Interval.CalcDelta(numSteps1);
+            var delta2 = interval2.Interval.CalcDelta(numSteps2);
+            var delta3 = interval3.Interval.CalcDelta(numSteps3);
 
-            float xx;
-            float yy;
-            float zz;
+            var env2 = env.CreateChildEnvironment();
+            env2.RemoveVariable(interval1.Variable);
+            env2.RemoveVariable(interval2.Variable);
+            env2.RemoveVariable(interval3.Variable);
+            var expr2 = expr.PreliminaryEval(env2);
 
-            List<Literal> xValues = new List<Literal>();
-            List<Literal> yValues = new List<Literal>();
-            List<Literal> zValues = new List<Literal>();
+            var inputs1 = new IMathObject[numSteps1];
+            var inputs2 = new IMathObject[numSteps2];
+            var inputs3 = new IMathObject[numSteps3];
 
-            nx = 0;
-            for (xx = xStart; xx <= xEnd; xx += xStep)
-            {
-                xValues.Add(new Literal(xx));
-                nx++;
-            }
-            ny = 0;
-            for (yy = yStart; yy <= yEnd; yy += yStep)
-            {
-                yValues.Add(new Literal(yy));
-                ny++;
-            }
-            nz = 0;
-            for (zz = zStart; zz <= zEnd; zz += zStep)
-            {
-                zValues.Add(new Literal(zz));
-                nz++;
-            }
+            int i;
+            for (i = 0; i < numSteps1; i++)
+                inputs1[i] =
+                    (delta1 * i + interval1.Interval.LowerBound).ToNumber();
+            for (i = 0; i < numSteps2; i++)
+                inputs2[i] =
+                    (delta2 * i + interval2.Interval.LowerBound).ToNumber();
+            for (i = 0; i < numSteps3; i++)
+                inputs3[i] =
+                    (delta3 * i + interval3.Interval.LowerBound).ToNumber();
 
-            Expression previousValueX = null;
-            bool hasPreviousValueX = false;
-            if (env.ContainsVariable(x))
-            {
-                hasPreviousValueX = true;
-                previousValueX = env.GetVariable(x);
-                env.RemoveVariable(x);
-            }
+            var literal1 = new Literal(0);
+            var literal2 = new Literal(0);
+            var literal3 = new Literal(0);
+            env2.SetVariable(interval1.Variable, literal1);
+            env2.SetVariable(interval2.Variable, literal2);
+            env2.SetVariable(interval3.Variable, literal3);
 
-            Expression previousValueY = null;
-            bool hasPreviousValueY = false;
-            if (env.ContainsVariable(y))
+            if (values == null ||
+                values.GetLength(0) < numSteps1 ||
+                values.GetLength(1) < numSteps2 ||
+                values.GetLength(2) < numSteps3)
             {
-                hasPreviousValueY = true;
-                previousValueY = env.GetVariable(y);
-                env.RemoveVariable(y);
+                values = new float[numSteps1, numSteps2, numSteps3];
             }
 
-            Expression previousValueZ = null;
-            bool hasPreviousValueZ = false;
-            if (env.ContainsVariable(z))
+            for (i = 0; i < numSteps1; i++)
             {
-                hasPreviousValueZ = true;
-                previousValueZ = env.GetVariable(z);
-                env.RemoveVariable(z);
-            }
-
-            Expression preeval = expr;//.PreliminaryEval(vars);
-            //check that all variables in the expression are already in the
-            //environment
-
-
-            float[, ,] values = new float[nx, ny, nz];
-
-            int ix;
-            int iy;
-            int iz;
-            for (ix = 0; ix < nx; ix++)
-            {
-                env.SetVariable(x, xValues[ix]);
-
-                for (iy = 0; iy < ny; iy++)
+                literal1.Value = inputs1[i];
+                int j;
+                for (j = 0; j < numSteps2; j++)
                 {
-                    env.SetVariable(y, yValues[iy]);
-
-                    for (iz = 0; iz < nz; iz++)
+                    literal2.Value = inputs2[j];
+                    int k;
+                    for (k = 0; k < numSteps3; k++)
                     {
-                        env.SetVariable(z, zValues[iz]);
-                        values[ix, iy, iz] =
-                            preeval.Eval(env).ToNumber().Value;
+                        literal3.Value = inputs3[k];
+                        values[i, j, k] = Eval(expr2, env2).ToNumber().Value;
                     }
-
                 }
-
             }
-
-            if (hasPreviousValueX)
-            {
-                env.SetVariable(x, previousValueX);
-            }
-            if (hasPreviousValueY)
-            {
-                env.SetVariable(y, previousValueY);
-            }
-            if (hasPreviousValueZ)
-            {
-                env.SetVariable(z, previousValueZ);
-            }
-
-            return values;
         }
 
-        public float[,] EvalMathPaint(Expression expr, SolusEnvironment env,
-            int width, int height)
+        public void EvalMathPaint(Expression expr, SolusEnvironment env,
+            int width, int height, ref float[,] values)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -386,14 +296,20 @@ namespace MetaphysicsIndustries.Solus
             env.SetVariable("i", new VariableAccess("x"));
             env.SetVariable("j", new VariableAccess("y"));
 
-            return EvalInterval(expr, env,
-                "x", 0, width - 1, 1,
-                "y", 0, height - 1, 1);
+            var interval1 = new VarInterval("x",
+                Interval.Integer(0, width - 1));
+            var interval2 = new VarInterval("y",
+                Interval.Integer(0, height - 1));
+            EvalInterval(expr, env,
+                interval1, width,
+                interval2, height,
+                ref values);
         }
 
 
-        public float[, ,] EvalMathPaint3D(Expression expr,
-            SolusEnvironment env, int width, int height, int numframes)
+        public void EvalMathPaint3D(Expression expr,
+            SolusEnvironment env, int width, int height, int numFrames,
+            ref float[,,] values)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -404,21 +320,28 @@ namespace MetaphysicsIndustries.Solus
                 parser.GetExpression("sqrt(x^2+y^2)", env));
             env.SetVariable("i", new VariableAccess("x"));
             env.SetVariable("j", new VariableAccess("y"));
-            env.SetVariable("numframes", new Literal(numframes));
+            env.SetVariable("numframes", new Literal(numFrames));
             env.SetVariable("k", new VariableAccess("z"));
             env.SetVariable("t", new VariableAccess("z"));
 
-            return EvalInterval(expr, env,
-                "x", 0, width - 1, 1,
-                "y", 0, height - 1, 1,
-                "z", 0, numframes - 1, 1);
+            var interval1 = new VarInterval("x",
+                Interval.Integer(0, width - 1));
+            var interval2 = new VarInterval("y",
+                Interval.Integer(0, height - 1));
+            var interval3 = new VarInterval("z",
+                Interval.Integer(0, numFrames - 1));
+            EvalInterval(expr, env,
+                interval1, width,
+                interval2, height,
+                interval3, numFrames,
+                ref values);
         }
 
         public static string[] GatherVariables(Expression expr)
         {
             var names = new HashSet<string>();
 
-            expr.AcceptVisitor(varVisitor: (x)=> names.Add(x.VariableName));
+            expr.AcceptVisitor(varVisitor: (x) => names.Add(x.VariableName));
 
             return names.ToArray();
         }
