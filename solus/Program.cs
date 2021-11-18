@@ -76,10 +76,11 @@ namespace solus
                 {
                     var parser = new SolusParser();
                     var env = new SolusEnvironment();
+                    var eval = new Evaluator();
                     foreach (var exprString in exprStrings)
                     {
                         var expr = parser.GetExpression(exprString, env);
-                        var result = expr.Eval(env);
+                        var result = eval.Eval(expr, env);
                         Console.WriteLine(result);
                     }
                 }
