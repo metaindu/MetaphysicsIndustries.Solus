@@ -636,7 +636,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.AreEqual(3f,
                 ((Literal) fcall.Arguments[2]).Value.ToFloat());
             Assert.AreEqual(4f,
-                ((Literal) fcall.Arguments[2]).Value.ToFloat());
+                ((Literal) fcall.Arguments[3]).Value.ToFloat());
         }
 
         [Test]
