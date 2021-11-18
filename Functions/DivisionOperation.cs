@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -53,6 +54,8 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected override float InternalBinaryCall(float x, float y)
         {
+            if (y == 0)
+                throw new OperandException("Division by zero");
             return x / y;
         }
 

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -38,7 +39,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
-            return ((float)Math.Log10(args[0].ToNumber().Value)).ToNumber();
+            var arg0 = args[0].ToNumber().Value;
+            if (arg0 <= 0)
+                throw new OperandException(
+                    "Argument must be positive");
+            return ((float)Math.Log10(arg0)).ToNumber();
         }
 
         public override string DisplayName
