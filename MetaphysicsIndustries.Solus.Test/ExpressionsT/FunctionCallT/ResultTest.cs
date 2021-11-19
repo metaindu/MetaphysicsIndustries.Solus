@@ -47,6 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(mmo.IsString(env));
             Assert.IsFalse(mmo.IsInterval(env));
             Assert.IsFalse(mmo.IsFunction(env));
+            Assert.IsFalse(mmo.IsExpression(env));
             // when
             var result = expr.Result;
             // then
@@ -57,6 +58,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(result.IsString(env));
             Assert.IsFalse(result.IsInterval(env));
             Assert.IsFalse(result.IsFunction(env));
+            Assert.IsFalse(result.IsExpression(env));
         }
 
         [Test]
@@ -80,6 +82,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(mmo.IsString(env));
             Assert.IsFalse(mmo.IsInterval(env));
             Assert.IsFalse(mmo.IsFunction(env));
+            Assert.IsFalse(mmo.IsExpression(env));
             // when
             var result = expr.Result;
             // then
@@ -92,6 +95,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(result.IsString(env));
             Assert.IsFalse(result.IsInterval(env));
             Assert.IsFalse(result.IsFunction(env));
+            Assert.IsFalse(result.IsExpression(env));
         }
     }
 }

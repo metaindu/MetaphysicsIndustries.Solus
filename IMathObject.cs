@@ -35,6 +35,7 @@ namespace MetaphysicsIndustries.Solus
         // TODO: int? GetStringLength(SolusEnvironment env);
         bool? IsInterval(SolusEnvironment env);
         bool? IsFunction(SolusEnvironment env);
+        bool? IsExpression(SolusEnvironment env);
 
         bool IsConcrete { get; }
     }
@@ -52,6 +53,7 @@ namespace MetaphysicsIndustries.Solus
         public int? GetVectorLength(SolusEnvironment env) => null;
         public bool? IsInterval(SolusEnvironment env) => false;
         public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
     }
@@ -70,6 +72,7 @@ namespace MetaphysicsIndustries.Solus
         public int? GetVectorLength(SolusEnvironment env) => null;
         public bool? IsInterval(SolusEnvironment env) => true;
         public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
     }

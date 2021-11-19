@@ -273,6 +273,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public int? GetVectorLength(SolusEnvironment env) => null;
             public bool? IsInterval(SolusEnvironment env) => null;
             public bool? IsFunction(SolusEnvironment env) => null;
+            public bool? IsExpression(SolusEnvironment env) => null;
             public bool IsConcrete => false;
         }
 

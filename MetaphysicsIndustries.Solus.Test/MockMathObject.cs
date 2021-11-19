@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test
         public MockMathObject(bool isScalar = true, bool isVector = false,
             bool isMatrix = false, int tensorRank = 0, bool isString = false,
             int[] dimensions = null, bool isInterval = false,
-            bool isFunction = false,
+            bool isFunction = false, bool isExpression = false,
             bool isConcrete = false)
         {
             _isScalar = isScalar;
@@ -44,6 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test
             _dimensions = dimensions;
             _isInterval = isInterval;
             _isFunction = isFunction;
+            _isExpression = isExpression;
             _isConcrete = isConcrete;
         }
 
@@ -85,6 +86,9 @@ namespace MetaphysicsIndustries.Solus.Test
 
         private readonly bool? _isFunction;
         public bool? IsFunction(SolusEnvironment env) => _isFunction;
+
+        private readonly bool? _isExpression;
+        public bool? IsExpression(SolusEnvironment env) => _isExpression;
 
         private readonly bool _isConcrete;
         public bool IsConcrete => _isConcrete;
