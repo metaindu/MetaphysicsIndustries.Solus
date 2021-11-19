@@ -20,35 +20,38 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
-
-namespace MetaphysicsIndustries.Solus.Test
+namespace MetaphysicsIndustries.Solus.Extra
 {
-    public class MockFunction : Function
+    public static class PascalTriangle
     {
-        public MockFunction(Types[] paramTypes, string name = "")
-            : base(paramTypes, name)
+        public static float BinomialCoefficient(int n, int k)
         {
+            if (k > n) return 0;
+            if (k > n / 2) k = n - k;
+
+            float prod = 1;
+            int i;
+
+            for (i = 1; i <= k; i++)
+            {
+                prod *= (n - k + i) / (float)i;
+            }
+
+            return prod;
         }
 
-        public Func<IEnumerable<IMathObject>, IMathObject> CallF;
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
+        public static float[] PascalsTriangle(int row)
         {
-            if (CallF == null) throw new NotImplementedException();
-            return CallF(args);
-        }
+            float[] res = new float[row + 1];
 
-        public Func<IEnumerable<IMathObject>, IMathObject> GetResultF;
-        public override IMathObject GetResult(
-            IEnumerable<IMathObject> args)
-        {
-            if (GetResultF != null)
-                return GetResultF(args);
-            throw new NotImplementedException();
+            int i;
+
+            for (i = 0; i < row; i++)
+            {
+                res[i] = BinomialCoefficient(row, i);
+            }
+
+            return res;
         }
     }
 }

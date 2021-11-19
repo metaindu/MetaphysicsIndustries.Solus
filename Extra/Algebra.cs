@@ -20,18 +20,18 @@
  *
  */
 
-using System;
-
-namespace MetaphysicsIndustries.Solus.Exceptions
+namespace MetaphysicsIndustries.Solus.Extra
 {
-    public class RequiresEvaluationException : InterrogationException
+    public static class Algebra
     {
-        public RequiresEvaluationException(
-            string message =
-                "Interrogation would require the expression be evaluated",
-            Exception innerException = null)
-            : base(message, innerException)
+        public static STuple<float, float> QuadraticEquation(float a,
+            float b, float c)
         {
+            float d = (float)System.Math.Sqrt(b * b - 4 * a * c);
+            float x1 = (-b + d) / (2 * a);
+            float x2 = (-b - d) / (2 * a);
+
+            return new STuple<float, float>(x1, x2);
         }
     }
 }

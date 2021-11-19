@@ -185,10 +185,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override Expression PreliminaryEval(SolusEnvironment env)
+        public override Expression Simplify(SolusEnvironment env)
         {
             var args = Arguments.Select(
-                a => a.PreliminaryEval(env)).ToArray();
+                a => a.Simplify(env)).ToArray();
             var allLiterals = args.All(a => a is Literal);
             if (allLiterals)
             {

@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -46,8 +47,15 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
-		{
-            return ((float)Math.Acos(args[0].ToNumber().Value)).ToNumber();
+        {
+            var arg0 = args[0].ToNumber().Value;
+            if (arg0 < -1)
+                throw new OperandException(
+                    "Argument less than -1");
+            if (arg0 > 1)
+                throw new OperandException(
+                    "Argument greater than 1");
+            return ((float)Math.Acos(arg0)).ToNumber();
 		}
 
         public override string DisplayName

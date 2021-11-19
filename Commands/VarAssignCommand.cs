@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Commands
   name
     The name of the variable.
   expr
-    An expression to evaluate to determine the value of the variable.";
+    An expression to set as the value of the variable.";
 
         public override void Execute(string input, SolusEnvironment env,
             ICommandData data)

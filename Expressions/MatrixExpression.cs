@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class MatrixExpression : TensorExpression
     {
-        private static SolusEngine _engine = new SolusEngine();
+        private static Evaluator _evaluator = new Evaluator();
 
         public static MatrixExpression FromUniform(float value, int rows,
             int columns)
@@ -213,7 +213,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public MatrixExpression Convolution(MatrixExpression convolvee)
         {
             //return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
-            //return AdvancedConvolution(convolvee, SolusEngine.MultiplicationBiMod, SolusEngine.AdditionBiMod);
+            // return AdvancedConvolution(convolvee,
+            //     Evaluator.MultiplicationBiMod, Evaluator.AdditionBiMod);
             throw new NotImplementedException();
         }
 
@@ -432,7 +433,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             //////            }
             //////        }
             //////
-            //////        ret[i, j] = _engine.CleanUp(new FunctionCall(secondOp, group.ToArray()));
+            //////        ret[i, j] = _evaluator.CleanUp(
+            //////            new FunctionCall(secondOp, group.ToArray()));
             //////    }
             //////}
 
@@ -674,7 +676,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override Expression PreliminaryEval(SolusEnvironment env)
+        public override Expression Simplify(SolusEnvironment env)
         {
             int r;
             int c;
@@ -683,7 +685,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (r = 0; r < RowCount; r++)
             for (c = 0; c < ColumnCount; c++)
             {
-                var value = this[r, c].PreliminaryEval(env);
+                var value = this[r, c].Simplify(env);
                 allLiteral &= value is Literal;
                 values[r, c] = value;
             }

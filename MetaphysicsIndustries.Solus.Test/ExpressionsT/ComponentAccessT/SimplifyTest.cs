@@ -28,7 +28,7 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 {
     [TestFixture]
-    public class PreliminaryEvalTest
+    public class SimplifyTest
     {
         static Vector vector(params float[] values) => new Vector(values);
 
@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var indexes = new Expression[] {new VariableAccess("a")};
             var ca = new ComponentAccess(expr, indexes);
             // when
-            var result = ca.PreliminaryEval(empty);
+            var result = ca.Simplify(empty);
             // then
             Assert.IsInstanceOf<ComponentAccess>(result);
             var ca2 = (ComponentAccess) result;
@@ -74,7 +74,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var indexes = new Expression[] {new Literal(1.ToNumber())};
             var ca = new ComponentAccess(expr, indexes);
             // when
-            var result = ca.PreliminaryEval(empty);
+            var result = ca.Simplify(empty);
             // then
             Assert.IsInstanceOf<Literal>(result);
             var lit = (Literal) result;
@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var indexes = varindexes("x");
             var ca = new ComponentAccess(expr, indexes);
             // when
-            var result = ca.PreliminaryEval(empty);
+            var result = ca.Simplify(empty);
             // then
             Assert.IsInstanceOf<ComponentAccess>(result);
             var ca2 = (ComponentAccess) result;
@@ -108,7 +108,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var indexes = litindexes(1);
             var ca = new ComponentAccess(expr, indexes);
             // when
-            var result = ca.PreliminaryEval(empty);
+            var result = ca.Simplify(empty);
             // then
             Assert.IsInstanceOf<VariableAccess>(result);
             var va = (VariableAccess) result;
@@ -123,7 +123,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var indexes = litindexes(1);
             var ca = new ComponentAccess(expr, indexes);
             // when
-            var result = ca.PreliminaryEval(empty);
+            var result = ca.Simplify(empty);
             // then
             Assert.IsInstanceOf<ComponentAccess>(result);
             var ca2 = (ComponentAccess) result;

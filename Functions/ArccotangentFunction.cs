@@ -46,8 +46,9 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
-		{
-            return ((float)Math.Atan2(1, args[0].ToNumber().Value)).ToNumber();
+        {
+            var x = args[0].ToNumber().Value;
+            return ((float)(Math.Atan2(1, x))).ToNumber();
         }
 
         public override string DisplayName

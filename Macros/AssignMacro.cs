@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus
         {
             var args2 = args.ToList();
             var v = ((VariableAccess)args2[0]).VariableName;
-            var value = args2[args2.Count-1].PreliminaryEval(env);
+            var value = args2[args2.Count-1].Simplify(env);
             if (args2.Count > 2)
             {
                 var funcargs = args2.Skip(1).Take(args2.Count - 2).Select(e => ((VariableAccess)e).VariableName);

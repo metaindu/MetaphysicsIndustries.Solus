@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Exponent; }
         }
 
-        //protected override Literal InternalCall(VariableTable env, Literal[] args)
+        //protected override Literal InternalCall(SolusEnvironment env,
+        //    Literal[] args)
         //{
         //    return new Literal(Math.Pow(args[0].Value, args[1].Value));
         //}

@@ -59,30 +59,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
                 return env.GetVariable(var).Eval(env);
             }
-            else
-            {
-                throw new NameException(
-                    "Variable not found in variable table: " +
-                    VariableName);
-            }
-        }
 
-        public override Expression PreliminaryEval(SolusEnvironment env)
-        {
-            if (env.ContainsVariable(VariableName))
-            {
-                //this will cause an infinite recursion if a variable 
-                //is defined in terms of itself or in terms of another 
-                //variable.
-                //we could add (if (env.Variables[Variable] as VariableAccess).Variable == Variable) { throw }
-                //but we can't look for cyclical definitions involving other variables, at least, not in an efficient way, right now.
-                var var = VariableName;
-                return env.GetVariable(var).PreliminaryEval(env);
-            }
-            else
-            {
-                return base.PreliminaryEval(env);
-            }
+            throw new NameException(
+                $"Variable not found: {VariableName}");
         }
 
         public override string ToString()

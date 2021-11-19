@@ -21,34 +21,19 @@
  */
 
 using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
 
-namespace MetaphysicsIndustries.Solus.Test
+namespace MetaphysicsIndustries.Solus.Extra
 {
-    public class MockFunction : Function
+    public static class Complex
     {
-        public MockFunction(Types[] paramTypes, string name = "")
-            : base(paramTypes, name)
+        public static float ComplexMagnitude(float real, float imaginary)
         {
+            return (float)Math.Sqrt(real * real + imaginary * imaginary);
         }
 
-        public Func<IEnumerable<IMathObject>, IMathObject> CallF;
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
+        public static float ComplexPhase(float real, float imaginary)
         {
-            if (CallF == null) throw new NotImplementedException();
-            return CallF(args);
-        }
-
-        public Func<IEnumerable<IMathObject>, IMathObject> GetResultF;
-        public override IMathObject GetResult(
-            IEnumerable<IMathObject> args)
-        {
-            if (GetResultF != null)
-                return GetResultF(args);
-            throw new NotImplementedException();
+            return (float)Math.Atan2(imaginary, real);
         }
     }
 }

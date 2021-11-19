@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Transformers;
 using Mono.Terminal;
 
 namespace solus
@@ -76,10 +77,11 @@ namespace solus
                 {
                     var parser = new SolusParser();
                     var env = new SolusEnvironment();
+                    var eval = new Evaluator();
                     foreach (var exprString in exprStrings)
                     {
                         var expr = parser.GetExpression(exprString, env);
-                        var result = expr.Eval(env);
+                        var result = eval.Eval(expr, env);
                         Console.WriteLine(result);
                     }
                 }
@@ -117,6 +119,8 @@ namespace solus
         {
             var parser = new SolusParser();
             var env = new SolusEnvironment();
+            var varApplier = new ApplyVariablesTransform();
+            var eval = new Evaluator();
 
             var le = new LineEditor("solus");
             string line;
@@ -195,7 +199,8 @@ namespace solus
                     }
                     else if (expr != null)
                     {
-                        var result = expr.PreliminaryEval(env);
+                        var result = eval.Simplify(
+                            varApplier.Transform(expr, env), env);
                         Console.WriteLine(result);
                     }
                 }
@@ -230,7 +235,7 @@ namespace solus
 
         static void ShowVersion()
         {
-            var assembly = Assembly.GetAssembly(typeof(SolusEngine));
+            var assembly = Assembly.GetAssembly(typeof(Evaluator));
             var name = assembly.GetName();
             var version = name.Version;
             var versionString = version.ToString();

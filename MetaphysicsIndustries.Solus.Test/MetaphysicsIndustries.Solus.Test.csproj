@@ -36,11 +36,13 @@
     <Compile Include="EnvironmentT\CloneTest.cs" />
     <Compile Include="EnvironmentT\DerivedTest.cs" />
     <Compile Include="EnvironmentT\EnvironmentTest.cs" />
+    <Compile Include="EvaluatorT\EvalIntervalTest.cs" />
+    <Compile Include="EvaluatorT\EvalTest.cs" />
     <Compile Include="ExpressionsT\ColorExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\AccessComponent2Test.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\AccessComponentTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ComponentAccessTest.cs" />
-    <Compile Include="ExpressionsT\ComponentAccessT\PreliminaryEvalTest.cs" />
+    <Compile Include="ExpressionsT\ComponentAccessT\SimplifyTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ResultTest.cs" />
     <Compile Include="ExpressionsT\DerivativeOfVariableT\ResultTest.cs" />
     <Compile Include="ExpressionsT\FunctionCallT\ResultTest.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="FunctionsT\LessThanOrEqualComparisonOperationT\LessThanOrEqualComparisonOperationTest.cs" />
     <Compile Include="FunctionsT\LoadImageFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\LoadImageFunctionT\LoadImageFunctionTest.cs" />
+    <Compile Include="FunctionsT\LoadImageFunctionT\LoadImageTest.cs" />
     <Compile Include="FunctionsT\Log10FunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\Log10FunctionT\Log10FunctionTest.cs" />
     <Compile Include="FunctionsT\Log2FunctionT\GetResultTest.cs" />
@@ -158,7 +161,6 @@
     <Compile Include="MockMathObjectF.cs" />
     <Compile Include="MockExpression.cs" />
     <Compile Include="MockMathObject.cs" />
-    <Compile Include="SolusEngineT\LoadImageTest.cs" />
     <Compile Include="SolusParserT\SolusParserTest.cs" />
     <Compile Include="ValuesT\IntervalT\ContainsTest.cs" />
     <Compile Include="ValuesT\IntervalT\EmptyDegenerateTest.cs" />

@@ -21,34 +21,37 @@
  */
 
 using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
 
-namespace MetaphysicsIndustries.Solus.Test
+namespace MetaphysicsIndustries.Solus.Extra
 {
-    public class MockFunction : Function
+    public class Polar
     {
-        public MockFunction(Types[] paramTypes, string name = "")
-            : base(paramTypes, name)
+        public static STuple<float, float> ConvertEuclideanToPolar(float x,
+            float y)
         {
+            STuple<float, float> pair = new STuple<float, float>();
+            pair.Value1 = (float)Math.Sqrt(x * x + y * y);
+            pair.Value2 = (float)Math.Atan2(y, x);
+            return pair;
         }
 
-        public Func<IEnumerable<IMathObject>, IMathObject> CallF;
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
+        public static STuple<float, float> ConvertPolarToEuclidean(float r,
+            float theta)
         {
-            if (CallF == null) throw new NotImplementedException();
-            return CallF(args);
+            STuple<float, float> pair = new STuple<float, float>();
+            pair.Value1 = (float)(r * Math.Cos(theta));
+            pair.Value2 = (float)(r * Math.Sin(theta));
+            return pair;
         }
 
-        public Func<IEnumerable<IMathObject>, IMathObject> GetResultF;
-        public override IMathObject GetResult(
-            IEnumerable<IMathObject> args)
+        public static float ConvertDegreesToRadians(float degrees)
         {
-            if (GetResultF != null)
-                return GetResultF(args);
-            throw new NotImplementedException();
+            return (float)(Math.PI * degrees / 180.0);
+        }
+
+        public static float ConvertRadiansToDegrees(float radians)
+        {
+            return (float)(180.0 * radians / Math.PI);
         }
     }
 }

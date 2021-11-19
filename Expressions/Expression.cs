@@ -93,7 +93,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public virtual Expression PreliminaryEval(SolusEnvironment env)
+        public virtual Expression Simplify(SolusEnvironment env)
         {
             return this;
         }

@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FactorialFunctionT
         }
 
         [Test]
-        public void CallWithThreeArgsYieldsSum()
+        public void CallWithThreeArgsThrows()
         {
             // given
             var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber(),

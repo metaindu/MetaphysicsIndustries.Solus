@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class VectorExpression : TensorExpression
     {
-        private static SolusEngine _engine = new SolusEngine();
+        private static Evaluator _evaluator = new Evaluator();
 
         public static VectorExpression FromUniformSequence(float value,
             int length)
@@ -215,7 +215,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         private Expression[] _valuesCache = null;
-        public override Expression PreliminaryEval(SolusEnvironment env)
+        public override Expression Simplify(SolusEnvironment env)
         {
             if (_valuesCache == null ||
                 _valuesCache.Length < _array.Length)
@@ -225,7 +225,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int i;
             for (i = 0; i < _array.Length; i++)
             {
-                var e = _valuesCache[i] = _array[i].PreliminaryEval(env);
+                var e = _valuesCache[i] = _array[i].Simplify(env);
                 allLiterals &= e is Literal;
             }
             if (allLiterals)
