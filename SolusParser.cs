@@ -685,7 +685,7 @@ namespace MetaphysicsIndustries.Solus
             return indexes;
         }
 
-        public VarInterval GetVarIntervalFromVarInterval(Span span,
+        public VarIntervalExpression GetVarIntervalFromVarInterval(Span span,
             SolusEnvironment env)
         {
             if (span.Subspans[0].Node ==
@@ -693,16 +693,14 @@ namespace MetaphysicsIndustries.Solus
             {
                 // var in [lower,upper)
                 var varname = span.Subspans[0].Subspans[0].Value;
-                var interval = GetIntervalFromInterval(span.Subspans[2]);
-                return new VarInterval(varname, interval);
+                var interval = GetIntervalFromInterval(span.Subspans[2], env);
+                return new VarIntervalExpression(varname, interval);
             }
             else
             {
                 // lower <= var <= upper
 
                 var lower = GetExpressionFromExpr(span.Subspans[0], env);
-                var lowerf = (float)Math.Round(
-                    lower.Eval(env).ToNumber().Value);
 
                 var openLower = (span.Subspans[1].Value == "<");
 
@@ -711,27 +709,24 @@ namespace MetaphysicsIndustries.Solus
                 var openUpper = (span.Subspans[3].Value == "<");
 
                 var upper = GetExpressionFromExpr(span.Subspans[4], env);
-                var upperf = (float)Math.Round(
-                    upper.Eval(env).ToNumber().Value);
 
-                return new VarInterval(
+                return new VarIntervalExpression(
                     varname,
-                    new Interval(lowerf, openLower,
-                        upperf, openUpper, false));
+                    new IntervalExpression(lower, openLower,
+                        upper, openUpper));
             }
         }
 
-        public Interval GetIntervalFromInterval(Span span)
+        public IntervalExpression GetIntervalFromInterval(Span span,
+            SolusEnvironment env)
         {
             var openLower = (span.Subspans[0].Value == "(");
-            var lower =
-                GetLiteralFromNumber(span.Subspans[1]).Value.ToNumber();
-            var upper =
-                GetLiteralFromNumber(span.Subspans[3]).Value.ToNumber();
+            var lower = GetExpressionFromExpr(span.Subspans[1], env);
+            var upper = GetExpressionFromExpr(span.Subspans[3], env);
             var openUpper = (span.Subspans[4].Value == ")");
 
-            return new Interval(lower.Value, openLower,
-                upper.Value, openUpper, false);
+            return new IntervalExpression(
+                lower, openLower, upper, openUpper);
         }
     }
 }

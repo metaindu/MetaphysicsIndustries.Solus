@@ -76,6 +76,7 @@
     <Compile Include="Expressions\RandomExpression.cs" />
     <Compile Include="Expressions\MatrixExpression.cs" />
     <Compile Include="Expressions\TensorExpression.cs" />
+    <Compile Include="Expressions\VarIntervalExpression.cs" />
     <Compile Include="Expressions\VectorExpression.cs" />
     <Compile Include="Expressions\VariableAccess.cs" />
     <Compile Include="Extra\Algebra.cs" />
