@@ -42,6 +42,22 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
         }
 
         [Test]
+        public void CreateSetsValues2()
+        {
+            // given
+            var varname = "a";
+            // when
+            var result = new VarInterval(varname, 1.1f, 3.1f);
+            // then
+            Assert.AreEqual("a", result.Variable);
+            Assert.AreEqual(1.1f, result.Interval.LowerBound);
+            Assert.IsFalse(result.Interval.OpenLowerBound);
+            Assert.AreEqual(3.1f, result.Interval.UpperBound);
+            Assert.IsFalse(result.Interval.OpenUpperBound);
+            Assert.IsFalse(result.Interval.IsIntegerInterval);
+        }
+
+        [Test]
         public void ToString1()
         {
             // given
