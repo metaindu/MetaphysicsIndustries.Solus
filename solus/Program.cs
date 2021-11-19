@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Transformers;
 using Mono.Terminal;
 
 namespace solus
@@ -118,6 +119,7 @@ namespace solus
         {
             var parser = new SolusParser();
             var env = new SolusEnvironment();
+            var varApplier = new ApplyVariablesTransform();
 
             var le = new LineEditor("solus");
             string line;
@@ -196,7 +198,8 @@ namespace solus
                     }
                     else if (expr != null)
                     {
-                        var result = expr.Simplify(env);
+                        var expr2 = varApplier.Transform(expr, env);
+                        var result = expr2.Simplify(env);
                         Console.WriteLine(result);
                     }
                 }

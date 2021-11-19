@@ -153,6 +153,7 @@
     <Compile Include="Macros\SubstMacro.cs" />
     <Compile Include="MathObjectHelper.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="Transformers\ApplyVariablesTransform.cs" />
     <Compile Include="Transformers\CleanUpTransformer.cs" />
     <Compile Include="Transformers\CloneTransformer.cs" />
     <Compile Include="Transformers\DerivativeTransformer.cs" />
