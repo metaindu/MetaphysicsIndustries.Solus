@@ -120,6 +120,7 @@ namespace solus
             var parser = new SolusParser();
             var env = new SolusEnvironment();
             var varApplier = new ApplyVariablesTransform();
+            var eval = new Evaluator();
 
             var le = new LineEditor("solus");
             string line;
@@ -199,7 +200,7 @@ namespace solus
                     else if (expr != null)
                     {
                         var expr2 = varApplier.Transform(expr, env);
-                        var result = expr2.Simplify(env);
+                        var result = eval.Simplify(expr2, env);
                         Console.WriteLine(result);
                     }
                 }
