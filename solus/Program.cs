@@ -199,8 +199,8 @@ namespace solus
                     }
                     else if (expr != null)
                     {
-                        var expr2 = varApplier.Transform(expr, env);
-                        var result = eval.Simplify(expr2, env);
+                        var result = eval.Simplify(
+                            varApplier.Transform(expr, env), env);
                         Console.WriteLine(result);
                     }
                 }
