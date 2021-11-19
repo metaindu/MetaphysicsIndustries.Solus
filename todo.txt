@@ -1,20 +1,3 @@
-bug: when assigning a variable, any variables in its expression are
-        automatically substituted if they already have values assigned. So:
-    >>> x := y + z
-    >>> y := a + b
-    >>> w := y + z
-    >>> vars
-    x = y + z
-    w = a + b + z
-    y = a + b
-    At this point, w is no longer defined in terms of y at all. If we delete y,
-        w will be unchanged. It's relation to y is completely removed, simply
-        because y was already defined when w was defined. That is not true for
-        x, which remains exactly how it was defined. This discrepancy would
-        likely be a surprise to the user.
-    Basically, this is caused by calling Simplify on inputs. Probably we
-        should call Simplify and just pass it an empty environment. That way,
-        it wouldn't automatically resolve variable references.
 should Expression.Clone be shallow or deep?
     or should it be removed altogether?
 distinguish between tensors (vectors, matrices) and simple arrays
