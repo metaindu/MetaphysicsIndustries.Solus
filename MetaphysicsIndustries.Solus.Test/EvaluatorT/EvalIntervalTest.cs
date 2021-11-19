@@ -185,5 +185,29 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             Assert.AreEqual(180, values[1, 2, 3]);
             Assert.AreEqual(198, values[1, 2, 4]);
         }
+
+        [Test]
+        [Ignore("too slow")]
+        public void PlotSomething()
+        {
+            // given
+            var parser = new SolusParser();
+            var env = new SolusEnvironment();
+            var expr = parser.GetExpression("x*e^(-x*x-y*y)", env);
+            var interval1 = new VarInterval("x", -2, 2);
+            var interval2 = new VarInterval("y", -2, 2);
+            float[,] values = null;
+            var eval = new Evaluator();
+            env.SetVariable("e", new Literal(2.718281828f));
+            // when
+            int startTime = System.Environment.TickCount;
+            eval.EvalInterval(expr, env,
+                interval1, 4000,
+                interval2, 4000,
+                ref values);
+            int endTime = System.Environment.TickCount;
+            // then
+            Assert.LessOrEqual(endTime - startTime, 1);
+        }
     }
 }
