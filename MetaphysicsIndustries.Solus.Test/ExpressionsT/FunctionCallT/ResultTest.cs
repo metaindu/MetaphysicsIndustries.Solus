@@ -45,6 +45,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(mmo.IsMatrix(env));
             Assert.AreEqual(0, mmo.GetTensorRank(env));
             Assert.IsFalse(mmo.IsString(env));
+            Assert.IsFalse(mmo.IsInterval(env));
+            Assert.IsFalse(mmo.IsFunction(env));
             // when
             var result = expr.Result;
             // then
@@ -53,6 +55,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(result.IsMatrix(env));
             Assert.AreEqual(0, result.GetTensorRank(env));
             Assert.IsFalse(result.IsString(env));
+            Assert.IsFalse(result.IsInterval(env));
+            Assert.IsFalse(result.IsFunction(env));
         }
 
         [Test]
@@ -74,6 +78,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.AreEqual(3, mmo.GetDimension(env, 0));
             Assert.AreEqual(4, mmo.GetDimension(env, 1));
             Assert.IsFalse(mmo.IsString(env));
+            Assert.IsFalse(mmo.IsInterval(env));
+            Assert.IsFalse(mmo.IsFunction(env));
             // when
             var result = expr.Result;
             // then
@@ -84,6 +90,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.AreEqual(3, result.GetDimension(env, 0));
             Assert.AreEqual(4, result.GetDimension(env, 1));
             Assert.IsFalse(result.IsString(env));
+            Assert.IsFalse(result.IsInterval(env));
+            Assert.IsFalse(result.IsFunction(env));
         }
     }
 }

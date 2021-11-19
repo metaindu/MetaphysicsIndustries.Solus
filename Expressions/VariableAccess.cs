@@ -144,6 +144,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return varexpr.Result.IsInterval(env);
             }
 
+            public bool? IsFunction(SolusEnvironment env)
+            {
+                if (!env.ContainsVariable(_va.VariableName)) return null;
+                var varexpr = env.GetVariable(_va.VariableName);
+                return false;
+            }
+
             public bool IsConcrete => false;
         }
     }

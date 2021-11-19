@@ -68,6 +68,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public int[] GetDimensions(SolusEnvironment env) => new[] {Length};
         public int? GetVectorLength(SolusEnvironment env) => Length;
         public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
 
         public bool IsConcrete => true;
 

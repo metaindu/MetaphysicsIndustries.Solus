@@ -108,6 +108,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                 GetDimension(env, 0);
 
             public bool? IsInterval(SolusEnvironment env) => false;
+            public bool? IsFunction(SolusEnvironment env) => false;
 
             public bool IsConcrete => false;
         }
