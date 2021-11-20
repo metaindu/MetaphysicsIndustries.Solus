@@ -54,6 +54,11 @@ namespace MetaphysicsIndustries.Solus.Values
             IsIntegerInterval = isIntegerInterval;
         }
 
+        public Interval(float lower, float upper)
+            : this(lower, false, upper, false, false)
+        {
+        }
+
         public readonly float LowerBound;
         public readonly float UpperBound;
         public float Length => UpperBound - LowerBound;
