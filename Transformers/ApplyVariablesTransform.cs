@@ -134,7 +134,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
         {
             var expr = Transform(ca.Expr, env);
             int i;
-            var allSame = expr == ca;
+            var allSame = expr == ca.Expr;
             var transformedIndexes = new Expression[ca.Indexes.Count];
             for (i = 0; i < ca.Indexes.Count; i++)
             {
