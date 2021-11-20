@@ -44,7 +44,8 @@ namespace MetaphysicsIndustries.Solus.Commands
         {
             _commands = commandSet;
         }
-        private static CommandSet _commands;
+
+        private static CommandSet _commands = new CommandSet();
 
         public override string Name => "help";
 

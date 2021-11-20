@@ -32,6 +32,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="CommandSetT\CommandSetTest.cs" />
+    <Compile Include="CommandsT\HelpCommandT\ConstructListTextTest.cs" />
+    <Compile Include="CommandsT\HelpCommandT\ConstructTextTest.cs" />
     <Compile Include="EnvironmentT\ChildTest.cs" />
     <Compile Include="EnvironmentT\CloneTest.cs" />
     <Compile Include="EnvironmentT\DerivedTest.cs" />
