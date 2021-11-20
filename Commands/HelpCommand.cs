@@ -129,6 +129,21 @@ List the available topics:
             var line = "";
             var newline = false;
 
+            var functions = new List<string>(env.GetFunctionNames());
+            var variables = new List<string>();
+
+            foreach (var name in env.GetVariableNames())
+            {
+                var v = env.GetVariable(name);
+                if (v.IsIsFunction(env))
+                    functions.Add(name);
+                else
+                    variables.Add(name);
+            }
+
+            functions.Sort();
+            variables.Sort();
+
             void AddItem(string item)
             {
                 item = item + " ";
@@ -157,11 +172,10 @@ List the available topics:
             if (newline) sb.AppendLine();
             newline = false;
 
-            if (env.CountFunctions() > 0)
+            if (functions.Count > 0)
             {
                 sb.AppendLine("Functions:");
                 line = "";
-                var functions = env.GetFunctionNames().ToList();
                 functions.Sort();
                 foreach (var f in functions)
                     AddItem(f);
@@ -189,12 +203,10 @@ List the available topics:
             if (newline) sb.AppendLine();
             newline = false;
 
-            if (env.CountVariables() > 0)
+            if (variables.Count > 0)
             {
                 sb.AppendLine("Variables:");
                 line = "";
-                var variables = env.GetVariableNames().ToList();
-                variables.Sort();
                 foreach (var v in variables)
                     AddItem(v);
                 if (line.Length > 0)
