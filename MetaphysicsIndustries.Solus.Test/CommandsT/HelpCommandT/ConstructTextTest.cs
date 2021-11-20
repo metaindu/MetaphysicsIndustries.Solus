@@ -12,7 +12,7 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
         {
             // given
             var env = new SolusEnvironment();
-            var f = new MockFunction(new Types[] { Types.Scalar }, "f");
+            var f = new MockFunction(new[] { Types.Scalar }, "f");
             f.DocStringV = "asdf";
             env.AddFunction(f);
             // prcondition
