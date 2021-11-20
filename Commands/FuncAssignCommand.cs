@@ -51,9 +51,7 @@ namespace MetaphysicsIndustries.Solus.Commands
             ICommandData data)
         {
             var func = ((FuncAssignCommandData) data).Func;
-            if (env.ContainsFunction(func.DisplayName))
-                env.RemoveFunction(func.DisplayName);
-            env.AddFunction(func);
+            env.SetVariable(func.DisplayName, func);
 
             var varrefs = func.Argnames.Select(x => new VariableAccess(x));
             var fcall = new FunctionCall(func, varrefs);
