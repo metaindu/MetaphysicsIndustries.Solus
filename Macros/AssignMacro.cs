@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 var funcargs = args2.Skip(1).Take(args2.Count - 2).Select(e => ((VariableAccess)e).VariableName);
                 var f = new UserDefinedFunction(v, funcargs.ToArray(), value);
-                env.SetFunction(v, f);
+                env.SetVariable(v, f);
             }
             else
             {
