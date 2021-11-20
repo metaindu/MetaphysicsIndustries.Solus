@@ -74,10 +74,10 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var result = new SolusEnvironment(useDefaults: true);
             // then
-            Assert.AreEqual(0, result.CountVariables());
+            Assert.AreEqual(25, result.CountVariables());
 
-            Assert.AreEqual(25, result.CountFunctions());
-            var functions = result.GetFunctionNames().ToList();
+            Assert.AreEqual(0, result.CountFunctions());
+            var functions = result.GetVariableNames().ToList();
             Assert.Contains("sin", functions);
             Assert.Contains("cos", functions);
             Assert.Contains("tan", functions);
