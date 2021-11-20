@@ -176,13 +176,15 @@ namespace MetaphysicsIndustries.Solus
                 Select(sub => sub.Value).
                 ToArray();
 
-            var env2 = env.Clone();
+            var env2 = env.CreateChildEnvironment();
 
             // create the function, with no expr
             var func = new UserDefinedFunction(funcname, args, null);
-            if (env2.ContainsFunction(funcname))
-                env2.RemoveFunction(funcname);
-            env2.AddFunction(func);
+
+            // replace any other function or variable by the same name
+            env2.RemoveVariable(funcname);
+            env2.RemoveFunction(funcname);
+            env2.SetVariable(funcname, func);
 
             // read the expr. this order of things allows for recursion
             var expr = GetExpressionFromExpr(span.Subspans.Last(), env2);
