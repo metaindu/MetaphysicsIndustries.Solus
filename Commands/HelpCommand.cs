@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {
@@ -98,6 +99,18 @@ List the available topics:
                 if (!string.IsNullOrEmpty(m.DocString))
                     return m.DocString;
                 return "This macro does not provide any information.";
+            }
+
+            if (env.ContainsVariable(topic))
+            {
+                var v = env.GetVariable(topic);
+                if (v.IsIsFunction(env))
+                {
+                    var f = (Function)v;
+                    if (!string.IsNullOrEmpty(f.DocString))
+                        return f.DocString;
+                    return "This function does not provide any information.";
+                }
             }
 
             if (_helpLookups.ContainsKey(topic))
