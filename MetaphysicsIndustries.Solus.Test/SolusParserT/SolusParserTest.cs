@@ -457,6 +457,25 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.AreEqual(2, literal.Value.ToFloat());
         }
 
+        [Test]
+        public void TestFunctionAsVariable()
+        {
+            // given
+            var parser = new SolusParser();
+            var f = SineFunction.Value;
+            var env = new SolusEnvironment();
+            env.SetVariable("f", f);
+            // when
+            var expr = parser.GetExpression("f(0)", env);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var fc = (FunctionCall)expr;
+            Assert.AreSame(f, fc.Function);
+            Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
+            Assert.AreEqual(0,
+                ((Literal)fc.Arguments[0]).Value.ToNumber().Value);
+        }
+
         public class CustomAsdfFunction : Function
         {
             public CustomAsdfFunction()

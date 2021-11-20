@@ -426,7 +426,13 @@ namespace MetaphysicsIndustries.Solus
             // TODO: don't do name lookup while parsing. use a VariableAccess
             // instead
 
-            if (env.ContainsFunction(name))
+            if (env.ContainsVariable(name) &&
+                env.GetVariable(name).IsIsFunction(env))
+            {
+                var f = (Function)env.GetVariable(name);
+                return new FunctionCall(f, args);
+            }
+            else if (env.ContainsFunction(name))
             {
                 return new FunctionCall(env.GetFunction(name), args);
             }
