@@ -23,7 +23,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Commands;
-using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
 
@@ -92,8 +91,8 @@ namespace MetaphysicsIndustries.Solus
 
         protected readonly SolusEnvironment Parent;
 
-        protected readonly Dictionary<string, Expression> Variables =
-            new Dictionary<string, Expression>();
+        protected readonly Dictionary<string, IMathObject> Variables =
+            new Dictionary<string, IMathObject>();
 
         protected readonly HashSet<string> RemovedVariables =
             new HashSet<string>();
@@ -116,7 +115,7 @@ namespace MetaphysicsIndustries.Solus
         protected readonly HashSet<string> RemovedCommands =
             new HashSet<string>();
 
-        public Expression GetVariable(string name)
+        public IMathObject GetVariable(string name)
         {
             if (RemovedVariables.Contains(name))
                 return null;
@@ -127,7 +126,7 @@ namespace MetaphysicsIndustries.Solus
             return null;
         }
 
-        public void SetVariable(string name, Expression value)
+        public void SetVariable(string name, IMathObject value)
         {
             RemovedVariables.Remove(name);
             Variables[name] = value;

@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus
         {
             var v = ((VariableAccess)args.First()).VariableName;
 
-            Expression retval = new Literal(0);
+            IMathObject retval = new Literal(0);
             if (env.ContainsVariable(v))
             {
                 retval = env.GetVariable(v);
@@ -53,7 +53,9 @@ namespace MetaphysicsIndustries.Solus
                 env.RemoveFunction(v);
             }
 
-            return retval;
+            if (retval.IsIsExpression(env))
+                return (Expression)retval;
+            return new Literal(retval);
         }
 
         public override string DocString

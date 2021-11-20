@@ -80,7 +80,10 @@ namespace MetaphysicsIndustries.Solus.Transformers
             if (env.ContainsVariable(va.VariableName))
             {
                 // TODO: check for cycles
-                return Transform(env.GetVariable(va.VariableName), env);
+                var target = env.GetVariable(va.VariableName);
+                if (target.IsIsExpression(env))
+                    return Transform((Expression)target, env);
+                return new Literal(target);
             }
 
             return va;

@@ -129,8 +129,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             {
                 foreach (var var in compiled.CompiledVars)
                 {
-                    bakedEnv[var] =
-                        env.GetVariable(var).Eval(env).ToNumber().Value;
+                    var target = env.GetVariable(var);
+                    if (target.IsIsExpression(env))
+                        target = ((Expression)target).Eval(env);
+                    bakedEnv[var] = target.ToNumber().Value;
                 }
             }
             else

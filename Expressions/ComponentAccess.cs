@@ -276,23 +276,5 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public bool? IsExpression(SolusEnvironment env) => null;
             public bool IsConcrete => false;
         }
-
-        private static IMathObject InterrogateIndexValue(Expression expr,
-            SolusEnvironment env)
-        {
-            if (expr is Literal lit) return lit.Value;
-            if (expr is VariableAccess va)
-            {
-                if (!env.ContainsVariable(va.VariableName))
-                    throw new NameException(
-                        $"Variable not found: {va.VariableName}");
-                var expr2 = env.GetVariable(va.VariableName);
-                // TODO: don't get stuck in an infinite loop, e.g. a:=b, b:=a
-                return InterrogateIndexValue(expr2, env);
-            }
-            // TODO: other expression types
-
-            return null;
-        }
     }
 }

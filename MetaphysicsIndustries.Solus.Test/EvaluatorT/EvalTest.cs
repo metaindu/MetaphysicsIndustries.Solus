@@ -317,7 +317,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
         }
 
         [Test]
-        public void VariableAccessGetsValueFromVariable()
+        public void VariableAccessGetsLiteralFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -336,6 +336,170 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
         }
 
         [Test]
+        public void VariableAccessGetsFunctionCallFromEnv()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var expr2 = new FunctionCall(CosineFunction.Value,
+                new Literal(0));
+            var env = new SolusEnvironment();
+            env.SetVariable("a", expr2);
+            var eval = new Evaluator();
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsScalar(null));
+            Assert.IsInstanceOf<Number>(result0);
+            var result = result0.ToNumber();
+            Assert.AreEqual(1, result.Value);
+        }
+
+        [Test]
+        public void VariableAccessGetsNumberFromEnv()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var value = 3.ToNumber();
+            var env = new SolusEnvironment();
+            env.SetVariable("a", value);
+            var eval = new Evaluator();
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsScalar(null));
+            Assert.IsInstanceOf<Number>(result0);
+            var result = result0.ToNumber();
+            Assert.AreEqual(3, result.Value);
+        }
+
+        [Test]
+        public void VariableAccessGetsVectorFromEnv()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var value = new Vector(new float[] { 1, 2, 3 });
+            var env = new SolusEnvironment();
+            env.SetVariable("a", value);
+            var eval = new Evaluator();
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsVector(null));
+            Assert.IsInstanceOf<Vector>(result0);
+            var result = (Vector)result0;
+            Assert.AreEqual(3, result.Length);
+            Assert.AreEqual(1, result[0].ToNumber().Value);
+            Assert.AreEqual(2, result[1].ToNumber().Value);
+            Assert.AreEqual(3, result[2].ToNumber().Value);
+        }
+
+        [Test]
+        public void VariableAccessGetsMatrixFromEnv()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var value = new Matrix(new float[,]
+            {
+                { 1, 2 },
+                { 3, 4 }
+            });
+            var env = new SolusEnvironment();
+            env.SetVariable("a", value);
+            var eval = new Evaluator();
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsMatrix(null));
+            Assert.IsInstanceOf<Matrix>(result0);
+            var result = (Matrix)result0;
+            Assert.AreEqual(2, result.RowCount);
+            Assert.AreEqual(2, result.ColumnCount);
+            Assert.AreEqual(1, result[0, 0].ToNumber().Value);
+            Assert.AreEqual(2, result[0, 1].ToNumber().Value);
+            Assert.AreEqual(3, result[1, 0].ToNumber().Value);
+            Assert.AreEqual(4, result[1, 1].ToNumber().Value);
+        }
+
+        [Test]
+        public void VariableAccessGetsStringFromEnv()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var value = "abc".ToStringValue();
+            var env = new SolusEnvironment();
+            env.SetVariable("a", value);
+            var eval = new Evaluator();
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsString(null));
+            Assert.IsInstanceOf<StringValue>(result0);
+            var result = (StringValue)result0;
+            Assert.AreEqual("abc", result.Value);
+        }
+
+        [Test]
+        public void VariableAccessGetsIntervalFromEnv()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var value = new Interval(1.1f, 3.5f);
+            var env = new SolusEnvironment();
+            env.SetVariable("a", value);
+            var eval = new Evaluator();
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsInterval(null));
+            Assert.IsInstanceOf<Interval>(result0);
+            var result = (Interval)result0;
+            Assert.AreEqual(1.1f, result.LowerBound);
+            Assert.AreEqual(3.5f, result.UpperBound);
+        }
+
+        [Test]
+        public void VariableAccessGetsFunctionFromEnv()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var f = CosineFunction.Value;
+            var env = new SolusEnvironment();
+            env.SetVariable("a", f);
+            var eval = new Evaluator();
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsFunction(null));
+            Assert.IsInstanceOf<CosineFunction>(result0);
+            Assert.AreSame(CosineFunction.Value, result0);
+        }
+
+        [Test]
+        public void VariableAccessGetsExpressionInsideLiteralFromEnv()
+        {
+            var expr = new VariableAccess("a");
+            var expr2 = ColorExpression.Gray;
+            var expr3 = new Literal(expr2);
+            var env = new SolusEnvironment();
+            env.SetVariable("a", expr3);
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, env);
+            // then
+            Assert.IsTrue(result.IsConcrete);
+            Assert.IsTrue(result.IsIsExpression(null));
+            Assert.IsInstanceOf<ColorExpression>(result);
+            Assert.AreSame(expr2, result);
+        }
+
+        [Test]
         public void VariableAccessMissingVariableThrows()
         {
             // given
@@ -348,7 +512,6 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             // and
             Assert.AreEqual("Variable not found: a", ex.Message);
         }
-
         //// Functions
         // AbsoluteValueFunction
 

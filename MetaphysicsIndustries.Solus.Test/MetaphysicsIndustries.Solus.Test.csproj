@@ -53,6 +53,7 @@
     <Compile Include="ExpressionsT\MatrixExpressionT\EvalTest.cs" />
     <Compile Include="ExpressionsT\MatrixExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\RandomExpressionT\ResultTest.cs" />
+    <Compile Include="ExpressionsT\VariableAccessT\EvalTest.cs" />
     <Compile Include="ExpressionsT\VariableAccessT\ResultTest.cs" />
     <Compile Include="ExpressionsT\VectorExpressionT\EvalTest.cs" />
     <Compile Include="ExpressionsT\VectorExpressionT\ResultTest.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="MockExpression.cs" />
     <Compile Include="MockMathObject.cs" />
     <Compile Include="SolusParserT\SolusParserTest.cs" />
+    <Compile Include="TransformersT\ApplyVariablesTransformT\ApplyVariablesTransformTest.cs" />
     <Compile Include="ValuesT\IntervalT\ContainsTest.cs" />
     <Compile Include="ValuesT\IntervalT\EmptyDegenerateTest.cs" />
     <Compile Include="ValuesT\IntervalT\EqualsTest.cs" />
