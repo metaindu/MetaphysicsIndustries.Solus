@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
@@ -1053,6 +1054,61 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
             Assert.AreEqual("b",
                 ((VariableAccess)fc.Arguments[1]).VariableName);
+        }
+
+        [Test]
+        public void ParseUserDefinedFunction()
+        {
+            // given
+            const string input = "f(x) := x";
+            var parser = new SolusParser();
+            var cs = new CommandSet();
+            cs.AddCommand(DeleteCommand.Value);
+            cs.AddCommand(FuncAssignCommand.Value);
+            cs.AddCommand(HelpCommand.Value);
+            cs.AddCommand(VarAssignCommand.Value);
+            cs.AddCommand(VarsCommand.Value);
+            // when
+            var result = parser.GetCommands(input, null, cs);
+            // then
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Length);
+            Assert.IsInstanceOf<FuncAssignCommandData>(result[0]);
+            var udf = ((FuncAssignCommandData)result[0]).Func;
+            Assert.AreEqual("f", udf.Name);
+            Assert.AreEqual(1, udf.Argnames.Length);
+            Assert.AreEqual("x", udf.Argnames[0]);
+            Assert.IsInstanceOf<VariableAccess>(udf.Expression);
+            var va = (VariableAccess)udf.Expression;
+            Assert.AreEqual("x", va.VariableName);
+        }
+
+        [Test]
+        [Ignore("Recursive is broken")]
+        public void ParseRecursiveUserDefinedFunction()
+        {
+            // given
+            const string input = "f(x) := if(x=0,0,1+f(floor(x/10)))";
+            var parser = new SolusParser();
+            var cs = new CommandSet();
+            cs.AddCommand(DeleteCommand.Value);
+            cs.AddCommand(FuncAssignCommand.Value);
+            cs.AddCommand(HelpCommand.Value);
+            cs.AddCommand(VarAssignCommand.Value);
+            cs.AddCommand(VarsCommand.Value);
+            // when
+            var result = parser.GetCommands(input, null, cs);
+            // then
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Length);
+            Assert.IsInstanceOf<FuncAssignCommandData>(result[0]);
+            var udf = ((FuncAssignCommandData)result[0]).Func;
+            Assert.AreEqual("f", udf.Name);
+            Assert.AreEqual(1, udf.Argnames.Length);
+            Assert.AreEqual("x", udf.Argnames[0]);
+            // Assert.IsInstanceOf<VariableAccess>(udf.Expression);
+            // var va = (VariableAccess)udf.Expression;
+            // Assert.AreEqual("x", va.VariableName);
         }
     }
 }
