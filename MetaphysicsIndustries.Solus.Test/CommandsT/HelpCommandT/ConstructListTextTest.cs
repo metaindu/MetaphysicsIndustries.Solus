@@ -65,7 +65,7 @@ Additional topics:
             var env = new SolusEnvironment();
             var f = new MockFunction(new[] { Types.Scalar }, "f");
             f.DocStringV = "asdf";
-            env.AddFunction(f);
+            env.SetVariable(f.DisplayName, f);
             var cs = new CommandSet();
             cs.AddCommand(DeleteCommand.Value);
             cs.AddCommand(FuncAssignCommand.Value);

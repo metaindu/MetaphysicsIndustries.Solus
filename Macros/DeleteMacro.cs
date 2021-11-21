@@ -48,10 +48,6 @@ namespace MetaphysicsIndustries.Solus
                 retval = env.GetVariable(v);
                 env.RemoveVariable(v);
             }
-            else if (env.ContainsFunction(v))
-            {
-                env.RemoveFunction(v);
-            }
 
             if (retval.IsIsExpression(env))
                 return (Expression)retval;

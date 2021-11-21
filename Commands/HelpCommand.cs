@@ -85,14 +85,6 @@ List the available topics:
                 return "This command does not provide any information.";
             }
 
-            if (env.ContainsFunction(topic))
-            {
-                var f = env.GetFunction(topic);
-                if (!string.IsNullOrEmpty(f.DocString))
-                    return f.DocString;
-                return "This function does not provide any information.";
-            }
-
             if (env.ContainsMacro(topic))
             {
                 var m = env.GetMacro(topic);
@@ -129,7 +121,7 @@ List the available topics:
             var line = "";
             var newline = false;
 
-            var functions = new List<string>(env.GetFunctionNames());
+            var functions = new List<string>();
             var variables = new List<string>();
 
             foreach (var name in env.GetVariableNames())

@@ -97,12 +97,6 @@ namespace MetaphysicsIndustries.Solus
         protected readonly HashSet<string> RemovedVariables =
             new HashSet<string>();
 
-        protected readonly Dictionary<string, Function> Functions =
-            new Dictionary<string, Function>();
-
-        protected readonly HashSet<string> RemovedFunctions =
-            new HashSet<string>();
-
         protected readonly Dictionary<string, Macro> Macros =
             new Dictionary<string, Macro>();
 
@@ -163,60 +157,6 @@ namespace MetaphysicsIndustries.Solus
             bool isRemoved(string name) => RemovedVariables.Contains(name);
             __GetVariableNames_cache.RemoveWhere(isRemoved);
             return __GetVariableNames_cache;
-        }
-
-        public void AddFunction(Function func) =>
-            SetFunction(func.DisplayName, func);
-
-        public Function GetFunction(string name)
-        {
-            if (RemovedFunctions.Contains(name))
-                return null;
-            if (Functions.ContainsKey(name))
-                return Functions[name];
-            if (Parent != null)
-                return Parent.GetFunction(name);
-            return null;
-        }
-
-        public void SetFunction(string name, Function value)
-        {
-            RemovedFunctions.Remove(name);
-            Functions[name] = value;
-        }
-
-        public bool ContainsFunction(string name)
-        {
-            if (RemovedFunctions.Contains(name)) return false;
-            if (Functions.ContainsKey(name)) return true;
-            if (Parent != null) return Parent.ContainsFunction(name);
-            return false;
-        }
-
-        public void RemoveFunction(string name)
-        {
-            Functions.Remove(name);
-            RemovedFunctions.Add(name);
-        }
-
-        public int CountFunctions()
-        {
-            return GetFunctionNames().Count();
-        }
-
-        private HashSet<string> __GetFunctionNames_cache;
-
-        public IEnumerable<string> GetFunctionNames()
-        {
-            if (__GetFunctionNames_cache == null)
-                __GetFunctionNames_cache = new HashSet<string>();
-            __GetFunctionNames_cache.Clear();
-            __GetFunctionNames_cache.AddRange(Functions.Keys);
-            if (Parent != null)
-                __GetFunctionNames_cache.AddRange(Parent.GetFunctionNames());
-            bool isRemoved(string name) => RemovedFunctions.Contains(name);
-            __GetFunctionNames_cache.RemoveWhere(isRemoved);
-            return __GetFunctionNames_cache;
         }
 
         public void AddMacro(Macro macro) =>
@@ -290,8 +230,6 @@ namespace MetaphysicsIndustries.Solus
         {
             foreach (var name in GetVariableNames())
                 clone.SetVariable(name, GetVariable(name));
-            foreach (var name in GetFunctionNames())
-                clone.SetFunction(name, GetFunction(name));
             foreach (var name in GetMacroNames())
                 clone.SetMacro(name, GetMacro(name));
         }

@@ -183,7 +183,6 @@ namespace MetaphysicsIndustries.Solus
 
             // replace any other function or variable by the same name
             env2.RemoveVariable(funcname);
-            env2.RemoveFunction(funcname);
             env2.SetVariable(funcname, func);
 
             // read the expr. this order of things allows for recursion
@@ -433,10 +432,6 @@ namespace MetaphysicsIndustries.Solus
             {
                 var f = (Function)env.GetVariable(name);
                 return new FunctionCall(f, args);
-            }
-            else if (env.ContainsFunction(name))
-            {
-                return new FunctionCall(env.GetFunction(name), args);
             }
             else if (env.ContainsMacro(name))
             {

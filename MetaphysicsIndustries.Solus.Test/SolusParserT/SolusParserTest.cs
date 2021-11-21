@@ -504,7 +504,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var parser = new SolusParser();
             var func = new CustomAsdfFunction();
             SolusEnvironment env = new SolusEnvironment();
-            env.AddFunction(func);
+            env.SetVariable(func.DisplayName, func);
 
 
             var expr = parser.GetExpression("asdf(1, 2)", env: env, cleanup: false);
@@ -551,7 +551,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var parser = new SolusParser();
             var func = new CountArgsFunction();
             var env = new SolusEnvironment();
-            env.AddFunction(func);
+            env.SetVariable(func.DisplayName, func);
             // when
             var expr = parser.GetExpression("count()", env: env,
                 cleanup: false);
@@ -568,7 +568,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var parser = new SolusParser();
             var func = new CountArgsFunction();
             var env = new SolusEnvironment();
-            env.AddFunction(func);
+            env.SetVariable(func.DisplayName, func);
             // when
             var expr = parser.GetExpression("count(1)", env: env,
                 cleanup: false);
@@ -588,7 +588,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var parser = new SolusParser();
             var func = new CountArgsFunction();
             var env = new SolusEnvironment();
-            env.AddFunction(func);
+            env.SetVariable(func.DisplayName, func);
             // when
             var expr = parser.GetExpression("count(1, 2)", env: env,
                 cleanup: false);
@@ -611,7 +611,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var parser = new SolusParser();
             var func = new CountArgsFunction();
             var env = new SolusEnvironment();
-            env.AddFunction(func);
+            env.SetVariable(func.DisplayName, func);
             // when
             var expr = parser.GetExpression("count(1, 2, 3)", env: env,
                 cleanup: false);
@@ -637,7 +637,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var parser = new SolusParser();
             var func = new CountArgsFunction();
             var env = new SolusEnvironment();
-            env.AddFunction(func);
+            env.SetVariable(func.DisplayName, func);
             // when
             var expr = parser.GetExpression("count(1, 2, 3, 4)", env: env,
                 cleanup: false);

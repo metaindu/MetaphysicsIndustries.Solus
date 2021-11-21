@@ -36,8 +36,8 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
             var env = new SolusEnvironment();
             var f = new MockFunction(new[] { Types.Scalar }, "f");
             f.DocStringV = "asdf";
-            env.AddFunction(f);
-            // prcondition
+            env.SetVariable(f.DisplayName, f);
+            // precondition
             Assert.AreEqual("asdf", f.DocString);
             // when
             var result = HelpCommand.Value.ConstructText(env, "f");

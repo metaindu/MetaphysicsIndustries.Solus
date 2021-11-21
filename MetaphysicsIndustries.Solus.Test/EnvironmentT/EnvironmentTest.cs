@@ -46,7 +46,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var result = new SolusEnvironment(useDefaults: false);
             // then
             Assert.AreEqual(0, result.CountVariables());
-            Assert.AreEqual(0, result.CountFunctions());
             Assert.AreEqual(0, result.CountMacros());
         }
 
@@ -57,14 +56,12 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var env = new SolusEnvironment(useDefaults: false);
             // precondition
             Assert.AreEqual(0, env.CountVariables());
-            Assert.AreEqual(0, env.CountFunctions());
             Assert.AreEqual(0, env.CountMacros());
             // when
             env.SetVariable("a", new Literal(1));
             // then
             Assert.AreEqual(1, env.CountVariables());
             Assert.Contains("a", env.GetVariableNames().ToList());
-            Assert.AreEqual(0, env.CountFunctions());
             Assert.AreEqual(0, env.CountMacros());
         }
 
@@ -75,34 +72,32 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var result = new SolusEnvironment(useDefaults: true);
             // then
             Assert.AreEqual(25, result.CountVariables());
-
-            Assert.AreEqual(0, result.CountFunctions());
-            var functions = result.GetVariableNames().ToList();
-            Assert.Contains("sin", functions);
-            Assert.Contains("cos", functions);
-            Assert.Contains("tan", functions);
-            Assert.Contains("ln", functions);
-            Assert.Contains("log2", functions);
-            Assert.Contains("log10", functions);
-            Assert.Contains("abs", functions);
-            Assert.Contains("sec", functions);
-            Assert.Contains("csc", functions);
-            Assert.Contains("cot", functions);
-            Assert.Contains("acos", functions);
-            Assert.Contains("asin", functions);
-            Assert.Contains("atan", functions);
-            Assert.Contains("asec", functions);
-            Assert.Contains("acsc", functions);
-            Assert.Contains("acot", functions);
-            Assert.Contains("ceil", functions);
-            Assert.Contains("floor", functions);
-            Assert.Contains("unitstep", functions);
-            Assert.Contains("atan2", functions);
-            Assert.Contains("log", functions);
-            Assert.Contains("dist", functions);
-            Assert.Contains("distsq", functions);
-            Assert.Contains("load_image", functions);
-            Assert.Contains("size", functions);
+            var vars = result.GetVariableNames().ToList();
+            Assert.Contains("sin", vars);
+            Assert.Contains("cos", vars);
+            Assert.Contains("tan", vars);
+            Assert.Contains("ln", vars);
+            Assert.Contains("log2", vars);
+            Assert.Contains("log10", vars);
+            Assert.Contains("abs", vars);
+            Assert.Contains("sec", vars);
+            Assert.Contains("csc", vars);
+            Assert.Contains("cot", vars);
+            Assert.Contains("acos", vars);
+            Assert.Contains("asin", vars);
+            Assert.Contains("atan", vars);
+            Assert.Contains("asec", vars);
+            Assert.Contains("acsc", vars);
+            Assert.Contains("acot", vars);
+            Assert.Contains("ceil", vars);
+            Assert.Contains("floor", vars);
+            Assert.Contains("unitstep", vars);
+            Assert.Contains("atan2", vars);
+            Assert.Contains("log", vars);
+            Assert.Contains("dist", vars);
+            Assert.Contains("distsq", vars);
+            Assert.Contains("load_image", vars);
+            Assert.Contains("size", vars);
 
             Assert.AreEqual(8, result.CountMacros());
             var macros = result.GetMacroNames().ToList();
