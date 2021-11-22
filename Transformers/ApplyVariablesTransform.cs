@@ -39,8 +39,6 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     return Transform(fc, env);
                 case VariableAccess va:
                     return Transform(va, env);
-                case DerivativeOfVariable dv:
-                    return Transform(dv, env);
                 case MatrixExpression matrix:
                     return Transform(matrix, env);
                 case VectorExpression vector:
@@ -87,12 +85,6 @@ namespace MetaphysicsIndustries.Solus.Transformers
             }
 
             return va;
-        }
-
-        private Expression Transform(DerivativeOfVariable dv,
-            SolusEnvironment env)
-        {
-            throw new NotImplementedException();
         }
 
         private Expression Transform(MatrixExpression matrix,

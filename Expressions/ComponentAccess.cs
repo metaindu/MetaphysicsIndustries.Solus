@@ -26,7 +26,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Exceptions;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {

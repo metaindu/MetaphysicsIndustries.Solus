@@ -20,7 +20,6 @@
  *
  */
 
-using System;
 using System.Linq;
 
 namespace MetaphysicsIndustries.Solus.Values

@@ -20,10 +20,8 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;

@@ -20,8 +20,6 @@
  *
  */
 
-using System;
-
 namespace MetaphysicsIndustries.Solus.Values
 {
     public readonly struct StringValue : IMathObject

@@ -20,9 +20,7 @@
  *
  */
 
-using System;
 using System.Linq;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Test
 {

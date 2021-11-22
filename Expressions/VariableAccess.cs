@@ -21,7 +21,6 @@
  */
 
 using MetaphysicsIndustries.Solus.Exceptions;
-using MetaphysicsIndustries.Solus.Values;
 using ArgumentNullException = System.ArgumentNullException;
 
 namespace MetaphysicsIndustries.Solus.Expressions
