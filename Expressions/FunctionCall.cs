@@ -139,7 +139,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (_function != value)
                 {
                     _function = value;
-                    this.OnFunctionChanged(new EventArgs());
+                    this.OnFunctionChanged(EventArgs.Empty);
                 }
             }
         }
