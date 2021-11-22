@@ -86,14 +86,6 @@ List the available topics:
                 return "This command does not provide any information.";
             }
 
-            if (env.ContainsMacro(topic))
-            {
-                var m = env.GetMacro(topic);
-                if (!string.IsNullOrEmpty(m.DocString))
-                    return m.DocString;
-                return "This macro does not provide any information.";
-            }
-
             if (env.ContainsVariable(topic))
             {
                 var v = env.GetVariable(topic);

@@ -48,8 +48,7 @@ namespace MetaphysicsIndustries.Solus.Commands
         {
             var data2 = (DeleteCommandData) data;
             var unknown = data2.Names.Where(name =>
-                !env.ContainsVariable(name) &&
-                !env.ContainsMacro(name)).ToList();
+                !env.ContainsVariable(name)).ToList();
 
             if (unknown.Count > 0)
             {
@@ -64,7 +63,6 @@ namespace MetaphysicsIndustries.Solus.Commands
             foreach (var name in data2.Names)
             {
                 env.RemoveVariable(name);
-                env.RemoveMacro(name);
             }
 
             Console.WriteLine("The variables were deleted successfully.");

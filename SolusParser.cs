@@ -434,10 +434,6 @@ namespace MetaphysicsIndustries.Solus
                 var f = (Function)env.GetVariable(name);
                 return new FunctionCall(f, args);
             }
-            else if (env.ContainsMacro(name))
-            {
-                return env.GetMacro(name).Call(args, env);
-            }
             else if (env.ContainsVariable(name) &&
                      env.GetVariable(name) is Macro)
             {

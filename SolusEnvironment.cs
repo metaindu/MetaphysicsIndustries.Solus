@@ -82,7 +82,7 @@ namespace MetaphysicsIndustries.Solus
 
             foreach (var macro in macros)
             {
-                AddMacro(macro);
+                SetVariable(macro.Name, macro);
             }
         }
 
@@ -156,63 +156,6 @@ namespace MetaphysicsIndustries.Solus
             return __GetVariableNames_cache;
         }
 
-        public void AddMacro(Macro macro) =>
-            SetVariable(macro.Name, macro);
-
-        public Macro GetMacro(string name)
-        {
-            if (RemovedMacros.Contains(name))
-                return null;
-            if (Macros.ContainsKey(name))
-                return Macros[name];
-            if (Variables.ContainsKey(name) &&
-                Variables[name] is Macro macro)
-                return macro;
-            if (Parent != null)
-                return Parent.GetMacro(name);
-            return null;
-        }
-
-        public void SetMacro(string name, Macro value)
-        {
-            RemovedMacros.Remove(name);
-            Macros[name] = value;
-        }
-
-        public bool ContainsMacro(string name)
-        {
-            if (RemovedMacros.Contains(name)) return false;
-            if (Macros.ContainsKey(name)) return true;
-            if (Parent != null) return Parent.ContainsMacro(name);
-            return false;
-        }
-
-        public void RemoveMacro(string name)
-        {
-            Macros.Remove(name);
-            RemovedMacros.Add(name);
-        }
-
-        public int CountMacros()
-        {
-            return GetMacroNames().Count();
-        }
-
-        private HashSet<string> __GetMacroNames_cache;
-
-        public IEnumerable<string> GetMacroNames()
-        {
-            if (__GetMacroNames_cache == null)
-                __GetMacroNames_cache = new HashSet<string>();
-            __GetMacroNames_cache.Clear();
-            __GetMacroNames_cache.AddRange(Macros.Keys);
-            if (Parent != null)
-                __GetMacroNames_cache.AddRange(Parent.GetMacroNames());
-            bool isRemoved(string name) => RemovedMacros.Contains(name);
-            __GetMacroNames_cache.RemoveWhere(isRemoved);
-            return __GetMacroNames_cache;
-        }
-
         public SolusEnvironment Clone()
         {
             var clone = Instantiate(false);
@@ -230,8 +173,6 @@ namespace MetaphysicsIndustries.Solus
         {
             foreach (var name in GetVariableNames())
                 clone.SetVariable(name, GetVariable(name));
-            foreach (var name in GetMacroNames())
-                clone.SetMacro(name, GetMacro(name));
         }
 
         public SolusEnvironment CreateChildEnvironment() =>

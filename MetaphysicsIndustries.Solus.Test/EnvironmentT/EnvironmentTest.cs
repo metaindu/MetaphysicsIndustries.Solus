@@ -46,7 +46,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var result = new SolusEnvironment(useDefaults: false);
             // then
             Assert.AreEqual(0, result.CountVariables());
-            Assert.AreEqual(0, result.CountMacros());
         }
 
         [Test]
@@ -56,13 +55,11 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var env = new SolusEnvironment(useDefaults: false);
             // precondition
             Assert.AreEqual(0, env.CountVariables());
-            Assert.AreEqual(0, env.CountMacros());
             // when
             env.SetVariable("a", new Literal(1));
             // then
             Assert.AreEqual(1, env.CountVariables());
             Assert.Contains("a", env.GetVariableNames().ToList());
-            Assert.AreEqual(0, env.CountMacros());
         }
 
         [Test]
@@ -103,8 +100,6 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("derive", vars);
             Assert.Contains("subst", vars);
             Assert.Contains("if", vars);
-
-            Assert.AreEqual(0, result.CountMacros());
         }
     }
 }
