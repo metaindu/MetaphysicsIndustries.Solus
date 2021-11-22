@@ -7,6 +7,10 @@ should arrays be indexed starting at zero or one?
 unify the namespace
     so that `vars` and `delete` and friends all work consistently and
     predictably
+turn macros into some kind of function that doesn't evaluate args before
+    being called
+turn transformers into some kind of function that doesn't evaluate args
+    before being called.
 don't evaluate macros while parsing
 don't require the SolusEnvironment while parsing
 arbitrary rules for function arguments, e.g.:
