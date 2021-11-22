@@ -30,7 +30,6 @@ using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Transformers;
-using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus
@@ -416,35 +415,53 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression GetFunctionCallFromFunctionCall(Span span, SolusEnvironment env)
         {
-            // TODO: take an arbitrary expression as the call target
-            var name = span.Subspans[0].Value;
+            var target = GetExpressionFromCallTarget(span.Subspans[0], env);
 
             var args = new List<Expression>();
             int i;
-            for (i = 2; i < span.Subspans.Count - 1; i += 2)
+            for (i = 1; i < span.Subspans.Count; i++)
             {
-                args.Add(GetExpressionFromExpr(span.Subspans[i], env));
+                var sub = span.Subspans[i];
+                if (sub.Node == _grammar.node_function_002D_call_1__0028_)
+                {
+                    args.Clear();
+                }
+                else if (sub.Node ==
+                         _grammar.node_function_002D_call_5__0029_)
+                {
+                    if (target is VariableAccess va &&
+                        env.ContainsVariable(va.VariableName))
+                    {
+                        var vv = env.GetVariable(va.VariableName);
+                        if (vv.IsIsFunction(env))
+                        {
+                            target = new FunctionCall((Function)vv, args);
+                            continue;
+                        }
+
+                        if (vv is Macro macro)
+                        {
+                            target = macro.Call(args, env);
+                            continue;
+                        }
+                    }
+
+                    target = new FunctionCall(target, args);
+                }
+                else if (sub.Node == _grammar.node_function_002D_call_2_arg ||
+                         sub.Node == _grammar.node_function_002D_call_4_arg)
+                {
+                    args.Add(GetExpressionFromExpr(span.Subspans[i], env));
+                }
             }
 
-            // TODO: don't do name lookup while parsing. use a VariableAccess
-            // instead
+            return target;
+        }
 
-            if (env.ContainsVariable(name) &&
-                env.GetVariable(name).IsIsFunction(env))
-            {
-                var f = (Function)env.GetVariable(name);
-                return new FunctionCall(f, args);
-            }
-            else if (env.ContainsVariable(name) &&
-                     env.GetVariable(name) is Macro)
-            {
-                return ((Macro)env.GetVariable(name)).Call(args, env);
-            }
-            else
-            {
-                throw new NameException(
-                    $"Unknown function, \"{name}\"");
-            }
+        public Expression GetExpressionFromCallTarget(Span span,
+            SolusEnvironment env)
+        {
+            return GetExpressionFromSubexprPart(span.Subspans[0], env);
         }
 
         public Literal GetLiteralFromNumber(Span span)

@@ -49,6 +49,7 @@ namespace MetaphysicsIndustries.Solus
         public NDefinition def_array_002D_index = new NDefinition("array-index");
         public NDefinition def_array_002D_literal = new NDefinition("array-literal");
         public NDefinition def_binop = new NDefinition("binop");
+        public NDefinition def_call_002D_target = new NDefinition("call-target");
         public NDefinition def_command = new NDefinition("command");
         public NDefinition def_commands = new NDefinition("commands");
         public NDefinition def_comp_002D_subexpr = new NDefinition("comp-subexpr");
@@ -136,6 +137,8 @@ namespace MetaphysicsIndustries.Solus
         public CharNode node_binop_4__003C__003D_;
         public CharNode node_binop_5__003E__003D_;
         public CharNode node_binop_6__003E__003D_;
+        public DefRefNode node_call_002D_target_0_paren;
+        public DefRefNode node_call_002D_target_1_varref;
         public DefRefNode node_command_0_help_002D_command;
         public DefRefNode node_command_1_var_002D_assign_002D_command;
         public DefRefNode node_command_2_func_002D_assign_002D_command;
@@ -173,7 +176,7 @@ namespace MetaphysicsIndustries.Solus
         public DefRefNode node_func_002D_assign_002D_command_5__0029_;
         public DefRefNode node_func_002D_assign_002D_command_6__003A__003D_;
         public DefRefNode node_func_002D_assign_002D_command_7_expr;
-        public DefRefNode node_function_002D_call_0_name;
+        public DefRefNode node_function_002D_call_0_call_002D_target;
         public DefRefNode node_function_002D_call_1__0028_;
         public DefRefNode node_function_002D_call_2_arg;
         public DefRefNode node_function_002D_call_3__002C_;
@@ -274,6 +277,7 @@ namespace MetaphysicsIndustries.Solus
             Definitions.Add(def_array_002D_index);
             Definitions.Add(def_array_002D_literal);
             Definitions.Add(def_binop);
+            Definitions.Add(def_call_002D_target);
             Definitions.Add(def_command);
             Definitions.Add(def_commands);
             Definitions.Add(def_comp_002D_subexpr);
@@ -610,6 +614,15 @@ namespace MetaphysicsIndustries.Solus
             node_binop_3__003C__003D_.NextNodes.Add(node_binop_4__003C__003D_);
             node_binop_5__003E__003D_.NextNodes.Add(node_binop_6__003E__003D_);
 
+            node_call_002D_target_0_paren = new DefRefNode(def_paren, "paren");
+            node_call_002D_target_1_varref = new DefRefNode(def_varref, "varref");
+            def_call_002D_target.Nodes.Add(node_call_002D_target_0_paren);
+            def_call_002D_target.Nodes.Add(node_call_002D_target_1_varref);
+            def_call_002D_target.StartNodes.Add(node_call_002D_target_0_paren);
+            def_call_002D_target.StartNodes.Add(node_call_002D_target_1_varref);
+            def_call_002D_target.EndNodes.Add(node_call_002D_target_0_paren);
+            def_call_002D_target.EndNodes.Add(node_call_002D_target_1_varref);
+
             node_command_0_help_002D_command = new DefRefNode(def_help_002D_command, "help-command");
             node_command_1_var_002D_assign_002D_command = new DefRefNode(def_var_002D_assign_002D_command, "var-assign-command");
             node_command_2_func_002D_assign_002D_command = new DefRefNode(def_func_002D_assign_002D_command, "func-assign-command");
@@ -767,21 +780,21 @@ namespace MetaphysicsIndustries.Solus
             node_func_002D_assign_002D_command_5__0029_.NextNodes.Add(node_func_002D_assign_002D_command_6__003A__003D_);
             node_func_002D_assign_002D_command_6__003A__003D_.NextNodes.Add(node_func_002D_assign_002D_command_7_expr);
 
-            node_function_002D_call_0_name = new DefRefNode(def_identifier, "name");
+            node_function_002D_call_0_call_002D_target = new DefRefNode(def_call_002D_target, "call-target");
             node_function_002D_call_1__0028_ = new DefRefNode(def__0024_implicit_0020_literal_0020__0028_, "(");
             node_function_002D_call_2_arg = new DefRefNode(def_expr, "arg");
             node_function_002D_call_3__002C_ = new DefRefNode(def__0024_implicit_0020_literal_0020__002C_, ",");
             node_function_002D_call_4_arg = new DefRefNode(def_expr, "arg");
             node_function_002D_call_5__0029_ = new DefRefNode(def__0024_implicit_0020_literal_0020__0029_, ")");
-            def_function_002D_call.Nodes.Add(node_function_002D_call_0_name);
+            def_function_002D_call.Nodes.Add(node_function_002D_call_0_call_002D_target);
             def_function_002D_call.Nodes.Add(node_function_002D_call_1__0028_);
             def_function_002D_call.Nodes.Add(node_function_002D_call_2_arg);
             def_function_002D_call.Nodes.Add(node_function_002D_call_3__002C_);
             def_function_002D_call.Nodes.Add(node_function_002D_call_4_arg);
             def_function_002D_call.Nodes.Add(node_function_002D_call_5__0029_);
-            def_function_002D_call.StartNodes.Add(node_function_002D_call_0_name);
+            def_function_002D_call.StartNodes.Add(node_function_002D_call_0_call_002D_target);
             def_function_002D_call.EndNodes.Add(node_function_002D_call_5__0029_);
-            node_function_002D_call_0_name.NextNodes.Add(node_function_002D_call_1__0028_);
+            node_function_002D_call_0_call_002D_target.NextNodes.Add(node_function_002D_call_1__0028_);
             node_function_002D_call_1__0028_.NextNodes.Add(node_function_002D_call_2_arg);
             node_function_002D_call_1__0028_.NextNodes.Add(node_function_002D_call_5__0029_);
             node_function_002D_call_2_arg.NextNodes.Add(node_function_002D_call_3__002C_);
@@ -789,6 +802,7 @@ namespace MetaphysicsIndustries.Solus
             node_function_002D_call_3__002C_.NextNodes.Add(node_function_002D_call_4_arg);
             node_function_002D_call_4_arg.NextNodes.Add(node_function_002D_call_3__002C_);
             node_function_002D_call_4_arg.NextNodes.Add(node_function_002D_call_5__0029_);
+            node_function_002D_call_5__0029_.NextNodes.Add(node_function_002D_call_1__0028_);
 
             node_help_002D_command_0_help = new DefRefNode(def__0024_implicit_0020_literal_0020_help, "help");
             node_help_002D_command_1_topic = new DefRefNode(def_identifier, "topic");

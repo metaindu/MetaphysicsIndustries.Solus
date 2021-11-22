@@ -711,6 +711,63 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
+        public void MultipleParensYieldsNestedFunctionCalls()
+        {
+            // given
+            var parser = new SolusParser();
+            var env = new SolusEnvironment();
+            // when
+            var expr = parser.GetExpression(
+                "f(1)(2,3)", env: env);
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var call1 = (FunctionCall)expr;
+            Assert.AreEqual(2, call1.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call1.Function);
+            var call2 = (FunctionCall)call1.Function;
+            Assert.AreEqual(1, call2.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(call2.Function);
+        }
+
+        [Test]
+        public void FunctionCallInParensIsValidCallTarget()
+        {
+            // given
+            var parser = new SolusParser();
+            var env = new SolusEnvironment();
+            // when
+            var expr = parser.GetExpression(
+                "(f(1))(2,3)", env: env);
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var call1 = (FunctionCall)expr;
+            Assert.AreEqual(2, call1.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call1.Function);
+            var call2 = (FunctionCall)call1.Function;
+            Assert.AreEqual(1, call2.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(call2.Function);
+        }
+
+        [Test]
+        public void ComponentAccessInParensIsValidCallTarget()
+        {
+            // given
+            var parser = new SolusParser();
+            var env = new SolusEnvironment();
+            // when
+            var expr = parser.GetExpression(
+                "(a[1])(2,3)", env: env);
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var call1 = (FunctionCall)expr;
+            Assert.AreEqual(2, call1.Arguments.Count);
+            Assert.IsInstanceOf<ComponentAccess>(call1.Function);
+            var ca = (ComponentAccess)call1.Function;
+            Assert.AreEqual(1, ca.Indexes.Count);
+            Assert.IsInstanceOf<VariableAccess>(ca.Expr);
+        }
+
+        [Test]
         public void TestUnaryNegativeVarref()
         {
             // setup
