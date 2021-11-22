@@ -26,7 +26,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Exceptions;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -271,26 +270,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public int? GetDimension(SolusEnvironment env, int index) => null;
             public int[] GetDimensions(SolusEnvironment env) => null;
             public int? GetVectorLength(SolusEnvironment env) => null;
-            public bool? IsInterval(SolusEnvironment env) => false;
+            public bool? IsInterval(SolusEnvironment env) => null;
+            public bool? IsFunction(SolusEnvironment env) => null;
+            public bool? IsExpression(SolusEnvironment env) => null;
             public bool IsConcrete => false;
-        }
-
-        private static IMathObject InterrogateIndexValue(Expression expr,
-            SolusEnvironment env)
-        {
-            if (expr is Literal lit) return lit.Value;
-            if (expr is VariableAccess va)
-            {
-                if (!env.ContainsVariable(va.VariableName))
-                    throw new NameException(
-                        $"Variable not found: {va.VariableName}");
-                var expr2 = env.GetVariable(va.VariableName);
-                // TODO: don't get stuck in an infinite loop, e.g. a:=b, b:=a
-                return InterrogateIndexValue(expr2, env);
-            }
-            // TODO: other expression types
-
-            return null;
+            public string DocString => "";
         }
     }
 }

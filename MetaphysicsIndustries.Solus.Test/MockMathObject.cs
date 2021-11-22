@@ -20,9 +20,7 @@
  *
  */
 
-using System;
 using System.Linq;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Test
 {
@@ -31,7 +29,8 @@ namespace MetaphysicsIndustries.Solus.Test
         public MockMathObject(bool isScalar = true, bool isVector = false,
             bool isMatrix = false, int tensorRank = 0, bool isString = false,
             int[] dimensions = null, bool isInterval = false,
-            bool isConcrete = false)
+            bool isFunction = false, bool isExpression = false,
+            bool isConcrete = false, string docString = "")
         {
             _isScalar = isScalar;
             _isVector = isVector;
@@ -42,7 +41,10 @@ namespace MetaphysicsIndustries.Solus.Test
                 dimensions = Enumerable.Repeat(1, tensorRank).ToArray();
             _dimensions = dimensions;
             _isInterval = isInterval;
+            _isFunction = isFunction;
+            _isExpression = isExpression;
             _isConcrete = isConcrete;
+            _docString = docString;
         }
 
         private readonly bool _isScalar;
@@ -61,17 +63,36 @@ namespace MetaphysicsIndustries.Solus.Test
         public bool? IsString(SolusEnvironment env) => _isString;
 
         private readonly int[] _dimensions;
-        public int? GetDimension(SolusEnvironment env, int index) =>
-            _dimensions[index];
+
+        public int? GetDimension(SolusEnvironment env, int index)
+        {
+            if (_dimensions == null) return null;
+            if (index < 0 || index >= _dimensions.Length) return null;
+            return _dimensions?[index];
+        }
+
         public int[] GetDimensions(SolusEnvironment env) => _dimensions;
 
-        public int? GetVectorLength(SolusEnvironment env) =>
-            throw new NotImplementedException();
+        public int? GetVectorLength(SolusEnvironment env)
+        {
+            if (_dimensions == null) return null;
+            if (_dimensions.Length != 1) return null;
+            return _dimensions[0];
+        }
 
         private readonly bool? _isInterval;
         public bool? IsInterval(SolusEnvironment env) => _isInterval;
 
+        private readonly bool? _isFunction;
+        public bool? IsFunction(SolusEnvironment env) => _isFunction;
+
+        private readonly bool? _isExpression;
+        public bool? IsExpression(SolusEnvironment env) => _isExpression;
+
         private readonly bool _isConcrete;
         public bool IsConcrete => _isConcrete;
+
+        private readonly string _docString;
+        public string DocString => _docString;
     }
 }

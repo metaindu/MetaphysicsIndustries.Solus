@@ -21,7 +21,6 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Test
 {
@@ -37,7 +36,10 @@ namespace MetaphysicsIndustries.Solus.Test
             Func<SolusEnvironment, int[]> getDimensionsF = null,
             Func<SolusEnvironment, int> getVectorLengthF = null,
             Func<SolusEnvironment, bool?> isIntervalF = null,
-            bool isConcreteV = false)
+            Func<SolusEnvironment, bool?> isFunctionF = null,
+            Func<SolusEnvironment, bool?> isExpressionF = null,
+            bool isConcreteV = false,
+            string docStringV = "")
         {
             IsScalarF = isScalarF;
             IsVectorF = isVectorF;
@@ -48,7 +50,10 @@ namespace MetaphysicsIndustries.Solus.Test
             GetDimensionsF = getDimensionsF;
             GetVectorLengthF = getVectorLengthF;
             IsIntervalF = isIntervalF;
+            IsFunctionF = isFunctionF;
+            IsExpressionF = isExpressionF;
             IsConcreteV = isConcreteV;
+            DocStringV = docStringV;
         }
 
         public Func<SolusEnvironment, bool> IsScalarF;
@@ -114,7 +119,24 @@ namespace MetaphysicsIndustries.Solus.Test
             throw new NotImplementedException();
         }
 
+        public Func<SolusEnvironment, bool?> IsFunctionF;
+        public bool? IsFunction(SolusEnvironment env)
+        {
+            if (IsFunctionF != null) return IsFunctionF(env);
+            throw new NotImplementedException();
+        }
+
+        public Func<SolusEnvironment, bool?> IsExpressionF;
+        public bool? IsExpression(SolusEnvironment env)
+        {
+            if (IsExpressionF != null) return IsExpressionF(env);
+            throw new NotImplementedException();
+        }
+
         public bool IsConcreteV;
         public bool IsConcrete => IsConcreteV;
+
+        public string DocStringV;
+        public string DocString => DocStringV;
     }
 }

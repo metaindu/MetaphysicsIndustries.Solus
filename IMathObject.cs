@@ -34,8 +34,12 @@ namespace MetaphysicsIndustries.Solus
         int? GetVectorLength(SolusEnvironment env);
         // TODO: int? GetStringLength(SolusEnvironment env);
         bool? IsInterval(SolusEnvironment env);
+        bool? IsFunction(SolusEnvironment env);
+        bool? IsExpression(SolusEnvironment env);
 
         bool IsConcrete { get; }
+
+        string DocString { get; }
     }
 
     public class ScalarMathObject : IMathObject
@@ -50,8 +54,12 @@ namespace MetaphysicsIndustries.Solus
         public int[] GetDimensions(SolusEnvironment env) => null;
         public int? GetVectorLength(SolusEnvironment env) => null;
         public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
+
+        public string DocString => "";
     }
 
     public class IntervalMathObject : IMathObject
@@ -67,7 +75,11 @@ namespace MetaphysicsIndustries.Solus
         public int[] GetDimensions(SolusEnvironment env) => null;
         public int? GetVectorLength(SolusEnvironment env) => null;
         public bool? IsInterval(SolusEnvironment env) => true;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
+
+        public string DocString => "";
     }
 }

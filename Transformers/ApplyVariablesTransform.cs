@@ -39,8 +39,6 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     return Transform(fc, env);
                 case VariableAccess va:
                     return Transform(va, env);
-                case DerivativeOfVariable dv:
-                    return Transform(dv, env);
                 case MatrixExpression matrix:
                     return Transform(matrix, env);
                 case VectorExpression vector:
@@ -80,16 +78,13 @@ namespace MetaphysicsIndustries.Solus.Transformers
             if (env.ContainsVariable(va.VariableName))
             {
                 // TODO: check for cycles
-                return Transform(env.GetVariable(va.VariableName), env);
+                var target = env.GetVariable(va.VariableName);
+                if (target.IsIsExpression(env))
+                    return Transform((Expression)target, env);
+                return new Literal(target);
             }
 
             return va;
-        }
-
-        private Expression Transform(DerivativeOfVariable dv,
-            SolusEnvironment env)
-        {
-            throw new NotImplementedException();
         }
 
         private Expression Transform(MatrixExpression matrix,
@@ -134,7 +129,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
         {
             var expr = Transform(ca.Expr, env);
             int i;
-            var allSame = expr == ca;
+            var allSame = expr == ca.Expr;
             var transformedIndexes = new Expression[ca.Indexes.Count];
             for (i = 0; i < ca.Indexes.Count; i++)
             {

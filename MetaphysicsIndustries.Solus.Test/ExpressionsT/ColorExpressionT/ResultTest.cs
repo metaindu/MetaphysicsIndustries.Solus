@@ -46,6 +46,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ColorExpressionT
             Assert.IsNull(result.GetDimension(env, 0));
             Assert.IsNull(result.GetDimensions(env));
             Assert.IsNull(result.GetVectorLength(env));
+            Assert.IsFalse(result.IsInterval(env));
+            Assert.IsFalse(result.IsFunction(env));
+            Assert.IsFalse(result.IsExpression(env));
         }
     }
 }

@@ -50,5 +50,8 @@ namespace MetaphysicsIndustries.Solus.Test
                 return GetResultF(args);
             throw new NotImplementedException();
         }
+
+        public string DocStringV = "";
+        public override string DocString => DocStringV;
     }
 }

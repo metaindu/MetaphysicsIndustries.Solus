@@ -21,7 +21,6 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -59,7 +58,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public int[] GetDimensions(SolusEnvironment env) => null;
             public int? GetVectorLength(SolusEnvironment env) => null;
             public bool? IsInterval(SolusEnvironment env) => false;
+            public bool? IsFunction(SolusEnvironment env) => false;
+            public bool? IsExpression(SolusEnvironment env) => false;
             public bool IsConcrete => false;
+            public string DocString => "";
         }
     }
 }

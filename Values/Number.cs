@@ -42,7 +42,10 @@ namespace MetaphysicsIndustries.Solus.Values
         public int[] GetDimensions(SolusEnvironment env) => null;
         public int? GetVectorLength(SolusEnvironment env) => null;
         public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
         public bool IsConcrete => true;
+        public string DocString => "";
 
         public override string ToString()
         {

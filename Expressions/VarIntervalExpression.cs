@@ -1,4 +1,4 @@
-﻿
+
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
@@ -20,30 +20,18 @@
  *
  */
 
-using System.Collections.Generic;
-using System.Linq;
-using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
-using MetaphysicsIndustries.Solus.Transformers;
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public class SubstMacro : Macro
+    public class VarIntervalExpression
     {
-        public static readonly SubstMacro Value = new SubstMacro();
-
-        protected SubstMacro()
+        public VarIntervalExpression(string variable,
+            IntervalExpression interval)
         {
-            Name = "subst";
-            NumArguments = 3;
+            Variable = variable;
+            Interval = interval;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            SubstTransformer subst = new SubstTransformer();
-            CleanUpTransformer cleanup = new CleanUpTransformer();
-            var var = ((VariableAccess)args.ElementAt(1)).VariableName;
-            return cleanup.CleanUp(subst.Subst(args.First(), var, args.ElementAt(2)));
-        }
+        public readonly string Variable;
+        public readonly IntervalExpression Interval;
     }
 }

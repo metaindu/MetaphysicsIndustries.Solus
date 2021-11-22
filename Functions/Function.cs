@@ -36,13 +36,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract class Function
+    public abstract class Function : IMathObject
     {
         protected Function(Types[] paramTypes, string name="")
         {
@@ -150,5 +149,18 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         public abstract IMathObject GetResult(IEnumerable<IMathObject> args);
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => true;
+        public bool? IsExpression(SolusEnvironment env) => false;
+        public bool IsConcrete => true;
     }
 }

@@ -20,8 +20,6 @@
  *
  */
 
-using System;
-
 namespace MetaphysicsIndustries.Solus.Values
 {
     public readonly struct StringValue : IMathObject
@@ -55,9 +53,12 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public int? GetVectorLength(SolusEnvironment env) => null;
         public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
         public bool IsConcrete => true;
 
         public int Length => Value?.Length ?? 0;
+        public string DocString => "";
 
         public override string ToString()
         {

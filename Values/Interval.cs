@@ -54,6 +54,11 @@ namespace MetaphysicsIndustries.Solus.Values
             IsIntegerInterval = isIntegerInterval;
         }
 
+        public Interval(float lower, float upper)
+            : this(lower, false, upper, false, false)
+        {
+        }
+
         public readonly float LowerBound;
         public readonly float UpperBound;
         public float Length => UpperBound - LowerBound;
@@ -171,6 +176,9 @@ namespace MetaphysicsIndustries.Solus.Values
         public int[] GetDimensions(SolusEnvironment env) => null;
         public int? GetVectorLength(SolusEnvironment env) => null;
         public bool? IsInterval(SolusEnvironment env) => true;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
         public bool IsConcrete => true;
+        public string DocString => "";
     }
 }

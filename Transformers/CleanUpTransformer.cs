@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
             }
             args = cleanArgs.ToArray();
 
-            return CleanUpFunctionArgs(fc.Function, args);
+            return CleanUpFunctionArgs(fc.Function, args) ?? fc;
         }
 
 
@@ -98,7 +98,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 return InternalCleanUpBinaryOperation((BinaryOperation)function, args);
             }
 
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+            return null;
         }
 
         //public Expression CleanUpDelayAssignExpression(DelayAssignExpression expr)

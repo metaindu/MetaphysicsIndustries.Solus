@@ -39,20 +39,14 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // precondition
             Assert.AreEqual(1, parent.CountVariables());
             Assert.Contains("a", parent.GetVariableNames().ToList());
-            Assert.AreEqual(0, parent.CountFunctions());
-            Assert.AreEqual(0, parent.CountMacros());
             // when
             var child = parent.CreateChildEnvironment();
             // then
             Assert.AreEqual(1, parent.CountVariables());
             Assert.Contains("a", parent.GetVariableNames().ToList());
-            Assert.AreEqual(0, parent.CountFunctions());
-            Assert.AreEqual(0, parent.CountMacros());
 
             Assert.AreEqual(1, child.CountVariables());
             Assert.Contains("a", child.GetVariableNames().ToList());
-            Assert.AreEqual(0, child.CountFunctions());
-            Assert.AreEqual(0, child.CountMacros());
         }
 
         [Test]

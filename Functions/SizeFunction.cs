@@ -108,8 +108,11 @@ namespace MetaphysicsIndustries.Solus.Functions
                 GetDimension(env, 0);
 
             public bool? IsInterval(SolusEnvironment env) => false;
+            public bool? IsFunction(SolusEnvironment env) => false;
+            public bool? IsExpression(SolusEnvironment env) => false;
 
             public bool IsConcrete => false;
+            public string DocString => "";
         }
 
         public override IMathObject GetResult(IEnumerable<IMathObject> args)

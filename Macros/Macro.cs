@@ -26,7 +26,7 @@ using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Macros
 {
-    public abstract class Macro
+    public abstract class Macro : IMathObject
     {
         public string Name = string.Empty;
         public int NumArguments = 0;
@@ -50,5 +50,18 @@ namespace MetaphysicsIndustries.Solus.Macros
         {
             get { return string.Empty; }
         }
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+        public bool IsConcrete => true;
     }
 }

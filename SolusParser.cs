@@ -28,6 +28,7 @@ using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
@@ -176,13 +177,14 @@ namespace MetaphysicsIndustries.Solus
                 Select(sub => sub.Value).
                 ToArray();
 
-            var env2 = env.Clone();
+            var env2 = env.CreateChildEnvironment();
 
             // create the function, with no expr
             var func = new UserDefinedFunction(funcname, args, null);
-            if (env2.ContainsFunction(funcname))
-                env2.RemoveFunction(funcname);
-            env2.AddFunction(func);
+
+            // replace any other function or variable by the same name
+            env2.RemoveVariable(funcname);
+            env2.SetVariable(funcname, func);
 
             // read the expr. this order of things allows for recursion
             var expr = GetExpressionFromExpr(span.Subspans.Last(), env2);
@@ -426,13 +428,16 @@ namespace MetaphysicsIndustries.Solus
             // TODO: don't do name lookup while parsing. use a VariableAccess
             // instead
 
-            if (env.ContainsFunction(name))
+            if (env.ContainsVariable(name) &&
+                env.GetVariable(name).IsIsFunction(env))
             {
-                return new FunctionCall(env.GetFunction(name), args);
+                var f = (Function)env.GetVariable(name);
+                return new FunctionCall(f, args);
             }
-            else if (env.ContainsMacro(name))
+            else if (env.ContainsVariable(name) &&
+                     env.GetVariable(name) is Macro)
             {
-                return env.GetMacro(name).Call(args, env);
+                return ((Macro)env.GetVariable(name)).Call(args, env);
             }
             else
             {
@@ -685,7 +690,7 @@ namespace MetaphysicsIndustries.Solus
             return indexes;
         }
 
-        public VarInterval GetVarIntervalFromVarInterval(Span span,
+        public VarIntervalExpression GetVarIntervalFromVarInterval(Span span,
             SolusEnvironment env)
         {
             if (span.Subspans[0].Node ==
@@ -693,16 +698,14 @@ namespace MetaphysicsIndustries.Solus
             {
                 // var in [lower,upper)
                 var varname = span.Subspans[0].Subspans[0].Value;
-                var interval = GetIntervalFromInterval(span.Subspans[2]);
-                return new VarInterval(varname, interval);
+                var interval = GetIntervalFromInterval(span.Subspans[2], env);
+                return new VarIntervalExpression(varname, interval);
             }
             else
             {
                 // lower <= var <= upper
 
                 var lower = GetExpressionFromExpr(span.Subspans[0], env);
-                var lowerf = (float)Math.Round(
-                    lower.Eval(env).ToNumber().Value);
 
                 var openLower = (span.Subspans[1].Value == "<");
 
@@ -711,27 +714,24 @@ namespace MetaphysicsIndustries.Solus
                 var openUpper = (span.Subspans[3].Value == "<");
 
                 var upper = GetExpressionFromExpr(span.Subspans[4], env);
-                var upperf = (float)Math.Round(
-                    upper.Eval(env).ToNumber().Value);
 
-                return new VarInterval(
+                return new VarIntervalExpression(
                     varname,
-                    new Interval(lowerf, openLower,
-                        upperf, openUpper, false));
+                    new IntervalExpression(lower, openLower,
+                        upper, openUpper));
             }
         }
 
-        public Interval GetIntervalFromInterval(Span span)
+        public IntervalExpression GetIntervalFromInterval(Span span,
+            SolusEnvironment env)
         {
             var openLower = (span.Subspans[0].Value == "(");
-            var lower =
-                GetLiteralFromNumber(span.Subspans[1]).Value.ToNumber();
-            var upper =
-                GetLiteralFromNumber(span.Subspans[3]).Value.ToNumber();
+            var lower = GetExpressionFromExpr(span.Subspans[1], env);
+            var upper = GetExpressionFromExpr(span.Subspans[3], env);
             var openUpper = (span.Subspans[4].Value == ")");
 
-            return new Interval(lower.Value, openLower,
-                upper.Value, openUpper, false);
+            return new IntervalExpression(
+                lower, openLower, upper, openUpper);
         }
     }
 }
