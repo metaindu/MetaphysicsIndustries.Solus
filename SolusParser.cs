@@ -416,6 +416,7 @@ namespace MetaphysicsIndustries.Solus
 
         public Expression GetFunctionCallFromFunctionCall(Span span, SolusEnvironment env)
         {
+            // TODO: take an arbitrary expression as the call target
             var name = span.Subspans[0].Value;
 
             var args = new List<Expression>();

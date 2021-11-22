@@ -42,6 +42,12 @@ delete-command = 'delete' varref varref* ;
 expr = subexpr ( binop subexpr )*;
 
 function-call = identifier:name '(' ( expr:arg ( ',' expr:arg )* )? ')';
+// call-target = (
+//     paren |
+//     function-call |
+//     varref |
+//     component-access
+// );
 
 <ignore case, token> number = (
     '0b' [01]+ |
