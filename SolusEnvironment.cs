@@ -94,18 +94,6 @@ namespace MetaphysicsIndustries.Solus
         protected readonly HashSet<string> RemovedVariables =
             new HashSet<string>();
 
-        protected readonly Dictionary<string, Macro> Macros =
-            new Dictionary<string, Macro>();
-
-        protected readonly HashSet<string> RemovedMacros =
-            new HashSet<string>();
-
-        protected readonly Dictionary<string, Command> Commands =
-            new Dictionary<string, Command>();
-
-        protected readonly HashSet<string> RemovedCommands =
-            new HashSet<string>();
-
         public IMathObject GetVariable(string name)
         {
             if (RemovedVariables.Contains(name))
