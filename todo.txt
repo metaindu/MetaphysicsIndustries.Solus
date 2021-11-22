@@ -4,9 +4,6 @@ distinguish between tensors (vectors, matrices) and simple arrays
 should arrays be indexed starting at zero or one?
     currently zero. that is common in programming.
     starting at one is common in mathematics
-unify the namespace
-    so that `vars` and `delete` and friends all work consistently and
-    predictably
 rename "vars" command to something like "names" ?
 turn macros into some kind of function that doesn't evaluate args before
     being called
