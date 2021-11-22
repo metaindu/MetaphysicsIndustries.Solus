@@ -157,7 +157,7 @@ namespace MetaphysicsIndustries.Solus
         }
 
         public void AddMacro(Macro macro) =>
-            SetMacro(macro.Name, macro);
+            SetVariable(macro.Name, macro);
 
         public Macro GetMacro(string name)
         {
@@ -165,6 +165,9 @@ namespace MetaphysicsIndustries.Solus
                 return null;
             if (Macros.ContainsKey(name))
                 return Macros[name];
+            if (Variables.ContainsKey(name) &&
+                Variables[name] is Macro macro)
+                return macro;
             if (Parent != null)
                 return Parent.GetMacro(name);
             return null;

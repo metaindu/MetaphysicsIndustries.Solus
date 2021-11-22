@@ -28,6 +28,7 @@ using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
@@ -436,6 +437,11 @@ namespace MetaphysicsIndustries.Solus
             else if (env.ContainsMacro(name))
             {
                 return env.GetMacro(name).Call(args, env);
+            }
+            else if (env.ContainsVariable(name) &&
+                     env.GetVariable(name) is Macro)
+            {
+                return ((Macro)env.GetVariable(name)).Call(args, env);
             }
             else
             {

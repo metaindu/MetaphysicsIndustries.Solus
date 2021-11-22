@@ -71,7 +71,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var result = new SolusEnvironment(useDefaults: true);
             // then
-            Assert.AreEqual(25, result.CountVariables());
+            Assert.AreEqual(30, result.CountVariables());
             var vars = result.GetVariableNames().ToList();
             Assert.Contains("sin", vars);
             Assert.Contains("cos", vars);
@@ -98,14 +98,13 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("distsq", vars);
             Assert.Contains("load_image", vars);
             Assert.Contains("size", vars);
+            Assert.Contains("sqrt", vars);
+            Assert.Contains("rand", vars);
+            Assert.Contains("derive", vars);
+            Assert.Contains("subst", vars);
+            Assert.Contains("if", vars);
 
-            Assert.AreEqual(5, result.CountMacros());
-            var macros = result.GetMacroNames().ToList();
-            Assert.Contains("sqrt", macros);
-            Assert.Contains("rand", macros);
-            Assert.Contains("derive", macros);
-            Assert.Contains("subst", macros);
-            Assert.Contains("if", macros);
+            Assert.AreEqual(0, result.CountMacros());
         }
     }
 }

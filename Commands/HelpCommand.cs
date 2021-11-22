@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {
@@ -103,6 +104,13 @@ List the available topics:
                         return f.DocString;
                     return "This function does not provide any information.";
                 }
+
+                if (v is Macro macro)
+                {
+                    if (!string.IsNullOrEmpty(macro.DocString))
+                        return macro.DocString;
+                    return "This macro does not provide any information.";
+                }
             }
 
             if (_helpLookups.ContainsKey(topic))
@@ -123,18 +131,22 @@ List the available topics:
 
             var functions = new List<string>();
             var variables = new List<string>();
+            var macros = new List<string>();
 
             foreach (var name in env.GetVariableNames())
             {
                 var v = env.GetVariable(name);
                 if (v.IsIsFunction(env))
                     functions.Add(name);
+                else if (v is Macro)
+                    macros.Add(name);
                 else
                     variables.Add(name);
             }
 
             functions.Sort();
             variables.Sort();
+            macros.Sort();
 
             void AddItem(string item)
             {
@@ -179,12 +191,10 @@ List the available topics:
             if (newline) sb.AppendLine();
             newline = false;
 
-            if (env.CountMacros() > 0)
+            if (macros.Count > 0)
             {
                 sb.AppendLine("Macros:");
                 line = "";
-                var macros = env.GetMacroNames().ToList();
-                macros.Sort();
                 foreach (var m in macros)
                     AddItem(m);
                 if (line.Length > 0)
