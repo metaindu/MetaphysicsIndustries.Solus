@@ -99,15 +99,12 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("load_image", vars);
             Assert.Contains("size", vars);
 
-            Assert.AreEqual(8, result.CountMacros());
+            Assert.AreEqual(5, result.CountMacros());
             var macros = result.GetMacroNames().ToList();
             Assert.Contains("sqrt", macros);
             Assert.Contains("rand", macros);
             Assert.Contains("derive", macros);
-            Assert.Contains("feedback", macros);
             Assert.Contains("subst", macros);
-            Assert.Contains("assign", macros);
-            Assert.Contains("delete", macros);
             Assert.Contains("if", macros);
         }
     }

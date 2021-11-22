@@ -76,10 +76,7 @@ namespace MetaphysicsIndustries.Solus
                 SqrtMacro.Value,
                 RandMacro.Value,
                 DeriveMacro.Value,
-                FeedbackMacro.Value,
                 SubstMacro.Value,
-                AssignMacro.Value,
-                DeleteMacro.Value,
                 IfMacro.Value,
             };
 

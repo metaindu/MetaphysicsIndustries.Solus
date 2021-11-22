@@ -51,7 +51,7 @@ Functions:
   ln load_image log log10 log2 sec sin size tan unitstep 
 
 Macros:
-  assign delete derive feedback if rand sqrt subst 
+  derive if rand sqrt subst 
 
 Additional topics:
   solus t 
@@ -83,7 +83,7 @@ Functions:
   floor ln load_image log log10 log2 sec sin size tan unitstep 
 
 Macros:
-  assign delete derive feedback if rand sqrt subst 
+  derive if rand sqrt subst 
 
 Additional topics:
   solus t 
@@ -115,7 +115,7 @@ Functions:
   floor ln load_image log log10 log2 sec sin size tan unitstep 
 
 Macros:
-  assign delete derive feedback if rand sqrt subst 
+  derive if rand sqrt subst 
 
 Additional topics:
   solus t 
