@@ -333,7 +333,7 @@ namespace MetaphysicsIndustries.Solus
             }
             else if (defref == _grammar.def_function_002D_call)
             {
-                return GetFunctionCallFromFunctioncall(span, env);
+                return GetFunctionCallFromFunctionCall(span, env);
             }
             else if (defref == _grammar.def_number)
             {
@@ -414,7 +414,7 @@ namespace MetaphysicsIndustries.Solus
                 $"Unknown binary operator, \"{span.Value}\"");
         }
 
-        public Expression GetFunctionCallFromFunctioncall(Span span, SolusEnvironment env)
+        public Expression GetFunctionCallFromFunctionCall(Span span, SolusEnvironment env)
         {
             var name = span.Subspans[0].Value;
 
