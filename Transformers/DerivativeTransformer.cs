@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
@@ -98,7 +99,14 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 Expression functionDerivative;
                 Expression argumentDerivative;
 
-                Function function = functionCall.Function;
+                var expr = functionCall.Function;
+                if (!(expr is Literal literal))
+                    throw new NotImplementedException(
+                        "Evaluated call target not yet implemented");
+                if (!literal.Value.IsIsFunction(null))
+                    throw new OperandException(
+                        "Call target is not a function");
+                var function = (Function)literal.Value;
 
                 if (function == CosineFunction.Value)
                 {
@@ -158,39 +166,41 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         private Expression GetDerivativeOfAssociativeCommutativOperation(FunctionCall functionCall, string var)
         {
+            var expr = functionCall.Function;
+            if (!(expr is Literal literal))
+                throw new NotImplementedException(
+                    "Evaluated call target not yet implemented");
+            if (!literal.Value.IsIsFunction(null))
+                throw new OperandException(
+                    "Call target is not a function");
+            var f = (Function)literal.Value;
 
-
-            if (functionCall.Function == AdditionOperation.Value)
-            {
+            if (f == AdditionOperation.Value)
                 return GetDerivativeOfAdditionOperation(functionCall, var);
-            }
-            else if (functionCall.Function == MultiplicationOperation.Value)
-            {
+            if (f == MultiplicationOperation.Value)
                 return GetDerivativeOfMultiplicationOperation(functionCall, var);
-            }
-            else
-            {
-                throw new InvalidOperationException("Unknown operation: " + functionCall.Function.ToString());
-            }
+            throw new InvalidOperationException(
+                $"Unknown operation: {functionCall.Function}");
         }
 
         protected Expression GetDerivativeOfBinaryOperation(FunctionCall functionCall, string var)
         {
-
-            BinaryOperation binaryOperation = functionCall.Function as BinaryOperation;
+            var expr = functionCall.Function;
+            if (!(expr is Literal literal))
+                throw new NotImplementedException(
+                    "Evaluated call target not yet implemented");
+            if (!literal.Value.IsIsFunction(null))
+                throw new OperandException(
+                    "Call target is not a function");
+            var f = (Function)literal.Value;
+            var binaryOperation = f as BinaryOperation;
 
             if (binaryOperation == DivisionOperation.Value)
-            {
                 return GetDerivativeOfDivisionOperation(functionCall, var);
-            }
-            else if (binaryOperation == ExponentOperation.Value)
-            {
+            if (binaryOperation == ExponentOperation.Value)
                 return GetDerivativeOfExponentOperation(functionCall, var);
-            }
-            else
-            {
-                throw new InvalidOperationException("Unknown binary operation: " + functionCall.Function.ToString());
-            }
+            throw new InvalidOperationException(
+                $"Unknown binary operation: {functionCall.Function}");
         }
 
         private Expression GetDerivativeOfExponentOperation(FunctionCall functionCall, string var)
@@ -334,8 +344,16 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         private Expression GetDerivativeOfMultiplicationOperation(FunctionCall functionCall, string var)
         {
+            var expr = functionCall.Function;
+            if (!(expr is Literal literalF))
+                throw new NotImplementedException(
+                    "Evaluated call target not yet implemented");
+            if (!literalF.Value.IsIsFunction(null))
+                throw new OperandException(
+                    "Call target is not a function");
+            var f = (Function)literalF.Value;
 
-            MultiplicationOperation operation = functionCall.Function as MultiplicationOperation;
+            MultiplicationOperation operation = f as MultiplicationOperation;
 
             List<Expression> args = functionCall.Arguments;
 

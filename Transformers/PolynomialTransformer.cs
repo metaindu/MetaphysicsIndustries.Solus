@@ -50,7 +50,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             if (expr is VariableAccess) return true;
             if (expr is FunctionCall)
             {
-                Function func = ((FunctionCall)expr).Function;
+                throw new NotImplementedException();
+                Function func = null; // ((FunctionCall)expr).Function;
                 Expression[] fargs = ((FunctionCall)expr).Arguments.ToArray();
 
                 if (func is DivisionOperation || func is MultiplicationOperation || func is AdditionOperation)
@@ -82,23 +83,25 @@ namespace MetaphysicsIndustries.Solus.Transformers
             throw new NotImplementedException();
 
             Dictionary<Literal, HashSet<Expression>> coeffs = new Dictionary<Literal, HashSet<Expression>>();
+            var call = expr as FunctionCall;
+            var literal = call?.Function as Literal;
+            var f = literal?.Value as Function;
 
-            if (expr.IsFunction(DivisionOperation.Value))
+            if (f == DivisionOperation.Value)
             {
 
             }
-            else if (expr.IsFunction(MultiplicationOperation.Value))
+            else if (f == MultiplicationOperation.Value)
             {
-                FunctionCall call = expr.As<FunctionCall>();
-
-                
                 HashSet<Expression> adds = new HashSet<Expression>();
                 foreach (Expression arg in call.Arguments)
                 {
-                    if (arg.IsFunction(AdditionOperation.Value) && ContainsVariable(arg, args.Variable))
-                    {
-                        adds.Add(arg);
-                    }
+                    throw new NotImplementedException();
+                    // if (arg.IsFunction(AdditionOperation.Value) &&
+                    //     ContainsVariable(arg, args.Variable))
+                    // {
+                    //     adds.Add(arg);
+                    // }
                 }
 
                 if (adds.Count > 0)

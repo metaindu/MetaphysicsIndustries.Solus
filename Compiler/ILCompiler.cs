@@ -164,8 +164,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IEnumerable<Instruction> ConvertToInstructions(
              FunctionCall expr, VariableToArgumentNumberMapper varmap)
         {
-            return ConvertToInstructions(expr.Function, varmap,
-                expr.Arguments);
+            if (expr.Function is Literal literal &&
+                literal.Value is Function f)
+                return ConvertToInstructions(f, varmap, expr.Arguments);
+            // TODO:
+            throw new NotImplementedException(
+                "What should be done? Should the expression be " +
+                "evaluated? Compiled?");
         }
 
         public IEnumerable<Instruction> ConvertToInstructions(
@@ -223,7 +228,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             {
                 if (!first &&
                     arg is FunctionCall call &&
-                    call.Function == NegationOperation.Value)
+                    call.Function is Literal literal &&
+                    literal.Value is Function f &&
+                    f == NegationOperation.Value)
                 {
                     instructions.AddRange(
                         ConvertToInstructions(call.Arguments[0], varmap));

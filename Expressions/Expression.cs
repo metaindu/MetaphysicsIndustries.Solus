@@ -98,11 +98,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return this;
         }
 
-        public bool IsFunction(Function function)
-        {
-            return (this is FunctionCall && ((FunctionCall)this).Function == function);
-        }
-
         public T As<T>()
             where T : Expression
         {

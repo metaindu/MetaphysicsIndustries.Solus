@@ -49,25 +49,18 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override string ToString(List<Expression> arguments)
         {
-            Expression arg = arguments[0];
+            var arg = arguments[0];
 
             if (arg == null)
-            {
-                return DisplayName + "(" + Expression.ToString(arg) + ")";
-            }
-            
-            FunctionCall call = arg.As<FunctionCall>();
-            Function func = call != null ? call.Function : null;
-            Operation oper = func != null ? func.As<Operation>() : null;
+                return $"{DisplayName}({Expression.ToString(null)})";
 
-            if (oper != null && oper.Precedence < Precedence)
-            {
-                return DisplayName + "(" + arg.ToString() + ")";
-            }
-            else
-            {
-                return DisplayName + arg.ToString();
-            }
+            if (arg is FunctionCall call &&
+                call.Function is Literal literal &&
+                literal.Value is Operation oper &&
+                oper.Precedence < Precedence)
+                return $"{DisplayName}({arg})";
+
+            return $"{DisplayName}{arg}";
         }
 
         public override float IdentityValue
