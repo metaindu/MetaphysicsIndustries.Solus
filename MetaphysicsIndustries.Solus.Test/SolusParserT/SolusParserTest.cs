@@ -475,12 +475,12 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.IsInstanceOf<Literal>(fcall.Function);
-            var literal = (Literal)fcall.Function;
-            Assert.AreEqual(SineFunction.Value, literal.Value);
+            Assert.IsInstanceOf<VariableAccess>(fcall.Function);
+            var va = (VariableAccess)fcall.Function;
+            Assert.AreEqual("sin", va.VariableName);
             Assert.AreEqual(1, fcall.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fcall.Arguments[0]);
-            var va = (VariableAccess)fcall.Arguments[0];
+            va = (VariableAccess)fcall.Arguments[0];
             Assert.AreEqual("pi", va.VariableName);
         }
 
@@ -529,9 +529,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fc = (FunctionCall)expr;
-            Assert.IsInstanceOf<Literal>(fc.Function);
-            var literal = (Literal)fc.Function;
-            Assert.AreSame(f, literal.Value);
+            Assert.IsInstanceOf<VariableAccess>(fc.Function);
+            var va = (VariableAccess)fc.Function;
+            Assert.AreEqual("f", va.VariableName);
             Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
             Assert.AreEqual(0,
                 ((Literal)fc.Arguments[0]).Value.ToNumber().Value);
@@ -774,6 +774,43 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             var ca = (ComponentAccess)call1.Function;
             Assert.AreEqual(1, ca.Indexes.Count);
             Assert.IsInstanceOf<VariableAccess>(ca.Expr);
+        }
+
+        [Test]
+        public void InterleavedComponentAccessAndFunctionCallAreValid()
+        {
+            // given
+            var parser = new SolusParser();
+            var env = new SolusEnvironment();
+            // when
+            var expr = parser.GetExpression(
+                "a[1](2,3)[4,5,6](7,8,9,0)()", env: env);
+            // then
+            FunctionCall call = null;
+            ComponentAccess ca = null;
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            call = (FunctionCall)expr;
+            Assert.AreEqual(0,call.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call.Function);
+
+            call = (FunctionCall)call.Function;
+            Assert.AreEqual(4,call.Arguments.Count);
+            Assert.IsInstanceOf<ComponentAccess>(call.Function);
+
+            ca =(ComponentAccess)call.Function;
+            Assert.AreEqual(3,ca.Indexes.Count);
+            Assert.IsInstanceOf<FunctionCall>(ca.Expr);
+
+            call = (FunctionCall)ca.Expr;
+            Assert.AreEqual(2,call.Arguments.Count);
+            Assert.IsInstanceOf<ComponentAccess>(call.Function);
+
+            ca = (ComponentAccess)call.Function;
+            Assert.AreEqual(1, ca.Indexes.Count);
+            Assert.IsInstanceOf<VariableAccess>(ca.Expr);
+
+            var va = (VariableAccess)ca.Expr;
+            Assert.AreEqual("a", va.VariableName);
         }
 
         [Test]

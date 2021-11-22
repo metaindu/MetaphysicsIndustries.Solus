@@ -57,8 +57,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
         {
             var expr = fc.Function;
             if (!(expr is Literal literal))
-                throw new NotImplementedException(
-                    "Evaluated call target not yet implemented");
+                return fc;
             if (!literal.Value.IsIsFunction(null))
                 throw new OperandException(
                     "Call target is not a function");

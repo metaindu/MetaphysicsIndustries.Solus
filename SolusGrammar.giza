@@ -41,12 +41,6 @@ delete-command = 'delete' varref varref* ;
 
 expr = subexpr ( binop subexpr )*;
 
-function-call = call-target ( '(' ( expr:arg ( ',' expr:arg )* )? ')' )+;
-call-target = (
-    paren |
-    varref
-);
-
 <ignore case, token> number = (
     '0b' [01]+ |
     '0o' [01234567]+ |
@@ -68,23 +62,21 @@ call-target = (
 
 unary-op = [+-] (
     paren |
-    function-call |
+    function-call-or-component-access |
     string |
     unary-op |
     varref |
-    array-literal |
-    component-access
+    array-literal
 );
 
 subexpr = (
     paren |
-    function-call |
+    function-call-or-component-access |
     number |
     string |
     unary-op |
     varref |
-    array-literal |
-    component-access
+    array-literal
 );
 
 paren = '(' expr ')';
@@ -96,11 +88,13 @@ varref = identifier;
 array-literal = '[' expr ( ',' expr )* ','?
               ( ';' expr ( ',' expr )* ','? )* ';'? ']';
 
-component-access = comp-subexpr array-index+;
+function-call-or-component-access =
+    call-comp-subexpr:target ( call-args | array-index )+;
 
-comp-subexpr = (
+call-args = '(' ( expr:arg ( ',' expr:arg )* ','? )? ')';
+
+call-comp-subexpr = (
     paren |
-    function-call |
     string |
     varref |
     array-literal
