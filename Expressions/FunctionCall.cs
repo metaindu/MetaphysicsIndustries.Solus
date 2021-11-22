@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -122,8 +123,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public virtual IMathObject Call(SolusEnvironment env)
         {
             var f0 = Function.Eval(env);
-            if (!f0.IsIsFunction(env))
-                throw new OperandException("Call target is not a function");
+            if (!f0.IsIsFunction(env) &&
+                !(f0 is Macro))
+                throw new OperandException(
+                    "Call target is not a function or macro");
+
+            if (f0 is Macro macro)
+                return macro.Call(Arguments, env);
+
             var f = (Function)f0;
 
             if (_evaledArgsCache.Length < Arguments.Count)

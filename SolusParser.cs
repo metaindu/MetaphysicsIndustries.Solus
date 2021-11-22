@@ -438,12 +438,6 @@ namespace MetaphysicsIndustries.Solus
                             target = new FunctionCall((Function)vv, args);
                             continue;
                         }
-
-                        if (vv is Macro macro)
-                        {
-                            target = macro.Call(args, env);
-                            continue;
-                        }
                     }
 
                     target = new FunctionCall(target, args);

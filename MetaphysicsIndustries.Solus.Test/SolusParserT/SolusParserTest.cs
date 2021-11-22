@@ -485,26 +485,35 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
-        public void TestFunctionCall2()
+        public void TestMacroCall2()
         {
+            // given
             var parser = new SolusParser();
-
+            // when
             var expr = parser.GetExpression("derive(x, x)", cleanup: false);
-
-            Assert.IsInstanceOf(typeof(Literal), expr);
-            Assert.AreEqual(1f, ((Literal) expr).Value.ToFloat());
+            // then
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var call = (FunctionCall)expr;
+            Assert.IsInstanceOf<VariableAccess>(call.Function);
+            var target = (VariableAccess)call.Function;
+            Assert.AreEqual("derive", target.VariableName);
+            Assert.AreEqual(2, call.Arguments.Count);
         }
 
         [Test]
-        public void TestFunctionCall3()
+        public void TestMacroCall3()
         {
+            // given
             var parser = new SolusParser();
-
+            // when
             var expr = parser.GetExpression("if(1, 2, 3)", cleanup: false);
-
-            Assert.IsInstanceOf(typeof(Literal), expr);
-            var literal = (Literal) expr;
-            Assert.AreEqual(2, literal.Value.ToFloat());
+            // then
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var call = (FunctionCall)expr;
+            Assert.IsInstanceOf<VariableAccess>(call.Function);
+            var target = (VariableAccess)call.Function;
+            Assert.AreEqual("if", target.VariableName);
+            Assert.AreEqual(3, call.Arguments.Count);
         }
 
         [Test]
