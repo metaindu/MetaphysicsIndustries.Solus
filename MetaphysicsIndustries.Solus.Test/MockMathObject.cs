@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Test
             bool isMatrix = false, int tensorRank = 0, bool isString = false,
             int[] dimensions = null, bool isInterval = false,
             bool isFunction = false, bool isExpression = false,
-            bool isConcrete = false)
+            bool isConcrete = false, string docString = "")
         {
             _isScalar = isScalar;
             _isVector = isVector;
@@ -46,6 +46,7 @@ namespace MetaphysicsIndustries.Solus.Test
             _isFunction = isFunction;
             _isExpression = isExpression;
             _isConcrete = isConcrete;
+            _docString = docString;
         }
 
         private readonly bool _isScalar;
@@ -92,5 +93,8 @@ namespace MetaphysicsIndustries.Solus.Test
 
         private readonly bool _isConcrete;
         public bool IsConcrete => _isConcrete;
+
+        private readonly string _docString;
+        public string DocString => _docString;
     }
 }

@@ -179,5 +179,6 @@ namespace MetaphysicsIndustries.Solus.Values
         public bool? IsFunction(SolusEnvironment env) => false;
         public bool? IsExpression(SolusEnvironment env) => false;
         public bool IsConcrete => true;
+        public string DocString => "";
     }
 }

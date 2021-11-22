@@ -99,6 +99,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             public bool? IsFunction(SolusEnvironment env) => false;
             public bool? IsExpression(SolusEnvironment env) => false;
             public bool IsConcrete => false;
+            public string DocString => "";
         }
 
         private readonly ResultC _result = new ResultC();

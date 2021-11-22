@@ -790,6 +790,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public bool? IsExpression(SolusEnvironment env) => false;
 
             public bool IsConcrete => false;
+            public string DocString => "";
         }
     }
 }

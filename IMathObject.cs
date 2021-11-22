@@ -38,6 +38,8 @@ namespace MetaphysicsIndustries.Solus
         bool? IsExpression(SolusEnvironment env);
 
         bool IsConcrete { get; }
+
+        string DocString { get; }
     }
 
     public class ScalarMathObject : IMathObject
@@ -56,6 +58,8 @@ namespace MetaphysicsIndustries.Solus
         public bool? IsExpression(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
+
+        public string DocString => "";
     }
 
     public class IntervalMathObject : IMathObject
@@ -75,5 +79,7 @@ namespace MetaphysicsIndustries.Solus
         public bool? IsExpression(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
+
+        public string DocString => "";
     }
 }

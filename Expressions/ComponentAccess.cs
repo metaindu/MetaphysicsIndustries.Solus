@@ -275,6 +275,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public bool? IsFunction(SolusEnvironment env) => null;
             public bool? IsExpression(SolusEnvironment env) => null;
             public bool IsConcrete => false;
+            public string DocString => "";
         }
     }
 }

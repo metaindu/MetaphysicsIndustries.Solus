@@ -60,6 +60,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public bool IsConcrete => true;
 
         public int Length => Value?.Length ?? 0;
+        public string DocString => "";
 
         public override string ToString()
         {

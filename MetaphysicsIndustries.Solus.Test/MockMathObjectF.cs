@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test
             Func<SolusEnvironment, bool?> isIntervalF = null,
             Func<SolusEnvironment, bool?> isFunctionF = null,
             Func<SolusEnvironment, bool?> isExpressionF = null,
-            bool isConcreteV = false)
+            bool isConcreteV = false,
+            string docStringV = "")
         {
             IsScalarF = isScalarF;
             IsVectorF = isVectorF;
@@ -53,6 +54,7 @@ namespace MetaphysicsIndustries.Solus.Test
             IsFunctionF = isFunctionF;
             IsExpressionF = isExpressionF;
             IsConcreteV = isConcreteV;
+            DocStringV = docStringV;
         }
 
         public Func<SolusEnvironment, bool> IsScalarF;
@@ -134,5 +136,8 @@ namespace MetaphysicsIndustries.Solus.Test
 
         public bool IsConcreteV;
         public bool IsConcrete => IsConcreteV;
+
+        public string DocStringV;
+        public string DocString => DocStringV;
     }
 }

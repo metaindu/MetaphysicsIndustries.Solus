@@ -181,6 +181,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
 
             public bool IsConcrete => false;
+            public string DocString => "";
         }
     }
 }
