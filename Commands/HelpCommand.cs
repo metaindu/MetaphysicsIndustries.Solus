@@ -89,20 +89,13 @@ List the available topics:
             if (env.ContainsVariable(topic))
             {
                 var v = env.GetVariable(topic);
+                if (!string.IsNullOrEmpty(v.DocString))
+                    return v.DocString;
                 if (v.IsIsFunction(env))
-                {
-                    var f = (Function)v;
-                    if (!string.IsNullOrEmpty(f.DocString))
-                        return f.DocString;
                     return "This function does not provide any information.";
-                }
-
                 if (v is Macro macro)
-                {
-                    if (!string.IsNullOrEmpty(macro.DocString))
-                        return macro.DocString;
                     return "This macro does not provide any information.";
-                }
+                return "This object does not provide any information.";
             }
 
             if (_helpLookups.ContainsKey(topic))
