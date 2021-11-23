@@ -43,11 +43,11 @@ namespace MetaphysicsIndustries.Solus.Macros
 
             if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
             {
-                return new Literal(args2[2].Eval(env).ToNumber().Value);
+                return new Literal(args2[2].Eval(env));
             }
             else
             {
-                return new Literal(args2[1].Eval(env).ToNumber().Value);
+                return new Literal(args2[1].Eval(env));
             }
         }
     }
