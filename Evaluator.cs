@@ -185,9 +185,9 @@ namespace MetaphysicsIndustries.Solus
             SolusParser parser = new SolusParser();
             env.SetVariable("width", new Literal(width));
             env.SetVariable("width", new Literal(width));
-            env.SetVariable("theta", parser.GetExpression("atan2(y,x)", env));
+            env.SetVariable("theta", parser.GetExpression("atan2(y,x)"));
             env.SetVariable("radius",
-                parser.GetExpression("sqrt(x^2+y^2)", env));
+                parser.GetExpression("sqrt(x^2+y^2)"));
             env.SetVariable("i", new VariableAccess("x"));
             env.SetVariable("j", new VariableAccess("y"));
 
@@ -210,9 +210,9 @@ namespace MetaphysicsIndustries.Solus
             SolusParser parser = new SolusParser();
             env.SetVariable("width", new Literal(width));
             env.SetVariable("height", new Literal(height));
-            env.SetVariable("theta", parser.GetExpression("atan2(y,x)", env));
+            env.SetVariable("theta", parser.GetExpression("atan2(y,x)"));
             env.SetVariable("radius",
-                parser.GetExpression("sqrt(x^2+y^2)", env));
+                parser.GetExpression("sqrt(x^2+y^2)"));
             env.SetVariable("i", new VariableAccess("x"));
             env.SetVariable("j", new VariableAccess("y"));
             env.SetVariable("numframes", new Literal(numFrames));

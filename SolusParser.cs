@@ -28,7 +28,6 @@ using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Transformers;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
@@ -54,13 +53,8 @@ namespace MetaphysicsIndustries.Solus
             _numberSpanner = new Spanner(_grammar.def_float_002D_number);
         }
 
-        public Expression GetExpression(string input, SolusEnvironment env = null, bool cleanup = false)
+        public Expression GetExpression(string input, bool cleanup = false)
         {
-            if (env == null)
-            {
-                env = new SolusEnvironment();
-            }
-
             var errors = new List<Error>();
 
             var spans = _parser.Parse(input.ToCharacterSource(), errors);
@@ -85,7 +79,7 @@ namespace MetaphysicsIndustries.Solus
 
             var span = spans[0];
 
-            var expr = GetExpressionFromExpr(span, env);
+            var expr = GetExpressionFromExpr(span);
 
             if (cleanup)
             {
@@ -97,10 +91,8 @@ namespace MetaphysicsIndustries.Solus
         }
 
         public ICommandData[] GetCommands(string input,
-            SolusEnvironment env = null, CommandSet commandSet = null)
+            CommandSet commandSet = null)
         {
-            if (env == null)
-                env = new SolusEnvironment();
             var errors = new List<Error>();
             var spans = _parserC.Parse(input.ToCharacterSource(), errors);
             if (errors.ContainsNonWarnings())
@@ -121,7 +113,7 @@ namespace MetaphysicsIndustries.Solus
             foreach (var sub in span.Subspans)
             {
                 if (sub.DefRef != _grammar.def_command) continue;
-                commands.Add(GetCommandFromCommand(sub, env, commandSet));
+                commands.Add(GetCommandFromCommand(sub, commandSet));
             }
 
             return commands.ToArray();
@@ -138,36 +130,34 @@ namespace MetaphysicsIndustries.Solus
             {BitwiseOrOperation.Value, 80},
         };
 
-        ICommandData GetCommandFromCommand(Span span, SolusEnvironment env,
-            CommandSet commandSet)
+        ICommandData GetCommandFromCommand(Span span, CommandSet commandSet)
         {
             var sub = span.Subspans[0];
             var def = sub.DefRef;
 
             if (def == _grammar.def_delete_002D_command)
-                return GetDeleteCommandFromSpan(sub, env);
+                return GetDeleteCommandFromSpan(sub);
             if (def == _grammar.def_func_002D_assign_002D_command)
-                return GetFuncAssignCommandFromSpan(sub, env);
+                return GetFuncAssignCommandFromSpan(sub);
             if (def == _grammar.def_help_002D_command)
                 return GetHelpCommandFromSpan(sub, commandSet);
             if (def == _grammar.def_var_002D_assign_002D_command)
-                return GetVarAssignCommandFromSpan(sub, env);
+                return GetVarAssignCommandFromSpan(sub);
             if (def == _grammar.def_vars_002D_command)
-                return GetVarsCommandFromSpan(sub, env);
+                return GetVarsCommandFromSpan(sub);
 
             throw new ParseException(-1,
                 $"Unknown command, \"{def}\"");
         }
 
-        ICommandData GetDeleteCommandFromSpan(Span span, SolusEnvironment env)
+        ICommandData GetDeleteCommandFromSpan(Span span)
         {
             var names = span.Subspans.Skip(1).
                 Select(sub => sub.Subspans[0].Value);
             return new DeleteCommandData(names);
         }
 
-        ICommandData GetFuncAssignCommandFromSpan(Span span,
-            SolusEnvironment env)
+        ICommandData GetFuncAssignCommandFromSpan(Span span)
         {
             var funcname = span.Subspans[0].Value;
 
@@ -176,17 +166,11 @@ namespace MetaphysicsIndustries.Solus
                 Select(sub => sub.Value).
                 ToArray();
 
-            var env2 = env.CreateChildEnvironment();
-
             // create the function, with no expr
             var func = new UserDefinedFunction(funcname, args, null);
 
-            // replace any other function or variable by the same name
-            env2.RemoveVariable(funcname);
-            env2.SetVariable(funcname, func);
-
             // read the expr. this order of things allows for recursion
-            var expr = GetExpressionFromExpr(span.Subspans.Last(), env2);
+            var expr = GetExpressionFromExpr(span.Subspans.Last());
             func.Expression = expr;
 
             return new FuncAssignCommandData(func);
@@ -200,32 +184,32 @@ namespace MetaphysicsIndustries.Solus
             return new HelpCommandData(topic);
         }
 
-        ICommandData GetVarAssignCommandFromSpan(Span span,
-            SolusEnvironment env)
+        ICommandData GetVarAssignCommandFromSpan(Span span)
         {
             var varname = span.Subspans[0].Subspans[0].Value;
-            var expr = GetExpressionFromExpr(span.Subspans[2], env);
+            var expr = GetExpressionFromExpr(span.Subspans[2]);
             return new VarAssignCommandData(varname, expr);
         }
 
-        ICommandData GetVarsCommandFromSpan(Span span, SolusEnvironment env)
+        ICommandData GetVarsCommandFromSpan(Span span)
         {
             return new VarsCommandData();
         }
 
-        public Expression GetExpressionFromExpr(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromExpr(Span span)
         {
             var subexprs = new List<Expression>();
             var operators = new List<Operation>();
             var operset = new HashSet<Operation>();
 
-            subexprs.Add(GetExpressionFromSubexpr(span.Subspans[0], env));
+            subexprs.Add(GetExpressionFromSubexpr(span.Subspans[0]));
 
             int i;
             for (i = 1; i < span.Subspans.Count; i += 2)
             {
                 Operation op;
-                Expression arg = GetExpressionFromSubexpr(span.Subspans[i + 1], env);
+                Expression arg = GetExpressionFromSubexpr(
+                    span.Subspans[i + 1]);
                 if (span.Subspans[i].Value == "-")
                 {
                     op = AdditionOperation.Value;
@@ -316,32 +300,32 @@ namespace MetaphysicsIndustries.Solus
             return subexprs[0];
         }
 
-        public Expression GetExpressionFromSubexpr(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromSubexpr(Span span)
         {
             var sub = span.Subspans[0];
 
-            return GetExpressionFromSubexprPart(sub, env);
+            return GetExpressionFromSubexprPart(sub);
         }
 
-        public Expression GetExpressionFromSubexprPart(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromSubexprPart(Span span)
         {
             var defref = span.DefRef;
             if (defref == _grammar.def_paren)
-                return GetExpressionFromExpr(span.Subspans[1], env);
+                return GetExpressionFromExpr(span.Subspans[1]);
             if (defref == _grammar.def_number)
                 return GetLiteralFromNumber(span);
             if (defref == _grammar.def_string)
                 return GetLiteralFromString(span);
             if (defref == _grammar.def_unary_002D_op)
-                return GetExpressionFromUnaryop(span, env);
+                return GetExpressionFromUnaryop(span);
             if (defref == _grammar.def_varref)
-                return GetVariableAccessFromVarref(span, env);
+                return GetVariableAccessFromVarref(span);
             if (defref == _grammar.def_array_002D_literal)
-                return GetTensorExpressionFromArrayLiteral(span, env);
+                return GetTensorExpressionFromArrayLiteral(span);
             if (defref == _grammar.
                 def_function_002D_call_002D_or_002D_component_002D_access)
                 return GetExpressionFromFunctionCallOrComponentAccess(
-                    span, env);
+                    span);
             throw new ParseException(-1,
                 $"Unknown subexpression, \"{defref}\"");
         }
@@ -546,9 +530,9 @@ namespace MetaphysicsIndustries.Solus
             return new Literal(value.ToStringValue());
         }
 
-        public Expression GetExpressionFromUnaryop(Span span, SolusEnvironment env)
+        public Expression GetExpressionFromUnaryop(Span span)
         {
-            Expression arg = GetExpressionFromSubexprPart(span.Subspans[1], env);
+            Expression arg = GetExpressionFromSubexprPart(span.Subspans[1]);
 
             if (span.Subspans[0].Value == "-")
             {
@@ -558,15 +542,14 @@ namespace MetaphysicsIndustries.Solus
             return arg;
         }
 
-        public VariableAccess GetVariableAccessFromVarref(Span span, SolusEnvironment env)
+        public VariableAccess GetVariableAccessFromVarref(Span span)
         {
             string varname = span.Subspans[0].Value;
 
             return new VariableAccess(varname);
         }
 
-        public TensorExpression GetTensorExpressionFromArrayLiteral(Span span,
-            SolusEnvironment env)
+        public TensorExpression GetTensorExpressionFromArrayLiteral(Span span)
         {
             var components = new List<List<Expression>>();
 
@@ -581,7 +564,7 @@ namespace MetaphysicsIndustries.Solus
             {
                 if (sub.Node is DefRefNode defref &&
                     defref.DefRef == _grammar.def_expr)
-                    AddComponent(GetExpressionFromExpr(sub, env));
+                    AddComponent(GetExpressionFromExpr(sub));
                 if (sub.Node == _grammar.node_array_002D_literal_5__003B_ ||
                     sub.Node == _grammar.node_array_002D_literal_10__003B_)
                     components.Add(new List<Expression>());
@@ -609,19 +592,19 @@ namespace MetaphysicsIndustries.Solus
         }
 
         public Expression GetExpressionFromFunctionCallOrComponentAccess(
-            Span span, SolusEnvironment env)
+            Span span)
         {
-            var expr = GetExpressionFromCallCompSubexpr(span.Subspans[0], env);
+            var expr = GetExpressionFromCallCompSubexpr(span.Subspans[0]);
             foreach (var sub in span.Subspans.Skip(1))
             {
                 if (sub.DefRef == _grammar.def_array_002D_index)
                 {
-                    var indexes = GetExpressionsFromArrayIndex(sub, env);
+                    var indexes = GetExpressionsFromArrayIndex(sub);
                     expr = new ComponentAccess(expr, indexes);
                 }
                 else
                 {
-                    var args = GetExpressionsFromCallArgs(sub, env);
+                    var args = GetExpressionsFromCallArgs(sub);
                     expr = new FunctionCall(expr, args);
                 }
             }
@@ -629,14 +612,12 @@ namespace MetaphysicsIndustries.Solus
             return expr;
         }
 
-        public Expression GetExpressionFromCallCompSubexpr(Span span,
-            SolusEnvironment env)
+        public Expression GetExpressionFromCallCompSubexpr(Span span)
         {
-            return GetExpressionFromSubexprPart(span.Subspans[0], env);
+            return GetExpressionFromSubexprPart(span.Subspans[0]);
         }
 
-        public IEnumerable<Expression> GetExpressionsFromArrayIndex(Span span,
-            SolusEnvironment env)
+        public IEnumerable<Expression> GetExpressionsFromArrayIndex(Span span)
         {
             var indexes = new List<Expression>();
             foreach (var sub in span.Subspans)
@@ -644,15 +625,14 @@ namespace MetaphysicsIndustries.Solus
                 if (sub.Node == _grammar.node_array_002D_index_1_expr ||
                     sub.Node == _grammar.node_array_002D_index_3_expr)
                 {
-                    indexes.Add(GetExpressionFromExpr(sub, env));
+                    indexes.Add(GetExpressionFromExpr(sub));
                 }
             }
 
             return indexes;
         }
 
-        public IEnumerable<Expression> GetExpressionsFromCallArgs(Span span,
-            SolusEnvironment env)
+        public IEnumerable<Expression> GetExpressionsFromCallArgs(Span span)
         {
             var args = new List<Expression>();
             foreach (var sub in span.Subspans)
@@ -660,29 +640,28 @@ namespace MetaphysicsIndustries.Solus
                 if (sub.Node == _grammar.node_call_002D_args_1_arg ||
                     sub.Node == _grammar.node_call_002D_args_3_arg)
                 {
-                    args.Add(GetExpressionFromExpr(sub, env));
+                    args.Add(GetExpressionFromExpr(sub));
                 }
             }
 
             return args;
         }
 
-        public VarIntervalExpression GetVarIntervalFromVarInterval(Span span,
-            SolusEnvironment env)
+        public VarIntervalExpression GetVarIntervalFromVarInterval(Span span)
         {
             if (span.Subspans[0].Node ==
                 _grammar.node_var_002D_interval_0_varref)
             {
                 // var in [lower,upper)
                 var varname = span.Subspans[0].Subspans[0].Value;
-                var interval = GetIntervalFromInterval(span.Subspans[2], env);
+                var interval = GetIntervalFromInterval(span.Subspans[2]);
                 return new VarIntervalExpression(varname, interval);
             }
             else
             {
                 // lower <= var <= upper
 
-                var lower = GetExpressionFromExpr(span.Subspans[0], env);
+                var lower = GetExpressionFromExpr(span.Subspans[0]);
 
                 var openLower = (span.Subspans[1].Value == "<");
 
@@ -690,7 +669,7 @@ namespace MetaphysicsIndustries.Solus
 
                 var openUpper = (span.Subspans[3].Value == "<");
 
-                var upper = GetExpressionFromExpr(span.Subspans[4], env);
+                var upper = GetExpressionFromExpr(span.Subspans[4]);
 
                 return new VarIntervalExpression(
                     varname,
@@ -699,12 +678,11 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public IntervalExpression GetIntervalFromInterval(Span span,
-            SolusEnvironment env)
+        public IntervalExpression GetIntervalFromInterval(Span span)
         {
             var openLower = (span.Subspans[0].Value == "(");
-            var lower = GetExpressionFromExpr(span.Subspans[1], env);
-            var upper = GetExpressionFromExpr(span.Subspans[3], env);
+            var lower = GetExpressionFromExpr(span.Subspans[1]);
+            var upper = GetExpressionFromExpr(span.Subspans[3]);
             var openUpper = (span.Subspans[4].Value == ")");
 
             return new IntervalExpression(
