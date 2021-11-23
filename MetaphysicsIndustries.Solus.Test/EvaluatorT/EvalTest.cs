@@ -317,6 +317,69 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
         }
 
         [Test]
+        public void FunctionCallWithVariableTargetYieldsValue()
+        {
+            // given
+            var mf = new MockFunction(new[] { Types.Scalar }, "f")
+            {
+                CallF = args => args.First()
+            };
+            var expr = new FunctionCall(new VariableAccess("f"),
+                new Expression[] { new Literal(5) });
+            var eval = new Evaluator();
+            var env = new SolusEnvironment();
+            env.SetVariable("f", mf);
+            // when
+            var result0 = eval.Eval(expr, env);
+            // then
+            Assert.IsNotNull(result0);
+            Assert.IsTrue(result0.IsConcrete);
+            Assert.IsTrue(result0.IsIsScalar(null));
+            Assert.IsInstanceOf<Number>(result0);
+            var result = result0.ToNumber();
+            Assert.AreEqual(5, result.Value);
+        }
+
+        [Test]
+        [Ignore("IfMacro currently returns a Literal, which confuses " +
+                "MultiplicationOperation")]
+        public void RecursiveFunctionYieldsValue()
+        {
+            // given
+            // factorial
+            // f(x) := if( x<=1, 1, x * f(x-1) )
+            var udf = new UserDefinedFunction("f", new[] { "x" },
+                new FunctionCall(
+                    new VariableAccess("if"),
+                    new FunctionCall(
+                        LessThanOrEqualComparisonOperation.Value,
+                        new VariableAccess("x"),
+                        new Literal(1)),
+                    new Literal(1),
+                    new FunctionCall(
+                        MultiplicationOperation.Value,
+                        new VariableAccess("x"),
+                        new FunctionCall(
+                            new VariableAccess("f"),
+                            new FunctionCall(
+                                AdditionOperation.Value,
+                                new VariableAccess("x"),
+                                new Literal(-1))))));
+            var env = new SolusEnvironment();
+            env.SetVariable("f", udf);
+            var eval = new Evaluator();
+            var expr = new FunctionCall(
+                new VariableAccess("f"),
+                new Literal(2));
+            // when
+            var result = eval.Eval(expr, env);
+            // then
+            Assert.IsInstanceOf<Number>(result);
+            var n = (Number)result;
+            Assert.AreEqual(2, n.Value);
+        }
+
+        [Test]
         public void VariableAccessGetsLiteralFromEnv()
         {
             // given
