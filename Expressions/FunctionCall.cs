@@ -68,6 +68,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
             Init(function, args.ToArray());
         }
 
+        public FunctionCall(Expression function, params Expression[] args)
+        {
+            Init(function, args);
+        }
+
         public override Expression Clone()
         {
             FunctionCall ret = new FunctionCall(Function,
