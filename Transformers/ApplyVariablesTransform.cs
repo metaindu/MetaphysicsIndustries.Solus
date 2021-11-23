@@ -60,8 +60,9 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         private Expression Transform(FunctionCall func, SolusEnvironment env)
         {
+            var f = Transform(func.Function, env);
             var transformedArgs = new List<Expression>();
-            var allSame = true;
+            var allSame = f == func.Function;
             foreach (var argument in func.Arguments)
             {
                 var expr = Transform(argument, env);
@@ -70,7 +71,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
             }
 
             if (allSame) return func;
-            return new FunctionCall(func.Function, transformedArgs);
+            return new FunctionCall(f, transformedArgs);
         }
 
         private Expression Transform(VariableAccess va, SolusEnvironment env)
