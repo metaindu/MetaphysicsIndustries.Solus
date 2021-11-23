@@ -244,9 +244,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return f.ToString(Arguments);
             }
 
+            var name = "[unknown function]";
+            if (expr is VariableAccess va)
+                name = va.VariableName;
+
             var exprs = Arguments.ToArray();
             var strs = Array.ConvertAll(exprs, Expression.ToString);
-            return "[unknown function](" + string.Join(", ", strs) + ")";
+            return $"{name}(" + string.Join(", ", strs) + ")";
         }
 
         private IMathObject[] _argumentResultCache;
