@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
@@ -54,6 +55,14 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         public Expression CleanUpFunctionCall(FunctionCall fc)
         {
+            var expr = fc.Function;
+            if (!(expr is Literal literal))
+                return fc;
+            if (!literal.Value.IsIsFunction(null))
+                throw new OperandException(
+                    "Call target is not a function");
+            var f = (Function)literal.Value;
+
             Expression[] args = fc.Arguments.ToArray();
             List<Expression> cleanArgs = new List<Expression>(args.Length);
             foreach (Expression arg in args)
@@ -63,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
             }
             args = cleanArgs.ToArray();
 
-            return CleanUpFunctionArgs(fc.Function, args) ?? fc;
+            return CleanUpFunctionArgs(f, args) ?? fc;
         }
 
 

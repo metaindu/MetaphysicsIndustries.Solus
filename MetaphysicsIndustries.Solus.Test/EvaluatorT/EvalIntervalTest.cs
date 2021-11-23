@@ -193,7 +193,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             // given
             var parser = new SolusParser();
             var env = new SolusEnvironment();
-            var expr = parser.GetExpression("x*e^(-x*x-y*y)", env);
+            var expr = parser.GetExpression("x*e^(-x*x-y*y)");
             var interval1 = new VarInterval("x", -2, 2);
             var interval2 = new VarInterval("y", -2, 2);
             float[,] values = null;

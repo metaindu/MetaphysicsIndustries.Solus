@@ -31,7 +31,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -39,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
     {
         public FunctionCall()
         {
-            this.Init(null, null);
+            this.Init((Expression)null, null);
         }
 
         public FunctionCall(Function function, IEnumerable<Expression> args)
@@ -54,6 +56,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             if (function == null) { throw new ArgumentNullException("function"); }
 
+            Init(function, args);
+        }
+
+        public FunctionCall(Expression function, IEnumerable<Expression> args)
+        {
+            if (function == null)
+                throw new ArgumentNullException(nameof(function));
+            if (args == null) throw new ArgumentNullException(nameof(args));
+
+            Init(function, args.ToArray());
+        }
+
+        public FunctionCall(Expression function, params Expression[] args)
+        {
             Init(function, args);
         }
 
@@ -111,12 +127,23 @@ namespace MetaphysicsIndustries.Solus.Expressions
         // Warning: Not thread-safe
         public virtual IMathObject Call(SolusEnvironment env)
         {
+            var f0 = Function.Eval(env);
+            if (!f0.IsIsFunction(env) &&
+                !(f0 is Macro))
+                throw new OperandException(
+                    "Call target is not a function or macro");
+
+            if (f0 is Macro macro)
+                return macro.Call(Arguments, env);
+
+            var f = (Function)f0;
+
             if (_evaledArgsCache.Length < Arguments.Count)
                 _evaledArgsCache = new IMathObject[Arguments.Count];
             int i;
             for (i = 0; i < Arguments.Count; i++)
                 _evaledArgsCache[i] = Arguments[i].Eval(env);
-            return Function.Call(env, _evaledArgsCache);
+            return f.Call(env, _evaledArgsCache);
         }
 
         public virtual List<Expression> Arguments
@@ -128,7 +155,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public Function Function
+        public Expression Function
         {
             get
             {
@@ -139,7 +166,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (_function != value)
                 {
                     _function = value;
-                    this.OnFunctionChanged(new EventArgs());
+                    this.OnFunctionChanged(EventArgs.Empty);
                 }
             }
         }
@@ -154,17 +181,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        protected void Init(Function function, Expression[] args)
+        private void Init(Function function, Expression[] args) =>
+            Init(new Literal(function), args);
+
+        private void Init(Expression function, Expression[] args)
         {
             _function = function;
-
             if (args != null)
-            {
                 _arguments.AddRange(args);
-            }
         }
 
-        private Function _function;
+        private Expression _function;
         private List<Expression> _arguments = new List<Expression>();
 
         protected override void InternalApplyToExpressionTree(SolusAction action, bool applyToChildrenBeforeParent)
@@ -187,34 +214,43 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override Expression Simplify(SolusEnvironment env)
         {
+            var function = Function.Simplify(env);
             var args = Arguments.Select(
                 a => a.Simplify(env)).ToArray();
             var allLiterals = args.All(a => a is Literal);
-            if (allLiterals)
+            if (allLiterals &&
+                function is Literal literal &&
+                literal.Value.IsIsFunction(env))
             {
+                var f = (Function)literal.Value;
                 var args2 = args.Select(
-                    a => ((Literal) a).Value);
-                var result = Function.Call(env, args2.ToArray());
+                    a => ((Literal)a).Value);
+                var result = f.Call(env, args2.ToArray());
                 return new Literal(result);
             }
-            else
-            {
-                return new FunctionCall(Function, args.ToArray());
-            }
+
+            return new FunctionCall(function, args.ToArray());
         }
 
         public override string ToString()
         {
-            if (Function != null)
+            if (Function == null) return "[call to null]";
+
+            var expr = Function;
+            if (expr is Literal literal &&
+                literal.Value.IsIsFunction(null))
             {
-                return Function.ToString(Arguments);
+                var f = (Function)literal.Value;
+                return f.ToString(Arguments);
             }
-            else
-            {
-                Expression[] exprs = Arguments.ToArray();
-                string[] strs = Array.ConvertAll<Expression, string>(exprs, Expression.ToString);
-                return "[unknown function](" + string.Join(", ", strs) + ")";
-            }
+
+            var name = "[unknown function]";
+            if (expr is VariableAccess va)
+                name = va.VariableName;
+
+            var exprs = Arguments.ToArray();
+            var strs = Array.ConvertAll(exprs, Expression.ToString);
+            return $"{name}(" + string.Join(", ", strs) + ")";
         }
 
         private IMathObject[] _argumentResultCache;
@@ -223,13 +259,18 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             get
             {
+                if (!(Function is Expression expr) ||
+                    !(expr is Literal literal) ||
+                    !(literal.Value is Function f))
+                    return null;
+
                 if (_argumentResultCache == null ||
                     _argumentResultCache.Length < Arguments.Count)
                     _argumentResultCache = new IMathObject[Arguments.Count];
                 int i;
                 for (i = 0; i < Arguments.Count; i++)
                     _argumentResultCache[i] = Arguments[i].Result;
-                return Function.GetResult(_argumentResultCache);
+                return f.GetResult(_argumentResultCache);
             }
         }
     }

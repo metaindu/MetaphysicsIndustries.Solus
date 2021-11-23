@@ -48,8 +48,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             int i;
             for (i = 0; i < Argnames.Length; i++)
             {
-                env2.SetVariable(Argnames[i],
-                    new Literal(args[i].ToNumber().Value));
+                env2.SetVariable(Argnames[i], new Literal(args[i]));
             }
 
             return Expression.Eval(env2);

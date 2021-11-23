@@ -38,7 +38,6 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             //given
             SolusParser parser = new SolusParser();
-            SolusEnvironment env = new SolusEnvironment();
             // when
             var expr = parser.GetExpression("2 + 2");
             // then
@@ -63,13 +62,17 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[0]);
             Assert.AreEqual("a", (fcall.Arguments[0] as VariableAccess).VariableName);
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             var fcall2 = (FunctionCall)fcall.Arguments[1];
-            Assert.AreSame(AdditionOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall2.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
             Assert.AreEqual(2.0f,
@@ -87,8 +90,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-
-            Assert.IsInstanceOf(typeof(AdditionOperation), fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.IsInstanceOf(typeof(AdditionOperation), literal.Value);
             Assert.GreaterOrEqual(fcall.Arguments.Count, 4);
             Assert.LessOrEqual(fcall.Arguments.Count, 6);
 
@@ -123,8 +127,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-
-            Assert.AreSame(AdditionOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
@@ -136,7 +141,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[2]);
             var fcall2 = (FunctionCall)fcall.Arguments[2];
-            Assert.AreSame(MultiplicationOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(4, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
@@ -163,8 +170,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-
-            Assert.AreSame(AdditionOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
@@ -174,7 +182,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             var fcall2 = (FunctionCall)fcall.Arguments[1];
-            Assert.AreSame(MultiplicationOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(4, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[0]);
@@ -205,12 +215,16 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.AreSame(AdditionOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             var fcall2 = (FunctionCall)fcall.Arguments[0];
-            Assert.AreSame(MultiplicationOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(4, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
@@ -244,12 +258,16 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.AreSame(AdditionOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             var fcall2 = (FunctionCall)fcall.Arguments[0];
-            Assert.AreSame(MultiplicationOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(3, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
@@ -271,7 +289,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[2]);
             fcall2 = (FunctionCall)fcall.Arguments[2];
-            Assert.AreSame(MultiplicationOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
@@ -291,12 +311,16 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.AreSame(AdditionOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(3, fcall.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             var fcall2 = (FunctionCall)fcall.Arguments[0];
-            Assert.AreSame(MultiplicationOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(Literal), fcall2.Arguments[0]);
@@ -314,7 +338,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[2]);
             fcall2 = (FunctionCall)fcall.Arguments[2];
-            Assert.AreSame(MultiplicationOperation.Value, fcall2.Function);
+            Assert.IsInstanceOf<Literal>(fcall2.Function);
+            literal = (Literal)fcall2.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(3, fcall2.Arguments.Count);
 
             Assert.IsInstanceOf(typeof(VariableAccess), fcall2.Arguments[0]);
@@ -337,33 +363,43 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.AreSame(BitwiseOrOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(BitwiseOrOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.AreEqual(1.0f,
                 ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
-            Assert.AreSame(BitwiseAndOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(BitwiseAndOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[0]);
             Assert.AreEqual("a", (fcall.Arguments[0] as VariableAccess).VariableName);
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
-            Assert.AreSame(AdditionOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.AreEqual(2.0f,
                 ((Literal) fcall.Arguments[0]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
-            Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[0]);
             Assert.AreEqual("b", (fcall.Arguments[0] as VariableAccess).VariableName);
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[1]);
             fcall = (FunctionCall)(fcall.Arguments[1]);
-            Assert.AreSame(ExponentOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(ExponentOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[0]);
             Assert.AreEqual(3.0f,
@@ -382,33 +418,43 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (expr as FunctionCall);
-            Assert.AreSame(BitwiseOrOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(BitwiseOrOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("c", (fcall.Arguments[1] as VariableAccess).VariableName);
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
-            Assert.AreSame(BitwiseAndOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(BitwiseAndOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
             Assert.AreEqual(3.0f,
                 ((Literal) fcall.Arguments[1]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
-            Assert.AreSame(AdditionOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(AdditionOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("b", (fcall.Arguments[1] as VariableAccess).VariableName);
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
-            Assert.AreSame(MultiplicationOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(MultiplicationOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(Literal), fcall.Arguments[1]);
             Assert.AreEqual(2.0f,
                 ((Literal) fcall.Arguments[1]).Value.ToFloat());
             Assert.IsInstanceOf(typeof(FunctionCall), fcall.Arguments[0]);
             fcall = (fcall.Arguments[0] as FunctionCall);
-            Assert.AreSame(ExponentOperation.Value, fcall.Function);
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            literal = (Literal)fcall.Function;
+            Assert.AreSame(ExponentOperation.Value, literal.Value);
             Assert.AreEqual(2, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[1]);
             Assert.AreEqual("a", (fcall.Arguments[1] as VariableAccess).VariableName);
@@ -421,41 +467,50 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         public void TestFunctionCall1()
         {
             var parser = new SolusParser();
-            SolusEnvironment env = new SolusEnvironment();
-            env.SetVariable("pi", new Literal((float) Math.PI));
 
             var expr = parser.GetExpression("sin(pi)", cleanup: false);
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (FunctionCall)expr;
-            Assert.IsInstanceOf(typeof(SineFunction), fcall.Function);
+            Assert.IsInstanceOf<VariableAccess>(fcall.Function);
+            var va = (VariableAccess)fcall.Function;
+            Assert.AreEqual("sin", va.VariableName);
             Assert.AreEqual(1, fcall.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fcall.Arguments[0]);
-            var va = (VariableAccess)fcall.Arguments[0];
+            va = (VariableAccess)fcall.Arguments[0];
             Assert.AreEqual("pi", va.VariableName);
         }
 
         [Test]
-        public void TestFunctionCall2()
+        public void TestMacroCall2()
         {
+            // given
             var parser = new SolusParser();
-
+            // when
             var expr = parser.GetExpression("derive(x, x)", cleanup: false);
-
-            Assert.IsInstanceOf(typeof(Literal), expr);
-            Assert.AreEqual(1f, ((Literal) expr).Value.ToFloat());
+            // then
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var call = (FunctionCall)expr;
+            Assert.IsInstanceOf<VariableAccess>(call.Function);
+            var target = (VariableAccess)call.Function;
+            Assert.AreEqual("derive", target.VariableName);
+            Assert.AreEqual(2, call.Arguments.Count);
         }
 
         [Test]
-        public void TestFunctionCall3()
+        public void TestMacroCall3()
         {
+            // given
             var parser = new SolusParser();
-
+            // when
             var expr = parser.GetExpression("if(1, 2, 3)", cleanup: false);
-
-            Assert.IsInstanceOf(typeof(Literal), expr);
-            var literal = (Literal) expr;
-            Assert.AreEqual(2, literal.Value.ToFloat());
+            // then
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            var call = (FunctionCall)expr;
+            Assert.IsInstanceOf<VariableAccess>(call.Function);
+            var target = (VariableAccess)call.Function;
+            Assert.AreEqual("if", target.VariableName);
+            Assert.AreEqual(3, call.Arguments.Count);
         }
 
         [Test]
@@ -464,14 +519,14 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // given
             var parser = new SolusParser();
             var f = SineFunction.Value;
-            var env = new SolusEnvironment();
-            env.SetVariable("f", f);
             // when
-            var expr = parser.GetExpression("f(0)", env);
+            var expr = parser.GetExpression("f(0)");
             // then
             Assert.IsInstanceOf<FunctionCall>(expr);
             var fc = (FunctionCall)expr;
-            Assert.AreSame(f, fc.Function);
+            Assert.IsInstanceOf<VariableAccess>(fc.Function);
+            var va = (VariableAccess)fc.Function;
+            Assert.AreEqual("f", va.VariableName);
             Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
             Assert.AreEqual(0,
                 ((Literal)fc.Arguments[0]).Value.ToNumber().Value);
@@ -503,11 +558,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             var parser = new SolusParser();
             var func = new CustomAsdfFunction();
-            SolusEnvironment env = new SolusEnvironment();
-            env.SetVariable(func.DisplayName, func);
 
-
-            var expr = parser.GetExpression("asdf(1, 2)", env: env, cleanup: false);
+            var expr = parser.GetExpression("asdf(1, 2)", cleanup: false);
 
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
             var fcall = (expr as FunctionCall);
@@ -549,11 +601,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             // given
             var parser = new SolusParser();
-            var func = new CountArgsFunction();
-            var env = new SolusEnvironment();
-            env.SetVariable(func.DisplayName, func);
             // when
-            var expr = parser.GetExpression("count()", env: env,
+            var expr = parser.GetExpression("count()",
                 cleanup: false);
             // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
@@ -566,11 +615,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             // given
             var parser = new SolusParser();
-            var func = new CountArgsFunction();
-            var env = new SolusEnvironment();
-            env.SetVariable(func.DisplayName, func);
             // when
-            var expr = parser.GetExpression("count(1)", env: env,
+            var expr = parser.GetExpression("count(1)",
                 cleanup: false);
             // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
@@ -586,11 +632,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             // given
             var parser = new SolusParser();
-            var func = new CountArgsFunction();
-            var env = new SolusEnvironment();
-            env.SetVariable(func.DisplayName, func);
             // when
-            var expr = parser.GetExpression("count(1, 2)", env: env,
+            var expr = parser.GetExpression("count(1, 2)",
                 cleanup: false);
             // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
@@ -609,11 +652,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             // given
             var parser = new SolusParser();
-            var func = new CountArgsFunction();
-            var env = new SolusEnvironment();
-            env.SetVariable(func.DisplayName, func);
             // when
-            var expr = parser.GetExpression("count(1, 2, 3)", env: env,
+            var expr = parser.GetExpression("count(1, 2, 3)",
                 cleanup: false);
             // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
@@ -635,11 +675,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         {
             // given
             var parser = new SolusParser();
-            var func = new CountArgsFunction();
-            var env = new SolusEnvironment();
-            env.SetVariable(func.DisplayName, func);
             // when
-            var expr = parser.GetExpression("count(1, 2, 3, 4)", env: env,
+            var expr = parser.GetExpression("count(1, 2, 3, 4)",
                 cleanup: false);
             // then
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
@@ -660,6 +697,96 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
+        public void MultipleParensYieldsNestedFunctionCalls()
+        {
+            // given
+            var parser = new SolusParser();
+            // when
+            var expr = parser.GetExpression(
+                "f(1)(2,3)");
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var call1 = (FunctionCall)expr;
+            Assert.AreEqual(2, call1.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call1.Function);
+            var call2 = (FunctionCall)call1.Function;
+            Assert.AreEqual(1, call2.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(call2.Function);
+        }
+
+        [Test]
+        public void FunctionCallInParensIsValidCallTarget()
+        {
+            // given
+            var parser = new SolusParser();
+            // when
+            var expr = parser.GetExpression(
+                "(f(1))(2,3)");
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var call1 = (FunctionCall)expr;
+            Assert.AreEqual(2, call1.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call1.Function);
+            var call2 = (FunctionCall)call1.Function;
+            Assert.AreEqual(1, call2.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(call2.Function);
+        }
+
+        [Test]
+        public void ComponentAccessInParensIsValidCallTarget()
+        {
+            // given
+            var parser = new SolusParser();
+            // when
+            var expr = parser.GetExpression(
+                "(a[1])(2,3)");
+            // then
+            Assert.IsInstanceOf(typeof(FunctionCall), expr);
+            var call1 = (FunctionCall)expr;
+            Assert.AreEqual(2, call1.Arguments.Count);
+            Assert.IsInstanceOf<ComponentAccess>(call1.Function);
+            var ca = (ComponentAccess)call1.Function;
+            Assert.AreEqual(1, ca.Indexes.Count);
+            Assert.IsInstanceOf<VariableAccess>(ca.Expr);
+        }
+
+        [Test]
+        public void InterleavedComponentAccessAndFunctionCallAreValid()
+        {
+            // given
+            var parser = new SolusParser();
+            // when
+            var expr = parser.GetExpression(
+                "a[1](2,3)[4,5,6](7,8,9,0)()");
+            // then
+            FunctionCall call = null;
+            ComponentAccess ca = null;
+            Assert.IsInstanceOf<FunctionCall>(expr);
+            call = (FunctionCall)expr;
+            Assert.AreEqual(0,call.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call.Function);
+
+            call = (FunctionCall)call.Function;
+            Assert.AreEqual(4,call.Arguments.Count);
+            Assert.IsInstanceOf<ComponentAccess>(call.Function);
+
+            ca =(ComponentAccess)call.Function;
+            Assert.AreEqual(3,ca.Indexes.Count);
+            Assert.IsInstanceOf<FunctionCall>(ca.Expr);
+
+            call = (FunctionCall)ca.Expr;
+            Assert.AreEqual(2,call.Arguments.Count);
+            Assert.IsInstanceOf<ComponentAccess>(call.Function);
+
+            ca = (ComponentAccess)call.Function;
+            Assert.AreEqual(1, ca.Indexes.Count);
+            Assert.IsInstanceOf<VariableAccess>(ca.Expr);
+
+            var va = (VariableAccess)ca.Expr;
+            Assert.AreEqual("a", va.VariableName);
+        }
+
+        [Test]
         public void TestUnaryNegativeVarref()
         {
             // setup
@@ -670,8 +797,10 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
 
             // assertions
             Assert.IsInstanceOf(typeof(FunctionCall), expr);
-            var fcall = (expr as FunctionCall);
-            Assert.AreSame(NegationOperation.Value, fcall.Function);
+            var fcall = (FunctionCall)expr;
+            Assert.IsInstanceOf<Literal>(fcall.Function);
+            var literal = (Literal)fcall.Function;
+            Assert.AreSame(NegationOperation.Value, literal.Value);
             Assert.AreEqual(1, fcall.Arguments.Count);
             Assert.IsInstanceOf(typeof(VariableAccess), fcall.Arguments[0]);
             Assert.AreEqual("a", (fcall.Arguments[0] as VariableAccess).VariableName);
@@ -938,7 +1067,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
             var fc = (FunctionCall) result;
-            Assert.AreSame(EqualComparisonOperation.Value, fc.Function);
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
+            Assert.AreSame(EqualComparisonOperation.Value, literal.Value);
             Assert.AreEqual(2, fc.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
             Assert.AreEqual("a",
@@ -959,7 +1090,9 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
             var fc = (FunctionCall) result;
-            Assert.AreSame(NotEqualComparisonOperation.Value, fc.Function);
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
+            Assert.AreSame(NotEqualComparisonOperation.Value, literal.Value);
             Assert.AreEqual(2, fc.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
             Assert.AreEqual("a",
@@ -980,7 +1113,10 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
             var fc = (FunctionCall) result;
-            Assert.AreSame(LessThanComparisonOperation.Value, fc.Function);
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
+            Assert.AreSame(LessThanComparisonOperation.Value,
+                literal.Value);
             Assert.AreEqual(2, fc.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
             Assert.AreEqual("a",
@@ -1001,8 +1137,10 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
             var fc = (FunctionCall) result;
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
             Assert.AreSame(LessThanOrEqualComparisonOperation.Value,
-                fc.Function);
+                literal.Value);
             Assert.AreEqual(2, fc.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
             Assert.AreEqual("a",
@@ -1023,8 +1161,10 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
             var fc = (FunctionCall) result;
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
             Assert.AreSame(GreaterThanComparisonOperation.Value,
-                fc.Function);
+                literal.Value);
             Assert.AreEqual(2, fc.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
             Assert.AreEqual("a",
@@ -1045,8 +1185,10 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
             var fc = (FunctionCall) result;
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
             Assert.AreSame(GreaterThanOrEqualComparisonOperation.Value,
-                fc.Function);
+                literal.Value);
             Assert.AreEqual(2, fc.Arguments.Count);
             Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
             Assert.AreEqual("a",
@@ -1069,7 +1211,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             cs.AddCommand(VarAssignCommand.Value);
             cs.AddCommand(VarsCommand.Value);
             // when
-            var result = parser.GetCommands(input, null, cs);
+            var result = parser.GetCommands(input, cs);
             // then
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Length);
@@ -1097,7 +1239,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             cs.AddCommand(VarAssignCommand.Value);
             cs.AddCommand(VarsCommand.Value);
             // when
-            var result = parser.GetCommands(input, null, cs);
+            var result = parser.GetCommands(input, cs);
             // then
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Length);

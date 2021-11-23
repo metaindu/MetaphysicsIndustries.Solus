@@ -80,7 +80,7 @@ namespace solus
                     var eval = new Evaluator();
                     foreach (var exprString in exprStrings)
                     {
-                        var expr = parser.GetExpression(exprString, env);
+                        var expr = parser.GetExpression(exprString);
                         var result = eval.Eval(expr, env);
                         Console.WriteLine(result);
                     }
@@ -142,7 +142,7 @@ namespace solus
 
                 try
                 {
-                    commandDatas = parser.GetCommands(line, env, cs);
+                    commandDatas = parser.GetCommands(line, cs);
                 }
                 catch (Exception _ex)
                 {
@@ -153,7 +153,7 @@ namespace solus
                 {
                     try
                     {
-                        expr = parser.GetExpression(line, env);
+                        expr = parser.GetExpression(line);
                         ex = null;
                     }
                     catch (Exception _ex)
