@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Transformers
 {
@@ -89,8 +88,16 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         protected Expression GetDerivativeOfFunctionCall(FunctionCall functionCall, string var)
         {
+            var expr = functionCall.Function;
+            if (!(expr is Literal literal))
+                throw new NotImplementedException(
+                    "Evaluated call target not yet implemented");
+            if (!literal.Value.IsIsFunction(null))
+                throw new OperandException(
+                    "Call target is not a function");
+            var function = (Function)literal.Value;
 
-            if (functionCall.Function is Operation)
+            if (function is Operation)
             {
                 return GetDerivativeOfOperation(functionCall, var);
             }
@@ -98,15 +105,6 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 Expression functionDerivative;
                 Expression argumentDerivative;
-
-                var expr = functionCall.Function;
-                if (!(expr is Literal literal))
-                    throw new NotImplementedException(
-                        "Evaluated call target not yet implemented");
-                if (!literal.Value.IsIsFunction(null))
-                    throw new OperandException(
-                        "Call target is not a function");
-                var function = (Function)literal.Value;
 
                 if (function == CosineFunction.Value)
                 {
@@ -148,13 +146,15 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         protected Expression GetDerivativeOfOperation(FunctionCall functionCall, string var)
         {
+            Function f = null;
+            if (functionCall.Function is Literal literal)
+                f = literal.Value as Function;
 
-
-            if (functionCall.Function is BinaryOperation)
+            if (f is BinaryOperation)
             {
                 return GetDerivativeOfBinaryOperation(functionCall, var);
             }
-            else if (functionCall.Function is AssociativeCommutativeOperation)
+            else if (f is AssociativeCommutativeOperation)
             {
                 return GetDerivativeOfAssociativeCommutativOperation(functionCall, var);
             }
