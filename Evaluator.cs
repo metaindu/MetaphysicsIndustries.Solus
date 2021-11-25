@@ -41,8 +41,13 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(expr.Simplify(env));
         }
 
+        public class StoreOp1
+        {
+            public float[] Values;
+        }
+
         public void EvalInterval(Expression expr, SolusEnvironment env,
-            VarInterval interval, int numSteps, ref float[] values)
+            VarInterval interval, int numSteps, StoreOp1 store)
         {
             var delta = interval.Interval.CalcDelta(numSteps);
 
@@ -53,23 +58,31 @@ namespace MetaphysicsIndustries.Solus
             var literal = new Literal(0);
             env2.SetVariable(interval.Variable, literal);
 
-            if (values == null || values.Length < numSteps)
-                values = new float[numSteps];
+            if (store != null)
+                if (store.Values == null || store.Values.Length < numSteps)
+                    store.Values = new float[numSteps];
 
             int i;
             for (i = 0; i < numSteps; i++)
             {
                 var xx = delta * i + interval.Interval.LowerBound;
                 literal.Value = xx.ToNumber();
-                values[i] = Eval(expr2, env2).ToNumber().Value;
+                var v = Eval(expr2, env2).ToNumber().Value;
+                if (store != null)
+                    store.Values[i] = v;
             }
+        }
+
+        public class StoreOp2
+        {
+            public float[,] Values;
         }
 
         public void EvalInterval(
             Expression expr, SolusEnvironment env,
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
-            ref float[,] values)
+            StoreOp2 store)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -95,12 +108,13 @@ namespace MetaphysicsIndustries.Solus
             env2.SetVariable(interval1.Variable, literal1);
             env2.SetVariable(interval2.Variable, literal2);
 
-            if (values == null ||
-                values.GetLength(0) < numSteps1 ||
-                values.GetLength(1) < numSteps2)
-            {
-                values = new float[numSteps1, numSteps2];
-            }
+            if (store != null)
+                if (store.Values == null ||
+                    store.Values.GetLength(0) < numSteps1 ||
+                    store.Values.GetLength(1) < numSteps2)
+                {
+                    store.Values = new float[numSteps1, numSteps2];
+                }
 
             for (i = 0; i < numSteps1; i++)
             {
@@ -109,9 +123,16 @@ namespace MetaphysicsIndustries.Solus
                 for (j = 0; j < numSteps2; j++)
                 {
                     literal2.Value = inputs2[j];
-                    values[i, j] = Eval(expr2, env2).ToNumber().Value;
+                    var v = Eval(expr2, env2).ToNumber().Value;
+                    if (store != null)
+                        store.Values[i, j] = v;
                 }
             }
+        }
+
+        public class StoreOp3
+        {
+            public float[,,] Values;
         }
 
         public void EvalInterval(
@@ -119,7 +140,7 @@ namespace MetaphysicsIndustries.Solus
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
             VarInterval interval3, int numSteps3,
-            ref float[,,] values)
+            StoreOp3 store)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -153,13 +174,14 @@ namespace MetaphysicsIndustries.Solus
             env2.SetVariable(interval2.Variable, literal2);
             env2.SetVariable(interval3.Variable, literal3);
 
-            if (values == null ||
-                values.GetLength(0) < numSteps1 ||
-                values.GetLength(1) < numSteps2 ||
-                values.GetLength(2) < numSteps3)
-            {
-                values = new float[numSteps1, numSteps2, numSteps3];
-            }
+            if (store != null)
+                if (store.Values == null ||
+                    store.Values.GetLength(0) < numSteps1 ||
+                    store.Values.GetLength(1) < numSteps2 ||
+                    store.Values.GetLength(2) < numSteps3)
+                {
+                    store.Values = new float[numSteps1, numSteps2, numSteps3];
+                }
 
             for (i = 0; i < numSteps1; i++)
             {
@@ -172,14 +194,16 @@ namespace MetaphysicsIndustries.Solus
                     for (k = 0; k < numSteps3; k++)
                     {
                         literal3.Value = inputs3[k];
-                        values[i, j, k] = Eval(expr2, env2).ToNumber().Value;
+                        var v = Eval(expr2, env2).ToNumber().Value;
+                        if (store != null)
+                            store.Values[i, j, k] = v;
                     }
                 }
             }
         }
 
         public void EvalMathPaint(Expression expr, SolusEnvironment env,
-            int width, int height, ref float[,] values)
+            int width, int height, StoreOp2 store)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -198,13 +222,13 @@ namespace MetaphysicsIndustries.Solus
             EvalInterval(expr, env,
                 interval1, width,
                 interval2, height,
-                ref values);
+                store);
         }
 
 
         public void EvalMathPaint3D(Expression expr,
             SolusEnvironment env, int width, int height, int numFrames,
-            ref float[,,] values)
+            StoreOp3 store)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -229,7 +253,7 @@ namespace MetaphysicsIndustries.Solus
                 interval1, width,
                 interval2, height,
                 interval3, numFrames,
-                ref values);
+                store);
         }
 
         public static string[] GatherVariables(Expression expr)

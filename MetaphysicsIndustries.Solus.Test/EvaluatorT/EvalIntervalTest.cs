@@ -42,17 +42,17 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             var interval = new VarInterval("x",
                 new Interval(2, false, 6, false, false));
             var numSteps = 5;
-            float[] values = null;
+            var store = new Evaluator.StoreOp1();
             // when
-            eval.EvalInterval(expr, env, interval, numSteps, ref values);
+            eval.EvalInterval(expr, env, interval, numSteps, store);
             // then
-            Assert.IsNotNull(values);
-            Assert.AreEqual(5, values.Length);
-            Assert.AreEqual(4, values[0]);
-            Assert.AreEqual(9, values[1]);
-            Assert.AreEqual(16, values[2]);
-            Assert.AreEqual(25, values[3]);
-            Assert.AreEqual(36, values[4]);
+            Assert.IsNotNull(store.Values);
+            Assert.AreEqual(5, store.Values.Length);
+            Assert.AreEqual(4, store.Values[0]);
+            Assert.AreEqual(9, store.Values[1]);
+            Assert.AreEqual(16, store.Values[2]);
+            Assert.AreEqual(25, store.Values[3]);
+            Assert.AreEqual(36, store.Values[4]);
         }
 
         [Test]
@@ -70,51 +70,51 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             var interval2 = new VarInterval("y",
                 new Interval(7, false, 12, false, false));
             var numSteps2 = 6;
-            float[,] values = null;
+            var store = new Evaluator.StoreOp2();
             // when
             eval.EvalInterval(expr, env,
                 interval1, numSteps1,
                 interval2, numSteps2,
-                ref values);
+                store);
             // then
-            Assert.IsNotNull(values);
-            Assert.AreEqual(5, values.GetLength(0));
-            Assert.AreEqual(6, values.GetLength(1));
+            Assert.IsNotNull(store.Values);
+            Assert.AreEqual(5, store.Values.GetLength(0));
+            Assert.AreEqual(6, store.Values.GetLength(1));
 
-            Assert.AreEqual(14, values[0, 0]);
-            Assert.AreEqual(16, values[0, 1]);
-            Assert.AreEqual(18, values[0, 2]);
-            Assert.AreEqual(20, values[0, 3]);
-            Assert.AreEqual(22, values[0, 4]);
-            Assert.AreEqual(24, values[0, 5]);
+            Assert.AreEqual(14, store.Values[0, 0]);
+            Assert.AreEqual(16, store.Values[0, 1]);
+            Assert.AreEqual(18, store.Values[0, 2]);
+            Assert.AreEqual(20, store.Values[0, 3]);
+            Assert.AreEqual(22, store.Values[0, 4]);
+            Assert.AreEqual(24, store.Values[0, 5]);
 
-            Assert.AreEqual(21, values[1, 0]);
-            Assert.AreEqual(24, values[1, 1]);
-            Assert.AreEqual(27, values[1, 2]);
-            Assert.AreEqual(30, values[1, 3]);
-            Assert.AreEqual(33, values[1, 4]);
-            Assert.AreEqual(36, values[1, 5]);
+            Assert.AreEqual(21, store.Values[1, 0]);
+            Assert.AreEqual(24, store.Values[1, 1]);
+            Assert.AreEqual(27, store.Values[1, 2]);
+            Assert.AreEqual(30, store.Values[1, 3]);
+            Assert.AreEqual(33, store.Values[1, 4]);
+            Assert.AreEqual(36, store.Values[1, 5]);
 
-            Assert.AreEqual(28, values[2, 0]);
-            Assert.AreEqual(32, values[2, 1]);
-            Assert.AreEqual(36, values[2, 2]);
-            Assert.AreEqual(40, values[2, 3]);
-            Assert.AreEqual(44, values[2, 4]);
-            Assert.AreEqual(48, values[2, 5]);
+            Assert.AreEqual(28, store.Values[2, 0]);
+            Assert.AreEqual(32, store.Values[2, 1]);
+            Assert.AreEqual(36, store.Values[2, 2]);
+            Assert.AreEqual(40, store.Values[2, 3]);
+            Assert.AreEqual(44, store.Values[2, 4]);
+            Assert.AreEqual(48, store.Values[2, 5]);
 
-            Assert.AreEqual(35, values[3, 0]);
-            Assert.AreEqual(40, values[3, 1]);
-            Assert.AreEqual(45, values[3, 2]);
-            Assert.AreEqual(50, values[3, 3]);
-            Assert.AreEqual(55, values[3, 4]);
-            Assert.AreEqual(60, values[3, 5]);
+            Assert.AreEqual(35, store.Values[3, 0]);
+            Assert.AreEqual(40, store.Values[3, 1]);
+            Assert.AreEqual(45, store.Values[3, 2]);
+            Assert.AreEqual(50, store.Values[3, 3]);
+            Assert.AreEqual(55, store.Values[3, 4]);
+            Assert.AreEqual(60, store.Values[3, 5]);
 
-            Assert.AreEqual(42, values[4, 0]);
-            Assert.AreEqual(48, values[4, 1]);
-            Assert.AreEqual(54, values[4, 2]);
-            Assert.AreEqual(60, values[4, 3]);
-            Assert.AreEqual(66, values[4, 4]);
-            Assert.AreEqual(72, values[4, 5]);
+            Assert.AreEqual(42, store.Values[4, 0]);
+            Assert.AreEqual(48, store.Values[4, 1]);
+            Assert.AreEqual(54, store.Values[4, 2]);
+            Assert.AreEqual(60, store.Values[4, 3]);
+            Assert.AreEqual(66, store.Values[4, 4]);
+            Assert.AreEqual(72, store.Values[4, 5]);
         }
 
         [Test]
@@ -136,54 +136,54 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             var interval3 = new VarInterval("z",
                 new Interval(7, false, 11, false, false));
             var numSteps3 = 5;
-            float[,,] values = null;
+            var store = new Evaluator.StoreOp3();
             // when
             eval.EvalInterval(expr, env,
                 interval1, numSteps1,
                 interval2, numSteps2,
                 interval3, numSteps3,
-                ref values);
+                store);
             // then
-            Assert.IsNotNull(values);
-            Assert.AreEqual(2, values.GetLength(0));
-            Assert.AreEqual(3, values.GetLength(1));
-            Assert.AreEqual(5, values.GetLength(2));
+            Assert.IsNotNull(store.Values);
+            Assert.AreEqual(2, store.Values.GetLength(0));
+            Assert.AreEqual(3, store.Values.GetLength(1));
+            Assert.AreEqual(5, store.Values.GetLength(2));
 
-            Assert.AreEqual(56, values[0, 0, 0]);
-            Assert.AreEqual(64, values[0, 0, 1]);
-            Assert.AreEqual(72, values[0, 0, 2]);
-            Assert.AreEqual(80, values[0, 0, 3]);
-            Assert.AreEqual(88, values[0, 0, 4]);
+            Assert.AreEqual(56, store.Values[0, 0, 0]);
+            Assert.AreEqual(64, store.Values[0, 0, 1]);
+            Assert.AreEqual(72, store.Values[0, 0, 2]);
+            Assert.AreEqual(80, store.Values[0, 0, 3]);
+            Assert.AreEqual(88, store.Values[0, 0, 4]);
 
-            Assert.AreEqual(70, values[0, 1, 0]);
-            Assert.AreEqual(80, values[0, 1, 1]);
-            Assert.AreEqual(90, values[0, 1, 2]);
-            Assert.AreEqual(100, values[0, 1, 3]);
-            Assert.AreEqual(110, values[0, 1, 4]);
+            Assert.AreEqual(70, store.Values[0, 1, 0]);
+            Assert.AreEqual(80, store.Values[0, 1, 1]);
+            Assert.AreEqual(90, store.Values[0, 1, 2]);
+            Assert.AreEqual(100, store.Values[0, 1, 3]);
+            Assert.AreEqual(110, store.Values[0, 1, 4]);
 
-            Assert.AreEqual(84, values[0, 2, 0]);
-            Assert.AreEqual(96, values[0, 2, 1]);
-            Assert.AreEqual(108, values[0, 2, 2]);
-            Assert.AreEqual(120, values[0, 2, 3]);
-            Assert.AreEqual(132, values[0, 2, 4]);
+            Assert.AreEqual(84, store.Values[0, 2, 0]);
+            Assert.AreEqual(96, store.Values[0, 2, 1]);
+            Assert.AreEqual(108, store.Values[0, 2, 2]);
+            Assert.AreEqual(120, store.Values[0, 2, 3]);
+            Assert.AreEqual(132, store.Values[0, 2, 4]);
 
-            Assert.AreEqual(84, values[1, 0, 0]);
-            Assert.AreEqual(96, values[1, 0, 1]);
-            Assert.AreEqual(108, values[1, 0, 2]);
-            Assert.AreEqual(120, values[1, 0, 3]);
-            Assert.AreEqual(132, values[1, 0, 4]);
+            Assert.AreEqual(84, store.Values[1, 0, 0]);
+            Assert.AreEqual(96, store.Values[1, 0, 1]);
+            Assert.AreEqual(108, store.Values[1, 0, 2]);
+            Assert.AreEqual(120, store.Values[1, 0, 3]);
+            Assert.AreEqual(132, store.Values[1, 0, 4]);
 
-            Assert.AreEqual(105, values[1, 1, 0]);
-            Assert.AreEqual(120, values[1, 1, 1]);
-            Assert.AreEqual(135, values[1, 1, 2]);
-            Assert.AreEqual(150, values[1, 1, 3]);
-            Assert.AreEqual(165, values[1, 1, 4]);
+            Assert.AreEqual(105, store.Values[1, 1, 0]);
+            Assert.AreEqual(120, store.Values[1, 1, 1]);
+            Assert.AreEqual(135, store.Values[1, 1, 2]);
+            Assert.AreEqual(150, store.Values[1, 1, 3]);
+            Assert.AreEqual(165, store.Values[1, 1, 4]);
 
-            Assert.AreEqual(126, values[1, 2, 0]);
-            Assert.AreEqual(144, values[1, 2, 1]);
-            Assert.AreEqual(162, values[1, 2, 2]);
-            Assert.AreEqual(180, values[1, 2, 3]);
-            Assert.AreEqual(198, values[1, 2, 4]);
+            Assert.AreEqual(126, store.Values[1, 2, 0]);
+            Assert.AreEqual(144, store.Values[1, 2, 1]);
+            Assert.AreEqual(162, store.Values[1, 2, 2]);
+            Assert.AreEqual(180, store.Values[1, 2, 3]);
+            Assert.AreEqual(198, store.Values[1, 2, 4]);
         }
 
         [Test]
@@ -196,7 +196,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             var expr = parser.GetExpression("x*e^(-x*x-y*y)");
             var interval1 = new VarInterval("x", -2, 2);
             var interval2 = new VarInterval("y", -2, 2);
-            float[,] values = null;
+            var store = new Evaluator.StoreOp2();
             var eval = new Evaluator();
             env.SetVariable("e", new Literal(2.718281828f));
             // when
@@ -204,7 +204,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             eval.EvalInterval(expr, env,
                 interval1, 4000,
                 interval2, 4000,
-                ref values);
+                store);
             int endTime = System.Environment.TickCount;
             // then
             Assert.LessOrEqual(endTime - startTime, 1);
