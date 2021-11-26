@@ -175,6 +175,8 @@
     <Compile Include="ValuesT\NumberT\NumberTest.cs" />
     <Compile Include="ValuesT\StringValueT\StringValueTest.cs" />
     <Compile Include="ValuesT\VarIntervalT\VarIntervalTest.cs" />
+    <Compile Include="ValuesT\Vector2T\Vector2Test.cs" />
+    <Compile Include="ValuesT\Vector3T\Vector3Test.cs" />
     <Compile Include="ValuesT\VectorT\VectorTest.cs" />
   </ItemGroup>
   <ItemGroup>

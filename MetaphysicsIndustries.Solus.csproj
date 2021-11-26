@@ -179,6 +179,8 @@
     <Compile Include="Values\Types.cs" />
     <Compile Include="Values\VarInterval.cs" />
     <Compile Include="Values\Vector.cs" />
+    <Compile Include="Values\Vector2.cs" />
+    <Compile Include="Values\Vector3.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExGrammar.txt" />
