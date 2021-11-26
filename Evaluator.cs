@@ -41,13 +41,15 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(expr.Simplify(env));
         }
 
-        public class StoreOp1
+        public class StoreOp1<T>
+            where T : IMathObject
         {
-            public float[] Values;
+            public T[] Values;
         }
 
-        public void EvalInterval(Expression expr, SolusEnvironment env,
-            VarInterval interval, int numSteps, StoreOp1 store)
+        public void EvalInterval<T>(Expression expr, SolusEnvironment env,
+            VarInterval interval, int numSteps, StoreOp1<T> store)
+            where T : IMathObject
         {
             var delta = interval.Interval.CalcDelta(numSteps);
 
@@ -60,29 +62,31 @@ namespace MetaphysicsIndustries.Solus
 
             if (store != null)
                 if (store.Values == null || store.Values.Length < numSteps)
-                    store.Values = new float[numSteps];
+                    store.Values = new T[numSteps];
 
             int i;
             for (i = 0; i < numSteps; i++)
             {
                 var xx = delta * i + interval.Interval.LowerBound;
                 literal.Value = xx.ToNumber();
-                var v = Eval(expr2, env2).ToNumber().Value;
+                var v = Eval(expr2, env2);
                 if (store != null)
-                    store.Values[i] = v;
+                    store.Values[i] = (T)v;
             }
         }
 
-        public class StoreOp2
+        public class StoreOp2<T>
+            where T : IMathObject
         {
-            public float[,] Values;
+            public T[,] Values;
         }
 
-        public void EvalInterval(
+        public void EvalInterval<T>(
             Expression expr, SolusEnvironment env,
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
-            StoreOp2 store)
+            StoreOp2<T> store)
+            where T : IMathObject
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -113,7 +117,7 @@ namespace MetaphysicsIndustries.Solus
                     store.Values.GetLength(0) < numSteps1 ||
                     store.Values.GetLength(1) < numSteps2)
                 {
-                    store.Values = new float[numSteps1, numSteps2];
+                    store.Values = new T[numSteps1, numSteps2];
                 }
 
             for (i = 0; i < numSteps1; i++)
@@ -123,24 +127,26 @@ namespace MetaphysicsIndustries.Solus
                 for (j = 0; j < numSteps2; j++)
                 {
                     literal2.Value = inputs2[j];
-                    var v = Eval(expr2, env2).ToNumber().Value;
+                    var v = Eval(expr2, env2);
                     if (store != null)
-                        store.Values[i, j] = v;
+                        store.Values[i, j] = (T)v;
                 }
             }
         }
 
-        public class StoreOp3
+        public class StoreOp3<T>
+            where T : IMathObject
         {
-            public float[,,] Values;
+            public T[,,] Values;
         }
 
-        public void EvalInterval(
+        public void EvalInterval<T>(
             Expression expr, SolusEnvironment env,
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
             VarInterval interval3, int numSteps3,
-            StoreOp3 store)
+            StoreOp3<T> store)
+            where T : IMathObject
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -180,7 +186,7 @@ namespace MetaphysicsIndustries.Solus
                     store.Values.GetLength(1) < numSteps2 ||
                     store.Values.GetLength(2) < numSteps3)
                 {
-                    store.Values = new float[numSteps1, numSteps2, numSteps3];
+                    store.Values = new T[numSteps1, numSteps2, numSteps3];
                 }
 
             for (i = 0; i < numSteps1; i++)
@@ -194,16 +200,16 @@ namespace MetaphysicsIndustries.Solus
                     for (k = 0; k < numSteps3; k++)
                     {
                         literal3.Value = inputs3[k];
-                        var v = Eval(expr2, env2).ToNumber().Value;
+                        var v = Eval(expr2, env2);
                         if (store != null)
-                            store.Values[i, j, k] = v;
+                            store.Values[i, j, k] = (T)v;
                     }
                 }
             }
         }
 
         public void EvalMathPaint(Expression expr, SolusEnvironment env,
-            int width, int height, StoreOp2 store)
+            int width, int height, StoreOp2<Number> store)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -228,7 +234,7 @@ namespace MetaphysicsIndustries.Solus
 
         public void EvalMathPaint3D(Expression expr,
             SolusEnvironment env, int width, int height, int numFrames,
-            StoreOp3 store)
+            StoreOp3<Number> store)
         {
             //previous values?
             SolusParser parser = new SolusParser();
