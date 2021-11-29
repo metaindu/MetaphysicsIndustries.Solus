@@ -236,7 +236,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
                 State = 0.ToNumber()
             };
             // when
-            eval.EvalInterval(expr, env, interval, 5, null, aggr);
+            eval.EvalInterval(expr, env, interval, 5, null,
+                new Evaluator.AggregateOp[] { aggr });
             // then
             Assert.AreEqual(25, aggr.State.Value);
         }
@@ -271,7 +272,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             eval.EvalInterval(expr, env,
                 interval1, 3,
                 interval2, 3,
-                null, aggr);
+                null,
+                new Evaluator.AggregateOp[] { aggr });
             // then
             Assert.AreEqual(18, aggr.State.Value);
         }
@@ -309,9 +311,43 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
                 interval1, 3,
                 interval2, 3,
                 interval3, 3,
-                null, aggr);
+                null,
+                new Evaluator.AggregateOp[] { aggr });
             // then
             Assert.AreEqual(162, aggr.State.Value);
+        }
+
+        [Test]
+        public void MultipleAggregateOpsYieldMultipleResults()
+        {
+            // given
+            var expr = new FunctionCall(
+                AdditionOperation.Value,
+                new VariableAccess("x"),
+                new Literal(2));
+            var eval = new Evaluator();
+            var interval = new VarInterval("x", 1, 5);
+            var env = new SolusEnvironment();
+            var aggrMax = new Evaluator.AggregateOp<Number, Number>
+            {
+                Function = (Number n, Number state) =>
+                    // find the max
+                    n.Value > state.Value ? n : state,
+                State = 0.ToNumber()
+            };
+            var aggrMin = new Evaluator.AggregateOp<Number, Number>
+            {
+                Function = (Number n, Number state) =>
+                    // find the max
+                    n.Value < state.Value ? n : state,
+                State = 1000.ToNumber()
+            };
+            var aggrs = new Evaluator.AggregateOp[] { aggrMin, aggrMax };
+            // when
+            eval.EvalInterval(expr, env, interval, 5, null, aggrs);
+            // then
+            Assert.AreEqual(7, aggrMax.State.Value);
+            Assert.AreEqual(3, aggrMin.State.Value);
         }
     }
 }

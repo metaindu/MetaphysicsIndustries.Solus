@@ -83,7 +83,7 @@ namespace MetaphysicsIndustries.Solus
 
         public void EvalInterval(Expression expr, SolusEnvironment env,
             VarInterval interval, int numSteps, StoreOp1 store,
-            AggregateOp aggr=null)
+            AggregateOp[] aggrs = null)
         {
             var delta = interval.Interval.CalcDelta(numSteps);
 
@@ -105,7 +105,9 @@ namespace MetaphysicsIndustries.Solus
                 var v = Eval(expr2, env2);
                 if (store != null)
                     store.Store(i, v);
-                aggr?.Operate(v);
+                if (aggrs != null)
+                    foreach (var aggr in aggrs)
+                        aggr?.Operate(v);
             }
         }
 
@@ -143,7 +145,7 @@ namespace MetaphysicsIndustries.Solus
             Expression expr, SolusEnvironment env,
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
-            StoreOp2 store, AggregateOp aggr=null)
+            StoreOp2 store, AggregateOp[] aggrs = null)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -182,7 +184,9 @@ namespace MetaphysicsIndustries.Solus
                     var v = Eval(expr2, env2);
                     if (store != null)
                         store.Store(i, j, v);
-                    aggr?.Operate(v);
+                    if (aggrs != null)
+                        foreach (var aggr in aggrs)
+                            aggr?.Operate(v);
                 }
             }
         }
@@ -225,7 +229,7 @@ namespace MetaphysicsIndustries.Solus
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
             VarInterval interval3, int numSteps3,
-            StoreOp3 store, AggregateOp aggr=null)
+            StoreOp3 store, AggregateOp[] aggrs = null)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -276,7 +280,9 @@ namespace MetaphysicsIndustries.Solus
                         var v = Eval(expr2, env2);
                         if (store != null)
                             store.Store(i, j, k, v);
-                        aggr?.Operate(v);
+                        if (aggrs != null)
+                            foreach (var aggr in aggrs)
+                                aggr?.Operate(v);
                     }
                 }
             }
