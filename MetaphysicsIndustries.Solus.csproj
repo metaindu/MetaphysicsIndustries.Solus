@@ -124,6 +124,10 @@
     <Compile Include="Functions\LogarithmFunction.cs" />
     <Compile Include="Functions\LogicalAndOperation.cs" />
     <Compile Include="Functions\LogicalOrOperation.cs" />
+    <Compile Include="Functions\MaximumFiniteFunction.cs" />
+    <Compile Include="Functions\MaximumFunction.cs" />
+    <Compile Include="Functions\MinimumFiniteFunction.cs" />
+    <Compile Include="Functions\MinimumFunction.cs" />
     <Compile Include="Functions\ModularDivision.cs" />
     <Compile Include="Functions\MultiplicationOperation.cs" />
     <Compile Include="Functions\NaturalLogarithmFunction.cs" />
