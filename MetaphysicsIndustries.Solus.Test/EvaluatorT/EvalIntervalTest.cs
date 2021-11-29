@@ -209,5 +209,109 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             // then
             Assert.LessOrEqual(endTime - startTime, 1);
         }
+
+        [Test]
+        public void AggregateOpRunsOnEachValue1()
+        {
+            // given
+            var expr = new FunctionCall(
+                MultiplicationOperation.Value,
+                new VariableAccess("x"),
+                new VariableAccess("x"));
+            var eval = new Evaluator();
+
+            Number Collect(Number n, Number state)
+            {
+                // find the max
+                if (n.Value > state.Value)
+                    return n;
+                return state;
+            }
+
+            var interval = new VarInterval("x", 1, 5);
+            var env = new SolusEnvironment();
+            var aggr = new Evaluator.AggregateOp<Number, Number>
+            {
+                Function = Collect,
+                State = 0.ToNumber()
+            };
+            // when
+            eval.EvalInterval(expr, env, interval, 5, null, aggr);
+            // then
+            Assert.AreEqual(25, aggr.State.Value);
+        }
+
+        [Test]
+        public void AggregateOpRunsOnEachValue2()
+        {
+            // given
+            var expr = new FunctionCall(
+                MultiplicationOperation.Value,
+                new VariableAccess("x"),
+                new VariableAccess("y"));
+            var eval = new Evaluator();
+
+            Number Max(Number n, Number state)
+            {
+                // find the max
+                if (n.Value > state.Value)
+                    return n;
+                return state;
+            }
+
+            var interval1 = new VarInterval("x", 1, 3);
+            var interval2 = new VarInterval("y", 4, 6);
+            var env = new SolusEnvironment();
+            var aggr = new Evaluator.AggregateOp<Number, Number>
+            {
+                Function = Max,
+                State = 0.ToNumber()
+            };
+            // when
+            eval.EvalInterval(expr, env,
+                interval1, 3,
+                interval2, 3,
+                null, aggr);
+            // then
+            Assert.AreEqual(18, aggr.State.Value);
+        }
+
+        [Test]
+        public void AggregateOpRunsOnEachValue3()
+        {
+            // given
+            var expr = new FunctionCall(
+                MultiplicationOperation.Value,
+                new VariableAccess("x"),
+                new VariableAccess("y"),
+                new VariableAccess("z"));
+            var eval = new Evaluator();
+
+            Number Max(Number n, Number state)
+            {
+                // find the max
+                if (n.Value > state.Value)
+                    return n;
+                return state;
+            }
+
+            var interval1 = new VarInterval("x", 1, 3);
+            var interval2 = new VarInterval("y", 4, 6);
+            var interval3 = new VarInterval("z", 7, 9);
+            var env = new SolusEnvironment();
+            var aggr = new Evaluator.AggregateOp<Number, Number>
+            {
+                Function = Max,
+                State = 0.ToNumber()
+            };
+            // when
+            eval.EvalInterval(expr, env,
+                interval1, 3,
+                interval2, 3,
+                interval3, 3,
+                null, aggr);
+            // then
+            Assert.AreEqual(162, aggr.State.Value);
+        }
     }
 }

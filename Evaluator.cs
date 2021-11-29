@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -64,8 +65,25 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public abstract class AggregateOp
+        {
+            public abstract void Operate(IMathObject input);
+        }
+
+        public class AggregateOp<TIn, TOut> : AggregateOp
+        {
+            public TOut State;
+            public Func<TIn, TOut, TOut> Function;
+
+            public override void Operate(IMathObject input)
+            {
+                State = Function((TIn)input, State);
+            }
+        }
+
         public void EvalInterval(Expression expr, SolusEnvironment env,
-            VarInterval interval, int numSteps, StoreOp1 store)
+            VarInterval interval, int numSteps, StoreOp1 store,
+            AggregateOp aggr=null)
         {
             var delta = interval.Interval.CalcDelta(numSteps);
 
@@ -87,6 +105,7 @@ namespace MetaphysicsIndustries.Solus
                 var v = Eval(expr2, env2);
                 if (store != null)
                     store.Store(i, v);
+                aggr?.Operate(v);
             }
         }
 
@@ -124,7 +143,7 @@ namespace MetaphysicsIndustries.Solus
             Expression expr, SolusEnvironment env,
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
-            StoreOp2 store)
+            StoreOp2 store, AggregateOp aggr=null)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -163,6 +182,7 @@ namespace MetaphysicsIndustries.Solus
                     var v = Eval(expr2, env2);
                     if (store != null)
                         store.Store(i, j, v);
+                    aggr?.Operate(v);
                 }
             }
         }
@@ -205,7 +225,7 @@ namespace MetaphysicsIndustries.Solus
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
             VarInterval interval3, int numSteps3,
-            StoreOp3 store)
+            StoreOp3 store, AggregateOp aggr=null)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -256,6 +276,7 @@ namespace MetaphysicsIndustries.Solus
                         var v = Eval(expr2, env2);
                         if (store != null)
                             store.Store(i, j, k, v);
+                        aggr?.Operate(v);
                     }
                 }
             }
