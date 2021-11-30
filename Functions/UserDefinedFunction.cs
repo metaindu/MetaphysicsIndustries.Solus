@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -39,6 +40,15 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public string[] Argnames;
         public Expression Expression;
+
+        public override void CheckArguments(IMathObject[] args)
+        {
+            if (args.Length != Argnames.Length)
+                throw new ArgumentException(
+                    $"Wrong number of arguments given to " +
+                    $"{DisplayName} (expected {Argnames.Length} but got " +
+                    $"{args.Length})");
+        }
 
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
