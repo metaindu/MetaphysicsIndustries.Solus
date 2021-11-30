@@ -92,12 +92,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             // TODO: maybe pass the env, and then we don't have to eval the
             // indexes before-hand?
-            if (indexes.Any(i => !i.IsIsScalar(null)))
-                throw new IndexException(
-                    "Indexes must be scalar");
-            if (indexes.Any(i => i.ToNumber().Value < 0))
-                throw new IndexException(
-                    "Indexes must not be negative");
+            int i;
+            for (i = 0; i < indexes.Length; i++)
+            {
+                if (!indexes[i].IsIsScalar(null))
+                    throw new IndexException(
+                        "Indexes must be scalar");
+                if (indexes[i].ToNumber().Value < 0)
+                    throw new IndexException(
+                        "Indexes must not be negative");
+            }
 
             var index0 = (int) indexes[0].ToNumber().Value;
             if (exprIsVector.HasValue && exprIsVector.Value)
