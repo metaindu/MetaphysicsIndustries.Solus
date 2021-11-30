@@ -53,7 +53,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
-            SolusEnvironment env2 = env.Clone();
+            SolusEnvironment env2 = env.CreateChildEnvironment();
 
             int i;
             for (i = 0; i < Argnames.Length; i++)
