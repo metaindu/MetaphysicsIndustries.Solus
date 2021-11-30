@@ -198,8 +198,38 @@ namespace MetaphysicsIndustries.Solus
 
         public IMathObject Eval(VectorExpression expr, SolusEnvironment env)
         {
+            var value0 = Eval(expr[0], env);
+            IMathObject value1 = null;
+            if (expr.Length > 1)
+                value1 = Eval(expr[1], env);
+            if (expr.Length == 2 &&
+                value0.IsConcrete &&
+                value0.IsIsScalar(null) &&
+                value1.IsConcrete &&
+                value1.IsIsScalar(null))
+                return new Vector2(
+                    value0.ToNumber().Value,
+                    value1.ToNumber().Value);
+            IMathObject value2 = null;
+            if (expr.Length > 2)
+                value2 = Eval(expr[2], env);
+            if (expr.Length == 3 &&
+                value0.IsConcrete &&
+                value0.IsIsScalar(null) &&
+                value1.IsConcrete &&
+                value1.IsIsScalar(null) &&
+                value2.IsConcrete &&
+                value2.IsIsScalar(null))
+                return new Vector3(
+                    value0.ToNumber().Value,
+                    ((Number)value1).Value,
+                    value2.ToNumber().Value);
+
             var values = new IMathObject[expr.Length];
-            for (int i = 0; i < expr.Length; i++)
+            values[0] = value0;
+            if (expr.Length > 1) values[1] = value1;
+            if (expr.Length > 2) values[2] = value2;
+            for (int i = 3; i < expr.Length; i++)
                 values[i] = Eval(expr[i], env);
             // Vector will take ownership of array
             return new Vector(values); // TODO: don't box here
