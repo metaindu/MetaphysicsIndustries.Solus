@@ -56,6 +56,31 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
         }
 
         [Test]
+        public void StoreToVector()
+        {
+            // given
+            var eval = new Evaluator();
+            var expr = new FunctionCall(MultiplicationOperation.Value,
+                new VariableAccess("x"),
+                new VariableAccess("x"));
+            var env = new SolusEnvironment();
+            var interval = new VarInterval("x",
+                new Interval(2, false, 6, false, false));
+            var numSteps = 5;
+            var store = new Evaluator.VectorStoreOp();
+            // when
+            eval.EvalInterval(expr, env, interval, numSteps, store);
+            // then
+            var result = store.GetResult();
+            Assert.AreEqual(5, result.Length);
+            Assert.AreEqual(4, result[0].ToNumber().Value);
+            Assert.AreEqual(9, result[1].ToNumber().Value);
+            Assert.AreEqual(16, result[2].ToNumber().Value);
+            Assert.AreEqual(25, result[3].ToNumber().Value);
+            Assert.AreEqual(36, result[4].ToNumber().Value);
+        }
+
+        [Test]
         public void TwoIntervalEval()
         {
             // given
@@ -115,6 +140,68 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             Assert.AreEqual(60, store.Values[4, 3].Value);
             Assert.AreEqual(66, store.Values[4, 4].Value);
             Assert.AreEqual(72, store.Values[4, 5].Value);
+        }
+
+        [Test]
+        public void StoreToMatrix()
+        {
+            // given
+            var eval = new Evaluator();
+            var expr = new FunctionCall(MultiplicationOperation.Value,
+                new VariableAccess("x"),
+                new VariableAccess("y"));
+            var env = new SolusEnvironment();
+            var interval1 = new VarInterval("x",
+                new Interval(2, false, 6, false, false));
+            var numSteps1 = 5;
+            var interval2 = new VarInterval("y",
+                new Interval(7, false, 12, false, false));
+            var numSteps2 = 6;
+            var store = new Evaluator.MatrixStoreOp();
+            // when
+            eval.EvalInterval(expr, env,
+                interval1, numSteps1,
+                interval2, numSteps2,
+                store);
+            // then
+            var result = store.GetResult();
+            Assert.AreEqual(5, result.RowCount);
+            Assert.AreEqual(6, result.ColumnCount);
+
+            Assert.AreEqual(14, result[0, 0].ToNumber().Value);
+            Assert.AreEqual(16, result[0, 1].ToNumber().Value);
+            Assert.AreEqual(18, result[0, 2].ToNumber().Value);
+            Assert.AreEqual(20, result[0, 3].ToNumber().Value);
+            Assert.AreEqual(22, result[0, 4].ToNumber().Value);
+            Assert.AreEqual(24, result[0, 5].ToNumber().Value);
+
+            Assert.AreEqual(21, result[1, 0].ToNumber().Value);
+            Assert.AreEqual(24, result[1, 1].ToNumber().Value);
+            Assert.AreEqual(27, result[1, 2].ToNumber().Value);
+            Assert.AreEqual(30, result[1, 3].ToNumber().Value);
+            Assert.AreEqual(33, result[1, 4].ToNumber().Value);
+            Assert.AreEqual(36, result[1, 5].ToNumber().Value);
+
+            Assert.AreEqual(28, result[2, 0].ToNumber().Value);
+            Assert.AreEqual(32, result[2, 1].ToNumber().Value);
+            Assert.AreEqual(36, result[2, 2].ToNumber().Value);
+            Assert.AreEqual(40, result[2, 3].ToNumber().Value);
+            Assert.AreEqual(44, result[2, 4].ToNumber().Value);
+            Assert.AreEqual(48, result[2, 5].ToNumber().Value);
+
+            Assert.AreEqual(35, result[3, 0].ToNumber().Value);
+            Assert.AreEqual(40, result[3, 1].ToNumber().Value);
+            Assert.AreEqual(45, result[3, 2].ToNumber().Value);
+            Assert.AreEqual(50, result[3, 3].ToNumber().Value);
+            Assert.AreEqual(55, result[3, 4].ToNumber().Value);
+            Assert.AreEqual(60, result[3, 5].ToNumber().Value);
+
+            Assert.AreEqual(42, result[4, 0].ToNumber().Value);
+            Assert.AreEqual(48, result[4, 1].ToNumber().Value);
+            Assert.AreEqual(54, result[4, 2].ToNumber().Value);
+            Assert.AreEqual(60, result[4, 3].ToNumber().Value);
+            Assert.AreEqual(66, result[4, 4].ToNumber().Value);
+            Assert.AreEqual(72, result[4, 5].ToNumber().Value);
         }
 
         [Test]

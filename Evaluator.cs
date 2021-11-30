@@ -66,6 +66,30 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public class VectorStoreOp : StoreOp1
+        {
+            private IMathObject[] _values = null;
+            private Vector? _result = null;
+
+            public Vector GetResult()
+            {
+                if (!_result.HasValue)
+                    _result = new Vector(_values);
+                return _result.Value;
+            }
+
+            public override void Store(int index, IMathObject value)
+            {
+                _values[index] = value;
+            }
+
+            public override void SetMinArraySize(int length)
+            {
+                if (_values == null || _values.Length != length)
+                    _values = new IMathObject[length];
+            }
+        }
+
         public abstract class AggregateOp
         {
             public abstract void Operate(IMathObject input,
@@ -164,6 +188,33 @@ namespace MetaphysicsIndustries.Solus
                 {
                     Values = new T[length0, length1];
                 }
+            }
+        }
+
+        public class MatrixStoreOp : StoreOp2
+        {
+            private IMathObject[,] _values = null;
+            private Matrix? _result = null;
+
+            public Matrix GetResult()
+            {
+                if (!_result.HasValue)
+                    _result = new Matrix(_values);
+                return _result.Value;
+            }
+
+            public override void Store(int index0, int index1,
+                IMathObject value)
+            {
+                _values[index0, index1] = value;
+            }
+
+            public override void SetMinArraySize(int length0, int length1)
+            {
+                if (_values == null ||
+                    _values.GetLength(0) < length0 ||
+                    _values.GetLength(1) < length1)
+                    _values = new IMathObject[length0, length1];
             }
         }
 
