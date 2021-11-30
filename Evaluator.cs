@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -78,6 +79,28 @@ namespace MetaphysicsIndustries.Solus
             public override void Operate(IMathObject input)
             {
                 State = Function((TIn)input, State);
+            }
+        }
+
+        public class FunctionAggregateOp : AggregateOp
+        {
+            public FunctionAggregateOp(Function function,
+                IMathObject initialState)
+            {
+                Function = function;
+                State = initialState;
+            }
+
+            public IMathObject State;
+            public readonly Function Function;
+
+            private readonly IMathObject[] _args = new IMathObject[2];
+            public override void Operate(IMathObject input)
+            {
+                _args[0] = input;
+                _args[1] = State;
+                var result = Function.Call(null, _args);
+                State = result;
             }
         }
 

@@ -349,5 +349,26 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
             Assert.AreEqual(7, aggrMax.State.Value);
             Assert.AreEqual(3, aggrMin.State.Value);
         }
+
+        [Test]
+        public void FunctionAggregateOpRunsOnEachValue()
+        {
+            // given
+            var expr = new FunctionCall(
+                MultiplicationOperation.Value,
+                new VariableAccess("x"),
+                new VariableAccess("x"));
+            var eval = new Evaluator();
+            var interval = new VarInterval("x", 1, 5);
+            var env = new SolusEnvironment();
+            var aggr = new Evaluator.FunctionAggregateOp(
+                MaximumFiniteFunction.Value, float.NaN.ToNumber());
+            // when
+            eval.EvalInterval(expr, env, interval, 5, null,
+                new Evaluator.AggregateOp[] { aggr });
+            // then
+            Assert.AreEqual(25, aggr.State.ToNumber().Value);
+        }
+
     }
 }
