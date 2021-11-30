@@ -48,13 +48,22 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return AccessComponent(value, evaledIndexes, env);
         }
 
+        private IMathObject[] _evaledIndexesCache;
         private IMathObject[] GetEvaledIndexes(SolusEnvironment env)
         {
-            // TODO: caching, eventually, so as to not repeat so much
-            // evaluation. But that is a non-starter at the moment, because
-            // the contents of the env can change at any time.
+            // TODO: proper caching of the results of evaluation, eventually,
+            // so as to not repeat so much evaluation. But that is a
+            // non-starter at the moment, because the contents of the env
+            // can change at any time.
 
-            return Indexes.Select(e => e.Eval(env)).ToArray();
+            if (_evaledIndexesCache == null ||
+                _evaledIndexesCache.Length < Indexes.Count)
+                _evaledIndexesCache = new IMathObject[Indexes.Count];
+            int i;
+            for (i = 0; i < Indexes.Count; i++)
+                _evaledIndexesCache[i] = Indexes[i].Eval(env);
+
+            return _evaledIndexesCache;
         }
 
         private static void CheckIndexes(IMathObject[] indexes,
