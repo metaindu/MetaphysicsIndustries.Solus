@@ -50,10 +50,18 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"{args.Length})");
         }
 
+        private SolusEnvironment _parentCache;
+        private SolusEnvironment _childCache;
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
-            SolusEnvironment env2 = env.CreateChildEnvironment();
+            if (_childCache == null ||
+                env != _parentCache)
+            {
+                _childCache = env.CreateChildEnvironment();
+                _parentCache = env;
+            }
+            var env2 = _childCache;
 
             int i;
             for (i = 0; i < Argnames.Length; i++)
