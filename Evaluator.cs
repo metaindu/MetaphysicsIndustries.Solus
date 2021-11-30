@@ -68,7 +68,8 @@ namespace MetaphysicsIndustries.Solus
 
         public abstract class AggregateOp
         {
-            public abstract void Operate(IMathObject input);
+            public abstract void Operate(IMathObject input,
+                SolusEnvironment env);
         }
 
         public class AggregateOp<TIn, TOut> : AggregateOp
@@ -76,7 +77,8 @@ namespace MetaphysicsIndustries.Solus
             public TOut State;
             public Func<TIn, TOut, TOut> Function;
 
-            public override void Operate(IMathObject input)
+            public override void Operate(IMathObject input,
+                SolusEnvironment env)
             {
                 State = Function((TIn)input, State);
             }
@@ -95,11 +97,12 @@ namespace MetaphysicsIndustries.Solus
             public readonly Function Function;
 
             private readonly IMathObject[] _args = new IMathObject[2];
-            public override void Operate(IMathObject input)
+            public override void Operate(IMathObject input,
+                SolusEnvironment env)
             {
                 _args[0] = input;
                 _args[1] = State;
-                var result = Function.Call(null, _args);
+                var result = Function.Call(env, _args);
                 State = result;
             }
         }
@@ -130,7 +133,7 @@ namespace MetaphysicsIndustries.Solus
                     store.Store(i, v);
                 if (aggrs != null)
                     foreach (var aggr in aggrs)
-                        aggr?.Operate(v);
+                        aggr?.Operate(v, env2);
             }
         }
 
@@ -209,7 +212,7 @@ namespace MetaphysicsIndustries.Solus
                         store.Store(i, j, v);
                     if (aggrs != null)
                         foreach (var aggr in aggrs)
-                            aggr?.Operate(v);
+                            aggr?.Operate(v, env2);
                 }
             }
         }
@@ -305,7 +308,7 @@ namespace MetaphysicsIndustries.Solus
                             store.Store(i, j, k, v);
                         if (aggrs != null)
                             foreach (var aggr in aggrs)
-                                aggr?.Operate(v);
+                                aggr?.Operate(v, env2);
                     }
                 }
             }
