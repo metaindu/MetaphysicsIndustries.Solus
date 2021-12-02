@@ -135,7 +135,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public IMathObject GetComponent(int row, int column) =>
-            _array[row, column];
+            this[row, column];
+
+        public override Expression GetComponent(int[] indexes)
+        {
+            if (indexes == null)
+                throw new ArgumentNullException(nameof(indexes));
+            if (indexes.Length != 2)
+                throw new ArgumentOutOfRangeException(
+                    nameof(indexes), "Wrong number of indexes");
+            if (indexes[0] < 0 || indexes[0] >= RowCount ||
+                indexes[1] < 0 || indexes[1] >= ColumnCount)
+                throw new IndexOutOfRangeException();
+            return this[indexes[0], indexes[1]];
+        }
 
         private Expression[,] _array;
 

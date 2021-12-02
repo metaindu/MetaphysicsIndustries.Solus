@@ -96,6 +96,18 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public int Length => _array.Length;
         public IMathObject GetComponent(int index) => _array[index];
 
+        public override Expression GetComponent(int[] indexes)
+        {
+            if (indexes == null)
+                throw new ArgumentNullException(nameof(indexes));
+            if (indexes.Length != 1)
+                throw new ArgumentOutOfRangeException(
+                    nameof(indexes), "Wrong number of indexes");
+            if (indexes[0] < 0 || indexes[0] >= Length)
+                throw new IndexOutOfRangeException();
+            return this[indexes[0]];
+        }
+
         public override IMathObject Eval(SolusEnvironment env)
         {
             var values = new IMathObject[Length];
