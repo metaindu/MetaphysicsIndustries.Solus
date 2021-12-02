@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
     public class EvalVariableAccessTest
     {
         [Test]
-        public void VariableAccessGetsLiteralFromEnv()
+        public void GetsLiteralFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsFunctionCallFromEnv()
+        public void GetsFunctionCallFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsNumberFromEnv()
+        public void GetsNumberFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsVectorFromEnv()
+        public void GetsVectorFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -113,7 +113,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsMatrixFromEnv()
+        public void GetsMatrixFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -141,7 +141,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsStringFromEnv()
+        public void GetsStringFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -160,7 +160,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsIntervalFromEnv()
+        public void GetsIntervalFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -180,7 +180,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsFunctionFromEnv()
+        public void GetsFunctionFromEnv()
         {
             // given
             var expr = new VariableAccess("a");
@@ -198,7 +198,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessGetsExpressionInsideLiteralFromEnv()
+        public void GetsExpressionInsideLiteralFromEnv()
         {
             var expr = new VariableAccess("a");
             var expr2 = ColorExpression.Gray;
@@ -216,7 +216,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VariableAccessMissingVariableThrows()
+        public void MissingVariableThrows()
         {
             // given
             var expr = new VariableAccess("a");

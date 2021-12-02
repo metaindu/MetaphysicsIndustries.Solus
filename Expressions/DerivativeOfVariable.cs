@@ -76,10 +76,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            throw new InvalidOperationException();
-        }
         public override Expression Clone()
         {
             throw new NotImplementedException();

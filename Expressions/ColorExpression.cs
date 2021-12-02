@@ -73,13 +73,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             get { return _pen.Brush; }
         }
 
-
-
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            return new Number(0xFFFFFF & _color.ToArgb());
-        }
-
         public override Expression Clone()
         {
             return new ColorExpression(_color);

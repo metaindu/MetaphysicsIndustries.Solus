@@ -41,18 +41,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public Expression UpperBound { get; }
         public bool OpenUpperBound { get; }
 
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            var lower = LowerBound.Eval(env);
-            if (!lower.IsIsScalar(env))
-                throw new OperandException("Lower bound is not a scalar");
-            var upper = UpperBound.Eval(env);
-            if (!upper.IsIsScalar(env))
-                throw new OperandException("Upper bound is not a scalar");
-            return new Interval(lower.ToNumber().Value, OpenLowerBound,
-                upper.ToNumber().Value, OpenUpperBound, false);
-        }
-
         public override Expression Clone()
         {
             return new IntervalExpression(LowerBound, OpenLowerBound,

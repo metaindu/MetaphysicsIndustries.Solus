@@ -191,7 +191,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             public override Expression GetComponent(int[] indexes) =>
                 throw new NotImplementedException();
 
-            public override IMathObject Eval(SolusEnvironment env) =>
+            public override IMathObject CustomEval(SolusEnvironment env) =>
                 throw new NotImplementedException();
             public override Expression Clone() =>
                 throw new NotImplementedException();

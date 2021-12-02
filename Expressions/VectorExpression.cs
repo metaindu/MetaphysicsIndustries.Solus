@@ -108,15 +108,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return this[indexes[0]];
         }
 
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            var values = new IMathObject[Length];
-            for (int i = 0; i < Length; i++)
-                values[i] = this[i].Eval(env);
-            // Vector will take ownership of array
-            return new Vector(values);  // TODO: don't box here
-        }
-
         public override Expression Clone()
         {
             var ret = new VectorExpression(Length);

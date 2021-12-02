@@ -124,6 +124,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IMathObject FastEval(Expression expr, SolusEnvironment env,
             ref Expression.CompiledExpression compiled)
         {
+            var eval = new Evaluator();
             var bakedEnv = new Dictionary<string, float>();
             if (compiled != null)
             {
@@ -131,7 +132,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 {
                     var target = env.GetVariable(var);
                     if (target.IsIsExpression(env))
-                        target = ((Expression)target).Eval(env);
+                        target = eval.Eval((Expression)target, env);
                     bakedEnv[var] = target.ToNumber().Value;
                 }
             }

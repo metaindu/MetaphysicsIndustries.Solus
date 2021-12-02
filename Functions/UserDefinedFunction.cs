@@ -69,7 +69,8 @@ namespace MetaphysicsIndustries.Solus.Functions
                 env2.SetVariable(Argnames[i], args[i]);
             }
 
-            return Expression.Eval(env2);
+            var eval = new Evaluator();
+            return eval.Eval(Expression, env2);
         }
 
         public override IMathObject GetResult(IEnumerable<IMathObject> args)

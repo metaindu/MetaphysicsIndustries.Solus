@@ -47,22 +47,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public string VariableName;
 
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            var var = VariableName;
-
-            if (env.ContainsVariable(var))
-            {
-                var target = env.GetVariable(var);
-                if (target.IsIsExpression(env))
-                    target = ((Expression)target).Eval(env);
-                return target;
-            }
-
-            throw new NameException(
-                $"Variable not found: {VariableName}");
-        }
-
         public override string ToString()
         {
             return VariableName;

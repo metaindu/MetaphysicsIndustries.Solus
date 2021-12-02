@@ -30,11 +30,39 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
-    public class Evaluator
+    public partial class Evaluator
     {
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
-            return expr.Eval(env);
+            switch (expr)
+            {
+                case ColorExpression ce:
+                    return Eval(ce, env);
+                case ComponentAccess ca:
+                    return Eval(ca, env);
+                case DerivativeOfVariable dov:
+                    return Eval(dov, env);
+                case FunctionCall fc:
+                    return Eval(fc, env);
+                case IntervalExpression interval:
+                    return Eval(interval, env);
+                case Literal literal:
+                    return Eval(literal, env);
+                case MatrixExpression me:
+                    return Eval(me, env);
+                case RandomExpression re:
+                    return Eval(re, env);
+                case VariableAccess va:
+                    return Eval(va, env);
+                case VectorExpression ve:
+                    return Eval(ve, env);
+                default:
+                    if (expr.ProvidesCustomEval)
+                        return expr.CustomEval(env);
+                    throw new ArgumentException(
+                        $"Unknown expression type: {expr.GetType().Name}",
+                        nameof(expr));
+            }
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)
