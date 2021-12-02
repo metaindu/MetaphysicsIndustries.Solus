@@ -35,6 +35,13 @@ namespace MetaphysicsIndustries.Solus
         {
             return (int)Math.Round(f);
         }
+
+        public static bool IsInteger(this float f)
+        {
+            var i = (int)f;
+            var f2 = (float)i;
+            return f2 == f;
+        }
     }
 }
 
