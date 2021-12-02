@@ -27,7 +27,7 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public class MatrixExpression : TensorExpression
+    public class MatrixExpression : TensorExpression, IMatrix
     {
         private static Evaluator _evaluator = new Evaluator();
 
@@ -133,6 +133,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             get { return _columnCount; }
         }
+
+        public IMathObject GetComponent(int row, int column) =>
+            _array[row, column];
+
         private Expression[,] _array;
 
         public int Count { get { return RowCount * ColumnCount; } }

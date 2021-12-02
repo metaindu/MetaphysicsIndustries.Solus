@@ -24,7 +24,7 @@ using System.Text;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
-    public readonly struct Matrix : IMathObject
+    public readonly struct Matrix : IMatrix
     {
         public Matrix(IMathObject[,] components)
         {
@@ -55,6 +55,10 @@ namespace MetaphysicsIndustries.Solus.Values
 
         public int RowCount => _components.GetLength(0);
         public int ColumnCount => _components.GetLength(1);
+
+        public IMathObject GetComponent(int row, int column) =>
+            _components[row, column];
+
         public Types ComponentType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;

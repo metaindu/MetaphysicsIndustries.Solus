@@ -25,7 +25,7 @@ using System.Collections.Generic;
 namespace MetaphysicsIndustries.Solus.Expressions
 {
     public abstract class TensorExpression : Expression,
-        IEnumerable<Expression>
+        IEnumerable<Expression>, ITensor
     {
         public abstract IEnumerator<Expression> GetEnumerator();
 

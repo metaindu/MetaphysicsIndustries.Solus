@@ -29,7 +29,7 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public class VectorExpression : TensorExpression
+    public class VectorExpression : TensorExpression, IVector
     {
         private static Evaluator _evaluator = new Evaluator();
 
@@ -94,6 +94,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         private Expression[] _array;
         public int Length => _array.Length;
+        public IMathObject GetComponent(int index) => _array[index];
 
         public override IMathObject Eval(SolusEnvironment env)
         {
