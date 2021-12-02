@@ -686,14 +686,18 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int c;
             var values = new Expression[RowCount, ColumnCount];
             var allLiteral = true;
+            var allSame = true;
             for (r = 0; r < RowCount; r++)
             for (c = 0; c < ColumnCount; c++)
             {
                 var value = this[r, c].Simplify(env);
                 allLiteral &= value is Literal;
+                allSame &= value == this[r, c];
                 values[r, c] = value;
             }
 
+            if (allSame)
+                return this;
             if (!allLiteral)
                 return new MatrixExpression(values);
 

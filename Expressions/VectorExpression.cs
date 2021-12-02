@@ -223,11 +223,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 _valuesCache = new Expression[_array.Length];
 
             bool allLiterals = true;
+            bool allSame = true;
             int i;
             for (i = 0; i < _array.Length; i++)
             {
                 var e = _valuesCache[i] = _array[i].Simplify(env);
                 allLiterals &= e is Literal;
+                allSame = e == _array[i];
             }
             if (allLiterals)
             {
@@ -237,6 +239,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 // Vector will take ownership of array
                 return new Literal(new Vector(values));
             }
+
+            if (allSame)
+                return this;
 
             return new VectorExpression(_valuesCache.Length, _valuesCache);
         }
