@@ -26,6 +26,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -171,60 +172,83 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 "greater than 2");
         }
 
-        public static Expression AccessComponent(Expression expr,
-            IMathObject[] indexes, SolusEnvironment env)
-        {
-            int? length = null;
-            if (expr.Result.IsIsVector(env))
-                length = expr.Result.GetVectorLength(env);
-
-            int? exprTensorRank = expr.Result.GetTensorRank(env);
-            int? exprRowCount = null;
-            int? exprColumnCount = null;
-            if (exprTensorRank.HasValue && exprTensorRank.Value == 2)
-            {
-                exprRowCount = expr.Result.GetDimension(env, 0);
-                exprColumnCount = expr.Result.GetDimension(env, 1);
-            }
-
-            CheckIndexes(indexes, expr.Result.IsScalar(env),
-                expr.Result.IsVector(env), expr.Result.IsMatrix(env),
-                exprTensorRank, expr.Result.IsString(env),
-                length, exprRowCount, exprColumnCount);
-
-            var index0 = (int) indexes[0].ToNumber().Value;
-            if (expr is VectorExpression ve)
-                return ve[index0];
-
-            var index1 = (int) indexes[1].ToNumber().Value;
-            if (expr is MatrixExpression me)
-                return me[index0, index1];
-
-            throw new NotImplementedException(
-                "Component access is not implemented for tensor rank " +
-                "greater than 2");
-        }
-
         public override Expression Simplify(SolusEnvironment env)
         {
             var expr = Expr.Simplify(env);
-            var evaledIndexes =
-                Indexes.Select(i => i.Simplify(env)).ToList();
-            if (evaledIndexes.All(ei => ei is Literal))
+
+            var canReduce = true;
+            bool sameIndexes = true;
+            var simplifiedIndexes = new Expression[Indexes.Count];
+            var intIndexes = new int[Indexes.Count];
+            int i;
+            for (i = 0; i < Indexes.Count; i++)
             {
-                var indexes2 = evaledIndexes.Select(
-                    ei => ((Literal) ei).Value).ToArray();
-                switch (expr)
+                intIndexes[i] = -1;
+                var s = Indexes[i].Simplify(env);
+                sameIndexes &= s == Indexes[i];
+                if (s is Literal literal)
                 {
-                    case Literal lit:
-                        return new Literal(
-                            AccessComponent(lit.Value, indexes2, env));
-                    case TensorExpression te:
-                        return AccessComponent(te, indexes2, env);
+                    var v = literal.Value;
+                    if (v.IsIsScalar(env))
+                    {
+                        var n = v.ToNumber().Value;
+                        if (n.IsInteger() && n >= 0)
+                            intIndexes[i] = (int)n;
+                        else
+                            canReduce = false;
+                    }
+                    else
+                        canReduce = false;
+                }
+                else
+                    canReduce = false;
+                simplifiedIndexes[i] = s;
+            }
+
+            if (canReduce)
+            {
+                if (expr is Literal eliteral2)
+                {
+                    var v = eliteral2.Value;
+                    if (v is IVector vv)
+                    {
+                        if (intIndexes.Length == 1 &&
+                            intIndexes[0] < vv.Length)
+                            return new Literal(
+                                vv.GetComponent(intIndexes[0]));
+                    }
+                    else if (v is IMatrix m)
+                    {
+                        if (intIndexes.Length == 2 &&
+                            intIndexes[0] < m.RowCount &&
+                            intIndexes[1] < m.ColumnCount)
+                            return new Literal(
+                                m.GetComponent(intIndexes[0], intIndexes[1]));
+                    }
+                }
+                else if (expr is TensorExpression te2)
+                {
+                    if (te2 is IVector vv)
+                    {
+                        if (intIndexes.Length == 1 &&
+                            intIndexes[0] < vv.Length)
+                            return (Expression)vv.GetComponent(intIndexes[0]);
+                    }
+                    else if (te2 is IMatrix m)
+                    {
+                        if (intIndexes.Length == 2 &&
+                            intIndexes[0] < m.RowCount &&
+                            intIndexes[1] < m.ColumnCount)
+                            return (Expression)m.GetComponent(
+                                intIndexes[0], intIndexes[1]);
+                    }
                 }
             }
 
-            return new ComponentAccess(expr, evaledIndexes);
+            if (expr == Expr && sameIndexes)
+                return this;
+
+            return new ComponentAccess(expr, simplifiedIndexes);
         }
 
         public override Expression Clone()
