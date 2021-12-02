@@ -44,17 +44,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override IMathObject Eval(SolusEnvironment env)
         {
             var value = Expr.Eval(env);
-            var evaledIndexes = GetEvaledIndexes(env);
-            return AccessComponent(value, evaledIndexes, env);
-        }
-
-        private IMathObject[] _evaledIndexesCache;
-        private IMathObject[] GetEvaledIndexes(SolusEnvironment env)
-        {
-            // TODO: proper caching of the results of evaluation, eventually,
-            // so as to not repeat so much evaluation. But that is a
-            // non-starter at the moment, because the contents of the env
-            // can change at any time.
 
             if (_evaledIndexesCache == null ||
                 _evaledIndexesCache.Length < Indexes.Count)
@@ -62,9 +51,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int i;
             for (i = 0; i < Indexes.Count; i++)
                 _evaledIndexesCache[i] = Indexes[i].Eval(env);
-
-            return _evaledIndexesCache;
+            return AccessComponent(value, _evaledIndexesCache, env);
         }
+
+        private IMathObject[] _evaledIndexesCache;
 
         private static void CheckIndexes(IMathObject[] indexes,
             bool? exprIsScalar, bool? exprIsVector, bool? exprIsMatrix,
