@@ -93,6 +93,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
         }
 
+        /// <summary>
+        /// Create a reduced, simpler form of the expression, if possible.
+        /// For example, "1 + 1" can be reduced to "2". This method should
+        /// not throw exceptions (TODO: clarify when that's the case).
+        /// </summary>
+        /// <param name="env"></param>
+        /// <returns>A simplified expression, or the expression the method
+        /// was called on, if it can't be simplified further.</returns>
         public virtual Expression Simplify(SolusEnvironment env)
         {
             return this;
