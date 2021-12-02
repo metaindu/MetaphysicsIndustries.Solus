@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         private static SolusEnvironment empty = new SolusEnvironment();
 
         [Test]
-        public void LiteralExprWithNonLiteralIndexYieldsComponentAccessExpr()
+        public void LiteralExprWithNonLiteralIndexYieldsSame()
         {
             // given
             var expr = vliteral(1, 2, 3);
@@ -76,11 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.Simplify(empty);
             // then
-            Assert.IsInstanceOf<ComponentAccess>(result);
-            var ca2 = (ComponentAccess) result;
-            Assert.IsInstanceOf<Literal>(ca2.Expr);
-            Assert.AreEqual(1, ca2.Indexes.Count);
-            Assert.IsInstanceOf<VariableAccess>(ca2.Indexes[0]);
+            Assert.AreSame(ca, result);
         }
 
         [Test]
@@ -133,7 +129,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         }
 
         [Test]
-        public void VarAccessWithLiteralIndexYieldsComponentAccessExpr()
+        public void VarAccessWithLiteralIndexYieldsSame()
         {
             // given
             var expr = new VariableAccess("a");
@@ -142,13 +138,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.Simplify(empty);
             // then
-            Assert.IsInstanceOf<ComponentAccess>(result);
-            var ca2 = (ComponentAccess) result;
-            Assert.IsInstanceOf<VariableAccess>(ca2.Expr);
-            Assert.AreEqual("a",
-                ((VariableAccess) ca2.Expr).VariableName);
-            Assert.AreEqual(1, ca2.Indexes.Count);
-            Assert.IsInstanceOf<Literal>(ca2.Indexes[0]);
+            Assert.AreSame(ca, result);
         }
 
         [Test]
@@ -198,6 +188,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 
             public override int TensorRank { get; }
 
+            public override Expression GetComponent(int[] indexes) =>
+                throw new NotImplementedException();
+
             public override IMathObject Eval(SolusEnvironment env) =>
                 throw new NotImplementedException();
             public override Expression Clone() =>
@@ -213,23 +206,21 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         }
 
         [Test]
-        public void NumberThrows()
+        public void NumberYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
                 new Literal(new Number(0)),
                 mkindexes(1));
             var env = new SolusEnvironment();
-            // expect
-            var ex = Assert.Throws<OperandException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual("Scalars do not have components",
-                ex.Message);
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void VectorWithTooManyIndexesThrows()
+        public void VectorWithTooManyIndexesYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -237,17 +228,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 mkindexes(1, 1));
             var env = new SolusEnvironment();
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual(
-                "Number of indexes doesn't match the number " +
-                "required by the expression",
-                ex.Message);
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void MatrixWithTooFewIndexesThrows()
+        public void MatrixWithTooFewIndexesYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -257,17 +244,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 mkindexes(1));
             var env = new SolusEnvironment();
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual(
-                "Number of indexes doesn't match the number " +
-                "required by the expression",
-                ex.Message);
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void VectorAsIndexThrows()
+        public void VectorAsIndexYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -277,15 +260,14 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                     new Literal(new Vector(new float[] { 4, 5, 6 }))
                 });
             var env = new SolusEnvironment();
-            // expect
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual("Indexes must be scalar", ex.Message);
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void MatrixAsIndexThrows()
+        public void MatrixAsIndexYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -297,15 +279,14 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                             new float[,] { { 1, 2 }, { 3, 4 } }))
                 });
             var env = new SolusEnvironment();
-            // expect
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual("Indexes must be scalar", ex.Message);
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void StringAsIndexThrows()
+        public void StringAsIndexYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -315,53 +296,45 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                     new Literal("abc".ToStringValue())
                 });
             var env = new SolusEnvironment();
-            // expect
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual("Indexes must be scalar", ex.Message);
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void NegativeIndexThrows()
+        public void NegativeIndexYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
                 varvector("a", "b", "c"),
                 mkindexes(-1));
             var env = new SolusEnvironment();
-            // expect
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual(
-                "Indexes must not be negative",
-                ex.Message);
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         // TODO: check for index greater than vector dimension
         // TODO: check for index greater than matrix dimension
 
         [Test]
-        public void HigherTensorRankObjectThrows()
+        public void HigherTensorRankObjectYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
                 new MockTensorExpression(3),
                 mkindexes(1, 2, 3));
             var env = new SolusEnvironment();
-            // expect
-            var ex = Assert.Throws<NotImplementedException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual(
-                "Component access is not implemented for tensor " +
-                "rank greater than 2",
-                ex.Message);
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void VectorWithTooLargeAnIndexThrows()
+        public void VectorWithTooLargeAnIndexYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -369,16 +342,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 mkindexes(3));
             var env = new SolusEnvironment();
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual(
-                "Index exceeds the size of the vector",
-                ex.Message);
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void MatrixWithTooLargeRowIndexThrows()
+        public void MatrixWithTooLargeRowIndexYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -388,16 +358,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 mkindexes(2, 0));
             var env = new SolusEnvironment();
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual(
-                "Index exceeds number of rows of the matrix",
-                ex.Message);
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
 
         [Test]
-        public void MatrixWithTooLargeColumnIndexThrows()
+        public void MatrixWithTooLargeColumnIndexYieldsSame()
         {
             // given
             var expr = new ComponentAccess(
@@ -407,12 +374,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 mkindexes(0, 2));
             var env = new SolusEnvironment();
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => expr.Simplify(env));
-            // and
-            Assert.AreEqual(
-                "Index exceeds number of columns of the matrix",
-                ex.Message);
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
     }
 }
