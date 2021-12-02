@@ -29,16 +29,18 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 {
     [TestFixture]
-    public class AccessComponentTest
+    public class EvalTest
     {
         [Test]
         public void VectorWithIndexYieldsComponent()
         {
             // given
-            var expr = new Vector(new float[] {1, 2, 3});
-            var indexes = new IMathObject[] {1.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(
+                    new Vector(new float[] { 1, 2, 3 })),
+                new Expression[] { new Literal(1) });
             // when
-            var result = ComponentAccess.AccessComponent(expr, indexes, null);
+            var result = expr.Eval(null);
             // then
             Assert.IsFalse(result.IsVector(null));
             Assert.IsTrue(result.IsScalar(null));
@@ -49,10 +51,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void MatrixWithIndexesYieldsComponent()
         {
             // given
-            var expr = new Matrix(new float[,] {{1, 2}, {3, 4}});
-            var indexes = new IMathObject[] {1.ToNumber(), 1.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(
+                    new Matrix(
+                        new float[,] { { 1, 2 }, { 3, 4 } })),
+                new Expression[] { new Literal(1), new Literal(1) });
             // when
-            var result = ComponentAccess.AccessComponent(expr, indexes, null);
+            var result = expr.Eval(null);
             // then
             Assert.IsFalse(result.IsVector(null));
             Assert.IsTrue(result.IsScalar(null));
@@ -63,13 +68,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void NumberThrows()
         {
             // given
-            var expr = 1.ToNumber();
-            var indexes = new IMathObject[] {1.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(1),
+                new Expression[] { new Literal(1) });
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
-            Assert.AreEqual("Scalars do not have components",
+            Assert.AreEqual(
+                "Unable to get components from expression, " +
+                "or the expression does not have components",
                 ex.Message);
         }
 
@@ -77,15 +85,15 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void VectorWithTooManyIndexesThrows()
         {
             // given
-            var expr = new Vector(new float[] {1, 2, 3});
-            var indexes = new IMathObject[] {1.ToNumber(), 1.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Expression[] { new Literal(1), new Literal(1) });
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+            var ex = Assert.Throws<OperandException>(
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
-                "Number of indexes doesn't match the number " +
-                "required by the expression",
+                "Wrong number of indexes for the expression",
                 ex.Message);
         }
 
@@ -93,15 +101,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void MatrixWithTooFewIndexesThrows()
         {
             // given
-            var expr = new Matrix(new float[,] {{1, 2}, {3, 4}});
-            var indexes = new IMathObject[] {1.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(new Matrix(
+                    new float[,] { { 1, 2 }, { 3, 4 } })),
+                new Expression[] { new Literal(1) });
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+            var ex = Assert.Throws<OperandException>(
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
-                "Number of indexes doesn't match the number " +
-                "required by the expression",
+                "Wrong number of indexes for the expression",
                 ex.Message);
         }
 
@@ -109,13 +118,15 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void VectorAsIndexThrows()
         {
             // given
-            var expr = new Vector(new float[] {1, 2, 3});
-            var indexes = new IMathObject[]
-            {
-                new Vector(new float[] {4, 5, 6})
-            };
+            var expr = new ComponentAccess(
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Expression[]
+                {
+                    new Literal(
+                        new Vector(new float[] { 4, 5, 6 }))
+                });
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
         }
@@ -124,13 +135,15 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void MatrixAsIndexThrows()
         {
             // given
-            var expr = new Vector(new float[] {1, 2, 3});
-            var indexes = new IMathObject[]
-            {
-                new Matrix(new float[,] {{1, 2}, {3, 4}})
-            };
+            var expr = new ComponentAccess(
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Expression[]
+                {
+                    new Literal(
+                        new Matrix(new float[,] { { 1, 2 }, { 3, 4 } }))
+                });
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
         }
@@ -139,10 +152,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void StringAsIndexThrows()
         {
             // given
-            var expr = new Vector(new float[] {1, 2, 3});
-            var indexes = new IMathObject[] {"abc".ToStringValue()};
+            var expr = new ComponentAccess(
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Expression[] { new Literal("abc".ToStringValue()) });
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual("Indexes must be scalar", ex.Message);
         }
@@ -151,11 +165,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void NegativeIndexThrows()
         {
             // given
-            var expr = new Vector(new float[] {1, 2, 3});
-            var indexes = new IMathObject[] {(-1).ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Expression[] { new Literal(-1) });
             // expect
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
                 "Indexes must not be negative",
@@ -169,20 +184,25 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void HigherTensorRankObjectThrows()
         {
             // given
-            var expr = new MockMathObject(isScalar: false, tensorRank: 3);
-            var indexes = new IMathObject[]
-            {
-                1.ToNumber(),
-                2.ToNumber(),
-                3.ToNumber()
-            };
+            var expr = new ComponentAccess(
+                new Literal(
+                    new MockMathObject(
+                        isScalar: false,
+                        tensorRank: 3,
+                        isConcrete: true)),
+                new Expression[]
+                {
+                    new Literal(1),
+                    new Literal(2),
+                    new Literal(3)
+                });
             // expect
-            var ex = Assert.Throws<NotImplementedException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+            var ex = Assert.Throws<OperandException>(
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
-                "Component access is not implemented for tensor " +
-                "rank greater than 2",
+                "Unable to get components from expression, " +
+                "or the expression does not have components",
                 ex.Message);
         }
 
@@ -190,10 +210,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void StringWithIndexYieldsComponent()
         {
             // given
-            var expr = "abc".ToStringValue();
-            var indexes = new IMathObject[] {1.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal("abc".ToStringValue()),
+                new Expression[] { new Literal(1) });
             // when
-            var result = ComponentAccess.AccessComponent(expr, indexes, null);
+            var result = expr.Eval(null);
             // then
             Assert.IsFalse(result.IsVector(null));
             Assert.IsFalse(result.IsScalar(null));
@@ -205,15 +226,15 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void StringWithTooManyIndexesThrows()
         {
             // given
-            var expr = "abc".ToStringValue();
-            var indexes = new IMathObject[] {1.ToNumber(), 1.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal("abc".ToStringValue()),
+                new Expression[] { new Literal(1), new Literal(1) });
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+            var ex = Assert.Throws<OperandException>(
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
-                "Number of indexes doesn't match the number " +
-                "required by the expression",
+                "Wrong number of indexes for the expression",
                 ex.Message);
         }
 
@@ -221,11 +242,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void VectorWithTooLargeAnIndexThrows()
         {
             // given
-            var expr = new Vector(new float[] {1, 2, 3});
-            var indexes = new IMathObject[] {3.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Expression[] { new Literal(3) });
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
                 "Index exceeds the size of the vector",
@@ -233,15 +255,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         }
 
         [Test]
-        [Ignore("Can't check index against string length yet")]
+        // [Ignore("Can't check index against string length yet")]
         public void StringWithTooLargeAnIndexThrows()
         {
             // given
-            var expr = "abc".ToStringValue();
-            var indexes = new IMathObject[] {3.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal("abc".ToStringValue()),
+                new Expression[] { new Literal(3) });
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
                 "Index exceeds the size of the string",
@@ -252,11 +275,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void MatrixWithTooLargeRowIndexThrows()
         {
             // given
-            var expr = new Matrix(new float[,] {{1, 2}, {3, 4}});
-            var indexes = new IMathObject[] {2.ToNumber(), 0.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(new Matrix(new float[,] { { 1, 2 }, { 3, 4 } })),
+                new Expression[] { new Literal(2), new Literal(0) });
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
                 "Index exceeds number of rows of the matrix",
@@ -267,11 +291,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         public void MatrixWithTooLargeColumnIndexThrows()
         {
             // given
-            var expr = new Matrix(new float[,] {{1, 2}, {3, 4}});
-            var indexes = new IMathObject[] {0.ToNumber(), 2.ToNumber()};
+            var expr = new ComponentAccess(
+                new Literal(new Matrix(new float[,] { { 1, 2 }, { 3, 4 } })),
+                new Expression[] { new Literal(0), new Literal(2) });
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ComponentAccess.AccessComponent(expr, indexes, null));
+                () => expr.Eval(null));
             // and
             Assert.AreEqual(
                 "Index exceeds number of columns of the matrix",
