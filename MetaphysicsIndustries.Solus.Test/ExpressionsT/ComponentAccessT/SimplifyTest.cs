@@ -378,5 +378,21 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // then
             Assert.AreSame(expr, result);
         }
+
+        [Test]
+        public void IntervalExpressionWithLiteralIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                new IntervalExpression(
+                    new Literal(-1), false,
+                    new Literal(1), false),
+                mkindexes(0));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
     }
 }
