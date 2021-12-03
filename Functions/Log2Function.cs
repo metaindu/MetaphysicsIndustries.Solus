@@ -36,16 +36,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             Name = "Logarithm of base two";
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            var arg0 = args[0].ToNumber().Value;
-            if (arg0 <= 0)
-                throw new OperandException(
-                    "Argument must be positive");
-            return ((float)Math.Log(arg0, 2)).ToNumber();
-        }
-
         public override string DisplayName
         {
             get

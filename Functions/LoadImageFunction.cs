@@ -53,7 +53,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     24-bit integers, with blue in the low 8 bits, green in the middle 8 bits,
     and red in the high 8 bits; the value is then cast to a float (32-bit).";
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
+        protected IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
             return CallWithLoader(env, args, null);

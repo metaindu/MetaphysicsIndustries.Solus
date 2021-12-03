@@ -28,5 +28,6 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.FunctionsT.
     [TestFixture]
     public class EvalLoadImageFunctionTest
     {
+        // TODO: how to call Evaluator.Call and specify a loader?
     }
 }

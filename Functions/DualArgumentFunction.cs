@@ -30,14 +30,5 @@ namespace MetaphysicsIndustries.Solus.Functions
             : base(new[] {Types.Scalar, Types.Scalar}, name)
         {
         }
-
-        protected sealed override IMathObject InternalCall(
-            SolusEnvironment env, IMathObject[] args)
-        {
-            return InternalCall(args[0].ToNumber().Value,
-                args[1].ToNumber().Value).ToNumber();
-        }
-
-        protected abstract float InternalCall(float arg0, float arg1);
     }
 }

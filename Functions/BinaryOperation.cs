@@ -40,14 +40,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
         }
 
-        protected sealed override IMathObject InternalCall(
-            SolusEnvironment env, IMathObject[] args)
-        {
-            return InternalBinaryCall(args[0].ToNumber().Value,
-                args[1].ToNumber().Value).ToNumber();
-        }
-        protected abstract float InternalBinaryCall(float x, float y);
-
         //protected override Expression InternalCleanUp(Expression[] args)
         //{
         //    if (args[0] is Literal &&

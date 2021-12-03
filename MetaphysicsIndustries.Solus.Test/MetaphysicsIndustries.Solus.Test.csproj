@@ -203,7 +203,6 @@
     <Compile Include="FunctionsT\SingleArgumentFunctionT\SingleArgumentFunctionTest.cs" />
     <Compile Include="FunctionsT\SizeFunctionT\CheckArgumentsTest.cs" />
     <Compile Include="FunctionsT\SizeFunctionT\GetResultTest.cs" />
-    <Compile Include="FunctionsT\SizeFunctionT\CallTest.cs" />
     <Compile Include="FunctionsT\TangentFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\TangentFunctionT\TangentFunctionTest.cs" />
     <Compile Include="FunctionsT\UnaryOperationT\UnaryOperationTest.cs" />

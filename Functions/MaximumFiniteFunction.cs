@@ -56,31 +56,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            int i;
-            float current = float.NaN;
-            bool first = true;
-            for (i = 0; i < args.Length; i++)
-            {
-                var value = args[i].ToNumber().Value;
-                if (!float.IsInfinity(value) &&
-                    !float.IsNaN(value))
-                {
-                    if (first)
-                    {
-                        current = value;
-                        first = false;
-                    }
-                    else
-                        current = Math.Max(current, value);
-                }
-            }
-
-            return current.ToNumber();
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             return ScalarMathObject.Value;

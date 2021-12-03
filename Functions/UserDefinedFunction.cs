@@ -50,29 +50,6 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"{args.Length})");
         }
 
-        private SolusEnvironment _parentCache;
-        private SolusEnvironment _childCache;
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            if (_childCache == null ||
-                env != _parentCache)
-            {
-                _childCache = env.CreateChildEnvironment();
-                _parentCache = env;
-            }
-            var env2 = _childCache;
-
-            int i;
-            for (i = 0; i < Argnames.Length; i++)
-            {
-                env2.SetVariable(Argnames[i], args[i]);
-            }
-
-            var eval = new Evaluator();
-            return eval.Eval(Expression, env2);
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             return Expression.Result;

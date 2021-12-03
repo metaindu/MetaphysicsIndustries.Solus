@@ -39,13 +39,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Multiplication; }
         }
 
-        protected override float InternalBinaryCall(float x, float y)
-        {
-            if (y == 0)
-                throw new OperandException("Division by zero");
-            return ((long)x) % ((long)y);   
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             return ScalarMathObject.Value;

@@ -43,12 +43,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 			this.Name = "Cosecant";
 		}
 
-
-        protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
-		{
-            return ((float)(1 / Math.Sin(args[0].ToNumber().Value))).ToNumber();
-        }
-
         public override string DisplayName
         {
             get

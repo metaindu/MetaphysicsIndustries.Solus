@@ -46,19 +46,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        //protected override Literal InternalCall(SolusEnvironment env,
-        //    Literal[] args)
-        //{
-        //    return new Literal(args[0].Value / args[1].Value);
-        //}
-
-        protected override float InternalBinaryCall(float x, float y)
-        {
-            if (y == 0)
-                throw new OperandException("Division by zero");
-            return x / y;
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             // TODO: vector divided by scalar

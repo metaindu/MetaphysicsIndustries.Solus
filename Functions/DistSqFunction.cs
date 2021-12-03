@@ -38,11 +38,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return "distsq"; }
         }
 
-        protected override float InternalCall(float arg0, float arg1)
-        {
-            return arg0 * arg0 + arg1 * arg1;
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             return ScalarMathObject.Value;

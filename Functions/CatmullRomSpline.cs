@@ -56,11 +56,13 @@ namespace MetaphysicsIndustries.Solus.Functions
         readonly float[] Times;
         readonly float[] Values;
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
+        public override IMathObject CustomCall(IMathObject[] args,
+            SolusEnvironment env)
         {
             return Evaluate(args[0].ToNumber().Value).ToNumber();
         }
+
+        public override bool ProvidesCustomCall => true;
 
         public float Evaluate(float time)
         {

@@ -43,13 +43,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 			this.Name = "Tangent";
 		}
 
-
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-		{
-            return ((float)Math.Tan(args[0].ToNumber().Value)).ToNumber();
-		}
-
         public override string DisplayName
         {
             get

@@ -53,18 +53,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            int i;
-            var current = args[0].ToNumber().Value;
-            for (i = 1; i < args.Length; i++)
-                current = Math.Min(
-                    current,
-                    args[i].ToNumber().Value);
-            return current.ToNumber();
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             return ScalarMathObject.Value;

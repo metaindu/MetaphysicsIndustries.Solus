@@ -56,18 +56,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         //    }
         //}
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            float value = 1;
-            int i;
-            for (i = 0; i < args.Length; i++)
-            {
-                value *= args[i].ToNumber().Value;
-            }
-            return value.ToNumber();
-        }
-
         public override bool Collapses
         {
             get

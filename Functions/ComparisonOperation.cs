@@ -29,11 +29,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             Name = name;
         }
 
-        protected override sealed float InternalBinaryCall(float x, float y)
-        {
-            return Compare(x, y) ? 1 : 0;
-        }
-
         protected abstract bool Compare(float x, float y);
 
         public override OperationPrecedence Precedence

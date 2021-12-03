@@ -51,11 +51,10 @@ namespace MetaphysicsIndustries.Solus.Functions
             ParamTypes = Array.AsReadOnly(paramTypes);
         }
 
-		public virtual IMathObject Call(SolusEnvironment env, params IMathObject[] args)
-        {
-            this.CheckArguments(args);
-            return InternalCall(env, args);
-        }
+        public virtual IMathObject CustomCall(IMathObject[] args,
+            SolusEnvironment env) => null;
+
+        public virtual bool ProvidesCustomCall => false;
 
         //public virtual Expression CleanUp(Expression[] args)
         //{
@@ -96,9 +95,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 				}
 			}
 		}
-
-        protected abstract IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args);
 
         public virtual void CheckArguments(IMathObject[] args) =>
             CheckArguments(args, ParamTypes, DisplayName);

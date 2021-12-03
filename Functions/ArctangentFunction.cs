@@ -43,12 +43,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 			this.Name = "Arctangent";
 		}
 
-
-        protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
-		{
-            return ((float)Math.Atan(args[0].ToNumber().Value)).ToNumber();
-		}
-
         public override string DisplayName
         {
             get

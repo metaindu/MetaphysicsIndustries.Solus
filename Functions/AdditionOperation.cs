@@ -40,19 +40,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Addition; }
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
-        {
-            // TODO: vector
-            // TODO: matrix
-            // TODO: string?
-            float sum = 0;
-            foreach (var arg in args)
-            {
-                sum += arg.ToNumber().Value;
-            }
-            return sum.ToNumber();
-        }
-
         public override float IdentityValue
         {
             get

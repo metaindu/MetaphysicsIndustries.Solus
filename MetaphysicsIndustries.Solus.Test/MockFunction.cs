@@ -35,12 +35,15 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         public Func<IEnumerable<IMathObject>, IMathObject> CallF;
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
+
+        public override IMathObject CustomCall(IMathObject[] args,
+            SolusEnvironment env)
         {
             if (CallF == null) throw new NotImplementedException();
             return CallF(args);
         }
+
+        public override bool ProvidesCustomCall => true;
 
         public Func<IEnumerable<IMathObject>, IMathObject> GetResultF;
         public override IMathObject GetResult(

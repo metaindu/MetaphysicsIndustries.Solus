@@ -141,7 +141,7 @@ namespace MetaphysicsIndustries.Solus
             int i;
             for (i = 0; i < expr.Arguments.Count; i++)
                 _functionCallArgsCache[i] = Eval(expr.Arguments[i], env);
-            return f.Call(env, _functionCallArgsCache);
+            return Call(f, _functionCallArgsCache, env);
         }
 
         public IMathObject Eval(IntervalExpression expr, SolusEnvironment env)

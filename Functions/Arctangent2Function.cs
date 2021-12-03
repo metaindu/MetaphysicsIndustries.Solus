@@ -34,11 +34,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
         }
 
-        protected override float InternalCall(float arg0, float arg1)
-        {
-            return (float)Math.Atan2(arg0, arg1);
-        }
-
         public override string DisplayName
         {
             get
