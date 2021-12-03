@@ -73,7 +73,6 @@
     <Compile Include="Expressions\IExpressionVisitor.cs" />
     <Compile Include="Expressions\IntervalExpression.cs" />
     <Compile Include="Expressions\Literal.cs" />
-    <Compile Include="Expressions\ProductExpression.cs" />
     <Compile Include="Expressions\RandomExpression.cs" />
     <Compile Include="Expressions\MatrixExpression.cs" />
     <Compile Include="Expressions\TensorExpression.cs" />
