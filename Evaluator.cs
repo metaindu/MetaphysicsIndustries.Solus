@@ -65,6 +65,12 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public IMathObject Call(Function f, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            return f.Call(env, args);
+        }
+
         public Expression Simplify(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
