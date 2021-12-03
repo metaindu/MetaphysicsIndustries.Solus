@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected AbsoluteValueFunction()
         {
-            Name = "Absolue Value";
+            Name = "Absolute Value";
         }
 
         protected override IMathObject InternalCall(SolusEnvironment env,
