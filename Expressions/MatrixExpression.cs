@@ -29,8 +29,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class MatrixExpression : TensorExpression, IMatrix
     {
-        private static Evaluator _evaluator = new Evaluator();
-
         public static MatrixExpression FromUniform(float value, int rows,
             int columns)
         {

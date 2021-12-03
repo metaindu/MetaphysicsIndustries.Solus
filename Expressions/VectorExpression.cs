@@ -31,8 +31,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class VectorExpression : TensorExpression, IVector
     {
-        private static Evaluator _evaluator = new Evaluator();
-
         public static VectorExpression FromUniformSequence(float value,
             int length)
         {
