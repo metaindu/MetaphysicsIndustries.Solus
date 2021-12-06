@@ -21,23 +21,36 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.RandMacroT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.MacrosT.SqrtMacroT
 {
     [TestFixture]
     public class CallTest
     {
         [Test]
-        public void CallYieldsRandomExpression()
+        public void CallYieldsExponentOperation()
         {
             // given
-            var expr = new FunctionCall(new Literal(RandMacro.Value));
+            var expr = new FunctionCall(new Literal(SqrtMacro.Value),
+                new Literal(2));
             var eval = new Evaluator();
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.IsInstanceOf<RandomExpression>(result);
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall)result;
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var target = (Literal)fc.Function;
+            Assert.AreSame(ExponentOperation.Value, target.Value);
+            Assert.AreEqual(2,fc.Arguments.Count);
+            Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
+            Assert.AreEqual(2f,
+                ((Literal)fc.Arguments[0]).Value.ToNumber().Value);
+            Assert.IsInstanceOf<Literal>(fc.Arguments[1]);
+            Assert.AreEqual(0.5f,
+                ((Literal)fc.Arguments[1]).Value.ToNumber().Value);
         }
     }
 }

@@ -25,7 +25,7 @@ using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.MacrosT.IfMacroT
 {
     [TestFixture]
     public class CallTest

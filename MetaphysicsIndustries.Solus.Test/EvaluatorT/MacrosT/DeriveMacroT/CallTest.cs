@@ -24,7 +24,7 @@ using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.DeriveMacroT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.MacrosT.DeriveMacroT
 {
     [TestFixture]
     public class CallTest

@@ -23,47 +23,21 @@
 using MetaphysicsIndustries.Solus.Expressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.SubstMacroT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.MacrosT.RandMacroT
 {
     [TestFixture]
     public class CallTest
     {
         [Test]
-        public void UnmatchedVariableYieldsSame()
+        public void CallYieldsRandomExpression()
         {
             // given
-            var original = new VariableAccess("x");
-            var expr = new FunctionCall(
-                new Literal(SubstMacro.Value),
-                original,
-                new VariableAccess("y"),
-                new Literal(1));
+            var expr = new FunctionCall(new Literal(RandMacro.Value));
             var eval = new Evaluator();
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.AreSame(original, result);
-            Assert.IsInstanceOf<VariableAccess>(result);
-            Assert.AreEqual("x",
-                ((VariableAccess)result).VariableName);
-        }
-
-        [Test]
-        public void MatchVariableGetsReplaced()
-        {
-            // given
-            var expr = new FunctionCall(
-                new Literal(SubstMacro.Value),
-                new VariableAccess("x"),
-                new VariableAccess("x"),
-                new Literal(1));
-            var eval = new Evaluator();
-            // when
-            var result = eval.Eval(expr, null);
-            // then
-            Assert.IsInstanceOf<Literal>(result);
-            Assert.AreEqual(1,
-                ((Literal)result).Value.ToNumber().Value);
+            Assert.IsInstanceOf<RandomExpression>(result);
         }
     }
 }

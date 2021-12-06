@@ -21,36 +21,49 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.SqrtMacroT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.MacrosT.SubstMacroT
 {
     [TestFixture]
     public class CallTest
     {
         [Test]
-        public void CallYieldsExponentOperation()
+        public void UnmatchedVariableYieldsSame()
         {
             // given
-            var expr = new FunctionCall(new Literal(SqrtMacro.Value),
-                new Literal(2));
+            var original = new VariableAccess("x");
+            var expr = new FunctionCall(
+                new Literal(SubstMacro.Value),
+                original,
+                new VariableAccess("y"),
+                new Literal(1));
             var eval = new Evaluator();
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.IsInstanceOf<FunctionCall>(result);
-            var fc = (FunctionCall)result;
-            Assert.IsInstanceOf<Literal>(fc.Function);
-            var target = (Literal)fc.Function;
-            Assert.AreSame(ExponentOperation.Value, target.Value);
-            Assert.AreEqual(2,fc.Arguments.Count);
-            Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
-            Assert.AreEqual(2f,
-                ((Literal)fc.Arguments[0]).Value.ToNumber().Value);
-            Assert.IsInstanceOf<Literal>(fc.Arguments[1]);
-            Assert.AreEqual(0.5f,
-                ((Literal)fc.Arguments[1]).Value.ToNumber().Value);
+            Assert.AreSame(original, result);
+            Assert.IsInstanceOf<VariableAccess>(result);
+            Assert.AreEqual("x",
+                ((VariableAccess)result).VariableName);
+        }
+
+        [Test]
+        public void MatchVariableGetsReplaced()
+        {
+            // given
+            var expr = new FunctionCall(
+                new Literal(SubstMacro.Value),
+                new VariableAccess("x"),
+                new VariableAccess("x"),
+                new Literal(1));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsInstanceOf<Literal>(result);
+            Assert.AreEqual(1,
+                ((Literal)result).Value.ToNumber().Value);
         }
     }
 }

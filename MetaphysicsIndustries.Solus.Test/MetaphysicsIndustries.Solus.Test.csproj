@@ -93,6 +93,11 @@
     <Compile Include="EvaluatorT\FunctionsT\TangentFunctionT\CallTest.cs" />
     <Compile Include="EvaluatorT\FunctionsT\UnitStepFunctionT\CallTest.cs" />
     <Compile Include="EvaluatorT\FunctionsT\UserDefinedFunctionT\CallTest.cs" />
+    <Compile Include="EvaluatorT\MacrosT\DeriveMacroT\CallTest.cs" />
+    <Compile Include="EvaluatorT\MacrosT\IfMacroT\CallTest.cs" />
+    <Compile Include="EvaluatorT\MacrosT\RandMacroT\CallTest.cs" />
+    <Compile Include="EvaluatorT\MacrosT\SqrtMacroT\CallTest.cs" />
+    <Compile Include="EvaluatorT\MacrosT\SubstMacroT\CallTest.cs" />
     <Compile Include="ExpressionsT\ColorExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ComponentAccessTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\SimplifyTest.cs" />
@@ -210,13 +215,8 @@
     <Compile Include="FunctionsT\UnitStepFunctionT\UnitStepFunctionTest.cs" />
     <Compile Include="FunctionsT\UserDefinedFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\UserDefinedFunctionT\UserDefinedFunctionTest.cs" />
-    <Compile Include="MacrosT\DeriveMacroT\CallTest.cs" />
     <Compile Include="MacrosT\DeriveMacroT\DeriveMacroTest.cs" />
-    <Compile Include="MacrosT\IfMacroT\CallTest.cs" />
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
-    <Compile Include="MacrosT\RandMacroT\CallTest.cs" />
-    <Compile Include="MacrosT\SqrtMacroT\CallTest.cs" />
-    <Compile Include="MacrosT\SubstMacroT\CallTest.cs" />
     <Compile Include="MacrosT\SubstMacroT\SubstMacroTest.cs" />
     <Compile Include="MockFunction.cs" />
     <Compile Include="MockMathObjectF.cs" />
@@ -253,6 +253,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MacrosT\RandMacroT" />
+    <Folder Include="MacrosT\SqrtMacroT" />
   </ItemGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
