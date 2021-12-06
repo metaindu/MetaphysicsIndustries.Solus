@@ -42,6 +42,23 @@ namespace MetaphysicsIndustries.Solus
         string DocString { get; }
     }
 
+    public interface ITensor : IMathObject
+    {
+    }
+
+    public interface IVector : ITensor
+    {
+        int Length { get; }
+        IMathObject GetComponent(int index);
+    }
+
+    public interface IMatrix : ITensor
+    {
+        int RowCount { get; }
+        int ColumnCount { get; }
+        IMathObject GetComponent(int row, int column);
+    }
+
     public class ScalarMathObject : IMathObject
     {
         public static readonly ScalarMathObject Value = new ScalarMathObject();

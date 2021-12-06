@@ -25,7 +25,7 @@ using System.Collections.Generic;
 namespace MetaphysicsIndustries.Solus.Expressions
 {
     public abstract class TensorExpression : Expression,
-        IEnumerable<Expression>
+        IEnumerable<Expression>, ITensor
     {
         public abstract IEnumerator<Expression> GetEnumerator();
 
@@ -35,6 +35,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public abstract int TensorRank { get; }
+        public abstract Expression GetComponent(int[] indexes);
 
         public delegate float Modulator(float x);
         public delegate float BiModulator(float x, float y);

@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
-    public readonly struct Vector : IMathObject
+    public readonly struct Vector : IVector
     {
         public Vector(IMathObject[] components)
         {
@@ -49,6 +49,8 @@ namespace MetaphysicsIndustries.Solus.Values
         private readonly IMathObject[] _components;
         public IMathObject this[int index] => _components[index];
         public int Length => _components.Length;
+        public IMathObject GetComponent(int index) => _components[index];
+
         public Types ComponentType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;

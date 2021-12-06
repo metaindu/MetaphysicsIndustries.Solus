@@ -24,7 +24,7 @@ using System;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
-    public readonly struct Vector2 : IMathObject
+    public readonly struct Vector2 : IVector
     {
         public Vector2(float x, float y)
         {
@@ -198,6 +198,14 @@ namespace MetaphysicsIndustries.Solus.Values
         public bool? IsExpression(SolusEnvironment env) => false;
         public bool IsConcrete => true;
         public string DocString => "";
+        int IVector.Length => 2;
+
+        public IMathObject GetComponent(int index)
+        {
+            if (index == 0) return X.ToNumber();
+            if (index == 1) return Y.ToNumber();
+            throw new IndexOutOfRangeException();
+        }
     }
 }
 

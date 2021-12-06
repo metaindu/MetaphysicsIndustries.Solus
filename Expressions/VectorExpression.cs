@@ -29,7 +29,7 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public class VectorExpression : TensorExpression
+    public class VectorExpression : TensorExpression, IVector
     {
         private static Evaluator _evaluator = new Evaluator();
 
@@ -94,6 +94,19 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         private Expression[] _array;
         public int Length => _array.Length;
+        public IMathObject GetComponent(int index) => _array[index];
+
+        public override Expression GetComponent(int[] indexes)
+        {
+            if (indexes == null)
+                throw new ArgumentNullException(nameof(indexes));
+            if (indexes.Length != 1)
+                throw new ArgumentOutOfRangeException(
+                    nameof(indexes), "Wrong number of indexes");
+            if (indexes[0] < 0 || indexes[0] >= Length)
+                throw new IndexOutOfRangeException();
+            return this[indexes[0]];
+        }
 
         public override IMathObject Eval(SolusEnvironment env)
         {
@@ -222,11 +235,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 _valuesCache = new Expression[_array.Length];
 
             bool allLiterals = true;
+            bool allSame = true;
             int i;
             for (i = 0; i < _array.Length; i++)
             {
                 var e = _valuesCache[i] = _array[i].Simplify(env);
                 allLiterals &= e is Literal;
+                allSame = e == _array[i];
             }
             if (allLiterals)
             {
@@ -236,6 +251,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 // Vector will take ownership of array
                 return new Literal(new Vector(values));
             }
+
+            if (allSame)
+                return this;
 
             return new VectorExpression(_valuesCache.Length, _valuesCache);
         }

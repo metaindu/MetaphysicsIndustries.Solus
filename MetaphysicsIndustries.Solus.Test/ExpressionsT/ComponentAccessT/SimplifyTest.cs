@@ -20,7 +20,10 @@
  *
  */
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
@@ -47,10 +50,24 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             values.Select(
                 v => (Expression) new VariableAccess(v)).ToArray();
 
+        static MatrixExpression matrix(int columns, params string[] values)
+        {
+            int rows = values.Length / columns;
+            var values2 = new Expression[rows * columns];
+            for (var k = 0; k < rows * columns; k++)
+                values2[k] = new VariableAccess(values[k]);
+            return new MatrixExpression(rows, columns, values2);
+        }
+
+        static Expression[] mkindexes(params int[] indexes)
+        {
+            return indexes.Select(i => (Expression)new Literal(i)).ToArray();
+        }
+
         private static SolusEnvironment empty = new SolusEnvironment();
 
         [Test]
-        public void LiteralExprWithNonLiteralIndexYieldsComponentAccessExpr()
+        public void LiteralExprWithNonLiteralIndexYieldsSame()
         {
             // given
             var expr = vliteral(1, 2, 3);
@@ -59,11 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.Simplify(empty);
             // then
-            Assert.IsInstanceOf<ComponentAccess>(result);
-            var ca2 = (ComponentAccess) result;
-            Assert.IsInstanceOf<Literal>(ca2.Expr);
-            Assert.AreEqual(1, ca2.Indexes.Count);
-            Assert.IsInstanceOf<VariableAccess>(ca2.Indexes[0]);
+            Assert.AreSame(ca, result);
         }
 
         [Test]
@@ -116,7 +129,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         }
 
         [Test]
-        public void VarAccessWithLiteralIndexYieldsComponentAccessExpr()
+        public void VarAccessWithLiteralIndexYieldsSame()
         {
             // given
             var expr = new VariableAccess("a");
@@ -125,13 +138,261 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.Simplify(empty);
             // then
-            Assert.IsInstanceOf<ComponentAccess>(result);
-            var ca2 = (ComponentAccess) result;
-            Assert.IsInstanceOf<VariableAccess>(ca2.Expr);
-            Assert.AreEqual("a",
-                ((VariableAccess) ca2.Expr).VariableName);
-            Assert.AreEqual(1, ca2.Indexes.Count);
-            Assert.IsInstanceOf<Literal>(ca2.Indexes[0]);
+            Assert.AreSame(ca, result);
+        }
+
+        [Test]
+        public void VectorWithIndexYieldsComponent()
+        {
+            // given
+            var expr = new ComponentAccess(
+                varvector("a", "b", "c"),
+                mkindexes(1));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.IsInstanceOf<VariableAccess>(result);
+            Assert.AreEqual("b", ((VariableAccess)result).VariableName);
+        }
+
+        [Test]
+        public void MatrixWithIndexesYieldsComponent()
+        {
+            // given
+            var expr = new ComponentAccess(
+                matrix(2,
+                    "a", "b",
+                    "c", "d"),
+                mkindexes(1, 1));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.IsInstanceOf<VariableAccess>(result);
+            Assert.AreEqual("d", ((VariableAccess)result).VariableName);
+        }
+
+        class MockTensorExpression : TensorExpression
+        {
+            public MockTensorExpression(int tensorRank)
+            {
+                TensorRank = tensorRank;
+                Result = new MockMathObjectF(
+                    isScalarF: e => TensorRank == 0,
+                    isVectorF: e => TensorRank == 1,
+                    isMatrixF: e => TensorRank == 2,
+                    getTensorRankF: e => TensorRank,
+                    isStringF: e => false);
+            }
+
+            public override int TensorRank { get; }
+
+            public override Expression GetComponent(int[] indexes) =>
+                throw new NotImplementedException();
+
+            public override IMathObject Eval(SolusEnvironment env) =>
+                throw new NotImplementedException();
+            public override Expression Clone() =>
+                throw new NotImplementedException();
+            public override void AcceptVisitor(IExpressionVisitor visitor) =>
+                throw new NotImplementedException();
+            public override IEnumerator<Expression> GetEnumerator() =>
+                throw new NotImplementedException();
+            public override void ApplyToAll(Modulator mod) =>
+                throw new NotImplementedException();
+
+            public override IMathObject Result { get; }
+        }
+
+        [Test]
+        public void NumberYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                new Literal(new Number(0)),
+                mkindexes(1));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void VectorWithTooManyIndexesYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                varvector("a", "b", "c"),
+                mkindexes(1, 1));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void MatrixWithTooFewIndexesYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                matrix(2,
+                    "a", "b",
+                    "c", "d"),
+                mkindexes(1));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void VectorAsIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                varvector("a", "b", "c"),
+                new Expression[]
+                {
+                    new Literal(new Vector(new float[] { 4, 5, 6 }))
+                });
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void MatrixAsIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                varvector("a", "b", "c"),
+                new Expression[]
+                {
+                    new Literal(
+                        new Matrix(
+                            new float[,] { { 1, 2 }, { 3, 4 } }))
+                });
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void StringAsIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                varvector("a", "b", "c"),
+                new Expression[]
+                {
+                    new Literal("abc".ToStringValue())
+                });
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void NegativeIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                varvector("a", "b", "c"),
+                mkindexes(-1));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        // TODO: check for index greater than vector dimension
+        // TODO: check for index greater than matrix dimension
+
+        [Test]
+        public void HigherTensorRankObjectYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                new MockTensorExpression(3),
+                mkindexes(1, 2, 3));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void VectorWithTooLargeAnIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                varvector("a", "b", "c"),
+                mkindexes(3));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void MatrixWithTooLargeRowIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                matrix(2,
+                    "a", "b",
+                    "c", "d"),
+                mkindexes(2, 0));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void MatrixWithTooLargeColumnIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                matrix(2,
+                    "a", "b",
+                    "c", "d"),
+                mkindexes(0, 2));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
+        }
+
+        [Test]
+        public void IntervalExpressionWithLiteralIndexYieldsSame()
+        {
+            // given
+            var expr = new ComponentAccess(
+                new IntervalExpression(
+                    new Literal(-1), false,
+                    new Literal(1), false),
+                mkindexes(0));
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.Simplify(env);
+            // then
+            Assert.AreSame(expr, result);
         }
     }
 }

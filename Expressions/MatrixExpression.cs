@@ -27,7 +27,7 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
-    public class MatrixExpression : TensorExpression
+    public class MatrixExpression : TensorExpression, IMatrix
     {
         private static Evaluator _evaluator = new Evaluator();
 
@@ -133,6 +133,23 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             get { return _columnCount; }
         }
+
+        public IMathObject GetComponent(int row, int column) =>
+            this[row, column];
+
+        public override Expression GetComponent(int[] indexes)
+        {
+            if (indexes == null)
+                throw new ArgumentNullException(nameof(indexes));
+            if (indexes.Length != 2)
+                throw new ArgumentOutOfRangeException(
+                    nameof(indexes), "Wrong number of indexes");
+            if (indexes[0] < 0 || indexes[0] >= RowCount ||
+                indexes[1] < 0 || indexes[1] >= ColumnCount)
+                throw new IndexOutOfRangeException();
+            return this[indexes[0], indexes[1]];
+        }
+
         private Expression[,] _array;
 
         public int Count { get { return RowCount * ColumnCount; } }
@@ -682,14 +699,18 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int c;
             var values = new Expression[RowCount, ColumnCount];
             var allLiteral = true;
+            var allSame = true;
             for (r = 0; r < RowCount; r++)
             for (c = 0; c < ColumnCount; c++)
             {
                 var value = this[r, c].Simplify(env);
                 allLiteral &= value is Literal;
+                allSame &= value == this[r, c];
                 values[r, c] = value;
             }
 
+            if (allSame)
+                return this;
             if (!allLiteral)
                 return new MatrixExpression(values);
 

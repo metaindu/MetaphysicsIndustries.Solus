@@ -94,8 +94,7 @@
     <Compile Include="EvaluatorT\FunctionsT\UnitStepFunctionT\EvalUnitStepFunctionTest.cs" />
     <Compile Include="EvaluatorT\FunctionsT\UserDefinedFunctionT\EvalUserDefinedFunctionTest.cs" />
     <Compile Include="ExpressionsT\ColorExpressionT\ResultTest.cs" />
-    <Compile Include="ExpressionsT\ComponentAccessT\AccessComponent2Test.cs" />
-    <Compile Include="ExpressionsT\ComponentAccessT\AccessComponentTest.cs" />
+    <Compile Include="ExpressionsT\ComponentAccessT\EvalTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ComponentAccessTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\SimplifyTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ResultTest.cs" />
