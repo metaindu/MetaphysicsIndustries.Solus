@@ -39,17 +39,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Exponent; }
         }
 
-        //protected override Literal InternalCall(SolusEnvironment env,
-        //    Literal[] args)
-        //{
-        //    return new Literal(Math.Pow(args[0].Value, args[1].Value));
-        //}
-
-        protected override float InternalBinaryCall(float x, float y)
-        {
-            return (float)Math.Pow(x, y);
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             // TODO: square matrix

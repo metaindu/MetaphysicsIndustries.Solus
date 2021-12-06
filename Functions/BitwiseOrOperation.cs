@@ -39,18 +39,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Bitwise; }
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
-        {
-            long value = 0;
-
-            foreach (var arg in args)
-            {
-                value |= (long) arg.ToNumber().Value;
-            }
-
-            return value.ToNumber();
-        }
-
         public override bool HasIdentityValue
         {
             get { return false; }

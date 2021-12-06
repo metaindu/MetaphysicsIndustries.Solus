@@ -43,13 +43,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 			this.Name = "Arccosecant";
 		}
 
-
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-		{
-            return ((float)Math.Asin(1/args[0].ToNumber().Value)).ToNumber();
-        }
-
         public override string DisplayName
         {
             get

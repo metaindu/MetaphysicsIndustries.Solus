@@ -41,12 +41,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Negation; }
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            return (-args[0].ToNumber().Value).ToNumber();
-        }
-
         public override string ToString(List<Expression> arguments)
         {
             var arg = arguments[0];

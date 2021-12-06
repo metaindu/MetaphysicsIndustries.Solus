@@ -59,6 +59,7 @@
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
     <Compile Include="Evaluator.Expressions.cs" />
+    <Compile Include="Evaluator.Functions.cs" />
     <Compile Include="Exceptions\IndexException.cs" />
     <Compile Include="Exceptions\InterrogationException.cs" />
     <Compile Include="Exceptions\NameException.cs" />

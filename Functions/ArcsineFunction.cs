@@ -44,19 +44,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 			this.Name = "Arcsine";
 		}
 
-
-        protected override IMathObject InternalCall(SolusEnvironment env, IMathObject[] args)
-        {
-            var arg0 = args[0].ToNumber().Value;
-            if (arg0 < -1)
-                throw new OperandException(
-                    "Argument less than -1");
-            if (arg0 > 1)
-                throw new OperandException(
-                    "Argument greater than 1");
-            return ((float)Math.Asin(arg0)).ToNumber();
-		}
-
         public override string DisplayName
         {
             get

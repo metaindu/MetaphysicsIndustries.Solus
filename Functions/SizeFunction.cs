@@ -55,22 +55,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            // TODO: this function should be able to operate on things that
-            // aren't IMathObject, namely TensorExpression
-            var arg = args[0];
-            if (arg.IsIsString(env) || arg.IsIsVector(env))
-            {
-                var dim = arg.GetDimension(env, 0);
-                if (dim.HasValue)
-                    return dim.Value.ToNumber();
-            }
-
-            return arg.GetDimensions(env).ToVector();
-        }
-
         private class ResultC : IMathObject
         {
             public ResultC(IMathObject obj) => _obj = obj;

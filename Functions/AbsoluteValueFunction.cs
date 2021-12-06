@@ -32,13 +32,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected AbsoluteValueFunction()
         {
-            Name = "Absolue Value";
-        }
-
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            return Math.Abs(args[0].ToNumber().Value).ToNumber();
+            Name = "Absolute Value";
         }
 
         public override string DisplayName

@@ -65,6 +65,115 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public IMathObject Call(Function f, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            f.CheckArguments(args);
+            switch (f)
+            {
+                case AbsoluteValueFunction ff:
+                    return CallFunction(ff, args, env);
+                case AdditionOperation ff:
+                    return CallFunction(ff, args, env);
+                case ArccosecantFunction ff:
+                    return CallFunction(ff, args, env);
+                case ArccosineFunction ff:
+                    return CallFunction(ff, args, env);
+                case ArccotangentFunction ff:
+                    return CallFunction(ff, args, env);
+                case ArcsecantFunction ff:
+                    return CallFunction(ff, args, env);
+                case ArcsineFunction ff:
+                    return CallFunction(ff, args, env);
+                case Arctangent2Function ff:
+                    return CallFunction(ff, args, env);
+                case ArctangentFunction ff:
+                    return CallFunction(ff, args, env);
+                case BitwiseAndOperation ff:
+                    return CallFunction(ff, args, env);
+                case BitwiseOrOperation ff:
+                    return CallFunction(ff, args, env);
+                case CeilingFunction ff:
+                    return CallFunction(ff, args, env);
+                case CosecantFunction ff:
+                    return CallFunction(ff, args, env);
+                case CosineFunction ff:
+                    return CallFunction(ff, args, env);
+                case CotangentFunction ff:
+                    return CallFunction(ff, args, env);
+                case DistFunction ff:
+                    return CallFunction(ff, args, env);
+                case DistSqFunction ff:
+                    return CallFunction(ff, args, env);
+                case DivisionOperation ff:
+                    return CallFunction(ff, args, env);
+                case EqualComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case ExponentOperation ff:
+                    return CallFunction(ff, args, env);
+                case FactorialFunction ff:
+                    return CallFunction(ff, args, env);
+                case FloorFunction ff:
+                    return CallFunction(ff, args, env);
+                case GreaterThanComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case GreaterThanOrEqualComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case LessThanComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case LessThanOrEqualComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case LoadImageFunction ff:
+                    return CallFunction(ff, args, env);
+                case Log10Function ff:
+                    return CallFunction(ff, args, env);
+                case Log2Function ff:
+                    return CallFunction(ff, args, env);
+                case LogarithmFunction ff:
+                    return CallFunction(ff, args, env);
+                case LogicalAndOperation ff:
+                    return CallFunction(ff, args, env);
+                case LogicalOrOperation ff:
+                    return CallFunction(ff, args, env);
+                case MaximumFiniteFunction ff:
+                    return CallFunction(ff, args, env);
+                case MaximumFunction ff:
+                    return CallFunction(ff, args, env);
+                case MinimumFiniteFunction ff:
+                    return CallFunction(ff, args, env);
+                case MinimumFunction ff:
+                    return CallFunction(ff, args, env);
+                case ModularDivision ff:
+                    return CallFunction(ff, args, env);
+                case MultiplicationOperation ff:
+                    return CallFunction(ff, args, env);
+                case NaturalLogarithmFunction ff:
+                    return CallFunction(ff, args, env);
+                case NegationOperation ff:
+                    return CallFunction(ff, args, env);
+                case NotEqualComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case SecantFunction ff:
+                    return CallFunction(ff, args, env);
+                case SineFunction ff:
+                    return CallFunction(ff, args, env);
+                case SizeFunction ff:
+                    return CallFunction(ff, args, env);
+                case TangentFunction ff:
+                    return CallFunction(ff, args, env);
+                case UnitStepFunction ff:
+                    return CallFunction(ff, args, env);
+                case UserDefinedFunction ff:
+                    return CallFunction(ff, args, env);
+                default:
+                    if (f.ProvidesCustomCall)
+                        return f.CustomCall(args, env);
+                    throw new ArgumentException(
+                        $"Unknown function: {f.GetType().Name}",
+                        nameof(f));
+            }
+        }
+
         public Expression Simplify(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
@@ -121,7 +230,7 @@ namespace MetaphysicsIndustries.Solus
         public abstract class AggregateOp
         {
             public abstract void Operate(IMathObject input,
-                SolusEnvironment env);
+                SolusEnvironment env, Evaluator evaluator);
         }
 
         public class AggregateOp<TIn, TOut> : AggregateOp
@@ -130,7 +239,7 @@ namespace MetaphysicsIndustries.Solus
             public Func<TIn, TOut, TOut> Function;
 
             public override void Operate(IMathObject input,
-                SolusEnvironment env)
+                SolusEnvironment env, Evaluator evaluator)
             {
                 State = Function((TIn)input, State);
             }
@@ -150,11 +259,11 @@ namespace MetaphysicsIndustries.Solus
 
             private readonly IMathObject[] _args = new IMathObject[2];
             public override void Operate(IMathObject input,
-                SolusEnvironment env)
+                SolusEnvironment env, Evaluator evaluator)
             {
                 _args[0] = input;
                 _args[1] = State;
-                var result = Function.Call(env, _args);
+                var result = evaluator.Call(Function, _args, env);
                 State = result;
             }
         }
@@ -185,7 +294,7 @@ namespace MetaphysicsIndustries.Solus
                     store.Store(i, v);
                 if (aggrs != null)
                     foreach (var aggr in aggrs)
-                        aggr?.Operate(v, env2);
+                        aggr?.Operate(v, env2, this);
             }
         }
 
@@ -291,7 +400,7 @@ namespace MetaphysicsIndustries.Solus
                         store.Store(i, j, v);
                     if (aggrs != null)
                         foreach (var aggr in aggrs)
-                            aggr?.Operate(v, env2);
+                            aggr?.Operate(v, env2, this);
                 }
             }
         }
@@ -387,7 +496,7 @@ namespace MetaphysicsIndustries.Solus
                             store.Store(i, j, k, v);
                         if (aggrs != null)
                             foreach (var aggr in aggrs)
-                                aggr?.Operate(v, env2);
+                                aggr?.Operate(v, env2, this);
                     }
                 }
             }

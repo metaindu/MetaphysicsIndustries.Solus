@@ -43,19 +43,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        protected override float InternalCall(float arg0, float arg1)
-        {
-            if (arg0 <= 0)
-                throw new OperandException("Argument must be positive");
-            if (arg1 <= 0)
-                throw new OperandException("Base must be positive");
-            if (arg1 <= 1 && arg1 >= 1)
-                throw new OperandException("Base must not be one");
-
-            var rv = (float)Math.Log(arg0, arg1);
-            return rv;
-        }
-
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
             return ScalarMathObject.Value;

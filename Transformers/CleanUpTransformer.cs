@@ -32,6 +32,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
 {
     public class CleanUpTransformer : ExpressionTransformer
     {
+        private readonly Evaluator _evaluator = new Evaluator();
+
         public Expression CleanUp(Expression expr)
         {
             if (expr is FunctionCall)
@@ -89,7 +91,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 var args2 = args.Select(
                     a => (IMathObject)((Literal) a).Value.ToNumber());
-                var result = function.Call(null, args2.ToArray());
+                var result = _evaluator.Call(function, args2.ToArray(), null);
                 return new Literal(result.ToNumber().Value);
             }
 
@@ -135,9 +137,13 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     {
                         if (arg is Literal)
                         {
-                            var result = function.Call(null,
-                                combinedValue.ToNumber(),
-                                ((Literal) arg).Value.ToNumber());
+                            var result = _evaluator.Call(function,
+                                new IMathObject[]
+                                {
+                                    combinedValue.ToNumber(),
+                                    ((Literal)arg).Value.ToNumber()
+                                },
+                                null);
                             combinedValue = result.ToNumber().Value;
                         }
                         else
@@ -251,7 +257,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 var evaledArgs = args.Select(
                     a => (IMathObject)((Literal) a).Value.ToNumber());
-                var result = function.Call(null, evaledArgs.ToArray());
+                var result = _evaluator.Call(function, evaledArgs.ToArray(),
+                    null);
                 return new Literal(result.ToNumber().Value);
             }
 
@@ -273,7 +280,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 IMathObject arg0 = ((Literal) args[0]).Value.ToNumber();
                 IMathObject arg1 = ((Literal) args[1]).Value.ToNumber();
-                var result = function.Call(null, arg0, arg1);
+                var result = _evaluator.Call(function,
+                    new [] { arg0, arg1 }, null);
                 return new Literal(result.ToNumber().Value);
             }
 

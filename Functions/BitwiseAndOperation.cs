@@ -38,24 +38,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Bitwise; }
         }
 
-        // protected override Literal InternalCall(SolusEnvironment env,
-        //     Literal[] args)
-        //{
-        //    ulong value = 0xffffffffffffffff;
-
-        //    foreach (Literal arg in args)
-        //    {
-        //        ulong argvalue = (ulong)(arg.Value);
-        //        value &= argvalue;
-        //    }
-
-        //    return new Literal(value);
-        //}
-        protected override float InternalBinaryCall(float x, float y)
-        {
-            return (long)x & (long)y;
-        }
-
         //public override float IdentityValue
         //{
         //    get { return 0xffffffffffffffff; }

@@ -32,40 +32,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly FactorialFunction Value =
             new FactorialFunction();
 
-        private static Dictionary<int, float> _presets = new Dictionary<int, float>();
-
-        static FactorialFunction()
-        {
-            _presets.Add(0,1);
-            _presets.Add(1,1);
-            _presets.Add(2,2);
-            _presets.Add(3,6);
-            _presets.Add(4,24);
-            _presets.Add(5,120);
-            _presets.Add(10, 3628800);
-
-        }
-
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            float p = args[0].ToNumber().Value;
-
-            if (p != (int)p) throw new ArgumentException("Argument must be an integer");
-
-            return GetValue((int)p).ToNumber();
-        }
-
-        private float GetValue(int p)
-        {
-            if (!_presets.ContainsKey(p))
-            {
-                _presets[p] = p * GetValue(p - 1);
-            }
-
-            return _presets[p];
-        }
-
         protected FactorialFunction()
         {
             Name = "Factorial";

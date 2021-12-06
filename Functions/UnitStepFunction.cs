@@ -34,19 +34,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             Name = "UnitStep";
         }
 
-        protected override IMathObject InternalCall(SolusEnvironment env,
-            IMathObject[] args)
-        {
-            if (args[0].ToNumber().Value >= 0)
-            {
-                return new Number(1);
-            }
-            else
-            {
-                return new Number(0);
-            }
-        }
-
         public override string DisplayName
         {
             get

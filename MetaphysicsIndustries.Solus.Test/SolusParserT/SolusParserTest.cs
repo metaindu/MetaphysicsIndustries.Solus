@@ -540,11 +540,12 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             {
             }
 
-            protected override IMathObject InternalCall(SolusEnvironment env,
-                IMathObject[] args)
+            public override IMathObject CustomCall(IMathObject[] args,
+                SolusEnvironment env)
             {
                 return new Number(3);
             }
+            public override bool ProvidesCustomCall => true;
 
             public override IMathObject GetResult(
                 IEnumerable<IMathObject> args)
@@ -579,11 +580,12 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             {
             }
 
-            protected override IMathObject InternalCall(SolusEnvironment env,
-                IMathObject[] args)
+            public override IMathObject CustomCall(IMathObject[] args,
+                SolusEnvironment env)
             {
                 return new Number(args.Length);
             }
+            public override bool ProvidesCustomCall => true;
 
             public override void CheckArguments(IMathObject[] args)
             {
