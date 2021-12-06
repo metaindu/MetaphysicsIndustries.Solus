@@ -179,8 +179,7 @@ namespace MetaphysicsIndustries.Solus
         public Expression Call(Macro m, Expression[] args,
             SolusEnvironment env)
         {
-            if (!m.HasVariableNumArgs &&
-                args.Length != m.NumArguments)
+            if (args.Length != m.NumArguments)
                 throw new OperandException(
                     "Incorrect number of arguments.");
             switch (m)

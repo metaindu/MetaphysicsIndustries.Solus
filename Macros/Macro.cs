@@ -26,7 +26,6 @@ namespace MetaphysicsIndustries.Solus.Macros
     {
         public abstract string Name { get; }
         public abstract int NumArguments { get; }
-        public virtual bool HasVariableNumArgs => false;
 
         public virtual string DocString => string.Empty;
 

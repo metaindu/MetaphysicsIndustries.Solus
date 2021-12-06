@@ -35,7 +35,6 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             // expect
             Assert.AreEqual("if", result.Name);
             Assert.AreEqual(3, result.NumArguments);
-            Assert.False(result.HasVariableNumArgs);
         }
     }
 }
