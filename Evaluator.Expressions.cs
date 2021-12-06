@@ -131,14 +131,19 @@ namespace MetaphysicsIndustries.Solus
                 throw new OperandException(
                     "Call target is not a function or macro");
 
+            int i;
             if (f0 is Macro macro)
-                return macro.Call(expr.Arguments, env);
+            {
+                var args = new Expression[expr.Arguments.Count];
+                for (i = 0; i < expr.Arguments.Count; i++)
+                    args[i] = expr.Arguments[i];
+                return Call(macro, args, env);
+            }
 
             var f = (Function)f0;
 
             if (_functionCallArgsCache.Length < expr.Arguments.Count)
                 _functionCallArgsCache = new IMathObject[expr.Arguments.Count];
-            int i;
             for (i = 0; i < expr.Arguments.Count; i++)
                 _functionCallArgsCache[i] = Eval(expr.Arguments[i], env);
             return Call(f, _functionCallArgsCache, env);

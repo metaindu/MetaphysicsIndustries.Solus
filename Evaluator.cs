@@ -23,8 +23,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -172,6 +174,16 @@ namespace MetaphysicsIndustries.Solus
                         $"Unknown function: {f.GetType().Name}",
                         nameof(f));
             }
+        }
+
+        public Expression Call(Macro m, Expression[] args,
+            SolusEnvironment env)
+        {
+            if (!m.HasVariableNumArgs &&
+                args.Length != m.NumArguments)
+                throw new OperandException(
+                    "Incorrect number of arguments.");
+            return m.Call(args, env);
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)
