@@ -34,15 +34,14 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.DeriveMacroT
         {
             // given
             var parser = new SolusParser();
-            var expr = parser.GetExpression("3*x^2+5*x+7");
-            var args = new[]
-            {
-                expr,
-                new VariableAccess("x")
-            };
+            var expr = new FunctionCall(
+                new Literal(DeriveMacro.Value),
+                parser.GetExpression("3*x^2+5*x+7"),
+                new VariableAccess("x"));
             var env = new SolusEnvironment();
+            var eval = new Evaluator();
             // when
-            var result = DeriveMacro.Value.Call(args, env);
+            var result = eval.Eval(expr, env);
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
             var fc = (FunctionCall)result;

@@ -48,8 +48,10 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             });
             var condition = new Literal(1);
             var args = new Expression[] {condition, thenArg, elseArg};
+            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var eval = new Evaluator();
             // when
-            var result = IfMacro.Value.Call(args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
@@ -77,8 +79,10 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             });
             var condition = new Literal(0);
             var args = new Expression[] {condition, thenArg, elseArg};
+            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var eval = new Evaluator();
             // when
-            var result = IfMacro.Value.Call(args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
@@ -106,8 +110,10 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             });
             var condition = new Literal(float.NaN);
             var args = new Expression[] {condition, thenArg, elseArg};
+            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var eval = new Evaluator();
             // when
-            var result = IfMacro.Value.Call(args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
@@ -135,8 +141,10 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             });
             var condition = new Literal(float.PositiveInfinity);
             var args = new Expression[] {condition, thenArg, elseArg};
+            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var eval = new Evaluator();
             // when
-            var result = IfMacro.Value.Call(args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
@@ -164,8 +172,10 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             });
             var condition = new Literal(float.NegativeInfinity);
             var args = new Expression[] {condition, thenArg, elseArg};
+            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var eval = new Evaluator();
             // when
-            var result = IfMacro.Value.Call(args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
