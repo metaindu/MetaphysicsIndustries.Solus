@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Macros;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.MacrosT.SubstMacroT

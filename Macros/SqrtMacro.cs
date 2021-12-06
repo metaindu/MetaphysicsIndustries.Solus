@@ -20,9 +20,7 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Macros;
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Macros
 {
     public class SqrtMacro : Macro
     {
