@@ -133,6 +133,10 @@
     <Compile Include="FunctionsT\LogicalAndOperationT\LogicalAndOperationTest.cs" />
     <Compile Include="FunctionsT\LogicalOrOperationT\GetResultTest.cs" />
     <Compile Include="FunctionsT\LogicalOrOperationT\LogicalOrOperationTest.cs" />
+    <Compile Include="FunctionsT\MaximumFiniteFunctionT\MaximumFiniteFunctionTest.cs" />
+    <Compile Include="FunctionsT\MaximumFunctionT\MaximumFunctionTest.cs" />
+    <Compile Include="FunctionsT\MinimumFiniteFunctionT\MinimumFiniteFunctionTest.cs" />
+    <Compile Include="FunctionsT\MinimumFunctionT\MinimumFunctionTest.cs" />
     <Compile Include="FunctionsT\ModularDivisionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\ModularDivisionT\ModularDivisionTest.cs" />
     <Compile Include="FunctionsT\MultiplicationOperationT\GetResultTest.cs" />
@@ -175,6 +179,8 @@
     <Compile Include="ValuesT\NumberT\NumberTest.cs" />
     <Compile Include="ValuesT\StringValueT\StringValueTest.cs" />
     <Compile Include="ValuesT\VarIntervalT\VarIntervalTest.cs" />
+    <Compile Include="ValuesT\Vector2T\Vector2Test.cs" />
+    <Compile Include="ValuesT\Vector3T\Vector3Test.cs" />
     <Compile Include="ValuesT\VectorT\VectorTest.cs" />
   </ItemGroup>
   <ItemGroup>

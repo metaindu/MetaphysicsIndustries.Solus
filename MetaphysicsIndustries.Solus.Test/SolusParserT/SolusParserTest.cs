@@ -1226,7 +1226,6 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
-        [Ignore("Recursive is broken")]
         public void ParseRecursiveUserDefinedFunction()
         {
             // given
@@ -1248,9 +1247,65 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.AreEqual("f", udf.Name);
             Assert.AreEqual(1, udf.Argnames.Length);
             Assert.AreEqual("x", udf.Argnames[0]);
-            // Assert.IsInstanceOf<VariableAccess>(udf.Expression);
-            // var va = (VariableAccess)udf.Expression;
-            // Assert.AreEqual("x", va.VariableName);
+            Assert.IsInstanceOf<FunctionCall>(udf.Expression);
+            var call = (FunctionCall)udf.Expression;
+            Assert.IsInstanceOf<VariableAccess>(call.Function);
+            Assert.AreEqual("if",
+                ((VariableAccess)call.Function).VariableName);
+            Assert.AreEqual(3, call.Arguments.Count);
+
+            Assert.IsInstanceOf<FunctionCall>(call.Arguments[0]);
+            var call2 = (FunctionCall)call.Arguments[0];
+            Assert.IsInstanceOf<Literal>(call2.Function);
+            Assert.AreSame(EqualComparisonOperation.Value,
+                ((Literal)call2.Function).Value);
+            Assert.IsInstanceOf<VariableAccess>(call2.Arguments[0]);
+            Assert.AreEqual("x",
+                ((VariableAccess)call2.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<Literal>(call2.Arguments[1]);
+            Assert.AreEqual(0,
+                ((Literal)call2.Arguments[1]).Value.ToNumber().Value);
+
+            Assert.IsInstanceOf<Literal>(call.Arguments[1]);
+            Assert.AreEqual(0,
+                ((Literal)call.Arguments[1]).Value.ToNumber().Value);
+
+            Assert.IsInstanceOf<FunctionCall>(call.Arguments[2]);
+            call2 = (FunctionCall)call.Arguments[2];
+            Assert.IsInstanceOf<Literal>(call2.Function);
+            Assert.AreSame(AdditionOperation.Value,
+                ((Literal)call2.Function).Value);
+            Assert.AreEqual(2, call2.Arguments.Count);
+            Assert.IsInstanceOf<Literal>(call2.Arguments[0]);
+            Assert.AreEqual(1,
+                ((Literal)call2.Arguments[0]).Value.ToNumber().Value);
+            Assert.IsInstanceOf<FunctionCall>(call2.Arguments[1]);
+
+            var call3 = (FunctionCall)call2.Arguments[1];
+            Assert.IsInstanceOf<VariableAccess>(call3.Function);
+            Assert.AreEqual("f",
+                ((VariableAccess)call3.Function).VariableName);
+            Assert.AreEqual(1, call3.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call3.Arguments[0]);
+
+            var call4 = (FunctionCall)call3.Arguments[0];
+            Assert.IsInstanceOf<VariableAccess>(call4.Function);
+            Assert.AreEqual("floor",
+                ((VariableAccess)call4.Function).VariableName);
+            Assert.AreEqual(1, call4.Arguments.Count);
+            Assert.IsInstanceOf<FunctionCall>(call4.Arguments[0]);
+
+            var call5 = (FunctionCall)call4.Arguments[0];
+            Assert.IsInstanceOf<Literal>(call5.Function);
+            Assert.AreSame(DivisionOperation.Value,
+                ((Literal)call5.Function).Value);
+            Assert.AreEqual(2, call5.Arguments.Count);
+            Assert.IsInstanceOf<VariableAccess>(call5.Arguments[0]);
+            Assert.AreEqual("x",
+                ((VariableAccess)call5.Arguments[0]).VariableName);
+            Assert.IsInstanceOf<Literal>(call5.Arguments[1]);
+            Assert.AreEqual(10,
+                ((Literal)call5.Arguments[1]).Value.ToNumber().Value);
         }
     }
 }

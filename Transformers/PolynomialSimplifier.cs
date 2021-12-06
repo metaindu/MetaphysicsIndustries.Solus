@@ -50,7 +50,11 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         private void TransformFunctionCall(FunctionCall fc)
         {
-            if (fc.Function is ExponentOperation)
+            Function f = null;
+            if (fc.Function is Literal literal0 &&
+                literal0.Value is Function f0)
+                f = f0;
+            if (f is ExponentOperation)
             {
                 var arg1 = fc.Arguments[1];
                 if (arg1 is Literal literal &&
@@ -58,8 +62,12 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     fc.Arguments[0] is FunctionCall)
                 {
                     FunctionCall fcarg = (FunctionCall)fc.Arguments[0];
-                    if (fcarg.Function is AdditionOperation ||
-                        fcarg.Function is MultiplicationOperation)
+                    Function f2 = null;
+                    if (fcarg.Function is Literal literal2 &&
+                        literal2.Value is Function function)
+                        f2 = function;
+                    if (f2 is AdditionOperation ||
+                        f2 is MultiplicationOperation)
                     {
                         //this is all wrong
 

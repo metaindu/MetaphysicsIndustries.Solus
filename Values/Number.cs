@@ -55,5 +55,19 @@ namespace MetaphysicsIndustries.Solus.Values
                 return "π";
             return Value.ToString("G");
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Number number)
+                return Value.Equals(number.Value);
+            if (obj is float f)
+                return Value.Equals(f);
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
     }
 }

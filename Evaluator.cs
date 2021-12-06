@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -41,8 +42,48 @@ namespace MetaphysicsIndustries.Solus
             return cleanup.CleanUp(expr.Simplify(env));
         }
 
+        public abstract class StoreOp1
+        {
+            public abstract void Store(int index, IMathObject value);
+            public abstract void SetMinArraySize(int length);
+        }
+
+        public class StoreOp1<T> : StoreOp1
+            where T : IMathObject
+        {
+            public T[] Values;
+
+            public override void Store(int index, IMathObject value)
+            {
+                Values[index] = (T)value;
+            }
+
+            public override void SetMinArraySize(int length)
+            {
+                if (Values == null || Values.Length < length)
+                    Values = new T[length];
+            }
+        }
+
+        public abstract class AggregateOp
+        {
+            public abstract void Operate(IMathObject input);
+        }
+
+        public class AggregateOp<TIn, TOut> : AggregateOp
+        {
+            public TOut State;
+            public Func<TIn, TOut, TOut> Function;
+
+            public override void Operate(IMathObject input)
+            {
+                State = Function((TIn)input, State);
+            }
+        }
+
         public void EvalInterval(Expression expr, SolusEnvironment env,
-            VarInterval interval, int numSteps, ref float[] values)
+            VarInterval interval, int numSteps, StoreOp1 store,
+            AggregateOp[] aggrs = null)
         {
             var delta = interval.Interval.CalcDelta(numSteps);
 
@@ -53,15 +94,50 @@ namespace MetaphysicsIndustries.Solus
             var literal = new Literal(0);
             env2.SetVariable(interval.Variable, literal);
 
-            if (values == null || values.Length < numSteps)
-                values = new float[numSteps];
+            if (store != null)
+                store.SetMinArraySize(numSteps);
 
             int i;
             for (i = 0; i < numSteps; i++)
             {
                 var xx = delta * i + interval.Interval.LowerBound;
                 literal.Value = xx.ToNumber();
-                values[i] = Eval(expr2, env2).ToNumber().Value;
+                var v = Eval(expr2, env2);
+                if (store != null)
+                    store.Store(i, v);
+                if (aggrs != null)
+                    foreach (var aggr in aggrs)
+                        aggr?.Operate(v);
+            }
+        }
+
+        public abstract class StoreOp2
+        {
+            public abstract void Store(int index0, int index1,
+                IMathObject value);
+
+            public abstract void SetMinArraySize(int length0, int length1);
+        }
+
+        public class StoreOp2<T> : StoreOp2
+            where T : IMathObject
+        {
+            public T[,] Values;
+
+            public override void Store(int index0, int index1,
+                IMathObject value)
+            {
+                Values[index0, index1] = (T)value;
+            }
+
+            public override void SetMinArraySize(int length0, int length1)
+            {
+                if (Values == null ||
+                    Values.GetLength(0) < length0 ||
+                    Values.GetLength(1) < length1)
+                {
+                    Values = new T[length0, length1];
+                }
             }
         }
 
@@ -69,7 +145,7 @@ namespace MetaphysicsIndustries.Solus
             Expression expr, SolusEnvironment env,
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
-            ref float[,] values)
+            StoreOp2 store, AggregateOp[] aggrs = null)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -95,12 +171,8 @@ namespace MetaphysicsIndustries.Solus
             env2.SetVariable(interval1.Variable, literal1);
             env2.SetVariable(interval2.Variable, literal2);
 
-            if (values == null ||
-                values.GetLength(0) < numSteps1 ||
-                values.GetLength(1) < numSteps2)
-            {
-                values = new float[numSteps1, numSteps2];
-            }
+            if (store != null)
+                store.SetMinArraySize(numSteps1, numSteps2);
 
             for (i = 0; i < numSteps1; i++)
             {
@@ -109,7 +181,45 @@ namespace MetaphysicsIndustries.Solus
                 for (j = 0; j < numSteps2; j++)
                 {
                     literal2.Value = inputs2[j];
-                    values[i, j] = Eval(expr2, env2).ToNumber().Value;
+                    var v = Eval(expr2, env2);
+                    if (store != null)
+                        store.Store(i, j, v);
+                    if (aggrs != null)
+                        foreach (var aggr in aggrs)
+                            aggr?.Operate(v);
+                }
+            }
+        }
+
+        public abstract class StoreOp3
+        {
+            public abstract void Store(int index0, int index1, int index2,
+                IMathObject value);
+
+            public abstract void SetMinArraySize(int length0, int length1,
+                int length2);
+        }
+
+        public class StoreOp3<T> : StoreOp3
+            where T : IMathObject
+        {
+            public T[,,] Values;
+
+            public override void Store(int index0, int index1, int index2,
+                IMathObject value)
+            {
+                Values[index0, index1, index2] = (T)value;
+            }
+
+            public override void SetMinArraySize(int length0, int length1,
+                int length2)
+            {
+                if (Values == null ||
+                    Values.GetLength(0) < length0 ||
+                    Values.GetLength(1) < length1 ||
+                    Values.GetLength(2) < length2)
+                {
+                    Values = new T[length0, length1, length2];
                 }
             }
         }
@@ -119,7 +229,7 @@ namespace MetaphysicsIndustries.Solus
             VarInterval interval1, int numSteps1,
             VarInterval interval2, int numSteps2,
             VarInterval interval3, int numSteps3,
-            ref float[,,] values)
+            StoreOp3 store, AggregateOp[] aggrs = null)
         {
             var delta1 = interval1.Interval.CalcDelta(numSteps1);
             var delta2 = interval2.Interval.CalcDelta(numSteps2);
@@ -153,13 +263,8 @@ namespace MetaphysicsIndustries.Solus
             env2.SetVariable(interval2.Variable, literal2);
             env2.SetVariable(interval3.Variable, literal3);
 
-            if (values == null ||
-                values.GetLength(0) < numSteps1 ||
-                values.GetLength(1) < numSteps2 ||
-                values.GetLength(2) < numSteps3)
-            {
-                values = new float[numSteps1, numSteps2, numSteps3];
-            }
+            if (store != null)
+                store.SetMinArraySize(numSteps1, numSteps2, numSteps3);
 
             for (i = 0; i < numSteps1; i++)
             {
@@ -172,14 +277,19 @@ namespace MetaphysicsIndustries.Solus
                     for (k = 0; k < numSteps3; k++)
                     {
                         literal3.Value = inputs3[k];
-                        values[i, j, k] = Eval(expr2, env2).ToNumber().Value;
+                        var v = Eval(expr2, env2);
+                        if (store != null)
+                            store.Store(i, j, k, v);
+                        if (aggrs != null)
+                            foreach (var aggr in aggrs)
+                                aggr?.Operate(v);
                     }
                 }
             }
         }
 
         public void EvalMathPaint(Expression expr, SolusEnvironment env,
-            int width, int height, ref float[,] values)
+            int width, int height, StoreOp2<Number> store)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -198,13 +308,13 @@ namespace MetaphysicsIndustries.Solus
             EvalInterval(expr, env,
                 interval1, width,
                 interval2, height,
-                ref values);
+                store);
         }
 
 
         public void EvalMathPaint3D(Expression expr,
             SolusEnvironment env, int width, int height, int numFrames,
-            ref float[,,] values)
+            StoreOp3<Number> store)
         {
             //previous values?
             SolusParser parser = new SolusParser();
@@ -229,7 +339,7 @@ namespace MetaphysicsIndustries.Solus
                 interval1, width,
                 interval2, height,
                 interval3, numFrames,
-                ref values);
+                store);
         }
 
         public static string[] GatherVariables(Expression expr)
