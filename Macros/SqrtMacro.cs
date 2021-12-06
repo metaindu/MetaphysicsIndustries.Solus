@@ -26,11 +26,12 @@ namespace MetaphysicsIndustries.Solus.Macros
     {
         public static readonly SqrtMacro Value = new SqrtMacro();
 
-        protected SqrtMacro()
+        private SqrtMacro()
         {
-            Name = "sqrt";
-            NumArguments = 1;
         }
+
+        public override string Name => "sqrt";
+        public override int NumArguments => 1;
 
         public override string DocString
         {

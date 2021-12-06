@@ -26,10 +26,11 @@ namespace MetaphysicsIndustries.Solus.Macros
     {
         public static readonly RandMacro Value = new RandMacro();
 
-        protected RandMacro()
+        private RandMacro()
         {
-            Name = "rand";
-            NumArguments = 0;
         }
+
+        public override string Name => "rand";
+        public override int NumArguments => 0;
     }
 }

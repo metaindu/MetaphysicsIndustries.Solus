@@ -26,10 +26,11 @@ namespace MetaphysicsIndustries.Solus.Macros
     {
         public static readonly SubstMacro Value = new SubstMacro();
 
-        protected SubstMacro()
+        private SubstMacro()
         {
-            Name = "subst";
-            NumArguments = 3;
         }
+
+        public override string Name => "subst";
+        public override int NumArguments => 3;
     }
 }

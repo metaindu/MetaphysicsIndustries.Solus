@@ -26,11 +26,12 @@ namespace MetaphysicsIndustries.Solus.Macros
     {
         public static readonly DeriveMacro Value = new DeriveMacro();
 
-        protected DeriveMacro()
+        private DeriveMacro()
         {
-            Name = "derive";
-            NumArguments = 2;
         }
+
+        public override string Name => "derive";
+        public override int NumArguments => 2;
 
         public override string DocString
         {

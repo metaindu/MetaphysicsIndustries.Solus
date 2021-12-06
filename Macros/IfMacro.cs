@@ -26,10 +26,11 @@ namespace MetaphysicsIndustries.Solus.Macros
     {
         public static readonly IfMacro Value = new IfMacro();
 
-        protected IfMacro()
+        private IfMacro()
         {
-            Name = "if";
-            NumArguments = 3;
         }
+
+        public override string Name => "if";
+        public override int NumArguments => 3;
     }
 }

@@ -24,14 +24,11 @@ namespace MetaphysicsIndustries.Solus.Macros
 {
     public abstract class Macro : IMathObject
     {
-        public string Name = string.Empty;
-        public int NumArguments = 0;
-        public bool HasVariableNumArgs = false;
+        public abstract string Name { get; }
+        public abstract int NumArguments { get; }
+        public virtual bool HasVariableNumArgs => false;
 
-        public virtual string DocString
-        {
-            get { return string.Empty; }
-        }
+        public virtual string DocString => string.Empty;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
