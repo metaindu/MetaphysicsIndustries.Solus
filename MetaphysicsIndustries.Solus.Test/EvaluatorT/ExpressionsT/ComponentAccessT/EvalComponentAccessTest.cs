@@ -20,12 +20,31 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
+    ComponentAccessT
 {
     [TestFixture]
-    public class EvalTest
+    public class EvalComponentAccessTest
     {
+        [Test]
+        public void ComponentAccessEvalYieldsTheIndicatedComponent()
+        {
+            // given
+            var expr = new Literal(
+                new Vector(new float[] { 1, 2, 3 }));
+            var indexes = new Expression[] { new Literal(1) };
+            var ca = new ComponentAccess(expr, indexes);
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(ca, null);
+            // then
+            Assert.IsFalse(result.IsVector(null));
+            Assert.IsTrue(result.IsScalar(null));
+            Assert.AreEqual(2, result.ToFloat());
+        }
     }
 }

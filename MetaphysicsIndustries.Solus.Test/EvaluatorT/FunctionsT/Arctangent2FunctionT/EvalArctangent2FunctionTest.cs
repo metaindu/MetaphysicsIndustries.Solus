@@ -22,10 +22,11 @@
 
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.FunctionsT.
+    Arctangent2FunctionT
 {
     [TestFixture]
-    public class EvalTest
+    public class EvalArctangent2FunctionTest
     {
     }
 }

@@ -20,12 +20,19 @@
  *
  */
 
+using System;
+using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.EvaluatorT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.FunctionsT.
+    MinimumFunctionT
 {
     [TestFixture]
-    public class EvalTest
+    public class EvalMinimumFunctionTest
     {
     }
 }
