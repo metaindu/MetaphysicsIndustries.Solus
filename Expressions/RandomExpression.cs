@@ -26,14 +26,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class RandomExpression : Expression
     {
-        static Random _random = new Random();
+        public static readonly Random Source = new Random();
 
-        float _value = (float)_random.NextDouble();
-
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            return ((float)_random.NextDouble()).ToNumber();
-        }
+        float _value = (float)Source.NextDouble();
 
         public override Expression Clone()
         {

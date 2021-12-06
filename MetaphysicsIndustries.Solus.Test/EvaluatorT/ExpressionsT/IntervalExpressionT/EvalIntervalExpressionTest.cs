@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
     public class EvalIntervalExpressionTest
     {
         [Test]
-        public void IntervalExpressionEvalYieldsConcreteInterval()
+        public void EvalYieldsConcreteInterval()
         {
             // given
             var i = new IntervalExpression(

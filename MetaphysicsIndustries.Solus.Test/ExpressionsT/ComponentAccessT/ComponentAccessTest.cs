@@ -49,22 +49,6 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         }
 
         [Test]
-        public void EvalYieldsTheIndicatedComponent()
-        {
-            // given
-            var expr = new Literal(
-                new Vector(new float[] {1, 2, 3}));
-            var indexes = new Expression[] {new Literal(1)};
-            var ca = new ComponentAccess(expr, indexes);
-            // when
-            var result = ca.Eval(null);
-            // then
-            Assert.IsFalse(result.IsVector(null));
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.AreEqual(2, result.ToFloat());
-        }
-
-        [Test]
         public void CloneYieldsShallowCopy()
         {
             // given

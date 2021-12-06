@@ -39,15 +39,16 @@ namespace MetaphysicsIndustries.Solus.Macros
         public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
         {
             var args2 = args.ToArray();
-            float value = args2[0].Eval(env).ToNumber().Value;
+            var eval = new Evaluator();
+            float value = eval.Eval(args2[0], env).ToNumber().Value;
 
             if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
             {
-                return new Literal(args2[2].Eval(env));
+                return new Literal(eval.Eval(args2[2], env));
             }
             else
             {
-                return new Literal(args2[1].Eval(env));
+                return new Literal(eval.Eval(args2[1], env));
             }
         }
     }

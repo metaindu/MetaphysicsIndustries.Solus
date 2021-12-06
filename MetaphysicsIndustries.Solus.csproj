@@ -58,6 +58,7 @@
     <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
+    <Compile Include="Evaluator.Expressions.cs" />
     <Compile Include="Exceptions\IndexException.cs" />
     <Compile Include="Exceptions\InterrogationException.cs" />
     <Compile Include="Exceptions\NameException.cs" />
@@ -72,7 +73,6 @@
     <Compile Include="Expressions\IExpressionVisitor.cs" />
     <Compile Include="Expressions\IntervalExpression.cs" />
     <Compile Include="Expressions\Literal.cs" />
-    <Compile Include="Expressions\ProductExpression.cs" />
     <Compile Include="Expressions\RandomExpression.cs" />
     <Compile Include="Expressions\MatrixExpression.cs" />
     <Compile Include="Expressions\TensorExpression.cs" />

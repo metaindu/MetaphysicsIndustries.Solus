@@ -31,8 +31,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class VectorExpression : TensorExpression, IVector
     {
-        private static Evaluator _evaluator = new Evaluator();
-
         public static VectorExpression FromUniformSequence(float value,
             int length)
         {
@@ -106,15 +104,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (indexes[0] < 0 || indexes[0] >= Length)
                 throw new IndexOutOfRangeException();
             return this[indexes[0]];
-        }
-
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            var values = new IMathObject[Length];
-            for (int i = 0; i < Length; i++)
-                values[i] = this[i].Eval(env);
-            // Vector will take ownership of array
-            return new Vector(values);  // TODO: don't box here
         }
 
         public override Expression Clone()

@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
     public class EvalMatrixExpressionTest
     {
         [Test]
-        public void MatrixExpressionLiteralsYieldMatrix()
+        public void LiteralsYieldMatrix()
         {
             // given
             var expr = new MatrixExpression(2, 2,
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void MatrixExpressionLiteralsYieldMatrix2()
+        public void LiteralsYieldMatrix2()
         {
             // given
             var expr = new MatrixExpression(2, 3,
@@ -82,7 +82,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void MatrixExpressionUndefinedVariablesInExpressionThrows()
+        public void UndefinedVariablesInExpressionCauseException()
         {
             // given
             var expr = new MatrixExpression(2, 2,
@@ -101,7 +101,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void MatrixExpressionDefinedVariablesInExpressionYieldValue()
+        public void DefinedVariablesInExpressionYieldValue()
         {
             // given
             var expr = new MatrixExpression(2, 2,
@@ -126,7 +126,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void MatrixExpressionNestedExpressionsYieldNestedValues()
+        public void NestedExpressionsYieldNestedValues()
         {
             // given
             var expr = new MatrixExpression(2, 2,

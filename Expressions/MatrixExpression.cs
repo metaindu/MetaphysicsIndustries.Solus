@@ -29,8 +29,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class MatrixExpression : TensorExpression, IMatrix
     {
-        private static Evaluator _evaluator = new Evaluator();
-
         public static MatrixExpression FromUniform(float value, int rows,
             int columns)
         {
@@ -630,15 +628,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         #endregion
-
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            var values = new IMathObject[RowCount, ColumnCount];
-            for (int r = 0; r < RowCount; r++)
-                for (int c = 0; c < ColumnCount; c++)
-                    values[r, c] = this[r, c].Eval(env);
-            return new Matrix(values);
-        }
 
         public override Expression Clone()
         {

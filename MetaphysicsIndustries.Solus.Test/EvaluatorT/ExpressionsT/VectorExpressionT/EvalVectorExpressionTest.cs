@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
     public class EvalVectorExpressionTest
     {
         [Test]
-        public void VectorExpressionLiteralsYieldVector()
+        public void LiteralsYieldVector()
         {
             // given
             var expr = new VectorExpression(3,
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VectorExpressionUndefinedVariablesInExpressionThrows()
+        public void UndefinedVariablesInExpressionCauseException()
         {
             // given
             var expr = new VectorExpression(3,
@@ -69,7 +69,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VectorExpressionDefinedVariablesInExpressionYieldValue()
+        public void DefinedVariablesInExpressionYieldValue()
         {
             // given
             var expr = new VectorExpression(3,
@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.ExpressionsT.
         }
 
         [Test]
-        public void VectorExpressionNestedExpressionsYieldNestedValues()
+        public void NestedExpressionsYieldNestedValues()
         {
             // given
             var expr = new VectorExpression(3,

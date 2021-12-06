@@ -84,11 +84,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         private static Expression CloneExpr(Expression expr) => expr.Clone();
 
-        public override IMathObject Eval(SolusEnvironment env)
-        {
-            return Call(env);
-        }
-
         //public override Expression CleanUp()
         //{
         //    Expression[] args = Arguments.ToArray();
@@ -121,29 +116,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     first = false;
                 }
             }
-        }
-
-        private IMathObject[] _evaledArgsCache = new IMathObject[0];
-        // Warning: Not thread-safe
-        public virtual IMathObject Call(SolusEnvironment env)
-        {
-            var f0 = Function.Eval(env);
-            if (!f0.IsIsFunction(env) &&
-                !(f0 is Macro))
-                throw new OperandException(
-                    "Call target is not a function or macro");
-
-            if (f0 is Macro macro)
-                return macro.Call(Arguments, env);
-
-            var f = (Function)f0;
-
-            if (_evaledArgsCache.Length < Arguments.Count)
-                _evaledArgsCache = new IMathObject[Arguments.Count];
-            int i;
-            for (i = 0; i < Arguments.Count; i++)
-                _evaledArgsCache[i] = Arguments[i].Eval(env);
-            return f.Call(env, _evaledArgsCache);
         }
 
         public virtual List<Expression> Arguments

@@ -58,11 +58,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return new Literal(Value);
         }
 
-        public override IMathObject Eval(SolusEnvironment env)
-		{
-			return _value;
-		}
-
         public override string ToString()
         {
 	        return Value.ToString();

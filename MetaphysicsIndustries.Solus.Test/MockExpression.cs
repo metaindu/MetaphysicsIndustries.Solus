@@ -43,11 +43,13 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         public Func<SolusEnvironment, IMathObject> EvalF;
-        public override IMathObject Eval(SolusEnvironment env)
+        public override IMathObject CustomEval(SolusEnvironment env)
         {
             if (EvalF != null) return EvalF(env);
             throw new System.NotImplementedException();
         }
+
+        public override bool ProvidesCustomEval => true;
 
         public Func<Expression> CloneF;
         public override Expression Clone()

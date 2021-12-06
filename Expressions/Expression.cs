@@ -35,8 +35,9 @@ using MetaphysicsIndustries.Solus.Functions;
 namespace MetaphysicsIndustries.Solus.Expressions
 {
 	public abstract class Expression : IMathObject
-	{
-        public abstract IMathObject Eval(SolusEnvironment env);
+    {
+        public virtual IMathObject CustomEval(SolusEnvironment env) => null;
+        public virtual bool ProvidesCustomEval => false;
 
         public class CompiledExpression
         {
