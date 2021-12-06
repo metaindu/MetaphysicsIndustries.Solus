@@ -20,25 +20,17 @@
  *
  */
 
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Macros
 {
     public class RandMacro : Macro
     {
         public static readonly RandMacro Value = new RandMacro();
 
-        protected RandMacro()
+        private RandMacro()
         {
-            Name = "rand";
-            NumArguments = 0;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            return new RandomExpression();
-        }
+        public override string Name => "rand";
+        public override int NumArguments => 0;
     }
 }

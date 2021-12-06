@@ -20,36 +20,14 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Expressions;
-
 namespace MetaphysicsIndustries.Solus.Macros
 {
     public abstract class Macro : IMathObject
     {
-        public string Name = string.Empty;
-        public int NumArguments = 0;
-        public bool HasVariableNumArgs = false;
+        public abstract string Name { get; }
+        public abstract int NumArguments { get; }
 
-        public abstract Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env);
-
-        public virtual Expression Call(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            List<Expression> arglist = new List<Expression>(args);
-            if (!HasVariableNumArgs &&
-                arglist.Count != NumArguments)
-            {
-                throw new ArgumentException("Incorrect number of arguments.", "arg");
-            }
-
-            return InternalCall(args, env);
-        }
-
-        public virtual string DocString
-        {
-            get { return string.Empty; }
-        }
+        public virtual string DocString => string.Empty;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;

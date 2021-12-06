@@ -1,4 +1,4 @@
-﻿
+
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
@@ -20,25 +20,21 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Macros
+using MetaphysicsIndustries.Solus.Macros;
+using NUnit.Framework;
+
+namespace MetaphysicsIndustries.Solus.Test.MacrosT.SubstMacroT
 {
-    public class SqrtMacro : Macro
+    [TestFixture]
+    public class SubstMacroTest
     {
-        public static readonly SqrtMacro Value = new SqrtMacro();
-
-        private SqrtMacro()
+        [Test]
+        public void ValueIsSet()
         {
-        }
-
-        public override string Name => "sqrt";
-        public override int NumArguments => 1;
-
-        public override string DocString
-        {
-            get
-            {
-                return "square root";
-            }
+            // expect
+            Assert.IsNotNull(SubstMacro.Value);
+            Assert.AreEqual("subst", SubstMacro.Value.Name);
+            Assert.AreEqual(3, SubstMacro.Value.NumArguments);
         }
     }
 }

@@ -20,36 +20,17 @@
  *
  */
 
-using System.Collections.Generic;
-using System.Linq;
-using MetaphysicsIndustries.Solus.Expressions;
-
 namespace MetaphysicsIndustries.Solus.Macros
 {
     public class IfMacro : Macro
     {
         public static readonly IfMacro Value = new IfMacro();
 
-        protected IfMacro()
+        private IfMacro()
         {
-            Name = "if";
-            NumArguments = 3;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            var args2 = args.ToArray();
-            var eval = new Evaluator();
-            float value = eval.Eval(args2[0], env).ToNumber().Value;
-
-            if (value == 0 || float.IsNaN(value) || float.IsInfinity(value))
-            {
-                return new Literal(eval.Eval(args2[2], env));
-            }
-            else
-            {
-                return new Literal(eval.Eval(args2[1], env));
-            }
-        }
+        public override string Name => "if";
+        public override int NumArguments => 3;
     }
 }

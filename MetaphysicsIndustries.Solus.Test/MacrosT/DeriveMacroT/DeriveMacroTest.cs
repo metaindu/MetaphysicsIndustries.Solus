@@ -1,4 +1,4 @@
-﻿
+
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
@@ -20,25 +20,28 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Macros
+using MetaphysicsIndustries.Solus.Macros;
+using NUnit.Framework;
+
+namespace MetaphysicsIndustries.Solus.Test.MacrosT.DeriveMacroT
 {
-    public class SqrtMacro : Macro
+    [TestFixture]
+    public class DeriveMacroTest
     {
-        public static readonly SqrtMacro Value = new SqrtMacro();
-
-        private SqrtMacro()
+        [Test]
+        public void ValueIsSet()
         {
-        }
+            // expect
+            Assert.IsNotNull(DeriveMacro.Value);
+            // and
+            Assert.AreEqual("derive", DeriveMacro.Value.Name);
+            Assert.AreEqual(2, DeriveMacro.Value.NumArguments);
+            Assert.AreEqual(
+                @"The derive operator
+  derive(f(x), x)
 
-        public override string Name => "sqrt";
-        public override int NumArguments => 1;
-
-        public override string DocString
-        {
-            get
-            {
-                return "square root";
-            }
+Returns the derivative of f(x) with respect to x.",
+                DeriveMacro.Value.DocString);
         }
     }
 }

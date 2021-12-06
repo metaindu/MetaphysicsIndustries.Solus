@@ -1,4 +1,4 @@
-﻿
+
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
@@ -20,25 +20,25 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Macros
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Macros;
+using NUnit.Framework;
+
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorT.MacrosT.RandMacroT
 {
-    public class SqrtMacro : Macro
+    [TestFixture]
+    public class CallTest
     {
-        public static readonly SqrtMacro Value = new SqrtMacro();
-
-        private SqrtMacro()
+        [Test]
+        public void CallYieldsRandomExpression()
         {
-        }
-
-        public override string Name => "sqrt";
-        public override int NumArguments => 1;
-
-        public override string DocString
-        {
-            get
-            {
-                return "square root";
-            }
+            // given
+            var expr = new FunctionCall(new Literal(RandMacro.Value));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsInstanceOf<RandomExpression>(result);
         }
     }
 }

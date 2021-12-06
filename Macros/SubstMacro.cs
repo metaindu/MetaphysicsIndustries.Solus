@@ -20,30 +20,17 @@
  *
  */
 
-using System.Collections.Generic;
-using System.Linq;
-using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
-using MetaphysicsIndustries.Solus.Transformers;
-
-namespace MetaphysicsIndustries.Solus
+namespace MetaphysicsIndustries.Solus.Macros
 {
     public class SubstMacro : Macro
     {
         public static readonly SubstMacro Value = new SubstMacro();
 
-        protected SubstMacro()
+        private SubstMacro()
         {
-            Name = "subst";
-            NumArguments = 3;
         }
 
-        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            SubstTransformer subst = new SubstTransformer();
-            CleanUpTransformer cleanup = new CleanUpTransformer();
-            var var = ((VariableAccess)args.ElementAt(1)).VariableName;
-            return cleanup.CleanUp(subst.Subst(args.First(), var, args.ElementAt(2)));
-        }
+        public override string Name => "subst";
+        public override int NumArguments => 3;
     }
 }
