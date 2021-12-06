@@ -20,10 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
-using System.Linq;
-using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus
@@ -36,11 +32,6 @@ namespace MetaphysicsIndustries.Solus
         {
             Name = "sqrt";
             NumArguments = 1;
-        }
-
-        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            return new FunctionCall(ExponentOperation.Value, args.First(), new Literal(0.5f));
         }
 
         public override string DocString

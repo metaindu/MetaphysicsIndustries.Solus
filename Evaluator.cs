@@ -183,7 +183,23 @@ namespace MetaphysicsIndustries.Solus
                 args.Length != m.NumArguments)
                 throw new OperandException(
                     "Incorrect number of arguments.");
-            return m.Call(args, env);
+            switch (m)
+            {
+                case DeriveMacro mm:
+                    return CallMacro(mm, args, env);
+                case IfMacro mm:
+                    return CallMacro(mm, args, env);
+                case RandMacro mm:
+                    return CallMacro(mm, args, env);
+                case SqrtMacro mm:
+                    return CallMacro(mm, args, env);
+                case SubstMacro mm:
+                    return CallMacro(mm, args, env);
+                default:
+                    throw new ArgumentException(
+                        $"Unknown macro: {m.GetType().Name}",
+                        nameof(m));
+            }
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)

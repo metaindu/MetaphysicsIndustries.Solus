@@ -20,11 +20,7 @@
  *
  */
 
-using System.Collections.Generic;
-using System.Linq;
-using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Macros;
-using MetaphysicsIndustries.Solus.Transformers;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -36,15 +32,6 @@ namespace MetaphysicsIndustries.Solus
         {
             Name = "derive";
             NumArguments = 2;
-        }
-
-        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            DerivativeTransformer derive = new DerivativeTransformer();
-            Expression expr = args.First();
-            var v = ((VariableAccess)args.ElementAt(1)).VariableName;
-
-            return derive.Transform(expr, new VariableTransformArgs(v));
         }
 
         public override string DocString

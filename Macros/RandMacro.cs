@@ -20,8 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus
@@ -34,11 +32,6 @@ namespace MetaphysicsIndustries.Solus
         {
             Name = "rand";
             NumArguments = 0;
-        }
-
-        public override Expression InternalCall(IEnumerable<Expression> args, SolusEnvironment env)
-        {
-            return new RandomExpression();
         }
     }
 }
