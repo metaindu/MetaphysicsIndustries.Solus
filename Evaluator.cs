@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -65,9 +66,34 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
+        public class VectorStoreOp : StoreOp1
+        {
+            private IMathObject[] _values = null;
+            private Vector? _result = null;
+
+            public Vector GetResult()
+            {
+                if (!_result.HasValue)
+                    _result = new Vector(_values);
+                return _result.Value;
+            }
+
+            public override void Store(int index, IMathObject value)
+            {
+                _values[index] = value;
+            }
+
+            public override void SetMinArraySize(int length)
+            {
+                if (_values == null || _values.Length != length)
+                    _values = new IMathObject[length];
+            }
+        }
+
         public abstract class AggregateOp
         {
-            public abstract void Operate(IMathObject input);
+            public abstract void Operate(IMathObject input,
+                SolusEnvironment env);
         }
 
         public class AggregateOp<TIn, TOut> : AggregateOp
@@ -75,9 +101,33 @@ namespace MetaphysicsIndustries.Solus
             public TOut State;
             public Func<TIn, TOut, TOut> Function;
 
-            public override void Operate(IMathObject input)
+            public override void Operate(IMathObject input,
+                SolusEnvironment env)
             {
                 State = Function((TIn)input, State);
+            }
+        }
+
+        public class FunctionAggregateOp : AggregateOp
+        {
+            public FunctionAggregateOp(Function function,
+                IMathObject initialState)
+            {
+                Function = function;
+                State = initialState;
+            }
+
+            public IMathObject State;
+            public readonly Function Function;
+
+            private readonly IMathObject[] _args = new IMathObject[2];
+            public override void Operate(IMathObject input,
+                SolusEnvironment env)
+            {
+                _args[0] = input;
+                _args[1] = State;
+                var result = Function.Call(env, _args);
+                State = result;
             }
         }
 
@@ -107,7 +157,7 @@ namespace MetaphysicsIndustries.Solus
                     store.Store(i, v);
                 if (aggrs != null)
                     foreach (var aggr in aggrs)
-                        aggr?.Operate(v);
+                        aggr?.Operate(v, env2);
             }
         }
 
@@ -138,6 +188,33 @@ namespace MetaphysicsIndustries.Solus
                 {
                     Values = new T[length0, length1];
                 }
+            }
+        }
+
+        public class MatrixStoreOp : StoreOp2
+        {
+            private IMathObject[,] _values = null;
+            private Matrix? _result = null;
+
+            public Matrix GetResult()
+            {
+                if (!_result.HasValue)
+                    _result = new Matrix(_values);
+                return _result.Value;
+            }
+
+            public override void Store(int index0, int index1,
+                IMathObject value)
+            {
+                _values[index0, index1] = value;
+            }
+
+            public override void SetMinArraySize(int length0, int length1)
+            {
+                if (_values == null ||
+                    _values.GetLength(0) < length0 ||
+                    _values.GetLength(1) < length1)
+                    _values = new IMathObject[length0, length1];
             }
         }
 
@@ -186,7 +263,7 @@ namespace MetaphysicsIndustries.Solus
                         store.Store(i, j, v);
                     if (aggrs != null)
                         foreach (var aggr in aggrs)
-                            aggr?.Operate(v);
+                            aggr?.Operate(v, env2);
                 }
             }
         }
@@ -282,7 +359,7 @@ namespace MetaphysicsIndustries.Solus
                             store.Store(i, j, k, v);
                         if (aggrs != null)
                             foreach (var aggr in aggrs)
-                                aggr?.Operate(v);
+                                aggr?.Operate(v, env2);
                     }
                 }
             }

@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -40,15 +41,32 @@ namespace MetaphysicsIndustries.Solus.Functions
         public string[] Argnames;
         public Expression Expression;
 
+        public override void CheckArguments(IMathObject[] args)
+        {
+            if (args.Length != Argnames.Length)
+                throw new ArgumentException(
+                    $"Wrong number of arguments given to " +
+                    $"{DisplayName} (expected {Argnames.Length} but got " +
+                    $"{args.Length})");
+        }
+
+        private SolusEnvironment _parentCache;
+        private SolusEnvironment _childCache;
         protected override IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
-            SolusEnvironment env2 = env.Clone();
+            if (_childCache == null ||
+                env != _parentCache)
+            {
+                _childCache = env.CreateChildEnvironment();
+                _parentCache = env;
+            }
+            var env2 = _childCache;
 
             int i;
             for (i = 0; i < Argnames.Length; i++)
             {
-                env2.SetVariable(Argnames[i], new Literal(args[i]));
+                env2.SetVariable(Argnames[i], args[i]);
             }
 
             return Expression.Eval(env2);

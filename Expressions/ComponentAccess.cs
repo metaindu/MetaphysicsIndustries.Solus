@@ -48,13 +48,22 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return AccessComponent(value, evaledIndexes, env);
         }
 
+        private IMathObject[] _evaledIndexesCache;
         private IMathObject[] GetEvaledIndexes(SolusEnvironment env)
         {
-            // TODO: caching, eventually, so as to not repeat so much
-            // evaluation. But that is a non-starter at the moment, because
-            // the contents of the env can change at any time.
+            // TODO: proper caching of the results of evaluation, eventually,
+            // so as to not repeat so much evaluation. But that is a
+            // non-starter at the moment, because the contents of the env
+            // can change at any time.
 
-            return Indexes.Select(e => e.Eval(env)).ToArray();
+            if (_evaledIndexesCache == null ||
+                _evaledIndexesCache.Length < Indexes.Count)
+                _evaledIndexesCache = new IMathObject[Indexes.Count];
+            int i;
+            for (i = 0; i < Indexes.Count; i++)
+                _evaledIndexesCache[i] = Indexes[i].Eval(env);
+
+            return _evaledIndexesCache;
         }
 
         private static void CheckIndexes(IMathObject[] indexes,
@@ -83,12 +92,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             // TODO: maybe pass the env, and then we don't have to eval the
             // indexes before-hand?
-            if (indexes.Any(i => !i.IsIsScalar(null)))
-                throw new IndexException(
-                    "Indexes must be scalar");
-            if (indexes.Any(i => i.ToNumber().Value < 0))
-                throw new IndexException(
-                    "Indexes must not be negative");
+            int i;
+            for (i = 0; i < indexes.Length; i++)
+            {
+                if (!indexes[i].IsIsScalar(null))
+                    throw new IndexException(
+                        "Indexes must be scalar");
+                if (indexes[i].ToNumber().Value < 0)
+                    throw new IndexException(
+                        "Indexes must not be negative");
+            }
 
             var index0 = (int) indexes[0].ToNumber().Value;
             if (exprIsVector.HasValue && exprIsVector.Value)
