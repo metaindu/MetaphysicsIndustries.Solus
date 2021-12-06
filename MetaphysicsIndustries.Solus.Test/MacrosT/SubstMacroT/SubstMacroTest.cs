@@ -20,22 +20,20 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Macros;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
+namespace MetaphysicsIndustries.Solus.Test.MacrosT.SubstMacroT
 {
-    public class IfMacroTest
+    [TestFixture]
+    public class SubstMacroTest
     {
         [Test]
-        public void HasDefaultValues()
+        public void ValueIsSet()
         {
-            // given
-            var result = IfMacro.Value;
             // expect
-            Assert.AreEqual("if", result.Name);
-            Assert.AreEqual(3, result.NumArguments);
-            Assert.False(result.HasVariableNumArgs);
+            Assert.IsNotNull(SubstMacro.Value);
+            Assert.AreEqual("subst", SubstMacro.Value.Name);
+            Assert.AreEqual(3, SubstMacro.Value.NumArguments);
         }
     }
 }

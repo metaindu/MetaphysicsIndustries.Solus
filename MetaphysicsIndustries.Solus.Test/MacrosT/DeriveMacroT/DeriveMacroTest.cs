@@ -20,22 +20,27 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Macros;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
+namespace MetaphysicsIndustries.Solus.Test.MacrosT.DeriveMacroT
 {
-    public class IfMacroTest
+    [TestFixture]
+    public class DeriveMacroTest
     {
         [Test]
-        public void HasDefaultValues()
+        public void ValueIsSet()
         {
-            // given
-            var result = IfMacro.Value;
             // expect
-            Assert.AreEqual("if", result.Name);
-            Assert.AreEqual(3, result.NumArguments);
-            Assert.False(result.HasVariableNumArgs);
+            Assert.IsNotNull(DeriveMacro.Value);
+            // and
+            Assert.AreEqual("derive", DeriveMacro.Value.Name);
+            Assert.AreEqual(2, DeriveMacro.Value.NumArguments);
+            Assert.AreEqual(
+                @"The derive operator
+  derive(f(x), x)
+
+Returns the derivative of f(x) with respect to x.",
+                DeriveMacro.Value.DocString);
         }
     }
 }

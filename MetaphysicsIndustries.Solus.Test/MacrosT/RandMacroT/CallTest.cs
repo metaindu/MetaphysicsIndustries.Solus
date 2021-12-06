@@ -20,22 +20,24 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Expressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
+namespace MetaphysicsIndustries.Solus.Test.MacrosT.RandMacroT
 {
-    public class IfMacroTest
+    [TestFixture]
+    public class CallTest
     {
         [Test]
-        public void HasDefaultValues()
+        public void CallYieldsRandomExpression()
         {
             // given
-            var result = IfMacro.Value;
-            // expect
-            Assert.AreEqual("if", result.Name);
-            Assert.AreEqual(3, result.NumArguments);
-            Assert.False(result.HasVariableNumArgs);
+            var expr = new FunctionCall(new Literal(RandMacro.Value));
+            var eval = new Evaluator();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsInstanceOf<RandomExpression>(result);
         }
     }
 }

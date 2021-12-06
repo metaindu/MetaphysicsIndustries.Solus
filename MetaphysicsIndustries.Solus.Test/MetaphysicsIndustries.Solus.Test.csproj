@@ -210,7 +210,14 @@
     <Compile Include="FunctionsT\UnitStepFunctionT\UnitStepFunctionTest.cs" />
     <Compile Include="FunctionsT\UserDefinedFunctionT\GetResultTest.cs" />
     <Compile Include="FunctionsT\UserDefinedFunctionT\UserDefinedFunctionTest.cs" />
+    <Compile Include="MacrosT\DeriveMacroT\CallTest.cs" />
+    <Compile Include="MacrosT\DeriveMacroT\DeriveMacroTest.cs" />
+    <Compile Include="MacrosT\IfMacroT\CallTest.cs" />
     <Compile Include="MacrosT\IfMacroT\IfMacroTest.cs" />
+    <Compile Include="MacrosT\RandMacroT\CallTest.cs" />
+    <Compile Include="MacrosT\SqrtMacroT\CallTest.cs" />
+    <Compile Include="MacrosT\SubstMacroT\CallTest.cs" />
+    <Compile Include="MacrosT\SubstMacroT\SubstMacroTest.cs" />
     <Compile Include="MockFunction.cs" />
     <Compile Include="MockMathObjectF.cs" />
     <Compile Include="MockExpression.cs" />
