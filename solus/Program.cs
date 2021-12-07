@@ -26,6 +26,7 @@ using System.Reflection;
 using MetaphysicsIndustries.Solus;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Transformers;

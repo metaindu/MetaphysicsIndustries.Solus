@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Giza;
+using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
