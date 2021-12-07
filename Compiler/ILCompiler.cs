@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -71,36 +70,20 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
             var instructionOffsets = new List<int>();
 
-            Logger.Log.Clear();
-
             foreach (var instruction in setup)
             {
-                Logger.WriteLine(
-                    "[{2}] IL_{0:X4} {1}",
-                    gen.ILOffset,
-                    instruction.ToString(),
-                    instructionOffsets.Count);
                 instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
             }
 
             foreach (var instruction in instructions)
             {
-                Logger.WriteLine(
-                    "[{2}] IL_{0:X4} {1}",
-                    gen.ILOffset,
-                    instruction.ToString(),
-                    instructionOffsets.Count);
                 instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
             }
 
             foreach (var instruction in shutdown)
             {
-                Logger.WriteLine(
-                    "[{2}] IL_{0:X4} {1}",
-                    gen.ILOffset, instruction.ToString(),
-                    instructionOffsets.Count);
                 instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
             }
