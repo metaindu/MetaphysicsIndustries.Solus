@@ -93,6 +93,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         private Expression[] _array;
         public int Length => _array.Length;
         public IMathObject GetComponent(int index) => _array[index];
+        IMathObject IVector.this[int index] => GetComponent(index);
 
         public override Expression GetComponent(int[] indexes)
         {

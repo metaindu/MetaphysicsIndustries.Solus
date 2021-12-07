@@ -50,6 +50,7 @@ namespace MetaphysicsIndustries.Solus
     {
         int Length { get; }
         IMathObject GetComponent(int index);
+        IMathObject this[int index] { get; }
     }
 
     public interface IMatrix : ITensor
@@ -57,6 +58,7 @@ namespace MetaphysicsIndustries.Solus
         int RowCount { get; }
         int ColumnCount { get; }
         IMathObject GetComponent(int row, int column);
+        IMathObject this[int row,int column] { get; }
     }
 
     public class ScalarMathObject : IMathObject
