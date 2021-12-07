@@ -120,9 +120,6 @@ namespace MetaphysicsIndustries.Solus
             throw new NotImplementedException();
         }
 
-        private IMathObject[] _functionCallArgsCache = new IMathObject[0];
-
-        // Warning: Not thread-safe
         public IMathObject Eval(FunctionCall expr, SolusEnvironment env)
         {
             var f0 = Eval(expr.Function, env);
@@ -142,11 +139,10 @@ namespace MetaphysicsIndustries.Solus
 
             var f = (Function)f0;
 
-            if (_functionCallArgsCache.Length < expr.Arguments.Count)
-                _functionCallArgsCache = new IMathObject[expr.Arguments.Count];
+            var evaluatedArgs = new IMathObject[expr.Arguments.Count];
             for (i = 0; i < expr.Arguments.Count; i++)
-                _functionCallArgsCache[i] = Eval(expr.Arguments[i], env);
-            return Call(f, _functionCallArgsCache, env);
+                evaluatedArgs[i] = Eval(expr.Arguments[i], env);
+            return Call(f, evaluatedArgs, env);
         }
 
         public IMathObject Eval(IntervalExpression expr, SolusEnvironment env)
