@@ -62,6 +62,7 @@
     <Compile Include="Evaluators\BasicEvaluator.Expressions.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Functions.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Macros.cs" />
+    <Compile Include="Evaluators\IEvaluator.cs" />
     <Compile Include="Exceptions\IndexException.cs" />
     <Compile Include="Exceptions\InterrogationException.cs" />
     <Compile Include="Exceptions\NameException.cs" />

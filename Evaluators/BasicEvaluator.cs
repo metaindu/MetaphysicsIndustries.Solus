@@ -32,7 +32,7 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
 {
-    public partial class BasicEvaluator
+    public partial class BasicEvaluator : IEvaluator
     {
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
