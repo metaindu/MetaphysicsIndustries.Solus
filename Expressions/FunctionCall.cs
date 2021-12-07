@@ -31,6 +31,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
@@ -197,7 +198,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 var f = (Function)literal.Value;
                 var args2 = args.Select(
                     a => ((Literal)a).Value);
-                var eval = new Evaluator();
+                var eval = new BasicEvaluator();
                 var result = eval.Call(f, args2.ToArray(), env);
                 return new Literal(result);
             }

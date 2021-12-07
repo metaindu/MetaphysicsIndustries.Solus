@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -32,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
 {
     public class CleanUpTransformer : ExpressionTransformer
     {
-        private readonly Evaluator _evaluator = new Evaluator();
+        private readonly IEvaluator _evaluator = new BasicEvaluator();
 
         public Expression CleanUp(Expression expr)
         {

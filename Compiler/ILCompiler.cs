@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Giza;
+using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
@@ -124,7 +125,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IMathObject FastEval(Expression expr, SolusEnvironment env,
             ref Expression.CompiledExpression compiled)
         {
-            var eval = new Evaluator();
+            var eval = new BasicEvaluator();
             var bakedEnv = new Dictionary<string, float>();
             if (compiled != null)
             {
