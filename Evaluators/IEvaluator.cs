@@ -22,6 +22,7 @@
 
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
 {
@@ -30,5 +31,21 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         IMathObject Eval(Expression expr, SolusEnvironment env);
 
         IMathObject Call(Function f, IMathObject[] args, SolusEnvironment env);
+
+        void EvalInterval(
+            Expression expr, SolusEnvironment env,
+            VarInterval interval, int numSteps, StoreOp1 store,
+            AggregateOp[] aggrs = null);
+        void EvalInterval(
+            Expression expr, SolusEnvironment env,
+            VarInterval interval1, int numSteps1,
+            VarInterval interval2, int numSteps2,
+            StoreOp2 store, AggregateOp[] aggrs = null);
+        void EvalInterval(
+            Expression expr, SolusEnvironment env,
+            VarInterval interval1, int numSteps1,
+            VarInterval interval2, int numSteps2,
+            VarInterval interval3, int numSteps3,
+            StoreOp3 store, AggregateOp[] aggrs = null);
     }
 }
