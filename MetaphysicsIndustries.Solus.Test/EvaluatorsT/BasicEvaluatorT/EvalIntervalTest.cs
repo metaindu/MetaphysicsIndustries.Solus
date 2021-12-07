@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var interval = new VarInterval("x",
                 new Interval(2, false, 6, false, false));
             var numSteps = 5;
-            var store = new BasicEvaluator.StoreOp1<Number>();
+            var store = new StoreOp1<Number>();
             // when
             eval.EvalInterval(expr, env, interval, numSteps, store);
             // then
@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var interval = new VarInterval("x",
                 new Interval(2, false, 6, false, false));
             var numSteps = 5;
-            var store = new BasicEvaluator.VectorStoreOp();
+            var store = new VectorStoreOp();
             // when
             eval.EvalInterval(expr, env, interval, numSteps, store);
             // then
@@ -96,7 +96,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var interval2 = new VarInterval("y",
                 new Interval(7, false, 12, false, false));
             var numSteps2 = 6;
-            var store = new BasicEvaluator.StoreOp2<Number>();
+            var store = new StoreOp2<Number>();
             // when
             eval.EvalInterval(expr, env,
                 interval1, numSteps1,
@@ -158,7 +158,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var interval2 = new VarInterval("y",
                 new Interval(7, false, 12, false, false));
             var numSteps2 = 6;
-            var store = new BasicEvaluator.MatrixStoreOp();
+            var store = new MatrixStoreOp();
             // when
             eval.EvalInterval(expr, env,
                 interval1, numSteps1,
@@ -224,7 +224,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var interval3 = new VarInterval("z",
                 new Interval(7, false, 11, false, false));
             var numSteps3 = 5;
-            var store = new BasicEvaluator.StoreOp3<Number>();
+            var store = new StoreOp3<Number>();
             // when
             eval.EvalInterval(expr, env,
                 interval1, numSteps1,
@@ -284,7 +284,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var expr = parser.GetExpression("x*e^(-x*x-y*y)");
             var interval1 = new VarInterval("x", -2, 2);
             var interval2 = new VarInterval("y", -2, 2);
-            var store = new BasicEvaluator.StoreOp2<Number>();
+            var store = new StoreOp2<Number>();
             var eval = new BasicEvaluator();
             env.SetVariable("e", new Literal(2.718281828f));
             // when
@@ -318,14 +318,14 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
 
             var interval = new VarInterval("x", 1, 5);
             var env = new SolusEnvironment();
-            var aggr = new BasicEvaluator.AggregateOp<Number, Number>
+            var aggr = new AggregateOp<Number, Number>
             {
                 Function = Collect,
                 State = 0.ToNumber()
             };
             // when
             eval.EvalInterval(expr, env, interval, 5, null,
-                new BasicEvaluator.AggregateOp[] { aggr });
+                new AggregateOp[] { aggr });
             // then
             Assert.AreEqual(25, aggr.State.Value);
         }
@@ -351,7 +351,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var interval1 = new VarInterval("x", 1, 3);
             var interval2 = new VarInterval("y", 4, 6);
             var env = new SolusEnvironment();
-            var aggr = new BasicEvaluator.AggregateOp<Number, Number>
+            var aggr = new AggregateOp<Number, Number>
             {
                 Function = Max,
                 State = 0.ToNumber()
@@ -361,7 +361,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
                 interval1, 3,
                 interval2, 3,
                 null,
-                new BasicEvaluator.AggregateOp[] { aggr });
+                new AggregateOp[] { aggr });
             // then
             Assert.AreEqual(18, aggr.State.Value);
         }
@@ -389,7 +389,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var interval2 = new VarInterval("y", 4, 6);
             var interval3 = new VarInterval("z", 7, 9);
             var env = new SolusEnvironment();
-            var aggr = new BasicEvaluator.AggregateOp<Number, Number>
+            var aggr = new AggregateOp<Number, Number>
             {
                 Function = Max,
                 State = 0.ToNumber()
@@ -400,7 +400,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
                 interval2, 3,
                 interval3, 3,
                 null,
-                new BasicEvaluator.AggregateOp[] { aggr });
+                new AggregateOp[] { aggr });
             // then
             Assert.AreEqual(162, aggr.State.Value);
         }
@@ -416,21 +416,21 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var eval = new BasicEvaluator();
             var interval = new VarInterval("x", 1, 5);
             var env = new SolusEnvironment();
-            var aggrMax = new BasicEvaluator.AggregateOp<Number, Number>
+            var aggrMax = new AggregateOp<Number, Number>
             {
                 Function = (Number n, Number state) =>
                     // find the max
                     n.Value > state.Value ? n : state,
                 State = 0.ToNumber()
             };
-            var aggrMin = new BasicEvaluator.AggregateOp<Number, Number>
+            var aggrMin = new AggregateOp<Number, Number>
             {
                 Function = (Number n, Number state) =>
                     // find the max
                     n.Value < state.Value ? n : state,
                 State = 1000.ToNumber()
             };
-            var aggrs = new BasicEvaluator.AggregateOp[] { aggrMin, aggrMax };
+            var aggrs = new AggregateOp[] { aggrMin, aggrMax };
             // when
             eval.EvalInterval(expr, env, interval, 5, null, aggrs);
             // then
@@ -449,11 +449,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
             var eval = new BasicEvaluator();
             var interval = new VarInterval("x", 1, 5);
             var env = new SolusEnvironment();
-            var aggr = new BasicEvaluator.FunctionAggregateOp(
+            var aggr = new FunctionAggregateOp(
                 MaximumFiniteFunction.Value, float.NaN.ToNumber());
             // when
             eval.EvalInterval(expr, env, interval, 5, null,
-                new BasicEvaluator.AggregateOp[] { aggr });
+                new AggregateOp[] { aggr });
             // then
             Assert.AreEqual(25, aggr.State.ToNumber().Value);
         }

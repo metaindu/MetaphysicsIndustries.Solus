@@ -207,94 +207,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             return cleanup.CleanUp(expr.Simplify(env));
         }
 
-        public abstract class StoreOp1
-        {
-            public abstract void Store(int index, IMathObject value);
-            public abstract void SetMinArraySize(int length);
-        }
-
-        public class StoreOp1<T> : StoreOp1
-            where T : IMathObject
-        {
-            public T[] Values;
-
-            public override void Store(int index, IMathObject value)
-            {
-                Values[index] = (T)value;
-            }
-
-            public override void SetMinArraySize(int length)
-            {
-                if (Values == null || Values.Length < length)
-                    Values = new T[length];
-            }
-        }
-
-        public class VectorStoreOp : StoreOp1
-        {
-            private IMathObject[] _values = null;
-            private Vector? _result = null;
-
-            public Vector GetResult()
-            {
-                if (!_result.HasValue)
-                    _result = new Vector(_values);
-                return _result.Value;
-            }
-
-            public override void Store(int index, IMathObject value)
-            {
-                _values[index] = value;
-            }
-
-            public override void SetMinArraySize(int length)
-            {
-                if (_values == null || _values.Length != length)
-                    _values = new IMathObject[length];
-            }
-        }
-
-        public abstract class AggregateOp
-        {
-            public abstract void Operate(IMathObject input,
-                SolusEnvironment env, BasicEvaluator evaluator);
-        }
-
-        public class AggregateOp<TIn, TOut> : AggregateOp
-        {
-            public TOut State;
-            public Func<TIn, TOut, TOut> Function;
-
-            public override void Operate(IMathObject input,
-                SolusEnvironment env, BasicEvaluator evaluator)
-            {
-                State = Function((TIn)input, State);
-            }
-        }
-
-        public class FunctionAggregateOp : AggregateOp
-        {
-            public FunctionAggregateOp(Function function,
-                IMathObject initialState)
-            {
-                Function = function;
-                State = initialState;
-            }
-
-            public IMathObject State;
-            public readonly Function Function;
-
-            private readonly IMathObject[] _args = new IMathObject[2];
-            public override void Operate(IMathObject input,
-                SolusEnvironment env, BasicEvaluator evaluator)
-            {
-                _args[0] = input;
-                _args[1] = State;
-                var result = evaluator.Call(Function, _args, env);
-                State = result;
-            }
-        }
-
         public void EvalInterval(Expression expr, SolusEnvironment env,
             VarInterval interval, int numSteps, StoreOp1 store,
             AggregateOp[] aggrs = null)
@@ -322,63 +234,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 if (aggrs != null)
                     foreach (var aggr in aggrs)
                         aggr?.Operate(v, env2, this);
-            }
-        }
-
-        public abstract class StoreOp2
-        {
-            public abstract void Store(int index0, int index1,
-                IMathObject value);
-
-            public abstract void SetMinArraySize(int length0, int length1);
-        }
-
-        public class StoreOp2<T> : StoreOp2
-            where T : IMathObject
-        {
-            public T[,] Values;
-
-            public override void Store(int index0, int index1,
-                IMathObject value)
-            {
-                Values[index0, index1] = (T)value;
-            }
-
-            public override void SetMinArraySize(int length0, int length1)
-            {
-                if (Values == null ||
-                    Values.GetLength(0) < length0 ||
-                    Values.GetLength(1) < length1)
-                {
-                    Values = new T[length0, length1];
-                }
-            }
-        }
-
-        public class MatrixStoreOp : StoreOp2
-        {
-            private IMathObject[,] _values = null;
-            private Matrix? _result = null;
-
-            public Matrix GetResult()
-            {
-                if (!_result.HasValue)
-                    _result = new Matrix(_values);
-                return _result.Value;
-            }
-
-            public override void Store(int index0, int index1,
-                IMathObject value)
-            {
-                _values[index0, index1] = value;
-            }
-
-            public override void SetMinArraySize(int length0, int length1)
-            {
-                if (_values == null ||
-                    _values.GetLength(0) < length0 ||
-                    _values.GetLength(1) < length1)
-                    _values = new IMathObject[length0, length1];
             }
         }
 
@@ -428,39 +283,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     if (aggrs != null)
                         foreach (var aggr in aggrs)
                             aggr?.Operate(v, env2, this);
-                }
-            }
-        }
-
-        public abstract class StoreOp3
-        {
-            public abstract void Store(int index0, int index1, int index2,
-                IMathObject value);
-
-            public abstract void SetMinArraySize(int length0, int length1,
-                int length2);
-        }
-
-        public class StoreOp3<T> : StoreOp3
-            where T : IMathObject
-        {
-            public T[,,] Values;
-
-            public override void Store(int index0, int index1, int index2,
-                IMathObject value)
-            {
-                Values[index0, index1, index2] = (T)value;
-            }
-
-            public override void SetMinArraySize(int length0, int length1,
-                int length2)
-            {
-                if (Values == null ||
-                    Values.GetLength(0) < length0 ||
-                    Values.GetLength(1) < length1 ||
-                    Values.GetLength(2) < length2)
-                {
-                    Values = new T[length0, length1, length2];
                 }
             }
         }
