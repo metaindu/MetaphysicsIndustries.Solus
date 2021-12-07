@@ -39,12 +39,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public virtual IMathObject CustomEval(SolusEnvironment env) => null;
         public virtual bool ProvidesCustomEval => false;
 
-        public class CompiledExpression
-        {
-            public Func<Dictionary<string, float>, float> Method;
-            public string[] CompiledVars;
-        }
-
         public abstract Expression Clone();
 
         public abstract void AcceptVisitor(IExpressionVisitor visitor);

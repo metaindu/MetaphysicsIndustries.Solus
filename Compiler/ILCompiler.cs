@@ -27,14 +27,12 @@ using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
-using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
     public class ILCompiler
     {
-        public Expression.CompiledExpression Compile(Expression expr)
+        public CompiledExpression Compile(Expression expr)
         {
             var varmap = new VariableToArgumentNumberMapper();
             var instructions = ConvertToInstructions(expr, varmap);
@@ -111,7 +109,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 (Func<Dictionary<string, float>, float>)method.CreateDelegate(
                     typeof(Func<Dictionary<string, float>, float>));
 
-            return new Expression.CompiledExpression{
+            return new CompiledExpression{
                 Method = del,
                 CompiledVars = args
             };
@@ -119,11 +117,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public IMathObject FastEval(Expression expr, SolusEnvironment env)
         {
-            Expression.CompiledExpression compiled = null;
+            CompiledExpression compiled = null;
             return FastEval(expr, env, ref compiled);
         }
         public IMathObject FastEval(Expression expr, SolusEnvironment env,
-            ref Expression.CompiledExpression compiled)
+            ref CompiledExpression compiled)
         {
             var eval = new BasicEvaluator();
             var bakedEnv = new Dictionary<string, float>();
