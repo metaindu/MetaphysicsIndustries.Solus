@@ -75,8 +75,8 @@ namespace MetaphysicsIndustries.Solus
         public static StringValue ToStringValue(this IMathObject mo) =>
             (StringValue) mo;
 
-        public static Vector ToVector(this IMathObject mo) => (Vector) mo;
-        public static Matrix ToMatrix(this IMathObject mo) => (Matrix) mo;
+        public static IVector ToVector(this IMathObject mo) => (IVector) mo;
+        public static IMatrix ToMatrix(this IMathObject mo) => (IMatrix) mo;
 
         public static Number ToNumber(this float value) => new Number(value);
         public static Number ToNumber(this int value) => new Number(value);

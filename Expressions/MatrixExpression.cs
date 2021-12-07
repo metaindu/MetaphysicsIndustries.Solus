@@ -134,6 +134,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public IMathObject GetComponent(int row, int column) =>
             this[row, column];
+        IMathObject IMatrix.this[int row,int column] =>
+            GetComponent(row, column);
 
         public override Expression GetComponent(int[] indexes)
         {

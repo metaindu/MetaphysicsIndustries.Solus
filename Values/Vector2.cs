@@ -206,6 +206,8 @@ namespace MetaphysicsIndustries.Solus.Values
             if (index == 1) return Y.ToNumber();
             throw new IndexOutOfRangeException();
         }
+
+        public IMathObject this[int index] => GetComponent(index);
     }
 }
 
