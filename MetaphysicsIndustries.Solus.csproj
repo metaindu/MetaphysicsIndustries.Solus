@@ -58,10 +58,10 @@
     <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
-    <Compile Include="Evaluators\Evaluator.cs" />
-    <Compile Include="Evaluators\Evaluator.Expressions.cs" />
-    <Compile Include="Evaluators\Evaluator.Functions.cs" />
-    <Compile Include="Evaluators\Evaluator.Macros.cs" />
+    <Compile Include="Evaluators\BasicEvaluator.cs" />
+    <Compile Include="Evaluators\BasicEvaluator.Expressions.cs" />
+    <Compile Include="Evaluators\BasicEvaluator.Functions.cs" />
+    <Compile Include="Evaluators\BasicEvaluator.Macros.cs" />
     <Compile Include="Exceptions\IndexException.cs" />
     <Compile Include="Exceptions\InterrogationException.cs" />
     <Compile Include="Exceptions\NameException.cs" />

@@ -125,7 +125,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IMathObject FastEval(Expression expr, SolusEnvironment env,
             ref Expression.CompiledExpression compiled)
         {
-            var eval = new Evaluator();
+            var eval = new BasicEvaluator();
             var bakedEnv = new Dictionary<string, float>();
             if (compiled != null)
             {

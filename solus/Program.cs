@@ -78,7 +78,7 @@ namespace solus
                 {
                     var parser = new SolusParser();
                     var env = new SolusEnvironment();
-                    var eval = new Evaluator();
+                    var eval = new BasicEvaluator();
                     foreach (var exprString in exprStrings)
                     {
                         var expr = parser.GetExpression(exprString);
@@ -121,7 +121,7 @@ namespace solus
             var parser = new SolusParser();
             var env = new SolusEnvironment();
             var varApplier = new ApplyVariablesTransform();
-            var eval = new Evaluator();
+            var eval = new BasicEvaluator();
 
             var le = new LineEditor("solus");
             string line;
@@ -236,7 +236,7 @@ namespace solus
 
         static void ShowVersion()
         {
-            var assembly = Assembly.GetAssembly(typeof(Evaluator));
+            var assembly = Assembly.GetAssembly(typeof(BasicEvaluator));
             var name = assembly.GetName();
             var version = name.Version;
             var versionString = version.ToString();

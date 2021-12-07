@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
 {
     public class CleanUpTransformer : ExpressionTransformer
     {
-        private readonly Evaluator _evaluator = new Evaluator();
+        private readonly BasicEvaluator _evaluator = new BasicEvaluator();
 
         public Expression CleanUp(Expression expr)
         {
