@@ -64,6 +64,7 @@
     <Compile Include="Evaluators\BasicEvaluator.Expressions.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Functions.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Macros.cs" />
+    <Compile Include="Evaluators\CompilingEvaluator.cs" />
     <Compile Include="Evaluators\FunctionAggregateOp.cs" />
     <Compile Include="Evaluators\MatrixStoreOp.cs" />
     <Compile Include="Evaluators\StoreOp.cs" />
