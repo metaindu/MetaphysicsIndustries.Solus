@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[0];
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[] { 2.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[] { 2.ToNumber(), 3.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -116,7 +116,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 3.ToNumber(),
                 5.ToNumber()
             };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then

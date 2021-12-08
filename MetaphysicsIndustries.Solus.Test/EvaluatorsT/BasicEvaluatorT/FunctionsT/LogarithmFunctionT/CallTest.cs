@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = LogarithmFunction.Value;
             var args = new IMathObject[] { arg.ToNumber(), b.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = LogarithmFunction.Value;
             var args = new IMathObject[] { 0.ToNumber(), 2.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = LogarithmFunction.Value;
             var args = new IMathObject[] { 2.ToNumber(), 0.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
@@ -104,7 +104,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = LogarithmFunction.Value;
             var args = new IMathObject[] { 2.ToNumber(), 1.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
@@ -118,7 +118,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = LogarithmFunction.Value;
             var args = new IMathObject[] { (-1).ToNumber(), 2.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
@@ -132,7 +132,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = LogarithmFunction.Value;
             var args = new IMathObject[] { 2.ToNumber(), (-2).ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));

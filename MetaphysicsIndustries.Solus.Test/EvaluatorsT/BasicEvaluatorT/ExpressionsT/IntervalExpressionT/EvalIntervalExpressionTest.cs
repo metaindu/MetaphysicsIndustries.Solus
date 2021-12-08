@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var i = new IntervalExpression(
                 new Literal(1), true,
                 new Literal(2), true);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(i, null);
             // then

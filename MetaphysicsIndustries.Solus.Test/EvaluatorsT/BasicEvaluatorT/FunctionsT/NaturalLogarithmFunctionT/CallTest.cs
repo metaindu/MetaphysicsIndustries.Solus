@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = NaturalLogarithmFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = NaturalLogarithmFunction.Value;
             var args = new IMathObject[] { 0.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = NaturalLogarithmFunction.Value;
             var args = new IMathObject[] { new Number(-1) };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));

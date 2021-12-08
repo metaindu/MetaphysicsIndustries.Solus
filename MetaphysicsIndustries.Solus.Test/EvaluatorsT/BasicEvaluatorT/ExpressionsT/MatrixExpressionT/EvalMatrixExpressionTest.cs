@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new Literal(2),
                 new Literal(3),
                 new Literal(4));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new Literal(4),
                 new Literal(5),
                 new Literal(6));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -92,7 +92,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new Literal(3),
                 new VariableAccess("a"));
             var env = new SolusEnvironment();
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var exc = Assert.Throws<NameException>(
                 () => eval.Eval(expr, env));
@@ -112,7 +112,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new VariableAccess("a"));
             var env = new SolusEnvironment();
             env.SetVariable("a", new Literal(5));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, env);
             // then
@@ -139,7 +139,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                     new Literal(5),
                     new Literal(6),
                     new Literal(7)));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, null);
             // then

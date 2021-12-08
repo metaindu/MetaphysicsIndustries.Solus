@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 parser.GetExpression("3*x^2+5*x+7"),
                 new VariableAccess("x"));
             var env = new SolusEnvironment();
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, env);
             // then

@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = FactorialFunction.Value;
             var args = new IMathObject[0];
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = FactorialFunction.Value;
             var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 2.ToNumber(),
                 4.ToNumber()
             };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = FactorialFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then

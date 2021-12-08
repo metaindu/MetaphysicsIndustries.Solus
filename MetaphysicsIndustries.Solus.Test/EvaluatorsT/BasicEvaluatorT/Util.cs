@@ -21,26 +21,12 @@
  */
 
 using MetaphysicsIndustries.Solus.Evaluators;
-using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
-using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
-    MacrosT.RandMacroT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT
 {
-    [TestFixture]
-    public class CallTest
+    public static class Util
     {
-        [Test]
-        public void CallYieldsRandomExpression()
-        {
-            // given
-            var expr = new FunctionCall(new Literal(RandMacro.Value));
-            var eval = Util.CreateEvaluator();
-            // when
-            var result = eval.Eval(expr, null);
-            // then
-            Assert.IsInstanceOf<RandomExpression>(result);
-        }
+        public static IEvaluator CreateEvaluator() =>
+            new BasicEvaluator();
     }
 }

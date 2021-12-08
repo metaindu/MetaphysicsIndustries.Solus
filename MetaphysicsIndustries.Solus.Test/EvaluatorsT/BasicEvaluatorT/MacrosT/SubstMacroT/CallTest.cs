@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 original,
                 new VariableAccess("y"),
                 new Literal(1));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -60,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new VariableAccess("x"),
                 new VariableAccess("x"),
                 new Literal(1));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, null);
             // then

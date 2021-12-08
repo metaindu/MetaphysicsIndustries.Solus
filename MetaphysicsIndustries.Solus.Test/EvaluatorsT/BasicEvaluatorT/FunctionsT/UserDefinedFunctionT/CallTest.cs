@@ -53,7 +53,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new Number(4)
             };
             var env = new SolusEnvironment();
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, env);
             // then
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             };
             var env = new SolusEnvironment();
             env.SetVariable("a", new Literal(8));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // precondition
             Assert.IsInstanceOf<Literal>(env.GetVariable("a"));
             Assert.AreEqual(8,
