@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
         }
 
         [Test]
-        public void AbsoluteValueFunctionNegativeYieldsNegative()
+        public void AbsoluteValueFunctionNegativeYieldsPositive()
         {
             // given
             var f = AbsoluteValueFunction.Value;
