@@ -127,6 +127,7 @@
     <Compile Include="Functions\Function.cs" />
     <Compile Include="Functions\GreaterThanComparisonOperation.cs" />
     <Compile Include="Functions\GreaterThanOrEqualComparisonOperation.cs" />
+    <Compile Include="Functions\MagicFunction.cs" />
     <Compile Include="Functions\LessThanComparisonOperation.cs" />
     <Compile Include="Functions\LessThanOrEqualComparisonOperation.cs" />
     <Compile Include="Functions\LoadImageFunction.cs" />
