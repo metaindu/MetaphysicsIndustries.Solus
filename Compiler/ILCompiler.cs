@@ -109,15 +109,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var eval = new BasicEvaluator();
             var bakedEnv = new Dictionary<string, float>();
             if (compiled != null)
-            {
-                foreach (var var in compiled.CompiledVars)
-                {
-                    var target = env.GetVariable(var);
-                    if (target.IsIsExpression(env))
-                        target = eval.Eval((Expression)target, env);
-                    bakedEnv[var] = target.ToNumber().Value;
-                }
-            }
+                BakeEnvironment(compiled, env, eval, ref bakedEnv);
             else
             {
                 // static initialize Instruction
@@ -127,6 +119,22 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             return compiled.Method(bakedEnv).ToNumber();
+        }
+
+        public void BakeEnvironment(
+            CompiledExpression compiled, SolusEnvironment env,
+            IEvaluator eval, ref Dictionary<string, float> bakedEnv)
+        {
+            if (bakedEnv == null)
+                bakedEnv = new Dictionary<string, float>();
+            bakedEnv.Clear();
+            foreach (var var in compiled.CompiledVars)
+            {
+                var target = env.GetVariable(var);
+                if (target.IsIsExpression(env))
+                    target = eval.Eval((Expression)target, env);
+                bakedEnv[var] = target.ToNumber().Value;
+            }
         }
 
         // compile expressions
