@@ -190,22 +190,27 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IEnumerable<Instruction> ConvertToInstructions(Function func,
             VariableToArgumentNumberMapper varmap, List<Expression> arguments)
         {
-            if (func is AdditionOperation ao)
-                return ConvertToInstructions(ao, varmap, arguments);
-            if (func is UnitStepFunction usf)
-                return ConvertToInstructions(usf, varmap, arguments);
-            if (func is CosineFunction c)
-                return ConvertToInstructions(c, varmap, arguments);
-            if (func is SineFunction s)
-                return ConvertToInstructions(s, varmap, arguments);
-            if (func is ExponentOperation eo)
-                return ConvertToInstructions(eo, varmap, arguments);
-            if (func is MultiplicationOperation mo)
-                return ConvertToInstructions(mo, varmap, arguments);
-            if (func is NegationOperation no)
-                return ConvertToInstructions(no, varmap, arguments);
-            throw new ArgumentException(
-                $"Unsupported function type: \"{func}\"", nameof(func));
+            switch (func)
+            {
+                case AdditionOperation ao:
+                    return ConvertToInstructions(ao, varmap, arguments);
+                case CosineFunction c:
+                    return ConvertToInstructions(c, varmap, arguments);
+                case ExponentOperation eo:
+                    return ConvertToInstructions(eo, varmap, arguments);
+                case MultiplicationOperation mo:
+                    return ConvertToInstructions(mo, varmap, arguments);
+                case NegationOperation no:
+                    return ConvertToInstructions(no, varmap, arguments);
+                case SineFunction s:
+                    return ConvertToInstructions(s, varmap, arguments);
+                case UnitStepFunction usf:
+                    return ConvertToInstructions(usf, varmap, arguments);
+                default:
+                    throw new ArgumentException(
+                        $"Unsupported function type: \"{func}\"",
+                        nameof(func));
+            }
         }
 
         public IEnumerable<Instruction> ConvertToInstructions(
