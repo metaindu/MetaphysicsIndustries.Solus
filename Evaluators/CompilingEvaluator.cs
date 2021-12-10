@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
@@ -37,6 +38,12 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             Dictionary<string, float> bakedEnv = null;
             _compiler.BakeEnvironment(compiled, env, this, ref bakedEnv);
             return compiled.Method(bakedEnv).ToNumber();
+        }
+
+        public Expression Simplify(Expression expr, SolusEnvironment env)
+        {
+            var cleanup = new CleanUpTransformer();
+            return cleanup.CleanUp(expr.Simplify(env));
         }
 
         public IMathObject Call(Function f, IMathObject[] args,
