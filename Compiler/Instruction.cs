@@ -175,7 +175,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             if (value >= int.MinValue &&
-                value >= int.MaxValue)
+                value <= int.MaxValue)
             {
                 return new Instruction {
                     ArgType = ArgumentType.I4,
