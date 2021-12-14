@@ -180,8 +180,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             VariableAccess expr, VariableToArgumentNumberMapper varmap)
         {
-            return new RawInstructions(
-                Instruction.LoadLocalVariable(varmap[expr.VariableName]));
+            return new LoadLocalIlExpression(varmap[expr.VariableName]);
         }
 
         // compile functions

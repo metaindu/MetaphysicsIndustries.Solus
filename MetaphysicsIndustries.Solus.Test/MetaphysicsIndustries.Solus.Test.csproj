@@ -58,6 +58,8 @@
     <Compile Include="CompilerT\IlExpressionsT\IlExpressionSequenceT\IlExpressionSequenceTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\LoadConstantIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\LoadConstantIlExpressionT\LoadConstantIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\LoadLocalIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\LoadLocalIlExpressionT\LoadLocalIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\MockIlExpression.cs" />
     <Compile Include="CompilerT\IlExpressionsT\MulIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\MulIlExpressionT\MulIlExpressionTest.cs" />

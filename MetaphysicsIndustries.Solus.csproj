@@ -70,6 +70,7 @@
     <Compile Include="Compiler\IlExpressions\IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpressionSequence.cs" />
     <Compile Include="Compiler\IlExpressions\LoadConstantIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\LoadLocalIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\MulIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\NegIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\OrIlExpression.cs" />
