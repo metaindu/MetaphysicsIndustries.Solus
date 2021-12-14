@@ -22,7 +22,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -296,19 +298,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-
-            instructions.Add(Instruction.Dup());
-            instructions.Add(Instruction.LoadConstant(0.0f));
-            instructions.Add(Instruction.CompareGreaterThan());
-            instructions.Add(Instruction.LoadConstant(2));
-            instructions.Add(Instruction.Mul());
-            instructions.Add(Instruction.LoadConstant(1));
-            instructions.Add(Instruction.Sub());
-            instructions.Add(Instruction.ConvertR4());
-            instructions.Add(Instruction.Mul());
-
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Abs),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -317,6 +311,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
+            IlExpression expr = new RawInstructions();
 
             bool first = true;
             foreach (var arg in arguments)
@@ -327,21 +322,26 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     literal.Value is Function f &&
                     f == NegationOperation.Value)
                 {
-                    instructions.AddRange(
-                        ConvertToInstructions(call.Arguments[0], varmap));
-                    instructions.Add(Instruction.Sub());
+                    expr = new SubIlExpression(expr,
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                call.Arguments[0], varmap).ToArray()));
                 }
                 else
                 {
-                    instructions.AddRange(ConvertToInstructions(arg, varmap));
-                    if (!first)
-                    {
-                        instructions.Add(Instruction.Add());
-                    }
+                    if (first)
+                        expr = new RawInstructions(
+                            ConvertToInstructions(arg, varmap).ToArray());
+                    else
+                        expr = new AddIlExpression(expr,
+                            new RawInstructions(
+                                ConvertToInstructions(
+                                    arg, varmap).ToArray()));
                     first = false;
                 }
             }
 
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -350,14 +350,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.Add(Instruction.LoadConstant(1f));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.Div());
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Asin", new [] { typeof(float) })));
+            var expr = new CallIlExpression(
+                typeof(Math).GetMethod(
+                    "Asin", new [] { typeof(float) }),
+                new DivIlExpression(
+                    new LoadConstantIlExpression(1f),
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[0],
+                            varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -366,12 +367,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Acos", new [] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Acos),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -380,14 +380,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.Add(Instruction.LoadConstant(1f));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Atan2",
-                        new[] { typeof(float), typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double, double>(Math.Atan2),
+                new LoadConstantIlExpression(1f),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -396,14 +394,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.Add(Instruction.LoadConstant(1f));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.Div());
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Acos", new [] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Acos),
+                new DivIlExpression(
+                    new LoadConstantIlExpression(1f),
+                    new RawInstructions(
+                        ConvertToInstructions(
+                            arguments[0], varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -412,12 +410,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Asin", new [] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Asin),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -426,15 +423,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Atan2",
-                        new[] { typeof(float), typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double, double>(Math.Atan2),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[1], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -443,12 +438,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Atan", new[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Atan),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -457,14 +451,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.Add(Instruction.And());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new AndIlExpression(
+                    new ConvertI4IlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                arguments[0], varmap).ToArray())),
+                    new ConvertI4IlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                arguments[1], varmap).ToArray()))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -473,14 +470,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.Add(Instruction.Or());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new OrIlExpression(
+                    new ConvertI4IlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                arguments[0], varmap).ToArray())),
+                    new ConvertI4IlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                arguments[1], varmap).ToArray()))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -489,12 +489,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Ceiling", new Type[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Ceiling),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -503,14 +502,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.Add(Instruction.LoadConstant(1f));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Sin", new Type[] { typeof(float) })));
-            instructions.Add(Instruction.Div());
+            var expr = new DivIlExpression(
+                new LoadConstantIlExpression(1f),
+                new CallIlExpression(
+                    new Func<double, double>(Math.Sin),
+                    new RawInstructions(
+                        ConvertToInstructions(
+                            arguments[0], varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -519,12 +518,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Cos", new Type[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Cos),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -533,14 +531,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.Add(Instruction.LoadConstant(1f));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Tan", new Type[] { typeof(float) })));
-            instructions.Add(Instruction.Div());
+            var expr = new DivIlExpression(
+                new LoadConstantIlExpression(1f),
+                new CallIlExpression(
+                    new Func<double, double>(Math.Tan),
+                    new RawInstructions(
+                        ConvertToInstructions(
+                            arguments[0], varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -549,19 +547,24 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.Dup());
-            instructions.Add(Instruction.Mul());
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.Dup());
-            instructions.Add(Instruction.Mul());
-            instructions.Add(Instruction.Add());
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Sqrt", new Type[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Sqrt),
+                new AddIlExpression(
+                    new IlExpressionSequence(
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[0],
+                                varmap).ToArray()),
+                        new RawInstructions(
+                            Instruction.Dup(),
+                            Instruction.Mul())),
+                    new IlExpressionSequence(
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[1],
+                                varmap).ToArray()),
+                        new RawInstructions(
+                            Instruction.Dup(),
+                            Instruction.Mul()))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -570,15 +573,22 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.Dup());
-            instructions.Add(Instruction.Mul());
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.Dup());
-            instructions.Add(Instruction.Mul());
-            instructions.Add(Instruction.Add());
+            var expr = new AddIlExpression(
+                new IlExpressionSequence(
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[0],
+                            varmap).ToArray()),
+                    new RawInstructions(
+                        Instruction.Dup(),
+                        Instruction.Mul())),
+                new IlExpressionSequence(
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[1],
+                            varmap).ToArray()),
+                    new RawInstructions(
+                        Instruction.Dup(),
+                        Instruction.Mul())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -587,11 +597,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.Div());
+            var expr = new DivIlExpression(
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[1], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -601,12 +612,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareEqualIlExpression(
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[0],
+                            varmap).ToArray()),
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[1],
+                            varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -673,12 +687,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Floor", new Type[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Floor),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -688,12 +701,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.CompareGreaterThan());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareGreaterThanIlExpression(
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[0],
+                            varmap).ToArray()),
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[1],
+                            varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -703,14 +719,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareEqualIlExpression(
+                    new LoadConstantIlExpression(0),
+                    new CompareLessThanIlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[0],
+                                varmap).ToArray()),
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[1],
+                                varmap).ToArray()))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -720,12 +739,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareLessThanIlExpression(
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[0],
+                            varmap).ToArray()),
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[1],
+                            varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -735,14 +757,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.CompareGreaterThan());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareEqualIlExpression(
+                    new LoadConstantIlExpression(0),
+                    new CompareGreaterThanIlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[0],
+                                varmap).ToArray()),
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[1],
+                                varmap).ToArray()))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -758,12 +783,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Log10", new[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Log10),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -772,14 +796,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.LoadConstant(2f));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Log",
-                        new[] { typeof(float), typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double, double>(Math.Log),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()),
+                new LoadConstantIlExpression(2f));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -788,15 +810,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Log",
-                        new[] { typeof(float), typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double, double>(Math.Log),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[1], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -805,20 +825,23 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.Add());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareEqualIlExpression(
+                    new LoadConstantIlExpression(0),
+                    new AddIlExpression(
+                        new CompareEqualIlExpression(
+                            new LoadConstantIlExpression(0),
+                            new ConvertI4IlExpression(
+                                new RawInstructions(
+                                    ConvertToInstructions(arguments[0],
+                                        varmap).ToArray()))),
+                        new CompareEqualIlExpression(
+                            new LoadConstantIlExpression(0),
+                            new ConvertI4IlExpression(
+                                new RawInstructions(
+                                    ConvertToInstructions(arguments[1],
+                                        varmap).ToArray()))))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -827,20 +850,23 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.Add());
-            instructions.Add(Instruction.LoadConstant(2));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareLessThanIlExpression(
+                    new AddIlExpression(
+                        new CompareEqualIlExpression(
+                            new LoadConstantIlExpression(0),
+                            new ConvertI4IlExpression(
+                                new RawInstructions(
+                                    ConvertToInstructions(arguments[0],
+                                        varmap).ToArray()))),
+                        new CompareEqualIlExpression(
+                            new LoadConstantIlExpression(0),
+                            new ConvertI4IlExpression(
+                                new RawInstructions(
+                                    ConvertToInstructions(arguments[1],
+                                        varmap).ToArray())))),
+                    new LoadConstantIlExpression(2)));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -877,14 +903,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.ConvertI4());
-            instructions.Add(Instruction.Rem());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new RemIlExpression(
+                    new ConvertI4IlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[0],
+                                varmap).ToArray())),
+                    new ConvertI4IlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(arguments[1],
+                                varmap).ToArray()))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -893,11 +922,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
             VariableToArgumentNumberMapper varmap, List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            foreach (var arg in arguments)
-                instructions.AddRange(
-                    ConvertToInstructions(arg, varmap));
-            for (int i = 1; i < arguments.Count; i++)
-                instructions.Add(Instruction.Mul());
+            IlExpression expr = new RawInstructions(
+                ConvertToInstructions(arguments[0], varmap).ToArray());
+            int i;
+            for (i = 1; i < arguments.Count; i++)
+                expr = new MulIlExpression(
+                    expr,
+                    new RawInstructions(
+                        ConvertToInstructions(arguments[i],
+                            varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -907,12 +941,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Log", new[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Log),
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -921,12 +954,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(new Instruction {
-                ArgType=Instruction.ArgumentType.None,
-                OpCode=OpCodes.Neg
-            });
+            var expr = new NegIlExpression(
+                new RawInstructions(
+                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -936,14 +967,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.LoadConstant(0));
-            instructions.Add(Instruction.CompareEqual());
-            instructions.Add(Instruction.ConvertR4());
+            var expr = new ConvertR4IlExpression(
+                new CompareEqualIlExpression(
+                    new LoadConstantIlExpression(0),
+                    new CompareEqualIlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                arguments[0], varmap).ToArray()),
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                arguments[1], varmap).ToArray()))));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -952,14 +986,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.Add(Instruction.LoadConstant(1f));
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Cos", new Type[] { typeof(float) })));
-            instructions.Add(Instruction.Div());
+            var expr = new DivIlExpression(
+                new LoadConstantIlExpression(1f),
+                new CallIlExpression(
+                    new Func<double, double>(Math.Cos),
+                    new RawInstructions(
+                        ConvertToInstructions(
+                            arguments[0], varmap).ToArray())));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -968,12 +1002,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod(
-                        "Sin", new Type[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Sin),
+                new RawInstructions(
+                    ConvertToInstructions(
+                        arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -989,12 +1023,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(Math).GetMethod(
-                        "Tan", new[] { typeof(float) })));
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Tan),
+                new RawInstructions(
+                    ConvertToInstructions(
+                        arguments[0], varmap).ToArray()));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
@@ -1003,16 +1037,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-
-            instructions.Add(Instruction.LoadConstant(0.0f));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.LoadConstant(1));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.ConvertR4());
-
+            var expr = new ConvertR4IlExpression(
+                new CompareLessThanIlExpression(
+                    new CompareLessThanIlExpression(
+                        new RawInstructions(
+                            ConvertToInstructions(
+                                arguments[0], varmap).ToArray()),
+                        new LoadConstantIlExpression(0f)),
+                    new LoadConstantIlExpression(1)));
+            expr.GetInstructions(instructions);
             return instructions;
         }
 
