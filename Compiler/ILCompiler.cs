@@ -519,23 +519,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             DistFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
+            var x = ConvertToIlExpression(arguments[0], varmap);
+            var y = ConvertToIlExpression(arguments[1], varmap);
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Sqrt),
                 new AddIlExpression(
-                    new IlExpressionSequence(
-                        ConvertToIlExpression(arguments[0],
-                            varmap),
-                        new RawInstructions(
-                            Instruction.Dup(),
-                            Instruction.Mul())),
-                    new IlExpressionSequence(
-                        ConvertToIlExpression(arguments[1],
-                            varmap),
-                        new RawInstructions(
-                            Instruction.Dup(),
-                            Instruction.Mul()))));
-            expr.GetInstructions(instructions);
+                    new MulIlExpression(
+                        x,
+                        new DupIlExpression(x)),
+                    new MulIlExpression(
+                        y,
+                        new DupIlExpression(y))));
             return expr;
         }
 
@@ -543,20 +537,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             DistSqFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
+            var x = ConvertToIlExpression(arguments[0], varmap);
+            var y = ConvertToIlExpression(arguments[1], varmap);
             var expr = new AddIlExpression(
-                new IlExpressionSequence(
-                    ConvertToIlExpression(arguments[0],
-                        varmap),
-                    new RawInstructions(
-                        Instruction.Dup(),
-                        Instruction.Mul())),
-                new IlExpressionSequence(
-                    ConvertToIlExpression(arguments[1],
-                        varmap),
-                    new RawInstructions(
-                        Instruction.Dup(),
-                        Instruction.Mul())));
+                new MulIlExpression(
+                    x,
+                    new DupIlExpression(x)),
+                new MulIlExpression(
+                    y,
+                    new DupIlExpression(y)));
             return expr;
         }
 

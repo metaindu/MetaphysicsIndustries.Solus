@@ -66,6 +66,7 @@
     <Compile Include="Compiler\IlExpressions\ConvertI4IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\ConvertR4IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\DivIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\DupIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpressionSequence.cs" />
     <Compile Include="Compiler\IlExpressions\LoadConstantIlExpression.cs" />
