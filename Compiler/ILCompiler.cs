@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Evaluators;
@@ -36,8 +35,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public CompiledExpression Compile(Expression expr)
         {
             var varmap = new VariableToArgumentNumberMapper();
-            var instructions = ConvertToInstructions(expr, varmap);
+            var ilexpr = ConvertToIlExpression(expr, varmap);
             var args = varmap.GetVariableNamesInIndexOrder();
+            var instructions = new List<Instruction>();
+            ilexpr.GetInstructions(instructions);
 
             DynamicMethod method =
                 new DynamicMethod(
@@ -141,151 +142,147 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         // compile expressions
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             Expression expr, VariableToArgumentNumberMapper varmap)
         {
             if (expr is FunctionCall call)
-                return ConvertToInstructions(call, varmap);
+                return ConvertToIlExpression(call, varmap);
             if (expr is Literal lit)
-                return ConvertToInstructions(lit, varmap);
+                return ConvertToIlExpression(lit, varmap);
             if (expr is VariableAccess va)
-                return ConvertToInstructions(va, varmap);
+                return ConvertToIlExpression(va, varmap);
             throw new ArgumentException(
                 $"Unsupported expresssion type: \"{expr}\"", nameof(expr));
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
              FunctionCall expr, VariableToArgumentNumberMapper varmap)
         {
             if (expr.Function is Literal literal &&
                 literal.Value is Function f)
-                return ConvertToInstructions(f, varmap, expr.Arguments);
+                return ConvertToIlExpression(f, varmap, expr.Arguments);
+
             // TODO:
             throw new NotImplementedException(
                 "What should be done? Should the expression be " +
                 "evaluated? Compiled?");
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             Literal expr, VariableToArgumentNumberMapper varmap)
         {
             if (expr.Value.IsIsScalar(null))
-                return new []
-                {
-                    Instruction.LoadConstant(expr.Value.ToFloat())
-                };
+                return new LoadConstantIlExpression(expr.Value.ToFloat());
             throw new NotImplementedException(
                 "currently only implemented for numbers.");
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             VariableAccess expr, VariableToArgumentNumberMapper varmap)
         {
-            return new []
-            {
-                Instruction.LoadLocalVariable(varmap[expr.VariableName])
-            };
+            return new RawInstructions(
+                Instruction.LoadLocalVariable(varmap[expr.VariableName]));
         }
 
         // compile functions
 
-        public IEnumerable<Instruction> ConvertToInstructions(Function func,
+        public IlExpression ConvertToIlExpression(Function func,
             VariableToArgumentNumberMapper varmap, List<Expression> arguments)
         {
             switch (func)
             {
                 case AbsoluteValueFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case AdditionOperation ao:
-                    return ConvertToInstructions(ao, varmap, arguments);
+                    return ConvertToIlExpression(ao, varmap, arguments);
                 case ArccosecantFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case ArccosineFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case ArccotangentFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case ArcsecantFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case ArcsineFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case Arctangent2Function ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case ArctangentFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case BitwiseAndOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case BitwiseOrOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case CeilingFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case CosecantFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case CosineFunction c:
-                    return ConvertToInstructions(c, varmap, arguments);
+                    return ConvertToIlExpression(c, varmap, arguments);
                 case CotangentFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case DistFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case DistSqFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case DivisionOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case EqualComparisonOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case ExponentOperation eo:
-                    return ConvertToInstructions(eo, varmap, arguments);
+                    return ConvertToIlExpression(eo, varmap, arguments);
                 case FactorialFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case FloorFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case GreaterThanComparisonOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case GreaterThanOrEqualComparisonOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case LessThanComparisonOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case LessThanOrEqualComparisonOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case LoadImageFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case Log10Function ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case Log2Function ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case LogarithmFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case LogicalAndOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case LogicalOrOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case MaximumFiniteFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case MaximumFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case MinimumFiniteFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case MinimumFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case ModularDivision ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case MultiplicationOperation mo:
-                    return ConvertToInstructions(mo, varmap, arguments);
+                    return ConvertToIlExpression(mo, varmap, arguments);
                 case NaturalLogarithmFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case NegationOperation no:
-                    return ConvertToInstructions(no, varmap, arguments);
+                    return ConvertToIlExpression(no, varmap, arguments);
                 case NotEqualComparisonOperation ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case SecantFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case SineFunction s:
-                    return ConvertToInstructions(s, varmap, arguments);
+                    return ConvertToIlExpression(s, varmap, arguments);
                 case SizeFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case TangentFunction ff:
-                    return ConvertToInstructions(ff, varmap, arguments);
+                    return ConvertToIlExpression(ff, varmap, arguments);
                 case UnitStepFunction usf:
-                    return ConvertToInstructions(usf, varmap, arguments);
+                    return ConvertToIlExpression(usf, varmap, arguments);
                 default:
                     throw new ArgumentException(
                         $"Unsupported function type: \"{func}\"",
@@ -293,24 +290,20 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             AbsoluteValueFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            var expr = new CallIlExpression(
+            return new CallIlExpression(
                 new Func<double, double>(Math.Abs),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
-            expr.GetInstructions(instructions);
-            return instructions;
+                ConvertToIlExpression(arguments[0], varmap));
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             AdditionOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             IlExpression expr = new RawInstructions();
 
             bool first = true;
@@ -323,29 +316,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     f == NegationOperation.Value)
                 {
                     expr = new SubIlExpression(expr,
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                call.Arguments[0], varmap).ToArray()));
+                            ConvertToIlExpression(
+                                call.Arguments[0], varmap));
                 }
                 else
                 {
                     if (first)
-                        expr = new RawInstructions(
-                            ConvertToInstructions(arg, varmap).ToArray());
+                        expr = ConvertToIlExpression(arg, varmap);
                     else
                         expr = new AddIlExpression(expr,
-                            new RawInstructions(
-                                ConvertToInstructions(
-                                    arg, varmap).ToArray()));
+                                ConvertToIlExpression(
+                                    arg, varmap));
                     first = false;
                 }
             }
 
-            expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ArccosecantFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -355,27 +344,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     "Asin", new [] { typeof(float) }),
                 new DivIlExpression(
                     new LoadConstantIlExpression(1f),
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[0],
-                            varmap).ToArray())));
+                        ConvertToIlExpression(arguments[0],
+                            varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ArccosineFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Acos),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ArccotangentFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -383,13 +370,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Atan2),
                 new LoadConstantIlExpression(1f),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ArcsecantFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -398,55 +384,50 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new Func<double, double>(Math.Acos),
                 new DivIlExpression(
                     new LoadConstantIlExpression(1f),
-                    new RawInstructions(
-                        ConvertToInstructions(
-                            arguments[0], varmap).ToArray())));
+                        ConvertToIlExpression(
+                            arguments[0], varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ArcsineFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Asin),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             Arctangent2Function func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Atan2),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[1], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap),
+                    ConvertToIlExpression(arguments[1], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ArctangentFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Atan),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             BitwiseAndOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -454,18 +435,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new ConvertR4IlExpression(
                 new AndIlExpression(
                     new ConvertI4IlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                arguments[0], varmap).ToArray())),
+                            ConvertToIlExpression(
+                                arguments[0], varmap)),
                     new ConvertI4IlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                arguments[1], varmap).ToArray()))));
+                            ConvertToIlExpression(
+                                arguments[1], varmap))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             BitwiseOrOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -473,31 +452,28 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new ConvertR4IlExpression(
                 new OrIlExpression(
                     new ConvertI4IlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                arguments[0], varmap).ToArray())),
+                            ConvertToIlExpression(
+                                arguments[0], varmap)),
                     new ConvertI4IlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                arguments[1], varmap).ToArray()))));
+                            ConvertToIlExpression(
+                                arguments[1], varmap))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             CeilingFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Ceiling),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             CosecantFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -506,27 +482,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new LoadConstantIlExpression(1f),
                 new CallIlExpression(
                     new Func<double, double>(Math.Sin),
-                    new RawInstructions(
-                        ConvertToInstructions(
-                            arguments[0], varmap).ToArray())));
+                        ConvertToIlExpression(
+                            arguments[0], varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             CosineFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Cos),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             CotangentFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -535,14 +509,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new LoadConstantIlExpression(1f),
                 new CallIlExpression(
                     new Func<double, double>(Math.Tan),
-                    new RawInstructions(
-                        ConvertToInstructions(
-                            arguments[0], varmap).ToArray())));
+                        ConvertToIlExpression(
+                            arguments[0], varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             DistFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -551,62 +524,55 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new Func<double, double>(Math.Sqrt),
                 new AddIlExpression(
                     new IlExpressionSequence(
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[0],
-                                varmap).ToArray()),
+                        ConvertToIlExpression(arguments[0],
+                            varmap),
                         new RawInstructions(
                             Instruction.Dup(),
                             Instruction.Mul())),
                     new IlExpressionSequence(
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[1],
-                                varmap).ToArray()),
+                        ConvertToIlExpression(arguments[1],
+                            varmap),
                         new RawInstructions(
                             Instruction.Dup(),
                             Instruction.Mul()))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             DistSqFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new AddIlExpression(
                 new IlExpressionSequence(
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[0],
-                            varmap).ToArray()),
+                    ConvertToIlExpression(arguments[0],
+                        varmap),
                     new RawInstructions(
                         Instruction.Dup(),
                         Instruction.Mul())),
                 new IlExpressionSequence(
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[1],
-                            varmap).ToArray()),
+                    ConvertToIlExpression(arguments[1],
+                        varmap),
                     new RawInstructions(
                         Instruction.Dup(),
                         Instruction.Mul())));
-            expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             DivisionOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new DivIlExpression(
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[1], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap),
+                    ConvertToIlExpression(arguments[1], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             EqualComparisonOperation func,
             VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
@@ -614,88 +580,44 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareEqualIlExpression(
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[0],
-                            varmap).ToArray()),
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[1],
-                            varmap).ToArray())));
+                        ConvertToIlExpression(arguments[0],
+                            varmap),
+                        ConvertToIlExpression(arguments[1],
+                            varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ExponentOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            List<Instruction> instructions = new List<Instruction>();
-
-            instructions.AddRange(
-                ConvertToInstructions(arguments[0], varmap));
-
-            if (arguments[1] is Literal lit)
-            {
-                var value = lit.Value.ToFloat();
-
-                if (value == 1f)
-                {
-                    return instructions;
-                }
-                if (value == value.Round() &&
-                    value > 1 &&
-                    value < 16)
-                {
-                    int i;
-                    for (i = 1; i < value; i++)
-                    {
-                        instructions.Add(Instruction.Dup());
-                    }
-                    for (i = 1; i < value; i++)
-                    {
-                        instructions.Add(Instruction.Mul());
-                    }
-                    return instructions;
-                }
-                if (value == 1 / 2.0f)
-                {
-                    instructions.Add(
-                        Instruction.Call(
-                            typeof(System.Math).GetMethod(
-                                "Sqrt", new Type[] { typeof(float) })));
-
-                    return instructions;
-                }
-            }
-
-            instructions.AddRange(
-                ConvertToInstructions(arguments[1], varmap));
-            instructions.Add(
-                Instruction.Call(
-                    typeof(System.Math).GetMethod("Pow")));
-            return instructions;
+            return new CallIlExpression(
+                new Func<double, double, double>(Math.Pow),
+                ConvertToIlExpression(arguments[0], varmap),
+                ConvertToIlExpression(arguments[1], varmap));
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             FactorialFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             FloorFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Floor),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             GreaterThanComparisonOperation func,
             VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
@@ -703,17 +625,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareGreaterThanIlExpression(
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[0],
-                            varmap).ToArray()),
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[1],
-                            varmap).ToArray())));
+                        ConvertToIlExpression(arguments[0],
+                            varmap),
+                        ConvertToIlExpression(arguments[1],
+                            varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             GreaterThanOrEqualComparisonOperation func,
             VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
@@ -723,17 +643,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CompareEqualIlExpression(
                     new LoadConstantIlExpression(0),
                     new CompareLessThanIlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[0],
-                                varmap).ToArray()),
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[1],
-                                varmap).ToArray()))));
+                            ConvertToIlExpression(arguments[0],
+                                varmap),
+                            ConvertToIlExpression(arguments[1],
+                                varmap))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             LessThanComparisonOperation func,
             VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
@@ -741,17 +659,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareLessThanIlExpression(
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[0],
-                            varmap).ToArray()),
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[1],
-                            varmap).ToArray())));
+                        ConvertToIlExpression(arguments[0],
+                            varmap),
+                        ConvertToIlExpression(arguments[1],
+                            varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             LessThanOrEqualComparisonOperation func,
             VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
@@ -761,66 +677,60 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CompareEqualIlExpression(
                     new LoadConstantIlExpression(0),
                     new CompareGreaterThanIlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[0],
-                                varmap).ToArray()),
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[1],
-                                varmap).ToArray()))));
+                            ConvertToIlExpression(arguments[0],
+                                varmap),
+                            ConvertToIlExpression(arguments[1],
+                                varmap))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             LoadImageFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             Log10Function func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Log10),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             Log2Function func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Log),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()),
+                    ConvertToIlExpression(arguments[0], varmap),
                 new LoadConstantIlExpression(2f));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             LogarithmFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Log),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[1], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap),
+                    ConvertToIlExpression(arguments[1], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             LogicalAndOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -832,20 +742,18 @@ namespace MetaphysicsIndustries.Solus.Compiler
                         new CompareEqualIlExpression(
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
-                                new RawInstructions(
-                                    ConvertToInstructions(arguments[0],
-                                        varmap).ToArray()))),
+                                    ConvertToIlExpression(arguments[0],
+                                        varmap))),
                         new CompareEqualIlExpression(
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
-                                new RawInstructions(
-                                    ConvertToInstructions(arguments[1],
-                                        varmap).ToArray()))))));
+                                    ConvertToIlExpression(arguments[1],
+                                        varmap))))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             LogicalOrOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -856,49 +764,47 @@ namespace MetaphysicsIndustries.Solus.Compiler
                         new CompareEqualIlExpression(
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
-                                new RawInstructions(
-                                    ConvertToInstructions(arguments[0],
-                                        varmap).ToArray()))),
+                                    ConvertToIlExpression(arguments[0],
+                                        varmap))),
                         new CompareEqualIlExpression(
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
-                                new RawInstructions(
-                                    ConvertToInstructions(arguments[1],
-                                        varmap).ToArray())))),
+                                    ConvertToIlExpression(arguments[1],
+                                        varmap)))),
                     new LoadConstantIlExpression(2)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             MaximumFiniteFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             MaximumFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             MinimumFiniteFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             MinimumFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             ModularDivision func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -906,36 +812,32 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new ConvertR4IlExpression(
                 new RemIlExpression(
                     new ConvertI4IlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[0],
-                                varmap).ToArray())),
+                            ConvertToIlExpression(arguments[0],
+                                varmap)),
                     new ConvertI4IlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(arguments[1],
-                                varmap).ToArray()))));
+                            ConvertToIlExpression(arguments[1],
+                                varmap))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             MultiplicationOperation func,
             VariableToArgumentNumberMapper varmap, List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-            IlExpression expr = new RawInstructions(
-                ConvertToInstructions(arguments[0], varmap).ToArray());
+            var expr = ConvertToIlExpression(arguments[0], varmap);
             int i;
             for (i = 1; i < arguments.Count; i++)
                 expr = new MulIlExpression(
                     expr,
-                    new RawInstructions(
-                        ConvertToInstructions(arguments[i],
-                            varmap).ToArray()));
+                        ConvertToIlExpression(arguments[i],
+                            varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             NaturalLogarithmFunction func,
             VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
@@ -943,25 +845,23 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Log),
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             NegationOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
             var expr = new NegIlExpression(
-                new RawInstructions(
-                    ConvertToInstructions(arguments[0], varmap).ToArray()));
+                    ConvertToIlExpression(arguments[0], varmap));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             NotEqualComparisonOperation func,
             VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
@@ -971,17 +871,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CompareEqualIlExpression(
                     new LoadConstantIlExpression(0),
                     new CompareEqualIlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                arguments[0], varmap).ToArray()),
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                arguments[1], varmap).ToArray()))));
+                            ConvertToIlExpression(
+                                arguments[0], varmap),
+                            ConvertToIlExpression(
+                                arguments[1], varmap))));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             SecantFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
@@ -990,66 +888,56 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new LoadConstantIlExpression(1f),
                 new CallIlExpression(
                     new Func<double, double>(Math.Cos),
-                    new RawInstructions(
-                        ConvertToInstructions(
-                            arguments[0], varmap).ToArray())));
+                        ConvertToIlExpression(
+                            arguments[0], varmap)));
             expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             SineFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Sin),
-                new RawInstructions(
-                    ConvertToInstructions(
-                        arguments[0], varmap).ToArray()));
-            expr.GetInstructions(instructions);
-            return instructions;
+                ConvertToIlExpression(
+                    arguments[0], varmap));
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             SizeFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             TangentFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Tan),
-                new RawInstructions(
-                    ConvertToInstructions(
-                        arguments[0], varmap).ToArray()));
-            expr.GetInstructions(instructions);
-            return instructions;
+                ConvertToIlExpression(
+                    arguments[0], varmap));
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             UnitStepFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareLessThanIlExpression(
                     new CompareLessThanIlExpression(
-                        new RawInstructions(
-                            ConvertToInstructions(
-                                arguments[0], varmap).ToArray()),
+                        ConvertToIlExpression(
+                            arguments[0], varmap),
                         new LoadConstantIlExpression(0f)),
                     new LoadConstantIlExpression(1)));
-            expr.GetInstructions(instructions);
-            return instructions;
+            return expr;
         }
 
-        public IEnumerable<Instruction> ConvertToInstructions(
+        public IlExpression ConvertToIlExpression(
             UserDefinedFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
