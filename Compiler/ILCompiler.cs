@@ -775,7 +775,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             MaximumFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            throw new NotImplementedException();
+            var expr = ConvertToIlExpression(arguments[0], varmap);
+            int i;
+            for (i = 1; i < arguments.Count; i++)
+            {
+                expr = new CallIlExpression(
+                    new Func<float, float, float>(Math.Max),
+                    expr,
+                    ConvertToIlExpression(arguments[i], varmap));
+            }
+
+            return expr;
         }
 
         public IlExpression ConvertToIlExpression(
@@ -789,7 +799,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             MinimumFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            throw new NotImplementedException();
+            var expr = ConvertToIlExpression(arguments[0], varmap);
+            int i;
+            for (i = 1; i < arguments.Count; i++)
+            {
+                expr = new CallIlExpression(
+                    new Func<float, float, float>(Math.Min),
+                    expr,
+                    ConvertToIlExpression(arguments[i], varmap));
+            }
+
+            return expr;
         }
 
         public IlExpression ConvertToIlExpression(
