@@ -35,9 +35,9 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         public Instruction Instruction { get; }
 
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
-            instructions.Add(Instruction);
+            nm.Instructions.Add(Instruction);
         }
     }
 }

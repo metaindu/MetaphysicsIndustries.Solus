@@ -38,14 +38,14 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var i1 = Instruction.LoadConstant(1);
             var expr = new DupIlExpression(
                 new MockIlExpression(il => il.Add(i1)));
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, instructions.Count);
-            Assert.AreEqual(Instruction.Dup(), instructions[0]);
+            Assert.AreEqual(1, nm.Instructions.Count);
+            Assert.AreEqual(Instruction.Dup(), nm.Instructions[0]);
         }
     }
 }

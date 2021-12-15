@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var ilexpr = ConvertToIlExpression(expr, nm);
             var args = nm.GetVariableNamesInIndexOrder();
             var instructions = new List<Instruction>();
-            ilexpr.GetInstructions(instructions);
+            ilexpr.GetInstructions(nm);
 
             DynamicMethod method =
                 new DynamicMethod(
@@ -342,7 +342,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new DivIlExpression(
                     new LoadConstantIlExpression(1f),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -354,7 +354,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Acos),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -367,7 +367,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new Func<double, double, double>(Math.Atan2),
                 new LoadConstantIlExpression(1f),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -381,7 +381,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new DivIlExpression(
                     new LoadConstantIlExpression(1f),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -393,7 +393,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Asin),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -406,7 +406,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new Func<double, double, double>(Math.Atan2),
                 ConvertToIlExpression(arguments[0], nm),
                 ConvertToIlExpression(arguments[1], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -418,7 +418,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Atan),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -433,7 +433,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                         ConvertToIlExpression(arguments[0], nm)),
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -448,7 +448,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                         ConvertToIlExpression(arguments[0], nm)),
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -460,7 +460,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Ceiling),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -474,7 +474,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CallIlExpression(
                     new Func<double, double>(Math.Sin),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -486,7 +486,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Cos),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -500,7 +500,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CallIlExpression(
                     new Func<double, double>(Math.Tan),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -546,7 +546,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new DivIlExpression(
                 ConvertToIlExpression(arguments[0], nm),
                 ConvertToIlExpression(arguments[1], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -560,7 +560,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CompareEqualIlExpression(
                     ConvertToIlExpression(arguments[0], nm),
                     ConvertToIlExpression(arguments[1], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -589,7 +589,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Floor),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -603,7 +603,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CompareGreaterThanIlExpression(
                     ConvertToIlExpression(arguments[0], nm),
                     ConvertToIlExpression(arguments[1], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -619,7 +619,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     new CompareLessThanIlExpression(
                         ConvertToIlExpression(arguments[0], nm),
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -633,7 +633,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CompareLessThanIlExpression(
                     ConvertToIlExpression(arguments[0], nm),
                     ConvertToIlExpression(arguments[1], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -649,7 +649,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     new CompareGreaterThanIlExpression(
                         ConvertToIlExpression(arguments[0], nm),
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -668,7 +668,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Log10),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -681,7 +681,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new Func<double, double, double>(Math.Log),
                 ConvertToIlExpression(arguments[0], nm),
                 new LoadConstantIlExpression(2f));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -694,7 +694,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new Func<double, double, double>(Math.Log),
                 ConvertToIlExpression(arguments[0], nm),
                 ConvertToIlExpression(arguments[1], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -715,7 +715,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
                                 ConvertToIlExpression(arguments[1], nm))))));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -736,7 +736,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             new ConvertI4IlExpression(
                                 ConvertToIlExpression(arguments[1], nm)))),
                     new LoadConstantIlExpression(2)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -799,7 +799,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                         ConvertToIlExpression(arguments[0], nm)),
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -814,7 +814,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 expr = new MulIlExpression(
                     expr,
                     ConvertToIlExpression(arguments[i], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -827,7 +827,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Log),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -838,7 +838,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var instructions = new List<Instruction>();
             var expr = new NegIlExpression(
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -854,7 +854,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     new CompareEqualIlExpression(
                         ConvertToIlExpression(arguments[0], nm),
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -868,7 +868,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CallIlExpression(
                     new Func<double, double>(Math.Cos),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             return expr;
         }
 

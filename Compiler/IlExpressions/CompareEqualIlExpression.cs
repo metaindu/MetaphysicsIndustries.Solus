@@ -37,11 +37,11 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public IlExpression Left { get; }
         public IlExpression Right { get; }
 
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
-            Left.GetInstructions(instructions);
-            Right.GetInstructions(instructions);
-            instructions.Add(Instruction.CompareEqual());
+            Left.GetInstructions(nm);
+            Right.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.CompareEqual());
         }
     }
 }

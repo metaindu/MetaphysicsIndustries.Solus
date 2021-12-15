@@ -44,17 +44,17 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var method = new Action<int, float, bool>(DummyMethod);
             var args = new IlExpression[0];
             var expr = new CallIlExpression(method, args);
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, instructions.Count);
+            Assert.AreEqual(1, nm.Instructions.Count);
             Assert.AreEqual(Instruction.ArgumentType.Method,
-                instructions[0].ArgType);
-            Assert.AreEqual(method.Method, instructions[0].MethodArg);
-            Assert.AreEqual(OpCodes.Call, instructions[0].OpCode);
+                nm.Instructions[0].ArgType);
+            Assert.AreEqual(method.Method, nm.Instructions[0].MethodArg);
+            Assert.AreEqual(OpCodes.Call, nm.Instructions[0].OpCode);
         }
 
         [Test]
@@ -69,20 +69,20 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 new LoadConstantIlExpression(3)
             };
             var expr = new CallIlExpression(method, args);
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(4, instructions.Count);
-            Assert.AreEqual(Instruction.LoadConstant(1), instructions[0]);
-            Assert.AreEqual(Instruction.LoadConstant(2), instructions[1]);
-            Assert.AreEqual(Instruction.LoadConstant(3), instructions[2]);
+            Assert.AreEqual(4, nm.Instructions.Count);
+            Assert.AreEqual(Instruction.LoadConstant(1), nm.Instructions[0]);
+            Assert.AreEqual(Instruction.LoadConstant(2), nm.Instructions[1]);
+            Assert.AreEqual(Instruction.LoadConstant(3), nm.Instructions[2]);
             Assert.AreEqual(Instruction.ArgumentType.Method,
-                instructions[3].ArgType);
-            Assert.AreEqual(method.Method, instructions[3].MethodArg);
-            Assert.AreEqual(OpCodes.Call, instructions[3].OpCode);
+                nm.Instructions[3].ArgType);
+            Assert.AreEqual(method.Method, nm.Instructions[3].MethodArg);
+            Assert.AreEqual(OpCodes.Call, nm.Instructions[3].OpCode);
         }
     }
 }

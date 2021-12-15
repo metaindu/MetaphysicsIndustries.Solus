@@ -11,9 +11,9 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         public ushort VarNumber { get; }
         
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
-            instructions.Add(Instruction.LoadLocalVariable(VarNumber));
+            nm.Instructions.Add(Instruction.LoadLocalVariable(VarNumber));
         }
     }
 }

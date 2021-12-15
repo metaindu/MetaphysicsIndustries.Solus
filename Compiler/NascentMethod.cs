@@ -57,6 +57,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
         {
             _dictionary.Clear();
         }
+
+        public readonly List<Instruction> Instructions =
+            new List<Instruction>();
     }
 }
 

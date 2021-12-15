@@ -37,15 +37,15 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.NegIlExpress
             var i1 = Instruction.LoadConstant(1);
             var expr = new NegIlExpression(
                 new MockIlExpression(il => il.Add(i1)));
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(2, instructions.Count);
-            Assert.AreEqual(i1, instructions[0]);
-            Assert.AreEqual(Instruction.Neg(), instructions[1]);
+            Assert.AreEqual(2, nm.Instructions.Count);
+            Assert.AreEqual(i1, nm.Instructions[0]);
+            Assert.AreEqual(Instruction.Neg(), nm.Instructions[1]);
         }
     }
 }

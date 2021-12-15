@@ -26,6 +26,6 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public abstract class IlExpression
     {
-        public abstract void GetInstructions(IList<Instruction> instructions);
+        public abstract void GetInstructions(NascentMethod nm);
     }
 }

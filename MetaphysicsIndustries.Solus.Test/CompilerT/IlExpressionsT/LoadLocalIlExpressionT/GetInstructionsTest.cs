@@ -48,17 +48,17 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.LoadLocalIlE
         {
             // given
             var expr = new LoadLocalIlExpression(arg);
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             var opcode = OpCodeValues[arg];
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, instructions.Count);
+            Assert.AreEqual(1, nm.Instructions.Count);
             Assert.AreEqual(Instruction.LoadLocalVariable(arg),
-                instructions[0]);
-            Assert.AreEqual(opcode, instructions[0].OpCode);
+                nm.Instructions[0]);
+            Assert.AreEqual(opcode, nm.Instructions[0].OpCode);
         }
 
         [Test]
@@ -68,16 +68,16 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.LoadLocalIlE
         {
             // given
             var expr = new LoadLocalIlExpression(arg);
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, instructions.Count);
+            Assert.AreEqual(1, nm.Instructions.Count);
             Assert.AreEqual(Instruction.LoadLocalVariable(arg),
-                instructions[0]);
-            Assert.AreEqual(OpCodes.Ldloc_S, instructions[0].OpCode);
+                nm.Instructions[0]);
+            Assert.AreEqual(OpCodes.Ldloc_S, nm.Instructions[0].OpCode);
         }
 
         [Test]
@@ -87,16 +87,16 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.LoadLocalIlE
         {
             // given
             var expr = new LoadLocalIlExpression(arg);
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, instructions.Count);
+            Assert.AreEqual(1, nm.Instructions.Count);
             Assert.AreEqual(Instruction.LoadLocalVariable(arg),
-                instructions[0]);
-            Assert.AreEqual(OpCodes.Ldloc, instructions[0].OpCode);
+                nm.Instructions[0]);
+            Assert.AreEqual(OpCodes.Ldloc, nm.Instructions[0].OpCode);
         }
     }
 }
