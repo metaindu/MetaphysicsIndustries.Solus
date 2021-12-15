@@ -21,7 +21,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions

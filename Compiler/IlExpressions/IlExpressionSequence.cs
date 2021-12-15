@@ -20,8 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
-
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class IlExpressionSequence : IlExpression
