@@ -37,7 +37,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var nm = new NascentMethod();
             var ilexpr = ConvertToIlExpression(expr, nm);
             var args = nm.GetVariableNamesInIndexOrder();
-            var instructions = new List<Instruction>();
             ilexpr.GetInstructions(nm);
 
             DynamicMethod method =
@@ -79,7 +78,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 instruction.Emit(gen);
             }
 
-            foreach (var instruction in instructions)
+            foreach (var instruction in nm.Instructions)
             {
                 instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
