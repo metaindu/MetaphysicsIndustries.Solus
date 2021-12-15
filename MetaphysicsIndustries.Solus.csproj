@@ -78,7 +78,7 @@
     <Compile Include="Compiler\IlExpressions\RemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\SubIlExpression.cs" />
     <Compile Include="Compiler\Instruction.cs" />
-    <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
+    <Compile Include="Compiler\NascentMethod.cs" />
     <Compile Include="Evaluators\AggregateOp.cs" />
     <Compile Include="Evaluators\BasicEvaluator.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Expressions.cs" />

@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class VariableToArgumentNumberMapper
+    public class NascentMethod
     {
         readonly Dictionary<string, byte> _dictionary = new Dictionary<string, byte>();
 
