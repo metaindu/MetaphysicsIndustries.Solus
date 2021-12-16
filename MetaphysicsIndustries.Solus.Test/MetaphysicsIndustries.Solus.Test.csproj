@@ -38,6 +38,12 @@
     <Compile Include="CompilerT\IlExpressionsT\AddIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\AndIlExpressionT\AndIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\AndIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\BranchIlExpressionT\BranchIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\BranchIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\BrFalseIlExpressionT\BrFalseIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\BrFalseIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\BrTrueIlExpressionT\BrTrueIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\BrTrueIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\CallIlExpressionT\CallIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\CallIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\CompareEqualIlExpressionT\CompareEqualIlExpressionTest.cs" />
@@ -65,8 +71,12 @@
     <Compile Include="CompilerT\IlExpressionsT\MulIlExpressionT\MulIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\NegIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\NegIlExpressionT\NegIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\NopIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\NopIlExpressionT\NopIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\OrIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\OrIlExpressionT\OrIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\PopIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\PopIlExpressionT\PopIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\RawInstructionsT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\RawInstructionsT\RawInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\RemIlExpressionT\GetInstructionsTest.cs" />
