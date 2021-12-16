@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public IlExpression Dividend { get; }
         public IlExpression Divisor { get; }
 
-        public override void GetInstructions(NascentMethod nm)
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
             Dividend.GetInstructions(nm);
             Divisor.GetInstructions(nm);

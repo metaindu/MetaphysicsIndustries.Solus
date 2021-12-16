@@ -20,10 +20,16 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public abstract class IlExpression
     {
-        public abstract void GetInstructions(NascentMethod nm);
+        public void GetInstructions(NascentMethod nm)
+        {
+            GetInstructionsInternal(nm);
+        }
+        protected abstract void GetInstructionsInternal(NascentMethod nm);
     }
 }

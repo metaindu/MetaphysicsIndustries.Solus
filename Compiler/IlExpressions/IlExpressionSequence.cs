@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         public IlExpression[] Expressions;
 
-        public override void GetInstructions(NascentMethod nm)
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
             foreach (var expr in Expressions)
                 expr.GetInstructions(nm);

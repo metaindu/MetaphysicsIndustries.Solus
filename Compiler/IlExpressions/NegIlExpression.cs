@@ -34,7 +34,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         public IlExpression Argument { get; }
 
-        public override void GetInstructions(NascentMethod nm)
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
             Argument.GetInstructions(nm);
             nm.Instructions.Add(Instruction.Neg());

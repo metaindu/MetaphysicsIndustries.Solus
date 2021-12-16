@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         public Instruction Instruction { get; }
 
-        public override void GetInstructions(NascentMethod nm)
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
             nm.Instructions.Add(Instruction);
         }
