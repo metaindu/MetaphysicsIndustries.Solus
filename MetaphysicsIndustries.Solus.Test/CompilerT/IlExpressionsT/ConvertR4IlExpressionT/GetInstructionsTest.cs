@@ -20,12 +20,12 @@
  *
  */
 
-using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.ConvertR4IlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    ConvertR4IlExpressionT
 {
     [TestFixture]
     public class GetInstructionsTest

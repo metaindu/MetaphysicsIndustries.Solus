@@ -24,7 +24,8 @@ using System;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.DupIlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    DupIlExpressionT
 {
     [TestFixture]
     public class DupIlExpressionTest
@@ -43,7 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.DupIlExpress
         }
 
         [Test]
-        public void ConstructorNullTargettThrows()
+        public void ConstructorNullTargetThrows()
         {
             // expect
             var ex = Assert.Throws<ArgumentNullException>(

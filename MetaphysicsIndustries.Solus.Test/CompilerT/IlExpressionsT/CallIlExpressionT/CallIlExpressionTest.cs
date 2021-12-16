@@ -25,7 +25,8 @@ using System.Reflection;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.CallIlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    CallIlExpressionT
 {
     [TestFixture]
     public class CallIlExpressionTest
