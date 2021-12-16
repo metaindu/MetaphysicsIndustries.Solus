@@ -776,7 +776,52 @@ namespace MetaphysicsIndustries.Solus.Compiler
             MinimumFiniteFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            throw new NotImplementedException();
+            var exprs = new List<IlExpression>(8 * arguments.Count + 7);
+            exprs.Add(new LoadConstantIlExpression(float.PositiveInfinity));
+            var nop = new NopIlExpression();
+            IlExpression first = nop;
+            for (int i = arguments.Count - 1; i >= 0; i--)
+            {
+                var calcArg = ConvertToIlExpression(arguments[i], nm);
+                var call1 = new CallIlExpression(
+                    new Func<float, bool>(float.IsInfinity),
+                    new DupIlExpression(calcArg));
+                var call2 = new CallIlExpression(
+                    new Func<float, bool>(float.IsNaN),
+                    new DupIlExpression(calcArg));
+                var pop = new PopIlExpression();
+                var br1 = new BrTrueIlExpression(pop);
+                var br2 = new BrTrueIlExpression(pop);
+                var call3 = new CallIlExpression(
+                    new Func<float, float, float>(Math.Min));
+                var br3 = new BranchIlExpression(first);
+
+                exprs.Insert(1, calcArg);
+                exprs.Insert(2, call1);
+                exprs.Insert(3, br1);
+                exprs.Insert(4, call2);
+                exprs.Insert(5, br2);
+                exprs.Insert(6, call3);
+                exprs.Insert(7, br3);
+                exprs.Insert(8, pop);
+
+                first = calcArg;
+            }
+
+            exprs.Add(nop);
+
+            exprs.Add(
+                new CallIlExpression(
+                    new Func<float, bool>(float.IsPositiveInfinity),
+                    new DupIlExpression(nop)));
+            var nop2 = new NopIlExpression();
+            exprs.Add(new BrFalseIlExpression(nop2));
+            exprs.Add(new PopIlExpression());
+            exprs.Add(new LoadConstantIlExpression(float.NaN));
+            exprs.Add(nop2);
+
+            var seq = new IlExpressionSequence(exprs.ToArray());
+            return seq;
         }
 
         public IlExpression ConvertToIlExpression(
