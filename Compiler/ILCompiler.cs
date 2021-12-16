@@ -78,10 +78,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 instruction.Emit(gen);
             }
 
+            Dictionary<IlLabel, Label> labels =
+                new Dictionary<IlLabel, Label>();
+
+            foreach (var ilLabel in nm.GetAllLabels())
+                labels[ilLabel] = gen.DefineLabel();
+
+            int i = 0;
             foreach (var instruction in nm.Instructions)
             {
+                var ilLabels = nm.GetLabelsByLocation(i);
+                if (ilLabels != null)
+                    foreach (var ilLabel in ilLabels)
+                        gen.MarkLabel(labels[ilLabel]);
                 instructionOffsets.Add(gen.ILOffset);
-                instruction.Emit(gen);
+                Label label = default;
+                if (instruction.LabelArg != null)
+                    label = labels[instruction.LabelArg];
+                instruction.Emit(gen, label);
+                i++;
             }
 
             foreach (var instruction in shutdown)

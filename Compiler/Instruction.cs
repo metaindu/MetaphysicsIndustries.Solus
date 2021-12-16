@@ -28,7 +28,21 @@ namespace MetaphysicsIndustries.Solus.Compiler
 {
     public struct Instruction
     {
-        public enum ArgumentType { None, I1, I2, I4, I8, UI1, UI2, R4, R8, Method, String };
+        public enum ArgumentType
+        {
+            None,
+            I1,
+            I2,
+            I4,
+            I8,
+            UI1,
+            UI2,
+            R4,
+            R8,
+            Method,
+            String,
+            Label
+        };
 
         public ArgumentType ArgType;
         public OpCode OpCode;
@@ -39,6 +53,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public double DoubleArg;
         public MethodInfo MethodArg;
         public string StringArg;
+        public IlLabel LabelArg;
 
         public override string ToString()
         {
@@ -69,6 +84,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             Replace("\t", "\\t").
                             Replace("\"", "\\\""));
                     break;
+                case ArgumentType.Label:
+                    arg = LabelArg.ToString();
+                    break;
                 }
 
                 return string.Format("{0} {1}", OpCode.Name, arg);
@@ -79,7 +97,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
         }
 
-        public void Emit(ILGenerator gen)
+        public void Emit(ILGenerator gen, Label label=default)
         {
             switch (ArgType)
             {
@@ -115,6 +133,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 break;
             case ArgumentType.String:
                 gen.Emit(OpCode, StringArg);
+                break;
+            case ArgumentType.Label:
+                gen.Emit(OpCode, label);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

@@ -28,6 +28,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
     {
         public void GetInstructions(NascentMethod nm)
         {
+            nm.RecordExpressionLocation(this);
             GetInstructionsInternal(nm);
         }
         protected abstract void GetInstructionsInternal(NascentMethod nm);
