@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
     public abstract class AggregateOp
     {
         public abstract void Operate(IMathObject input,
-            SolusEnvironment env, BasicEvaluator evaluator);
+            SolusEnvironment env, IEvaluator evaluator);
     }
 
     public class AggregateOp<TIn, TOut> : AggregateOp
@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public Func<TIn, TOut, TOut> Function;
 
         public override void Operate(IMathObject input,
-            SolusEnvironment env, BasicEvaluator evaluator)
+            SolusEnvironment env, IEvaluator evaluator)
         {
             State = Function((TIn)input, State);
         }
