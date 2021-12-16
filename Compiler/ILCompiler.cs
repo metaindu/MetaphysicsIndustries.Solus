@@ -166,7 +166,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             if (expr is VariableAccess va)
                 return ConvertToIlExpression(va, nm);
             throw new ArgumentException(
-                $"Unsupported expresssion type: \"{expr}\"", nameof(expr));
+                $"Unsupported expression type: \"{expr}\"", nameof(expr));
         }
 
         public IlExpression ConvertToIlExpression(
