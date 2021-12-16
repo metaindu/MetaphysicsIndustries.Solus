@@ -20,12 +20,13 @@
  *
  */
 
-using System.Collections.Generic;
-
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public abstract class IlExpression
     {
+        private static int _id = 0;
+        public readonly int Id = _id++;
+
         public void GetInstructions(NascentMethod nm)
         {
             nm.RecordExpressionLocation(this);
