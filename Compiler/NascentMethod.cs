@@ -71,7 +71,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public void RecordExpressionLocation(IlExpression expr)
         {
-            if (_expressionLocations.ContainsKey(expr)) 
+            if (_expressionLocations.ContainsKey(expr))
                 return;
             int index = Instructions.Count;
             _expressionLocations[expr] = index;
