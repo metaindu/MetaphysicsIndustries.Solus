@@ -65,7 +65,9 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         public override Expression Transform(Expression expr, VariableTransformArgs args)
         {
-            if (expr is FunctionCall && ((FunctionCall)expr).Function is DivisionOperation)
+            if (expr is FunctionCall fc &&
+                fc.Function is Literal literal &&
+                literal.Value is DivisionOperation)
             {
                 List<Expression> fargs = ((FunctionCall)expr).Arguments;
 
