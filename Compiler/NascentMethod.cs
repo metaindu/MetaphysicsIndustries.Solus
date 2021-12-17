@@ -29,17 +29,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         readonly Dictionary<string, byte> _dictionary = new Dictionary<string, byte>();
 
-        public byte this [ string name ]
+        public byte CreateIndexOfLocalForVariableName(string name)
         {
-            get
-            {
-                if (!_dictionary.ContainsKey(name))
-                {
-                    _dictionary.Add(name, (byte)_dictionary.Count);
-                }
-
-                return _dictionary[name];
-            }
+            if (!_dictionary.ContainsKey(name))
+                _dictionary.Add(name, (byte)_dictionary.Count);
+            return _dictionary[name];
         }
 
         public string[] GetVariableNamesInIndexOrder()
