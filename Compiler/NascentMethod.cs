@@ -27,22 +27,24 @@ namespace MetaphysicsIndustries.Solus.Compiler
 {
     public class NascentMethod
     {
-        readonly Dictionary<string, byte> _dictionary = new Dictionary<string, byte>();
+        readonly Dictionary<string, byte> _localIndexesByName = new Dictionary<string, byte>();
         public readonly List<IlLocal> Locals = new List<IlLocal>();
 
         public byte CreateIndexOfLocalForVariableName(string name)
         {
-            if (!_dictionary.ContainsKey(name))
+            if (!_localIndexesByName.ContainsKey(name))
             {
-                _dictionary.Add(name, (byte)_dictionary.Count);
+                int index = _localIndexesByName.Count;
+                _localIndexesByName.Add(name, (byte)index);
                 Locals.Add(new IlLocal
                 {
                     Usage = IlLocalUsage.BakedVariable,
                     VariableName = name,
                 });
+                return (byte)index;
             }
 
-            return _dictionary[name];
+            return _localIndexesByName[name];
         }
 
         public readonly List<Instruction> Instructions =
