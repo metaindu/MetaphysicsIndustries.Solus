@@ -62,6 +62,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             VarInterval interval, int numSteps, StoreOp1 store,
             AggregateOp[] aggrs = null)
         {
+            if (store != null)
+                store.SetMinArraySize(numSteps);
+
             var delta = interval.Interval.CalcDelta(numSteps);
 
             var env2 = env.CreateChildEnvironment();
@@ -70,9 +73,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var compiled = _compiler.Compile(expr2);
             Dictionary<string, float> bakedEnv = null;
             _compiler.BakeEnvironment(compiled, env2, this, ref bakedEnv);
-
-            if (store != null)
-                store.SetMinArraySize(numSteps);
 
             int i;
             for (i = 0; i < numSteps; i++)
