@@ -57,6 +57,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var locals = new List<LocalBuilder>();
 
             var bakedVars = new string[nm.Locals.Count];
+            IlParam bakedEnvParam = null;
+            int bakedEnvParamIndex = -1;
 
             int i;
             for (i = 0; i < nm.Locals.Count; i++)
@@ -67,7 +69,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 {
                     case IlLocalUsage.BakedVariable:
                         bakedVars[i] = ilLocal.VariableName;
-                        setup.Add(Instruction.LoadArgument(0));
+                        if (bakedEnvParam == null)
+                        {
+                            bakedEnvParam = nm.CreateParam(
+                                typeof(Dictionary<string, float>));
+                            bakedEnvParamIndex =
+                                nm.GetParamIndex(bakedEnvParam);
+                        }
+
+                        setup.Add(Instruction.LoadArgument(
+                            (ushort)bakedEnvParamIndex));
                         setup.Add(
                             Instruction.LoadString(ilLocal.VariableName));
                         setup.Add(Instruction.Call(get_Item));
