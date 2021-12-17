@@ -36,7 +36,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
         {
             var nm = new NascentMethod();
             var ilexpr = ConvertToIlExpression(expr, nm);
-            var args = nm.GetVariableNamesInIndexOrder();
             ilexpr.GetInstructions(nm);
 
             DynamicMethod method =
@@ -56,15 +55,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ushort n = 0;
             var setup = new List<Instruction>();
             var locals = new List<LocalBuilder>();
-            foreach (var arg in args)
-            {
-                locals.Add(gen.DeclareLocal(typeof(float)));
 
-                setup.Add(Instruction.LoadArgument(0));
-                setup.Add(Instruction.LoadString(arg));
-                setup.Add(Instruction.Call(get_Item));
-                setup.Add(Instruction.StoreLocalVariable(n));
-                n++;
+            var bakedVars = new string[nm.Locals.Count];
+
+            int i;
+            for (i = 0; i < nm.Locals.Count; i++)
+            {
+                var ilLocal = nm.Locals[i];
+                locals.Add(gen.DeclareLocal(typeof(float)));
+                switch (ilLocal.Usage)
+                {
+                    case IlLocalUsage.BakedVariable:
+                        bakedVars[i] = ilLocal.VariableName;
+                        setup.Add(Instruction.LoadArgument(0));
+                        setup.Add(
+                            Instruction.LoadString(ilLocal.VariableName));
+                        setup.Add(Instruction.Call(get_Item));
+                        setup.Add(Instruction.StoreLocalVariable(n));
+                        break;
+                }
             }
 
             var shutdown = new List<Instruction>();
@@ -84,7 +93,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             foreach (var ilLabel in nm.GetAllLabels())
                 labels[ilLabel] = gen.DefineLabel();
 
-            int i = 0;
+            i = 0;
             foreach (var instruction in nm.Instructions)
             {
                 var ilLabels = nm.GetLabelsByLocation(i);
@@ -111,7 +120,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
             return new CompiledExpression{
                 Method = del,
-                CompiledVars = args
+                CompiledVars = bakedVars
             };
         }
 
