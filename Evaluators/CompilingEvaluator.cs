@@ -62,7 +62,31 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             VarInterval interval, int numSteps, StoreOp1 store,
             AggregateOp[] aggrs = null)
         {
-            throw new System.NotImplementedException();
+            var delta = interval.Interval.CalcDelta(numSteps);
+
+            var env2 = env.CreateChildEnvironment();
+            env2.RemoveVariable(interval.Variable);
+            var expr2 = Simplify(expr, env2);
+            var compiled = _compiler.Compile(expr2);
+            Dictionary<string, float> bakedEnv = null;
+            _compiler.BakeEnvironment(compiled, env2, this, ref bakedEnv);
+
+            if (store != null)
+                store.SetMinArraySize(numSteps);
+
+            int i;
+            for (i = 0; i < numSteps; i++)
+            {
+                var xx = delta * i + interval.Interval.LowerBound;
+                // env2.SetVariable(interval.Variable, xx.ToNumber());
+                bakedEnv[interval.Variable] = xx;
+                var v = compiled.Method(bakedEnv).ToNumber();
+                if (store != null)
+                    store.Store(i, v);
+                if (aggrs != null)
+                    foreach (var aggr in aggrs)
+                        aggr?.Operate(v, env2, this);
+            }
         }
 
         public void EvalInterval(
