@@ -28,31 +28,38 @@ namespace MetaphysicsIndustries.Solus.Compiler
 {
     public class NascentMethod
     {
-        readonly Dictionary<string, byte> _localIndexesByName = new Dictionary<string, byte>();
+        readonly Dictionary<string, ushort> _localIndexesByName =
+            new Dictionary<string, ushort>();
         public readonly List<IlLocal> Locals = new List<IlLocal>();
-        private readonly Dictionary<IlLocal, byte> _indexesByLocal =
-            new Dictionary<IlLocal, byte>();
+        private readonly Dictionary<IlLocal, ushort> _indexesByLocal =
+            new Dictionary<IlLocal, ushort>();
 
-        public byte CreateIndexOfLocalForVariableName(string name)
+        public ushort CreateIndexOfLocalForVariableName(string name)
         {
             if (!_localIndexesByName.ContainsKey(name))
             {
-                var local = new IlLocal
-                {
-                    Usage = IlLocalUsage.BakedVariable,
-                    VariableName = name,
-                };
-                var index = (byte)Locals.Count;
+                var local = CreateLocal();
+                local.Usage = IlLocalUsage.BakedVariable;
+                local.VariableName = name;
+                var index = GetIndexOfLocal(local);
                 _localIndexesByName.Add(name, index);
-                _indexesByLocal[local] = index;
-                Locals.Add(local);
                 return index;
             }
 
             return _localIndexesByName[name];
         }
 
-        public byte GetIndexOfLocal(IlLocal local) => _indexesByLocal[local];
+        public IlLocal CreateLocal()
+        {
+            var local = new IlLocal();
+            var index = (ushort)Locals.Count;
+            _indexesByLocal[local] = index;
+            Locals.Add(local);
+            return local;
+        }
+
+        public ushort GetIndexOfLocal(IlLocal local) =>
+            _indexesByLocal[local];
 
         public readonly List<IlParam> Params = new List<IlParam>();
         private readonly Dictionary<IlParam, int> _indexesByParam =

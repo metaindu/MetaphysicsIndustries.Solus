@@ -47,8 +47,12 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void SmallNumberYieldsSpecialOpCode(byte arg)
         {
             // given
-            var expr = new LoadLocalIlExpression(arg);
             var nm = new NascentMethod();
+            int i;
+            IlLocal local = null;
+            for (i = 0; i <= arg; i++)
+                local = nm.CreateLocal();
+            var expr = new LoadLocalIlExpression(local);
             var opcode = OpCodeValues[arg];
             // precondition
             Assert.AreEqual(0, nm.Instructions.Count);
@@ -67,8 +71,12 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void ShortNumberYieldsShortOpCode(ushort arg)
         {
             // given
-            var expr = new LoadLocalIlExpression(arg);
             var nm = new NascentMethod();
+            int i;
+            IlLocal local = null;
+            for (i = 0; i <= arg; i++)
+                local = nm.CreateLocal();
+            var expr = new LoadLocalIlExpression(local);
             // precondition
             Assert.AreEqual(0, nm.Instructions.Count);
             // when
@@ -86,8 +94,12 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void NormalNumberYieldsNormalOpCode(ushort arg)
         {
             // given
-            var expr = new LoadLocalIlExpression(arg);
             var nm = new NascentMethod();
+            int i;
+            IlLocal local = null;
+            for (i = 0; i <= arg; i++)
+                local = nm.CreateLocal();
+            var expr = new LoadLocalIlExpression(local);
             // precondition
             Assert.AreEqual(0, nm.Instructions.Count);
             // when

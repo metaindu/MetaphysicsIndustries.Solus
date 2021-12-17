@@ -217,8 +217,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             VariableAccess expr, NascentMethod nm)
         {
-            return new LoadLocalIlExpression(
-                nm.CreateIndexOfLocalForVariableName(expr.VariableName));
+            var index =
+                nm.CreateIndexOfLocalForVariableName(expr.VariableName);
+            var local = nm.Locals[index];
+            return new LoadLocalIlExpression(local);
         }
 
         // compile functions

@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
@@ -32,11 +33,13 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         [Test]
         public void ConstructorCreatesInstance()
         {
+            // given
+            var local = new IlLocal();
             // when
-            var result = new LoadLocalIlExpression(23);
+            var result = new LoadLocalIlExpression(local);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(23, result.VarNumber);
+            Assert.AreSame(local, result.Local);
         }
     }
 }
