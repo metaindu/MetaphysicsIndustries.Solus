@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 
@@ -46,6 +47,19 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
             return _localIndexesByName[name];
         }
+
+        public readonly List<IlParam> Params = new List<IlParam>();
+        private readonly Dictionary<IlParam, int> _indexesByParam =
+            new Dictionary<IlParam, int>();
+
+        public IlParam CreateParam(Type paramType)
+        {
+            var param = new IlParam { ParamType = paramType };
+            _indexesByParam[param] = Params.Count;
+            Params.Add(param);
+            return param;
+        }
+        public int GetParamIndex(IlParam param) => _indexesByParam[param];
 
         public readonly List<Instruction> Instructions =
             new List<Instruction>();
