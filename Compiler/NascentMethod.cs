@@ -30,23 +30,29 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         readonly Dictionary<string, byte> _localIndexesByName = new Dictionary<string, byte>();
         public readonly List<IlLocal> Locals = new List<IlLocal>();
+        private readonly Dictionary<IlLocal, byte> _indexesByLocal =
+            new Dictionary<IlLocal, byte>();
 
         public byte CreateIndexOfLocalForVariableName(string name)
         {
             if (!_localIndexesByName.ContainsKey(name))
             {
-                int index = _localIndexesByName.Count;
-                _localIndexesByName.Add(name, (byte)index);
-                Locals.Add(new IlLocal
+                var local = new IlLocal
                 {
                     Usage = IlLocalUsage.BakedVariable,
                     VariableName = name,
-                });
-                return (byte)index;
+                };
+                var index = (byte)Locals.Count;
+                _localIndexesByName.Add(name, index);
+                _indexesByLocal[local] = index;
+                Locals.Add(local);
+                return index;
             }
 
             return _localIndexesByName[name];
         }
+
+        public byte GetIndexOfLocal(IlLocal local) => _indexesByLocal[local];
 
         public readonly List<IlParam> Params = new List<IlParam>();
         private readonly Dictionary<IlParam, int> _indexesByParam =
