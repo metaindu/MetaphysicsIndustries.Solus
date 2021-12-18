@@ -29,5 +29,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public Func<Dictionary<string, float>, float> Method;
         public string[] CompiledVars;
+
+        public float Evaluate(Dictionary<string, float> bakedEnv)
+        {
+            return (float)Method.DynamicInvoke(bakedEnv);
+        }
     }
 }

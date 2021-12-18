@@ -155,7 +155,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 compiled = Compile(expr);
             }
 
-            return compiled.Method(bakedEnv).ToNumber();
+            return compiled.Evaluate(bakedEnv).ToNumber();
         }
 
         public void BakeEnvironment(

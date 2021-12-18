@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var compiled = _compiler.Compile(expr);
             Dictionary<string, float> bakedEnv = null;
             _compiler.BakeEnvironment(compiled, env, this, ref bakedEnv);
-            return compiled.Method(bakedEnv).ToNumber();
+            return compiled.Evaluate(bakedEnv).ToNumber();
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 var xx = delta * i + interval.Interval.LowerBound;
                 // env2.SetVariable(interval.Variable, xx.ToNumber());
                 bakedEnv[interval.Variable] = xx;
-                var v = compiled.Method(bakedEnv).ToNumber();
+                var v = compiled.Evaluate(bakedEnv).ToNumber();
                 if (store != null)
                     store.Store(i, v);
                 if (aggrs != null)
