@@ -35,9 +35,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
             var compiled = _compiler.Compile(expr);
-            Dictionary<string, float> bakedEnv = null;
-            _compiler.BakeEnvironment(compiled, env, this, ref bakedEnv);
-            return compiled.Evaluate(bakedEnv).ToNumber();
+            CompiledEnvironment cenv = null;
+            _compiler.CompileEnvironment(compiled, env, this, ref cenv);
+            return compiled.Evaluate(cenv).ToNumber();
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)
@@ -71,16 +71,16 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             env2.RemoveVariable(interval.Variable);
             var expr2 = Simplify(expr, env2);
             var compiled = _compiler.Compile(expr2);
-            Dictionary<string, float> bakedEnv = null;
-            _compiler.BakeEnvironment(compiled, env2, this, ref bakedEnv);
+            CompiledEnvironment cenv = null;
+            _compiler.CompileEnvironment(compiled, env2, this, ref cenv);
 
             int i;
             for (i = 0; i < numSteps; i++)
             {
                 var xx = delta * i + interval.Interval.LowerBound;
                 // env2.SetVariable(interval.Variable, xx.ToNumber());
-                bakedEnv[interval.Variable] = xx;
-                var v = compiled.Evaluate(bakedEnv).ToNumber();
+                cenv[interval.Variable] = xx;
+                var v = compiled.Evaluate(cenv).ToNumber();
                 if (store != null)
                     store.Store(i, v);
                 if (aggrs != null)

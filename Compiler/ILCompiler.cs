@@ -44,21 +44,21 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     returnType: typeof(float),
                     parameterTypes: new []
                     {
-                        typeof(Dictionary<string, float>)
+                        typeof(CompiledEnvironment)
                     });
 
             var gen = method.GetILGenerator();
 
-            var dtype = typeof(Dictionary<string, float>);
+            var dtype = typeof(CompiledEnvironment);
             var get_Item = dtype.GetProperty("Item").GetGetMethod();
 
             ushort n = 0;
             var setup = new List<Instruction>();
             var locals = new List<LocalBuilder>();
 
-            var bakedVars = new string[nm.Locals.Count];
-            IlParam bakedEnvParam = null;
-            int bakedEnvParamIndex = -1;
+            var cenv = new string[nm.Locals.Count];
+            IlParam cenvParam = null;
+            int cenvParamIndex = -1;
 
             int i;
             for (i = 0; i < nm.Locals.Count; i++)
@@ -67,18 +67,18 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 locals.Add(gen.DeclareLocal(typeof(float)));
                 switch (ilLocal.Usage)
                 {
-                    case IlLocalUsage.BakedVariable:
-                        bakedVars[i] = ilLocal.VariableName;
-                        if (bakedEnvParam == null)
+                    case IlLocalUsage.InitFromCompiledEnv:
+                        cenv[i] = ilLocal.VariableName;
+                        if (cenvParam == null)
                         {
-                            bakedEnvParam = nm.CreateParam(
-                                typeof(Dictionary<string, float>));
-                            bakedEnvParamIndex =
-                                nm.GetParamIndex(bakedEnvParam);
+                            cenvParam = nm.CreateParam(
+                                typeof(CompiledEnvironment));
+                            cenvParamIndex =
+                                nm.GetParamIndex(cenvParam);
                         }
 
                         setup.Add(Instruction.LoadArgument(
-                            (ushort)bakedEnvParamIndex));
+                            (ushort)cenvParamIndex));
                         setup.Add(
                             Instruction.LoadString(ilLocal.VariableName));
                         setup.Add(Instruction.Call(get_Item));
@@ -126,12 +126,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             var del =
-                (Func<Dictionary<string, float>, float>)method.CreateDelegate(
-                    typeof(Func<Dictionary<string, float>, float>));
+                (Func<CompiledEnvironment, float>)method.CreateDelegate(
+                    typeof(Func<CompiledEnvironment, float>));
 
             return new CompiledExpression{
                 Method = del,
-                CompiledVars = bakedVars
+                CompiledVars = cenv
             };
         }
 
@@ -144,9 +144,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ref CompiledExpression compiled)
         {
             var eval = new BasicEvaluator();
-            var bakedEnv = new Dictionary<string, float>();
+            var cenv = new CompiledEnvironment();
             if (compiled != null)
-                BakeEnvironment(compiled, env, eval, ref bakedEnv);
+                CompileEnvironment(compiled, env, eval, ref cenv);
             else
             {
                 // static initialize Instruction
@@ -155,16 +155,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 compiled = Compile(expr);
             }
 
-            return compiled.Evaluate(bakedEnv).ToNumber();
+            return compiled.Evaluate(cenv).ToNumber();
         }
 
-        public void BakeEnvironment(
+        public void CompileEnvironment(
             CompiledExpression compiled, SolusEnvironment env,
-            IEvaluator eval, ref Dictionary<string, float> bakedEnv)
+            IEvaluator eval, ref CompiledEnvironment cenv)
         {
-            if (bakedEnv == null)
-                bakedEnv = new Dictionary<string, float>();
-            bakedEnv.Clear();
+            cenv = new CompiledEnvironment();
             foreach (var var in compiled.CompiledVars)
             {
                 var target = env.GetVariable(var);
@@ -172,7 +170,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 {
                     if (target.IsIsExpression(env))
                         target = eval.Eval((Expression)target, env);
-                    bakedEnv[var] = target.ToNumber().Value;
+                    cenv[var] = target.ToNumber().Value;
                 }
             }
         }

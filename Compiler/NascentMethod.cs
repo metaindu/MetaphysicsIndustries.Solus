@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             if (!_localIndexesByName.ContainsKey(name))
             {
                 var local = CreateLocal();
-                local.Usage = IlLocalUsage.BakedVariable;
+                local.Usage = IlLocalUsage.InitFromCompiledEnv;
                 local.VariableName = name;
                 var index = GetIndexOfLocal(local);
                 _localIndexesByName.Add(name, index);

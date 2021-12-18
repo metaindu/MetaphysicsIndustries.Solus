@@ -20,19 +20,19 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class CompiledExpression
+    public class CompiledEnvironment
     {
-        public Func<CompiledEnvironment, float> Method;
-        public string[] CompiledVars;
+        private readonly Dictionary<string, float> _valuesByName =
+            new Dictionary<string, float>();
 
-        public float Evaluate(CompiledEnvironment cenv)
+        public float this[string name]
         {
-            return (float)Method.DynamicInvoke(cenv);
+            get => _valuesByName[name];
+            set => _valuesByName[name] = value;
         }
     }
 }
