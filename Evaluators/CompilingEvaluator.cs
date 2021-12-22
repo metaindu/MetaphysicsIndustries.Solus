@@ -35,8 +35,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
             var compiled = _compiler.Compile(expr);
-            CompiledEnvironment cenv = null;
-            _compiler.CompileEnvironment(compiled, env, this, ref cenv);
+            var cenv =
+                _compiler.CompileEnvironment(compiled, env, this);
             return compiled.Evaluate(cenv).ToNumber();
         }
 
@@ -71,8 +71,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             env2.RemoveVariable(interval.Variable);
             var expr2 = Simplify(expr, env2);
             var compiled = _compiler.Compile(expr2);
-            CompiledEnvironment cenv = null;
-            _compiler.CompileEnvironment(compiled, env2, this, ref cenv);
+            var cenv =
+                _compiler.CompileEnvironment(compiled, env2, this);
 
             int i;
             for (i = 0; i < numSteps; i++)

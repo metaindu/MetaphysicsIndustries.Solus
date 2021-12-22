@@ -146,7 +146,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var eval = new BasicEvaluator();
             var cenv = new CompiledEnvironment();
             if (compiled != null)
-                CompileEnvironment(compiled, env, eval, ref cenv);
+                cenv = CompileEnvironment(compiled, env, eval);
             else
             {
                 // static initialize Instruction
@@ -158,11 +158,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             return compiled.Evaluate(cenv).ToNumber();
         }
 
-        public void CompileEnvironment(
+        public CompiledEnvironment CompileEnvironment(
             CompiledExpression compiled, SolusEnvironment env,
-            IEvaluator eval, ref CompiledEnvironment cenv)
+            IEvaluator eval)
         {
-            cenv = new CompiledEnvironment();
+            var cenv = new CompiledEnvironment();
             foreach (var var in compiled.CompiledVars)
             {
                 var target = env.GetVariable(var);
@@ -173,6 +173,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     cenv[var] = target.ToNumber().Value;
                 }
             }
+
+            return cenv;
         }
 
         // compile expressions
