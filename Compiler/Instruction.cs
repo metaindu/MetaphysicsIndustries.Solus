@@ -40,6 +40,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             R4,
             R8,
             Method,
+            Constructor,
             String,
             Label
         };
@@ -52,6 +53,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public float FloatArg;
         public double DoubleArg;
         public MethodInfo MethodArg;
+        public ConstructorInfo ConstructorArg;
         public string StringArg;
         public IlLabel LabelArg;
 
@@ -74,6 +76,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     arg = string.Format(" {0}.{1}",
                         (MethodArg != null ? MethodArg.DeclaringType.Name : "(null)"),
                         (MethodArg != null ? MethodArg.Name : "(null)"));
+                    break;
+                case ArgumentType.Constructor:
+                    if (ConstructorArg == null)
+                        arg = " (null).(null)";
+                    else if (ConstructorArg.DeclaringType == null)
+                        arg = $" (null).{MethodArg.Name}";
+                    else
+                        arg = $" {ConstructorArg.DeclaringType.Name}." +
+                              $"{MethodArg.Name}";
                     break;
                 case ArgumentType.String:
                     arg = string.Format(" \"{0}\"",
@@ -130,6 +141,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 break;
             case ArgumentType.Method:
                 gen.Emit(OpCode, MethodArg);
+                break;
+            case ArgumentType.Constructor:
+                gen.Emit(OpCode, ConstructorArg);
                 break;
             case ArgumentType.String:
                 gen.Emit(OpCode, StringArg);
@@ -402,6 +416,29 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 OpCode = OpCodes.Brfalse,
                 ArgType = ArgumentType.Label,
                 LabelArg = label
+            };
+
+        public static Instruction Throw() =>
+            new Instruction
+            {
+                OpCode = OpCodes.Throw,
+                ArgType = ArgumentType.None
+            };
+
+        public static Instruction NewObj(ConstructorInfo ci) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Newobj,
+                ArgType = ArgumentType.Constructor,
+                ConstructorArg = ci
+            };
+
+        public static Instruction LdStr(string value) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Ldstr,
+                ArgType = ArgumentType.String,
+                StringArg = value,
             };
     }
 }

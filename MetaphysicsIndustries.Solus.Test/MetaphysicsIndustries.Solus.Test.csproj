@@ -66,11 +66,15 @@
     <Compile Include="CompilerT\IlExpressionsT\LoadConstantIlExpressionT\LoadConstantIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\LoadLocalIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\LoadLocalIlExpressionT\LoadLocalIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\LoadStringIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\LoadStringIlExpressionT\LoadStringIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\MockIlExpression.cs" />
     <Compile Include="CompilerT\IlExpressionsT\MulIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\MulIlExpressionT\MulIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\NegIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\NegIlExpressionT\NegIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\NewObjIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\NewObjIlExpressionT\NewObjIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\NopIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\NopIlExpressionT\NopIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\OrIlExpressionT\GetInstructionsTest.cs" />
@@ -83,6 +87,8 @@
     <Compile Include="CompilerT\IlExpressionsT\RemIlExpressionT\RemIlExpressionTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\SubIlExpressionT\GetInstructionsTest.cs" />
     <Compile Include="CompilerT\IlExpressionsT\SubIlExpressionT\SubIlExpressionTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\ThrowIlExpressionT\GetInstructionsTest.cs" />
+    <Compile Include="CompilerT\IlExpressionsT\ThrowIlExpressionT\ThrowIlExpressionTest.cs" />
     <Compile Include="EnvironmentT\ChildTest.cs" />
     <Compile Include="EnvironmentT\CloneTest.cs" />
     <Compile Include="EnvironmentT\DerivedTest.cs" />
