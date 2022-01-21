@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.NegationOperationT
 {
-    [TestFixture]
-    public class EvalNegationOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalNegationOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(-2, 2)]
@@ -46,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = NegationOperation.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

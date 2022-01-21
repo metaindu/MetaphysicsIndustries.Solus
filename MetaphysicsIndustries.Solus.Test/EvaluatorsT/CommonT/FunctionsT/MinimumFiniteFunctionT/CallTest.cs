@@ -30,8 +30,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.MinimumFiniteFunctionT
 {
-    [TestFixture]
-    public class EvalMinimumFiniteFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalMinimumFiniteFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void AscendingYieldsMin()
@@ -46,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(4),
                 new Number(5)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -66,7 +67,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(7),
                 new Number(6)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -87,7 +88,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(-2),
                 new Number(-1)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -107,7 +108,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(-8),
                 new Number(-9)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -126,7 +127,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(0),
                 new Number(1)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -147,7 +148,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(3),
                 new Number(2)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -164,7 +165,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             {
                 new Number(5)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -178,7 +179,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = MinimumFiniteFunction.Value;
             var args = new IMathObject[0];
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -199,7 +200,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(4),
                 new Number(5)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -220,7 +221,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(4),
                 new Number(5)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -241,7 +242,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(4),
                 new Number(5)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -261,7 +262,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(float.NaN),
                 new Number(1)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -280,7 +281,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(float.NegativeInfinity),
                 new Number(float.NaN)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -298,7 +299,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(float.PositiveInfinity),
                 new Number(float.NegativeInfinity)
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

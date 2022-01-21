@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.FactorialFunctionT
 {
-    [TestFixture]
-    public class EvalFactorialFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalFactorialFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void FactorialFunctionCallWithNoArgsThrows()
@@ -37,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = FactorialFunction.Value;
             var args = new IMathObject[0];
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -49,7 +50,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = FactorialFunction.Value;
             var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -66,7 +67,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 2.ToNumber(),
                 4.ToNumber()
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -91,7 +92,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = FactorialFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

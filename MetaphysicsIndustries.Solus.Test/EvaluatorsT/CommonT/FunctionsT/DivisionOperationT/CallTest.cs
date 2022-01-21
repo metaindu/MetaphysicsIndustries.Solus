@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.DivisionOperationT
 {
-    [TestFixture]
-    public class EvalDivisionOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalDivisionOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 1, 0)]
@@ -58,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 dividend.ToNumber(),
                 divisor.ToNumber()
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -72,7 +73,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = DivisionOperation.Value;
             var args = new IMathObject[] { 1.ToNumber(), 0.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));

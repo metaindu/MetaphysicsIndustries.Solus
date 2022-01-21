@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.UserDefinedFunctionT
 {
-    [TestFixture]
-    public class EvalUserDefinedFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalUserDefinedFunctionTest<T>
+        where T : IEvaluator, new()
     {
         // TODO: check args
 
@@ -53,7 +54,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Number(4)
             };
             var env = new SolusEnvironment();
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, env);
             // then
@@ -80,7 +81,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             };
             var env = new SolusEnvironment();
             env.SetVariable("a", new Literal(8));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // precondition
             Assert.IsInstanceOf<Literal>(env.GetVariable("a"));
             Assert.AreEqual(8,

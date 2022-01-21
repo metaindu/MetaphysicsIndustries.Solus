@@ -30,8 +30,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     ExpressionsT.FunctionCallT
 {
-    [TestFixture]
-    public class EvalFunctionCallTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalFunctionCallTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void FunctionCallYieldsReturnValue()
@@ -42,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 CallF = args => args.First()
             };
             var expr = new FunctionCall(mf, new Literal(5));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, null);
             // then
@@ -64,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             };
             var expr = new FunctionCall(new VariableAccess("f"),
                 new Expression[] { new Literal(5) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var env = new SolusEnvironment();
             env.SetVariable("f", mf);
             // when
@@ -105,7 +106,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                                 new Literal(-1))))));
             var env = new SolusEnvironment();
             env.SetVariable("f", udf);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(
                 new VariableAccess("f"),
                 new Literal(2));

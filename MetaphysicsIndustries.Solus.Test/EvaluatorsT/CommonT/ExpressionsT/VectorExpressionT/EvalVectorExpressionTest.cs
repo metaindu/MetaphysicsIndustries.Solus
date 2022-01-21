@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     ExpressionsT.VectorExpressionT
 {
-    [TestFixture]
-    public class EvalVectorExpressionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalVectorExpressionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void LiteralsYieldVector()
@@ -40,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Literal(1),
                 new Literal(2),
                 new Literal(3));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -61,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Literal(2),
                 new VariableAccess("a"));
             var env = new SolusEnvironment();
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var exc = Assert.Throws<NameException>(() => eval.Eval(expr, env));
             // and
@@ -79,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new VariableAccess("a"));
             var env = new SolusEnvironment();
             env.SetVariable("a", new Literal(5));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, env);
             // then
@@ -102,7 +103,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new Literal(3),
                     new Literal(4),
                     new Literal(5)));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then

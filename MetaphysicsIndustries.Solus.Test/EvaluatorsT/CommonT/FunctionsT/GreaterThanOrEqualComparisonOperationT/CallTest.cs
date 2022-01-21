@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.GreaterThanOrEqualComparisonOperationT
 {
-    [TestFixture]
-    public class EvalGreaterThanOrEqualComparisonOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalGreaterThanOrEqualComparisonOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 0, 1)]
@@ -61,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = GreaterThanOrEqualComparisonOperation.Value;
             var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

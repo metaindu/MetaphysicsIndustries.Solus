@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.CosecantFunctionT
 {
-    [TestFixture]
-    public class EvalCosecantFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalCosecantFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         // [TestCase(0, 1/0)]
@@ -63,7 +64,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = CosecantFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

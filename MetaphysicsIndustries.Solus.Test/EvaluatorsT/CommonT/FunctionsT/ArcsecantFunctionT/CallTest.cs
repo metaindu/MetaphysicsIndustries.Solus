@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.ArcsecantFunctionT
 {
-    [TestFixture]
-    public class EvalArcsecantFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalArcsecantFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 1)]
@@ -46,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = ArcsecantFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

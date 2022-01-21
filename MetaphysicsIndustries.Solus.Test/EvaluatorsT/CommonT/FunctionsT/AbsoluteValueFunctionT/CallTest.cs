@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.AbsoluteValueFunctionT
 {
-    [TestFixture]
-    public class EvalAbsoluteValueFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalAbsoluteValueFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void AbsoluteValueFunctionPositiveYieldsPositive()
@@ -37,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = AbsoluteValueFunction.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -50,7 +51,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = AbsoluteValueFunction.Value;
             var args = new IMathObject[] { (-1).ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

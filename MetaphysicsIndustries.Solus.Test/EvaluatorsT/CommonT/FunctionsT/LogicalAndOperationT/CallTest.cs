@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.LogicalAndOperationT
 {
-    [TestFixture]
-    public class EvalLogicalAndOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalLogicalAndOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 0, 0)]
@@ -68,7 +69,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = LogicalAndOperation.Value;
             var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

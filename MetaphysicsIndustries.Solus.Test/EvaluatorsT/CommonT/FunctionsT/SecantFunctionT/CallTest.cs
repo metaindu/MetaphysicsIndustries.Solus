@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.SecantFunctionT
 {
-    [TestFixture]
-    public class EvalSecantFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalSecantFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 1)]
@@ -62,7 +63,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = SecantFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

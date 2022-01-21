@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     MacrosT.SqrtMacroT
 {
-    [TestFixture]
-    public class CallTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class CallTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void CallYieldsExponentOperation()
@@ -38,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var expr = new FunctionCall(new Literal(SqrtMacro.Value),
                 new Literal(2));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then

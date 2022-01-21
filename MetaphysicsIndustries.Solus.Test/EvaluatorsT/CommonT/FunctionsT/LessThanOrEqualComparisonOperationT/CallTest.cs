@@ -32,8 +32,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.LessThanOrEqualComparisonOperationT
 {
-    [TestFixture]
-    public class EvalLessThanOrEqualComparisonOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalLessThanOrEqualComparisonOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 0, 1)]
@@ -65,7 +66,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = LessThanOrEqualComparisonOperation.Value;
             var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

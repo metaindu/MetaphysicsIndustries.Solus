@@ -30,8 +30,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     ExpressionsT.VariableAccessT
 {
-    [TestFixture]
-    public class EvalVariableAccessTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalVariableAccessTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void GetsLiteralFromEnv()
@@ -41,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr2 = new Literal(3);
             var env = new SolusEnvironment();
             env.SetVariable("a", expr2);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -61,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Literal(0));
             var env = new SolusEnvironment();
             env.SetVariable("a", expr2);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -80,7 +81,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var value = 3.ToNumber();
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -99,7 +100,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var value = new Vector(new float[] { 1, 2, 3 });
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -125,7 +126,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             });
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -149,7 +150,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var value = "abc".ToStringValue();
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -168,7 +169,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var value = new Interval(1.1f, 3.5f);
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -188,7 +189,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var f = CosineFunction.Value;
             var env = new SolusEnvironment();
             env.SetVariable("a", f);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -206,7 +207,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr3 = new Literal(expr2);
             var env = new SolusEnvironment();
             env.SetVariable("a", expr3);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, env);
             // then
@@ -222,7 +223,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var expr = new VariableAccess("a");
             var env = new SolusEnvironment();
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<NameException>(
                 () => eval.Eval(expr, env));

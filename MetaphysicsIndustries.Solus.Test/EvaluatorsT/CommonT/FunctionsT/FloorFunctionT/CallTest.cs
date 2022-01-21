@@ -27,8 +27,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.FloorFunctionT
 {
-    [TestFixture]
-    public class EvalFloorFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalFloorFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 0)]
@@ -41,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = FloorFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -58,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = FloorFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     ExpressionsT.IntervalExpressionT
 {
-    [TestFixture]
-    public class EvalIntervalExpressionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalIntervalExpressionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void EvalYieldsConcreteInterval()
@@ -38,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var i = new IntervalExpression(
                 new Literal(1), true,
                 new Literal(2), true);
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(i, null);
             // then

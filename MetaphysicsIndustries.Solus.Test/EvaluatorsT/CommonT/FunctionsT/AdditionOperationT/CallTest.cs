@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.AdditionOperationT
 {
-    [TestFixture]
-    public class EvalAdditionOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalAdditionOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void AdditionOperationCallWithNoArgsThrows()
@@ -38,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = AdditionOperation.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -50,7 +51,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = AdditionOperation.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -62,7 +63,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = AdditionOperation.Value;
             var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -80,7 +81,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 2.ToNumber(),
                 4.ToNumber()
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

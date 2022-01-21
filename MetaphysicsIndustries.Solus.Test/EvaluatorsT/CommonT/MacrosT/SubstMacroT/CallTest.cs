@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     MacrosT.SubstMacroT
 {
-    [TestFixture]
-    public class CallTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class CallTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void UnmatchedVariableYieldsSame()
@@ -41,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 original,
                 new VariableAccess("y"),
                 new Literal(1));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -60,7 +61,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new VariableAccess("x"),
                 new VariableAccess("x"),
                 new Literal(1));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then

@@ -30,8 +30,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.SizeFunctionT
 {
-    [TestFixture]
-    public class EvalSizeFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalSizeFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void SizeFunctionZeroArgumentsThrows()
@@ -39,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = SizeFunction.Value;
             var args = new IMathObject[0];
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -59,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Vector(new float[] { 1, 2, 3 }),
                 new Vector(new float[] { 4, 5, 6 })
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -75,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = SizeFunction.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -95,7 +96,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             {
                 new float[] { 1, 2 }.ToVector()
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -116,7 +117,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     { 4, 5, 6 }
                 })
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -133,7 +134,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = SizeFunction.Value;
             var args = new IMathObject[] { "abc".ToStringValue() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

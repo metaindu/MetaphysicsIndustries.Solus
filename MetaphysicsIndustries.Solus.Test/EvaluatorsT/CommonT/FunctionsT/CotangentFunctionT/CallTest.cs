@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.CotangentFunctionT
 {
-    [TestFixture]
-    public class EvalCotangentFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalCotangentFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase((float)(-5 * Math.PI / 2), 0)]
@@ -64,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = CotangentFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.Log10FunctionT
 {
-    [TestFixture]
-    public class EvalLog10FunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalLog10FunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0.00001f, -5)]
@@ -56,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = Log10Function.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -69,7 +70,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = Log10Function.Value;
             var args = new IMathObject[] { 0.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
@@ -83,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = Log10Function.Value;
             var args = new IMathObject[] { (-1).ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));

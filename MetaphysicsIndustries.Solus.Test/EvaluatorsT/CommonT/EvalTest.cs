@@ -20,12 +20,14 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Evaluators;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
 {
-    [TestFixture]
-    public class EvalTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalTest<T>
+        where T : IEvaluator, new()
     {
     }
 }

@@ -28,15 +28,16 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     MacrosT.RandMacroT
 {
-    [TestFixture]
-    public class CallTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class CallTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void CallYieldsRandomExpression()
         {
             // given
             var expr = new FunctionCall(new Literal(RandMacro.Value));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then

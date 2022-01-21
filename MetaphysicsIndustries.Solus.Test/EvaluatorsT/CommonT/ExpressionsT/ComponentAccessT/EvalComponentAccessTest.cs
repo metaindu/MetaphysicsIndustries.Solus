@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     ExpressionsT.ComponentAccessT
 {
-    [TestFixture]
-    public class EvalComponentAccessTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalComponentAccessTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void VectorWithIndexYieldsComponent()
@@ -40,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Literal(
                     new Vector(new float[] { 1, 2, 3 })),
                 new Expression[] { new Literal(1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -58,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new Matrix(
                         new float[,] { { 1, 2 }, { 3, 4 } })),
                 new Expression[] { new Literal(1), new Literal(1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -74,7 +75,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal(1),
                 new Expression[] { new Literal(1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Eval(expr, null));
@@ -92,7 +93,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new Expression[] { new Literal(1), new Literal(1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var ex = Assert.Throws<OperandException>(
                 () => eval.Eval(expr, null));
@@ -110,7 +111,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Literal(new Matrix(
                     new float[,] { { 1, 2 }, { 3, 4 } })),
                 new Expression[] { new Literal(1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var ex = Assert.Throws<OperandException>(
                 () => eval.Eval(expr, null));
@@ -131,7 +132,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new Literal(
                         new Vector(new float[] { 4, 5, 6 }))
                 });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));
@@ -150,7 +151,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new Literal(
                         new Matrix(new float[,] { { 1, 2 }, { 3, 4 } }))
                 });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));
@@ -165,7 +166,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new Expression[] { new Literal("abc".ToStringValue()) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));
@@ -180,7 +181,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new Expression[] { new Literal(-1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));
@@ -209,7 +210,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new Literal(2),
                     new Literal(3)
                 });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Eval(expr, null));
@@ -227,7 +228,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal("abc".ToStringValue()),
                 new Expression[] { new Literal(1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then
@@ -244,7 +245,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal("abc".ToStringValue()),
                 new Expression[] { new Literal(1), new Literal(1) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var ex = Assert.Throws<OperandException>(
                 () => eval.Eval(expr, null));
@@ -261,7 +262,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new Expression[] { new Literal(3) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));
@@ -279,7 +280,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal("abc".ToStringValue()),
                 new Expression[] { new Literal(3) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));
@@ -296,7 +297,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal(new Matrix(new float[,] { { 1, 2 }, { 3, 4 } })),
                 new Expression[] { new Literal(2), new Literal(0) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));
@@ -313,7 +314,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var expr = new ComponentAccess(
                 new Literal(new Matrix(new float[,] { { 1, 2 }, { 3, 4 } })),
                 new Expression[] { new Literal(0), new Literal(2) });
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var ex = Assert.Throws<IndexException>(
                 () => eval.Eval(expr, null));

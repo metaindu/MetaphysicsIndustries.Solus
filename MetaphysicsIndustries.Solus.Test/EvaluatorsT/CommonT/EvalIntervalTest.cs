@@ -28,14 +28,15 @@ using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
 {
-    [TestFixture]
-    public class EvalIntervalTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalIntervalTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void SingleIntervalEval()
         {
             // given
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("x"));
@@ -60,7 +61,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
         public void StoreToVector()
         {
             // given
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("x"));
@@ -85,7 +86,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
         public void TwoIntervalEval()
         {
             // given
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("y"));
@@ -147,7 +148,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
         public void StoreToMatrix()
         {
             // given
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("y"));
@@ -209,7 +210,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
         public void ThreeIntervalEval()
         {
             // given
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("y"),
@@ -285,7 +286,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
             var interval1 = new VarInterval("x", -2, 2);
             var interval2 = new VarInterval("y", -2, 2);
             var store = new StoreOp2<Number>();
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             env.SetVariable("e", new Literal(2.718281828f));
             // when
             int startTime = System.Environment.TickCount;
@@ -306,7 +307,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("x"));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
 
             Number Collect(Number n, Number state)
             {
@@ -338,7 +339,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("y"));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
 
             Number Max(Number n, Number state)
             {
@@ -375,7 +376,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 new VariableAccess("x"),
                 new VariableAccess("y"),
                 new VariableAccess("z"));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
 
             Number Max(Number n, Number state)
             {
@@ -413,7 +414,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 AdditionOperation.Value,
                 new VariableAccess("x"),
                 new Literal(2));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var interval = new VarInterval("x", 1, 5);
             var env = new SolusEnvironment();
             var aggrMax = new AggregateOp<Number, Number>
@@ -446,7 +447,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 MultiplicationOperation.Value,
                 new VariableAccess("x"),
                 new VariableAccess("x"));
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             var interval = new VarInterval("x", 1, 5);
             var env = new SolusEnvironment();
             var aggr = new FunctionAggregateOp(

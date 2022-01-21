@@ -20,13 +20,15 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Evaluators;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.LoadImageFunctionT
 {
-    [TestFixture]
-    public class EvalLoadImageFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalLoadImageFunctionTest<T>
+        where T : IEvaluator, new()
     {
         // TODO: how to call Evaluator.Call and specify a loader?
     }

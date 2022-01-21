@@ -20,13 +20,15 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Evaluators;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.Arctangent2FunctionT
 {
-    [TestFixture]
-    public class EvalArctangent2FunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalArctangent2FunctionTest<T>
+        where T : IEvaluator, new()
     {
     }
 }

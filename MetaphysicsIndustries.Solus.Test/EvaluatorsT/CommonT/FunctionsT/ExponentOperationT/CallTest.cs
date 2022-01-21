@@ -28,8 +28,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.ExponentOperationT
 {
-    [TestFixture]
-    public class EvalExponentOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalExponentOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 1, 0)]
@@ -74,7 +75,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = ExponentOperation.Value;
             var args = new IMathObject[] { b.ToNumber(), exponent.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

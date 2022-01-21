@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.MultiplicationOperationT
 {
-    [TestFixture]
-    public class EvalMultiplicationOperationTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalMultiplicationOperationTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 1, 0)]
@@ -56,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -70,7 +71,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[0];
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -84,7 +85,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[] { 2.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
                 eval.Call(f, args, null));
@@ -98,7 +99,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = MultiplicationOperation.Value;
             var args = new IMathObject[] { 2.ToNumber(), 3.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -116,7 +117,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 3.ToNumber(),
                 5.ToNumber()
             };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     MacrosT.DeriveMacroT
 {
-    [TestFixture]
-    public class CallTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class CallTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void DeriveYieldsDerivative()
@@ -42,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 parser.GetExpression("3*x^2+5*x+7"),
                 new VariableAccess("x"));
             var env = new SolusEnvironment();
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, env);
             // then

@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
 {
     public static class Util
     {
-        public static IEvaluator CreateEvaluator() =>
-            new BasicEvaluator();
+        public static T CreateEvaluator<T>() 
+            where T : new() => new T();
     }
 }

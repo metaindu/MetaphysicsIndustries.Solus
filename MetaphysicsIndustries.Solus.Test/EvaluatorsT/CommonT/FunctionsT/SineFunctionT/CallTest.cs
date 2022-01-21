@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.SineFunctionT
 {
-    [TestFixture]
-    public class EvalSineFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalSineFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 0)]
@@ -63,7 +64,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = SineFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then

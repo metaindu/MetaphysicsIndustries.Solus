@@ -30,8 +30,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.ArccosineFunctionT
 {
-    [TestFixture]
-    public class EvalArccosineFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalArccosineFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         [TestCase(0, 1)]
@@ -47,7 +48,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = ArccosineFunction.Value;
             var args = new IMathObject[] { arg.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -61,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = ArccosineFunction.Value;
             var args = new IMathObject[] { (-1.0001f).ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
@@ -75,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = ArccosineFunction.Value;
             var args = new IMathObject[] { 1.0001f.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // expect
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));

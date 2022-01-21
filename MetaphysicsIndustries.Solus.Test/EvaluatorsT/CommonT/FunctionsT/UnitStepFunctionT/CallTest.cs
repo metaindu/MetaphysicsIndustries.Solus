@@ -29,8 +29,9 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.UnitStepFunctionT
 {
-    [TestFixture]
-    public class EvalUnitStepFunctionTest
+    [TestFixture(typeof(BasicEvaluator))]
+    public class EvalUnitStepFunctionTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
         public void UnitStepFunctionPositiveYieldsOne()
@@ -38,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = UnitStepFunction.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -51,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = UnitStepFunction.Value;
             var args = new IMathObject[] { 0.ToNumber() };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -64,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // given
             var f = UnitStepFunction.Value;
             var args = new IMathObject[] { new Number(-1) };
-            var eval = Util.CreateEvaluator();
+            var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Call(f, args, null);
             // then
