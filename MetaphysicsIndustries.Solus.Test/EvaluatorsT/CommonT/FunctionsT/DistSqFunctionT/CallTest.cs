@@ -29,6 +29,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.DistSqFunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalDistSqFunctionTest<T>
         where T : IEvaluator, new()
     {

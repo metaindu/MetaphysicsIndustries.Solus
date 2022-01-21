@@ -29,6 +29,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.BitwiseAndOperationT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalBitwiseAndOperationTest<T>
         where T : IEvaluator, new()
     {

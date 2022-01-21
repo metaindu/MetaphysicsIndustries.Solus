@@ -30,6 +30,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     MacrosT.IfMacroT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class CallTest<T>
         where T : IEvaluator, new()
     {

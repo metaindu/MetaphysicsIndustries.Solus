@@ -30,6 +30,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.ArccosecantFunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalArccosecantFunctionTest<T>
         where T : IEvaluator, new()
     {

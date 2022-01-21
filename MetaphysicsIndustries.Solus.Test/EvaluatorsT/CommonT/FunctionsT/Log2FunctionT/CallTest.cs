@@ -31,6 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.Log2FunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalLog2FunctionTest<T>
         where T : IEvaluator, new()
     {

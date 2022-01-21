@@ -31,6 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.MinimumFiniteFunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalMinimumFiniteFunctionTest<T>
         where T : IEvaluator, new()
     {

@@ -32,6 +32,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.MaximumFiniteFunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalMaximumFiniteFunctionTest<T>
         where T : IEvaluator, new()
     {

@@ -31,6 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     ExpressionsT.VariableAccessT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalVariableAccessTest<T>
         where T : IEvaluator, new()
     {

@@ -27,6 +27,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.Arctangent2FunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalArctangent2FunctionTest<T>
         where T : IEvaluator, new()
     {

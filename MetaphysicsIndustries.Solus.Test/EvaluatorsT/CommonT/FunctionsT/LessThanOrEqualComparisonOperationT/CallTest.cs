@@ -33,6 +33,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.LessThanOrEqualComparisonOperationT
 {
     [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
     public class EvalLessThanOrEqualComparisonOperationTest<T>
         where T : IEvaluator, new()
     {
