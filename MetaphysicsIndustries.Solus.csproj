@@ -113,6 +113,7 @@
     <Compile Include="Expressions\ComponentAccess.cs" />
     <Compile Include="Expressions\DerivativeOfVariable.cs" />
     <Compile Include="Expressions\Expression.cs" />
+    <Compile Include="Expressions\ExpressionChecker.cs" />
     <Compile Include="Expressions\FunctionCall.cs" />
     <Compile Include="Expressions\IExpressionVisitor.cs" />
     <Compile Include="Expressions\IntervalExpression.cs" />
