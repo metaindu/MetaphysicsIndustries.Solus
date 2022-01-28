@@ -125,15 +125,15 @@ namespace MetaphysicsIndustries.Solus.Expressions
             Check(expr.Function, env);
             for (var i = 0; i < expr.Arguments.Count; i++)
                 Check(expr.Arguments[i], env);
-            
-            var literal = expr.Function as Literal;
-            if (literal==null)
-                throw new ArgumentException(
-                    "Can't check non-literal function target.");
-            var macro = literal.Value as Macro;
-            if (macro != null) return;
-            var f = literal.Value as Function;
-            if (f==null)
+
+            IMathObject fv = expr.Function;
+            if (fv is VariableAccess va)
+                fv = va.GetFinalReferencedValue(env);
+            if (fv is Literal literal)
+                fv = literal.Value;
+            if (fv is Macro) return;
+            var f = fv as Function;
+            if (f == null)
                 throw new ArgumentException(
                     "Can't check non-function target.");
 
