@@ -40,13 +40,54 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             // TODO: vector
             // TODO: matrix
             // TODO: string?
-            float sum = 0;
-            foreach (var arg in args)
+
+            if (args[0].IsIsScalar(env))
             {
-                sum += arg.ToNumber().Value;
+                float sum = 0;
+                foreach (var arg in args)
+                {
+                    sum += arg.ToNumber().Value;
+                }
+                return sum.ToNumber();
             }
 
-            return sum.ToNumber();
+            if (args[0].IsIsMatrix(env))
+            {
+                var m = args[0].ToMatrix();
+                var nr = m.RowCount;
+                var nc = m.ColumnCount;
+                var elements = new float[nr, nc];
+                int r, c;
+                foreach (var arg in args)
+                {
+                    var v = arg.ToMatrix();
+                    for (r = 0; r < nr; r++)
+                    for (c = 0; c < nr; c++)
+                        elements[r,c] += v[r,c].ToNumber().Value;
+                }
+                return new Matrix(elements);
+            }
+
+            if (args[0].IsIsVector(env))
+            {
+                int n = args[0].ToVector().Length;
+                var elements = new float[n];
+                int i;
+                foreach (var arg in args)
+                {
+                    var v = arg.ToVector();
+                    for (i = 0; i < n; i++)
+                        elements[i] += v[i].ToNumber().Value;
+                }
+
+                if (n == 2) return new Vector2(elements[0], elements[1]);
+                if (n == 3)
+                    return new Vector3(
+                        elements[0], elements[1], elements[2]);
+                return new Vector(elements);
+            }
+
+            throw new OperandException("Unsupported type");
         }
 
         public IMathObject CallFunction(ArccosecantFunction f,
@@ -409,14 +450,105 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MultiplicationOperation f,
             IMathObject[] args, SolusEnvironment env)
         {
-            float value = 1;
-            int i;
-            for (i = 0; i < args.Length; i++)
+            // s*s=s
+            // s*v=v
+            // v*s=v
+            // v*v=X
+            // s*m=m
+            // m*s=m
+            // v*m=v?
+            // m*V=v?
+            // m*m=m
+
+            IMathObject current = args[0];
+            IMathObject next = null;
+            for (int i = 1; i < args.Length; i++)
             {
-                value *= args[i].ToNumber().Value;
+                var cs = current.IsIsScalar(env);
+                var cv = current.IsIsVector(env);
+                var cm = current.IsIsMatrix(env);
+                if (!cs && !cv && !cm)
+                    throw new OperandException(
+                        "Unsupported type, " + $"{current.GetMathType()}");
+                next = args[i];
+                var ns = next.IsIsScalar(env);
+                var nv = next.IsIsVector(env);
+                var nm = next.IsIsMatrix(env);
+                if (!ns && !nv && !nm)
+                    throw new OperandException(
+                        "Unsupported type, " + $"{next.GetMathType()}");
+
+                if (cs)
+                {
+                    if (ns)
+                    {
+                        current = new Number(current.ToNumber().Value *
+                                             next.ToNumber().Value);
+                    }
+                    else if (nv)
+                    {
+                        var csv = current.ToNumber().Value;
+                        var nvv = next.ToVector();
+                        var fs = new float[nvv.Length];
+                        for (int j = 0; j < nvv.Length; j++)
+                            fs[j] = nvv[j].ToNumber().Value * csv;
+                        current = new Vector(fs);
+                    }
+                    else // if (nm)
+                    {
+                        var csv = current.ToNumber().Value;
+                        var nmv = next.ToMatrix();
+                        var fs = new float[nmv.RowCount, nmv.ColumnCount];
+                        for (int r = 0; r < nmv.RowCount; r++)
+                        for (int c = 0; c < nmv.ColumnCount; c++)
+                            fs[r, c] = nmv[r, c].ToNumber().Value * csv;
+                        current = new Matrix(fs);
+                    }
+                }
+                else if (cv)
+                {
+                    if (ns)
+                    {
+                        var cvv = current.ToVector();
+                        var nsv = next.ToNumber().Value;
+                        var fs = new float[cvv.Length];
+                        for (int j = 0; j < cvv.Length; j++)
+                            fs[j] = cvv[j].ToNumber().Value * nsv;
+                        current = new Vector(fs);
+                    }
+                    else if (nv)
+                    {
+                        throw new NotImplementedException();
+                    }
+                    else // if (nm)
+                    {
+                        throw new NotImplementedException();
+                    }
+                }
+                else // if (cm)
+                {
+                    if (ns)
+                    {
+                        var cmv = current.ToMatrix();
+                        var nsv = next.ToNumber().Value;
+                        var fs = new float[cmv.RowCount, cmv.ColumnCount];
+                        for (int r = 0; r < cmv.RowCount; r++)
+                        for (int c = 0; c < cmv.ColumnCount; c++)
+                            fs[r, c] = cmv[r, c].ToNumber().Value * nsv;
+                        current = new Matrix(fs);
+                    }
+                    else if (nv)
+                    {
+                        throw new NotImplementedException();
+                    }
+                    else // if (nm)
+                    {
+                        throw new NotImplementedException();
+                    }
+                }
             }
 
-            return value.ToNumber();
+            return current;
         }
 
         public IMathObject CallFunction(NaturalLogarithmFunction f,
