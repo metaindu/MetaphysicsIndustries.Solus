@@ -109,16 +109,16 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"{displayName} (expected {paramTypes.Count} but got " +
                     $"{args.Length})");
             }
-            for (var i = 0; i < args.Length; i++)
-            {
-                var argtype = args[i].GetMathType();
-                if (argtype != paramTypes[i])
-                {
-                    throw new ArgumentException(
-                        $"Argument {i} wrong type: expected " +
-                        $"{paramTypes[i]} but got {argtype}");
-                }
-            }
+            // for (var i = 0; i < args.Length; i++)
+            // {
+            //     var argtype = args[i].GetMathType();
+            //     if (argtype != paramTypes[i])
+            //     {
+            //         throw new ArgumentException(
+            //             $"Argument {i} wrong type: expected " +
+            //             $"{paramTypes[i]} but got {argtype}");
+            //     }
+            // }
         }
 
         public ReadOnlyCollection<Types> ParamTypes { get; }
