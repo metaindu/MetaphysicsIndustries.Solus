@@ -20,8 +20,10 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -74,11 +76,96 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
-            // TODO: matrix multiplication
-            // TODO: matrix times scalar and vice-versa
-            // TODO: matrix times vector and vice-versa
-            // TODO: vector times scalar
-            return args.First();
+            // s*s=s
+            // s*v=v
+            // v*s=v
+            // v*v=X
+            // s*m=m
+            // m*s=m
+            // v*m=v?
+            // m*V=v?
+            // m*m=m
+            var args1 = args.ToList();
+            var current = args1[0];
+            var n = args1.Count;
+            for (int i = 1; i < n; i++)
+            {
+                var cs = current.IsIsScalar(null);
+                var cv = current.IsIsVector(null);
+                var cm = current.IsIsMatrix(null);
+                if (!cs && !cv && !cm)
+                    return null;
+                var next = args1[i];
+                var ns = next.IsIsScalar(null);
+                var nv = next.IsIsVector(null);
+                var nm = next.IsIsMatrix(null);
+                if (!ns && !nv && !nm)
+                    return null;
+
+                if (cs)
+                {
+                    // if (ns)
+                    // {
+                    //     // current = next;
+                    // }
+                    // else if (nv)
+                    // {
+                    //     current = next;
+                    // }
+                    // else // if (nm)
+                    // {
+                    //     current = next;
+                    // }
+                    current = next;
+                }
+                else if (cv)
+                {
+                    if (ns)
+                    {
+                        // current = current;
+                    }
+                    else if (nv)
+                    {
+                        throw new NotImplementedException();
+                    }
+                    else // if (nm)
+                    {
+                        throw new NotImplementedException();
+                    }
+                }
+                else // if (cm)
+                {
+                    if (ns)
+                    {
+                        // current = current;
+                    }
+                    else if (nv)
+                    {
+                        throw new NotImplementedException();
+                    }
+                    else // if (nm)
+                    {
+                        if (current.GetDimension(null, 1) !=
+                            next.GetDimension(null, 0))
+                            throw new OperandException(
+                                "Matrix dimensions don't match for matrix " +
+                                "multiplication");
+                        var tt = current.GetDimension(null, 0);
+                        if (!tt.HasValue)
+                            throw new InvalidOperationException(
+                                "Null row count?");
+                        var r = tt.Value;
+                        tt = next.GetDimension(null, 1);
+                        if (!tt.HasValue)
+                            throw new InvalidOperationException(
+                                "Null column count?");
+                        var c = tt.Value;
+                        current = new MatrixMathObject(r, c);
+                    }
+                }
+            }
+
+            return current;
         }
     }
 }

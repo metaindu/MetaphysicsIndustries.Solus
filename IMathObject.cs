@@ -101,4 +101,79 @@ namespace MetaphysicsIndustries.Solus
 
         public string DocString => "";
     }
+
+    public class VectorMathObject : IMathObject
+    {
+        public VectorMathObject(int length) => _length = length;
+        private readonly int _length;
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => true;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => 1;
+        public bool? IsString(SolusEnvironment env) => false;
+
+        public int? GetDimension(SolusEnvironment env, int index)
+        {
+            if (index == 0) return _length;
+            return null;
+        }
+
+        private int[] __GetDimensions;
+
+        public int[] GetDimensions(SolusEnvironment env)
+        {
+            if (__GetDimensions == null)
+                __GetDimensions = new[] { _length };
+            return __GetDimensions;
+        }
+
+        public int? GetVectorLength(SolusEnvironment env) => _length;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+
+        public bool IsConcrete => false;
+        public string DocString => "";
+    }
+
+    public class MatrixMathObject : IMathObject
+    {
+        public MatrixMathObject(int rowCount, int columnCount)
+        {
+            _rowCount = rowCount;
+            _columnCount = columnCount;
+        }
+
+        private readonly int _rowCount;
+        private readonly int _columnCount;
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => true;
+        public int? GetTensorRank(SolusEnvironment env) => 2;
+        public bool? IsString(SolusEnvironment env) => false;
+
+        public int? GetDimension(SolusEnvironment env, int index)
+        {
+            if (index == 0) return _rowCount;
+            if (index == 1) return _columnCount;
+            return null;
+        }
+
+        private int[] __GetDimensions;
+
+        public int[] GetDimensions(SolusEnvironment env)
+        {
+            if (__GetDimensions == null)
+                __GetDimensions = new[] { _rowCount, _columnCount };
+            return __GetDimensions;
+        }
+
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+
+        public bool IsConcrete => false;
+        public string DocString => "";
+    }
 }
