@@ -46,6 +46,9 @@ namespace MetaphysicsIndustries.Solus.Values
         {
         }
 
+        public static Vector Zero(int length) =>
+            new Vector(new float[length]);
+
         private readonly IMathObject[] _components;
         public IMathObject this[int index] => _components[index];
         public int Length => _components.Length;
