@@ -132,8 +132,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public void Check(FunctionCall expr, SolusEnvironment env)
         {
             Check(expr.Function, env);
-            for (var i = 0; i < expr.Arguments.Count; i++)
-                Check(expr.Arguments[i], env);
 
             IMathObject fv = expr.Function;
             if (fv is VariableAccess va)
@@ -145,6 +143,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (f == null)
                 throw new ArgumentException(
                     "Can't check non-function target.");
+
+            for (var i = 0; i < expr.Arguments.Count; i++)
+                Check(expr.Arguments[i], env);
 
             var args = expr.Arguments;
 
