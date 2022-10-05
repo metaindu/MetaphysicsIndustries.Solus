@@ -42,8 +42,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new VariableAccess("y"),
                 new Literal(1));
             var ec = new ExpressionChecker();
+            var env = new SolusEnvironment();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.Check(expr, env));
         }
 
         [Test]
@@ -56,8 +57,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new VariableAccess("x"),
                 new Literal(1));
             var ec = new ExpressionChecker();
+            var env = new SolusEnvironment();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.Check(expr, env));
         }
     }
 }
