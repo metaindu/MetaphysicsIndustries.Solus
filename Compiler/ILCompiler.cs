@@ -299,6 +299,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             return new LoadLocalIlExpression(local);
         }
 
+        static Type[] GetTypeArrayOfInt(int length)
+        {
+            var a = new Type[length];
+            int i;
+            for (i = 0; i < length; i++)
+                a[i] = typeof(int);
+            return a;
+        }
+
         public IlExpression ConvertToIlExpression(ComponentAccess expr,
             NascentMethod nm)
         {
@@ -310,13 +319,27 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 indexes2[i] = ConvertToIlExpression(expr.Indexes[i], nm);
             }
 
-            // assume vector for now
-            if (expr.Indexes.Count != 1)
-                throw new InvalidOperationException();
-            var toString = typeof(object).GetMethod("ToString");
-            var toString2 = typeof(float).GetMethod("ToString",
-                Type.EmptyTypes);
-            return new LoadElemIlExpression(expr2, indexes2[0]);
+            // assume vector (and not string) for now
+            if (expr.Indexes.Count == 1)
+                return new LoadElemIlExpression(expr2, indexes2[0]);
+
+            // higher rank tensor
+            if (expr.Indexes.Count >= 2)
+            {
+                var arrayType = typeof(float).MakeArrayType(
+                    expr.Indexes.Count);
+                var getMethod = arrayType.GetMethod("Get",
+                    GetTypeArrayOfInt(expr.Indexes.Count));
+                var args = new IlExpression[indexes2.Length + 1];
+                args[0] = expr2;
+                indexes2.CopyTo(args, 1);
+                var callExpr = new CallIlExpression(getMethod, args);
+                return callExpr;
+            }
+
+            // TODO: string?
+
+            throw new NotImplementedException();
         }
 
         // compile functions
