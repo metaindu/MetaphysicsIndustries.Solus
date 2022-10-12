@@ -42,7 +42,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
             Method,
             Constructor,
             String,
-            Label
+            Label,
+            Type,
         };
 
         public ArgumentType ArgType;
@@ -56,6 +57,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public ConstructorInfo ConstructorArg;
         public string StringArg;
         public IlLabel LabelArg;
+        public Type TypeArg;
 
         public override string ToString()
         {
@@ -108,7 +110,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
         }
 
-        public void Emit(ILGenerator gen, Label label=default)
+        public void Emit(IILGenerator gen, Label label=default)
         {
             switch (ArgType)
             {
@@ -150,6 +152,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 break;
             case ArgumentType.Label:
                 gen.Emit(OpCode, label);
+                break;
+            case ArgumentType.Type:
+                gen.Emit(OpCode, TypeArg);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -423,6 +428,40 @@ namespace MetaphysicsIndustries.Solus.Compiler
             {
                 OpCode = OpCodes.Throw,
                 ArgType = ArgumentType.None
+            };
+
+        public static Instruction NewArr(Type type) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Newarr,
+                ArgType = ArgumentType.Type,
+                TypeArg = type
+            };
+
+        public static Instruction LdElem(Type type) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Ldelem,
+                ArgType = ArgumentType.Type,
+                TypeArg = type
+            };
+        public static Instruction LdElemR4() =>
+            new Instruction
+            {
+                OpCode = OpCodes.Ldelem_R4,
+            };
+
+        public static Instruction StElem(Type type) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Stelem,
+                ArgType = ArgumentType.Type,
+                TypeArg = type
+            };
+        public static Instruction StElemR4() =>
+            new Instruction
+            {
+                OpCode = OpCodes.Stelem_R4,
             };
 
         public static Instruction NewObj(ConstructorInfo ci) =>

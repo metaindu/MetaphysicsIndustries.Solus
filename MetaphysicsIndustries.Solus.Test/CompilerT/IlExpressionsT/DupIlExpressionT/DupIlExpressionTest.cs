@@ -44,15 +44,25 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         }
 
         [Test]
-        public void ConstructorNullTargetThrows()
+        public void ConstructorNullTargetCreatesInstance()
         {
-            // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new DupIlExpression(null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: target",
-                ex.Message);
+            // when
+            var result = new DupIlExpression(null);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<DupIlExpression>(result);
+            Assert.IsNull(result.Target);
+        }
+
+        [Test]
+        public void ConstructorNoTargetCreatesInstance()
+        {
+            // when
+            var result = new DupIlExpression();
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<DupIlExpression>(result);
+            Assert.IsNull(result.Target);
         }
     }
 }

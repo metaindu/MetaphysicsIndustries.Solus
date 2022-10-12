@@ -20,26 +20,28 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
-
-namespace MetaphysicsIndustries.Solus.Compiler
+namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class CompiledExpression
+    public class StoreElemIlExpression : IlExpression
     {
-        public Func<CompiledEnvironment, float> Method;
-        public string[] CompiledVars;
-
-        // diagnostics
-        public NascentMethod nm;
-        public IlExpression ilexpr;
-        public List<Instruction> setup;
-        public List<Instruction> shutdown;
-
-        public float Evaluate(CompiledEnvironment cenv)
+        public StoreElemIlExpression(IlExpression array_ = null,
+            IlExpression index = null, IlExpression value = null)
         {
-            return (float)Method(cenv);
+            Array = array_;
+            Index = index;
+            Value = value;
+        }
+
+        public IlExpression Array { get; }
+        public IlExpression Index { get; }
+        public IlExpression Value { get; }
+
+        protected override void GetInstructionsInternal(NascentMethod nm)
+        {
+            if (Array != null) Array.GetInstructions(nm);
+            if (Index != null) Index.GetInstructions(nm);
+            if (Value != null) Value.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.StElem(typeof(float)));
         }
     }
 }

@@ -21,25 +21,26 @@
  */
 
 using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 
-namespace MetaphysicsIndustries.Solus.Compiler
+namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class CompiledExpression
+    public class NewArrIlExpression : IlExpression
     {
-        public Func<CompiledEnvironment, float> Method;
-        public string[] CompiledVars;
-
-        // diagnostics
-        public NascentMethod nm;
-        public IlExpression ilexpr;
-        public List<Instruction> setup;
-        public List<Instruction> shutdown;
-
-        public float Evaluate(CompiledEnvironment cenv)
+        public NewArrIlExpression(Type elemType,
+            IlExpression length)
         {
-            return (float)Method(cenv);
+            ElemType = elemType ??
+                       throw new ArgumentNullException(nameof(elemType));
+            Length = length;
+        }
+
+        public Type ElemType { get; }
+        public IlExpression Length { get; }
+
+        protected override void GetInstructionsInternal(NascentMethod nm)
+        {
+            if (Length != null) Length.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.NewArr(ElemType));
         }
     }
 }
