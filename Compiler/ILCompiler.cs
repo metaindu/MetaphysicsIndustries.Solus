@@ -257,9 +257,37 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return new IlExpressionSequence(seq);
             }
 
+            if (expr.Value.IsIsMatrix(null))
+            {
+                var a = new float[2, 3];
+                var m = expr.Value.ToMatrix();
+                var arrayType = typeof(float[,]);
+                var ctor = arrayType.GetConstructor(
+                    new[] { typeof(int), typeof(int) });
+                var setMethod = arrayType.GetMethod("Set",
+                    new[] { typeof(int), typeof(int), typeof(float) });
+                var seq = new List<IlExpression>();
+                seq.Add(new NewObjIlExpression(ctor,
+                    new LoadConstantIlExpression(m.RowCount),
+                    new LoadConstantIlExpression(m.ColumnCount)));
+                var dup = new DupIlExpression();
+                int r, c;
+                for (r = 0; r < m.RowCount; r++)
+                for (c = 0; c < m.ColumnCount; c++)
+                    seq.Add(
+                        new CallIlExpression(
+                            setMethod,
+                            dup,
+                            new LoadConstantIlExpression(r),
+                            new LoadConstantIlExpression(c),
+                            new LoadConstantIlExpression(m[r, c].ToFloat())));
+
+                return new IlExpressionSequence(seq);
+            }
+
             throw new NotImplementedException(
-                "currently only implemented for numbers and " +
-                "vectors.");
+                "currently only implemented for numbers, vectors, " +
+                "and matrices.");
         }
 
         public IlExpression ConvertToIlExpression(
