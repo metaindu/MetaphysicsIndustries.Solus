@@ -48,7 +48,10 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             int i;
             for (i = 0; i < Args.Length; i++)
                 Args[i].GetInstructions(nm);
-            nm.Instructions.Add(Instruction.Call(Method));
+            if (Method.IsVirtual)
+                nm.Instructions.Add(Instruction.CallVirtual(Method));
+            else
+                nm.Instructions.Add(Instruction.Call(Method));
         }
     }
 }
