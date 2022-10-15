@@ -77,6 +77,28 @@ namespace MetaphysicsIndustries.Solus.Compiler
             public string StringArg;
             public Label LabelArg;
             public Type TypeArg;
+
+            public string Flag;
+
+            public override string ToString()
+            {
+                object extra = null;
+                if (Flag == "SbyteArg") extra = SbyteArg;
+                else if (Flag == "ShortArg") extra = ShortArg;
+                else if (Flag == "IntArg") extra = IntArg;
+                else if (Flag == "LongArg") extra = LongArg;
+                else if (Flag == "FloatArg") extra = FloatArg;
+                else if (Flag == "DoubleArg") extra = DoubleArg;
+                else if (Flag == "MethodArg") extra = MethodArg;
+                else if (Flag == "ConstructorArg") extra = ConstructorArg;
+                else if (Flag == "StringArg") extra = StringArg;
+                else if (Flag == "LabelArg") extra = LabelArg;
+                else if (Flag == "TypeArg") extra = TypeArg;
+
+                if (extra != null)
+                    return $"{OpCode} {extra}";
+                return $"{OpCode}";
+            }
         }
 
         private readonly IILGenerator _next;
@@ -91,67 +113,67 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public void Emit(OpCode opCode, sbyte sbyteArg)
         {
-            Records.Add(new Record { OpCode = opCode, SbyteArg = sbyteArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "SbyteArg", SbyteArg = sbyteArg });
             _next.Emit(opCode, sbyteArg);
         }
 
         public void Emit(OpCode opCode, short shortArg)
         {
-            Records.Add(new Record { OpCode = opCode, ShortArg = shortArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "ShortArg", ShortArg = shortArg });
             _next.Emit(opCode, shortArg);
         }
 
         public void Emit(OpCode opCode, int intArg)
         {
-            Records.Add(new Record { OpCode = opCode, IntArg = intArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "IntArg", IntArg = intArg });
             _next.Emit(opCode, intArg);
         }
 
         public void Emit(OpCode opCode, long longArg)
         {
-            Records.Add(new Record { OpCode = opCode, LongArg = longArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "LongArg", LongArg = longArg });
             _next.Emit(opCode, longArg);
         }
 
         public void Emit(OpCode opCode, float floatArg)
         {
-            Records.Add(new Record { OpCode = opCode, FloatArg = floatArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "FloatArg", FloatArg = floatArg });
             _next.Emit(opCode, floatArg);
         }
 
         public void Emit(OpCode opCode, double doubleArg)
         {
-            Records.Add(new Record { OpCode = opCode, DoubleArg = doubleArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "DoubleArg", DoubleArg = doubleArg });
             _next.Emit(opCode, doubleArg);
         }
 
         public void Emit(OpCode opCode, MethodInfo methodArg)
         {
-            Records.Add(new Record { OpCode = opCode, MethodArg = methodArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "MethodArg", MethodArg = methodArg });
             _next.Emit(opCode, methodArg);
         }
 
         public void Emit(OpCode opCode, ConstructorInfo constructorArg)
         {
-            Records.Add(new Record { OpCode = opCode, ConstructorArg = constructorArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "ConstructorArg", ConstructorArg = constructorArg });
             _next.Emit(opCode, constructorArg);
         }
 
         public void Emit(OpCode opCode, string stringArg)
         {
-            Records.Add(new Record { OpCode = opCode, StringArg = stringArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "StringArg", StringArg = stringArg });
             _next.Emit(opCode, stringArg);
         }
 
         public void Emit(OpCode opCode, Label labelArg)
         {
-            Records.Add(new Record { OpCode = opCode, LabelArg = labelArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "LabelArg", LabelArg = labelArg });
             _next.Emit(opCode, labelArg);
         }
 
         public void Emit(OpCode opCode, Type typeArg)
         {
-            Records.Add(new Record { OpCode = opCode, TypeArg = typeArg });
+            Records.Add(new Record { OpCode = opCode, Flag = "TypeArg", TypeArg = typeArg });
             _next.Emit(opCode, typeArg);
         }
     }
