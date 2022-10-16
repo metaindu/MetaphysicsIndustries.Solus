@@ -42,5 +42,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             if (Length != null) Length.GetInstructions(nm);
             nm.Instructions.Add(Instruction.NewArr(ElemType));
         }
+
+        public override Type ResultType => ElemType.MakeArrayType();
     }
 }

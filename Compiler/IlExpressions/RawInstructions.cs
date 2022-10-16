@@ -20,12 +20,20 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class RawInstructions:IlExpression
+    public class RawInstructions : IlExpression
     {
         public RawInstructions(params Instruction[] instructions)
+            : this(null, instructions)
         {
+        }
+        public RawInstructions(Type resultType=null,
+            params Instruction[] instructions)
+        {
+            ResultType = resultType;
             Instructions = instructions;
         }
 
@@ -37,5 +45,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             for (i = 0; i < Instructions.Length; i++)
                 nm.Instructions.Add(Instructions[i]);
         }
+
+        public override Type ResultType { get; }
     }
 }

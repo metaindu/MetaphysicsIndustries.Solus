@@ -77,6 +77,7 @@
     <Compile Include="Compiler\IlExpressions\LoadConstantIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadElemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadLocalIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\LoadNullIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadStringIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\MulIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\NegIlExpression.cs" />

@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
@@ -44,5 +45,8 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             foreach (var expr in Expressions)
                 expr.GetInstructions(nm);
         }
+
+        public override Type ResultType =>
+            Expressions[Expressions.Length - 1].ResultType;
     }
 }

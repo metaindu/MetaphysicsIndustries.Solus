@@ -20,6 +20,8 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class LoadConstantIlExpression : IlExpression
@@ -36,6 +38,30 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
             nm.Instructions.Add(Instruction);
+        }
+
+        public override Type ResultType {
+            get
+            {
+                switch (Instruction.ArgType)
+                {
+                    case Instruction.ArgumentType.I1:
+                    case Instruction.ArgumentType.I2:
+                    case Instruction.ArgumentType.I4:
+                        return typeof(int);
+                    case Instruction.ArgumentType.I8:
+                        return typeof(long);
+                    case Instruction.ArgumentType.R4:
+                        return typeof(float);
+                    case Instruction.ArgumentType.R8:
+                        return typeof(double);
+                    case Instruction.ArgumentType.String:
+                        return typeof(string);
+                }
+
+                throw new ArgumentException(
+                    $"Unsupported argument type, {Instruction.ArgType}");
+            }
         }
     }
 }

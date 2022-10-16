@@ -24,32 +24,17 @@ using System;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class AndIlExpression : IlExpression
+    public class LoadNullIlExpression : IlExpression
     {
-        public AndIlExpression(IlExpression left, IlExpression right)
+        public LoadNullIlExpression()
         {
-            Left = left ?? throw new ArgumentNullException(nameof(left));
-            Right = right ?? throw new ArgumentNullException(nameof(right));
         }
-
-        public IlExpression Left { get; }
-        public IlExpression Right { get; }
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            Left.GetInstructions(nm);
-            Right.GetInstructions(nm);
-            nm.Instructions.Add(Instruction.And());
+            nm.Instructions.Add(Instruction.LoadNull());
         }
 
-        public override Type ResultType
-        {
-            get
-            {
-                if (Left.ResultType == Right.ResultType)
-                    return Left.ResultType;
-                return typeof(int);
-            }
-        }
+        public override Type ResultType => typeof(object);
     }
 }

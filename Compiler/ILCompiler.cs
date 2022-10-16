@@ -22,10 +22,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 
@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             DynamicMethod method =
                 new DynamicMethod(
                     name: this.ToString(),
-                    returnType: typeof(float),
+                    returnType: typeof(object),
                     parameterTypes: new []
                     {
                         typeof(CompiledEnvironment)
@@ -90,6 +90,19 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             var shutdown = new List<Instruction>();
+            var resultType = ilexpr.ResultType;
+            if (resultType == typeof(byte) ||
+                resultType == typeof(sbyte) ||
+                resultType == typeof(short) ||
+                resultType == typeof(ushort) ||
+                resultType == typeof(int) ||
+                resultType == typeof(uint) ||
+                resultType == typeof(long) ||
+                resultType == typeof(ulong) ||
+                resultType == typeof(float) ||
+                resultType == typeof(double) ||
+                resultType == typeof(bool))
+                shutdown.Add(Instruction.Box(typeof(float)));
             shutdown.Add(Instruction.Return());
 
             var instructionOffsets = new List<int>();
@@ -127,12 +140,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 instruction.Emit(gen2);
             }
 
-            Func<CompiledEnvironment, float> del;
+            Func<CompiledEnvironment, object> del;
             try
             {
                 del =
-                    (Func<CompiledEnvironment, float>)method.CreateDelegate(
-                        typeof(Func<CompiledEnvironment, float>));
+                    (Func<CompiledEnvironment, object>)method.CreateDelegate(
+                        typeof(Func<CompiledEnvironment, object>));
             }
             catch (InvalidProgramException ipe)
             {
@@ -205,6 +218,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return ConvertToIlExpression(va, nm);
             if (expr is ComponentAccess ca)
                 return ConvertToIlExpression(ca, nm);
+            if (expr is VectorExpression ve)
+                return ConvertToIlExpression(ve, nm);
+            if (expr is MatrixExpression me)
+                return ConvertToIlExpression(me, nm);
             throw new ArgumentException(
                 $"Unsupported expression type: \"{expr}\"", nameof(expr));
         }
@@ -228,8 +245,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
             if (expr.Value.IsIsScalar(null))
             {
                 var value = expr.Value.ToFloat();
-                if (value == Math.Floor(value))
-                    return new LoadConstantIlExpression((long)value);
                 return new LoadConstantIlExpression(value);
             }
 
@@ -259,7 +274,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
             if (expr.Value.IsIsMatrix(null))
             {
-                var a = new float[2, 3];
                 var m = expr.Value.ToMatrix();
                 var arrayType = typeof(float[,]);
                 var ctor = arrayType.GetConstructor(
@@ -316,7 +330,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
             int i;
             for (i = 0; i < indexes2.Length; i++)
             {
-                indexes2[i] = ConvertToIlExpression(expr.Indexes[i], nm);
+                indexes2[i] = new ConvertI4IlExpression(
+                    ConvertToIlExpression(expr.Indexes[i], nm));
             }
 
             // assume vector (and not string) for now
@@ -340,6 +355,52 @@ namespace MetaphysicsIndustries.Solus.Compiler
             // TODO: string?
 
             throw new NotImplementedException();
+        }
+
+        public IlExpression ConvertToIlExpression(VectorExpression expr,
+            NascentMethod nm)
+        {
+            var seq = new List<IlExpression>();
+            var newarr = new NewArrIlExpression(
+                typeof(float),
+                new LoadConstantIlExpression(expr.Length));
+            seq.Add(newarr);
+            int i;
+            for (i = 0; i < expr.Length; i++)
+                seq.Add(
+                    new StoreElemIlExpression(
+                        array_: new DupIlExpression(newarr),
+                        index: new LoadConstantIlExpression(i),
+                        value: ConvertToIlExpression(expr[i], nm)));
+
+            return new IlExpressionSequence(seq);
+        }
+
+        public IlExpression ConvertToIlExpression(MatrixExpression expr,
+            NascentMethod nm)
+        {
+            var arrayType = typeof(float[,]);
+            var ctor = arrayType.GetConstructor(
+                new[] { typeof(int), typeof(int) });
+            var setMethod = arrayType.GetMethod("Set",
+                new[] { typeof(int), typeof(int), typeof(float) });
+            var seq = new List<IlExpression>();
+            var newobj = new NewObjIlExpression(ctor,
+                new LoadConstantIlExpression(expr.RowCount),
+                new LoadConstantIlExpression(expr.ColumnCount));
+            seq.Add(newobj);
+            var dup = new DupIlExpression(newobj);
+            int r, c;
+            for (r = 0; r < expr.RowCount; r++)
+            for (c = 0; c < expr.ColumnCount; c++)
+                seq.Add(
+                    new CallIlExpression(
+                        setMethod,
+                        dup,
+                        new LoadConstantIlExpression(r),
+                        new LoadConstantIlExpression(c),
+                        ConvertToIlExpression(expr[r, c], nm)));
+            return new IlExpressionSequence(seq);
         }
 
         // compile functions

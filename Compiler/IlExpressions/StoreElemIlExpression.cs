@@ -20,6 +20,8 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class StoreElemIlExpression : IlExpression
@@ -43,5 +45,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             if (Value != null) Value.GetInstructions(nm);
             nm.Instructions.Add(Instruction.StElem(typeof(float)));
         }
+
+        public override Type ResultType => typeof(void);
     }
 }
