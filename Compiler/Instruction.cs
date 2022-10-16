@@ -100,6 +100,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 case ArgumentType.Label:
                     arg = LabelArg.ToString();
                     break;
+                case ArgumentType.Type:
+                    arg = $" {TypeArg}";
+                    break;
                 }
 
                 return string.Format("{0} {1}", OpCode.Name, arg);
