@@ -44,15 +44,14 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         }
 
         [Test]
-        public void ConstructorNullArgumentThrows()
+        public void ConstructorNullArgumentDoesNotThrow()
         {
-            // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new ConvertR4IlExpression(null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: argument",
-                ex.Message);
+            // when
+            var result = new ConvertR4IlExpression(null);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<ConvertR4IlExpression>(result);
+            Assert.IsNull(result.Argument);
         }
     }
 }

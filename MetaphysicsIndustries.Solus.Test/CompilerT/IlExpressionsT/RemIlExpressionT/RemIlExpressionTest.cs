@@ -46,43 +46,43 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         }
 
         [Test]
-        public void ConstructorNullDividendThrows()
+        public void ConstructorNullDividendDoesNotThrow()
         {
             // given
             var divisor = new MockIlExpression();
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new RemIlExpression(null, divisor));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: dividend",
-                ex.Message);
+            var result = new RemIlExpression(null, divisor);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<RemIlExpression>(result);
+            Assert.IsNull(result.Dividend);
+            Assert.AreSame(divisor, result.Divisor);
         }
 
         [Test]
-        public void ConstructorNullDivisorThrows()
+        public void ConstructorNullDivisorDoesNotThrow()
         {
             // given
             var dividend = new MockIlExpression();
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new RemIlExpression(dividend, null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: divisor",
-                ex.Message);
+            var result = new RemIlExpression(dividend, null);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<RemIlExpression>(result);
+            Assert.AreSame(dividend, result.Dividend);
+            Assert.IsNull(result.Divisor);
         }
 
         [Test]
-        public void ConstructorNullBothThrows()
+        public void ConstructorNullBothDoesNotThrow()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new RemIlExpression(null, null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: dividend",
-                ex.Message);
+            var result = new RemIlExpression(null, null);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<RemIlExpression>(result);
+            Assert.IsNull(result.Dividend);
+            Assert.IsNull(result.Divisor);
         }
     }
 }

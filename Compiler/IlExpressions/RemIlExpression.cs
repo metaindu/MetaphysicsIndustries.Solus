@@ -26,12 +26,11 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class RemIlExpression : IlExpression
     {
-        public RemIlExpression(IlExpression dividend, IlExpression divisor)
+        public RemIlExpression(IlExpression dividend=null,
+            IlExpression divisor=null)
         {
-            Dividend = dividend ??
-                       throw new ArgumentNullException(nameof(dividend));
-            Divisor = divisor ??
-                      throw new ArgumentNullException(nameof(divisor));
+            Dividend = dividend;
+            Divisor = divisor;
         }
 
         public IlExpression Dividend { get; }
@@ -39,8 +38,10 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            Dividend.GetInstructions(nm);
-            Divisor.GetInstructions(nm);
+            if (Dividend != null)
+                Dividend.GetInstructions(nm);
+            if (Divisor != null)
+                Divisor.GetInstructions(nm);
             nm.Instructions.Add(Instruction.Rem());
         }
 
@@ -48,7 +49,9 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         {
             get
             {
-                if (Dividend.ResultType == Divisor.ResultType)
+                if (Dividend != null &&
+                    Divisor != null &&
+                    Dividend.ResultType == Divisor.ResultType)
                     return Dividend.ResultType;
                 return typeof(float);
             }

@@ -26,17 +26,17 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class ConvertR4IlExpression : IlExpression
     {
-        public ConvertR4IlExpression(IlExpression argument)
+        public ConvertR4IlExpression(IlExpression argument=null)
         {
-            Argument = argument ??
-                       throw new ArgumentNullException(nameof(argument));
+            Argument = argument;
         }
 
         public IlExpression Argument { get; }
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            Argument.GetInstructions(nm);
+            if (Argument != null)
+                Argument.GetInstructions(nm);
             nm.Instructions.Add(Instruction.ConvertR4());
         }
 
