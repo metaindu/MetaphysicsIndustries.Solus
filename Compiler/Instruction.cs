@@ -180,7 +180,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return new Instruction {
                     ArgType = ArgumentType.I4,
                     IntArg = value,
-                    OpCode = OpCodes.Ldc_I4_S
+                    OpCode = OpCodes.Ldc_I4
                 };
             }
 
@@ -258,6 +258,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
         {
             return new Instruction { OpCode = OpCodes.Sub };
         }
+
+        public static Instruction Neg() =>
+            new Instruction { OpCode = OpCodes.Neg };
 
         public static Instruction CompareLessThan()
         {
