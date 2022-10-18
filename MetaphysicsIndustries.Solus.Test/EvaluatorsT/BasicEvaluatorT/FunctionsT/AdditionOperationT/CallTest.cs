@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = AdditionOperation.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -50,7 +50,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = AdditionOperation.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = AdditionOperation.Value;
             var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 2.ToNumber(),
                 4.ToNumber()
             };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then

@@ -60,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = NotEqualComparisonOperation.Value;
             var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then

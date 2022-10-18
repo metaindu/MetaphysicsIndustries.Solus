@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = SizeFunction.Value;
             var args = new IMathObject[0];
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new Vector(new float[] { 1, 2, 3 }),
                 new Vector(new float[] { 4, 5, 6 })
             };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -75,7 +75,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = SizeFunction.Value;
             var args = new IMathObject[] { 1.ToNumber() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
@@ -95,7 +95,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             {
                 new float[] { 1, 2 }.ToVector()
             };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -116,7 +116,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                     { 4, 5, 6 }
                 })
             };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then
@@ -133,7 +133,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var f = SizeFunction.Value;
             var args = new IMathObject[] { "abc".ToStringValue() };
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Call(f, args, null);
             // then

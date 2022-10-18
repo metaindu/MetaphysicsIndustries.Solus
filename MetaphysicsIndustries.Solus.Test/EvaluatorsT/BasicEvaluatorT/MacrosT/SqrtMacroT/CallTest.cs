@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var expr = new FunctionCall(new Literal(SqrtMacro.Value),
                 new Literal(2));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, null);
             // then

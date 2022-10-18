@@ -20,27 +20,15 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Evaluators;
-using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
-using NUnit.Framework;
+using System;
 
-namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
-    MacrosT.RandMacroT
+namespace MetaphysicsIndustries.Solus.Functions
 {
-    [TestFixture]
-    public class CallTest
+    /// <summary>
+    /// A function that calls out to a .NET target method.
+    /// </summary>
+    public interface IMagicFunction
     {
-        [Test]
-        public void CallYieldsRandomExpression()
-        {
-            // given
-            var expr = new FunctionCall(new Literal(RandMacro.Value));
-            var eval = Util.CreateEvaluator();
-            // when
-            var result = eval.Eval(expr, null);
-            // then
-            Assert.IsInstanceOf<RandomExpression>(result);
-        }
+        Delegate Target { get; }
     }
 }

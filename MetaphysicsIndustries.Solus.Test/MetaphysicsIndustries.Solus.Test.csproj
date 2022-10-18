@@ -98,6 +98,7 @@
     <Compile Include="EvaluatorsT\BasicEvaluatorT\MacrosT\RandMacroT\CallTest.cs" />
     <Compile Include="EvaluatorsT\BasicEvaluatorT\MacrosT\SqrtMacroT\CallTest.cs" />
     <Compile Include="EvaluatorsT\BasicEvaluatorT\MacrosT\SubstMacroT\CallTest.cs" />
+    <Compile Include="EvaluatorsT\BasicEvaluatorT\Util.cs" />
     <Compile Include="ExpressionsT\ColorExpressionT\ResultTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\ComponentAccessTest.cs" />
     <Compile Include="ExpressionsT\ComponentAccessT\SimplifyTest.cs" />

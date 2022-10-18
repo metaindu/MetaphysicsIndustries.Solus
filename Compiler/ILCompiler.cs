@@ -23,18 +23,15 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using MetaphysicsIndustries.Giza;
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
-using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
     public class ILCompiler
     {
-        public Expression.CompiledExpression Compile(Expression expr)
+        public CompiledExpression Compile(Expression expr)
         {
             var varmap = new VariableToArgumentNumberMapper();
             var instructions = ConvertToInstructions(expr, varmap);
@@ -73,36 +70,20 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
             var instructionOffsets = new List<int>();
 
-            Logger.Log.Clear();
-
             foreach (var instruction in setup)
             {
-                Logger.WriteLine(
-                    "[{2}] IL_{0:X4} {1}",
-                    gen.ILOffset,
-                    instruction.ToString(),
-                    instructionOffsets.Count);
                 instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
             }
 
             foreach (var instruction in instructions)
             {
-                Logger.WriteLine(
-                    "[{2}] IL_{0:X4} {1}",
-                    gen.ILOffset,
-                    instruction.ToString(),
-                    instructionOffsets.Count);
                 instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
             }
 
             foreach (var instruction in shutdown)
             {
-                Logger.WriteLine(
-                    "[{2}] IL_{0:X4} {1}",
-                    gen.ILOffset, instruction.ToString(),
-                    instructionOffsets.Count);
                 instructionOffsets.Add(gen.ILOffset);
                 instruction.Emit(gen);
             }
@@ -111,7 +92,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 (Func<Dictionary<string, float>, float>)method.CreateDelegate(
                     typeof(Func<Dictionary<string, float>, float>));
 
-            return new Expression.CompiledExpression{
+            return new CompiledExpression{
                 Method = del,
                 CompiledVars = args
             };
@@ -119,24 +100,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public IMathObject FastEval(Expression expr, SolusEnvironment env)
         {
-            Expression.CompiledExpression compiled = null;
+            CompiledExpression compiled = null;
             return FastEval(expr, env, ref compiled);
         }
         public IMathObject FastEval(Expression expr, SolusEnvironment env,
-            ref Expression.CompiledExpression compiled)
+            ref CompiledExpression compiled)
         {
             var eval = new BasicEvaluator();
             var bakedEnv = new Dictionary<string, float>();
             if (compiled != null)
-            {
-                foreach (var var in compiled.CompiledVars)
-                {
-                    var target = env.GetVariable(var);
-                    if (target.IsIsExpression(env))
-                        target = eval.Eval((Expression)target, env);
-                    bakedEnv[var] = target.ToNumber().Value;
-                }
-            }
+                BakeEnvironment(compiled, env, eval, ref bakedEnv);
             else
             {
                 // static initialize Instruction
@@ -146,6 +119,22 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             return compiled.Method(bakedEnv).ToNumber();
+        }
+
+        public void BakeEnvironment(
+            CompiledExpression compiled, SolusEnvironment env,
+            IEvaluator eval, ref Dictionary<string, float> bakedEnv)
+        {
+            if (bakedEnv == null)
+                bakedEnv = new Dictionary<string, float>();
+            bakedEnv.Clear();
+            foreach (var var in compiled.CompiledVars)
+            {
+                var target = env.GetVariable(var);
+                if (target.IsIsExpression(env))
+                    target = eval.Eval((Expression)target, env);
+                bakedEnv[var] = target.ToNumber().Value;
+            }
         }
 
         // compile expressions
@@ -201,22 +190,126 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IEnumerable<Instruction> ConvertToInstructions(Function func,
             VariableToArgumentNumberMapper varmap, List<Expression> arguments)
         {
-            if (func is AdditionOperation ao)
-                return ConvertToInstructions(ao, varmap, arguments);
-            if (func is UnitStepFunction usf)
-                return ConvertToInstructions(usf, varmap, arguments);
-            if (func is CosineFunction c)
-                return ConvertToInstructions(c, varmap, arguments);
-            if (func is SineFunction s)
-                return ConvertToInstructions(s, varmap, arguments);
-            if (func is ExponentOperation eo)
-                return ConvertToInstructions(eo, varmap, arguments);
-            if (func is MultiplicationOperation mo)
-                return ConvertToInstructions(mo, varmap, arguments);
-            if (func is NegationOperation no)
-                return ConvertToInstructions(no, varmap, arguments);
-            throw new ArgumentException(
-                $"Unsupported function type: \"{func}\"", nameof(func));
+            switch (func)
+            {
+                case AbsoluteValueFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case AdditionOperation ao:
+                    return ConvertToInstructions(ao, varmap, arguments);
+                case ArccosecantFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case ArccosineFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case ArccotangentFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case ArcsecantFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case ArcsineFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case Arctangent2Function ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case ArctangentFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case BitwiseAndOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case BitwiseOrOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case CeilingFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case CosecantFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case CosineFunction c:
+                    return ConvertToInstructions(c, varmap, arguments);
+                case CotangentFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case DistFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case DistSqFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case DivisionOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case EqualComparisonOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case ExponentOperation eo:
+                    return ConvertToInstructions(eo, varmap, arguments);
+                case FactorialFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case FloorFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case GreaterThanComparisonOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case GreaterThanOrEqualComparisonOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case LessThanComparisonOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case LessThanOrEqualComparisonOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case LoadImageFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case Log10Function ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case Log2Function ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case LogarithmFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case LogicalAndOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case LogicalOrOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case MaximumFiniteFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case MaximumFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case MinimumFiniteFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case MinimumFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case ModularDivision ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case MultiplicationOperation mo:
+                    return ConvertToInstructions(mo, varmap, arguments);
+                case NaturalLogarithmFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case NegationOperation no:
+                    return ConvertToInstructions(no, varmap, arguments);
+                case NotEqualComparisonOperation ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case SecantFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case SineFunction s:
+                    return ConvertToInstructions(s, varmap, arguments);
+                case SizeFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case TangentFunction ff:
+                    return ConvertToInstructions(ff, varmap, arguments);
+                case UnitStepFunction usf:
+                    return ConvertToInstructions(usf, varmap, arguments);
+                default:
+                    throw new ArgumentException(
+                        $"Unsupported function type: \"{func}\"",
+                        nameof(func));
+            }
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            AbsoluteValueFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+
+            instructions.Add(Instruction.Dup());
+            instructions.Add(Instruction.LoadConstant(0.0f));
+            instructions.Add(Instruction.CompareGreaterThan());
+            instructions.Add(Instruction.LoadConstant(2));
+            instructions.Add(Instruction.Mul());
+            instructions.Add(Instruction.LoadConstant(1));
+            instructions.Add(Instruction.Sub());
+            instructions.Add(Instruction.ConvertR4());
+            instructions.Add(Instruction.Mul());
+
+            return instructions;
         }
 
         public IEnumerable<Instruction> ConvertToInstructions(
@@ -253,20 +346,171 @@ namespace MetaphysicsIndustries.Solus.Compiler
         }
 
         public IEnumerable<Instruction> ConvertToInstructions(
-            UnitStepFunction func, VariableToArgumentNumberMapper varmap,
+            ArccosecantFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
             var instructions = new List<Instruction>();
-
+            instructions.Add(Instruction.LoadConstant(1f));
             instructions.AddRange(
                 ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.Div());
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Asin", new [] { typeof(float) })));
+            return instructions;
+        }
 
-            instructions.Add(Instruction.LoadConstant(0.0f));
-            instructions.Add(Instruction.CompareLessThan());
-            instructions.Add(Instruction.LoadConstant(1));
-            instructions.Add(Instruction.CompareLessThan());
+        public IEnumerable<Instruction> ConvertToInstructions(
+            ArccosineFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Acos", new [] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            ArccotangentFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.Add(Instruction.LoadConstant(1f));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Atan2",
+                        new[] { typeof(float), typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            ArcsecantFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.Add(Instruction.LoadConstant(1f));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.Div());
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Acos", new [] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            ArcsineFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Asin", new [] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            Arctangent2Function func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Atan2",
+                        new[] { typeof(float), typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            ArctangentFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Atan", new[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            BitwiseAndOperation func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.Add(Instruction.And());
             instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
 
+        public IEnumerable<Instruction> ConvertToInstructions(
+            BitwiseOrOperation func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.Add(Instruction.Or());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            CeilingFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(System.Math).GetMethod(
+                        "Ceiling", new Type[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            CosecantFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.Add(Instruction.LoadConstant(1f));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(System.Math).GetMethod(
+                        "Sin", new Type[] { typeof(float) })));
+            instructions.Add(Instruction.Div());
             return instructions;
         }
 
@@ -274,7 +518,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             CosineFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            List<Instruction> instructions = new List<Instruction>();
+            var instructions = new List<Instruction>();
             instructions.AddRange(
                 ConvertToInstructions(arguments[0], varmap));
             instructions.Add(
@@ -285,16 +529,84 @@ namespace MetaphysicsIndustries.Solus.Compiler
         }
 
         public IEnumerable<Instruction> ConvertToInstructions(
-            SineFunction func, VariableToArgumentNumberMapper varmap,
+            CotangentFunction func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            List<Instruction> instructions = new List<Instruction>();
+            var instructions = new List<Instruction>();
+            instructions.Add(Instruction.LoadConstant(1f));
             instructions.AddRange(
                 ConvertToInstructions(arguments[0], varmap));
             instructions.Add(
                 Instruction.Call(
                     typeof(System.Math).GetMethod(
-                        "Sin", new Type[] { typeof(float) })));
+                        "Tan", new Type[] { typeof(float) })));
+            instructions.Add(Instruction.Div());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            DistFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.Dup());
+            instructions.Add(Instruction.Mul());
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.Dup());
+            instructions.Add(Instruction.Mul());
+            instructions.Add(Instruction.Add());
+            instructions.Add(
+                Instruction.Call(
+                    typeof(System.Math).GetMethod(
+                        "Sqrt", new Type[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            DistSqFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.Dup());
+            instructions.Add(Instruction.Mul());
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.Dup());
+            instructions.Add(Instruction.Mul());
+            instructions.Add(Instruction.Add());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            DivisionOperation func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.Div());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            EqualComparisonOperation func,
+            VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.ConvertR4());
             return instructions;
         }
 
@@ -350,6 +662,233 @@ namespace MetaphysicsIndustries.Solus.Compiler
         }
 
         public IEnumerable<Instruction> ConvertToInstructions(
+            FactorialFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            FloorFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(System.Math).GetMethod(
+                        "Floor", new Type[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            GreaterThanComparisonOperation func,
+            VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.CompareGreaterThan());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            GreaterThanOrEqualComparisonOperation func,
+            VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.CompareLessThan());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            LessThanComparisonOperation func,
+            VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.CompareLessThan());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            LessThanOrEqualComparisonOperation func,
+            VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.CompareGreaterThan());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            LoadImageFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            Log10Function func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Log10", new[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            Log2Function func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.LoadConstant(2f));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Log",
+                        new[] { typeof(float), typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            LogarithmFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Log",
+                        new[] { typeof(float), typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            LogicalAndOperation func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.Add());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            LogicalOrOperation func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.Add());
+            instructions.Add(Instruction.LoadConstant(2));
+            instructions.Add(Instruction.CompareLessThan());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            MaximumFiniteFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            MaximumFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            MinimumFiniteFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            MinimumFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            ModularDivision func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.ConvertI4());
+            instructions.Add(Instruction.Rem());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
             MultiplicationOperation func,
             VariableToArgumentNumberMapper varmap, List<Expression> arguments)
         {
@@ -363,10 +902,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
         }
 
         public IEnumerable<Instruction> ConvertToInstructions(
+            NaturalLogarithmFunction func,
+            VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Log", new[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
             NegationOperation func, VariableToArgumentNumberMapper varmap,
             List<Expression> arguments)
         {
-            List<Instruction> instructions = new List<Instruction>();
+            var instructions = new List<Instruction>();
             instructions.AddRange(
                 ConvertToInstructions(arguments[0], varmap));
             instructions.Add(new Instruction {
@@ -374,6 +928,99 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 OpCode=OpCodes.Neg
             });
             return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            NotEqualComparisonOperation func,
+            VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[1], varmap));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.LoadConstant(0));
+            instructions.Add(Instruction.CompareEqual());
+            instructions.Add(Instruction.ConvertR4());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            SecantFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.Add(Instruction.LoadConstant(1f));
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(System.Math).GetMethod(
+                        "Cos", new Type[] { typeof(float) })));
+            instructions.Add(Instruction.Div());
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            SineFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(System.Math).GetMethod(
+                        "Sin", new Type[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            SizeFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            TangentFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+            instructions.Add(
+                Instruction.Call(
+                    typeof(Math).GetMethod(
+                        "Tan", new[] { typeof(float) })));
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            UnitStepFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            var instructions = new List<Instruction>();
+
+            instructions.AddRange(
+                ConvertToInstructions(arguments[0], varmap));
+
+            instructions.Add(Instruction.LoadConstant(0.0f));
+            instructions.Add(Instruction.CompareLessThan());
+            instructions.Add(Instruction.LoadConstant(1));
+            instructions.Add(Instruction.CompareLessThan());
+            instructions.Add(Instruction.ConvertR4());
+
+            return instructions;
+        }
+
+        public IEnumerable<Instruction> ConvertToInstructions(
+            UserDefinedFunction func, VariableToArgumentNumberMapper varmap,
+            List<Expression> arguments)
+        {
+            throw new NotImplementedException();
         }
     }
 }

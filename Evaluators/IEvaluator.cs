@@ -30,6 +30,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
     {
         IMathObject Eval(Expression expr, SolusEnvironment env);
 
+        Expression Simplify(Expression expr, SolusEnvironment env);
+
         IMathObject Call(Function f, IMathObject[] args, SolusEnvironment env);
 
         void EvalInterval(

@@ -55,6 +55,7 @@
     <Compile Include="Commands\ICommandData.cs" />
     <Compile Include="Commands\VarsCommand.cs" />
     <Compile Include="Commands\VarAssignCommand.cs" />
+    <Compile Include="Compiler\CompiledExpression.cs" />
     <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="Evaluators\BasicEvaluator.Expressions.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Functions.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Macros.cs" />
+    <Compile Include="Evaluators\CompilingEvaluator.cs" />
     <Compile Include="Evaluators\FunctionAggregateOp.cs" />
     <Compile Include="Evaluators\MatrixStoreOp.cs" />
     <Compile Include="Evaluators\StoreOp.cs" />
@@ -125,6 +127,7 @@
     <Compile Include="Functions\Function.cs" />
     <Compile Include="Functions\GreaterThanComparisonOperation.cs" />
     <Compile Include="Functions\GreaterThanOrEqualComparisonOperation.cs" />
+    <Compile Include="Functions\MagicFunction.cs" />
     <Compile Include="Functions\LessThanComparisonOperation.cs" />
     <Compile Include="Functions\LessThanOrEqualComparisonOperation.cs" />
     <Compile Include="Functions\LoadImageFunction.cs" />

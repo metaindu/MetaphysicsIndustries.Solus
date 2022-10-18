@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 CallF = args => args.First()
             };
             var expr = new FunctionCall(mf, new Literal(5));
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, null);
             // then
@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             };
             var expr = new FunctionCall(new VariableAccess("f"),
                 new Expression[] { new Literal(5) });
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             var env = new SolusEnvironment();
             env.SetVariable("f", mf);
             // when
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                                 new Literal(-1))))));
             var env = new SolusEnvironment();
             env.SetVariable("f", udf);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             var expr = new FunctionCall(
                 new VariableAccess("f"),
                 new Literal(2));

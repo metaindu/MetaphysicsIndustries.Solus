@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var expr2 = new Literal(3);
             var env = new SolusEnvironment();
             env.SetVariable("a", expr2);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
                 new Literal(0));
             var env = new SolusEnvironment();
             env.SetVariable("a", expr2);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var value = 3.ToNumber();
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var value = new Vector(new float[] { 1, 2, 3 });
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -125,7 +125,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             });
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -149,7 +149,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var value = "abc".ToStringValue();
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -168,7 +168,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var value = new Interval(1.1f, 3.5f);
             var env = new SolusEnvironment();
             env.SetVariable("a", value);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -188,7 +188,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var f = CosineFunction.Value;
             var env = new SolusEnvironment();
             env.SetVariable("a", f);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result0 = eval.Eval(expr, env);
             // then
@@ -206,7 +206,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             var expr3 = new Literal(expr2);
             var env = new SolusEnvironment();
             env.SetVariable("a", expr3);
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // when
             var result = eval.Eval(expr, env);
             // then
@@ -222,7 +222,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.BasicEvaluatorT.
             // given
             var expr = new VariableAccess("a");
             var env = new SolusEnvironment();
-            var eval = new BasicEvaluator();
+            var eval = Util.CreateEvaluator();
             // expect
             var ex = Assert.Throws<NameException>(
                 () => eval.Eval(expr, env));

@@ -175,7 +175,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             if (value >= int.MinValue &&
-                value >= int.MaxValue)
+                value <= int.MaxValue)
             {
                 return new Instruction {
                     ArgType = ArgumentType.I4,
@@ -217,6 +217,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 OpCode = OpCodes.Call
             };
         }
+
+        public static Instruction Call(Delegate del) => Call(del.Method);
+
         public static Instruction CallVirtual(MethodInfo mi)
         {
             if (mi == null) throw new ArgumentNullException("mi");
@@ -228,14 +231,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
             };
         }
 
+        public static Instruction CallVirtual(Delegate del) =>
+            CallVirtual(del.Method);
+
         public static Instruction Dup()
         {
             return new Instruction { OpCode = OpCodes.Dup };
         }
+
         public static Instruction Mul()
         {
             return new Instruction { OpCode = OpCodes.Mul };
         }
+
+        public static Instruction Div() =>
+            new Instruction { OpCode = OpCodes.Div };
+
+        public static Instruction Rem() =>
+            new Instruction { OpCode = OpCodes.Rem };
+
         public static Instruction Add()
         {
             return new Instruction { OpCode = OpCodes.Add };
@@ -249,6 +263,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
         {
             return new Instruction { OpCode = OpCodes.Clt };
         }
+        public static Instruction CompareGreaterThan() =>
+            new Instruction { OpCode = OpCodes.Cgt };
+
+        public static Instruction CompareEqual() =>
+            new Instruction { OpCode = OpCodes.Ceq };
 
         public static Instruction LoadLocalVariable(ushort varNumber)
         {
@@ -316,10 +335,22 @@ namespace MetaphysicsIndustries.Solus.Compiler
             return new Instruction { OpCode = OpCodes.Conv_R4 };
         }
 
+        public static Instruction ConvertI4() =>
+            new Instruction { OpCode = OpCodes.Conv_I4 };
+
         public static Instruction Return()
         {
             return new Instruction { OpCode = OpCodes.Ret };
         }
+
+        public static Instruction And() =>
+            new Instruction { OpCode = OpCodes.And };
+        public static Instruction Or() =>
+            new Instruction { OpCode = OpCodes.Or };
+        public static Instruction Xor() =>
+            new Instruction { OpCode = OpCodes.Xor };
+        public static Instruction Not() =>
+            new Instruction { OpCode = OpCodes.Not };
     }
 }
 
