@@ -26,7 +26,7 @@ using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    AddIlExpressionT
+    DupIlExpressionT
 {
     [TestFixture]
     public class GetInstructionsTest
@@ -36,20 +36,16 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         {
             // given
             var i1 = Instruction.LoadConstant(1);
-            var i2 = Instruction.LoadConstant(2);
-            var expr = new AddIlExpression(
-                new MockIlExpression(il => il.Add(i1)),
-                new MockIlExpression(il => il.Add(i2)));
+            var expr = new DupIlExpression(
+                new MockIlExpression(il => il.Add(i1)));
             var nm = new NascentMethod();
             // precondition
             Assert.AreEqual(0, nm.Instructions.Count);
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(3, nm.Instructions.Count);
-            Assert.AreEqual(i1, nm.Instructions[0]);
-            Assert.AreEqual(i2, nm.Instructions[1]);
-            Assert.AreEqual(Instruction.Add(), nm.Instructions[2]);
+            Assert.AreEqual(1, nm.Instructions.Count);
+            Assert.AreEqual(Instruction.Dup(), nm.Instructions[0]);
         }
     }
 }

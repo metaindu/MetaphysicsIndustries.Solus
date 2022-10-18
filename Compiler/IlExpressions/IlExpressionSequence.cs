@@ -20,8 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
-
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class IlExpressionSequence : IlExpression
@@ -33,10 +31,10 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         public IlExpression[] Expressions;
 
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
             foreach (var expr in Expressions)
-                expr.GetInstructions(instructions);
+                expr.GetInstructions(nm);
         }
     }
 }

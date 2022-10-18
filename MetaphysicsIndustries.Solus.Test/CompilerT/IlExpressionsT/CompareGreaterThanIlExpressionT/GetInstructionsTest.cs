@@ -40,17 +40,17 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var expr = new CompareGreaterThanIlExpression(
                 new MockIlExpression(il => il.Add(i1)),
                 new MockIlExpression(il => il.Add(i2)));
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, instructions.Count);
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(3, instructions.Count);
-            Assert.AreEqual(i1, instructions[0]);
-            Assert.AreEqual(i2, instructions[1]);
+            Assert.AreEqual(3, nm.Instructions.Count);
+            Assert.AreEqual(i1, nm.Instructions[0]);
+            Assert.AreEqual(i2, nm.Instructions[1]);
             Assert.AreEqual(Instruction.CompareGreaterThan(),
-                instructions[2]);
+                nm.Instructions[2]);
         }
     }
 }

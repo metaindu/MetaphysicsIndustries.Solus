@@ -40,13 +40,13 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                     il => il.Add(Instruction.Add())),
                 new MockIlExpression(
                     il => il.Add(Instruction.Div())));
-            var instructions = new List<Instruction>();
+            var nm = new NascentMethod();
             // when
-            expr.GetInstructions(instructions);
+            expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(2, instructions.Count);
-            Assert.AreEqual(Instruction.Add(), instructions[0]);
-            Assert.AreEqual(Instruction.Div(), instructions[1]);
+            Assert.AreEqual(2, nm.Instructions.Count);
+            Assert.AreEqual(Instruction.Add(), nm.Instructions[0]);
+            Assert.AreEqual(Instruction.Div(), nm.Instructions[1]);
         }
     }
 }

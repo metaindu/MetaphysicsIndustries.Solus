@@ -21,7 +21,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -38,11 +37,11 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public IlExpression Dividend { get; }
         public IlExpression Divisor { get; }
 
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
-            Dividend.GetInstructions(instructions);
-            Divisor.GetInstructions(instructions);
-            instructions.Add(Instruction.Rem());
+            Dividend.GetInstructions(nm);
+            Divisor.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.Rem());
         }
     }
 }

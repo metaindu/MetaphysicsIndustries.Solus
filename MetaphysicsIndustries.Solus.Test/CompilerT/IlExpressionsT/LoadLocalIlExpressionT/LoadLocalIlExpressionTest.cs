@@ -20,36 +20,23 @@
  *
  */
 
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler;
+using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    AddIlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.LoadLocalIlExpressionT
 {
     [TestFixture]
-    public class GetInstructionsTest
+    public class LoadLocalIlExpressionTest
     {
         [Test]
-        public void GetInstructionsAddsToList()
+        public void ConstructorCreatesInstance()
         {
-            // given
-            var i1 = Instruction.LoadConstant(1);
-            var i2 = Instruction.LoadConstant(2);
-            var expr = new AddIlExpression(
-                new MockIlExpression(il => il.Add(i1)),
-                new MockIlExpression(il => il.Add(i2)));
-            var nm = new NascentMethod();
-            // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            expr.GetInstructions(nm);
+            var result = new LoadLocalIlExpression(23);
             // then
-            Assert.AreEqual(3, nm.Instructions.Count);
-            Assert.AreEqual(i1, nm.Instructions[0]);
-            Assert.AreEqual(i2, nm.Instructions[1]);
-            Assert.AreEqual(Instruction.Add(), nm.Instructions[2]);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(23, result.VarNumber);
         }
     }
 }

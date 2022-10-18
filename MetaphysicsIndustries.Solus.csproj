@@ -66,9 +66,11 @@
     <Compile Include="Compiler\IlExpressions\ConvertI4IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\ConvertR4IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\DivIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\DupIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpressionSequence.cs" />
     <Compile Include="Compiler\IlExpressions\LoadConstantIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\LoadLocalIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\MulIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\NegIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\OrIlExpression.cs" />
@@ -76,7 +78,7 @@
     <Compile Include="Compiler\IlExpressions\RemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\SubIlExpression.cs" />
     <Compile Include="Compiler\Instruction.cs" />
-    <Compile Include="Compiler\VariableToArgumentNumberMapper.cs" />
+    <Compile Include="Compiler\NascentMethod.cs" />
     <Compile Include="Evaluators\AggregateOp.cs" />
     <Compile Include="Evaluators\BasicEvaluator.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Expressions.cs" />

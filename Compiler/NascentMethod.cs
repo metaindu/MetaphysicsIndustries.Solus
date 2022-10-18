@@ -20,27 +20,46 @@
  *
  */
 
-using System;
+using System.Collections.Generic;
 
-namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
+namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class CompareGreaterThanIlExpression : IlExpression
+    public class NascentMethod
     {
-        public CompareGreaterThanIlExpression(IlExpression left,
-            IlExpression right)
+        readonly Dictionary<string, byte> _dictionary = new Dictionary<string, byte>();
+
+        public byte this [ string name ]
         {
-            Left = left ?? throw new ArgumentNullException(nameof(left));
-            Right = right ?? throw new ArgumentNullException(nameof(right));
+            get
+            {
+                if (!_dictionary.ContainsKey(name))
+                {
+                    _dictionary.Add(name, (byte)_dictionary.Count);
+                }
+
+                return _dictionary[name];
+            }
         }
 
-        public IlExpression Left { get; }
-        public IlExpression Right { get; }
-
-        public override void GetInstructions(NascentMethod nm)
+        public string[] GetVariableNamesInIndexOrder()
         {
-            Left.GetInstructions(nm);
-            Right.GetInstructions(nm);
-            nm.Instructions.Add(Instruction.CompareGreaterThan());
+            var names = new string[_dictionary.Count];
+
+            foreach (var kvp in _dictionary)
+            {
+                names[kvp.Value] = kvp.Key;
+            }
+
+            return names;
         }
+
+        public void Clear()
+        {
+            _dictionary.Clear();
+        }
+
+        public readonly List<Instruction> Instructions =
+            new List<Instruction>();
     }
 }
+

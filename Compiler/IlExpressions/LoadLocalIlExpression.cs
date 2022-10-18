@@ -20,27 +20,20 @@
  *
  */
 
-using System;
-
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class CompareGreaterThanIlExpression : IlExpression
+    public class LoadLocalIlExpression : IlExpression
     {
-        public CompareGreaterThanIlExpression(IlExpression left,
-            IlExpression right)
+        public LoadLocalIlExpression(ushort varNumber)
         {
-            Left = left ?? throw new ArgumentNullException(nameof(left));
-            Right = right ?? throw new ArgumentNullException(nameof(right));
+            VarNumber = varNumber;
         }
 
-        public IlExpression Left { get; }
-        public IlExpression Right { get; }
-
+        public ushort VarNumber { get; }
+        
         public override void GetInstructions(NascentMethod nm)
         {
-            Left.GetInstructions(nm);
-            Right.GetInstructions(nm);
-            nm.Instructions.Add(Instruction.CompareGreaterThan());
+            nm.Instructions.Add(Instruction.LoadLocalVariable(VarNumber));
         }
     }
 }

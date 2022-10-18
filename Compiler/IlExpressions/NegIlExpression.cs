@@ -21,7 +21,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -35,10 +34,10 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 
         public IlExpression Argument { get; }
 
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
-            Argument.GetInstructions(instructions);
-            instructions.Add(Instruction.Neg());
+            Argument.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.Neg());
         }
     }
 }

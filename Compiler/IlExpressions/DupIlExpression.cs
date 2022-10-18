@@ -20,43 +20,23 @@
  *
  */
 
-using System.Collections.Generic;
+using System;
 
-namespace MetaphysicsIndustries.Solus.Compiler
+namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class VariableToArgumentNumberMapper
+    public class DupIlExpression : IlExpression
     {
-        readonly Dictionary<string, byte> _dictionary = new Dictionary<string, byte>();
-
-        public byte this [ string name ]
+        public DupIlExpression(IlExpression target)
         {
-            get
-            {
-                if (!_dictionary.ContainsKey(name))
-                {
-                    _dictionary.Add(name, (byte)_dictionary.Count);
-                }
-
-                return _dictionary[name];
-            }
+            Target = target ??
+                       throw new ArgumentNullException(nameof(target));
         }
 
-        public string[] GetVariableNamesInIndexOrder()
+        public IlExpression Target { get; }
+
+        public override void GetInstructions(NascentMethod nm)
         {
-            var names = new string[_dictionary.Count];
-
-            foreach (var kvp in _dictionary)
-            {
-                names[kvp.Value] = kvp.Key;
-            }
-
-            return names;
-        }
-
-        public void Clear()
-        {
-            _dictionary.Clear();
+            nm.Instructions.Add(Instruction.Dup());
         }
     }
 }
-

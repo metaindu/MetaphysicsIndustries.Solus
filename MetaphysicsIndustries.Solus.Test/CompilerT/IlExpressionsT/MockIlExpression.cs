@@ -36,9 +36,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT
         }
 
         public Action<IList<Instruction>> GetInstructionsF;
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
-            GetInstructionsF?.Invoke(instructions);
+            GetInstructionsF?.Invoke(nm.Instructions);
         }
     }
 }

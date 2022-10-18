@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.ConvertR4IlE
         }
 
         [Test]
-        public void ConstructorNullArgumenttThrows()
+        public void ConstructorNullArgumentThrows()
         {
             // expect
             var ex = Assert.Throws<ArgumentNullException>(

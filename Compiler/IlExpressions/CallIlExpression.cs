@@ -21,7 +21,6 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
@@ -43,13 +42,13 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public MethodInfo Method { get; }
         public IlExpression[] Args { get; }
 
-        public override void GetInstructions(IList<Instruction> instructions)
+        public override void GetInstructions(NascentMethod nm)
         {
             // TODO: check args against method signature?
             int i;
             for (i = 0; i < Args.Length; i++)
-                Args[i].GetInstructions(instructions);
-            instructions.Add(Instruction.Call(Method));
+                Args[i].GetInstructions(nm);
+            nm.Instructions.Add(Instruction.Call(Method));
         }
     }
 }
