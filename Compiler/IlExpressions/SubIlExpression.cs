@@ -41,5 +41,15 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             Right.GetInstructions(nm);
             nm.Instructions.Add(Instruction.Sub());
         }
+
+        public override Type ResultType
+        {
+            get
+            {
+                if (Left.ResultType == Right.ResultType)
+                    return Left.ResultType;
+                return typeof(float);
+            }
+        }
     }
 }

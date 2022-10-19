@@ -47,5 +47,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
                 Arguments[i].GetInstructions(nm);
             nm.Instructions.Add(Instruction.NewObj(Constructor));
         }
+
+        public override Type ResultType => Constructor.DeclaringType;
     }
 }

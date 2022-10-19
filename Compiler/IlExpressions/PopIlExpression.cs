@@ -20,6 +20,8 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class PopIlExpression : IlExpression
@@ -28,5 +30,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         {
             nm.Instructions.Add(Instruction.Pop());
         }
+
+        public override Type ResultType => typeof(void);
     }
 }

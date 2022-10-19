@@ -221,6 +221,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var name = "[unknown function]";
             if (expr is VariableAccess va)
                 name = va.VariableName;
+            if (expr is Literal lit)
+            {
+                if (lit.Value.IsIsFunction(null))
+                    name = ((Function)lit.Value).Name;
+                if (lit.Value is Macro macro)
+                    name = macro.Name;
+            }
+
 
             var exprs = Arguments.ToArray();
             var strs = Array.ConvertAll(exprs, Expression.ToString);

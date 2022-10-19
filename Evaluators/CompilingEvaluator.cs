@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var compiled = _compiler.Compile(expr);
             var cenv =
                 _compiler.CompileEnvironment(compiled, env, this);
-            return compiled.Evaluate(cenv).ToNumber();
+            return compiled.Evaluate(cenv);
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)

@@ -20,6 +20,8 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class LoadLocalIlExpression : IlExpression
@@ -36,5 +38,8 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             var index = nm.GetIndexOfLocal(Local);
             nm.Instructions.Add(Instruction.LoadLocalVariable(index));
         }
+
+        public override Type ResultType =>
+            throw new NotImplementedException();
     }
 }

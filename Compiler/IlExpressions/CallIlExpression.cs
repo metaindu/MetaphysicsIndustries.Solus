@@ -53,5 +53,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             else
                 nm.Instructions.Add(Instruction.Call(Method));
         }
+
+        public override Type ResultType => Method.ReturnType;
     }
 }

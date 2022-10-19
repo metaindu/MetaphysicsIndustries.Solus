@@ -42,5 +42,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             Right.GetInstructions(nm);
             nm.Instructions.Add(Instruction.CompareEqual());
         }
+
+        public override Type ResultType => typeof(bool);
     }
 }

@@ -156,19 +156,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
             // object is known to have components all of a particular type,
             // e.g. 3-vector in R^3. otherwise, we have to evaluate the
             // indexes.
+            // For now, we assume all components are scalars.
             public ResultC(ComponentAccess ca) => _ca = ca;
             private readonly ComponentAccess _ca;
-            public bool? IsScalar(SolusEnvironment env) => null;
-            public bool? IsVector(SolusEnvironment env) => null;
-            public bool? IsMatrix(SolusEnvironment env) => null;
-            public int? GetTensorRank(SolusEnvironment env) => null;
-            public bool? IsString(SolusEnvironment env) => null;
+            public bool? IsScalar(SolusEnvironment env) => true;
+            public bool? IsVector(SolusEnvironment env) => false;
+            public bool? IsMatrix(SolusEnvironment env) => false;
+            public int? GetTensorRank(SolusEnvironment env) => 0;
+            public bool? IsString(SolusEnvironment env) => false;
             public int? GetDimension(SolusEnvironment env, int index) => null;
             public int[] GetDimensions(SolusEnvironment env) => null;
             public int? GetVectorLength(SolusEnvironment env) => null;
-            public bool? IsInterval(SolusEnvironment env) => null;
-            public bool? IsFunction(SolusEnvironment env) => null;
-            public bool? IsExpression(SolusEnvironment env) => null;
+            public bool? IsInterval(SolusEnvironment env) => false;
+            public bool? IsFunction(SolusEnvironment env) => false;
+            public bool? IsExpression(SolusEnvironment env) => false;
             public bool IsConcrete => false;
             public string DocString => "";
         }

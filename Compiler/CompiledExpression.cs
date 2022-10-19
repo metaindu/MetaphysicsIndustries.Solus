@@ -28,7 +28,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
 {
     public class CompiledExpression
     {
-        public Func<CompiledEnvironment, float> Method;
+        public Func<CompiledEnvironment, object> Method;
         public string[] CompiledVars;
 
         // diagnostics
@@ -37,9 +37,20 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public List<Instruction> setup;
         public List<Instruction> shutdown;
 
-        public float Evaluate(CompiledEnvironment cenv)
+        public IMathObject Evaluate(CompiledEnvironment cenv)
         {
-            return (float)Method(cenv);
+            var result = Method(cenv);
+            if (result is float f)
+                return f.ToNumber();
+            if (result is float[] v)
+                return v.ToVector();
+            if (result is float[,] m)
+                return m.ToMatrix();
+            if (result is string s)
+                return s.ToStringValue();
+
+            throw new InvalidOperationException(
+                $"Unsupported result type: {result.GetType()}");
         }
     }
 }

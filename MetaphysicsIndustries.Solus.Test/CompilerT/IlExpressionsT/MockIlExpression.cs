@@ -40,5 +40,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT
         {
             GetInstructionsF?.Invoke(nm.Instructions);
         }
+
+        public override Type ResultType =>
+            throw new NotImplementedException();
     }
 }

@@ -20,6 +20,8 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class LoadElemIlExpression : IlExpression
@@ -40,5 +42,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             if (Index != null) Index.GetInstructions(nm);
             nm.Instructions.Add(Instruction.LdElem(typeof(float)));
         }
+
+        public override Type ResultType => typeof(float);
     }
 }

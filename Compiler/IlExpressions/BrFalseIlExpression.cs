@@ -39,5 +39,8 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             var label = nm.GetOrCreateExpressionLabel(Target);
             nm.Instructions.Add(Instruction.BrFalse(label));
         }
+
+        public override Type ResultType =>
+            throw new NotImplementedException();
     }
 }

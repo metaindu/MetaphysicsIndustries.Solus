@@ -20,6 +20,8 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public abstract class IlExpression
@@ -33,5 +35,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             GetInstructionsInternal(nm);
         }
         protected abstract void GetInstructionsInternal(NascentMethod nm);
+
+        public abstract Type ResultType { get; }
     }
 }

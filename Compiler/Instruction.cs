@@ -100,6 +100,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 case ArgumentType.Label:
                     arg = LabelArg.ToString();
                     break;
+                case ArgumentType.Type:
+                    arg = $" {TypeArg}";
+                    break;
                 }
 
                 return string.Format("{0} {1}", OpCode.Name, arg);
@@ -373,6 +376,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             };
         }
 
+        public static Instruction LoadNull() =>
+            new Instruction { OpCode = OpCodes.Ldnull };
+
         public static Instruction ConvertR4()
         {
             return new Instruction { OpCode = OpCodes.Conv_R4 };
@@ -380,6 +386,28 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public static Instruction ConvertI4() =>
             new Instruction { OpCode = OpCodes.Conv_I4 };
+
+        public static Instruction Box(Type type) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Box,
+                ArgType = ArgumentType.Type,
+                TypeArg = type
+            };
+        public static Instruction Unbox(Type type) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Unbox,
+                ArgType = ArgumentType.Type,
+                TypeArg = type
+            };
+        public static Instruction UnboxAny(Type type) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Unbox_Any,
+                ArgType = ArgumentType.Type,
+                TypeArg = type
+            };
 
         public static Instruction Return()
         {

@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
     public class ResultTest
     {
         [Test]
-        public void IsResultScalarYieldsNull1()
+        public void IsResultScalarYieldsTrue1()
         {
             // given
             var expr = new ComponentAccess(
@@ -48,11 +48,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsScalar(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void IsResultScalarYieldsNull2()
+        public void IsResultScalarYieldsTrue2()
         {
             // given
             var expr = new ComponentAccess(
@@ -69,11 +69,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsScalar(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void IsResultVectorYieldsNull1()
+        public void IsResultVectorYieldsFalse1()
         {
             // given
             var expr = new ComponentAccess(
@@ -92,11 +92,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsVector(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void IsResultVectorYieldsNull2()
+        public void IsResultVectorYieldsFalse2()
         {
             // given
             var expr = new ComponentAccess(
@@ -115,11 +115,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsVector(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void IsResultMatrixYieldsNull1()
+        public void IsResultMatrixYieldsFalse1()
         {
             // given
             var expr = new ComponentAccess(
@@ -138,11 +138,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsMatrix(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void IsResultMatrixYieldsNull2()
+        public void IsResultMatrixYieldsFalse2()
         {
             // given
             var expr = new ComponentAccess(
@@ -161,11 +161,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsMatrix(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void IsResultStringYieldsNull1()
+        public void IsResultStringYieldsFalse1()
         {
             // given
             var expr = new ComponentAccess(
@@ -184,11 +184,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsString(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void IsResultStringYieldsNull2()
+        public void IsResultStringYieldsFalse2()
         {
             // given
             var expr = new ComponentAccess(
@@ -207,11 +207,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsString(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsFalse(result);
         }
 
         [Test]
-        public void GetResultTensorRankYieldsNull1()
+        public void GetResultTensorRankYieldsZero1()
         {
             // given
             var expr = new ComponentAccess(
@@ -230,11 +230,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.GetTensorRank(env);
             // then
-            Assert.IsNull(result);
+            Assert.AreEqual(result, 0);
         }
 
         [Test]
-        public void GetResultTensorRankYieldsNull2()
+        public void GetResultTensorRankYieldsZero2()
         {
             // given
             var expr = new ComponentAccess(
@@ -253,7 +253,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.GetTensorRank(env);
             // then
-            Assert.IsNull(result);
+            Assert.AreEqual(result, 0);
         }
 
         [Test]
@@ -328,7 +328,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
         }
 
         [Test]
-        public void MatrixComponentYieldsNull()
+        public void MatrixComponentYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -350,7 +350,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Result.IsScalar(env);
             // then
-            Assert.IsNull(result);
+            Assert.IsTrue(result);
         }
 
         [Test]
@@ -369,8 +369,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var env = new SolusEnvironment();
             // when
             var result = expr.Result.IsString(env);
-            // then
-            Assert.IsNull(result);
+            // theTruesert.IsNull(result);
         }
 
         // scalar?

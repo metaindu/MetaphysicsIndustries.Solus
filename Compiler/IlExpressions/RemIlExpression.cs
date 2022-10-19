@@ -43,5 +43,15 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             Divisor.GetInstructions(nm);
             nm.Instructions.Add(Instruction.Rem());
         }
+
+        public override Type ResultType
+        {
+            get
+            {
+                if (Dividend.ResultType == Divisor.ResultType)
+                    return Dividend.ResultType;
+                return typeof(float);
+            }
+        }
     }
 }

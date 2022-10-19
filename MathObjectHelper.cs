@@ -88,6 +88,9 @@ namespace MetaphysicsIndustries.Solus
         public static Vector ToVector(this int[] values) =>
             new Vector(values.Select(v => (float) v).ToArray());
 
+        public static Matrix ToMatrix(this float[,] values) =>
+            new Matrix(values);
+
         public static StringValue ToStringValue(this string value) =>
             new StringValue(value);
 

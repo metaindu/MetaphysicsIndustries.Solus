@@ -35,5 +35,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         {
             nm.Instructions.Add(Instruction.LdStr(Value));
         }
+
+        public override Type ResultType => typeof(string);
     }
 }

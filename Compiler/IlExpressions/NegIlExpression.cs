@@ -39,5 +39,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             Argument.GetInstructions(nm);
             nm.Instructions.Add(Instruction.Neg());
         }
+
+        public override Type ResultType => Argument.ResultType;
     }
 }
