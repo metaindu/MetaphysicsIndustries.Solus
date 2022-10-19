@@ -24,16 +24,17 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class LoadLocalIlExpression : IlExpression
     {
-        public LoadLocalIlExpression(ushort varNumber)
+        public LoadLocalIlExpression(IlLocal local)
         {
-            VarNumber = varNumber;
+            Local = local;
         }
 
-        public ushort VarNumber { get; }
+        public IlLocal Local { get; }
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            nm.Instructions.Add(Instruction.LoadLocalVariable(VarNumber));
+            var index = nm.GetIndexOfLocal(Local);
+            nm.Instructions.Add(Instruction.LoadLocalVariable(index));
         }
     }
 }

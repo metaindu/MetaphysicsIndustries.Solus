@@ -21,18 +21,37 @@
  */
 
 using System;
-using System.Collections.Generic;
+using System.Reflection.Emit;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Compiler
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    LoadStringIlExpressionT
 {
-    public class CompiledExpression
+    [TestFixture]
+    public class LoadStringIlExpressionTest
     {
-        public Func<CompiledEnvironment, float> Method;
-        public string[] CompiledVars;
-
-        public float Evaluate(CompiledEnvironment cenv)
+        [Test]
+        public void CreateSetsProperty()
         {
-            return (float)Method.DynamicInvoke(cenv);
+            // when
+            var result = new LoadStringIlExpression("abc");
+            // then
+            Assert.IsNotNull(result);
+            Assert.AreEqual("abc", result.Value);
         }
+
+        [Test]
+        public void NullArgumentThrows()
+        {
+            // expect
+            var ex = Assert.Throws<ArgumentNullException>(
+                () => new LoadStringIlExpression(null));
+            // and
+            Assert.AreEqual(
+                "Value cannot be null.\nParameter name: value",
+                ex.Message);
+        }
+
     }
 }

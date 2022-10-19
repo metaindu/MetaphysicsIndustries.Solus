@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 
@@ -27,37 +28,51 @@ namespace MetaphysicsIndustries.Solus.Compiler
 {
     public class NascentMethod
     {
-        readonly Dictionary<string, byte> _dictionary = new Dictionary<string, byte>();
+        readonly Dictionary<string, ushort> _localIndexesByName =
+            new Dictionary<string, ushort>();
+        public readonly List<IlLocal> Locals = new List<IlLocal>();
+        private readonly Dictionary<IlLocal, ushort> _indexesByLocal =
+            new Dictionary<IlLocal, ushort>();
 
-        public byte this [ string name ]
+        public ushort CreateIndexOfLocalForVariableName(string name)
         {
-            get
+            if (!_localIndexesByName.ContainsKey(name))
             {
-                if (!_dictionary.ContainsKey(name))
-                {
-                    _dictionary.Add(name, (byte)_dictionary.Count);
-                }
-
-                return _dictionary[name];
-            }
-        }
-
-        public string[] GetVariableNamesInIndexOrder()
-        {
-            var names = new string[_dictionary.Count];
-
-            foreach (var kvp in _dictionary)
-            {
-                names[kvp.Value] = kvp.Key;
+                var local = CreateLocal();
+                local.Usage = IlLocalUsage.InitFromCompiledEnv;
+                local.VariableName = name;
+                var index = GetIndexOfLocal(local);
+                _localIndexesByName.Add(name, index);
+                return index;
             }
 
-            return names;
+            return _localIndexesByName[name];
         }
 
-        public void Clear()
+        public IlLocal CreateLocal()
         {
-            _dictionary.Clear();
+            var local = new IlLocal();
+            var index = (ushort)Locals.Count;
+            _indexesByLocal[local] = index;
+            Locals.Add(local);
+            return local;
         }
+
+        public ushort GetIndexOfLocal(IlLocal local) =>
+            _indexesByLocal[local];
+
+        public readonly List<IlParam> Params = new List<IlParam>();
+        private readonly Dictionary<IlParam, int> _indexesByParam =
+            new Dictionary<IlParam, int>();
+
+        public IlParam CreateParam(Type paramType)
+        {
+            var param = new IlParam { ParamType = paramType };
+            _indexesByParam[param] = Params.Count;
+            Params.Add(param);
+            return param;
+        }
+        public int GetParamIndex(IlParam param) => _indexesByParam[param];
 
         public readonly List<Instruction> Instructions =
             new List<Instruction>();

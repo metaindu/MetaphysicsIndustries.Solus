@@ -20,26 +20,39 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Compiler;
+using System;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    LoadLocalIlExpressionT
+    ThrowIlExpressionT
 {
     [TestFixture]
-    public class LoadLocalIlExpressionTest
+    public class ThrowIlExpressionTest
     {
         [Test]
         public void ConstructorCreatesInstance()
         {
             // given
-            var local = new IlLocal();
+            var argument = new MockIlExpression();
             // when
-            var result = new LoadLocalIlExpression(local);
+            var result = new ThrowIlExpression(argument);
             // then
             Assert.IsNotNull(result);
-            Assert.AreSame(local, result.Local);
+            Assert.IsInstanceOf<ThrowIlExpression>(result);
+            Assert.AreSame(argument, result.Argument);
+        }
+
+        [Test]
+        public void ConstructorNullArgumentThrows()
+        {
+            // expect
+            var ex = Assert.Throws<ArgumentNullException>(
+                () => new ThrowIlExpression(null));
+            // and
+            Assert.AreEqual(
+                "Value cannot be null.\nParameter name: argument",
+                ex.Message);
         }
     }
 }

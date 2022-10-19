@@ -36,7 +36,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
         {
             var nm = new NascentMethod();
             var ilexpr = ConvertToIlExpression(expr, nm);
-            var args = nm.GetVariableNamesInIndexOrder();
             ilexpr.GetInstructions(nm);
 
             DynamicMethod method =
@@ -45,26 +44,47 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     returnType: typeof(float),
                     parameterTypes: new []
                     {
-                        typeof(Dictionary<string, float>)
+                        typeof(CompiledEnvironment)
                     });
 
             var gen = method.GetILGenerator();
 
-            var dtype = typeof(Dictionary<string, float>);
+            var dtype = typeof(CompiledEnvironment);
             var get_Item = dtype.GetProperty("Item").GetGetMethod();
 
             ushort n = 0;
             var setup = new List<Instruction>();
             var locals = new List<LocalBuilder>();
-            foreach (var arg in args)
-            {
-                locals.Add(gen.DeclareLocal(typeof(float)));
 
-                setup.Add(Instruction.LoadArgument(0));
-                setup.Add(Instruction.LoadString(arg));
-                setup.Add(Instruction.Call(get_Item));
-                setup.Add(Instruction.StoreLocalVariable(n));
-                n++;
+            var cenv = new string[nm.Locals.Count];
+            IlParam cenvParam = null;
+            int cenvParamIndex = -1;
+
+            int i;
+            for (i = 0; i < nm.Locals.Count; i++)
+            {
+                var ilLocal = nm.Locals[i];
+                locals.Add(gen.DeclareLocal(typeof(float)));
+                switch (ilLocal.Usage)
+                {
+                    case IlLocalUsage.InitFromCompiledEnv:
+                        cenv[i] = ilLocal.VariableName;
+                        if (cenvParam == null)
+                        {
+                            cenvParam = nm.CreateParam(
+                                typeof(CompiledEnvironment));
+                            cenvParamIndex =
+                                nm.GetParamIndex(cenvParam);
+                        }
+
+                        setup.Add(Instruction.LoadArgument(
+                            (ushort)cenvParamIndex));
+                        setup.Add(
+                            Instruction.LoadString(ilLocal.VariableName));
+                        setup.Add(Instruction.Call(get_Item));
+                        setup.Add(Instruction.StoreLocalVariable(n));
+                        break;
+                }
             }
 
             var shutdown = new List<Instruction>();
@@ -84,7 +104,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             foreach (var ilLabel in nm.GetAllLabels())
                 labels[ilLabel] = gen.DefineLabel();
 
-            int i = 0;
+            i = 0;
             foreach (var instruction in nm.Instructions)
             {
                 var ilLabels = nm.GetLabelsByLocation(i);
@@ -106,12 +126,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             var del =
-                (Func<Dictionary<string, float>, float>)method.CreateDelegate(
-                    typeof(Func<Dictionary<string, float>, float>));
+                (Func<CompiledEnvironment, float>)method.CreateDelegate(
+                    typeof(Func<CompiledEnvironment, float>));
 
             return new CompiledExpression{
                 Method = del,
-                CompiledVars = args
+                CompiledVars = cenv
             };
         }
 
@@ -124,9 +144,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ref CompiledExpression compiled)
         {
             var eval = new BasicEvaluator();
-            var bakedEnv = new Dictionary<string, float>();
+            var cenv = new CompiledEnvironment();
             if (compiled != null)
-                BakeEnvironment(compiled, env, eval, ref bakedEnv);
+                cenv = CompileEnvironment(compiled, env, eval);
             else
             {
                 // static initialize Instruction
@@ -135,16 +155,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 compiled = Compile(expr);
             }
 
-            return compiled.Method(bakedEnv).ToNumber();
+            return compiled.Evaluate(cenv).ToNumber();
         }
 
-        public void BakeEnvironment(
+        public CompiledEnvironment CompileEnvironment(
             CompiledExpression compiled, SolusEnvironment env,
-            IEvaluator eval, ref Dictionary<string, float> bakedEnv)
+            IEvaluator eval)
         {
-            if (bakedEnv == null)
-                bakedEnv = new Dictionary<string, float>();
-            bakedEnv.Clear();
+            var cenv = new CompiledEnvironment();
             foreach (var var in compiled.CompiledVars)
             {
                 var target = env.GetVariable(var);
@@ -152,9 +170,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 {
                     if (target.IsIsExpression(env))
                         target = eval.Eval((Expression)target, env);
-                    bakedEnv[var] = target.ToNumber().Value;
+                    cenv[var] = target.ToNumber().Value;
                 }
             }
+
+            return cenv;
         }
 
         // compile expressions
@@ -197,7 +217,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             VariableAccess expr, NascentMethod nm)
         {
-            return new LoadLocalIlExpression(nm[expr.VariableName]);
+            var index =
+                nm.CreateIndexOfLocalForVariableName(expr.VariableName);
+            var local = nm.Locals[index];
+            return new LoadLocalIlExpression(local);
         }
 
         // compile functions

@@ -21,18 +21,11 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class CompiledExpression
+    public class IlParam
     {
-        public Func<CompiledEnvironment, float> Method;
-        public string[] CompiledVars;
-
-        public float Evaluate(CompiledEnvironment cenv)
-        {
-            return (float)Method.DynamicInvoke(cenv);
-        }
+        public Type ParamType;
     }
 }

@@ -20,15 +20,22 @@
  *
  */
 
+using System;
+
 namespace MetaphysicsIndustries.Solus.Evaluators
 {
+    public interface IGenericStoreOp
+    {
+        Type ElementType { get; }
+    }
+
     public abstract class StoreOp1
     {
         public abstract void Store(int index, IMathObject value);
         public abstract void SetMinArraySize(int length);
     }
 
-    public class StoreOp1<T> : StoreOp1
+    public class StoreOp1<T> : StoreOp1, IGenericStoreOp
         where T : IMathObject
     {
         public T[] Values;
@@ -43,6 +50,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             if (Values == null || Values.Length < length)
                 Values = new T[length];
         }
+
+        public Type ElementType => typeof(T);
     }
 
     public abstract class StoreOp2

@@ -35,9 +35,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
             var compiled = _compiler.Compile(expr);
-            Dictionary<string, float> bakedEnv = null;
-            _compiler.BakeEnvironment(compiled, env, this, ref bakedEnv);
-            return compiled.Method(bakedEnv).ToNumber();
+            var cenv =
+                _compiler.CompileEnvironment(compiled, env, this);
+            return compiled.Evaluate(cenv).ToNumber();
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)
@@ -62,7 +62,31 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             VarInterval interval, int numSteps, StoreOp1 store,
             AggregateOp[] aggrs = null)
         {
-            throw new System.NotImplementedException();
+            if (store != null)
+                store.SetMinArraySize(numSteps);
+
+            var delta = interval.Interval.CalcDelta(numSteps);
+
+            var env2 = env.CreateChildEnvironment();
+            env2.RemoveVariable(interval.Variable);
+            var expr2 = Simplify(expr, env2);
+            var compiled = _compiler.Compile(expr2);
+            var cenv =
+                _compiler.CompileEnvironment(compiled, env2, this);
+
+            int i;
+            for (i = 0; i < numSteps; i++)
+            {
+                var xx = delta * i + interval.Interval.LowerBound;
+                // env2.SetVariable(interval.Variable, xx.ToNumber());
+                cenv[interval.Variable] = xx;
+                var v = compiled.Evaluate(cenv).ToNumber();
+                if (store != null)
+                    store.Store(i, v);
+                if (aggrs != null)
+                    foreach (var aggr in aggrs)
+                        aggr?.Operate(v, env2, this);
+            }
         }
 
         public void EvalInterval(

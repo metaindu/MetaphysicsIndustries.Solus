@@ -21,18 +21,19 @@
  */
 
 using System;
-using System.Collections.Generic;
 
-namespace MetaphysicsIndustries.Solus.Compiler
+namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class CompiledExpression
+    public class LoadStringIlExpression : IlExpression
     {
-        public Func<CompiledEnvironment, float> Method;
-        public string[] CompiledVars;
+        public LoadStringIlExpression(string value) =>
+            Value = value ?? throw new ArgumentNullException(nameof(value));
 
-        public float Evaluate(CompiledEnvironment cenv)
+        public string Value { get; }
+
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            return (float)Method.DynamicInvoke(cenv);
+            nm.Instructions.Add(Instruction.LdStr(Value));
         }
     }
 }

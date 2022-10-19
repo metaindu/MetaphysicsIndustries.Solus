@@ -20,19 +20,32 @@
  *
  */
 
-using System;
-using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Compiler
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    ThrowIlExpressionT
 {
-    public class CompiledExpression
+    [TestFixture]
+    public class GetInstructionsTest
     {
-        public Func<CompiledEnvironment, float> Method;
-        public string[] CompiledVars;
-
-        public float Evaluate(CompiledEnvironment cenv)
+        [Test]
+        public void GetInstructionsAddsToList()
         {
-            return (float)Method.DynamicInvoke(cenv);
+            // given
+            var i1 = Instruction.LoadConstant(1);
+            var expr = new ThrowIlExpression(
+                new MockIlExpression(il => il.Add(i1)));
+            var nm = new NascentMethod();
+            // precondition
+            Assert.AreEqual(0, nm.Instructions.Count);
+            // when
+            expr.GetInstructions(nm);
+            // then
+            Assert.AreEqual(2, nm.Instructions.Count);
+            Assert.AreEqual(i1, nm.Instructions[0]);
+            Assert.AreEqual(Instruction.Throw(), nm.Instructions[1]);
         }
     }
 }

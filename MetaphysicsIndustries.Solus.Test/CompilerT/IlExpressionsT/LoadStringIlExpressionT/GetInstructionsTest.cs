@@ -20,26 +20,35 @@
  *
  */
 
+using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    LoadLocalIlExpressionT
+    LoadStringIlExpressionT
 {
     [TestFixture]
-    public class LoadLocalIlExpressionTest
+    public class GetInstructionsTest
     {
         [Test]
-        public void ConstructorCreatesInstance()
+        public void YieldsInstruction()
         {
             // given
-            var local = new IlLocal();
+            var expr = new LoadStringIlExpression("abc123");
+            var nm = new NascentMethod();
+            // precondition
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            var result = new LoadLocalIlExpression(local);
+            expr.GetInstructions(nm);
             // then
-            Assert.IsNotNull(result);
-            Assert.AreSame(local, result.Local);
+            Assert.AreEqual(1, nm.Instructions.Count);
+            Assert.AreEqual(Instruction.LoadString("abc123"),
+                nm.Instructions[0]);
+            Assert.AreEqual(OpCodes.Ldstr, nm.Instructions[0].OpCode);
+            Assert.AreEqual(Instruction.ArgumentType.String,
+                nm.Instructions[0].ArgType);
+            Assert.AreEqual("abc123", nm.Instructions[0].StringArg);
         }
     }
 }
