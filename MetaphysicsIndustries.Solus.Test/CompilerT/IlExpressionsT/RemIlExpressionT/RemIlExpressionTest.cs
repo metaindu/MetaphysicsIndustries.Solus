@@ -24,7 +24,8 @@ using System;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.RemIlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    RemIlExpressionT
 {
     [TestFixture]
     public class RemIlExpressionTest

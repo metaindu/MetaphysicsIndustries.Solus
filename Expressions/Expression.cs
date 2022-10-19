@@ -30,6 +30,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -62,6 +63,15 @@ namespace MetaphysicsIndustries.Solus.Expressions
             };
 
             AcceptVisitor(visitor);
+        }
+
+        public static string[] GatherVariables(Expression expr)
+        {
+            var names = new HashSet<string>();
+
+            expr.AcceptVisitor(varVisitor: (x) => names.Add(x.VariableName));
+
+            return names.ToArray();
         }
 
 

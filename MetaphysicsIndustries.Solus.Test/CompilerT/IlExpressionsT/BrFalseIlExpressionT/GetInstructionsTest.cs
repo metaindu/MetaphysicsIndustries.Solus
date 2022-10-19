@@ -20,39 +20,40 @@
  *
  */
 
-using System;
+using System.Linq;
+using System.Reflection.Emit;
+using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    DupIlExpressionT
+    BrFalseIlExpressionT
 {
     [TestFixture]
-    public class DupIlExpressionTest
+    public class GetInstructionsTest
     {
         [Test]
-        public void ConstructorCreatesInstance()
+        public void GetInstructionsAddsToList()
         {
             // given
-            var target = new MockIlExpression();
+            var i1 = Instruction.LoadConstant(1);
+            var expr = new BrFalseIlExpression(
+                new MockIlExpression(il => il.Add(i1)));
+            var nm = new NascentMethod();
+            // precondition
+            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.AreEqual(0, nm.GetAllLabels().Count());
             // when
-            var result = new DupIlExpression(target);
+            expr.GetInstructions(nm);
             // then
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<DupIlExpression>(result);
-            Assert.AreSame(target, result.Target);
-        }
-
-        [Test]
-        public void ConstructorNullTargetThrows()
-        {
-            // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new DupIlExpression(null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: target",
-                ex.Message);
+            Assert.AreEqual(1, nm.Instructions.Count);
+            Assert.AreEqual(OpCodes.Brfalse, nm.Instructions[0].OpCode);
+            Assert.AreEqual(Instruction.ArgumentType.Label,
+                nm.Instructions[0].ArgType);
+            Assert.IsNotNull(nm.Instructions[0].LabelArg);
+            Assert.AreEqual(1, nm.GetAllLabels().Count());
+            Assert.AreSame(nm.GetAllLabels().First(),
+                nm.Instructions[0].LabelArg);
         }
     }
 }

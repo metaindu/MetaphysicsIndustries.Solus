@@ -21,8 +21,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -403,15 +401,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 interval2, height,
                 interval3, numFrames,
                 store);
-        }
-
-        public static string[] GatherVariables(Expression expr)
-        {
-            var names = new HashSet<string>();
-
-            expr.AcceptVisitor(varVisitor: (x) => names.Add(x.VariableName));
-
-            return names.ToArray();
         }
     }
 }

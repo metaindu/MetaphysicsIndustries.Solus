@@ -24,7 +24,8 @@ using System;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.ConvertI4IlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    ConvertI4IlExpressionT
 {
     [TestFixture]
     public class ConvertI4IlExpressionTest

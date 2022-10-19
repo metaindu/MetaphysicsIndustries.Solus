@@ -375,6 +375,34 @@ namespace MetaphysicsIndustries.Solus.Compiler
             new Instruction { OpCode = OpCodes.Xor };
         public static Instruction Not() =>
             new Instruction { OpCode = OpCodes.Not };
+
+        public static Instruction Nop() =>
+            new Instruction { OpCode = OpCodes.Nop };
+
+        public static Instruction Pop() =>
+            new Instruction { OpCode = OpCodes.Pop };
+
+        public static Instruction Branch(IlLabel label) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Br,
+                ArgType = ArgumentType.Label,
+                LabelArg = label
+            };
+        public static Instruction BrTrue(IlLabel label) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Brtrue,
+                ArgType = ArgumentType.Label,
+                LabelArg = label
+            };
+        public static Instruction BrFalse(IlLabel label) =>
+            new Instruction
+            {
+                OpCode = OpCodes.Brfalse,
+                ArgType = ArgumentType.Label,
+                LabelArg = label
+            };
     }
 }
 

@@ -25,10 +25,10 @@ using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    DupIlExpressionT
+    BranchIlExpressionT
 {
     [TestFixture]
-    public class DupIlExpressionTest
+    public class BranchIlExpressionTest
     {
         [Test]
         public void ConstructorCreatesInstance()
@@ -36,10 +36,10 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var target = new MockIlExpression();
             // when
-            var result = new DupIlExpression(target);
+            var result = new BranchIlExpression(target);
             // then
             Assert.IsNotNull(result);
-            Assert.IsInstanceOf<DupIlExpression>(result);
+            Assert.IsInstanceOf<BranchIlExpression>(result);
             Assert.AreSame(target, result.Target);
         }
 
@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         {
             // expect
             var ex = Assert.Throws<ArgumentNullException>(
-                () => new DupIlExpression(null));
+                () => new BranchIlExpression(null));
             // and
             Assert.AreEqual(
                 "Value cannot be null.\nParameter name: target",

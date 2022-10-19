@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 
         private readonly IMathObject[] _args = new IMathObject[2];
         public override void Operate(IMathObject input,
-            SolusEnvironment env, BasicEvaluator evaluator)
+            SolusEnvironment env, IEvaluator evaluator)
         {
             _args[0] = input;
             _args[1] = State;

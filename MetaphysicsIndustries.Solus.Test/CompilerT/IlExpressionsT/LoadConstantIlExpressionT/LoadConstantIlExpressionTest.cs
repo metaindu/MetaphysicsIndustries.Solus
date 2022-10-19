@@ -24,7 +24,8 @@ using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.LoadConstantIlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    LoadConstantIlExpressionT
 {
     [TestFixture]
     public class LoadConstantIlExpressionTest

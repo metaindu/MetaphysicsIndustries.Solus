@@ -20,39 +20,29 @@
  *
  */
 
-using System;
+using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    DupIlExpressionT
+    NopIlExpressionT
 {
     [TestFixture]
-    public class DupIlExpressionTest
+    public class GetInstructionsTest
     {
         [Test]
-        public void ConstructorCreatesInstance()
+        public void GetInstructionsAddsToList()
         {
             // given
-            var target = new MockIlExpression();
+            var expr = new NopIlExpression();
+            var nm = new NascentMethod();
+            // precondition
+            Assert.AreEqual(0, nm.Instructions.Count);
             // when
-            var result = new DupIlExpression(target);
+            expr.GetInstructions(nm);
             // then
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<DupIlExpression>(result);
-            Assert.AreSame(target, result.Target);
-        }
-
-        [Test]
-        public void ConstructorNullTargetThrows()
-        {
-            // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new DupIlExpression(null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: target",
-                ex.Message);
+            Assert.AreEqual(1, nm.Instructions.Count);
+            Assert.AreEqual(Instruction.Nop(), nm.Instructions[0]);
         }
     }
 }

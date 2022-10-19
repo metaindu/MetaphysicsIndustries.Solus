@@ -20,13 +20,13 @@
  *
  */
 
-using System.Collections.Generic;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.LoadLocalIlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    LoadLocalIlExpressionT
 {
     [TestFixture]
     public class GetInstructionsTest

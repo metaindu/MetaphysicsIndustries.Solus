@@ -20,7 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;

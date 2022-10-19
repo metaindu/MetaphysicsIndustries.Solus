@@ -24,7 +24,8 @@ using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.RawInstructionsT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    RawInstructionsT
 {
     [TestFixture]
     public class RawInstructionsTest

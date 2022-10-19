@@ -20,32 +20,13 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Compiler;
-using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
-using NUnit.Framework;
-
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
-    NegIlExpressionT
+namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    [TestFixture]
-    public class GetInstructionsTest
+    public class NopIlExpression : IlExpression
     {
-        [Test]
-        public void GetInstructionsAddsToList()
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            // given
-            var i1 = Instruction.LoadConstant(1);
-            var expr = new NegIlExpression(
-                new MockIlExpression(il => il.Add(i1)));
-            var nm = new NascentMethod();
-            // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
-            // when
-            expr.GetInstructions(nm);
-            // then
-            Assert.AreEqual(2, nm.Instructions.Count);
-            Assert.AreEqual(i1, nm.Instructions[0]);
-            Assert.AreEqual(Instruction.Neg(), nm.Instructions[1]);
+            nm.Instructions.Add(Instruction.Nop());
         }
     }
 }

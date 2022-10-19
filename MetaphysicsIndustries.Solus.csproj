@@ -59,6 +59,9 @@
     <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\IlExpressions\AddIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\AndIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\BranchIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\BrFalseIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\BrTrueIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\CallIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\CompareEqualIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\CompareGreaterThanIlExpression.cs" />
@@ -73,7 +76,9 @@
     <Compile Include="Compiler\IlExpressions\LoadLocalIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\MulIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\NegIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\NopIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\OrIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\PopIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\RawInstructions.cs" />
     <Compile Include="Compiler\IlExpressions\RemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\SubIlExpression.cs" />

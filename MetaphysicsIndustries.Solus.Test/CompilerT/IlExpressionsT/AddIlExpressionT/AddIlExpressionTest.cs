@@ -24,7 +24,8 @@ using System;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.AddIlExpressionT
+namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
+    AddIlExpressionT
 {
     [TestFixture]
     public class AddIlExpressionTest
