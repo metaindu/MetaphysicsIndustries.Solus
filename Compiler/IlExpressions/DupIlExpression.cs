@@ -26,10 +26,9 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class DupIlExpression : IlExpression
     {
-        public DupIlExpression(IlExpression target)
+        public DupIlExpression(IlExpression target=null)
         {
-            Target = target ??
-                       throw new ArgumentNullException(nameof(target));
+            Target = target;
         }
 
         public IlExpression Target { get; }

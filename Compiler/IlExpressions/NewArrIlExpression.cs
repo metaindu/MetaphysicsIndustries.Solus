@@ -21,37 +21,26 @@
  */
 
 using System;
-using System.Reflection;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class CallIlExpression : IlExpression
+    public class NewArrIlExpression : IlExpression
     {
-        public CallIlExpression(MethodInfo method, params IlExpression[] args)
+        public NewArrIlExpression(Type elemType,
+            IlExpression length)
         {
-            Method = method ??
-                     throw new ArgumentNullException(nameof(method));
-            Args = args ?? throw new ArgumentNullException(nameof(args));
-        }
-        public CallIlExpression(Delegate @delegate,
-            params IlExpression[] args)
-            : this(@delegate?.Method, args)
-        {
+            ElemType = elemType ??
+                       throw new ArgumentNullException(nameof(elemType));
+            Length = length;
         }
 
-        public MethodInfo Method { get; }
-        public IlExpression[] Args { get; }
+        public Type ElemType { get; }
+        public IlExpression Length { get; }
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            // TODO: check args against method signature?
-            int i;
-            for (i = 0; i < Args.Length; i++)
-                Args[i].GetInstructions(nm);
-            if (Method.IsVirtual)
-                nm.Instructions.Add(Instruction.CallVirtual(Method));
-            else
-                nm.Instructions.Add(Instruction.Call(Method));
+            if (Length != null) Length.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.NewArr(ElemType));
         }
     }
 }

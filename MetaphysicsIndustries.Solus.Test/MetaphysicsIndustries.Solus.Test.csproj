@@ -369,7 +369,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="EvaluatorsT" />
     <Folder Include="MacrosT\RandMacroT" />
     <Folder Include="MacrosT\SqrtMacroT" />
   </ItemGroup>

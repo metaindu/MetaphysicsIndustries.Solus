@@ -57,6 +57,7 @@
     <Compile Include="Commands\VarAssignCommand.cs" />
     <Compile Include="Compiler\CompiledEnvironment.cs" />
     <Compile Include="Compiler\CompiledExpression.cs" />
+    <Compile Include="Compiler\IILGenerator.cs" />
     <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\IlExpressions\AddIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\AndIlExpression.cs" />
@@ -74,16 +75,19 @@
     <Compile Include="Compiler\IlExpressions\IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpressionSequence.cs" />
     <Compile Include="Compiler\IlExpressions\LoadConstantIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\LoadElemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadLocalIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadStringIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\MulIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\NegIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\NewArrIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\NewObjIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\NopIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\OrIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\PopIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\RawInstructions.cs" />
     <Compile Include="Compiler\IlExpressions\RemIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\StoreElemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\SubIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\ThrowIlExpression.cs" />
     <Compile Include="Compiler\IlLabel.cs" />

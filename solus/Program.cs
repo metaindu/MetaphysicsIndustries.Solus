@@ -121,7 +121,7 @@ namespace solus
             var parser = new SolusParser();
             var env = new SolusEnvironment();
             var varApplier = new ApplyVariablesTransform();
-            var eval = new BasicEvaluator();
+            IEvaluator eval = new BasicEvaluator();
 
             var le = new LineEditor("solus");
             string line;

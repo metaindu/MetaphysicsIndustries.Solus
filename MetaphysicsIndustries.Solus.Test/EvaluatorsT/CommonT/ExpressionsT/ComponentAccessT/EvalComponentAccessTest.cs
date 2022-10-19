@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.IsFalse(result.IsVector(null));
+            Assert.IsFalse(result.IsMatrix(null));
             Assert.IsTrue(result.IsScalar(null));
             Assert.AreEqual(4, result.ToFloat());
         }

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Evaluators;
@@ -48,6 +49,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     });
 
             var gen = method.GetILGenerator();
+            var gen2 = new ILRecorder(new ILGeneratorAdapter(gen));
 
             var dtype = typeof(CompiledEnvironment);
             var get_Item = dtype.GetProperty("Item").GetGetMethod();
@@ -95,7 +97,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             foreach (var instruction in setup)
             {
                 instructionOffsets.Add(gen.ILOffset);
-                instruction.Emit(gen);
+                instruction.Emit(gen2);
             }
 
             Dictionary<IlLabel, Label> labels =
@@ -115,23 +117,36 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 Label label = default;
                 if (instruction.LabelArg != null)
                     label = labels[instruction.LabelArg];
-                instruction.Emit(gen, label);
+                instruction.Emit(gen2, label);
                 i++;
             }
 
             foreach (var instruction in shutdown)
             {
                 instructionOffsets.Add(gen.ILOffset);
-                instruction.Emit(gen);
+                instruction.Emit(gen2);
             }
 
-            var del =
-                (Func<CompiledEnvironment, float>)method.CreateDelegate(
-                    typeof(Func<CompiledEnvironment, float>));
+            Func<CompiledEnvironment, float> del;
+            try
+            {
+                del =
+                    (Func<CompiledEnvironment, float>)method.CreateDelegate(
+                        typeof(Func<CompiledEnvironment, float>));
+            }
+            catch (InvalidProgramException ipe)
+            {
+                Console.WriteLine(ipe);
+                throw;
+            }
 
             return new CompiledExpression{
                 Method = del,
-                CompiledVars = cenv
+                CompiledVars = cenv,
+                nm = nm,
+                ilexpr = ilexpr,
+                setup = setup,
+                shutdown = shutdown,
             };
         }
 
@@ -188,7 +203,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return ConvertToIlExpression(lit, nm);
             if (expr is VariableAccess va)
                 return ConvertToIlExpression(va, nm);
-            // TODO: component access
+            if (expr is ComponentAccess ca)
+                return ConvertToIlExpression(ca, nm);
             throw new ArgumentException(
                 $"Unsupported expression type: \"{expr}\"", nameof(expr));
         }
@@ -210,9 +226,68 @@ namespace MetaphysicsIndustries.Solus.Compiler
             Literal expr, NascentMethod nm)
         {
             if (expr.Value.IsIsScalar(null))
-                return new LoadConstantIlExpression(expr.Value.ToFloat());
+            {
+                var value = expr.Value.ToFloat();
+                if (value == Math.Floor(value))
+                    return new LoadConstantIlExpression((long)value);
+                return new LoadConstantIlExpression(value);
+            }
+
+            if (expr.Value.IsIsVector(null))
+            {
+                var v = expr.Value.ToVector();
+                var seq = new List<IlExpression>();
+                var newarr = new NewArrIlExpression(
+                    typeof(float),
+                    new LoadConstantIlExpression(v.Length));
+                seq.Add(newarr);
+                int i;
+                // for (i = 0; i < v.Length; i++)
+                //     seq.Add();
+                for (i = 0; i < v.Length; i++)
+                {
+                    seq.Add(
+                        new StoreElemIlExpression(
+                            array_: new DupIlExpression(newarr),
+                            index: new LoadConstantIlExpression(i),
+                            value: new LoadConstantIlExpression(
+                                v[i].ToNumber().Value)));
+                }
+
+                return new IlExpressionSequence(seq);
+            }
+
+            if (expr.Value.IsIsMatrix(null))
+            {
+                var a = new float[2, 3];
+                var m = expr.Value.ToMatrix();
+                var arrayType = typeof(float[,]);
+                var ctor = arrayType.GetConstructor(
+                    new[] { typeof(int), typeof(int) });
+                var setMethod = arrayType.GetMethod("Set",
+                    new[] { typeof(int), typeof(int), typeof(float) });
+                var seq = new List<IlExpression>();
+                seq.Add(new NewObjIlExpression(ctor,
+                    new LoadConstantIlExpression(m.RowCount),
+                    new LoadConstantIlExpression(m.ColumnCount)));
+                var dup = new DupIlExpression();
+                int r, c;
+                for (r = 0; r < m.RowCount; r++)
+                for (c = 0; c < m.ColumnCount; c++)
+                    seq.Add(
+                        new CallIlExpression(
+                            setMethod,
+                            dup,
+                            new LoadConstantIlExpression(r),
+                            new LoadConstantIlExpression(c),
+                            new LoadConstantIlExpression(m[r, c].ToFloat())));
+
+                return new IlExpressionSequence(seq);
+            }
+
             throw new NotImplementedException(
-                "currently only implemented for numbers.");
+                "currently only implemented for numbers, vectors, " +
+                "and matrices.");
         }
 
         public IlExpression ConvertToIlExpression(
@@ -222,6 +297,49 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 nm.CreateIndexOfLocalForVariableName(expr.VariableName);
             var local = nm.Locals[index];
             return new LoadLocalIlExpression(local);
+        }
+
+        static Type[] GetTypeArrayOfInt(int length)
+        {
+            var a = new Type[length];
+            int i;
+            for (i = 0; i < length; i++)
+                a[i] = typeof(int);
+            return a;
+        }
+
+        public IlExpression ConvertToIlExpression(ComponentAccess expr,
+            NascentMethod nm)
+        {
+            var expr2 = ConvertToIlExpression(expr.Expr, nm);
+            var indexes2 = new IlExpression[expr.Indexes.Count];
+            int i;
+            for (i = 0; i < indexes2.Length; i++)
+            {
+                indexes2[i] = ConvertToIlExpression(expr.Indexes[i], nm);
+            }
+
+            // assume vector (and not string) for now
+            if (expr.Indexes.Count == 1)
+                return new LoadElemIlExpression(expr2, indexes2[0]);
+
+            // higher rank tensor
+            if (expr.Indexes.Count >= 2)
+            {
+                var arrayType = typeof(float).MakeArrayType(
+                    expr.Indexes.Count);
+                var getMethod = arrayType.GetMethod("Get",
+                    GetTypeArrayOfInt(expr.Indexes.Count));
+                var args = new IlExpression[indexes2.Length + 1];
+                args[0] = expr2;
+                indexes2.CopyTo(args, 1);
+                var callExpr = new CallIlExpression(getMethod, args);
+                return callExpr;
+            }
+
+            // TODO: string?
+
+            throw new NotImplementedException();
         }
 
         // compile functions
@@ -324,6 +442,32 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 case UnitStepFunction usf:
                     return ConvertToIlExpression(usf, nm, arguments);
                 default:
+                    // if (func.ProvidesCustomCall)
+                    // {
+                    //     var args2 = new IlExpression[arguments.Count];
+                    //     int i;
+                    //     for (i = 0; i < arguments.Count; i++)
+                    //         args2[i] = ConvertToIlExpression(arguments[i], nm);
+                    //     var expr = new CallIlExpression(new Func< func.CustomCall, args2);
+                    //
+                    //     var expr = ConvertToIlExpression(arguments[0], nm);
+                    //     int i;
+                    //     for (i = 1; i < arguments.Count; i++)
+                    //     {
+                    //         expr = new CallIlExpression(
+                    //             new Func<float, float, float>(Math.Max),
+                    //             expr,
+                    //             ConvertToIlExpression(arguments[i], nm));
+                    //     }
+                    //
+                    //     return expr;
+                    //
+                    //
+                    //     var expr = new CallIlExpression(
+                    //         new Func<double, double>(Math.Tan),
+                    //         ConvertToIlExpression(arguments[0], nm));
+                    //     return expr;
+                    // }
                     throw new ArgumentException(
                         $"Unsupported function type: \"{func}\"",
                         nameof(func));
@@ -983,6 +1127,34 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             UserDefinedFunction func, NascentMethod nm,
             List<Expression> arguments)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IlExpression ConvertToIlExpression(StoreOp1 op,
+            NascentMethod nm)
+        {
+            if (op is IGenericStoreOp g)
+                return ConvertToIlExpression(op, g.ElementType, nm);
+            if (op is VectorStoreOp vso)
+                return ConvertToIlExpression(vso, nm);
+
+            throw new ArgumentException(
+                $"Unsupported store operation: \"{op}\"", nameof(op));
+        }
+
+        public IlExpression ConvertToIlExpression(StoreOp1 op,
+            Type elementType, NascentMethod nm)
+        {
+            // var storeParam = nm.CreateParam()
+            // return new IlExpressionSequence(
+            //     new DupIlExpression(),
+            //     )
+            throw new NotImplementedException();
+        }
+
+        public IlExpression ConvertToIlExpression(VectorStoreOp op,
+            NascentMethod nm)
         {
             throw new NotImplementedException();
         }

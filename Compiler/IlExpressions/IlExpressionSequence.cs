@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections.Generic;
+
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class IlExpressionSequence : IlExpression
@@ -27,6 +29,12 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public IlExpressionSequence(params IlExpression[] expressions)
         {
             Expressions = expressions;
+        }
+        public IlExpressionSequence(IList<IlExpression> expressions)
+        {
+            var exprs = new IlExpression[expressions.Count];
+            expressions.CopyTo(exprs, 0);
+            Expressions = exprs;
         }
 
         public IlExpression[] Expressions;

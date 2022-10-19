@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
@@ -29,6 +30,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public Func<CompiledEnvironment, float> Method;
         public string[] CompiledVars;
+
+        // diagnostics
+        public NascentMethod nm;
+        public IlExpression ilexpr;
+        public List<Instruction> setup;
+        public List<Instruction> shutdown;
 
         public float Evaluate(CompiledEnvironment cenv)
         {

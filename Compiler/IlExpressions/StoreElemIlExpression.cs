@@ -20,38 +20,28 @@
  *
  */
 
-using System;
-using System.Reflection;
-
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class CallIlExpression : IlExpression
+    public class StoreElemIlExpression : IlExpression
     {
-        public CallIlExpression(MethodInfo method, params IlExpression[] args)
+        public StoreElemIlExpression(IlExpression array_ = null,
+            IlExpression index = null, IlExpression value = null)
         {
-            Method = method ??
-                     throw new ArgumentNullException(nameof(method));
-            Args = args ?? throw new ArgumentNullException(nameof(args));
-        }
-        public CallIlExpression(Delegate @delegate,
-            params IlExpression[] args)
-            : this(@delegate?.Method, args)
-        {
+            Array = array_;
+            Index = index;
+            Value = value;
         }
 
-        public MethodInfo Method { get; }
-        public IlExpression[] Args { get; }
+        public IlExpression Array { get; }
+        public IlExpression Index { get; }
+        public IlExpression Value { get; }
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            // TODO: check args against method signature?
-            int i;
-            for (i = 0; i < Args.Length; i++)
-                Args[i].GetInstructions(nm);
-            if (Method.IsVirtual)
-                nm.Instructions.Add(Instruction.CallVirtual(Method));
-            else
-                nm.Instructions.Add(Instruction.Call(Method));
+            if (Array != null) Array.GetInstructions(nm);
+            if (Index != null) Index.GetInstructions(nm);
+            if (Value != null) Value.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.StElem(typeof(float)));
         }
     }
 }
