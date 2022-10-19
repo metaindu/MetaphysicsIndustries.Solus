@@ -60,14 +60,23 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 Check(expr.Indexes[i], env);
 
             var value = expr.Expr.Result;
-            var rank = value.GetTensorRank(env);
-            if (rank == null || rank.Value < 1 || rank.Value > 2)
-                throw new OperandException(
-                    "Unable to get components from expression, " +
-                    "or the expression does not have components");
-            if (rank.Value != expr.Indexes.Count)
-                throw new OperandException(
-                    "Wrong number of indexes for the expression");
+            if (value.IsIsString(env))
+            {
+                if (expr.Indexes.Count != 1)
+                    throw new OperandException(
+                        "Wrong number of indexes for the expression");
+            }
+            else
+            {
+                var rank = value.GetTensorRank(env);
+                if (rank == null || rank.Value < 1 || rank.Value > 2)
+                    throw new OperandException(
+                        "Unable to get components from expression, " +
+                        "or the expression does not have components");
+                if (rank.Value != expr.Indexes.Count)
+                    throw new OperandException(
+                        "Wrong number of indexes for the expression");
+            }
 
             for (i = 0; i < expr.Indexes.Count; i++)
             {
@@ -125,15 +134,15 @@ namespace MetaphysicsIndustries.Solus.Expressions
             Check(expr.Function, env);
             for (var i = 0; i < expr.Arguments.Count; i++)
                 Check(expr.Arguments[i], env);
-            
-            var literal = expr.Function as Literal;
-            if (literal==null)
-                throw new ArgumentException(
-                    "Can't check non-literal function target.");
-            var macro = literal.Value as Macro;
-            if (macro != null) return;
-            var f = literal.Value as Function;
-            if (f==null)
+
+            IMathObject fv = expr.Function;
+            if (fv is VariableAccess va)
+                fv = va.GetFinalReferencedValue(env);
+            if (fv is Literal literal)
+                fv = literal.Value;
+            if (fv is Macro) return;
+            var f = fv as Function;
+            if (f == null)
                 throw new ArgumentException(
                     "Can't check non-function target.");
 

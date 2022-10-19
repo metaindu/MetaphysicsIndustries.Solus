@@ -20,7 +20,6 @@
  *
  */
 
-using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -34,6 +33,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         private readonly ILCompiler _compiler = new ILCompiler();
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
+            var ec = new ExpressionChecker();
+            ec.Check(expr, env);
+
             var compiled = _compiler.Compile(expr);
             var cenv =
                 _compiler.CompileEnvironment(compiled, env, this);

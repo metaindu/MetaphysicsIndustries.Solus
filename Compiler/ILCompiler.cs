@@ -188,6 +188,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return ConvertToIlExpression(lit, nm);
             if (expr is VariableAccess va)
                 return ConvertToIlExpression(va, nm);
+            // TODO: component access
             throw new ArgumentException(
                 $"Unsupported expression type: \"{expr}\"", nameof(expr));
         }

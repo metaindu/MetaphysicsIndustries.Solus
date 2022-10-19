@@ -49,8 +49,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     return Transform(interval, env);
             }
 
-            throw new ArgumentException(
-                $"Unrecognized argument type: {expr.GetType().Name}");
+            return expr;
         }
 
         private Expression Transform(Literal literal, SolusEnvironment env)

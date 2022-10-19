@@ -20,7 +20,8 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Exceptions;
+using System;
+using System.Collections.Generic;
 using ArgumentNullException = System.ArgumentNullException;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -38,6 +39,31 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             VariableName = variableName;
             Result = new ResultC(this);
+        }
+
+        private readonly HashSet<VariableAccess> _visitedVarrefs =
+            new HashSet<VariableAccess>();
+
+        public IMathObject GetFinalReferencedValue(SolusEnvironment env)
+        {
+            // TODO: Replace this whole method with something better, some
+            // better perspective
+
+            IMathObject dest = this;
+            // TODO: Not thread-safe
+            _visitedVarrefs.Clear();
+            while (dest is VariableAccess va)
+            {
+                if (_visitedVarrefs.Contains(va))
+                    // found a cycle
+                    // TODO: choose a more appropriate exception class
+                    throw new InvalidOperationException();
+                _visitedVarrefs.Add(va);
+                // TODO: check for missing var name
+                dest = env.GetVariable(va.VariableName);
+            }
+
+            return dest;
         }
 
         public override Expression Clone()

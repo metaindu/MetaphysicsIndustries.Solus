@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public float Evaluate(CompiledEnvironment cenv)
         {
-            return (float)Method.DynamicInvoke(cenv);
+            return (float)Method(cenv);
         }
     }
 }
