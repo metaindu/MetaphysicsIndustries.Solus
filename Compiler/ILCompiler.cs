@@ -37,7 +37,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var nm = new NascentMethod();
             var ilexpr = ConvertToIlExpression(expr, nm);
             var args = nm.GetVariableNamesInIndexOrder();
-            var instructions = new List<Instruction>();
             ilexpr.GetInstructions(nm);
 
             DynamicMethod method =
@@ -79,10 +78,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 instruction.Emit(gen);
             }
 
-            foreach (var instruction in instructions)
+            Dictionary<IlLabel, Label> labels =
+                new Dictionary<IlLabel, Label>();
+
+            foreach (var ilLabel in nm.GetAllLabels())
+                labels[ilLabel] = gen.DefineLabel();
+
+            int i = 0;
+            foreach (var instruction in nm.Instructions)
             {
+                var ilLabels = nm.GetLabelsByLocation(i);
+                if (ilLabels != null)
+                    foreach (var ilLabel in ilLabels)
+                        gen.MarkLabel(labels[ilLabel]);
                 instructionOffsets.Add(gen.ILOffset);
-                instruction.Emit(gen);
+                Label label = default;
+                if (instruction.LabelArg != null)
+                    label = labels[instruction.LabelArg];
+                instruction.Emit(gen, label);
+                i++;
             }
 
             foreach (var instruction in shutdown)
@@ -293,7 +307,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
             AbsoluteValueFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             return new CallIlExpression(
                 new Func<double, double>(Math.Abs),
                 ConvertToIlExpression(arguments[0], nm));
@@ -335,14 +348,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArccosecantFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 typeof(Math).GetMethod(
                     "Asin", new [] { typeof(float) }),
                 new DivIlExpression(
                     new LoadConstantIlExpression(1f),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -350,11 +361,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArccosineFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Acos),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -362,12 +371,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArccotangentFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Atan2),
                 new LoadConstantIlExpression(1f),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -375,13 +382,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArcsecantFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Acos),
                 new DivIlExpression(
                     new LoadConstantIlExpression(1f),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -389,11 +394,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArcsineFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Asin),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -401,12 +404,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             Arctangent2Function func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Atan2),
                 ConvertToIlExpression(arguments[0], nm),
                 ConvertToIlExpression(arguments[1], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -414,11 +415,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArctangentFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Atan),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -426,14 +425,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             BitwiseAndOperation func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new AndIlExpression(
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[0], nm)),
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -441,14 +438,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             BitwiseOrOperation func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new OrIlExpression(
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[0], nm)),
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -456,11 +451,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             CeilingFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Ceiling),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -468,13 +461,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             CosecantFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new DivIlExpression(
                 new LoadConstantIlExpression(1f),
                 new CallIlExpression(
                     new Func<double, double>(Math.Sin),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -482,11 +473,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             CosineFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Cos),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -494,13 +483,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             CotangentFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new DivIlExpression(
                 new LoadConstantIlExpression(1f),
                 new CallIlExpression(
                     new Func<double, double>(Math.Tan),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -542,11 +529,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             DivisionOperation func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new DivIlExpression(
                 ConvertToIlExpression(arguments[0], nm),
                 ConvertToIlExpression(arguments[1], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -555,12 +540,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareEqualIlExpression(
                     ConvertToIlExpression(arguments[0], nm),
                     ConvertToIlExpression(arguments[1], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -585,11 +568,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             FloorFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Floor),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -598,12 +579,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareGreaterThanIlExpression(
                     ConvertToIlExpression(arguments[0], nm),
                     ConvertToIlExpression(arguments[1], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -612,14 +591,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareEqualIlExpression(
                     new LoadConstantIlExpression(0),
                     new CompareLessThanIlExpression(
                         ConvertToIlExpression(arguments[0], nm),
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -628,12 +605,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareLessThanIlExpression(
                     ConvertToIlExpression(arguments[0], nm),
                     ConvertToIlExpression(arguments[1], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -642,14 +617,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareEqualIlExpression(
                     new LoadConstantIlExpression(0),
                     new CompareGreaterThanIlExpression(
                         ConvertToIlExpression(arguments[0], nm),
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -664,11 +637,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             Log10Function func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Log10),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -676,12 +647,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             Log2Function func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Log),
                 ConvertToIlExpression(arguments[0], nm),
                 new LoadConstantIlExpression(2f));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -689,12 +658,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             LogarithmFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Log),
                 ConvertToIlExpression(arguments[0], nm),
                 ConvertToIlExpression(arguments[1], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -702,7 +669,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
             LogicalAndOperation func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareEqualIlExpression(
                     new LoadConstantIlExpression(0),
@@ -715,7 +681,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
                                 ConvertToIlExpression(arguments[1], nm))))));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -723,7 +688,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
             LogicalOrOperation func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareLessThanIlExpression(
                     new AddIlExpression(
@@ -736,7 +700,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             new ConvertI4IlExpression(
                                 ConvertToIlExpression(arguments[1], nm)))),
                     new LoadConstantIlExpression(2)));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -792,14 +755,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ModularDivision func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new RemIlExpression(
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[0], nm)),
                     new ConvertI4IlExpression(
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -807,14 +768,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             MultiplicationOperation func,
             NascentMethod nm, List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = ConvertToIlExpression(arguments[0], nm);
             int i;
             for (i = 1; i < arguments.Count; i++)
                 expr = new MulIlExpression(
                     expr,
                     ConvertToIlExpression(arguments[i], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -823,11 +782,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Log),
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -835,10 +792,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NegationOperation func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new NegIlExpression(
                 ConvertToIlExpression(arguments[0], nm));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -847,14 +802,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new ConvertR4IlExpression(
                 new CompareEqualIlExpression(
                     new LoadConstantIlExpression(0),
                     new CompareEqualIlExpression(
                         ConvertToIlExpression(arguments[0], nm),
                         ConvertToIlExpression(arguments[1], nm))));
-            expr.GetInstructions(nm);
             return expr;
         }
 
@@ -862,13 +815,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
             SecantFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var instructions = new List<Instruction>();
             var expr = new DivIlExpression(
                 new LoadConstantIlExpression(1f),
                 new CallIlExpression(
                     new Func<double, double>(Math.Cos),
                     ConvertToIlExpression(arguments[0], nm)));
-            expr.GetInstructions(nm);
             return expr;
         }
 

@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public IlExpression Left { get; }
         public IlExpression Right { get; }
 
-        public override void GetInstructions(NascentMethod nm)
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
             Left.GetInstructions(nm);
             Right.GetInstructions(nm);

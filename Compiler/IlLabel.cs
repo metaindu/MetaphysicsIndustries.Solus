@@ -20,28 +20,16 @@
  *
  */
 
-using System;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 
-namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
+namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class DivIlExpression : IlExpression
+    public class IlLabel
     {
-        public DivIlExpression(IlExpression dividend, IlExpression divisor)
-        {
-            Dividend = dividend ??
-                       throw new ArgumentNullException(nameof(dividend));
-            Divisor = divisor ??
-                      throw new ArgumentNullException(nameof(divisor));
-        }
-
-        public IlExpression Dividend { get; }
-        public IlExpression Divisor { get; }
-
-        protected override void GetInstructionsInternal(NascentMethod nm)
-        {
-            Dividend.GetInstructions(nm);
-            Divisor.GetInstructions(nm);
-            nm.Instructions.Add(Instruction.Div());
-        }
+        private static int _id = 0;
+        public int Id = _id++;
+        public IlLabel(IlExpression ilexpr) => IlExpr = ilexpr;
+        public IlExpression IlExpr { get; }
+        public override string ToString() => $"IlLabel({Id}, {IlExpr})";
     }
 }

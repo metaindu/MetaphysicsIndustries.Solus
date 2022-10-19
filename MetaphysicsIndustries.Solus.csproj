@@ -77,6 +77,7 @@
     <Compile Include="Compiler\IlExpressions\RawInstructions.cs" />
     <Compile Include="Compiler\IlExpressions\RemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\SubIlExpression.cs" />
+    <Compile Include="Compiler\IlLabel.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\NascentMethod.cs" />
     <Compile Include="Evaluators\AggregateOp.cs" />

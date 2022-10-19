@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
@@ -60,6 +61,52 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public readonly List<Instruction> Instructions =
             new List<Instruction>();
+
+        private readonly Dictionary<IlExpression, int> _expressionLocations =
+            new Dictionary<IlExpression, int>();
+
+        private readonly Dictionary<int, List<IlExpression>>
+            _expressionsByLocation =
+                new Dictionary<int, List<IlExpression>>();
+
+        public void RecordExpressionLocation(IlExpression expr)
+        {
+            if (_expressionLocations.ContainsKey(expr))
+                return;
+            int index = Instructions.Count;
+            _expressionLocations[expr] = index;
+            if (!_expressionsByLocation.ContainsKey(index))
+                _expressionsByLocation[index] = new List<IlExpression>();
+            _expressionsByLocation[Instructions.Count].Add(expr);
+        }
+
+        private Dictionary<IlExpression, IlLabel> _labelsByExpression =
+            new Dictionary<IlExpression, IlLabel>();
+
+        public IlLabel GetOrCreateExpressionLabel(IlExpression expr)
+        {
+            if (!_labelsByExpression.ContainsKey(expr))
+            {
+                var label = new IlLabel(expr);
+                _labelsByExpression[expr] = label;
+            }
+
+            return _labelsByExpression[expr];
+        }
+
+        public IEnumerable<IlLabel> GetAllLabels() =>
+            _labelsByExpression.Values;
+
+        public IEnumerable<IlLabel> GetLabelsByLocation(int index)
+        {
+            if (!_expressionsByLocation.ContainsKey(index)) return null;
+            var exprs = _expressionsByLocation[index];
+            var labels = new List<IlLabel>(exprs.Count);
+            int i;
+            for (i = 0; i < exprs.Count; i++)
+                if (_labelsByExpression.ContainsKey(exprs[i]))
+                    labels.Add(_labelsByExpression[exprs[i]]);
+            return labels;
+        }
     }
 }
-

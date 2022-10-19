@@ -24,6 +24,14 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public abstract class IlExpression
     {
-        public abstract void GetInstructions(NascentMethod nm);
+        private static int _id = 0;
+        public readonly int Id = _id++;
+
+        public void GetInstructions(NascentMethod nm)
+        {
+            nm.RecordExpressionLocation(this);
+            GetInstructionsInternal(nm);
+        }
+        protected abstract void GetInstructionsInternal(NascentMethod nm);
     }
 }

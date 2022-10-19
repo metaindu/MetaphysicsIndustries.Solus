@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public MethodInfo Method { get; }
         public IlExpression[] Args { get; }
 
-        public override void GetInstructions(NascentMethod nm)
+        protected override void GetInstructionsInternal(NascentMethod nm)
         {
             // TODO: check args against method signature?
             int i;
