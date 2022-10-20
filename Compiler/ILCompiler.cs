@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             for (i = 0; i < nm.Locals.Count; i++)
             {
                 var ilLocal = nm.Locals[i];
-                locals.Add(gen.DeclareLocal(typeof(float)));
+                locals.Add(gen.DeclareLocal(ilLocal.LocalType));
                 switch (ilLocal.Usage)
                 {
                     case IlLocalUsage.InitFromCompiledEnv:

@@ -52,6 +52,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlLocal CreateLocal()
         {
             var local = new IlLocal();
+            local.LocalType = typeof(float);
             var index = (ushort)Locals.Count;
             _indexesByLocal[local] = index;
             Locals.Add(local);
