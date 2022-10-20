@@ -367,6 +367,24 @@ namespace MetaphysicsIndustries.Solus.Compiler
             };
         }
 
+        public static Instruction LoadLocalVariableAddress(ushort varNumber)
+        {
+            if (varNumber < 256)
+            {
+                return new Instruction {
+                    ArgType = ArgumentType.UI1,
+                    UIntArg = varNumber,
+                    OpCode = OpCodes.Ldloca_S
+                };
+            }
+
+            return new Instruction {
+                ArgType = ArgumentType.UI2,
+                UIntArg = varNumber,
+                OpCode = OpCodes.Ldloca
+            };
+        }
+
         public static Instruction LoadString(string value)
         {
             return new Instruction {
