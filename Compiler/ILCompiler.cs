@@ -28,6 +28,7 @@ using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
@@ -58,11 +59,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var setup = new List<Instruction>();
             var locals = new List<LocalBuilder>();
 
-            var cenv = new string[nm.Locals.Count];
+            int compileVarsCount = 0;
+            int i;
+            for (i = 0; i < nm.Locals.Count; i++)
+                if (nm.Locals[i].Usage == IlLocalUsage.InitFromCompiledEnv)
+                    compileVarsCount++;
+            var cenv = new string[compileVarsCount];
             IlParam cenvParam = null;
             int cenvParamIndex = -1;
 
-            int i;
+            compileVarsCount = 0;
             for (i = 0; i < nm.Locals.Count; i++)
             {
                 var ilLocal = nm.Locals[i];
@@ -70,7 +76,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 switch (ilLocal.Usage)
                 {
                     case IlLocalUsage.InitFromCompiledEnv:
-                        cenv[i] = ilLocal.VariableName;
+                        cenv[compileVarsCount] = ilLocal.VariableName;
+                        compileVarsCount++;
                         if (cenvParam == null)
                         {
                             cenvParam = nm.CreateParam(
