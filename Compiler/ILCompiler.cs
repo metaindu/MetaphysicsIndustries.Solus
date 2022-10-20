@@ -306,9 +306,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return new IlExpressionSequence(seq);
             }
 
+            if (expr.Value.IsIsString(null))
+                return new LoadStringIlExpression(
+                    expr.Value.ToStringValue().Value);
+
             throw new NotImplementedException(
                 "currently only implemented for numbers, vectors, " +
-                "and matrices.");
+                " matrices, and strings.");
         }
 
         public IlExpression ConvertToIlExpression(
