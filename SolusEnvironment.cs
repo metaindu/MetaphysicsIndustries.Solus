@@ -108,6 +108,9 @@ namespace MetaphysicsIndustries.Solus
         protected readonly Dictionary<string, IMathObject> Variables =
             new Dictionary<string, IMathObject>();
 
+        protected readonly Dictionary<string, bool> VariableIsType =
+            new Dictionary<string, bool>();
+
         protected readonly HashSet<string> RemovedVariables =
             new HashSet<string>();
 
@@ -122,10 +125,27 @@ namespace MetaphysicsIndustries.Solus
             return null;
         }
 
+        public IMathObject GetVariableType(string name)
+        {
+            if (RemovedVariables.Contains(name)) return null;
+            if (VariableIsType[name] && Variables.ContainsKey(name))
+                return Variables[name];
+            if (Parent != null) return Parent.GetVariableType(name);
+            return null;
+        }
+
         public void SetVariable(string name, IMathObject value)
         {
             RemovedVariables.Remove(name);
             Variables[name] = value;
+            VariableIsType[name] = false;
+        }
+
+        public void SetVariableType(string name, IMathObject type)
+        {
+            RemovedVariables.Remove(name);
+            Variables[name] = type;
+            VariableIsType[name] = true;
         }
 
         public bool ContainsVariable(string name)
@@ -139,6 +159,7 @@ namespace MetaphysicsIndustries.Solus
         public void RemoveVariable(string name)
         {
             Variables.Remove(name);
+            VariableIsType.Remove(name);
             RemovedVariables.Add(name);
         }
 
