@@ -61,6 +61,7 @@
     <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\IlExpressions\AddIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\AndIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\BoxIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\BranchIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\BrFalseIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\BrTrueIlExpression.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Compiler\IlExpressions\IlExpressionSequence.cs" />
     <Compile Include="Compiler\IlExpressions\LoadConstantIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadElemIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\LoadLocalAddrIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadLocalIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadNullIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadStringIlExpression.cs" />
@@ -90,6 +92,7 @@
     <Compile Include="Compiler\IlExpressions\RawInstructions.cs" />
     <Compile Include="Compiler\IlExpressions\RemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\StoreElemIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\StoreLocalIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\SubIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\ThrowIlExpression.cs" />
     <Compile Include="Compiler\IlLabel.cs" />

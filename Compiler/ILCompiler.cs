@@ -28,6 +28,7 @@ using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
@@ -58,19 +59,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var setup = new List<Instruction>();
             var locals = new List<LocalBuilder>();
 
-            var cenv = new string[nm.Locals.Count];
+            int compileVarsCount = 0;
+            int i;
+            for (i = 0; i < nm.Locals.Count; i++)
+                if (nm.Locals[i].Usage == IlLocalUsage.InitFromCompiledEnv)
+                    compileVarsCount++;
+            var cenv = new string[compileVarsCount];
             IlParam cenvParam = null;
             int cenvParamIndex = -1;
 
-            int i;
+            compileVarsCount = 0;
             for (i = 0; i < nm.Locals.Count; i++)
             {
                 var ilLocal = nm.Locals[i];
-                locals.Add(gen.DeclareLocal(typeof(float)));
+                locals.Add(gen.DeclareLocal(ilLocal.LocalType));
                 switch (ilLocal.Usage)
                 {
                     case IlLocalUsage.InitFromCompiledEnv:
-                        cenv[i] = ilLocal.VariableName;
+                        cenv[compileVarsCount] = ilLocal.VariableName;
+                        compileVarsCount++;
                         if (cenvParam == null)
                         {
                             cenvParam = nm.CreateParam(
@@ -299,9 +306,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return new IlExpressionSequence(seq);
             }
 
+            if (expr.Value.IsIsString(null))
+                return new LoadStringIlExpression(
+                    expr.Value.ToStringValue().Value);
+
             throw new NotImplementedException(
                 "currently only implemented for numbers, vectors, " +
-                "and matrices.");
+                " matrices, and strings.");
         }
 
         public IlExpression ConvertToIlExpression(
@@ -332,6 +343,37 @@ namespace MetaphysicsIndustries.Solus.Compiler
             {
                 indexes2[i] = new ConvertI4IlExpression(
                     ConvertToIlExpression(expr.Indexes[i], nm));
+            }
+
+            // TODO: check expr.ResultType against the number of indexes
+            //       eventually, we will have a type system that can tel us
+            //       exactly what we should expect (real number, integer,
+            //       vector on R^3, etc.) at any point in the computation.
+            //       Until then, we use approximations.
+            if (expr2.ResultType == typeof(string))
+            {
+                if (expr.Indexes.Count != 1)
+                    throw new OperandException(
+                        "Wrong number of indexes for the expression");
+                var charType = typeof(char);
+                var toString = charType.GetMethod("ToString",
+                    Type.EmptyTypes);
+                var strType = typeof(string);
+                var getChars = strType.GetMethod("get_Chars",
+                    new[] { typeof(int) });
+                var local = nm.CreateLocal();
+                local.Usage = IlLocalUsage.Internal;
+                local.LocalType = typeof(char);
+
+                return new IlExpressionSequence(
+                    new StoreLocalIlExpression(
+                        local,
+                        new CallIlExpression(
+                            getChars,
+                            expr2, indexes2[0])),
+                    new CallIlExpression(
+                        toString,
+                        new LoadLocalAddrIlExpression(local)));
             }
 
             // assume vector (and not string) for now

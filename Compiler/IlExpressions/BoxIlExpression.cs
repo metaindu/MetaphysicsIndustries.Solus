@@ -20,21 +20,28 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Compiler
-{
-    public enum IlLocalUsage
-    {
-        /// <summary>
-        /// The value of the variable will be taken from the compiled
-        /// environment when the compiled method starts executing, and stored
-        /// in the localvar.
-        /// </summary>
-        InitFromCompiledEnv,
+using System;
 
-        /// <summary>
-        /// The variable will only be used internally to the expression, and
-        /// is not related to the compiled environment.
-        /// </summary>
-        Internal,
+namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
+{
+    public class BoxIlExpression : IlExpression
+    {
+        public BoxIlExpression(Type type, IlExpression target = null)
+        {
+            Type = type;
+            Target = target;
+        }
+
+        public Type Type { get; }
+        public IlExpression Target { get; }
+
+        protected override void GetInstructionsInternal(NascentMethod nm)
+        {
+            if (Target != null)
+                Target.GetInstructions(nm);
+            nm.Instructions.Add(Instruction.Box(Type));
+        }
+
+        public override Type ResultType => Type;
     }
 }
