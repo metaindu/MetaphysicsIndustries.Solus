@@ -593,10 +593,38 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArccosineFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+            var test2 = new CompareGreaterThanIlExpression(
+                new DupIlExpression(),
+                new LoadConstantIlExpression(1f));
             var expr = new CallIlExpression(
-                new Func<double, double>(Math.Acos),
-                ConvertToIlExpression(arguments[0], nm));
-            return expr;
+                new Func<double, double>(Math.Acos));
+            var seq = new List<IlExpression>();
+            var arg = ConvertToIlExpression(arguments[0], nm);
+            seq.Add(arg);
+            seq.Add(
+                new CompareLessThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(-1f)));
+            seq.Add(new BrFalseIlExpression(test2));
+            seq.Add(
+                new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Argument less than -1"),
+                        new LoadNullIlExpression())));
+            seq.Add(test2);
+            seq.Add(new BrFalseIlExpression(expr));
+            seq.Add(
+                new ThrowIlExpression(
+                    new NewObjIlExpression(ctor,
+                        new LoadStringIlExpression("Argument greater than 1"),
+                        new LoadNullIlExpression())));
+            seq.Add(expr);
+
+            return new IlExpressionSequence(seq);
         }
 
         public IlExpression ConvertToIlExpression(
@@ -626,10 +654,39 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ArcsineFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
+            var arg = ConvertToIlExpression(arguments[0], nm);
+
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+
+            var checkLess = new IfThenElseConstruct(
+                new CompareLessThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(-1f)),
+                new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Argument less than -1"),
+                        new LoadNullIlExpression())));
+            var checkGreater = new IfThenElseConstruct(
+                new CompareGreaterThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(1f)),
+                new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Argument greater than 1"),
+                        new LoadNullIlExpression())));
             var expr = new CallIlExpression(
-                new Func<double, double>(Math.Asin),
-                ConvertToIlExpression(arguments[0], nm));
-            return expr;
+                new Func<double, double>(Math.Asin));
+
+            return new IlExpressionSequence(
+                arg,
+                checkLess,
+                checkGreater,
+                expr,
+                new ConvertR4IlExpression());
         }
 
         public IlExpression ConvertToIlExpression(
@@ -761,10 +818,29 @@ namespace MetaphysicsIndustries.Solus.Compiler
             DivisionOperation func, NascentMethod nm,
             List<Expression> arguments)
         {
-            var expr = new DivIlExpression(
-                ConvertToIlExpression(arguments[0], nm),
-                ConvertToIlExpression(arguments[1], nm));
-            return expr;
+            var left = ConvertToIlExpression(arguments[0], nm);
+            var right = ConvertToIlExpression(arguments[1], nm);
+
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+
+            var checkZero = new IfThenElseConstruct(
+                new CompareEqualIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(0f)),
+                new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Division by zero"),
+                        new LoadNullIlExpression())));
+
+            var expr = new DivIlExpression();
+            return new IlExpressionSequence(
+                left,
+                right,
+                checkZero,
+                expr);
         }
 
         public IlExpression ConvertToIlExpression(
@@ -869,32 +945,118 @@ namespace MetaphysicsIndustries.Solus.Compiler
             Log10Function func, NascentMethod nm,
             List<Expression> arguments)
         {
+            var arg = ConvertToIlExpression(arguments[0], nm);
+
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+
+            var checkNotPos = new IfThenElseConstruct(
+                new CompareGreaterThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(0f)),
+                elseBlock: new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Argument must be positive"),
+                        new LoadNullIlExpression())));
+
             var expr = new CallIlExpression(
-                new Func<double, double>(Math.Log10),
-                ConvertToIlExpression(arguments[0], nm));
-            return expr;
+                new Func<double, double>(Math.Log10));
+
+            return new IlExpressionSequence(
+                arg,
+                checkNotPos,
+                expr,
+                new ConvertR4IlExpression());
         }
 
         public IlExpression ConvertToIlExpression(
             Log2Function func, NascentMethod nm,
             List<Expression> arguments)
         {
+            var arg = ConvertToIlExpression(arguments[0], nm);
+
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+
+            var checkNotPos = new IfThenElseConstruct(
+                new CompareGreaterThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(0f)),
+                elseBlock: new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Argument must be positive"),
+                        new LoadNullIlExpression())));
+
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Log),
-                ConvertToIlExpression(arguments[0], nm),
+                // arg,
                 new LoadConstantIlExpression(2f));
-            return expr;
+
+            return new IlExpressionSequence(
+                arg,
+                checkNotPos,
+                expr,
+                new ConvertR4IlExpression());
         }
 
         public IlExpression ConvertToIlExpression(
             LogarithmFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+
+            var arg = ConvertToIlExpression(arguments[0], nm);
+
+            var checkArgNotPos = new IfThenElseConstruct(
+                new CompareGreaterThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(0f)),
+                elseBlock: new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Argument must be positive"),
+                        new LoadNullIlExpression())));
+
+            var base_ = ConvertToIlExpression(arguments[1], nm);
+
+            var checkBaseNotPos = new IfThenElseConstruct(
+                new CompareGreaterThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(0f)),
+                elseBlock: new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Base must be positive"),
+                        new LoadNullIlExpression())));
+            var checkBaseNotOne = new IfThenElseConstruct(
+                new CompareEqualIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(1f)),
+                thenBlock: new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Base must not be one"),
+                        new LoadNullIlExpression())));
+
             var expr = new CallIlExpression(
-                new Func<double, double, double>(Math.Log),
-                ConvertToIlExpression(arguments[0], nm),
-                ConvertToIlExpression(arguments[1], nm));
-            return expr;
+                new Func<double, double, double>(Math.Log)
+                // arg,
+                // base_
+                );
+            return new IlExpressionSequence(
+                arg,
+                checkArgNotPos,
+                base_,
+                checkBaseNotPos,
+                checkBaseNotOne,
+                expr,
+                new ConvertR4IlExpression());
         }
 
         public IlExpression ConvertToIlExpression(
@@ -948,10 +1110,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var calcArg = ConvertToIlExpression(arguments[i], nm);
                 var call1 = new CallIlExpression(
                     new Func<float, bool>(float.IsInfinity),
-                    new DupIlExpression(calcArg));
+                    new DupIlExpression());
                 var call2 = new CallIlExpression(
                     new Func<float, bool>(float.IsNaN),
-                    new DupIlExpression(calcArg));
+                    new DupIlExpression());
                 var pop = new PopIlExpression();
                 var br1 = new BrTrueIlExpression(pop);
                 var br2 = new BrTrueIlExpression(pop);
@@ -976,12 +1138,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
             exprs.Add(
                 new CallIlExpression(
                     new Func<float, bool>(float.IsNegativeInfinity),
-                    new DupIlExpression(nop)));
-            var nop2 = new NopIlExpression();
-            exprs.Add(new BrFalseIlExpression(nop2));
+                    new DupIlExpression()));
+            var conv = new ConvertR4IlExpression();
+            exprs.Add(new BrFalseIlExpression(conv));
             exprs.Add(new PopIlExpression());
             exprs.Add(new LoadConstantIlExpression(float.NaN));
-            exprs.Add(nop2);
+            exprs.Add(conv);
 
             var seq = new IlExpressionSequence(exprs.ToArray());
             return seq;
@@ -1017,10 +1179,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var calcArg = ConvertToIlExpression(arguments[i], nm);
                 var call1 = new CallIlExpression(
                     new Func<float, bool>(float.IsInfinity),
-                    new DupIlExpression(calcArg));
+                    new DupIlExpression());
                 var call2 = new CallIlExpression(
                     new Func<float, bool>(float.IsNaN),
-                    new DupIlExpression(calcArg));
+                    new DupIlExpression());
                 var pop = new PopIlExpression();
                 var br1 = new BrTrueIlExpression(pop);
                 var br2 = new BrTrueIlExpression(pop);
@@ -1046,11 +1208,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 new CallIlExpression(
                     new Func<float, bool>(float.IsPositiveInfinity),
                     new DupIlExpression(nop)));
-            var nop2 = new NopIlExpression();
-            exprs.Add(new BrFalseIlExpression(nop2));
+            var conv = new ConvertR4IlExpression();
+            exprs.Add(new BrFalseIlExpression(conv));
             exprs.Add(new PopIlExpression());
             exprs.Add(new LoadConstantIlExpression(float.NaN));
-            exprs.Add(nop2);
+            exprs.Add(conv);
 
             var seq = new IlExpressionSequence(exprs.ToArray());
             return seq;
@@ -1077,13 +1239,35 @@ namespace MetaphysicsIndustries.Solus.Compiler
             ModularDivision func, NascentMethod nm,
             List<Expression> arguments)
         {
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+
+            var left =
+                new ConvertI4IlExpression(
+                    ConvertToIlExpression(arguments[0], nm));
+            var right =
+                new ConvertI4IlExpression(
+                    ConvertToIlExpression(arguments[1], nm));
+
+            var checkZero = new IfThenElseConstruct(
+                new CompareEqualIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(0)),
+                new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Division by zero"),
+                        new LoadNullIlExpression())));
+
             var expr = new ConvertR4IlExpression(
-                new RemIlExpression(
-                    new ConvertI4IlExpression(
-                        ConvertToIlExpression(arguments[0], nm)),
-                    new ConvertI4IlExpression(
-                        ConvertToIlExpression(arguments[1], nm))));
-            return expr;
+                new RemIlExpression());
+
+            return new IlExpressionSequence(
+                left,
+                right,
+                checkZero,
+                expr);
         }
 
         public IlExpression ConvertToIlExpression(
@@ -1104,10 +1288,30 @@ namespace MetaphysicsIndustries.Solus.Compiler
             NascentMethod nm,
             List<Expression> arguments)
         {
+
+            var excType = typeof(OperandException);
+            var ctor = excType.GetConstructor(
+                new Type[] { typeof(string), typeof(Exception) });
+
+            var arg = ConvertToIlExpression(arguments[0], nm);
+
+            var checkNotPos = new IfThenElseConstruct(
+                new CompareGreaterThanIlExpression(
+                    new DupIlExpression(),
+                    new LoadConstantIlExpression(0f)),
+                elseBlock: new ThrowIlExpression(
+                    new NewObjIlExpression(
+                        ctor,
+                        new LoadStringIlExpression("Argument must be positive"),
+                        new LoadNullIlExpression())));
+
             var expr = new CallIlExpression(
-                new Func<double, double>(Math.Log),
-                ConvertToIlExpression(arguments[0], nm));
-            return expr;
+                new Func<double, double>(Math.Log));
+            return new IlExpressionSequence(
+                arg,
+                checkNotPos,
+                expr,
+                new ConvertR4IlExpression());
         }
 
         public IlExpression ConvertToIlExpression(

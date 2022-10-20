@@ -46,43 +46,43 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         }
 
         [Test]
-        public void ConstructorNullDividendThrows()
+        public void ConstructorNullDividendDoesNotThrow()
         {
             // given
             var divisor = new MockIlExpression();
-            // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new DivIlExpression(null, divisor));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: dividend",
-                ex.Message);
+            // when
+            var result = new DivIlExpression(null, divisor);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<DivIlExpression>(result);
+            Assert.IsNull(result.Dividend);
+            Assert.AreSame(divisor, result.Divisor);
         }
 
         [Test]
-        public void ConstructorNullDivisorThrows()
+        public void ConstructorNullDivisorDoesNotThrow()
         {
             // given
             var dividend = new MockIlExpression();
-            // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new DivIlExpression(dividend, null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: divisor",
-                ex.Message);
+            // when
+            var result = new DivIlExpression(dividend, null);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<DivIlExpression>(result);
+            Assert.AreSame(dividend, result.Dividend);
+            Assert.IsNull(result.Divisor);
         }
 
         [Test]
-        public void ConstructorNullBothThrows()
+        public void ConstructorNullBothDoesNotThrow()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
-                () => new DivIlExpression(null, null));
-            // and
-            Assert.AreEqual(
-                "Value cannot be null.\nParameter name: dividend",
-                ex.Message);
+            var result = new DivIlExpression(null, null);
+            // then
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<DivIlExpression>(result);
+            Assert.IsNull(result.Dividend);
+            Assert.IsNull(result.Divisor);
         }
     }
 }
