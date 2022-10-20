@@ -345,6 +345,37 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     ConvertToIlExpression(expr.Indexes[i], nm));
             }
 
+            // TODO: check expr.ResultType against the number of indexes
+            //       eventually, we will have a type system that can tel us
+            //       exactly what we should expect (real number, integer,
+            //       vector on R^3, etc.) at any point in the computation.
+            //       Until then, we use approximations.
+            if (expr2.ResultType == typeof(string))
+            {
+                if (expr.Indexes.Count != 1)
+                    throw new OperandException(
+                        "Wrong number of indexes for the expression");
+                var charType = typeof(char);
+                var toString = charType.GetMethod("ToString",
+                    Type.EmptyTypes);
+                var strType = typeof(string);
+                var getChars = strType.GetMethod("get_Chars",
+                    new[] { typeof(int) });
+                var local = nm.CreateLocal();
+                local.Usage = IlLocalUsage.Internal;
+                local.LocalType = typeof(char);
+
+                return new IlExpressionSequence(
+                    new StoreLocalIlExpression(
+                        local,
+                        new CallIlExpression(
+                            getChars,
+                            expr2, indexes2[0])),
+                    new CallIlExpression(
+                        toString,
+                        new LoadLocalAddrIlExpression(local)));
+            }
+
             // assume vector (and not string) for now
             if (expr.Indexes.Count == 1)
                 return new LoadElemIlExpression(expr2, indexes2[0]);
