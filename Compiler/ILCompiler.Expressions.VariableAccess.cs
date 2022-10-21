@@ -20,14 +20,20 @@
  *
  */
 
-using System;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class IlLocal
+    public partial class ILCompiler
     {
-        public IlLocalUsage Usage;
-        public string VariableName;
-        public Type LocalType;
+        public IlExpression ConvertToIlExpression(
+            VariableAccess expr, NascentMethod nm)
+        {
+            var index =
+                nm.CreateIndexOfLocalForVariableName(expr.VariableName);
+            var local = nm.Locals[index];
+            return new LoadLocalIlExpression(local);
+        }
     }
 }

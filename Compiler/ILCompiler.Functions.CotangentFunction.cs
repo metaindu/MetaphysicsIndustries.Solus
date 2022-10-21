@@ -21,13 +21,25 @@
  */
 
 using System;
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class IlLocal
+    public partial class ILCompiler
     {
-        public IlLocalUsage Usage;
-        public string VariableName;
-        public Type LocalType;
+        public IlExpression ConvertToIlExpression(
+            CotangentFunction func, NascentMethod nm,
+            List<Expression> arguments)
+        {
+            var expr = new DivIlExpression(
+                new LoadConstantIlExpression(1f),
+                new CallIlExpression(
+                    new Func<double, double>(Math.Tan),
+                    ConvertToIlExpression(arguments[0], nm)));
+            return expr;
+        }
     }
 }

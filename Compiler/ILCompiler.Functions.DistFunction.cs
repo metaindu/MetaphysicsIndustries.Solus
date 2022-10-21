@@ -21,13 +21,31 @@
  */
 
 using System;
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class IlLocal
+    public partial class ILCompiler
     {
-        public IlLocalUsage Usage;
-        public string VariableName;
-        public Type LocalType;
+        public IlExpression ConvertToIlExpression(
+            DistFunction func, NascentMethod nm,
+            List<Expression> arguments)
+        {
+            var x = ConvertToIlExpression(arguments[0], nm);
+            var y = ConvertToIlExpression(arguments[1], nm);
+            var expr = new CallIlExpression(
+                new Func<double, double>(Math.Sqrt),
+                new AddIlExpression(
+                    new MulIlExpression(
+                        x,
+                        new DupIlExpression(x)),
+                    new MulIlExpression(
+                        y,
+                        new DupIlExpression(y))));
+            return expr;
+        }
     }
 }

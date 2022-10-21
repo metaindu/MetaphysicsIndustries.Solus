@@ -21,13 +21,25 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class IlLocal
+    public partial class ILCompiler
     {
-        public IlLocalUsage Usage;
-        public string VariableName;
-        public Type LocalType;
+        public IlExpression ConvertToIlExpression(
+            FunctionCall expr, NascentMethod nm)
+        {
+            if (expr.Function is Literal literal &&
+                literal.Value is Function f)
+                return ConvertToIlExpression(f, nm, expr.Arguments);
+
+            // TODO:
+            throw new NotImplementedException(
+                "What should be done? Should the expression be " +
+                "evaluated? Compiled?");
+        }
     }
 }

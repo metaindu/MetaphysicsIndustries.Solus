@@ -20,14 +20,26 @@
  *
  */
 
-using System;
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class IlLocal
+    public partial class ILCompiler
     {
-        public IlLocalUsage Usage;
-        public string VariableName;
-        public Type LocalType;
+        public IlExpression ConvertToIlExpression(
+            UnitStepFunction func, NascentMethod nm,
+            List<Expression> arguments)
+        {
+            var expr = new ConvertR4IlExpression(
+                new CompareLessThanIlExpression(
+                    new CompareLessThanIlExpression(
+                        ConvertToIlExpression(arguments[0], nm),
+                        new LoadConstantIlExpression(0f)),
+                    new LoadConstantIlExpression(1)));
+            return expr;
+        }
     }
 }

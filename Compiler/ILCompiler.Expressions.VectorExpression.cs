@@ -20,14 +20,31 @@
  *
  */
 
-using System;
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class IlLocal
+    public partial class ILCompiler
     {
-        public IlLocalUsage Usage;
-        public string VariableName;
-        public Type LocalType;
+        public IlExpression ConvertToIlExpression(VectorExpression expr,
+            NascentMethod nm)
+        {
+            var seq = new List<IlExpression>();
+            var newarr = new NewArrIlExpression(
+                typeof(float),
+                new LoadConstantIlExpression(expr.Length));
+            seq.Add(newarr);
+            int i;
+            for (i = 0; i < expr.Length; i++)
+                seq.Add(
+                    new StoreElemIlExpression(
+                        array_: new DupIlExpression(newarr),
+                        index: new LoadConstantIlExpression(i),
+                        value: ConvertToIlExpression(expr[i], nm)));
+
+            return new IlExpressionSequence(seq);
+        }
     }
 }

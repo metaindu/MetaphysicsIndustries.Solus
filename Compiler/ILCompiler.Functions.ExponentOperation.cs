@@ -21,13 +21,23 @@
  */
 
 using System;
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public class IlLocal
+    public partial class ILCompiler
     {
-        public IlLocalUsage Usage;
-        public string VariableName;
-        public Type LocalType;
+        public IlExpression ConvertToIlExpression(
+            ExponentOperation func, NascentMethod nm,
+            List<Expression> arguments)
+        {
+            return new CallIlExpression(
+                new Func<double, double, double>(Math.Pow),
+                ConvertToIlExpression(arguments[0], nm),
+                ConvertToIlExpression(arguments[1], nm));
+        }
     }
 }
