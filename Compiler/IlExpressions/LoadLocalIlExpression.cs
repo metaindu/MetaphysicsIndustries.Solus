@@ -39,7 +39,6 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             nm.Instructions.Add(Instruction.LoadLocalVariable(index));
         }
 
-        public override Type ResultType =>
-            throw new NotImplementedException();
+        public override Type ResultType => Local.LocalType;
     }
 }
