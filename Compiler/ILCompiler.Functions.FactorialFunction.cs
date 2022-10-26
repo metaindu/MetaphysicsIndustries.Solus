@@ -34,7 +34,38 @@ namespace MetaphysicsIndustries.Solus.Compiler
             FactorialFunction func, NascentMethod nm,
             List<Expression> arguments)
         {
-            throw new NotImplementedException();
+            var product = nm.CreateLocal(typeof(float), "product");
+            var n = nm.CreateLocal(typeof(float), "n");
+            // n = ...
+            var initN = new StoreLocalIlExpression(
+                n, ConvertToIlExpression(arguments[0], nm));
+            // product = 1
+            var initProduct = new StoreLocalIlExpression(
+                product, new LoadConstantIlExpression(1f));
+            // while (n > 1)
+            // {
+            //     product = product * n;
+            //     n = n + 1;
+            // }
+            var loop = new WhileLoopConstruct(
+                new CompareGreaterThanIlExpression(
+                    new LoadLocalIlExpression(n),
+                    new LoadConstantIlExpression(1f)),
+                new IlExpressionSequence(
+                    new StoreLocalIlExpression(product,
+                        new MulIlExpression(
+                            new LoadLocalIlExpression(product),
+                            new LoadLocalIlExpression(n))),
+                    new StoreLocalIlExpression(n,
+                        new SubIlExpression(
+                            new LoadLocalIlExpression(n),
+                            new LoadConstantIlExpression(1f)))));
+            // return product;
+            return new IlExpressionSequence(
+                initN,
+                initProduct,
+                loop,
+                new LoadLocalIlExpression(product));
         }
     }
 }
