@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             int i;
             for (i = 0; i < args.Length; i++)
                 literals[i] = new Literal(args[i]);
-            var expr = new FunctionCall(f, literals);
+            var expr = new FunctionCall(new Literal(f), literals);
             return Eval(expr, env);
         }
 

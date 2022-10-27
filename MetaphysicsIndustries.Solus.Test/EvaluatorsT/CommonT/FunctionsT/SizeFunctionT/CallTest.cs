@@ -90,7 +90,6 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         [Test]
         public void SizeFunctionVectorYieldsLength()
         {
-
             // given
             var f = SizeFunction.Value;
             var args = new IMathObject[]
