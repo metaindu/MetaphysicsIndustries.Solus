@@ -49,10 +49,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
             return _localIndexesByName[name];
         }
 
-        public IlLocal CreateLocal()
+        public IlLocal CreateLocal(Type type=null, string name=null,
+            IlLocalUsage usage=IlLocalUsage.Internal)
         {
-            var local = new IlLocal();
-            local.LocalType = typeof(float);
+            if (type == null)
+                type = typeof(float);
+            var local = new IlLocal
+            {
+                LocalType = type,
+                VariableName = name,
+                Usage = usage
+            };
             var index = (ushort)Locals.Count;
             _indexesByLocal[local] = index;
             Locals.Add(local);

@@ -21,24 +21,44 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class LoadLocalIlExpression : IlExpression
+    public class WhileLoopConstruct : IlExpression
     {
-        public LoadLocalIlExpression(IlLocal local)
+        public WhileLoopConstruct(IlExpression condition = null,
+            IlExpression body = null)
         {
-            Local = local;
+            Condition = condition;
+            Body = body;
         }
 
-        public IlLocal Local { get; }
+        public IlExpression Condition { get; }
+        public IlExpression Body { get; }
+
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
-            var index = nm.GetIndexOfLocal(Local);
-            nm.Instructions.Add(Instruction.LoadLocalVariable(index));
+            var nop1 = new NopIlExpression();
+            var nop2 = new NopIlExpression();
+            var exprs = new List<IlExpression>();
+            exprs.Add(nop1);
+            if (Condition != null)
+            {
+                exprs.Add(Condition);
+                exprs.Add(new BrFalseIlExpression(nop2));
+            }
+
+            if (Body != null)
+                exprs.Add(Body);
+            exprs.Add(new BranchIlExpression(nop1));
+            exprs.Add(nop2);
+            var seq = new IlExpressionSequence(exprs);
+            seq.GetInstructions(nm);
         }
 
-        public override Type ResultType => Local.LocalType;
+        public override Type ResultType =>
+            throw new NotImplementedException();
     }
 }

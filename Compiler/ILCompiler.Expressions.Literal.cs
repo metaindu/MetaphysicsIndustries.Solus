@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                                 v[i].ToNumber().Value)));
                 }
 
-                return new IlExpressionSequence(seq);
+                return new IlExpressionSequence(typeof(float[]), seq);
             }
 
             if (expr.Value.IsIsMatrix(null))
@@ -86,7 +86,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             new LoadConstantIlExpression(c),
                             new LoadConstantIlExpression(m[r, c].ToFloat())));
 
-                return new IlExpressionSequence(seq);
+                return new IlExpressionSequence(typeof(float[,]), seq);
             }
 
             if (expr.Value.IsIsString(null))

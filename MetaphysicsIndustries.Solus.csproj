@@ -151,6 +151,7 @@
     <Compile Include="Compiler\IlExpressions\StoreLocalIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\SubIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\ThrowIlExpression.cs" />
+    <Compile Include="Compiler\IlExpressions\WhileLoopConstruct.cs" />
     <Compile Include="Compiler\IlLabel.cs" />
     <Compile Include="Compiler\IlLocal.cs" />
     <Compile Include="Compiler\IlLocalUsage.cs" />

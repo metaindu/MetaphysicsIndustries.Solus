@@ -28,17 +28,28 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
     public class IlExpressionSequence : IlExpression
     {
         public IlExpressionSequence(params IlExpression[] expressions)
+            : this(null, expressions)
         {
-            Expressions = expressions;
         }
         public IlExpressionSequence(IList<IlExpression> expressions)
+            : this(null, expressions)
         {
+        }
+        public IlExpressionSequence(Type resultType, params IlExpression[] expressions)
+        {
+            _resultType = resultType;
+            Expressions = expressions;
+        }
+        public IlExpressionSequence(Type resultType, IList<IlExpression> expressions)
+        {
+            _resultType = resultType;
             var exprs = new IlExpression[expressions.Count];
             expressions.CopyTo(exprs, 0);
             Expressions = exprs;
         }
 
         public IlExpression[] Expressions;
+        private Type _resultType;
 
         protected override void GetInstructionsInternal(NascentMethod nm)
         {
@@ -46,7 +57,14 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
                 expr.GetInstructions(nm);
         }
 
-        public override Type ResultType =>
-            Expressions[Expressions.Length - 1].ResultType;
+        public override Type ResultType
+        {
+            get
+            {
+                if (_resultType != null)
+                    return _resultType;
+                return Expressions[Expressions.Length - 1].ResultType;
+            }
+        }
     }
 }
