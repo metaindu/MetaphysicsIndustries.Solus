@@ -30,13 +30,14 @@ namespace MetaphysicsIndustries.Solus.Values
             Interval = interval;
         }
 
-        public VarInterval(string variable, float lowerBound, float upperBoud,
+        public VarInterval(string variable,
+            float lowerBound, float upperBound,
             bool openLowerBound = false, bool openUpperBound = false,
             bool isIntegerInterval = false)
         {
             Variable = variable;
             Interval = new Interval(lowerBound, openLowerBound,
-                upperBoud, openUpperBound, isIntegerInterval);
+                upperBound, openUpperBound, isIntegerInterval);
         }
 
         public readonly string Variable;
