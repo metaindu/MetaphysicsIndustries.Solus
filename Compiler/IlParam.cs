@@ -27,5 +27,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public class IlParam
     {
         public Type ParamType;
+        public string ParamName;
     }
 }

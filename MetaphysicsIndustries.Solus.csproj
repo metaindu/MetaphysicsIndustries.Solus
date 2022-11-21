@@ -55,8 +55,8 @@
     <Compile Include="Commands\ICommandData.cs" />
     <Compile Include="Commands\VarsCommand.cs" />
     <Compile Include="Commands\VarAssignCommand.cs" />
-    <Compile Include="Compiler\CompiledEnvironment.cs" />
     <Compile Include="Compiler\CompiledExpression.cs" />
+    <Compile Include="Compiler\DelegateTypes.cs" />
     <Compile Include="Compiler\IILGenerator.cs" />
     <Compile Include="Compiler\ILCompiler.cs" />
     <Compile Include="Compiler\ILCompiler.Expressions.ComponentAccess.cs" />
@@ -132,6 +132,7 @@
     <Compile Include="Compiler\IlExpressions\IfThenElseConstruct.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\IlExpressionSequence.cs" />
+    <Compile Include="Compiler\IlExpressions\LoadParamIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadConstantIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadElemIlExpression.cs" />
     <Compile Include="Compiler\IlExpressions\LoadLocalAddrIlExpression.cs" />

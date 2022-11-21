@@ -30,10 +30,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             VariableAccess expr, NascentMethod nm)
         {
-            var index =
-                nm.CreateIndexOfLocalForVariableName(expr.VariableName);
-            var local = nm.Locals[index];
-            return new LoadLocalIlExpression(local);
+            var param = nm.CreateParam(expr.VariableName);
+            return new LoadParamIlExpression(param);
         }
     }
 }
