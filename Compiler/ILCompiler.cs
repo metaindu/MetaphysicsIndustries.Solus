@@ -85,6 +85,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var gen = method.GetILGenerator();
             var gen2 = new ILRecorder(new ILGeneratorAdapter(gen));
 
+            foreach (var local in nm.Locals)
+                gen.DeclareLocal(local.LocalType);
+
             var setup = new List<Instruction>();
 
             var shutdown = new List<Instruction>();
