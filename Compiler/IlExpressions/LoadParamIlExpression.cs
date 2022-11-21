@@ -20,19 +20,25 @@
  *
  */
 
-using System.Collections.Generic;
+using System;
 
-namespace MetaphysicsIndustries.Solus.Compiler
+namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
-    public class CompiledEnvironment
+    public class LoadParamIlExpression : IlExpression
     {
-        private readonly Dictionary<string, float> _valuesByName =
-            new Dictionary<string, float>();
-
-        public float this[string name]
+        public LoadParamIlExpression(IlParam param)
         {
-            get => _valuesByName[name];
-            set => _valuesByName[name] = value;
+            Param = param;
         }
+
+        public IlParam Param { get; }
+
+        protected override void GetInstructionsInternal(NascentMethod nm)
+        {
+            var index = (ushort)nm.GetParamIndex(Param);
+            nm.Instructions.Add(Instruction.LoadArgument(index));
+        }
+
+        public override Type ResultType => Param.ParamType;
     }
 }

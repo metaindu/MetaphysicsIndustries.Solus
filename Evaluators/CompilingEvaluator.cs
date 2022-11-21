@@ -20,7 +20,10 @@
  *
  */
 
+using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
@@ -31,15 +34,34 @@ namespace MetaphysicsIndustries.Solus.Evaluators
     public class CompilingEvaluator : IEvaluator
     {
         private readonly ILCompiler _compiler = new ILCompiler();
+
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
             var ec = new ExpressionChecker();
             ec.Check(expr, env);
 
-            var compiled = _compiler.Compile(expr);
-            var cenv =
-                _compiler.CompileEnvironment(compiled, env, this);
-            return compiled.Evaluate(cenv);
+            // We can't rely on callers to have applied all variables. We
+            // have to do it here, even if it turns out to be a no-op in some
+            // cases.
+            var avt = new ApplyVariablesTransform();
+            expr = avt.Transform(expr, env);
+            ec.Check(expr, env);
+
+            var varNames = Expression.GatherVariables(expr);
+            var varTypes = new Dictionary<string, IMathObject>();
+            foreach (var varName in varNames)
+            {
+                if (!env.ContainsVariable(varName))
+                    throw new NameException(
+                        $"Variable \"{varName}\" is not bound");
+                var value = env.GetVariable(varName);
+                if (value.IsIsExpression(env))
+                    value = ((Expression)value).Result;
+                varTypes[varName] = value;
+            }
+
+            var compiled = _compiler.Compile(expr, varTypes);
+            return compiled.Evaluate(env);
         }
 
         public Expression Simplify(Expression expr, SolusEnvironment env)
@@ -67,22 +89,42 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             if (store != null)
                 store.SetMinArraySize(numSteps);
 
+            var varNames = Expression.GatherVariables(expr);
+            var varTypes = new Dictionary<string, IMathObject>();
+            foreach (var varName in varNames)
+            {
+                if (!env.ContainsVariable(varName) &&
+                    varName != interval.Variable)
+                    throw new NameException(
+                        $"Variable \"{varName}\" is not bound");
+                if (varName == interval.Variable)
+                    varTypes[varName] = ScalarMathObject.Value;
+                else
+                {
+                    var value = env.GetVariable(varName);
+                    if (value.IsIsExpression(env))
+                        value = ((Expression)value).Result;
+                    varTypes[varName] = value;
+                }
+            }
+
             var delta = interval.Interval.CalcDelta(numSteps);
 
             var env2 = env.CreateChildEnvironment();
             env2.RemoveVariable(interval.Variable);
             var expr2 = Simplify(expr, env2);
-            var compiled = _compiler.Compile(expr2);
-            var cenv =
-                _compiler.CompileEnvironment(compiled, env2, this);
+            var compiled = _compiler.Compile(expr2, varTypes);
+            object[] varValuesInOrder = null;
+            compiled.CompileEnvironment(env2, ref varValuesInOrder);
 
+            var intervalVarIndex =
+                Array.IndexOf(compiled.VariableNames, interval.Variable);
             int i;
             for (i = 0; i < numSteps; i++)
             {
                 var xx = delta * i + interval.Interval.LowerBound;
-                // env2.SetVariable(interval.Variable, xx.ToNumber());
-                cenv[interval.Variable] = xx;
-                var v = compiled.Evaluate(cenv).ToNumber();
+                varValuesInOrder[intervalVarIndex] = xx;
+                var v = compiled.Evaluate(varValuesInOrder).ToNumber();
                 if (store != null)
                     store.Store(i, v);
                 if (aggrs != null)

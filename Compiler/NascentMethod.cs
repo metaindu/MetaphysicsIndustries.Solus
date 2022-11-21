@@ -73,14 +73,34 @@ namespace MetaphysicsIndustries.Solus.Compiler
         private readonly Dictionary<IlParam, int> _indexesByParam =
             new Dictionary<IlParam, int>();
 
-        public IlParam CreateParam(Type paramType)
+        public IlParam CreateParam(string paramName, Type paramType=null)
         {
-            var param = new IlParam { ParamType = paramType };
+            foreach (var p in Params)
+                if (p.ParamName == paramName)
+                {
+                    if (paramType != p.ParamType)
+                        throw new InvalidOperationException(
+                            "Parameter type does not match.");
+                    return p;
+                }
+
+            var param = new IlParam
+            {
+                ParamType = paramType,
+                ParamName = paramName,
+            };
             _indexesByParam[param] = Params.Count;
             Params.Add(param);
             return param;
         }
         public int GetParamIndex(IlParam param) => _indexesByParam[param];
+        public IlParam GetParamByName(string name)
+        {
+            foreach (var param in Params)
+                if (param.ParamName == name)
+                    return param;
+            return null;
+        }
 
         public readonly List<Instruction> Instructions =
             new List<Instruction>();

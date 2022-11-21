@@ -23,89 +23,71 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
     public partial class ILCompiler
     {
-        public CompiledExpression Compile(Expression expr)
+        /// <summary>
+        /// Convert an expression tree into a compiled form that can be
+        /// easily executed.
+        /// </summary>
+        /// <param name="expr">The expression to compile</param>
+        /// <param name="variableTypesByName">
+        /// A mapping of variable names to IMathObject's representing the
+        /// variables' types.
+        /// </param>
+        /// <returns>CompiledExpression</returns>
+        /// <exception cref="NameException">
+        /// If a variable reference appears in the expression but there is no
+        /// corresponding entry in variableTypesByName
+        /// </exception>
+        public CompiledExpression Compile(Expression expr,
+            IDictionary<string, IMathObject> variableTypesByName=null)
         {
             var nm = new NascentMethod();
+
             var ilexpr = ConvertToIlExpression(expr, nm);
+
+            var varNames = new string[nm.Params.Count];
+            var paramTypes = new Type[nm.Params.Count];
+            var typeEnv = new SolusEnvironment();
+            int i = 0;
+            foreach (var param in nm.Params)
+            {
+                var varName = param.ParamName;
+                varNames[i] = varName;
+
+                if (!variableTypesByName.ContainsKey(varName))
+                    throw new NameException(
+                        $"The variable \"{varName}\" doesn't have " +
+                        $"a runtime type defined in `variableTypesByName`");
+                var varValue = variableTypesByName[varName];
+                typeEnv.SetVariable(varName, varValue);
+                var paramType = ResolveType(varValue);
+                param.ParamType = paramType;
+                paramTypes[i] = paramType;
+                i++;
+            }
+
+            var returnType = ResolveType(expr.Result, typeEnv);
+
             ilexpr.GetInstructions(nm);
 
             DynamicMethod method =
                 new DynamicMethod(
                     name: this.ToString(),
-                    returnType: typeof(object),
-                    parameterTypes: new []
-                    {
-                        typeof(CompiledEnvironment)
-                    });
+                    returnType: returnType,
+                    parameterTypes: paramTypes);
 
             var gen = method.GetILGenerator();
             var gen2 = new ILRecorder(new ILGeneratorAdapter(gen));
 
-            var dtype = typeof(CompiledEnvironment);
-            var get_Item = dtype.GetProperty("Item").GetGetMethod();
-
-            ushort n = 0;
             var setup = new List<Instruction>();
-            var locals = new List<LocalBuilder>();
-
-            int compileVarsCount = 0;
-            int i;
-            for (i = 0; i < nm.Locals.Count; i++)
-                if (nm.Locals[i].Usage == IlLocalUsage.InitFromCompiledEnv)
-                    compileVarsCount++;
-            var cenv = new string[compileVarsCount];
-            IlParam cenvParam = null;
-            int cenvParamIndex = -1;
-
-            compileVarsCount = 0;
-            for (i = 0; i < nm.Locals.Count; i++)
-            {
-                var ilLocal = nm.Locals[i];
-                locals.Add(gen.DeclareLocal(ilLocal.LocalType));
-                switch (ilLocal.Usage)
-                {
-                    case IlLocalUsage.InitFromCompiledEnv:
-                        cenv[compileVarsCount] = ilLocal.VariableName;
-                        compileVarsCount++;
-                        if (cenvParam == null)
-                        {
-                            cenvParam = nm.CreateParam(
-                                typeof(CompiledEnvironment));
-                            cenvParamIndex =
-                                nm.GetParamIndex(cenvParam);
-                        }
-
-                        setup.Add(Instruction.LoadArgument(
-                            (ushort)cenvParamIndex));
-                        setup.Add(
-                            Instruction.LoadString(ilLocal.VariableName));
-                        setup.Add(Instruction.Call(get_Item));
-                        setup.Add(Instruction.StoreLocalVariable(n));
-                        break;
-                }
-            }
 
             var shutdown = new List<Instruction>();
-            var resultType = ilexpr.ResultType;
-            if (resultType == typeof(byte) ||
-                resultType == typeof(sbyte) ||
-                resultType == typeof(short) ||
-                resultType == typeof(ushort) ||
-                resultType == typeof(int) ||
-                resultType == typeof(uint) ||
-                resultType == typeof(long) ||
-                resultType == typeof(ulong) ||
-                resultType == typeof(float) ||
-                resultType == typeof(double) ||
-                resultType == typeof(bool))
-                shutdown.Add(Instruction.Box(typeof(float)));
             shutdown.Add(Instruction.Return());
 
             var instructionOffsets = new List<int>();
@@ -116,8 +98,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 instruction.Emit(gen2);
             }
 
-            Dictionary<IlLabel, Label> labels =
-                new Dictionary<IlLabel, Label>();
+            var labels = new Dictionary<IlLabel, Label>();
 
             foreach (var ilLabel in nm.GetAllLabels())
                 labels[ilLabel] = gen.DefineLabel();
@@ -143,12 +124,21 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 instruction.Emit(gen2);
             }
 
-            Func<CompiledEnvironment, object> del;
+            Delegate del;
+
+            var genTypeArgs = new List<Type>();
+            genTypeArgs.AddRange(paramTypes);
+            genTypeArgs.Add(returnType);
+            var genericTypeName = string.Format("{0}`{1}",
+                "MetaphysicsIndustries.Solus.Compiler.CompiledExpression",
+                genTypeArgs.Count);
+            var genericType =
+                typeof(ILCompiler).Assembly.GetType(genericTypeName);
+            var delegateType = genericType.MakeGenericType(
+                genTypeArgs.ToArray());
             try
             {
-                del =
-                    (Func<CompiledEnvironment, object>)method.CreateDelegate(
-                        typeof(Func<CompiledEnvironment, object>));
+                del = method.CreateDelegate(delegateType);
             }
             catch (InvalidProgramException ipe)
             {
@@ -158,7 +148,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
             return new CompiledExpression{
                 Method = del,
-                CompiledVars = cenv,
+                DelegateType = delegateType,
+                VariableNames = varNames,
+                ParameterTypes = paramTypes,
                 nm = nm,
                 ilexpr = ilexpr,
                 setup = setup,
@@ -166,46 +158,19 @@ namespace MetaphysicsIndustries.Solus.Compiler
             };
         }
 
-        public IMathObject FastEval(Expression expr, SolusEnvironment env)
+        public Type ResolveType(IMathObject value,
+            SolusEnvironment typeEnv=null)
         {
-            CompiledExpression compiled = null;
-            return FastEval(expr, env, ref compiled);
-        }
-        public IMathObject FastEval(Expression expr, SolusEnvironment env,
-            ref CompiledExpression compiled)
-        {
-            var eval = new BasicEvaluator();
-            var cenv = new CompiledEnvironment();
-            if (compiled != null)
-                cenv = CompileEnvironment(compiled, env, eval);
-            else
-            {
-                // static initialize Instruction
-                Instruction.LoadConstant(0).ToString();
-
-                compiled = Compile(expr);
-            }
-
-            return compiled.Evaluate(cenv).ToNumber();
-        }
-
-        public CompiledEnvironment CompileEnvironment(
-            CompiledExpression compiled, SolusEnvironment env,
-            IEvaluator eval)
-        {
-            var cenv = new CompiledEnvironment();
-            foreach (var var in compiled.CompiledVars)
-            {
-                var target = env.GetVariable(var);
-                if (target != null)
-                {
-                    if (target.IsIsExpression(env))
-                        target = eval.Eval((Expression)target, env);
-                    cenv[var] = target.ToNumber().Value;
-                }
-            }
-
-            return cenv;
+            if (value.IsIsString(typeEnv))
+                return typeof(string);
+            if (value.IsIsScalar(typeEnv))
+                return typeof(float);
+            if (value.IsIsVector(typeEnv))
+                return typeof(float[]);
+            if (value.IsIsMatrix(typeEnv))
+                return typeof(float[,]);
+            throw new NotImplementedException(
+                $"Unrecognized type, {value.GetType()}");
         }
     }
 }
