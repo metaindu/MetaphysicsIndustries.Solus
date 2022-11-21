@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -61,7 +62,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
         /// </exception>
         public IMathObject Evaluate(object[] varValuesInOrder=null)
         {
-            var result = Method.Method.Invoke(null, varValuesInOrder);
+            object result;
+            try
+            {
+                result = Method.Method.Invoke(null, varValuesInOrder);
+            }
+            catch (Exception ex)
+            {
+                if (ex is TargetInvocationException tie)
+                    throw tie.InnerException;
+                throw;
+            }
             if (result is float f)
                 return f.ToNumber();
             if (result is float[] v)
