@@ -52,15 +52,29 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     new PopIlExpression(),
                     new LoadNullIlExpression());
             if (arg.ResultType == typeof(string))
-                return new ConvertR4IlExpression(
-                    new CallIlExpression(
-                        typeof(string).GetMethod("get_Length"),
-                        arg));
+                return new IlExpressionSequence(
+                    typeof(float[]),
+                    new NewArrIlExpression(typeof(float),
+                        new LoadConstantIlExpression(1L)),
+                    new StoreElemIlExpression(
+                        new DupIlExpression(),
+                        new LoadConstantIlExpression(0L),
+                        new ConvertR4IlExpression(
+                            new CallIlExpression(
+                                typeof(string).GetMethod("get_Length"),
+                                arg))));
             if (arg.ResultType == typeof(float[]))
-                return new ConvertR4IlExpression(
-                    new CallIlExpression(
-                        typeof(float[]).GetMethod("get_Length"),
-                        arg));
+                return new IlExpressionSequence(
+                    typeof(float[]),
+                    new NewArrIlExpression(typeof(float),
+                        new LoadConstantIlExpression(1L)),
+                    new StoreElemIlExpression(
+                        new DupIlExpression(),
+                        new LoadConstantIlExpression(0L),
+                        new ConvertR4IlExpression(
+                            new CallIlExpression(
+                                typeof(float[]).GetMethod("get_Length"),
+                                arg))));
             var getLength3 = typeof(float[,]).GetMethod(
                 "GetLength", new Type[] { typeof(int) });
             if (arg.ResultType == typeof(float[,]))
