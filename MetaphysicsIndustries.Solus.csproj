@@ -155,7 +155,6 @@
     <Compile Include="Compiler\IlExpressions\WhileLoopConstruct.cs" />
     <Compile Include="Compiler\IlLabel.cs" />
     <Compile Include="Compiler\IlLocal.cs" />
-    <Compile Include="Compiler\IlLocalUsage.cs" />
     <Compile Include="Compiler\IlParam.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\NascentMethod.cs" />
