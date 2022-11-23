@@ -32,13 +32,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             SecantFunction func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new DivIlExpression(
                 new LoadConstantIlExpression(1f),
                 new CallIlExpression(
                     new Func<double, double>(Math.Cos),
-                    ConvertToIlExpression(arguments[0], nm)));
+                    ConvertToIlExpression(arguments[0], nm,
+                        variables)));
             return expr;
         }
     }

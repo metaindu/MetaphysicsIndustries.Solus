@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -30,14 +31,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
 {
     public partial class ILCompiler
     {
+        // public VariableIdentity ResolveVariable(string name, )
+
         /// <summary>
         /// Convert an expression tree into a compiled form that can be
         /// easily executed.
         /// </summary>
         /// <param name="expr">The expression to compile</param>
-        /// <param name="variableTypesByName">
-        /// A mapping of variable names to IMathObject's representing the
-        /// variables' types.
+        /// <param name="variables">
+        /// A mapping of variable names to VariableIdentity objects providing
+        /// information about the variables' types and usage.
         /// </param>
         /// <returns>CompiledExpression</returns>
         /// <exception cref="NameException">
@@ -45,11 +48,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
         /// corresponding entry in variableTypesByName
         /// </exception>
         public CompiledExpression Compile(Expression expr,
-            IDictionary<string, IMathObject> variableTypesByName=null)
+            VariableIdentityMap variables)
         {
             var nm = new NascentMethod();
 
-            var ilexpr = ConvertToIlExpression(expr, nm);
+            var ilexpr = ConvertToIlExpression(expr, nm, variables);
 
             var varNames = new string[nm.Params.Count];
             var paramTypes = new Type[nm.Params.Count];
@@ -60,15 +63,23 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var varName = param.ParamName;
                 varNames[i] = varName;
 
-                if (!variableTypesByName.ContainsKey(varName))
+                if (!variables.ContainsVariable(varName))
                     throw new NameException(
                         $"The variable \"{varName}\" doesn't have " +
                         $"a runtime type defined in `variableTypesByName`");
-                var varValue = variableTypesByName[varName];
-                typeEnv.SetVariable(varName, varValue);
-                var paramType = ResolveType(varValue);
-                param.ParamType = paramType;
-                paramTypes[i] = paramType;
+                var vi = variables[varName];
+                var varValue = vi.Value;
+                var mathType = vi.MathType;
+                if (mathType == null)
+                    mathType = varValue;
+                typeEnv.SetVariable(varName, mathType);
+                var iltype = vi.IlType;
+                if (iltype == null && mathType != null)
+                    iltype = ResolveType(mathType);
+                if (iltype == null && varValue != null)
+                    iltype = ResolveType(varValue);
+                param.ParamType = iltype;
+                paramTypes[i] = iltype;
                 i++;
             }
 

@@ -33,9 +33,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             ArcsineFunction func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var arg = ConvertToIlExpression(arguments[0], nm);
+            var arg = ConvertToIlExpression(arguments[0], nm, variables);
 
             var excType = typeof(OperandException);
             var ctor = excType.GetConstructor(

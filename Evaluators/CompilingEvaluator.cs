@@ -48,7 +48,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             ec.Check(expr, env);
 
             var varNames = Expression.GatherVariables(expr);
-            var varTypes = new Dictionary<string, IMathObject>();
+            var variables =
+                new VariableIdentityMap();
             foreach (var varName in varNames)
             {
                 if (!env.ContainsVariable(varName))
@@ -57,10 +58,17 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 var value = env.GetVariable(varName);
                 if (value.IsIsExpression(env))
                     value = ((Expression)value).Result;
-                varTypes[varName] = value;
+                variables[varName] = new VariableIdentity
+                {
+                    Name = varName,
+                    MathType = value,
+                    // IlType =
+                    Value = value,
+                    Source = VariableSource.Param
+                };
             }
 
-            var compiled = _compiler.Compile(expr, varTypes);
+            var compiled = _compiler.Compile(expr, variables);
             return compiled.Evaluate(env);
         }
 
@@ -90,7 +98,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 store.SetMinArraySize(numSteps);
 
             var varNames = Expression.GatherVariables(expr);
-            var varTypes = new Dictionary<string, IMathObject>();
+            var variables =
+                new VariableIdentityMap();
             foreach (var varName in varNames)
             {
                 if (!env.ContainsVariable(varName) &&
@@ -98,13 +107,25 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     throw new NameException(
                         $"Variable \"{varName}\" is not bound");
                 if (varName == interval.Variable)
-                    varTypes[varName] = ScalarMathObject.Value;
+                    variables[varName] = new VariableIdentity
+                    {
+                        Name = varName,
+                        MathType = ScalarMathObject.Value,
+                        Source = VariableSource.Param
+                    };
                 else
                 {
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).Result;
-                    varTypes[varName] = value;
+                    variables[varName] = new VariableIdentity
+                    {
+                        Name = varName,
+                        MathType = value,
+                        // IlType =
+                        Value = value,
+                        Source = VariableSource.Param
+                    };
                 }
             }
 
@@ -113,7 +134,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var env2 = env.CreateChildEnvironment();
             env2.RemoveVariable(interval.Variable);
             var expr2 = Simplify(expr, env2);
-            var compiled = _compiler.Compile(expr2, varTypes);
+            var compiled = _compiler.Compile(expr2, variables);
             object[] varValuesInOrder = null;
             compiled.CompileEnvironment(env2, ref varValuesInOrder);
 
@@ -143,7 +164,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 store.SetMinArraySize(numSteps1, numSteps2);
 
             var varNames = Expression.GatherVariables(expr);
-            var varTypes = new Dictionary<string, IMathObject>();
+            var variables = new VariableIdentityMap();
             foreach (var varName in varNames)
             {
                 if (!env.ContainsVariable(varName) &&
@@ -153,13 +174,25 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                         $"Variable \"{varName}\" is not bound");
                 if (varName == interval1.Variable ||
                     varName == interval2.Variable)
-                    varTypes[varName] = ScalarMathObject.Value;
+                    variables[varName] = new VariableIdentity
+                    {
+                        Name = varName,
+                        MathType = ScalarMathObject.Value,
+                        Source = VariableSource.Param
+                    };
                 else
                 {
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).Result;
-                    varTypes[varName] = value;
+                    variables[varName] = new VariableIdentity
+                    {
+                        Name = varName,
+                        MathType = value,
+                        // IlType =
+                        Value = value,
+                        Source = VariableSource.Param
+                    };
                 }
             }
 
@@ -170,7 +203,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             env2.RemoveVariable(interval1.Variable);
             env2.RemoveVariable(interval2.Variable);
             var expr2 = Simplify(expr, env2);
-            var compiled = _compiler.Compile(expr2, varTypes);
+            var compiled = _compiler.Compile(expr2, variables);
             object[] varValuesInOrder = null;
             compiled.CompileEnvironment(env2, ref varValuesInOrder);
 
@@ -210,7 +243,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 store.SetMinArraySize(numSteps1, numSteps2, numSteps3);
 
             var varNames = Expression.GatherVariables(expr);
-            var varTypes = new Dictionary<string, IMathObject>();
+            var variables = new VariableIdentityMap();
             foreach (var varName in varNames)
             {
                 if (!env.ContainsVariable(varName) &&
@@ -222,13 +255,25 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 if (varName == interval1.Variable ||
                     varName == interval2.Variable ||
                     varName == interval3.Variable)
-                    varTypes[varName] = ScalarMathObject.Value;
+                    variables[varName] = new VariableIdentity
+                    {
+                        Name = varName,
+                        MathType = ScalarMathObject.Value,
+                        Source = VariableSource.Param
+                    };
                 else
                 {
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).Result;
-                    varTypes[varName] = value;
+                    variables[varName] = new VariableIdentity
+                    {
+                        Name = varName,
+                        //MathType =
+                        // IlType =
+                        Value = value,
+                        Source = VariableSource.Param
+                    };
                 }
             }
 
@@ -241,7 +286,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             env2.RemoveVariable(interval2.Variable);
             env2.RemoveVariable(interval3.Variable);
             var expr2 = Simplify(expr, env2);
-            var compiled = _compiler.Compile(expr2, varTypes);
+            var compiled = _compiler.Compile(expr2, variables);
             object[] varValuesInOrder = null;
             compiled.CompileEnvironment(env2, ref varValuesInOrder);
 

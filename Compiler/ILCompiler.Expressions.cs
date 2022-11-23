@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Expressions;
 
@@ -29,20 +30,21 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(
-            Expression expr, NascentMethod nm)
+            Expression expr, NascentMethod nm,
+            VariableIdentityMap variables)
         {
             if (expr is FunctionCall call)
-                return ConvertToIlExpression(call, nm);
+                return ConvertToIlExpression(call, nm, variables);
             if (expr is Literal lit)
-                return ConvertToIlExpression(lit, nm);
+                return ConvertToIlExpression(lit, nm, variables);
             if (expr is VariableAccess va)
-                return ConvertToIlExpression(va, nm);
+                return ConvertToIlExpression(va, nm, variables);
             if (expr is ComponentAccess ca)
-                return ConvertToIlExpression(ca, nm);
+                return ConvertToIlExpression(ca, nm, variables);
             if (expr is VectorExpression ve)
-                return ConvertToIlExpression(ve, nm);
+                return ConvertToIlExpression(ve, nm, variables);
             if (expr is MatrixExpression me)
-                return ConvertToIlExpression(me, nm);
+                return ConvertToIlExpression(me, nm, variables);
             throw new ArgumentException(
                 $"Unsupported expression type: \"{expr}\"", nameof(expr));
         }

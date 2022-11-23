@@ -31,6 +31,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             LogicalAndOperation func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new ConvertR4IlExpression(
@@ -40,11 +41,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
                         new CompareEqualIlExpression(
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
-                                ConvertToIlExpression(arguments[0], nm))),
+                                ConvertToIlExpression(arguments[0],
+                                    nm, variables))),
                         new CompareEqualIlExpression(
                             new LoadConstantIlExpression(0),
                             new ConvertI4IlExpression(
-                                ConvertToIlExpression(arguments[1], nm))))));
+                                ConvertToIlExpression(arguments[1], nm,
+                                    variables))))));
             return expr;
         }
     }

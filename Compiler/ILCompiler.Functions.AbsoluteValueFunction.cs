@@ -32,11 +32,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             AbsoluteValueFunction func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
             return new CallIlExpression(
                 new Func<double, double>(Math.Abs),
-                ConvertToIlExpression(arguments[0], nm));
+                ConvertToIlExpression(arguments[0], nm, variables));
         }
     }
 }

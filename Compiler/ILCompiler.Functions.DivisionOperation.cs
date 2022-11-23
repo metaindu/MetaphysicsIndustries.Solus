@@ -33,10 +33,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             DivisionOperation func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var left = ConvertToIlExpression(arguments[0], nm);
-            var right = ConvertToIlExpression(arguments[1], nm);
+            var left = ConvertToIlExpression(arguments[0], nm,
+                variables);
+            var right = ConvertToIlExpression(arguments[1], nm,
+                variables);
 
             var excType = typeof(OperandException);
             var ctor = excType.GetConstructor(
