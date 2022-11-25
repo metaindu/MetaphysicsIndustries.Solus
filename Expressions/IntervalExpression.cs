@@ -54,6 +54,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             UpperBound.AcceptVisitor(visitor);
         }
 
-        public override IMathObject Result => IntervalMathObject.Value;
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            IntervalMathObject.Value;
     }
 }

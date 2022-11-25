@@ -127,7 +127,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return expr.ToString();
         }
 
-        public abstract IMathObject Result { get; }
+        public abstract IMathObject GetResultType(SolusEnvironment env);
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;

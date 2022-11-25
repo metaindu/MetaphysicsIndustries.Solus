@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                         $"Variable \"{varName}\" is not bound");
                 var value = env.GetVariable(varName);
                 if (value.IsIsExpression(env))
-                    value = ((Expression)value).Result;
+                    value = ((Expression)value).GetResultType(env);
                 variables[varName] = new VariableIdentity
                 {
                     Name = varName,
@@ -117,7 +117,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 {
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
-                        value = ((Expression)value).Result;
+                        value = ((Expression)value).GetResultType(env);
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
@@ -184,7 +184,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 {
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
-                        value = ((Expression)value).Result;
+                        value = ((Expression)value).GetResultType(env);
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 {
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
-                        value = ((Expression)value).Result;
+                        value = ((Expression)value).GetResultType(env);
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,

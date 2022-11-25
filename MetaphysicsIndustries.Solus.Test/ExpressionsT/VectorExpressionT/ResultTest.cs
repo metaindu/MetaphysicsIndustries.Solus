@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VectorExpressionT
                 new VariableAccess("d"));
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsTrue(result.IsVector(env));

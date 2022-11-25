@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.RandomExpressionT
             var expr = new RandomExpression();
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsTrue(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));

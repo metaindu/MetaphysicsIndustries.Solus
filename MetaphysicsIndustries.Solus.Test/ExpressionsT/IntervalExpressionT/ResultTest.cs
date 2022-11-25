@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.IntervalExpressionT
                 new Literal(2), true);
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.IntervalExpressionT
                 new VariableAccess("b"), true);
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));

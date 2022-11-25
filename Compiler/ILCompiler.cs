@@ -83,7 +83,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 i++;
             }
 
-            var returnType = ResolveType(expr.Result, typeEnv);
+            var returnType = ResolveType(
+                expr.GetResultType(typeEnv), typeEnv);
 
             ilexpr.GetInstructions(nm);
 

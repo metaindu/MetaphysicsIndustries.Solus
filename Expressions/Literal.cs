@@ -98,6 +98,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IMathObject Result => Value;
-    }
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+	        Value;
+	}
 }

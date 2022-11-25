@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.MatrixExpressionT
                 new VariableAccess("f"));
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));

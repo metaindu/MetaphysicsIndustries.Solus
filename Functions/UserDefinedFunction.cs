@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override IMathObject GetResult(IEnumerable<IMathObject> args)
         {
-            return Expression.Result;
+            return Expression.GetResultType(null);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.DerivativeOfVariableT
             Assert.Throws<NotImplementedException>(
                 () =>
                 {
-                    var result = expr.Result;
+                    var result = expr.GetResultType(env);
                 });
         }
     }

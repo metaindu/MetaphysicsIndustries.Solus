@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsScalar(env);
+            var result = expr.GetResultType(env).IsScalar(env);
             // then
             Assert.IsTrue(result);
         }
@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsScalar(env);
+            var result = expr.GetResultType(env).IsScalar(env);
             // then
             Assert.IsTrue(result);
         }
@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsVector(env);
+            var result = expr.GetResultType(env).IsVector(env);
             // then
             Assert.IsFalse(result);
         }
@@ -113,7 +113,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsVector(env);
+            var result = expr.GetResultType(env).IsVector(env);
             // then
             Assert.IsFalse(result);
         }
@@ -136,7 +136,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsMatrix(env);
+            var result = expr.GetResultType(env).IsMatrix(env);
             // then
             Assert.IsFalse(result);
         }
@@ -159,7 +159,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsMatrix(env);
+            var result = expr.GetResultType(env).IsMatrix(env);
             // then
             Assert.IsFalse(result);
         }
@@ -182,7 +182,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsString(env);
+            var result = expr.GetResultType(env).IsString(env);
             // then
             Assert.IsFalse(result);
         }
@@ -205,7 +205,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsString(env);
+            var result = expr.GetResultType(env).IsString(env);
             // then
             Assert.IsFalse(result);
         }
@@ -228,7 +228,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.GetTensorRank(env);
+            var result = expr.GetResultType(env).GetTensorRank(env);
             // then
             Assert.AreEqual(result, 0);
         }
@@ -251,7 +251,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.GetTensorRank(env);
+            var result = expr.GetResultType(env).GetTensorRank(env);
             // then
             Assert.AreEqual(result, 0);
         }
@@ -274,7 +274,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.GetDimension(env, 0);
+            var result = expr.GetResultType(env).GetDimension(env, 0);
             // then
             Assert.IsNull(result);
         }
@@ -299,7 +299,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.GetDimensions(env);
+            var result = expr.GetResultType(env).GetDimensions(env);
             // then
             Assert.IsNull(result);
         }
@@ -322,7 +322,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.GetVectorLength(env);
+            var result = expr.GetResultType(env).GetVectorLength(env);
             // then
             Assert.IsNull(result);
         }
@@ -348,7 +348,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(0), new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsScalar(env);
+            var result = expr.GetResultType(env).IsScalar(env);
             // then
             Assert.IsTrue(result);
         }
@@ -368,7 +368,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result.IsString(env);
+            var result = expr.GetResultType(env).IsString(env);
             // theTruesert.IsNull(result);
         }
 

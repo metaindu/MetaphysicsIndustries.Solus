@@ -29,6 +29,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public static readonly Random Source = new Random();
 
         float _value = (float)Source.NextDouble();
+        private readonly IMathObject _result = new ResultC();
 
         public override Expression Clone()
         {
@@ -40,7 +41,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override IMathObject Result { get; } = new ResultC();
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            _result;
 
         private class ResultC : IMathObject
         {

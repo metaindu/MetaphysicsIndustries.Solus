@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (string.IsNullOrEmpty(variableName)) throw new ArgumentNullException("variableName");
 
             VariableName = variableName;
-            Result = new ResultC(this);
+            _result = new ResultC(this);
         }
 
         private readonly HashSet<VariableAccess> _visitedVarrefs =
@@ -72,6 +72,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public string VariableName;
+        private readonly IMathObject _result;
 
         public override string ToString()
         {
@@ -83,7 +84,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IMathObject Result { get; }
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            _result;
 
         private class ResultC : IMathObject
         {
@@ -96,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.IsScalar(env);
             }
 
@@ -106,7 +108,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.IsVector(env);
             }
 
@@ -116,7 +118,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.IsMatrix(env);
             }
 
@@ -126,7 +128,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.GetTensorRank(env);
             }
 
@@ -136,7 +138,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.IsString(env);
             }
 
@@ -146,7 +148,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.GetDimension(env, index);
             }
 
@@ -156,7 +158,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.GetDimensions(env);
             }
 
@@ -166,7 +168,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.GetVectorLength(env);
             }
 
@@ -176,7 +178,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return varexpr.IsInterval(env);
             }
 
@@ -186,7 +188,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return false;
             }
 
@@ -196,7 +198,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!env.ContainsVariable(_va.VariableName)) return null;
                 var varexpr = env.GetVariable(_va.VariableName);
                 if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).Result;
+                    varexpr = ((Expression)varexpr).GetResultType(env);
                 return true;
             }
 
