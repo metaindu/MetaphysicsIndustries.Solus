@@ -24,8 +24,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using MetaphysicsIndustries.Solus.Exceptions;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -156,14 +154,25 @@ namespace MetaphysicsIndustries.Solus.Expressions
             // object is known to have components all of a particular type,
             // e.g. 3-vector in R^3. otherwise, we have to evaluate the
             // indexes.
-            // For now, we assume all components are scalars.
+            // For now, we assume all components are scalars or strings.
             public ResultC(ComponentAccess ca) => _ca = ca;
             private readonly ComponentAccess _ca;
-            public bool? IsScalar(SolusEnvironment env) => true;
+
+            public bool? IsScalar(SolusEnvironment env)
+            {
+                if (_ca.Expr.Result.IsIsString(env))
+                    return false;
+                return true;
+            }
             public bool? IsVector(SolusEnvironment env) => false;
             public bool? IsMatrix(SolusEnvironment env) => false;
             public int? GetTensorRank(SolusEnvironment env) => 0;
-            public bool? IsString(SolusEnvironment env) => false;
+            public bool? IsString(SolusEnvironment env)
+            {
+                if (_ca.Expr.Result.IsIsString(env))
+                    return true;
+                return false;
+            }
             public int? GetDimension(SolusEnvironment env, int index) => null;
             public int[] GetDimensions(SolusEnvironment env) => null;
             public int? GetVectorLength(SolusEnvironment env) => null;

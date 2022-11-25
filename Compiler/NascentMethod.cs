@@ -34,23 +34,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         private readonly Dictionary<IlLocal, ushort> _indexesByLocal =
             new Dictionary<IlLocal, ushort>();
 
-        public ushort CreateIndexOfLocalForVariableName(string name)
-        {
-            if (!_localIndexesByName.ContainsKey(name))
-            {
-                var local = CreateLocal();
-                local.Usage = IlLocalUsage.InitFromCompiledEnv;
-                local.VariableName = name;
-                var index = GetIndexOfLocal(local);
-                _localIndexesByName.Add(name, index);
-                return index;
-            }
-
-            return _localIndexesByName[name];
-        }
-
-        public IlLocal CreateLocal(Type type=null, string name=null,
-            IlLocalUsage usage=IlLocalUsage.Internal)
+        public IlLocal CreateLocal(Type type=null, string name=null)
         {
             if (type == null)
                 type = typeof(float);
@@ -58,7 +42,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
             {
                 LocalType = type,
                 VariableName = name,
-                Usage = usage
             };
             var index = (ushort)Locals.Count;
             _indexesByLocal[local] = index;

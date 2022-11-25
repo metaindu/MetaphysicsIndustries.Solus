@@ -67,7 +67,6 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var getChars = strType.GetMethod("get_Chars",
                     new[] { typeof(int) });
                 var local = nm.CreateLocal();
-                local.Usage = IlLocalUsage.Internal;
                 local.LocalType = typeof(char);
 
                 return new IlExpressionSequence(

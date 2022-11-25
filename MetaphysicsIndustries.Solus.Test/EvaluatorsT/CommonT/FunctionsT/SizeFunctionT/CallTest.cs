@@ -100,8 +100,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.AreEqual(2, result.ToFloat());
+            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsTrue(result.IsVector(null));
+            var v = result.ToVector();
+            Assert.AreEqual(1, v.Length);
+            Assert.AreEqual(2, v[0].ToFloat());
         }
 
         [Test]
@@ -121,6 +124,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
+            Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             var v = result.ToVector();
             Assert.AreEqual(2, v.Length);
@@ -138,8 +142,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.AreEqual(3, result.ToFloat());
+            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsTrue(result.IsVector(null));
+            var v = result.ToVector();
+            Assert.AreEqual(1, v.Length);
+            Assert.AreEqual(3, v[0].ToFloat());
         }
     }
 }

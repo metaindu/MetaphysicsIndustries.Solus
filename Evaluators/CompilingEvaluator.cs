@@ -139,7 +139,64 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             VarInterval interval2, int numSteps2,
             StoreOp2 store, AggregateOp[] aggrs = null)
         {
-            throw new System.NotImplementedException();
+            if (store != null)
+                store.SetMinArraySize(numSteps1, numSteps2);
+
+            var varNames = Expression.GatherVariables(expr);
+            var varTypes = new Dictionary<string, IMathObject>();
+            foreach (var varName in varNames)
+            {
+                if (!env.ContainsVariable(varName) &&
+                    varName != interval1.Variable &&
+                    varName != interval2.Variable)
+                    throw new NameException(
+                        $"Variable \"{varName}\" is not bound");
+                if (varName == interval1.Variable ||
+                    varName == interval2.Variable)
+                    varTypes[varName] = ScalarMathObject.Value;
+                else
+                {
+                    var value = env.GetVariable(varName);
+                    if (value.IsIsExpression(env))
+                        value = ((Expression)value).Result;
+                    varTypes[varName] = value;
+                }
+            }
+
+            var delta1 = interval1.Interval.CalcDelta(numSteps1);
+            var delta2 = interval2.Interval.CalcDelta(numSteps2);
+
+            var env2 = env.CreateChildEnvironment();
+            env2.RemoveVariable(interval1.Variable);
+            env2.RemoveVariable(interval2.Variable);
+            var expr2 = Simplify(expr, env2);
+            var compiled = _compiler.Compile(expr2, varTypes);
+            object[] varValuesInOrder = null;
+            compiled.CompileEnvironment(env2, ref varValuesInOrder);
+
+            var intervalVarIndex1 =
+                Array.IndexOf(compiled.VariableNames, interval1.Variable);
+            var intervalVarIndex2 =
+                Array.IndexOf(compiled.VariableNames, interval2.Variable);
+
+            // TODO: don't always do nested loops. there might be faster ways.
+            int i, j;
+            for (i = 0; i < numSteps1; i++)
+            {
+                var xx = delta1 * i + interval1.Interval.LowerBound;
+                varValuesInOrder[intervalVarIndex1] = xx;
+                for (j = 0; j < numSteps2; j++)
+                {
+                    var yy = delta2 * j + interval2.Interval.LowerBound;
+                    varValuesInOrder[intervalVarIndex2] = yy;
+                    var v = compiled.Evaluate(varValuesInOrder).ToNumber();
+                    if (store != null)
+                        store.Store(i, j, v);
+                    if (aggrs != null)
+                        foreach (var aggr in aggrs)
+                            aggr?.Operate(v, env2, this);
+                }
+            }
         }
 
         public void EvalInterval(
@@ -149,7 +206,74 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             VarInterval interval3, int numSteps3,
             StoreOp3 store, AggregateOp[] aggrs = null)
         {
-            throw new System.NotImplementedException();
+            if (store != null)
+                store.SetMinArraySize(numSteps1, numSteps2, numSteps3);
+
+            var varNames = Expression.GatherVariables(expr);
+            var varTypes = new Dictionary<string, IMathObject>();
+            foreach (var varName in varNames)
+            {
+                if (!env.ContainsVariable(varName) &&
+                    varName != interval1.Variable &&
+                    varName != interval2.Variable &&
+                    varName != interval3.Variable)
+                    throw new NameException(
+                        $"Variable \"{varName}\" is not bound");
+                if (varName == interval1.Variable ||
+                    varName == interval2.Variable ||
+                    varName == interval3.Variable)
+                    varTypes[varName] = ScalarMathObject.Value;
+                else
+                {
+                    var value = env.GetVariable(varName);
+                    if (value.IsIsExpression(env))
+                        value = ((Expression)value).Result;
+                    varTypes[varName] = value;
+                }
+            }
+
+            var delta1 = interval1.Interval.CalcDelta(numSteps1);
+            var delta2 = interval2.Interval.CalcDelta(numSteps2);
+            var delta3 = interval3.Interval.CalcDelta(numSteps3);
+
+            var env2 = env.CreateChildEnvironment();
+            env2.RemoveVariable(interval1.Variable);
+            env2.RemoveVariable(interval2.Variable);
+            env2.RemoveVariable(interval3.Variable);
+            var expr2 = Simplify(expr, env2);
+            var compiled = _compiler.Compile(expr2, varTypes);
+            object[] varValuesInOrder = null;
+            compiled.CompileEnvironment(env2, ref varValuesInOrder);
+
+            var intervalVarIndex1 =
+                Array.IndexOf(compiled.VariableNames, interval1.Variable);
+            var intervalVarIndex2 =
+                Array.IndexOf(compiled.VariableNames, interval2.Variable);
+            var intervalVarIndex3 =
+                Array.IndexOf(compiled.VariableNames, interval3.Variable);
+            // TODO: don't always do nested loops. there might be faster ways.
+            int i, j, k;
+            for (i = 0; i < numSteps1; i++)
+            {
+                var xx = delta1 * i + interval1.Interval.LowerBound;
+                varValuesInOrder[intervalVarIndex1] = xx;
+                for (j = 0; j < numSteps2; j++)
+                {
+                    var yy = delta2 * j + interval2.Interval.LowerBound;
+                    varValuesInOrder[intervalVarIndex2] = yy;
+                    for (k = 0; k < numSteps3; k++)
+                    {
+                        var zz = delta3 * k + interval3.Interval.LowerBound;
+                        varValuesInOrder[intervalVarIndex3] = zz;
+                        var v = compiled.Evaluate(varValuesInOrder).ToNumber();
+                        if (store != null)
+                            store.Store(i, j, k, v);
+                        if (aggrs != null)
+                            foreach (var aggr in aggrs)
+                                aggr?.Operate(v, env2, this);
+                    }
+                }
+            }
         }
     }
 }

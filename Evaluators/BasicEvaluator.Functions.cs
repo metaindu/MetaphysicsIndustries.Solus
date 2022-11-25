@@ -462,14 +462,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             // TODO: this function should be able to operate on things that
             // aren't IMathObject, namely TensorExpression
             var arg = args[0];
-            if (arg.IsIsString(env) || arg.IsIsVector(env))
-            {
-                var dim = arg.GetDimension(env, 0);
-                if (dim.HasValue)
-                    return dim.Value.ToNumber();
-            }
+            if (arg.IsIsString(env) || arg.IsIsVector(env) ||
+                arg.IsIsMatrix(env))
+                return arg.GetDimensions(env).ToVector();
 
-            return arg.GetDimensions(env).ToVector();
+            return null;
         }
 
         public IMathObject CallFunction(TangentFunction f,
