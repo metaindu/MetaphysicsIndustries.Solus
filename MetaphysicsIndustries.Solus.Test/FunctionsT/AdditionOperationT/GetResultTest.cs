@@ -43,7 +43,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             Assert.AreEqual(0, arg1.GetTensorRank(null));
             Assert.IsFalse(arg1.IsString(null));
             // when
-            var result = AdditionOperation.Value.GetResult(args);
+            var value = AdditionOperation.Value;
+            var result = value.GetResultType(null, args);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
@@ -66,7 +67,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             Assert.AreEqual(0, arg1.GetTensorRank(null));
             Assert.IsTrue(arg1.IsString(null));
             // when
-            var result = AdditionOperation.Value.GetResult(args);
+            var value = AdditionOperation.Value;
+            var result = value.GetResultType(null, args);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));

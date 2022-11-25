@@ -104,7 +104,8 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         private readonly ResultC _result = new ResultC();
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
             return _result;
         }

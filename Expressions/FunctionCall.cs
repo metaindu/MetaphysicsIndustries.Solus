@@ -250,7 +250,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             int i;
             for (i = 0; i < Arguments.Count; i++)
                 _argumentResultCache[i] = Arguments[i].GetResultType(env);
-            return f.GetResult(_argumentResultCache);
+            return f.GetResultType(env, _argumentResultCache);
         }
     }
 }

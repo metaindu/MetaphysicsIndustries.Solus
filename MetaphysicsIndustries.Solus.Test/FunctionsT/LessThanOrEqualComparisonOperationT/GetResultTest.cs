@@ -44,7 +44,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
             Assert.IsFalse(arg1.IsString(null));
             // when
             var result =
-                LessThanOrEqualComparisonOperation.Value.GetResult(args);
+                LessThanOrEqualComparisonOperation.Value.GetResultType(
+                    null, args);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));

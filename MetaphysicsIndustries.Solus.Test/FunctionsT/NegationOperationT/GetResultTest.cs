@@ -42,7 +42,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NegationOperationT
             Assert.AreEqual(0, arg1.GetTensorRank(null));
             Assert.IsFalse(arg1.IsString(null));
             // when
-            var result = NegationOperation.Value.GetResult(args);
+            var value = NegationOperation.Value;
+            var result = value.GetResultType(null, args);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
@@ -64,7 +65,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NegationOperationT
             Assert.AreEqual(1, arg1.GetTensorRank(null));
             Assert.IsFalse(arg1.IsString(null));
             // when
-            var result = NegationOperation.Value.GetResult(args);
+            var value = NegationOperation.Value;
+            var result = value.GetResultType(null, args);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));

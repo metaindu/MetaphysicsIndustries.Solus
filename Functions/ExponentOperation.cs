@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return OperationPrecedence.Exponent; }
         }
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
             // TODO: square matrix
             return ScalarMathObject.Value;

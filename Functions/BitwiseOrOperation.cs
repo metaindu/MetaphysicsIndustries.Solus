@@ -54,7 +54,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return 0; }
         }
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
             return ScalarMathObject.Value;
         }

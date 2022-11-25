@@ -50,7 +50,8 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"{args.Length})");
         }
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
             return Expression.GetResultType(null);
         }

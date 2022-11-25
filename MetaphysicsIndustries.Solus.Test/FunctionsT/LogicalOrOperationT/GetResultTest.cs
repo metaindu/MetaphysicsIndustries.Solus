@@ -42,7 +42,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogicalOrOperationT
             Assert.AreEqual(0, arg1.GetTensorRank(null));
             Assert.IsFalse(arg1.IsString(null));
             // when
-            var result = LogicalOrOperation.Value.GetResult(args);
+            var value = LogicalOrOperation.Value;
+            var result = value.GetResultType(null, args);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));

@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             Assert.AreEqual(0, expr.GetResultType(null).GetTensorRank(null));
             Assert.IsFalse(expr.GetResultType(null).IsString(null));
             // when
-            var result = f.GetResult(new IMathObject[0]);
+            var result = f.GetResultType(null, new IMathObject[0]);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             Assert.AreEqual(1, expr.GetResultType(null).GetTensorRank(null));
             Assert.IsFalse(expr.GetResultType(null).IsString(null));
             // when
-            var result = f.GetResult(new IMathObject[0]);
+            var result = f.GetResultType(null, new IMathObject[0]);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));

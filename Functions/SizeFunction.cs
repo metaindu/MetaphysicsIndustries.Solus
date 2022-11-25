@@ -99,9 +99,10 @@ namespace MetaphysicsIndustries.Solus.Functions
             public string DocString => "";
         }
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
-            return new ResultC(args.First());
+            return new ResultC(argTypes.First());
         }
     }
 }
