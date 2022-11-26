@@ -176,6 +176,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 case UnitStepFunction usf:
                     return ConvertToIlExpression(usf, nm, variables,
                         arguments);
+                case UserDefinedFunction udf:
+                    return ConvertToIlExpression(udf, nm, variables,
+                        arguments);
                 default:
                     // if (func.ProvidesCustomCall)
                     // {
@@ -185,7 +188,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     //         args2[i] = ConvertToIlExpression(arguments[i],
                     //             nm);
                     //     var expr = new CallIlExpression(
-                    //         new Func< func.CustomCall, args2);
+                    //         func.CustomCall, args2);
                     //
                     //     var expr = ConvertToIlExpression(
                     //         arguments[0], nm);

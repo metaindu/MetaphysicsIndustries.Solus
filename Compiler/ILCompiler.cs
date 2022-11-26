@@ -184,6 +184,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return typeof(float[]);
             if (value.IsIsMatrix(typeEnv))
                 return typeof(float[,]);
+            if (value.IsIsFunction(typeEnv))
+                return typeof(MethodInfo);
             throw new NotImplementedException(
                 $"Unrecognized type, {value.GetType()}");
         }

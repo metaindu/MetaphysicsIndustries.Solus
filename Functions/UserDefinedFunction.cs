@@ -53,7 +53,21 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override IMathObject GetResultType(SolusEnvironment env,
             IEnumerable<IMathObject> argTypes)
         {
-            return Expression.GetResultType(null);
+            SolusEnvironment env2;
+            if (env != null)
+                env2 = env.CreateChildEnvironment();
+            else
+                env2 = new SolusEnvironment();
+            var argValues = argTypes.ToList();
+            int i;
+            for (i = 0; i < Argnames.Length; i++)
+            {
+                var argName = Argnames[i];
+                var argValue = argValues[i];
+                env2.SetVariable(argName, argValue);
+            }
+
+            return Expression.GetResultType(env2);
         }
     }
 }

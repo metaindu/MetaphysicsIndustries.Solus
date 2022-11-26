@@ -35,7 +35,34 @@ namespace MetaphysicsIndustries.Solus.Compiler
             VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            throw new NotImplementedException();
+            // TODO: the variables in the udf definition should be
+            //       implemented as locals
+            int i;
+            var seq = new List<IlExpression>();
+            var variables2 = variables.CreateChild();
+            for (i = 0; i < func.Argnames.Length; i++)
+            {
+                var name = func.Argnames[i];
+                var value = arguments[i];
+                var arg = ConvertToIlExpression(arguments[i], nm,
+                    variables);
+                var varType = arg.ResultType;
+                var local = nm.CreateLocal(varType, name);
+                variables2.SetVariable(name, new VariableIdentity
+                {
+                    Name = name,
+                    IlType = varType,
+                    Value = value,
+                    Source = VariableSource.Local,
+                    LocalSource = local,
+                });
+                seq.Add(new StoreLocalIlExpression(local, arg));
+            }
+
+            var ilexpr = ConvertToIlExpression(func.Expression, nm,
+                variables2);
+            seq.Add(ilexpr);
+            return new IlExpressionSequence(seq);
         }
     }
 }

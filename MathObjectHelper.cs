@@ -21,6 +21,7 @@
  */
 
 using System.Linq;
+using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
@@ -99,6 +100,9 @@ namespace MetaphysicsIndustries.Solus
 
         public static float ToFloat(this IMathObject value) =>
             value.ToNumber().Value;
+
+        public static Function ToFunction(this IMathObject mo) =>
+            (Function)mo;
 
         public static Types GetMathType(this IMathObject mo,
             SolusEnvironment env=null)

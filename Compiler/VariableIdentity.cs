@@ -31,5 +31,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public Type IlType;
         public IMathObject Value;
         public VariableSource Source;
+        public IlLocal LocalSource;
+        public IlParam ParamSource;
     }
 }

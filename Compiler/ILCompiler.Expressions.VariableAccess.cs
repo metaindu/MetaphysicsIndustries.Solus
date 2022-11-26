@@ -32,8 +32,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
             VariableAccess expr, NascentMethod nm,
             VariableIdentityMap variables)
         {
-            var param = nm.CreateParam(expr.VariableName);
-            return new LoadParamIlExpression(param);
+            var vi = variables[expr.VariableName];
+            if (vi.Source == VariableSource.Param)
+            {
+                var param = nm.CreateParam(expr.VariableName);
+                return new LoadParamIlExpression(param);
+            }
+
+            var local = vi.LocalSource;
+            return new LoadLocalIlExpression(local);
         }
     }
 }
