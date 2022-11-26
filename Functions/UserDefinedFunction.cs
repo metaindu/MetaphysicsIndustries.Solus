@@ -50,9 +50,24 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"{args.Length})");
         }
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
-            return Expression.Result;
+            SolusEnvironment env2;
+            if (env != null)
+                env2 = env.CreateChildEnvironment();
+            else
+                env2 = new SolusEnvironment();
+            var argValues = argTypes.ToList();
+            int i;
+            for (i = 0; i < Argnames.Length; i++)
+            {
+                var argName = Argnames[i];
+                var argValue = argValues[i];
+                env2.SetVariable(argName, argValue);
+            }
+
+            return Expression.GetResultType(env2);
         }
     }
 }

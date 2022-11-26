@@ -30,15 +30,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(
-            MultiplicationOperation func,
-            NascentMethod nm, List<Expression> arguments)
+            MultiplicationOperation func, NascentMethod nm,
+            VariableIdentityMap variables,
+            List<Expression> arguments)
         {
-            var expr = ConvertToIlExpression(arguments[0], nm);
+            var expr = ConvertToIlExpression(arguments[0], nm,
+                variables);
             int i;
             for (i = 1; i < arguments.Count; i++)
                 expr = new MulIlExpression(
                     expr,
-                    ConvertToIlExpression(arguments[i], nm));
+                    ConvertToIlExpression(arguments[i], nm, variables));
             return expr;
         }
     }

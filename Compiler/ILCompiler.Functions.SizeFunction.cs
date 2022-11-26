@@ -32,9 +32,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             SizeFunction func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var arg = ConvertToIlExpression(arguments[0], nm);
+            var arg = ConvertToIlExpression(arguments[0], nm,
+                variables);
             if (arg.ResultType == typeof(byte) ||
                 arg.ResultType == typeof(sbyte) ||
                 arg.ResultType == typeof(short) ||

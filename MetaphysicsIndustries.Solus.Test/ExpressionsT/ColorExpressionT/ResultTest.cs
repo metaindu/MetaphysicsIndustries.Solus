@@ -36,7 +36,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ColorExpressionT
             var expr = new ColorExpression(Color.Red);
             var env = new SolusEnvironment();
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsTrue(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));

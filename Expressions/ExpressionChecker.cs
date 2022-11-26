@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (i = 0; i < expr.Indexes.Count; i++)
                 Check(expr.Indexes[i], env);
 
-            var value = expr.Expr.Result;
+            var value = expr.Expr.GetResultType(env);
             if (value.IsIsString(env))
             {
                 if (expr.Indexes.Count != 1)
@@ -102,7 +102,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             for (i = 0; i < expr.Indexes.Count; i++)
             {
-                var si = expr.Indexes[i].Result;
+                var si = expr.Indexes[i].GetResultType(env);
                 if (si == null) continue;
                 if (!si.IsIsScalar(env))
                     throw new IndexException(
@@ -183,7 +183,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
                 for (var i = 0; i < args.Count; i++)
                 {
-                    var argtype = args[i].Result.GetMathType();
+                    var argtype = args[i].GetResultType(env).GetMathType();
                     if (argtype != Types.Scalar)
                         throw new ArgumentException(
                             $"Argument {i} wrong type: expected " +
@@ -301,7 +301,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].Result.GetMathType();
+                var argtype = args[i].GetResultType(env).GetMathType();
                 if (argtype != f.ParamTypes[i])
                 {
                     throw new ArgumentException(
@@ -314,12 +314,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public void Check(IntervalExpression expr, SolusEnvironment env)
         {
             Check(expr.LowerBound, env);
-            var lower = expr.LowerBound.Result;
+            var lower = expr.LowerBound.GetResultType(env);
             if (!lower.IsIsScalar(env))
                 throw new OperandException("Lower bound is not a scalar");
 
             Check(expr.UpperBound, env);
-            var upper = expr.UpperBound.Result;
+            var upper = expr.UpperBound.GetResultType(env);
             if (!upper.IsIsScalar(env))
                 throw new OperandException("Upper bound is not a scalar");
         }
@@ -517,7 +517,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].Result.GetMathType();
+                var argtype = args[i].GetResultType(env).GetMathType();
                 if (argtype != Types.Scalar)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
@@ -531,7 +531,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].Result.GetMathType();
+                var argtype = args[i].GetResultType(env).GetMathType();
                 if (argtype != Types.Scalar)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
@@ -545,7 +545,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].Result.GetMathType();
+                var argtype = args[i].GetResultType(env).GetMathType();
                 if (argtype != Types.Scalar)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
@@ -559,7 +559,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].Result.GetMathType();
+                var argtype = args[i].GetResultType(env).GetMathType();
                 if (argtype != Types.Scalar)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
@@ -609,7 +609,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     $"Wrong number of arguments given to " +
                     $"{ff.DisplayName} (expected 1 but got " +
                     $"{args.Count})");
-            var argtype = args[0].Result.GetMathType();
+            var argtype = args[0].GetResultType(env).GetMathType();
             if (argtype != Types.Vector &&
                 argtype != Types.Matrix &&
                 argtype != Types.String)

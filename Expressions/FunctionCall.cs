@@ -237,23 +237,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         private IMathObject[] _argumentResultCache;
 
-        public override IMathObject Result
+        public override IMathObject GetResultType(SolusEnvironment env)
         {
-            get
-            {
-                if (!(Function is Expression expr) ||
-                    !(expr is Literal literal) ||
-                    !(literal.Value is Function f))
-                    return null;
+            if (!(Function is Expression expr) ||
+                !(expr is Literal literal) ||
+                !(literal.Value is Function f))
+                return null;
 
-                if (_argumentResultCache == null ||
-                    _argumentResultCache.Length < Arguments.Count)
-                    _argumentResultCache = new IMathObject[Arguments.Count];
-                int i;
-                for (i = 0; i < Arguments.Count; i++)
-                    _argumentResultCache[i] = Arguments[i].Result;
-                return f.GetResult(_argumentResultCache);
-            }
+            if (_argumentResultCache == null ||
+                _argumentResultCache.Length < Arguments.Count)
+                _argumentResultCache = new IMathObject[Arguments.Count];
+            int i;
+            for (i = 0; i < Arguments.Count; i++)
+                _argumentResultCache[i] = Arguments[i].GetResultType(env);
+            return f.GetResultType(env, _argumentResultCache);
         }
     }
 }

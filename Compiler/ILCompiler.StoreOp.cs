@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Evaluators;
 
@@ -28,20 +29,24 @@ namespace MetaphysicsIndustries.Solus.Compiler
 {
     public partial class ILCompiler
     {
-        public IlExpression ConvertToIlExpression(StoreOp1 op,
-            NascentMethod nm)
+        public IlExpression ConvertToIlExpression(
+            StoreOp1 op, NascentMethod nm,
+            VariableIdentityMap variables)
         {
             if (op is IGenericStoreOp g)
-                return ConvertToIlExpression(op, g.ElementType, nm);
+                return ConvertToIlExpression(op, g.ElementType, nm, variables);
             if (op is VectorStoreOp vso)
-                return ConvertToIlExpression(vso, nm);
+                return ConvertToIlExpression(vso, nm, variables);
 
             throw new ArgumentException(
                 $"Unsupported store operation: \"{op}\"", nameof(op));
         }
 
-        public IlExpression ConvertToIlExpression(StoreOp1 op,
-            Type elementType, NascentMethod nm)
+        public IlExpression ConvertToIlExpression(
+            StoreOp1 op,
+            Type elementType,
+            NascentMethod nm,
+            VariableIdentityMap variables)
         {
             // var storeParam = nm.CreateParam()
             // return new IlExpressionSequence(
@@ -50,8 +55,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
             throw new NotImplementedException();
         }
 
-        public IlExpression ConvertToIlExpression(VectorStoreOp op,
-            NascentMethod nm)
+        public IlExpression ConvertToIlExpression(
+            VectorStoreOp op,
+            NascentMethod nm,
+            VariableIdentityMap variables)
         {
             throw new NotImplementedException();
         }

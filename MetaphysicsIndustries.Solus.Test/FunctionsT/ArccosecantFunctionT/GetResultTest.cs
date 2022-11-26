@@ -42,7 +42,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccosecantFunctionT
             Assert.AreEqual(0, arg1.GetTensorRank(null));
             Assert.IsFalse(arg1.IsString(null));
             // when
-            var result = ArccosecantFunction.Value.GetResult(args);
+            var value = ArccosecantFunction.Value;
+            var result = value.GetResultType(null, args);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));

@@ -37,13 +37,13 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             var expr = new Literal(1.ToNumber());
             var f = new UserDefinedFunction("f", new string[0], expr);
             // precondition
-            Assert.IsTrue(expr.Result.IsScalar(null));
-            Assert.IsFalse(expr.Result.IsVector(null));
-            Assert.IsFalse(expr.Result.IsMatrix(null));
-            Assert.AreEqual(0, expr.Result.GetTensorRank(null));
-            Assert.IsFalse(expr.Result.IsString(null));
+            Assert.IsTrue(expr.GetResultType(null).IsScalar(null));
+            Assert.IsFalse(expr.GetResultType(null).IsVector(null));
+            Assert.IsFalse(expr.GetResultType(null).IsMatrix(null));
+            Assert.AreEqual(0, expr.GetResultType(null).GetTensorRank(null));
+            Assert.IsFalse(expr.GetResultType(null).IsString(null));
             // when
-            var result = f.GetResult(new IMathObject[0]);
+            var result = f.GetResultType(null, new IMathObject[0]);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
@@ -59,13 +59,13 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             var expr = new Literal(new Vector(new float[] { 1, 2, 3 }));
             var f = new UserDefinedFunction("f", new string[0], expr);
             // precondition
-            Assert.IsFalse(expr.Result.IsScalar(null));
-            Assert.IsTrue(expr.Result.IsVector(null));
-            Assert.IsFalse(expr.Result.IsMatrix(null));
-            Assert.AreEqual(1, expr.Result.GetTensorRank(null));
-            Assert.IsFalse(expr.Result.IsString(null));
+            Assert.IsFalse(expr.GetResultType(null).IsScalar(null));
+            Assert.IsTrue(expr.GetResultType(null).IsVector(null));
+            Assert.IsFalse(expr.GetResultType(null).IsMatrix(null));
+            Assert.AreEqual(1, expr.GetResultType(null).GetTensorRank(null));
+            Assert.IsFalse(expr.GetResultType(null).IsString(null));
             // when
-            var result = f.GetResult(new IMathObject[0]);
+            var result = f.GetResultType(null, new IMathObject[0]);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));

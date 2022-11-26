@@ -31,6 +31,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             AdditionOperation func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
             IlExpression expr = new RawInstructions();
@@ -45,15 +46,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     f == NegationOperation.Value)
                 {
                     expr = new SubIlExpression(expr,
-                        ConvertToIlExpression(call.Arguments[0], nm));
+                        ConvertToIlExpression(call.Arguments[0], nm,
+                            variables));
                 }
                 else
                 {
                     if (first)
-                        expr = ConvertToIlExpression(arg, nm);
+                        expr = ConvertToIlExpression(arg, nm, variables);
                     else
                         expr = new AddIlExpression(expr,
-                            ConvertToIlExpression(arg, nm));
+                            ConvertToIlExpression(arg, nm, variables));
                     first = false;
                 }
             }

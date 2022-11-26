@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -39,15 +40,15 @@ namespace MetaphysicsIndustries.Solus.Compiler
         }
 
         public IlExpression ConvertToIlExpression(ComponentAccess expr,
-            NascentMethod nm)
+            NascentMethod nm, VariableIdentityMap variables)
         {
-            var expr2 = ConvertToIlExpression(expr.Expr, nm);
+            var expr2 = ConvertToIlExpression(expr.Expr, nm, variables);
             var indexes2 = new IlExpression[expr.Indexes.Count];
             int i;
             for (i = 0; i < indexes2.Length; i++)
             {
                 indexes2[i] = new ConvertI4IlExpression(
-                    ConvertToIlExpression(expr.Indexes[i], nm));
+                    ConvertToIlExpression(expr.Indexes[i], nm, variables));
             }
 
             // TODO: check expr.ResultType against the number of indexes

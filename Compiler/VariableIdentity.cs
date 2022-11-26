@@ -21,32 +21,17 @@
  */
 
 using System;
-using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
-using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
-    public partial class ILCompiler
+    public class VariableIdentity
     {
-        public IlExpression ConvertToIlExpression(
-            MinimumFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
-            List<Expression> arguments)
-        {
-            var expr = ConvertToIlExpression(arguments[0], nm,
-                variables);
-            int i;
-            for (i = 1; i < arguments.Count; i++)
-            {
-                expr = new CallIlExpression(
-                    new Func<float, float, float>(Math.Min),
-                    expr,
-                    ConvertToIlExpression(arguments[i], nm, variables));
-            }
-
-            return expr;
-        }
+        public string Name;
+        public IMathObject MathType;
+        public Type IlType;
+        public IMathObject Value;
+        public VariableSource Source;
+        public IlLocal LocalSource;
+        public IlParam ParamSource;
     }
 }

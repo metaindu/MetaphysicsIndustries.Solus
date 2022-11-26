@@ -33,11 +33,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Expr = expr;
             Indexes = new ReadOnlyCollection<Expression>(indexes.ToList());
-            Result = new ResultC(this);
+            _result = new ResultC(this);
         }
 
         public readonly Expression Expr;
         public readonly ReadOnlyCollection<Expression> Indexes;
+        private readonly IMathObject _result;
 
         public override Expression Simplify(SolusEnvironment env)
         {
@@ -146,7 +147,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IMathObject Result { get; }
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            _result;
 
         private class ResultC : IMathObject
         {
@@ -160,7 +162,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             public bool? IsScalar(SolusEnvironment env)
             {
-                if (_ca.Expr.Result.IsIsString(env))
+                if (_ca.Expr.GetResultType(env).IsIsString(env))
                     return false;
                 return true;
             }
@@ -169,7 +171,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             public int? GetTensorRank(SolusEnvironment env) => 0;
             public bool? IsString(SolusEnvironment env)
             {
-                if (_ca.Expr.Result.IsIsString(env))
+                if (_ca.Expr.GetResultType(env).IsIsString(env))
                     return true;
                 return false;
             }

@@ -32,8 +32,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(
-            NaturalLogarithmFunction func,
-            NascentMethod nm,
+            NaturalLogarithmFunction func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
 
@@ -41,7 +41,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var ctor = excType.GetConstructor(
                 new Type[] { typeof(string), typeof(Exception) });
 
-            var arg = ConvertToIlExpression(arguments[0], nm);
+            var arg = ConvertToIlExpression(arguments[0], nm,
+                variables);
 
             var checkNotPos = new IfThenElseConstruct(
                 new CompareGreaterThanIlExpression(

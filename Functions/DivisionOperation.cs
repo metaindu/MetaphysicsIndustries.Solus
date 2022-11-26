@@ -46,7 +46,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
             // TODO: vector divided by scalar
             // TODO: matrix divided by scalar

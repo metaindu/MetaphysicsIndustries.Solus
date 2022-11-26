@@ -30,7 +30,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(
-            Literal expr, NascentMethod nm)
+            Literal expr, NascentMethod nm,
+            VariableIdentityMap variables)
         {
             if (expr.Value.IsIsScalar(null))
             {

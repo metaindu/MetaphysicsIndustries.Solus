@@ -144,7 +144,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return string.Empty; }
         }
 
-        public abstract IMathObject GetResult(IEnumerable<IMathObject> args);
+        public abstract IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes);
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;

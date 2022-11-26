@@ -72,13 +72,14 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        public override IMathObject GetResult(IEnumerable<IMathObject> args)
+        public override IMathObject GetResultType(SolusEnvironment env,
+            IEnumerable<IMathObject> argTypes)
         {
             // TODO: matrix multiplication
             // TODO: matrix times scalar and vice-versa
             // TODO: matrix times vector and vice-versa
             // TODO: vector times scalar
-            return args.First();
+            return argTypes.First();
         }
     }
 }

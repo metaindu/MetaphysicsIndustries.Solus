@@ -33,6 +33,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             ModularDivision func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var excType = typeof(OperandException);
@@ -41,10 +42,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
             var left =
                 new ConvertI4IlExpression(
-                    ConvertToIlExpression(arguments[0], nm));
+                    ConvertToIlExpression(arguments[0], nm,
+                        variables));
             var right =
                 new ConvertI4IlExpression(
-                    ConvertToIlExpression(arguments[1], nm));
+                    ConvertToIlExpression(arguments[1], nm,
+                        variables));
 
             var checkZero = new IfThenElseConstruct(
                 new CompareEqualIlExpression(

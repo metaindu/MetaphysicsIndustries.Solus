@@ -43,7 +43,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             Assert.AreEqual(0, arg1.GetTensorRank(null));
             Assert.IsFalse(arg1.IsString(null));
             // when
-            var result = LoadImageFunction.Value.GetResult(args);
+            var value = LoadImageFunction.Value;
+            var result = value.GetResultType(null, args);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));

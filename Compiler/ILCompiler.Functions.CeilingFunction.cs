@@ -32,11 +32,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             CeilingFunction func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Ceiling),
-                ConvertToIlExpression(arguments[0], nm));
+                ConvertToIlExpression(arguments[0], nm, variables));
             return expr;
         }
     }

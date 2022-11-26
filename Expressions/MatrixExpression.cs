@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 }
             }
 
-            Result = new ResultC(this);
+            _result = new ResultC(this);
         }
 
         public MatrixExpression(int rows, int columns,
@@ -151,6 +151,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         private Expression[,] _array;
+        private readonly IMathObject _result;
 
         public int Count { get { return RowCount * ColumnCount; } }
 
@@ -768,7 +769,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IMathObject Result { get; }
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            _result;
 
         private class ResultC : IMathObject
         {

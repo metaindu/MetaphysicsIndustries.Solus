@@ -98,6 +98,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override IMathObject Result => ScalarMathObject.Value;
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            ScalarMathObject.Value;
     }
 }

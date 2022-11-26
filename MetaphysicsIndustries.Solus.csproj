@@ -158,6 +158,9 @@
     <Compile Include="Compiler\IlParam.cs" />
     <Compile Include="Compiler\Instruction.cs" />
     <Compile Include="Compiler\NascentMethod.cs" />
+    <Compile Include="Compiler\VariableIdentity.cs" />
+    <Compile Include="Compiler\VariableIdentityMap.cs" />
+    <Compile Include="Compiler\VariableSource.cs" />
     <Compile Include="Evaluators\AggregateOp.cs" />
     <Compile Include="Evaluators\BasicEvaluator.cs" />
     <Compile Include="Evaluators\BasicEvaluator.Expressions.cs" />

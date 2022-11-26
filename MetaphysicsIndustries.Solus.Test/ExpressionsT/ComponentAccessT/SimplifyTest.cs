@@ -175,10 +175,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
 
         class MockTensorExpression : TensorExpression
         {
+            private readonly IMathObject _result;
+
             public MockTensorExpression(int tensorRank)
             {
                 TensorRank = tensorRank;
-                Result = new MockMathObjectF(
+                _result = new MockMathObjectF(
                     isScalarF: e => TensorRank == 0,
                     isVectorF: e => TensorRank == 1,
                     isMatrixF: e => TensorRank == 2,
@@ -202,7 +204,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             public override void ApplyToAll(Modulator mod) =>
                 throw new NotImplementedException();
 
-            public override IMathObject Result { get; }
+            public override IMathObject GetResultType(SolusEnvironment env) =>
+                _result;
         }
 
         [Test]

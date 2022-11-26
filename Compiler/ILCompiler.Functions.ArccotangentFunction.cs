@@ -32,12 +32,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             ArccotangentFunction func, NascentMethod nm,
+            VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new CallIlExpression(
                 new Func<double, double, double>(Math.Atan2),
                 new LoadConstantIlExpression(1f),
-                ConvertToIlExpression(arguments[0], nm));
+                ConvertToIlExpression(arguments[0], nm, variables));
             return expr;
         }
     }

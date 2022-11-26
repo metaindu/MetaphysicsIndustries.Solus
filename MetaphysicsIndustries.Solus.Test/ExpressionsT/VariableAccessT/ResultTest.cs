@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.AreEqual(0, mmo.GetTensorRank(env));
             Assert.IsFalse(mmo.IsString(env));
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsTrue(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.AreEqual(4, mmo.GetDimension(env, 1));
             Assert.IsFalse(mmo.IsString(env));
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.AreEqual(0, mmo.GetTensorRank(env));
             Assert.IsTrue(mmo.IsString(env));
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
@@ -116,7 +116,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             var expr = new VariableAccess("a");
             var env = new SolusEnvironment();  // no "a"
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsNull(result.IsScalar(env));
             Assert.IsNull(result.IsVector(env));

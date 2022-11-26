@@ -20,6 +20,7 @@
  *
  */
 
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Expressions;
 
@@ -28,10 +29,18 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(
-            VariableAccess expr, NascentMethod nm)
+            VariableAccess expr, NascentMethod nm,
+            VariableIdentityMap variables)
         {
-            var param = nm.CreateParam(expr.VariableName);
-            return new LoadParamIlExpression(param);
+            var vi = variables[expr.VariableName];
+            if (vi.Source == VariableSource.Param)
+            {
+                var param = nm.CreateParam(expr.VariableName);
+                return new LoadParamIlExpression(param);
+            }
+
+            var local = vi.LocalSource;
+            return new LoadLocalIlExpression(local);
         }
     }
 }

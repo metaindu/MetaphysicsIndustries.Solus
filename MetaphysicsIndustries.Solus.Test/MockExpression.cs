@@ -71,7 +71,8 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         private IMathObject _result;
-        public override IMathObject Result => _result;
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            _result;
         public void SetResult(IMathObject value) => _result = value;
     }
 }

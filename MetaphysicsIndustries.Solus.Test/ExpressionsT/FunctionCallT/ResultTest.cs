@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(mmo.IsFunction(env));
             Assert.IsFalse(mmo.IsExpression(env));
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsTrue(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
             Assert.IsFalse(mmo.IsFunction(env));
             Assert.IsFalse(mmo.IsExpression(env));
             // when
-            var result = expr.Result;
+            var result = expr.GetResultType(env);
             // then
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));

@@ -21,6 +21,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -30,11 +31,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(
-            FunctionCall expr, NascentMethod nm)
+            FunctionCall expr, NascentMethod nm,
+            VariableIdentityMap variables)
         {
             if (expr.Function is Literal literal &&
                 literal.Value is Function f)
-                return ConvertToIlExpression(f, nm, expr.Arguments);
+                return ConvertToIlExpression(f, nm, variables, expr.Arguments);
 
             // TODO:
             throw new NotImplementedException(

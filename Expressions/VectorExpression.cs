@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 _array[i] = Literal.Zero;
             }
 
-            Result = new ResultC(this);
+            _result = new ResultC(this);
         }
 
         public VectorExpression(int length, params float[] initialContents)
@@ -218,6 +218,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         private Expression[] _valuesCache = null;
+        private readonly IMathObject _result;
+
         public override Expression Simplify(SolusEnvironment env)
         {
             if (_valuesCache == null ||
@@ -285,7 +287,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IMathObject Result { get; }
+        public override IMathObject GetResultType(SolusEnvironment env) =>
+            _result;
 
         private class ResultC : IMathObject
         {
