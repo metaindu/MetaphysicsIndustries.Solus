@@ -70,11 +70,11 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             var value = AdditionOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.IsFalse(result.IsScalar(null));
+            Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
             Assert.AreEqual(0, result.GetTensorRank(null));
-            Assert.IsTrue(result.IsString(null));
+            Assert.IsFalse(result.IsString(null));
         }
     }
 }
