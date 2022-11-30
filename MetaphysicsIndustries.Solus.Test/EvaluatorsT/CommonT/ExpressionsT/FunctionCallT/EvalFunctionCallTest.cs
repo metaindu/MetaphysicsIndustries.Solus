@@ -39,14 +39,13 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         public void FunctionCallYieldsReturnValue()
         {
             // given
-            var mf = new MockFunction(new[] { Types.Scalar }, "f")
-            {
-                CallF = args => args.First()
-            };
-            var expr = new FunctionCall(mf, new Literal(5));
+            var udf = new UserDefinedFunction("f", new[] { "a" },
+                new VariableAccess("a"));
+            var expr = new FunctionCall(udf, new Literal(5));
             var eval = Util.CreateEvaluator<T>();
+            var env = new SolusEnvironment();
             // when
-            var result0 = eval.Eval(expr, null);
+            var result0 = eval.Eval(expr, env);
             // then
             Assert.IsNotNull(result0);
             Assert.IsTrue(result0.IsConcrete);
@@ -60,15 +59,13 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         public void FunctionCallWithVariableTargetYieldsValue()
         {
             // given
-            var mf = new MockFunction(new[] { Types.Scalar }, "f")
-            {
-                CallF = args => args.First()
-            };
+            var udf = new UserDefinedFunction("f", new[] { "a" },
+                new VariableAccess("a"));
             var expr = new FunctionCall(new VariableAccess("f"),
                 new Expression[] { new Literal(5) });
             var eval = Util.CreateEvaluator<T>();
             var env = new SolusEnvironment();
-            env.SetVariable("f", mf);
+            env.SetVariable("f", udf);
             // when
             var result0 = eval.Eval(expr, env);
             // then
