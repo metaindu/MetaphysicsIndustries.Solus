@@ -74,6 +74,23 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
         }
 
         [Test]
+        public void TransformVariableWithNonExpressionYieldsOther()
+        {
+            // given
+            var expr = new VariableAccess("a");
+            var value = 3.ToNumber();
+            var tf = new ApplyVariablesTransform();
+            var env = new SolusEnvironment();
+            env.SetVariable("a", value);
+            // when
+            var result = tf.Transform(expr, env);
+            // then
+            Assert.IsInstanceOf<Literal>(result);
+            var literal = (Literal)result;
+            Assert.AreEqual(literal.Value, value);
+        }
+
+        [Test]
         public void TransformMatrixYieldsTransformed()
         {
             // given
