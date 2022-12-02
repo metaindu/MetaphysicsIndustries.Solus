@@ -29,6 +29,24 @@ namespace MetaphysicsIndustries.Solus
 {
     public class SolusEnvironment
     {
+        /// <summary>
+        /// An environment is a mapping between variable names and values.
+        /// The names are string and the values are of type IMathObject.
+        /// Often, the values are expressions, but this is not necessary. Any
+        /// IMathObject is a valid value to set for a variable.
+        ///
+        /// By default, an environment will include mappings for various
+        /// typical builtins, like trig functions.
+        ///
+        /// An environment can be a child of another environment. If a
+        /// variable is not defined in the child environment, then the parent
+        /// will be search. This process can be repeated recursively.
+        /// </summary>
+        /// <param name="useDefaults">
+        /// Whether to include the default name mappings.</param>
+        /// <param name="parent">
+        /// The next environment for recursive lookup
+        /// </param>
         public SolusEnvironment(bool useDefaults = true,
             SolusEnvironment parent = null)
         {
