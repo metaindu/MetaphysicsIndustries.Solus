@@ -32,6 +32,8 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             Instruction = Instruction.LoadConstant(value);
         public LoadConstantIlExpression(long value) =>
             Instruction = Instruction.LoadConstant(value);
+        public LoadConstantIlExpression(bool value) =>
+            Instruction = Instruction.LoadConstant(value ? 1L : 0L);
 
         public Instruction Instruction { get; }
 

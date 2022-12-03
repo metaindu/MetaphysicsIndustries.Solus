@@ -51,4 +51,20 @@ namespace MetaphysicsIndustries.Solus
         public T2 Value2;
         public T3 Value3;
     }
+
+    public struct STuple<T1, T2, T3, T4>
+    {
+        public STuple(T1 value1, T2 value2, T3 value3, T4 value4)
+        {
+            Value1 = value1;
+            Value2 = value2;
+            Value3 = value3;
+            Value4 = value4;
+        }
+
+        public readonly T1 Value1;
+        public readonly T2 Value2;
+        public readonly T3 Value3;
+        public readonly T4 Value4;
+    }
 }

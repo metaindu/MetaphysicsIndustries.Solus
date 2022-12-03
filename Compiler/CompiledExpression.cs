@@ -81,6 +81,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return m.ToMatrix();
             if (result is string s)
                 return s.ToStringValue();
+            if (result is STuple<float, bool, float, bool> st)
+                return new Interval(
+                    st.Value1,
+                    st.Value2,
+                    st.Value3,
+                    st.Value4,
+                    false);
 
             throw new InvalidOperationException(
                 $"Unsupported result type: {result.GetType()}");

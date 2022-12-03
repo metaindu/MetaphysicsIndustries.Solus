@@ -33,6 +33,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
             Literal expr, NascentMethod nm,
             VariableIdentityMap variables)
         {
+            // TODO: work out how to use `variables` in place of null `env`
+
             if (expr.Value.IsIsScalar(null))
             {
                 var value = expr.Value.ToFloat();
@@ -93,6 +95,26 @@ namespace MetaphysicsIndustries.Solus.Compiler
             if (expr.Value.IsIsString(null))
                 return new LoadStringIlExpression(
                     expr.Value.ToStringValue().Value);
+
+            if (expr.Value.IsIsInterval(null))
+            {
+                var ii = expr.Value.ToInterval();
+                var stuple = typeof(STuple<float, bool, float, bool>);
+                var ctor = stuple.GetConstructor(
+                    new[]
+                    {
+                        typeof(float),
+                        typeof(bool),
+                        typeof(float),
+                        typeof(bool)
+                    });
+                var rv = new NewObjIlExpression(ctor,
+                    new LoadConstantIlExpression(ii.LowerBound),
+                    new LoadConstantIlExpression(ii.OpenLowerBound),
+                    new LoadConstantIlExpression(ii.UpperBound),
+                    new LoadConstantIlExpression(ii.OpenUpperBound));
+                return rv;
+            }
 
             throw new NotImplementedException(
                 "currently only implemented for numbers, vectors, " +

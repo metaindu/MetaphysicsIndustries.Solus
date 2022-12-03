@@ -45,8 +45,31 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return ConvertToIlExpression(ve, nm, variables);
             if (expr is MatrixExpression me)
                 return ConvertToIlExpression(me, nm, variables);
+            if (expr is IntervalExpression ie)
+                return ConvertToIlExpression(ie, nm, variables);
             throw new ArgumentException(
                 $"Unsupported expression type: \"{expr}\"", nameof(expr));
+        }
+
+        // TODO: copy-paste IlCompiler.Expressions.*.cs here
+
+        public IlExpression ConvertToIlExpression(IntervalExpression expr,
+            NascentMethod nm, VariableIdentityMap variables)
+        {
+            var lower = ConvertToIlExpression(expr.LowerBound, nm, variables);
+            var isLowerOpen = new LoadConstantIlExpression(expr.OpenLowerBound);
+            var upper = ConvertToIlExpression(expr.UpperBound, nm, variables);
+            var isUpperOpen = new LoadConstantIlExpression(expr.OpenUpperBound);
+            // TODO: IsIntegerInterval ?
+            var stuple = typeof(STuple<float, bool, float, bool>);
+            var ctor = stuple.GetConstructor(
+                new[]
+                {
+                    typeof(float), typeof(bool), typeof(float), typeof(bool)
+                });
+            var rv = new NewObjIlExpression(ctor,
+                lower, isLowerOpen, upper, isUpperOpen);
+            return rv;
         }
     }
 }
