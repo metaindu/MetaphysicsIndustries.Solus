@@ -104,6 +104,9 @@ namespace MetaphysicsIndustries.Solus
         public static Function ToFunction(this IMathObject mo) =>
             (Function)mo;
 
+        public static Interval ToInterval(this IMathObject mo) =>
+            (Interval)mo;
+
         public static Types GetMathType(this IMathObject mo,
             SolusEnvironment env=null)
         {
