@@ -186,6 +186,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return typeof(float[,]);
             if (value.IsIsFunction(typeEnv))
                 return typeof(MethodInfo);
+            if (value.IsIsInterval(typeEnv))
+                return typeof(STuple<float, bool, float, bool>);
             throw new NotImplementedException(
                 $"Unrecognized type, {value.GetType()}");
         }
