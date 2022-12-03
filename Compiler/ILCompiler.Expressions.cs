@@ -51,6 +51,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 $"Unsupported expression type: \"{expr}\"", nameof(expr));
         }
 
+        // TODO: copy-paste IlCompiler.Expressions.*.cs here
+
         public IlExpression ConvertToIlExpression(IntervalExpression expr,
             NascentMethod nm, VariableIdentityMap variables)
         {
