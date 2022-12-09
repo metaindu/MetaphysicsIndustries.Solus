@@ -1,29 +1,34 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Solus", "MetaphysicsIndustries.Solus.csproj", "{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Solus", "MetaphysicsIndustries.Solus.csproj", "{9EA855D3-8CC1-42B6-B368-5B3F4D1E2B83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaphysicsIndustries.Solus.Test", "MetaphysicsIndustries.Solus.Test\MetaphysicsIndustries.Solus.Test.csproj", "{AF9AC998-5856-4745-AF8C-D13CC1631D2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solus", "solus\solus.csproj", "{00916C31-5B9C-41F8-938F-DE20063CAD7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solus", "solus\solus.csproj", "{2C6210A1-5B53-4E4E-9A5A-4F09C114ADCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{00916C31-5B9C-41F8-938F-DE20063CAD7E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A630057C-40CF-4DF3-BE44-FC660B3E6BA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EA855D3-8CC1-42B6-B368-5B3F4D1E2B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EA855D3-8CC1-42B6-B368-5B3F4D1E2B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EA855D3-8CC1-42B6-B368-5B3F4D1E2B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EA855D3-8CC1-42B6-B368-5B3F4D1E2B83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF9AC998-5856-4745-AF8C-D13CC1631D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6210A1-5B53-4E4E-9A5A-4F09C114ADCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6210A1-5B53-4E4E-9A5A-4F09C114ADCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6210A1-5B53-4E4E-9A5A-4F09C114ADCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6210A1-5B53-4E4E-9A5A-4F09C114ADCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
