@@ -47,6 +47,10 @@ boolean true and false
 piece-wise functions
 parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
 sequences
+color value
+    ToRGB
+    ToHSV
+    ToWavelengthDistribution
 sum function that can operate on parametrics. the big sigma symbol.
 single component assignment?
     "c[2,3] := 4"
