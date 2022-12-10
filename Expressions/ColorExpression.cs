@@ -57,21 +57,21 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 {
                     _color = value;
 
-                    _pen = new Pen(_color);
+                    // _pen = new Pen(_color);
                 }
             }
         }
 
-        private Pen _pen;
-        public Pen Pen
-        {
-            get { return _pen; }
-        }
-
-        public Brush Brush
-        {
-            get { return _pen.Brush; }
-        }
+        // private Pen _pen;
+        // public Pen Pen
+        // {
+        //     get { return _pen; }
+        // }
+        //
+        // public Brush Brush
+        // {
+        //     get { return _pen.Brush; }
+        // }
 
         public override Expression Clone()
         {

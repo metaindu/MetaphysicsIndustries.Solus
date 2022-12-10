@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             mi[1, 0] = Color.Red;
             mi[1, 1] = Color.White;
             mi.CopyPixelsToBitmap();
-            Func<string, Image> loader = filename => mi.Bitmap;
+            Func<string, object> loader = filename => mi.Bitmap;
             // when
             var result = LoadImageFunction.LoadImage("filename", loader);
             // then
