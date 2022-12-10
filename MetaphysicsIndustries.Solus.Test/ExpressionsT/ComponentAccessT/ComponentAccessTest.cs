@@ -41,7 +41,6 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var result = new ComponentAccess(expr, indexes);
             // then
             Assert.AreSame(expr, result.Expr);
-            Assert.AreNotSame(indexes, result.Indexes);
             Assert.AreEqual(1, result.Indexes.Count);
             Assert.IsInstanceOf<Literal>(result.Indexes[0]);
             Assert.AreEqual(1,
