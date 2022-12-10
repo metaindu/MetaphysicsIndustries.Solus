@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new NewObjIlExpression(null, args));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: constructor",
+                "Value cannot be null. (Parameter 'constructor')",
                 ex.Message);
         }
 
@@ -72,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new NewObjIlExpression(ctor, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: arguments",
+                "Value cannot be null. (Parameter 'arguments')",
                 ex.Message);
         }
 
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new NewObjIlExpression(null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: constructor",
+                "Value cannot be null. (Parameter 'constructor')",
                 ex.Message);
         }
     }

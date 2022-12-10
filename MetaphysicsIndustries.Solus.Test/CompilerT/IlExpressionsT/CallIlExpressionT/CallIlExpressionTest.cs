@@ -60,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CallIlExpression((Delegate)null, args));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: method",
+                "Value cannot be null. (Parameter 'method')",
                 ex.Message);
         }
 
@@ -74,7 +74,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CallIlExpression(method, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: args",
+                "Value cannot be null. (Parameter 'args')",
                 ex.Message);
         }
 
@@ -86,7 +86,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CallIlExpression((Delegate)null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: method",
+                "Value cannot be null. (Parameter 'method')",
                 ex.Message);
         }
 
@@ -117,7 +117,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CallIlExpression((MethodInfo)null, args));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: method",
+                "Value cannot be null. (Parameter 'method')",
                 ex.Message);
         }
 
@@ -133,7 +133,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CallIlExpression(method, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: args",
+                "Value cannot be null. (Parameter 'args')",
                 ex.Message);
         }
 
@@ -145,7 +145,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CallIlExpression((MethodInfo)null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: method",
+                "Value cannot be null. (Parameter 'method')",
                 ex.Message);
         }
     }

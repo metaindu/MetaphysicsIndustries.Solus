@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CompareEqualIlExpression(null, right));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: left",
+                "Value cannot be null. (Parameter 'left')",
                 ex.Message);
         }
 
@@ -69,7 +69,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CompareEqualIlExpression(left, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: right",
+                "Value cannot be null. (Parameter 'right')",
                 ex.Message);
         }
 
@@ -81,7 +81,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new CompareEqualIlExpression(null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: left",
+                "Value cannot be null. (Parameter 'left')",
                 ex.Message);
         }
     }

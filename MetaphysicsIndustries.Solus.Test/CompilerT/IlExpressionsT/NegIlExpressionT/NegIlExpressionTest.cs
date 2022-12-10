@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new NegIlExpression(null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: argument",
+                "Value cannot be null. (Parameter 'argument')",
                 ex.Message);
         }
     }

@@ -54,7 +54,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // and
             Assert.AreEqual("lowerBound", ex.ParamName);
             Assert.AreEqual(
-                "Not a number\nParameter name: lowerBound", ex.Message);
+                "Not a number (Parameter 'lowerBound')",
+                ex.Message);
         }
 
         [Test]
@@ -69,7 +70,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // and
             Assert.AreEqual("upperBound", ex.ParamName);
             Assert.AreEqual(
-                "Not a number\nParameter name: upperBound", ex.Message);
+                "Not a number (Parameter 'upperBound')",
+                ex.Message);
         }
 
         [Test]

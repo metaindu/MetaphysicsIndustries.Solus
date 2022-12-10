@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 () => new LoadStringIlExpression(null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: value",
+                "Value cannot be null. (Parameter 'value')",
                 ex.Message);
         }
 
