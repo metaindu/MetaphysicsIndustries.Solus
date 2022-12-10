@@ -47,6 +47,7 @@ boolean true and false
 piece-wise functions
 parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
 sequences
+use SixLabors.ImageSharp to load image files, instead of System.Drawing, or whatever isn't platform-compatible
 color value
     ToRGB
     ToHSV
