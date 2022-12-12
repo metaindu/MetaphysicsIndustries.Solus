@@ -6,10 +6,20 @@ should arrays be indexed starting at zero or one?
     starting at one is common in mathematics
 rename "vars" command to something like "names" ?
 turn macros into some kind of function that doesn't evaluate args before
-    being called
+        being called
+    basically a transformer, as next item below
 turn transformers into some kind of function that doesn't evaluate args
-    before being called.
+        before being called.
     a function that takes an expression and returns an expression
+    depends on types/constraints for function arguments
+Functions that take expressions will by default cause their arguments *not* to
+        be evaluated. To pass to the function the result of evaluating an
+        expression, use the eval function. This is the opposite of how it is
+        with lisp, where you do something to the argument ("quote") to prevent
+        evaluation.
+    eval(expr: Expression [, env: Environment] [, evaluator: Evaluator]
+            ) -> Expression
+    parse(s: string) -> Expression
 implement the ILCompiler functionality as an expression transformer
     define functions that represent IEEE754 floating point add, mult, etc
     IlExpression becomes a subtype of regular Expression
@@ -24,9 +34,9 @@ similar checks on inputs to expression
 a type system to support the above
 maybe a "property system" in addition to, or in place of, said type system
 markers of the type of the result of an expression (or return value of a
-    function), based on inputs
+        function), based on inputs
 figure out some solution to the problem of values being boxed and unboxed so
-    much. It's causing lots of allocations and is just slow in general.
+        much. It's causing lots of allocations and is just slow in general.
 simple sets as IMathObject
 intervals
     syntax
@@ -47,7 +57,8 @@ boolean true and false
 piece-wise functions
 parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
 sequences
-use SixLabors.ImageSharp to load image files, instead of System.Drawing, or whatever isn't platform-compatible
+use SixLabors.ImageSharp to load image files, instead of System.Drawing, or
+        whatever isn't platform-compatible
 color value
     ToRGB
     ToHSV
@@ -75,7 +86,7 @@ array comprehension
     "[ i*j*k for i=...,j=...,k=... ]" -> 3d array
     etc.
     array-comprehension = '[' expr 'for'
-        var-interval ( ',' var-interval )* ']';
+            var-interval ( ',' var-interval )* ']';
 "help syntax" topics
     "help syntax array-literal"
     "help syntax component-access"
