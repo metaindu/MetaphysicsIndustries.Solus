@@ -3,6 +3,7 @@
 1. Create a `prep-release` branch, or similar
 2. In that branch:
    * Check `todo.txt` for anything important, or anything already completed
+   * Check copyright dates
    * Bump the version numbers
      * `Properties/AssemblyInfo.cs`
      * `solus/Properties/AssemblyInfo.cs`

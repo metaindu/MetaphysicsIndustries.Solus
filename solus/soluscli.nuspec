@@ -2,7 +2,7 @@
 
 <!--
 MetaphysicsIndustries.Solus
-Copyright (C) 2008-2021 Metaphysics Industries, Inc.
+Copyright (C) 2008-2022 Metaphysics Industries, Inc.
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,7 @@ USA
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Solus command-line interface</description>
         <releaseNotes>Allow interrogation to return null for "Not available". Minor memory usage improvements.</releaseNotes>
-        <copyright>Copyright 2021 izrik and Metaphysics Industries, Inc.</copyright>
+        <copyright>Copyright 2022 izrik and Metaphysics Industries, Inc.</copyright>
         <tags>math numeric algebra</tags>
         <dependencies>
             <group>

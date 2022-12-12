@@ -1,7 +1,7 @@
 ﻿
 /*
  *  MetaphysicsIndustries.Solus
- *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
+ *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -27,7 +27,7 @@ using System.Reflection;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Metaphysics Industries, Inc.")]
 [assembly: AssemblyProduct("solus")]
-[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Inc. 2006-2021")]
+[assembly: AssemblyCopyright("Copyright © Metaphysics Industries, Inc. 2006-2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
