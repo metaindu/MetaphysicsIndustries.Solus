@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFrameworks>net40;net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net6.0;net7.0</TargetFrameworks>
@@ -12,11 +12,32 @@
             MetaphysicsIndustries.Solus.Test/**;
             solus/**;
             instance/**;
-            packages/**
+            packages/**;
+            tmp/**
         </DefaultItemExcludes>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="MetaphysicsIndustries.Giza" Version="0.4.0" />
     </ItemGroup>
+
+    <PropertyGroup>
+        <PackageId>MetaphysicsIndustries.Solus</PackageId>
+        <!--<PackageVersion></PackageVersion>-->
+        <Title>MetaphysicsIndustries.Solus</Title>
+        <Authors>izrik,metaindu</Authors>
+        <!--<PackageOwners>izrik,metaindu</PackageOwners>-->
+        <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/metaindu/MetaphysicsIndustries.Solus</PackageProjectUrl>
+        <Description>Mathematics system</Description>
+        <PackageReleaseNotes>Compiling evaluator. Target newer frameworks.</PackageReleaseNotes>
+        <Copyright>Copyright 2022 izrik and Metaphysics Industries, Inc.</Copyright>
+        <PackageTags>math numeric algebra</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
 </Project>

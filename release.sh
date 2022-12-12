@@ -18,6 +18,8 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
 
+PACKAGE_BASE=MetaphysicsIndustries.Solus
+
 TAG="$1"
 
 if [ "$TAG" = "" ]
@@ -55,7 +57,7 @@ else
 fi
 
 echo 'Creating the nuget package...'
-if ! nuget pack MetaphysicsIndustries.Solus.nuspec -Properties version=$DVERSION ; then
+if ! dotnet pack --include-source --include-symbols -o ./ $PACKAGE_BASE.csproj /p:PackageVersion=$VERSION ; then
     echo 'Error creating the package. The package will not be uploaded.'
     exit 1
 fi
@@ -69,7 +71,7 @@ if [ -n "$DRY_RUN" ]; then
     echo 'This is a dry run. The package will not be uploaded.'
 else
     echo 'Uploading the package to nuget...'
-    if ! nuget push MetaphysicsIndustries.Solus.$DVERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
+    if ! nuget push $PACKAGE_BASE.$DVERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
         echo 'Error uploading the package. Quitting.'
         exit 1
     fi
