@@ -8,8 +8,35 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <DefaultItemExcludes>
+      tmp/**
+    </DefaultItemExcludes>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MetaphysicsIndustries.Solus.csproj" />
   </ItemGroup>
+
+
+  <PropertyGroup>
+    <PackageId>soluscli</PackageId>
+    <!--<PackageVersion></PackageVersion>-->
+    <Title>Solus CLI</Title>
+    <Authors>izrik,metaindu</Authors>
+    <!--<PackageOwners>izrik,metaindu</PackageOwners>-->
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/metaindu/MetaphysicsIndustries.Solus</PackageProjectUrl>
+    <!-- TODO: <PackageIcon>images/logo.png</PackageIcon> -->
+    <Description>Solus command-line interface</Description>
+    <PackageReleaseNotes>Compiling evaluator. Target newer frameworks.</PackageReleaseNotes>
+    <Copyright>Copyright 2022 izrik and Metaphysics Industries, Inc.</Copyright>
+    <PackageTags>math numeric algebra</PackageTags>
+    <!--<PackageReadmeFile>README.md</PackageReadmeFile>-->
+  </PropertyGroup>
+
+<!--  <ItemGroup>-->
+<!--    <None Include="/README.md" Pack="true" PackagePath="\" />-->
+<!--  </ItemGroup>-->
 
 </Project>

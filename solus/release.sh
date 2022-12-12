@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # MetaphysicsIndustries.Solus
-# Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
+# Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -17,6 +17,9 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
 # USA
+
+PROJECT_BASE=solus
+PACKAGE_BASE=soluscli
 
 TAG="$1"
 
@@ -55,7 +58,7 @@ else
 fi
 
 echo 'Creating the nuget package...'
-if ! nuget pack soluscli.nuspec -Properties version=$DVERSION ; then
+if ! dotnet pack --include-source --include-symbols -o ./ $PROJECT_BASE.csproj /p:PackageVersion=$VERSION ; then
     echo 'Error creating the package. The package will not be uploaded.'
     exit 1
 fi
@@ -69,7 +72,7 @@ if [ -n "$DRY_RUN" ]; then
     echo 'This is a dry run. The package will not be uploaded.'
 else
     echo 'Uploading the package to nuget...'
-    if ! nuget push soluscli.$DVERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
+    if ! nuget push $PACKAGE_BASE.$DVERSION.nupkg -Source nuget.org -ApiKey $NUGET_API_KEY ; then
         echo 'Error uploading the package. Quitting.'
         exit 1
     fi

@@ -3,13 +3,14 @@
 1. Create a `prep-release` branch, or similar
 2. In that branch:
    * Check `todo.txt` for anything important, or anything already completed
+   * Check copyright dates
    * Bump the version numbers
      * `Properties/AssemblyInfo.cs`
      * `solus/Properties/AssemblyInfo.cs`
    * Bump the dependency version in `soluscli.nuspec`
    * Check files for license notices
    * Check any other code formatting or static analysis
-   * Update the release notes in the nuspec files
+   * Update the release notes in the project files (`<PackageReleaseNotes>`)
    * Clean, build, and run tests
    * Do a dry run of `release.sh` (both of them), without pushing to nuget
      gallery (Use the `DRY_RUN` envvar)
