@@ -60,29 +60,31 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         public IMathObject CallWithLoader(SolusEnvironment env,
-            IMathObject[] args, Func<string, Image> loader)
+            IMathObject[] args, Func<string, object> loader)
         {
             return LoadImage(args[0].ToStringValue().Value,
                 loader);
         }
 
         public static Matrix LoadImage(string filename,
-            Func<string, Image> _loader = null)
+            Func<string, object> _loader = null)
         {
-            if (_loader == null)
-                _loader = Image.FromFile;
-            var fileImage = _loader(filename);
-            if (!(fileImage is Bitmap bitmap))
-                throw new InvalidOperationException(
-                    "The file is not in the correct format");
-            var image = new MemoryImage(bitmap);
-            image.CopyBitmapToPixels();
+            // if (_loader == null)
+            //     _loader = Image.FromFile;
+            // var fileImage = _loader(filename);
+            // if (!(fileImage is Bitmap bitmap))
+            //     throw new InvalidOperationException(
+            //         "The file is not in the correct format");
+            // var image = new MemoryImage(bitmap);
+            // image.CopyBitmapToPixels();
+            //
+            // var values = new float[image.Height, image.Width];
+            // for (var c = 0; c < image.Width; c++)
+            // for (var r = 0; r < image.Height; r++)
+            //     values[r, c] = image[r, c].ToArgb() & 0x00FFFFFF;
+            // return new Matrix(values);
 
-            var values = new float[image.Height, image.Width];
-            for (var c = 0; c < image.Width; c++)
-            for (var r = 0; r < image.Height; r++)
-                values[r, c] = image[r, c].ToArgb() & 0x00FFFFFF;
-            return new Matrix(values);
+            throw new NotImplementedException();
         }
 
         private class ResultC : IMathObject

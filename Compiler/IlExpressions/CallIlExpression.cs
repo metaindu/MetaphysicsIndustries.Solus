@@ -22,6 +22,7 @@
 
 using System;
 using System.Reflection;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -30,8 +31,8 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public CallIlExpression(MethodInfo method, params IlExpression[] args)
         {
             Method = method ??
-                     throw new ArgumentNullException(nameof(method));
-            Args = args ?? throw new ArgumentNullException(nameof(args));
+                     throw ValueException.Null(nameof(method));
+            Args = args ?? throw ValueException.Null(nameof(args));
         }
         public CallIlExpression(Delegate @delegate,
             params IlExpression[] args)

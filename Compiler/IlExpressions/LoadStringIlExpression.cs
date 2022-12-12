@@ -21,13 +21,14 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
     public class LoadStringIlExpression : IlExpression
     {
         public LoadStringIlExpression(string value) =>
-            Value = value ?? throw new ArgumentNullException(nameof(value));
+            Value = value ?? throw ValueException.Null(nameof(value));
 
         public string Value { get; }
 

@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -48,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
         public void NullParamTypesThrows()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new MockFunction(null, "func2"));
             // and
             Assert.AreEqual("paramTypes", ex.ParamName);

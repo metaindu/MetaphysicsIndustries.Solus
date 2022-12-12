@@ -22,7 +22,7 @@
 
 using System;
 using System.Collections.Generic;
-using ArgumentNullException = System.ArgumentNullException;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -35,7 +35,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public VariableAccess(string variableName)
         {
-            if (string.IsNullOrEmpty(variableName)) throw new ArgumentNullException("variableName");
+            if (string.IsNullOrEmpty(variableName))
+                throw ValueException.Null(nameof(variableName));
 
             VariableName = variableName;
             _result = new ResultC(this);

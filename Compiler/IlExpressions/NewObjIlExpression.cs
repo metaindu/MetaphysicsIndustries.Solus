@@ -22,6 +22,7 @@
 
 using System;
 using System.Reflection;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -31,10 +32,10 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             params IlExpression[] arguments)
         {
             Constructor = constructor ??
-                          throw new ArgumentNullException(
+                          throw ValueException.Null(
                               nameof(constructor));
             Arguments = arguments ??
-                        throw new ArgumentNullException(nameof(arguments));
+                        throw ValueException.Null(nameof(arguments));
         }
 
         public ConstructorInfo Constructor { get; }

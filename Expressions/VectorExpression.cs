@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
@@ -98,9 +99,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override Expression GetComponent(int[] indexes)
         {
             if (indexes == null)
-                throw new ArgumentNullException(nameof(indexes));
+                throw ValueException.Null(nameof(indexes));
             if (indexes.Length != 1)
-                throw new ArgumentOutOfRangeException(
+                throw new ValueException(
                     nameof(indexes), "Wrong number of indexes");
             if (indexes[0] < 0 || indexes[0] >= Length)
                 throw new IndexOutOfRangeException();

@@ -20,7 +20,7 @@
  *
  */
 
-using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
@@ -30,10 +30,10 @@ namespace MetaphysicsIndustries.Solus.Values
             float upperBound, bool openUpperBound, bool isIntegerInterval)
         {
             if (float.IsNaN(lowerBound))
-                throw new ArgumentOutOfRangeException(
+                throw new ValueException(
                     nameof(lowerBound), "Not a number");
             if (float.IsNaN(upperBound))
-                throw new ArgumentOutOfRangeException(
+                throw new ValueException(
                     nameof(upperBound), "Not a number");
 
             if (lowerBound > upperBound)

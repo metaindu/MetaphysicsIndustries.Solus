@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2021 Metaphysics Industries, Inc., Richard Sartor
@@ -21,6 +20,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public BranchIlExpression(IlExpression target)
         {
             Target = target ??
-                     throw new ArgumentNullException(nameof(target));
+                     throw ValueException.Null(nameof(target));
         }
 
         public IlExpression Target { get; }

@@ -40,24 +40,28 @@ namespace MetaphysicsIndustries.Solus
         }
 
         public MemoryImage(int width, int height)
-            : this(new Bitmap(width, height, PixelFormat.Format32bppArgb))
+            // : this(new Bitmap(width, height, PixelFormat.Format32bppArgb))
         {
+            throw new NotImplementedException();
         }
 
-        public MemoryImage(Bitmap bitmap)
+        public MemoryImage(object bitmap)
         {
-            if (bitmap == null) { throw new ArgumentNullException("bitmap"); }
+            // if (bitmap == null)
+            //     throw ValueException.Null(nameof(bitmap));
+            //
+            // _bitmap = bitmap.Clone(
+            //     new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            //     PixelFormat.Format32bppArgb);
+            //
+            // _pixels = new Color[bitmap.Height, bitmap.Width];
 
-            _bitmap = bitmap.Clone(
-                new Rectangle(0, 0, bitmap.Width, bitmap.Height),
-                PixelFormat.Format32bppArgb);
-
-            _pixels = new Color[bitmap.Height, bitmap.Width];
+            throw new NotImplementedException();
         }
 
         public void Dispose()
         {
-            _bitmap.Dispose();
+            // _bitmap.Dispose();
         }
 
         public int[] AllocateArrayForPixels()
@@ -103,26 +107,28 @@ namespace MetaphysicsIndustries.Solus
         // the bitmap object
         public void CopyPixelsToBitmap()
         {
-            BitmapData data = null;
+            // BitmapData data = null;
+            //
+            // try
+            // {
+            //     data = _bitmap.LockBits(new Rectangle(0, 0, Width, Height),
+            //                                     ImageLockMode.WriteOnly,
+            //                                     PixelFormat.Format32bppArgb);
+            //     IntPtr ptr = data.Scan0;
+            //     int[] pixeldata = AllocateArrayForPixels();
+            //     CopyPixelsToArray(pixeldata);
+            //     System.Runtime.InteropServices.Marshal.Copy(pixeldata, 0, ptr,
+            //         Width * Height);
+            // }
+            // finally
+            // {
+            //     if (data != null)
+            //     {
+            //         _bitmap.UnlockBits(data);
+            //     }
+            // }
 
-            try
-            {
-                data = _bitmap.LockBits(new Rectangle(0, 0, Width, Height),
-                                                ImageLockMode.WriteOnly,
-                                                PixelFormat.Format32bppArgb);
-                IntPtr ptr = data.Scan0;
-                int[] pixeldata = AllocateArrayForPixels();
-                CopyPixelsToArray(pixeldata);
-                System.Runtime.InteropServices.Marshal.Copy(pixeldata, 0, ptr,
-                    Width * Height);
-            }
-            finally
-            {
-                if (data != null)
-                {
-                    _bitmap.UnlockBits(data);
-                }
-            }
+            throw new NotImplementedException();
         }
 
         public void CopyArrayToPixels(int[] pixeldata)
@@ -142,36 +148,41 @@ namespace MetaphysicsIndustries.Solus
         // array in memory
         public void CopyBitmapToPixels()
         {
-            if (Bitmap == null) { throw new InvalidOperationException(); }
-
-            BitmapData data = null;
-            int[] pixeldata;
-
-            try
-            {
-                data = _bitmap.LockBits(
-                    new Rectangle(0, 0, _bitmap.Width, _bitmap.Height),
-                    ImageLockMode.ReadOnly,
-                    PixelFormat.Format32bppArgb);
-                IntPtr ptr = data.Scan0;
-                pixeldata = AllocateArrayForPixels();
-                System.Runtime.InteropServices.Marshal.Copy(ptr, pixeldata, 0,
-                    Width * Height);
-            }
-            finally
-            {
-                if (data != null)
-                {
-                    _bitmap.UnlockBits(data);
-                }
-            }
-
-            CopyArrayToPixels(pixeldata);
+            // if (Bitmap == null) { throw new InvalidOperationException(); }
+            //
+            // BitmapData data = null;
+            // int[] pixeldata;
+            //
+            // try
+            // {
+            //     data = _bitmap.LockBits(
+            //         new Rectangle(0, 0, _bitmap.Width, _bitmap.Height),
+            //         ImageLockMode.ReadOnly,
+            //         PixelFormat.Format32bppArgb);
+            //     IntPtr ptr = data.Scan0;
+            //     pixeldata = AllocateArrayForPixels();
+            //     System.Runtime.InteropServices.Marshal.Copy(ptr, pixeldata, 0,
+            //         Width * Height);
+            // }
+            // finally
+            // {
+            //     if (data != null)
+            //     {
+            //         _bitmap.UnlockBits(data);
+            //     }
+            // }
+            //
+            // CopyArrayToPixels(pixeldata);
+            throw new NotImplementedException();
         }
 
         public Size Size
         {
-            get { return _bitmap.Size; }
+            get
+            {
+                // return _bitmap.Size;
+                throw new NotImplementedException();
+            }
             //set
             //{
             //    if (value.Width <= 0 || value.Height <= 0)
@@ -225,7 +236,7 @@ namespace MetaphysicsIndustries.Solus
             }
         }
 
-        public Bitmap Bitmap
+        public object Bitmap
         {
             get
             {
@@ -235,15 +246,23 @@ namespace MetaphysicsIndustries.Solus
 
         public int Width
         {
-            get { return _bitmap.Width; }
+            get
+            {
+                // return _bitmap.Width;
+                throw new NotImplementedException();
+            }
         }
 
         public int Height
         {
-            get { return _bitmap.Height; }
+            get
+            {
+                // return _bitmap.Height;
+                throw new NotImplementedException();
+            }
         }
 
         private readonly Color[,] _pixels;
-        private readonly Bitmap _bitmap;
+        private readonly object _bitmap;
     }
 }

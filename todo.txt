@@ -9,6 +9,12 @@ turn macros into some kind of function that doesn't evaluate args before
     being called
 turn transformers into some kind of function that doesn't evaluate args
     before being called.
+    a function that takes an expression and returns an expression
+implement the ILCompiler functionality as an expression transformer
+    define functions that represent IEEE754 floating point add, mult, etc
+    IlExpression becomes a subtype of regular Expression
+    a function that takes the resulting expression and converts it into a
+            sequence of CIL instructions
 arbitrary rules for function arguments, e.g.:
     - like GreaterThanZero or
     - Matrix sized NxM
@@ -41,6 +47,11 @@ boolean true and false
 piece-wise functions
 parametric expressions, e.g. "sin(x) for 0<=x<2*pi" or "dist(r) for r in R"
 sequences
+use SixLabors.ImageSharp to load image files, instead of System.Drawing, or whatever isn't platform-compatible
+color value
+    ToRGB
+    ToHSV
+    ToWavelengthDistribution
 sum function that can operate on parametrics. the big sigma symbol.
 single component assignment?
     "c[2,3] := 4"

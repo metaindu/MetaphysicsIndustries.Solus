@@ -47,15 +47,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public FunctionCall(Function function, IEnumerable<Expression> args)
         {
-            if (function == null) { throw new ArgumentNullException("function"); }
-            if (args == null) { throw new ArgumentNullException("args"); }
+            if (function == null)
+                throw ValueException.Null(nameof(function));
+            if (args == null) { throw ValueException.Null(nameof(args)); }
 
             Init(function, args.ToArray());
         }
 
         public FunctionCall(Function function, params Expression[] args)
         {
-            if (function == null) { throw new ArgumentNullException("function"); }
+            if (function == null)
+                throw ValueException.Null(nameof(function));
 
             Init(function, args);
         }
@@ -63,8 +65,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public FunctionCall(Expression function, IEnumerable<Expression> args)
         {
             if (function == null)
-                throw new ArgumentNullException(nameof(function));
-            if (args == null) throw new ArgumentNullException(nameof(args));
+                throw ValueException.Null(nameof(function));
+            if (args == null) throw ValueException.Null(nameof(args));
 
             Init(function, args.ToArray());
         }

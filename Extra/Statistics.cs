@@ -113,8 +113,8 @@ namespace MetaphysicsIndustries.Solus.Extra
 
         // public static float MeanSquareError(Matrix a, Matrix b)
         // {
-        //     if (a == null) { throw new ArgumentNullException("a"); }
-        //     if (b == null) { throw new ArgumentNullException("b"); }
+        //     if (a == null) { throw ValueException.Null(nameof(a)); }
+        //     if (b == null) { throw ValueException.Null(nameof(b)); }
         //     if (a.RowCount != b.RowCount ||
         //         a.ColumnCount != b.ColumnCount)
         //     {
@@ -146,8 +146,8 @@ namespace MetaphysicsIndustries.Solus.Extra
 
         // public static float MaxError(Matrix a, Matrix b)
         // {
-        //     if (a == null) { throw new ArgumentNullException("a"); }
-        //     if (b == null) { throw new ArgumentNullException("b"); }
+        //     if (a == null) { throw ValueException.Null(nameof(a)); }
+        //     if (b == null) { throw ValueException.Null(nameof(b)); }
         //     if (a.RowCount != b.RowCount ||
         //         a.ColumnCount != b.ColumnCount)
         //     {

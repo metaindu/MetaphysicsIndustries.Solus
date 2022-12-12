@@ -36,6 +36,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
 
@@ -46,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected Function(Types[] paramTypes, string name="")
         {
             if (paramTypes == null)
-                throw new ArgumentNullException(nameof(paramTypes));
+                throw ValueException.Null(nameof(paramTypes));
             _name = name;
             ParamTypes = Array.AsReadOnly(paramTypes);
         }

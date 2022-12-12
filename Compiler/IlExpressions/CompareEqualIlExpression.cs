@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -29,8 +30,8 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public CompareEqualIlExpression(IlExpression left,
             IlExpression right)
         {
-            Left = left ?? throw new ArgumentNullException(nameof(left));
-            Right = right ?? throw new ArgumentNullException(nameof(right));
+            Left = left ?? throw ValueException.Null(nameof(left));
+            Right = right ?? throw ValueException.Null(nameof(right));
         }
 
         public IlExpression Left { get; }

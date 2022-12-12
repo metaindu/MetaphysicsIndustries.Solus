@@ -21,36 +21,36 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Exceptions;
 
-namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
+namespace MetaphysicsIndustries.Solus.Exceptions
 {
-    public class MulIlExpression : IlExpression
+    public class ValueException : SolusException
     {
-        public MulIlExpression(IlExpression left, IlExpression right)
+        public ValueException(string paramName, string message)
+            : base(FormatMessage(paramName, message), null)
         {
-            Left = left ?? throw ValueException.Null(nameof(left));
-            Right = right ?? throw ValueException.Null(nameof(right));
+            ParamName = paramName;
         }
 
-        public IlExpression Left { get; }
-        public IlExpression Right { get; }
-
-        protected override void GetInstructionsInternal(NascentMethod nm)
+        public ValueException(string message, Exception innerException)
+            : base(message, innerException)
         {
-            Left.GetInstructions(nm);
-            Right.GetInstructions(nm);
-            nm.Instructions.Add(Instruction.Mul());
         }
 
-        public override Type ResultType
+        public string ParamName { get; }
+
+        public static string FormatMessage(string paramName, string message)
         {
-            get
-            {
-                if (Left.ResultType == Right.ResultType)
-                    return Left.ResultType;
-                return typeof(float);
-            }
+            if (paramName == null && message == null)
+                return "The value was incorrect";
+            if (paramName == null)
+                return message;
+            if (message == null)
+                return $"The value was incorrect: {paramName}";
+            return $"{message}: {paramName}";
         }
+
+        public static ValueException Null(string paramName) =>
+            new ValueException(paramName, "Value cannot be null");
     }
 }

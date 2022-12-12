@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             object result;
             try
             {
-                result = Method.Method.Invoke(null, varValuesInOrder);
+                result = Method.DynamicInvoke(varValuesInOrder);
             }
             catch (Exception ex)
             {

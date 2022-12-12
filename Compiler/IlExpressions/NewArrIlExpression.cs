@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -30,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
             IlExpression length)
         {
             ElemType = elemType ??
-                       throw new ArgumentNullException(nameof(elemType));
+                       throw ValueException.Null(nameof(elemType));
             Length = length;
         }
 

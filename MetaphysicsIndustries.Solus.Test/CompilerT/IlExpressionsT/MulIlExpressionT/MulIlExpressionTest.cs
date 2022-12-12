@@ -22,6 +22,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Exceptions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
@@ -51,11 +52,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var right = new MockIlExpression();
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new MulIlExpression(null, right));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: left",
+                "Value cannot be null: left",
                 ex.Message);
         }
 
@@ -65,11 +66,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var left = new MockIlExpression();
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new MulIlExpression(left, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: right",
+                "Value cannot be null: right",
                 ex.Message);
         }
 
@@ -77,11 +78,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void ConstructorNullBothThrows()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new MulIlExpression(null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null.\nParameter name: left",
+                "Value cannot be null: left",
                 ex.Message);
         }
     }

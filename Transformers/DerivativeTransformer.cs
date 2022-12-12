@@ -37,8 +37,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         public override Expression Transform(Expression expr, VariableTransformArgs args)
         {
-            if (expr == null) { throw new ArgumentNullException("expr"); }
-            if (args == null) { throw new ArgumentNullException("args"); }
+            if (expr == null) { throw ValueException.Null(nameof(expr)); }
+            if (args == null) { throw ValueException.Null(nameof(args)); }
 
             Expression d = GetDerivative(expr, args.Variable);
 
