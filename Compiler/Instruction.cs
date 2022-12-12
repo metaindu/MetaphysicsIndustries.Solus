@@ -23,6 +23,7 @@
 using System;
 using System.Reflection;
 using System.Reflection.Emit;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
@@ -160,7 +161,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 gen.Emit(OpCode, TypeArg);
                 break;
             default:
-                throw new ArgumentOutOfRangeException();
+                throw new ValueException(nameof(ArgType), "Unknown value");
             }
         }
 
@@ -252,7 +253,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public static Instruction Call(MethodInfo mi)
         {
-            if (mi == null) throw new ArgumentNullException("mi");
+            if (mi == null) throw ValueException.Null(nameof(mi));
 
             return new Instruction {
                 ArgType = ArgumentType.Method,
@@ -265,7 +266,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
 
         public static Instruction CallVirtual(MethodInfo mi)
         {
-            if (mi == null) throw new ArgumentNullException("mi");
+            if (mi == null) throw ValueException.Null(nameof(mi));
 
             return new Instruction {
                 ArgType = ArgumentType.Method,

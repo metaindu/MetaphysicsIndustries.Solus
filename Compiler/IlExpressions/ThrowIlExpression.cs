@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -28,7 +29,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
     {
         public ThrowIlExpression(IlExpression argument) =>
             Argument = argument ??
-                       throw new ArgumentNullException(nameof(argument));
+                       throw ValueException.Null(nameof(argument));
 
         public IlExpression Argument { get; }
 

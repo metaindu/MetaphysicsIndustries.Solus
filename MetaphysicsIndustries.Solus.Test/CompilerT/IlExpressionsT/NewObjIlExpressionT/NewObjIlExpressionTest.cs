@@ -23,6 +23,7 @@
 using System;
 using System.Reflection;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Exceptions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
@@ -54,11 +55,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var args = new IlExpression[0];
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new NewObjIlExpression(null, args));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'constructor')",
+                "Value cannot be null: constructor",
                 ex.Message);
         }
 
@@ -68,11 +69,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var ctor = typeof(DummyClass).GetConstructor(Type.EmptyTypes);
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new NewObjIlExpression(ctor, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'arguments')",
+                "Value cannot be null: arguments",
                 ex.Message);
         }
 
@@ -80,11 +81,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void NullBothThrows()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new NewObjIlExpression(null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'constructor')",
+                "Value cannot be null: constructor",
                 ex.Message);
         }
     }

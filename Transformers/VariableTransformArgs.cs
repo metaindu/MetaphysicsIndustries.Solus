@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Transformers
 {
@@ -28,7 +29,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
     {
         public VariableTransformArgs(string variable)
         {
-            if (variable == null) { throw new ArgumentNullException("variable"); }
+            if (variable == null)
+                throw ValueException.Null(nameof(variable));
 
             _variable = variable;	
         }

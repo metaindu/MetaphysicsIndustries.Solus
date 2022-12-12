@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -46,15 +47,21 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
         public void CreateWithNaNLowerThrows()
         {
             // expect
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(
+            var ex = Assert.Throws<ValueException>(
                 () =>
                 {
                     var i = new Interval(float.NaN, false, 1, false, false);
                 });
             // and
+
+            // TODO: hard-code all exception messages. don't rely on the
+            //       framework to format the message, because then it isn't
+            //       consistent.
+            // TODO: Create some exception classes for bad types, values,
+            //       and/or arguments
             Assert.AreEqual("lowerBound", ex.ParamName);
             Assert.AreEqual(
-                "Not a number (Parameter 'lowerBound')",
+                "Not a number: lowerBound",
                 ex.Message);
         }
 
@@ -62,7 +69,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
         public void CreateWithNaNUpperThrows()
         {
             // expect
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(
+            var ex = Assert.Throws<ValueException>(
                 () =>
                 {
                     var i = new Interval(1, false, float.NaN, false, false);
@@ -70,7 +77,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // and
             Assert.AreEqual("upperBound", ex.ParamName);
             Assert.AreEqual(
-                "Not a number (Parameter 'upperBound')",
+                "Not a number: upperBound",
                 ex.Message);
         }
 

@@ -47,7 +47,8 @@ namespace MetaphysicsIndustries.Solus
 
         public MemoryImage(object bitmap)
         {
-            // if (bitmap == null) { throw new ArgumentNullException("bitmap"); }
+            // if (bitmap == null)
+            //     throw ValueException.Null(nameof(bitmap));
             //
             // _bitmap = bitmap.Clone(
             //     new Rectangle(0, 0, bitmap.Width, bitmap.Height),

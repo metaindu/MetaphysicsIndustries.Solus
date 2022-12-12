@@ -22,6 +22,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Exceptions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
@@ -47,11 +48,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void ConstructorNullTargetThrows()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new BrFalseIlExpression(null));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'target')",
+                "Value cannot be null: target",
                 ex.Message);
         }
     }

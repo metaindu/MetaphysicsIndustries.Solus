@@ -23,6 +23,7 @@
 using System;
 using System.Reflection;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Exceptions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
@@ -56,11 +57,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var args = new IlExpression[0];
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((Delegate)null, args));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'method')",
+                "Value cannot be null: method",
                 ex.Message);
         }
 
@@ -70,11 +71,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var method = new Action<int, float, bool>(DummyMethod);
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression(method, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'args')",
+                "Value cannot be null: args",
                 ex.Message);
         }
 
@@ -82,11 +83,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void NullBothThrowsDelegate()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((Delegate)null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'method')",
+                "Value cannot be null: method",
                 ex.Message);
         }
 
@@ -113,11 +114,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // given
             var args = new IlExpression[0];
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((MethodInfo)null, args));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'method')",
+                "Value cannot be null: method",
                 ex.Message);
         }
 
@@ -129,11 +130,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 "DummyMethod",
                 new Type[] { typeof(int), typeof(float), typeof(bool) });
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression(method, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'args')",
+                "Value cannot be null: args",
                 ex.Message);
         }
 
@@ -141,11 +142,11 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
         public void NullBothThrowsMethodInfo()
         {
             // expect
-            var ex = Assert.Throws<ArgumentNullException>(
+            var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((MethodInfo)null, null));
             // and
             Assert.AreEqual(
-                "Value cannot be null. (Parameter 'method')",
+                "Value cannot be null: method",
                 ex.Message);
         }
     }

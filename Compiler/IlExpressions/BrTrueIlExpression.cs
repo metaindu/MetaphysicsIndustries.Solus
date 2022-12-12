@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
 {
@@ -29,7 +30,7 @@ namespace MetaphysicsIndustries.Solus.Compiler.IlExpressions
         public BrTrueIlExpression(IlExpression target)
         {
             Target = target ??
-                     throw new ArgumentNullException(nameof(target));
+                     throw ValueException.Null(nameof(target));
         }
 
         public IlExpression Target { get; }
