@@ -97,5 +97,4 @@ syntax for user-defined functions
     `f(a:scalar) "calculate the thing" -> vector := [a, a+1, a+2]`
 repl line continuation, so it doesn't all have to go on a single line
     wodehouse can do that, but that's python, so not much help
-update IL compilation
 syntax for variable number of arguments to a function
