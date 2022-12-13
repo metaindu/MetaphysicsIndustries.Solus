@@ -21,7 +21,6 @@
  */
 
 using System;
-using System.Drawing;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
@@ -38,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             var mi = new MemoryImage(2, 2);
             mi[0, 0] = Color.White;
             mi[0, 1] = Color.Red;
-            mi[1, 0] = Color.Lime;
+            mi[1, 0] = Color.Green;
             mi[1, 1] = Color.Blue;
             mi.CopyPixelsToBitmap();
             Func<string, object> loader = filename => mi.Bitmap;

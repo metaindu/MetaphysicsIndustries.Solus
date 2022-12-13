@@ -21,15 +21,13 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
     /*
      * A 2D array of pixel color data.
-     * 
+     *
      */
 
     public class MemoryImage : IDisposable
