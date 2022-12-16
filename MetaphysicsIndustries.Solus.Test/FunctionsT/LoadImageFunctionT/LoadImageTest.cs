@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             mi.CopyPixelsToBitmap();
             Func<string, object> loader = filename => mi.Bitmap;
             // when
-            var result = LoadImageFunction.LoadImage("filename", loader);
+            var result = LoadImageFunction.LoadImage("filename", null);
             // then
             Assert.AreEqual(2, result.RowCount);
             Assert.AreEqual(2, result.ColumnCount);

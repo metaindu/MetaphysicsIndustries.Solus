@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using FreeImageAPI;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -59,14 +60,13 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         public IMathObject CallWithLoader(SolusEnvironment env,
-            IMathObject[] args, Func<string, object> loader)
+            IMathObject[] args, Func<string, Matrix> loader)
         {
             return LoadImage(args[0].ToStringValue().Value,
                 loader);
         }
 
-        public static Matrix LoadImage(string filename,
-            Func<string, object> _loader = null)
+        public static Matrix LoadViaSystemDrawing(string filename)
         {
             // if (_loader == null)
             //     _loader = Image.FromFile;
@@ -84,6 +84,80 @@ namespace MetaphysicsIndustries.Solus.Functions
             // return new Matrix(values);
 
             throw new NotImplementedException();
+        }
+
+        public static Matrix LoadViaImageSharp(string filename)
+        {
+            // var image0 = Image.Load(filename);
+            // var image = (Image<Rgb24>)image0;
+            // var values = new float[image.Height, image.Width];
+            // for (var c = 0; c < image.Width; c++)
+            // for (var r = 0; r < image.Height; r++)
+            //     values[r, c] = image[c, r].R << 16 |
+            //                    image[c, r].G << 8 |
+            //                    image[c, r].B << 0;
+            // return new Matrix(values);
+            throw new NotImplementedException();
+        }
+
+        public static Matrix LoadViaMagickNet(string filename)
+        {
+            // var image = new MagickImage(filename);
+            // var values = new float[image.Height, image.Width];
+            // var pvalues = image.GetPixels().GetValues();
+            // int i=0;
+            // for (var c = 0; c < image.Width; c++)
+            // for (var r = 0; r < image.Height; r++, i += 4)
+            //     values[r, c] = pvalues[i + 0] << 16 |
+            //                    pvalues[i + 1] << 8 |
+            //                    pvalues[i + 2];
+            // return new Matrix(values);
+            throw new NotImplementedException();
+        }
+
+        public static Matrix LoadViaFreeImage(string filename)
+        {
+            var image = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG,
+                filename, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+            var w = FreeImage.GetWidth(image);
+            var h = FreeImage.GetHeight(image);
+            var values = new float[h, w];
+            for (uint c = 0; c < w; c++)
+            for (uint r = 0; r < h; r++)
+            {
+                FreeImage.GetPixelColor(image, c, r,
+                    out var quad);
+                values[r, c] = quad.uintValue & 0xffffff;
+            }
+            return new Matrix(values);
+        }
+
+        public static Matrix LoadViaSkiaSharp(string filename)
+        {
+            // var image = SKImage.FromEncodedData(filename);
+            // var pixels = image.PeekPixels();
+            //
+            // var w = pixels.Width;
+            // var h = pixels.Height;
+            // var values = new float[h, w];
+            // for (int c = 0; c < w; c++)
+            // for (int r = 0; r < h; r++)
+            // {
+            //     var color = pixels.GetPixelColor(c, r);
+            //     values[r, c] = color.Red << 16 |
+            //                    color.Green << 8 |
+            //                    color.Blue << 0;
+            // }
+            // return new Matrix(values);
+            throw new NotImplementedException();
+        }
+
+        public static Matrix LoadImage(string filename,
+            Func<string, Matrix> _loader = null)
+        {
+            if (_loader != null)
+                return _loader(filename);
+            return LoadViaFreeImage(filename);
         }
 
         private class ResultC : IMathObject
