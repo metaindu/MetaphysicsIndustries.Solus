@@ -59,6 +59,39 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             Assert.AreEqual(0x007f7f, result[3, 3].ToNumber().Value);
         }
 
+        [Test]
+        public void LoadsImageIntoMatrix()
+        {
+            // given
+            Func<string, Stream> reader = filename =>
+                new MemoryStream(TinyTestPatternPng);
+            var args = new IMathObject[] {"filename".ToStringValue()};
+            // when
+            var result0 = LoadImageFunction.Value.CallWithReader(
+                null,args, reader);
+            // then
+            Assert.IsTrue(result0.IsIsMatrix(null));
+            var result = result0.ToMatrix();
+            Assert.AreEqual(4, result.RowCount);
+            Assert.AreEqual(4, result.ColumnCount);
+            Assert.AreEqual(0x0000ff, result[0, 0].ToNumber().Value);
+            Assert.AreEqual(0x00007f, result[0, 1].ToNumber().Value);
+            Assert.AreEqual(0x000000, result[0, 2].ToNumber().Value);
+            Assert.AreEqual(0x7f7f7f, result[0, 3].ToNumber().Value);
+            Assert.AreEqual(0x00ff00, result[1, 0].ToNumber().Value);
+            Assert.AreEqual(0x007f00, result[1, 1].ToNumber().Value);
+            Assert.AreEqual(0xffff00, result[1, 2].ToNumber().Value);
+            Assert.AreEqual(0x7f7f00, result[1, 3].ToNumber().Value);
+            Assert.AreEqual(0xff0000, result[2, 0].ToNumber().Value);
+            Assert.AreEqual(0x7f0000, result[2, 1].ToNumber().Value);
+            Assert.AreEqual(0xff00ff, result[2, 2].ToNumber().Value);
+            Assert.AreEqual(0x7f007f, result[2, 3].ToNumber().Value);
+            Assert.AreEqual(0xffffff, result[3, 0].ToNumber().Value);
+            Assert.AreEqual(0x7f7f7f, result[3, 1].ToNumber().Value);
+            Assert.AreEqual(0x00ffff, result[3, 2].ToNumber().Value);
+            Assert.AreEqual(0x007f7f, result[3, 3].ToNumber().Value);
+        }
+
         public byte[] TinyTestPatternPng =
         {
             0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
