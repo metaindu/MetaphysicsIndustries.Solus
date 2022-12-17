@@ -23,8 +23,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using FreeImageAPI;
 using MetaphysicsIndustries.Solus.Values;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -87,21 +88,34 @@ namespace MetaphysicsIndustries.Solus.Functions
             throw new NotImplementedException();
         }
 
-        public static Matrix LoadViaImageSharp(string filename)
+        public static Matrix LoadViaImageSharp(Stream stream)
         {
-            // var image0 = Image.Load(filename);
-            // var image = (Image<Rgb24>)image0;
-            // var values = new float[image.Height, image.Width];
-            // for (var c = 0; c < image.Width; c++)
-            // for (var r = 0; r < image.Height; r++)
-            //     values[r, c] = image[c, r].R << 16 |
-            //                    image[c, r].G << 8 |
-            //                    image[c, r].B << 0;
-            // return new Matrix(values);
-            throw new NotImplementedException();
+            var image = Image.Load(stream);
+            int w = image.Width;
+            int h = image.Height;
+            var values = new float[h, w];
+            if (image is Image<Rgba32> image32)
+            {
+                for (var c = 0; c < w; c++)
+                for (var r = 0; r < h; r++)
+                    values[h - r - 1, c] = image32[c, r].R << 16 |
+                                           image32[c, r].G << 8 |
+                                           image32[c, r].B << 0;
+            }
+            else if (image is Image<Rgb24> image24)
+            {
+                for (var c = 0; c < w; c++)
+                for (var r = 0; r < h; r++)
+                    values[h - r - 1, c] = image24[c, r].R << 16 |
+                                           image24[c, r].G << 8 |
+                                           image24[c, r].B << 0;
+            }
+
+            return new Matrix(values);
+            // throw new NotImplementedException();
         }
 
-        public static Matrix LoadViaMagickNet(string filename)
+        public static Matrix LoadViaMagickNet(Stream stream)
         {
             // var image = new MagickImage(filename);
             // var values = new float[image.Height, image.Width];
@@ -118,19 +132,20 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public static Matrix LoadViaFreeImage(Stream stream)
         {
-            var image = FreeImage.LoadFromStream(stream,
-                FREE_IMAGE_LOAD_FLAGS.DEFAULT);
-            var w = FreeImage.GetWidth(image);
-            var h = FreeImage.GetHeight(image);
-            var values = new float[h, w];
-            for (uint c = 0; c < w; c++)
-            for (uint r = 0; r < h; r++)
-            {
-                FreeImage.GetPixelColor(image, c, r,
-                    out var quad);
-                values[r, c] = quad.uintValue & 0xffffff;
-            }
-            return new Matrix(values);
+            // var image = FreeImage.LoadFromStream(stream,
+            //     FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+            // var w = FreeImage.GetWidth(image);
+            // var h = FreeImage.GetHeight(image);
+            // var values = new float[h, w];
+            // for (uint c = 0; c < w; c++)
+            // for (uint r = 0; r < h; r++)
+            // {
+            //     FreeImage.GetPixelColor(image, c, r,
+            //         out var quad);
+            //     values[r, c] = quad.uintValue & 0xffffff;
+            // }
+            // return new Matrix(values);
+            throw new NotImplementedException();
         }
 
         public static Matrix LoadViaSkiaSharp(string filename)
@@ -162,7 +177,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             else
                 stream = new FileStream(filename, FileMode.Open);
 
-            return LoadViaFreeImage(stream);
+            return LoadViaImageSharp(stream);
         }
 
         private class ResultC : IMathObject
