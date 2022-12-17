@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using FreeImageAPI;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -56,14 +57,14 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)
         {
-            return CallWithLoader(env, args, null);
+            return CallWithReader(env, args, null);
         }
 
-        public IMathObject CallWithLoader(SolusEnvironment env,
-            IMathObject[] args, Func<string, Matrix> loader)
+        public IMathObject CallWithReader(SolusEnvironment env,
+            IMathObject[] args, Func<string, Stream> reader)
         {
             return LoadImage(args[0].ToStringValue().Value,
-                loader);
+                reader);
         }
 
         public static Matrix LoadViaSystemDrawing(string filename)
@@ -115,10 +116,10 @@ namespace MetaphysicsIndustries.Solus.Functions
             throw new NotImplementedException();
         }
 
-        public static Matrix LoadViaFreeImage(string filename)
+        public static Matrix LoadViaFreeImage(Stream stream)
         {
-            var image = FreeImage.Load(FREE_IMAGE_FORMAT.FIF_PNG,
-                filename, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+            var image = FreeImage.LoadFromStream(stream,
+                FREE_IMAGE_LOAD_FLAGS.DEFAULT);
             var w = FreeImage.GetWidth(image);
             var h = FreeImage.GetHeight(image);
             var values = new float[h, w];
@@ -153,11 +154,15 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         public static Matrix LoadImage(string filename,
-            Func<string, Matrix> _loader = null)
+            Func<string, Stream> reader = null)
         {
-            if (_loader != null)
-                return _loader(filename);
-            return LoadViaFreeImage(filename);
+            Stream stream;
+            if (reader != null)
+                stream = reader(filename);
+            else
+                stream = new FileStream(filename, FileMode.Open);
+
+            return LoadViaFreeImage(stream);
         }
 
         private class ResultC : IMathObject

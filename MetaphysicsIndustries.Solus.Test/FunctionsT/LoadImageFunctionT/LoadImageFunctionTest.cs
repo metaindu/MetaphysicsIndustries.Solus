@@ -44,7 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             var args = new IMathObject[] {"filename".ToStringValue()};
             // when
             var result =
-                LoadImageFunction.Value.CallWithLoader(null, args, null);
+                LoadImageFunction.Value.CallWithReader(null, args, null);
             // then
             Assert.IsTrue(result.IsMatrix(null));
             Assert.IsInstanceOf<Matrix>(result);
