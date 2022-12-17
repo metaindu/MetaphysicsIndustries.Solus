@@ -60,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
         }
 
         [Test]
-        public void LoadsImageIntoMatrix()
+        public void LoadsImageIntoMatrix2()
         {
             // given
             Func<string, Stream> reader = filename =>
