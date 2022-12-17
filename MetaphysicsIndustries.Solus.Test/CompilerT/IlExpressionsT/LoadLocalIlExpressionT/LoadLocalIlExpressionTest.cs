@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadLocalIlExpression(local);
             // then
             Assert.IsNotNull(result);
-            Assert.AreSame(local, result.Local);
+            Assert.That(result.Local, Is.SameAs(local));
         }
     }
 }

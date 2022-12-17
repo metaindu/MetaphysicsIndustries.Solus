@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var result = new SolusEnvironment(useDefaults: false);
             // then
-            Assert.AreEqual(0, result.CountVariables());
+            Assert.That(result.CountVariables(), Is.EqualTo(0));
         }
 
         [Test]
@@ -54,11 +54,11 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // given
             var env = new SolusEnvironment(useDefaults: false);
             // precondition
-            Assert.AreEqual(0, env.CountVariables());
+            Assert.That(env.CountVariables(), Is.EqualTo(0));
             // when
             env.SetVariable("a", new Literal(1));
             // then
-            Assert.AreEqual(1, env.CountVariables());
+            Assert.That(env.CountVariables(), Is.EqualTo(1));
             Assert.Contains("a", env.GetVariableNames().ToList());
         }
 
@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var result = new SolusEnvironment(useDefaults: true);
             // then
-            Assert.AreEqual(30, result.CountVariables());
+            Assert.That(result.CountVariables(), Is.EqualTo(30));
             var vars = result.GetVariableNames().ToList();
             Assert.Contains("sin", vars);
             Assert.Contains("cos", vars);

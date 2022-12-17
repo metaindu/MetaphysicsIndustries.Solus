@@ -40,7 +40,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             Assert.IsTrue(expr.GetResultType(null).IsScalar(null));
             Assert.IsFalse(expr.GetResultType(null).IsVector(null));
             Assert.IsFalse(expr.GetResultType(null).IsMatrix(null));
-            Assert.AreEqual(0, expr.GetResultType(null).GetTensorRank(null));
+            Assert.That(expr.GetResultType(null).GetTensorRank(null),
+                Is.EqualTo(0));
             Assert.IsFalse(expr.GetResultType(null).IsString(null));
             // when
             var result = f.GetResultType(null, new IMathObject[0]);
@@ -48,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(result.IsString(null));
         }
 
@@ -62,7 +63,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             Assert.IsFalse(expr.GetResultType(null).IsScalar(null));
             Assert.IsTrue(expr.GetResultType(null).IsVector(null));
             Assert.IsFalse(expr.GetResultType(null).IsMatrix(null));
-            Assert.AreEqual(1, expr.GetResultType(null).GetTensorRank(null));
+            Assert.That(expr.GetResultType(null).GetTensorRank(null),
+                Is.EqualTo(1));
             Assert.IsFalse(expr.GetResultType(null).IsString(null));
             // when
             var result = f.GetResultType(null, new IMathObject[0]);
@@ -70,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(1, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
             Assert.IsFalse(result.IsString(null));
         }
     }

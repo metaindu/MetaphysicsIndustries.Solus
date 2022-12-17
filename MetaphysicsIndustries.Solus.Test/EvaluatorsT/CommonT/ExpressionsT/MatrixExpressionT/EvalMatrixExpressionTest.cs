@@ -49,12 +49,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Matrix>(result);
             var matrix = (Matrix)result;
-            Assert.AreEqual(2, matrix.RowCount);
-            Assert.AreEqual(2, matrix.ColumnCount);
-            Assert.AreEqual(1.ToNumber(), matrix[0, 0]);
-            Assert.AreEqual(2.ToNumber(), matrix[0, 1]);
-            Assert.AreEqual(3.ToNumber(), matrix[1, 0]);
-            Assert.AreEqual(4.ToNumber(), matrix[1, 1]);
+            Assert.That(matrix.RowCount, Is.EqualTo(2));
+            Assert.That(matrix.ColumnCount, Is.EqualTo(2));
+            Assert.That(matrix[0, 0], Is.EqualTo(1.ToNumber()));
+            Assert.That(matrix[0, 1], Is.EqualTo(2.ToNumber()));
+            Assert.That(matrix[1, 0], Is.EqualTo(3.ToNumber()));
+            Assert.That(matrix[1, 1], Is.EqualTo(4.ToNumber()));
         }
 
         [Test]
@@ -74,14 +74,14 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Matrix>(result);
             var matrix = (Matrix)result;
-            Assert.AreEqual(2, matrix.RowCount);
-            Assert.AreEqual(3, matrix.ColumnCount);
-            Assert.AreEqual(1.ToNumber(), matrix[0, 0]);
-            Assert.AreEqual(2.ToNumber(), matrix[0, 1]);
-            Assert.AreEqual(3.ToNumber(), matrix[0, 2]);
-            Assert.AreEqual(4.ToNumber(), matrix[1, 0]);
-            Assert.AreEqual(5.ToNumber(), matrix[1, 1]);
-            Assert.AreEqual(6.ToNumber(), matrix[1, 2]);
+            Assert.That(matrix.RowCount, Is.EqualTo(2));
+            Assert.That(matrix.ColumnCount, Is.EqualTo(3));
+            Assert.That(matrix[0, 0], Is.EqualTo(1.ToNumber()));
+            Assert.That(matrix[0, 1], Is.EqualTo(2.ToNumber()));
+            Assert.That(matrix[0, 2], Is.EqualTo(3.ToNumber()));
+            Assert.That(matrix[1, 0], Is.EqualTo(4.ToNumber()));
+            Assert.That(matrix[1, 1], Is.EqualTo(5.ToNumber()));
+            Assert.That(matrix[1, 2], Is.EqualTo(6.ToNumber()));
         }
 
         [Test]
@@ -99,8 +99,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var exc = Assert.Throws<NameException>(
                 () => eval.Eval(expr, env));
             // and
-            Assert.AreEqual("Variable not found: a",
-                exc.Message);
+            Assert.That(exc.Message,
+                Is.EqualTo("Variable not found: a"));
         }
 
         [Test]
@@ -120,12 +120,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Matrix>(result);
             var matrix = (Matrix)result;
-            Assert.AreEqual(2, matrix.RowCount);
-            Assert.AreEqual(2, matrix.ColumnCount);
-            Assert.AreEqual(1.ToNumber(), matrix[0, 0]);
-            Assert.AreEqual(2.ToNumber(), matrix[0, 1]);
-            Assert.AreEqual(3.ToNumber(), matrix[1, 0]);
-            Assert.AreEqual(5.ToNumber(), matrix[1, 1]);
+            Assert.That(matrix.RowCount, Is.EqualTo(2));
+            Assert.That(matrix.ColumnCount, Is.EqualTo(2));
+            Assert.That(matrix[0, 0], Is.EqualTo(1.ToNumber()));
+            Assert.That(matrix[0, 1], Is.EqualTo(2.ToNumber()));
+            Assert.That(matrix[1, 0], Is.EqualTo(3.ToNumber()));
+            Assert.That(matrix[1, 1], Is.EqualTo(5.ToNumber()));
         }
 
         [Test]
@@ -147,19 +147,19 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Matrix>(result);
             var matrix = (Matrix)result;
-            Assert.AreEqual(2, matrix.RowCount);
-            Assert.AreEqual(2, matrix.ColumnCount);
-            Assert.AreEqual(1.ToNumber(), matrix[0, 0]);
-            Assert.AreEqual(2.ToNumber(), matrix[0, 1]);
-            Assert.AreEqual(3.ToNumber(), matrix[1, 0]);
+            Assert.That(matrix.RowCount, Is.EqualTo(2));
+            Assert.That(matrix.ColumnCount, Is.EqualTo(2));
+            Assert.That(matrix[0, 0], Is.EqualTo(1.ToNumber()));
+            Assert.That(matrix[0, 1], Is.EqualTo(2.ToNumber()));
+            Assert.That(matrix[1, 0], Is.EqualTo(3.ToNumber()));
             Assert.IsInstanceOf<Matrix>(matrix[1, 1]);
             var matrix2 = (Matrix)matrix[1, 1];
-            Assert.AreEqual(2, matrix2.RowCount);
-            Assert.AreEqual(2, matrix2.ColumnCount);
-            Assert.AreEqual(4.ToNumber(), matrix2[0, 0]);
-            Assert.AreEqual(5.ToNumber(), matrix2[0, 1]);
-            Assert.AreEqual(6.ToNumber(), matrix2[1, 0]);
-            Assert.AreEqual(7.ToNumber(), matrix2[1, 1]);
+            Assert.That(matrix2.RowCount, Is.EqualTo(2));
+            Assert.That(matrix2.ColumnCount, Is.EqualTo(2));
+            Assert.That(matrix2[0, 0], Is.EqualTo(4.ToNumber()));
+            Assert.That(matrix2[0, 1], Is.EqualTo(5.ToNumber()));
+            Assert.That(matrix2[1, 0], Is.EqualTo(6.ToNumber()));
+            Assert.That(matrix2[1, 1], Is.EqualTo(7.ToNumber()));
         }
     }
 }

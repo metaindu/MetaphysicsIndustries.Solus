@@ -40,10 +40,10 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsTrue(result.IsString(null));
-            Assert.AreEqual(0, result.GetDimension(null, 0));
-            Assert.AreEqual(new[] {0}, result.GetDimensions(null));
+            Assert.That(result.GetDimension(null, 0), Is.EqualTo(0));
+            Assert.That(result.GetDimensions(null), Is.EqualTo(new[] {0}));
         }
 
         [Test]
@@ -52,9 +52,9 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             // when
             var result = new StringValue("abc");
             // then
-            Assert.AreEqual("abc", result.Value);
-            Assert.AreEqual(3, result.GetDimension(null, 0));
-            Assert.AreEqual(new[] {3}, result.GetDimensions(null));
+            Assert.That(result.Value, Is.EqualTo("abc"));
+            Assert.That(result.GetDimension(null, 0), Is.EqualTo(3));
+            Assert.That(result.GetDimensions(null), Is.EqualTo(new[] {3}));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.StringValueT
             // when
             var result = value.ToString();
             // then
-            Assert.AreEqual("\"abc\"", result);
+            Assert.That(result, Is.EqualTo("\"abc\""));
         }
     }
 }

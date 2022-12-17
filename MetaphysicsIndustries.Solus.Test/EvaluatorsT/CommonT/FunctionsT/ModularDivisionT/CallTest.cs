@@ -89,7 +89,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
-            Assert.AreEqual(expected, result.ToFloat(), 0.000001f);
+            Assert.That(result.ToFloat(),
+                Is.EqualTo(expected).Within(0.000001f));
         }
 
         [Test]
@@ -103,7 +104,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
             // and
-            Assert.AreEqual("Division by zero", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Division by zero"));
         }
     }
 }

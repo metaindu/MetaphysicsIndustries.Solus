@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MaximumFiniteFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.AreEqual("maxf", MaximumFiniteFunction.Value.Name);
+            Assert.That(MaximumFiniteFunction.Value.Name, Is.EqualTo("maxf"));
         }
     }
 }

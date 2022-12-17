@@ -38,17 +38,17 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var expr = new LoadStringIlExpression("abc123");
             var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.LoadString("abc123"),
-                nm.Instructions[0]);
-            Assert.AreEqual(OpCodes.Ldstr, nm.Instructions[0].OpCode);
-            Assert.AreEqual(Instruction.ArgumentType.String,
-                nm.Instructions[0].ArgType);
-            Assert.AreEqual("abc123", nm.Instructions[0].StringArg);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(1));
+            Assert.That(nm.Instructions[0],
+                Is.EqualTo(Instruction.LoadString("abc123")));
+            Assert.That(nm.Instructions[0].OpCode, Is.EqualTo(OpCodes.Ldstr));
+            Assert.That(nm.Instructions[0].ArgType,
+                Is.EqualTo(Instruction.ArgumentType.String));
+            Assert.That(nm.Instructions[0].StringArg, Is.EqualTo("abc123"));
         }
     }
 }

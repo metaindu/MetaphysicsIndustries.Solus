@@ -42,8 +42,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<AddIlExpression>(result);
-            Assert.AreSame(left, result.Left);
-            Assert.AreSame(right, result.Right);
+            Assert.That(result.Left, Is.SameAs(left));
+            Assert.That(result.Right, Is.SameAs(right));
         }
 
         [Test]
@@ -55,9 +55,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new AddIlExpression(null, right));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: left",
-                ex.Message);
+            Assert.That(
+                ex.Message, Is.EqualTo("Value cannot be null: left"));
         }
 
         [Test]
@@ -69,9 +68,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new AddIlExpression(left, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: right",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: right"));
         }
 
         [Test]
@@ -81,9 +80,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new AddIlExpression(null, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: left",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: left"));
         }
     }
 }

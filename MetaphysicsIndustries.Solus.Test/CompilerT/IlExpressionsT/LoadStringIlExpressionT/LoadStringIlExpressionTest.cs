@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadStringIlExpression("abc");
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual("abc", result.Value);
+            Assert.That(result.Value, Is.EqualTo("abc"));
         }
 
         [Test]
@@ -49,9 +49,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new LoadStringIlExpression(null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: value",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: value"));
         }
 
     }

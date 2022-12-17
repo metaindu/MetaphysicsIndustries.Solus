@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Argument must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Argument must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
     }
 }

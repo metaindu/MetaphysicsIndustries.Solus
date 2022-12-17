@@ -70,10 +70,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Unable to get components from expression, " +
-                "or the expression does not have components",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Unable to get components from expression, " +
+                    "or the expression does not have components"));
         }
 
         [Test]
@@ -88,9 +88,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Wrong number of indexes for the expression",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Wrong number of indexes for the expression"));
         }
 
         [Test]
@@ -106,9 +106,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Wrong number of indexes for the expression",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Wrong number of indexes for the expression"));
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Indexes must be scalar", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Indexes must be scalar", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Indexes must be scalar", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
         }
 
         [Test]
@@ -176,9 +176,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Indexes must not be negative",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Indexes must not be negative"));
         }
 
         // TODO: check for index greater than vector dimension
@@ -205,10 +205,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Unable to get components from expression, " +
-                "or the expression does not have components",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Unable to get components from expression, " +
+                    "or the expression does not have components"));
         }
 
         [Test]
@@ -235,9 +235,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Wrong number of indexes for the expression",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Wrong number of indexes for the expression"));
         }
 
         [Test]
@@ -252,9 +252,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Index exceeds the size of the vector",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Index exceeds the size of the vector"));
         }
 
         [Test]
@@ -270,9 +270,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Index exceeds the size of the string",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Index exceeds the size of the string"));
         }
 
         [Test]
@@ -287,9 +287,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Index exceeds number of rows of the matrix",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Index exceeds number of rows of the matrix"));
         }
 
         [Test]
@@ -304,9 +304,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual(
-                "Index exceeds number of columns of the matrix",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Index exceeds number of columns of the matrix"));
         }
     }
 }

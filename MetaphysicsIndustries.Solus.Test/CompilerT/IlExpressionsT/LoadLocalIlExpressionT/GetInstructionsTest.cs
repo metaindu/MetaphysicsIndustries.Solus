@@ -55,14 +55,14 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var expr = new LoadLocalIlExpression(local);
             var opcode = OpCodeValues[arg];
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.LoadLocalVariable(arg),
-                nm.Instructions[0]);
-            Assert.AreEqual(opcode, nm.Instructions[0].OpCode);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(1));
+            Assert.That(nm.Instructions[0],
+                Is.EqualTo(Instruction.LoadLocalVariable(arg)));
+            Assert.That(nm.Instructions[0].OpCode, Is.EqualTo(opcode));
         }
 
         [Test]
@@ -78,14 +78,15 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 local = nm.CreateLocal();
             var expr = new LoadLocalIlExpression(local);
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.LoadLocalVariable(arg),
-                nm.Instructions[0]);
-            Assert.AreEqual(OpCodes.Ldloc_S, nm.Instructions[0].OpCode);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(1));
+            Assert.That(nm.Instructions[0],
+                Is.EqualTo(Instruction.LoadLocalVariable(arg)));
+            Assert.That(nm.Instructions[0].OpCode,
+                Is.EqualTo(OpCodes.Ldloc_S));
         }
 
         [Test]
@@ -101,14 +102,14 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 local = nm.CreateLocal();
             var expr = new LoadLocalIlExpression(local);
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.LoadLocalVariable(arg),
-                nm.Instructions[0]);
-            Assert.AreEqual(OpCodes.Ldloc, nm.Instructions[0].OpCode);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(1));
+            Assert.That(nm.Instructions[0],
+                Is.EqualTo(Instruction.LoadLocalVariable(arg)));
+            Assert.That(nm.Instructions[0].OpCode, Is.EqualTo(OpCodes.Ldloc));
         }
     }
 }

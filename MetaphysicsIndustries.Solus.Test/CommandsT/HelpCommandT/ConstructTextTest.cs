@@ -38,11 +38,11 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
             f.DocStringV = "asdf";
             env.SetVariable(f.DisplayName, f);
             // precondition
-            Assert.AreEqual("asdf", f.DocString);
+            Assert.That(f.DocString, Is.EqualTo("asdf"));
             // when
             var result = HelpCommand.Value.ConstructText(env, "f");
             // then
-            Assert.AreEqual("asdf", result);
+            Assert.That(result, Is.EqualTo("asdf"));
         }
 
         [Test]
@@ -54,11 +54,11 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
             f.DocStringV = "asdf";
             env.SetVariable("f", f);
             // prcondition
-            Assert.AreEqual("asdf", f.DocString);
+            Assert.That(f.DocString, Is.EqualTo("asdf"));
             // when
             var result = HelpCommand.Value.ConstructText(env, "f");
             // then
-            Assert.AreEqual("asdf", result);
+            Assert.That(result, Is.EqualTo("asdf"));
         }
     }
 }

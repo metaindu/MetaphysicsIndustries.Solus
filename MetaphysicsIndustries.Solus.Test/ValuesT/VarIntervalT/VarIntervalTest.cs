@@ -37,8 +37,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
             // when
             var result = new VarInterval(varname, interval);
             // then
-            Assert.AreEqual("a", result.Variable);
-            Assert.AreEqual(interval, result.Interval);
+            Assert.That(result.Variable, Is.EqualTo("a"));
+            Assert.That(result.Interval, Is.EqualTo(interval));
         }
 
         [Test]
@@ -49,10 +49,10 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
             // when
             var result = new VarInterval(varname, 1.1f, 3.1f);
             // then
-            Assert.AreEqual("a", result.Variable);
-            Assert.AreEqual(1.1f, result.Interval.LowerBound);
+            Assert.That(result.Variable, Is.EqualTo("a"));
+            Assert.That(result.Interval.LowerBound, Is.EqualTo(1.1f));
             Assert.IsFalse(result.Interval.OpenLowerBound);
-            Assert.AreEqual(3.1f, result.Interval.UpperBound);
+            Assert.That(result.Interval.UpperBound, Is.EqualTo(3.1f));
             Assert.IsFalse(result.Interval.OpenUpperBound);
             Assert.IsFalse(result.Interval.IsIntegerInterval);
         }
@@ -67,7 +67,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
             // when
             var result = vi.ToString();
             // then
-            Assert.AreEqual("1.1 < a < 3.1", result);
+            Assert.That(result, Is.EqualTo("1.1 < a < 3.1"));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
             // when
             var result = vi.ToString();
             // then
-            Assert.AreEqual("1.1 < a <= 3.1", result);
+            Assert.That(result, Is.EqualTo("1.1 < a <= 3.1"));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
             // when
             var result = vi.ToString();
             // then
-            Assert.AreEqual("1.1 <= a < 3.1", result);
+            Assert.That(result, Is.EqualTo("1.1 <= a < 3.1"));
         }
 
         [Test]
@@ -106,7 +106,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
             // when
             var result = vi.ToString();
             // then
-            Assert.AreEqual("1.1 <= a <= 3.1", result);
+            Assert.That(result, Is.EqualTo("1.1 <= a <= 3.1"));
         }
 
         // TODO: string representation doesn't show integer
@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VarIntervalT
             // when
             var result = vi.ToString();
             // then
-            Assert.AreEqual("1.1 <= a <= 3.1", result);
+            Assert.That(result, Is.EqualTo("1.1 <= a <= 3.1"));
         }
     }
 }

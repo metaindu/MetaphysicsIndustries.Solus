@@ -41,8 +41,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<DivIlExpression>(result);
-            Assert.AreSame(dividend, result.Dividend);
-            Assert.AreSame(divisor, result.Divisor);
+            Assert.That(result.Dividend, Is.SameAs(dividend));
+            Assert.That(result.Divisor, Is.SameAs(divisor));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<DivIlExpression>(result);
             Assert.IsNull(result.Dividend);
-            Assert.AreSame(divisor, result.Divisor);
+            Assert.That(result.Divisor, Is.SameAs(divisor));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<DivIlExpression>(result);
-            Assert.AreSame(dividend, result.Dividend);
+            Assert.That(result.Dividend, Is.SameAs(dividend));
             Assert.IsNull(result.Divisor);
         }
 

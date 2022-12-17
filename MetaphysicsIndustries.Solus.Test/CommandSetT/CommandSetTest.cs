@@ -36,9 +36,9 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<CommandSet>(result);
-            Assert.AreEqual(0, result.CountCommands());
-            Assert.AreEqual(new List<string>(),
-                new List<string>(result.GetCommandNames()));
+            Assert.That(result.CountCommands(), Is.EqualTo(0));
+            Assert.That(new List<string>(result.GetCommandNames()),
+                Is.EqualTo(new List<string>()));
         }
 
         class DummyCommand : Command
@@ -63,15 +63,15 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             // given
             var cs = new CommandSet();
             // precondition
-            Assert.AreEqual(0, cs.CountCommands());
-            Assert.AreEqual(new List<string>(),
-                new List<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(0));
+            Assert.That(new List<string>(cs.GetCommandNames()),
+                Is.EqualTo(new List<string>()));
             // when
             cs.AddCommand(new DummyCommand());
             // then
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new List<string> {"dummy"},
-                new List<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new List<string>(cs.GetCommandNames()),
+                Is.EqualTo(new List<string> {"dummy"}));
         }
 
         [Test]
@@ -82,13 +82,13 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             var dc = new DummyCommand();
             cs.AddCommand(dc);
             // precondition
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new List<string> {"dummy"},
-                new List<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new List<string>(cs.GetCommandNames()),
+                Is.EqualTo(new List<string> {"dummy"}));
             // when
             var result = cs.GetCommand("dummy");
             // then
-            Assert.AreSame(dc, result);
+            Assert.That(result, Is.SameAs(dc));
         }
 
         [Test]
@@ -101,12 +101,12 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             cs.AddCommand(dc1);
             cs.AddCommand(dc2);
             // precondition
-            Assert.AreEqual(2, cs.CountCommands());
+            Assert.That(cs.CountCommands(), Is.EqualTo(2));
             // when
             var result = new HashSet<string>(cs.GetCommandNames());
             // then
-            Assert.AreEqual(new HashSet<string> {"dummy", "dummy2"},
-                result);
+            Assert.That(result,
+                Is.EqualTo(new HashSet<string> {"dummy", "dummy2"}));
         }
 
         [Test]
@@ -116,14 +116,14 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             var cs = new CommandSet();
             var dc = new DummyCommand();
             // precondition
-            Assert.AreEqual("dummy", dc.Name);
-            Assert.AreEqual(0, cs.CountCommands());
+            Assert.That(dc.Name, Is.EqualTo("dummy"));
+            Assert.That(cs.CountCommands(), Is.EqualTo(0));
             // when
             cs.SetCommand("something", dc);
             // then
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"something"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"something"}));
         }
 
         [Test]
@@ -134,19 +134,19 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             var dc = new DummyCommand();
             cs.AddCommand(dc);
             // precondition
-            Assert.AreEqual("dummy", dc.Name);
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"dummy"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(dc.Name, Is.EqualTo("dummy"));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"dummy"}));
             // when
             cs.SetCommand("something", dc);
             // then
-            Assert.AreEqual(2, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"dummy", "something"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(2));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"dummy", "something"}));
             // and
-            Assert.AreSame(cs.GetCommand("dummy"),
-                cs.GetCommand("something"));
+            Assert.That(cs.GetCommand("something"),
+                Is.SameAs(cs.GetCommand("dummy")));
         }
 
         [Test]
@@ -155,9 +155,9 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             // given
             var cs = new CommandSet();
             // precondition
-            Assert.AreEqual(0, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string>(),
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(0));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string>()));
             // when
             var result = cs.ContainsCommand("something");
             // then
@@ -171,9 +171,9 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             var cs = new CommandSet();
             cs.AddCommand(new DummyCommand());
             // precondition
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"dummy"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"dummy"}));
             // when
             var result = cs.ContainsCommand("dummy");
             // then
@@ -188,9 +188,9 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             var dc = new DummyCommand("dummy");
             cs.SetCommand("something", new DummyCommand());
             // precondition
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"something"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"something"}));
             // expect
             Assert.IsFalse(cs.ContainsCommand("dummy"));
             Assert.IsTrue(cs.ContainsCommand("something"));
@@ -204,16 +204,16 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             var dc = new DummyCommand();
             cs.AddCommand(dc);
             // precondition
-            Assert.AreEqual("dummy", dc.Name);
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"dummy"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(dc.Name, Is.EqualTo("dummy"));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"dummy"}));
             // when
             cs.RemoveCommand("dummy");
             // then
-            Assert.AreEqual(0, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string>(),
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(0));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string>()));
         }
 
         [Test]
@@ -224,17 +224,17 @@ namespace MetaphysicsIndustries.Solus.Test.CommandSetT
             var dc = new DummyCommand();
             cs.AddCommand(dc);
             // precondition
-            Assert.AreEqual("dummy", dc.Name);
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"dummy"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(dc.Name, Is.EqualTo("dummy"));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"dummy"}));
             Assert.IsFalse(cs.ContainsCommand("something"));
             // when
             cs.RemoveCommand("something");
             // then
-            Assert.AreEqual(1, cs.CountCommands());
-            Assert.AreEqual(new HashSet<string> {"dummy"},
-                new HashSet<string>(cs.GetCommandNames()));
+            Assert.That(cs.CountCommands(), Is.EqualTo(1));
+            Assert.That(new HashSet<string>(cs.GetCommandNames()),
+                Is.EqualTo(new HashSet<string> {"dummy"}));
         }
     }
 }

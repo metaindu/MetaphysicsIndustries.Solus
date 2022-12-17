@@ -170,7 +170,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<ArgumentException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("No arguments passed", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("No arguments passed"));
         }
 
         [Test]

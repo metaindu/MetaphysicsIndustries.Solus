@@ -46,9 +46,9 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
             // and
-            Assert.AreEqual("Wrong number of arguments given to " +
-                            "size (expected 1 but got 0)",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo("Wrong number of arguments given to " +
+                           "size (expected 1 but got 0)"));
         }
 
         [Test]
@@ -66,9 +66,9 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
             // and
-            Assert.AreEqual("Wrong number of arguments given to " +
-                            "size (expected 1 but got 2)",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo("Wrong number of arguments given to " +
+                           "size (expected 1 but got 2)"));
         }
 
         [Test]
@@ -82,9 +82,9 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
             // and
-            Assert.AreEqual("Argument wrong type: expected " +
-                            "Vector or Matrix or String but got Scalar",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo("Argument wrong type: expected " +
+                           "Vector or Matrix or String but got Scalar"));
         }
 
         [Test]
@@ -103,8 +103,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             var v = result.ToVector();
-            Assert.AreEqual(1, v.Length);
-            Assert.AreEqual(2, v[0].ToFloat());
+            Assert.That(v.Length, Is.EqualTo(1));
+            Assert.That(v[0].ToFloat(), Is.EqualTo(2));
         }
 
         [Test]
@@ -127,9 +127,9 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             var v = result.ToVector();
-            Assert.AreEqual(2, v.Length);
-            Assert.AreEqual(2, v[0].ToFloat());
-            Assert.AreEqual(3, v[1].ToFloat());
+            Assert.That(v.Length, Is.EqualTo(2));
+            Assert.That(v[0].ToFloat(), Is.EqualTo(2));
+            Assert.That(v[1].ToFloat(), Is.EqualTo(3));
         }
 
         [Test]
@@ -145,8 +145,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             var v = result.ToVector();
-            Assert.AreEqual(1, v.Length);
-            Assert.AreEqual(3, v[0].ToFloat());
+            Assert.That(v.Length, Is.EqualTo(1));
+            Assert.That(v[0].ToFloat(), Is.EqualTo(3));
         }
     }
 }

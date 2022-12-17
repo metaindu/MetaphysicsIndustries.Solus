@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             Assert.IsTrue(arg1.IsScalar(null));
             Assert.IsFalse(arg1.IsVector(null));
             Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(arg1.IsString(null));
             // when
             var value = LoadImageFunction.Value;
@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsTrue(result.IsMatrix(null));
-            Assert.AreEqual(2, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(2));
             Assert.IsFalse(result.IsString(null));
             Assert.IsNull(result.GetDimension(null, -1));
             Assert.IsNull(result.GetDimension(null, 0));

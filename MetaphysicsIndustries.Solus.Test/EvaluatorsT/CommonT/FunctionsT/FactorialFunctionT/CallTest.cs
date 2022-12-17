@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.AreEqual(expected, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(expected));
         }
     }
 }

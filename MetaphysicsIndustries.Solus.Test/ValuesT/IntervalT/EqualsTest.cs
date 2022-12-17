@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsTrue(i1.Equals(i2));
             Assert.IsTrue(i1.Equals((object)i2));
-            Assert.AreEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -169,7 +169,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -181,7 +181,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -193,7 +193,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -205,7 +205,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -277,7 +277,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -289,7 +289,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -301,7 +301,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -313,7 +313,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -337,7 +337,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -349,7 +349,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -361,7 +361,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -385,7 +385,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -397,7 +397,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -409,7 +409,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -421,7 +421,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -433,7 +433,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -445,7 +445,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -457,7 +457,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -469,7 +469,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -481,7 +481,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -493,7 +493,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -505,7 +505,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -517,7 +517,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -529,7 +529,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -541,7 +541,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -553,7 +553,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -565,7 +565,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -577,7 +577,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -589,7 +589,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -601,7 +601,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -613,7 +613,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -625,7 +625,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -637,7 +637,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -649,7 +649,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -661,7 +661,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -673,7 +673,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -685,7 +685,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -697,7 +697,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -709,7 +709,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -721,7 +721,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -733,7 +733,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -745,7 +745,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -757,7 +757,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -769,7 +769,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -781,7 +781,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]
@@ -793,7 +793,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // expect
             Assert.IsFalse(i1.Equals(i2));
             Assert.IsFalse(i1.Equals((object)i2));
-            Assert.AreNotEqual(i1.GetHashCode(), i2.GetHashCode());
+            Assert.That(i2.GetHashCode(), Is.Not.EqualTo(i1.GetHashCode()));
         }
 
         [Test]

@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MaximumFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.AreEqual("max", MaximumFunction.Value.Name);
+            Assert.That(MaximumFunction.Value.Name, Is.EqualTo("max"));
         }
     }
 }

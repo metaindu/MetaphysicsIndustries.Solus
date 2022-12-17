@@ -48,10 +48,10 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<IVector>(result);
             var vector = (IVector)result;
-            Assert.AreEqual(3, vector.Length);
-            Assert.AreEqual(1.ToNumber(), vector.GetComponent(0));
-            Assert.AreEqual(2.ToNumber(), vector.GetComponent(1));
-            Assert.AreEqual(3.ToNumber(), vector.GetComponent(2));
+            Assert.That(vector.Length, Is.EqualTo(3));
+            Assert.That(vector.GetComponent(0), Is.EqualTo(1.ToNumber()));
+            Assert.That(vector.GetComponent(1), Is.EqualTo(2.ToNumber()));
+            Assert.That(vector.GetComponent(2), Is.EqualTo(3.ToNumber()));
         }
 
         [Test]
@@ -67,8 +67,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // expect
             var exc = Assert.Throws<NameException>(() => eval.Eval(expr, env));
             // and
-            Assert.AreEqual("Variable not found: a",
-                exc.Message);
+            Assert.That(exc.Message,
+                Is.EqualTo("Variable not found: a"));
         }
 
         [Test]
@@ -87,10 +87,10 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<IVector>(result);
             var vector = (IVector)result;
-            Assert.AreEqual(3, vector.Length);
-            Assert.AreEqual(1.ToNumber(), vector.GetComponent(0));
-            Assert.AreEqual(2.ToNumber(), vector.GetComponent(1));
-            Assert.AreEqual(5.ToNumber(), vector.GetComponent(2));
+            Assert.That(vector.Length, Is.EqualTo(3));
+            Assert.That(vector.GetComponent(0), Is.EqualTo(1.ToNumber()));
+            Assert.That(vector.GetComponent(1), Is.EqualTo(2.ToNumber()));
+            Assert.That(vector.GetComponent(2), Is.EqualTo(5.ToNumber()));
         }
 
         [Test]
@@ -110,15 +110,15 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<IVector>(result);
             var vector = (IVector)result;
-            Assert.AreEqual(3, vector.Length);
-            Assert.AreEqual(1.ToNumber(), vector.GetComponent(0));
-            Assert.AreEqual(2.ToNumber(), vector.GetComponent(1));
+            Assert.That(vector.Length, Is.EqualTo(3));
+            Assert.That(vector.GetComponent(0), Is.EqualTo(1.ToNumber()));
+            Assert.That(vector.GetComponent(1), Is.EqualTo(2.ToNumber()));
             Assert.IsInstanceOf<IVector>(vector.GetComponent(2));
             var vector2 = (IVector)vector.GetComponent(2);
-            Assert.AreEqual(3, vector2.Length);
-            Assert.AreEqual(3.ToNumber(), vector2.GetComponent(0));
-            Assert.AreEqual(4.ToNumber(), vector2.GetComponent(1));
-            Assert.AreEqual(5.ToNumber(), vector2.GetComponent(2));
+            Assert.That(vector2.Length, Is.EqualTo(3));
+            Assert.That(vector2.GetComponent(0), Is.EqualTo(3.ToNumber()));
+            Assert.That(vector2.GetComponent(1), Is.EqualTo(4.ToNumber()));
+            Assert.That(vector2.GetComponent(2), Is.EqualTo(5.ToNumber()));
         }
     }
 }

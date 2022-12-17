@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.NotNull(result);
             Assert.NotNull(result.Expressions);
-            Assert.AreEqual(0, result.Expressions.Length);
+            Assert.That(result.Expressions.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -52,9 +52,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 expr2);
             // then
             Assert.NotNull(result.Expressions);
-            Assert.AreEqual(2, result.Expressions.Length);
-            Assert.AreSame(expr1, result.Expressions[0]);
-            Assert.AreSame(expr2, result.Expressions[1]);
+            Assert.That(result.Expressions.Length, Is.EqualTo(2));
+            Assert.That(result.Expressions[0], Is.SameAs(expr1));
+            Assert.That(result.Expressions[1], Is.SameAs(expr2));
         }
     }
 }

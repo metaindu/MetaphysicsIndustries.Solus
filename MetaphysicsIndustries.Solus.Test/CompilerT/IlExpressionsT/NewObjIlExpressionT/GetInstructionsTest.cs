@@ -47,15 +47,15 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var expr = new NewObjIlExpression(ctor, args);
             var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.ArgumentType.Constructor,
-                nm.Instructions[0].ArgType);
-            Assert.AreSame(ctor, nm.Instructions[0].ConstructorArg);
-            Assert.AreEqual(OpCodes.Newobj, nm.Instructions[0].OpCode);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(1));
+            Assert.That(nm.Instructions[0].ArgType,
+                Is.EqualTo(Instruction.ArgumentType.Constructor));
+            Assert.That(nm.Instructions[0].ConstructorArg, Is.SameAs(ctor));
+            Assert.That(nm.Instructions[0].OpCode, Is.EqualTo(OpCodes.Newobj));
         }
 
         [Test]
@@ -71,18 +71,21 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var expr = new NewObjIlExpression(ctor, args);
             var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(4, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.LoadConstant(1), nm.Instructions[0]);
-            Assert.AreEqual(Instruction.LoadConstant(2), nm.Instructions[1]);
-            Assert.AreEqual(Instruction.LoadConstant(3), nm.Instructions[2]);
-            Assert.AreEqual(Instruction.ArgumentType.Constructor,
-                nm.Instructions[3].ArgType);
-            Assert.AreSame(ctor, nm.Instructions[3].ConstructorArg);
-            Assert.AreEqual(OpCodes.Newobj, nm.Instructions[3].OpCode);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(4));
+            Assert.That(nm.Instructions[0],
+                Is.EqualTo(Instruction.LoadConstant(1)));
+            Assert.That(nm.Instructions[1],
+                Is.EqualTo(Instruction.LoadConstant(2)));
+            Assert.That(nm.Instructions[2],
+                Is.EqualTo(Instruction.LoadConstant(3)));
+            Assert.That(nm.Instructions[3].ArgType,
+                Is.EqualTo(Instruction.ArgumentType.Constructor));
+            Assert.That(nm.Instructions[3].ConstructorArg, Is.SameAs(ctor));
+            Assert.That(nm.Instructions[3].OpCode, Is.EqualTo(OpCodes.Newobj));
         }
     }
 }

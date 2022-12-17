@@ -39,10 +39,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => AdditionOperation.Value.CheckArguments(args));
-            Assert.AreEqual(
-                "Wrong number of arguments given to + " +
-                "(given 1, require at least 2)",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Wrong number of arguments given to + " +
+                    "(given 1, require at least 2)"));
         }
 
         [Test]
@@ -87,9 +87,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
             // expect
             var ex = Assert.Throws<ArgumentException>(
                 () => AdditionOperation.Value.CheckArguments(args));
-            Assert.AreEqual(
-                "Argument 0 wrong type: expected Scalar but got Vector",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo(
+                    "Argument 0 wrong type: expected Scalar but got Vector"));
         }
     }
 }

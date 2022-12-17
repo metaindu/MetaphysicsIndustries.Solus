@@ -38,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.NotNull(result);
             Assert.NotNull(result.Instructions);
-            Assert.AreEqual(0, result.Instructions.Length);
+            Assert.That(result.Instructions.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -50,9 +50,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 Instruction.Div());
             // then
             Assert.NotNull(result.Instructions);
-            Assert.AreEqual(2, result.Instructions.Length);
-            Assert.AreEqual(Instruction.Add(), result.Instructions[0]);
-            Assert.AreEqual(Instruction.Div(), result.Instructions[1]);
+            Assert.That(result.Instructions.Length, Is.EqualTo(2));
+            Assert.That(result.Instructions[0], Is.EqualTo(Instruction.Add()));
+            Assert.That(result.Instructions[1], Is.EqualTo(Instruction.Div()));
         }
     }
 }

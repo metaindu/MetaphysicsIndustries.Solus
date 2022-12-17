@@ -34,14 +34,16 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.DeriveMacroT
             // expect
             Assert.IsNotNull(DeriveMacro.Value);
             // and
-            Assert.AreEqual("derive", DeriveMacro.Value.Name);
-            Assert.AreEqual(2, DeriveMacro.Value.NumArguments);
-            Assert.AreEqual(
-                @"The derive operator
+            Assert.That(DeriveMacro.Value.Name, Is.EqualTo("derive"));
+            Assert.That(DeriveMacro.Value.NumArguments, Is.EqualTo(2));
+            Assert.That(
+                DeriveMacro.Value.DocString,
+                Is.EqualTo(
+                    @"The derive operator
   derive(f(x), x)
 
-Returns the derivative of f(x) with respect to x.",
-                DeriveMacro.Value.DocString);
+Returns the derivative of f(x) with respect to x."
+                ));
         }
     }
 }

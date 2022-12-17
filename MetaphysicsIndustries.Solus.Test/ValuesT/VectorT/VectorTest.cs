@@ -38,20 +38,20 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             // when
             var result = new Vector(values);
             // then
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(Types.Scalar, result.ComponentType);
-            Assert.AreEqual(1, result[0].ToNumber().Value);
-            Assert.AreEqual(2, result[1].ToNumber().Value);
-            Assert.AreEqual(3, result[2].ToNumber().Value);
+            Assert.That(result.Length, Is.EqualTo(3));
+            Assert.That(result.ComponentType, Is.EqualTo(Types.Scalar));
+            Assert.That(result[0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[2].ToNumber().Value, Is.EqualTo(3));
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(1, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
             Assert.IsFalse(result.IsString(null));
-            Assert.AreEqual(3, result.GetDimension(null, 0));
+            Assert.That(result.GetDimension(null, 0), Is.EqualTo(3));
             Assert.IsNull(result.GetDimension(null, -1));
             Assert.IsNull(result.GetDimension(null, 2));
-            Assert.AreEqual(new[] {3}, result.GetDimensions(null));
+            Assert.That(result.GetDimensions(null), Is.EqualTo(new[] {3}));
         }
 
         [Test]
@@ -62,10 +62,10 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             // when
             var result = new Vector(values);
             // then
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(1, result[0].ToNumber().Value);
-            Assert.AreEqual(2, result[1].ToNumber().Value);
-            Assert.AreEqual(3, result[2].ToNumber().Value);
+            Assert.That(result.Length, Is.EqualTo(3));
+            Assert.That(result[0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[2].ToNumber().Value, Is.EqualTo(3));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             // when
             var result = new Vector(values);
             // then
-            Assert.AreEqual(Types.Mixed, result.ComponentType);
+            Assert.That(result.ComponentType, Is.EqualTo(Types.Mixed));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             // when
             var result = v.ToString();
             // then
-            Assert.AreEqual("[1, 2, 3]", result);
+            Assert.That(result, Is.EqualTo("[1, 2, 3]"));
         }
 
         [Test]
@@ -117,9 +117,10 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             // when
             var result = v.ToString();
             // then
-            Assert.AreEqual(
-                "[1, \"two\", [\"t\", \"h\", \"r\", \"e\", \"e\"]]",
-                result);
+            Assert.That(
+                result,
+                Is.EqualTo(
+                    "[1, \"two\", [\"t\", \"h\", \"r\", \"e\", \"e\"]]"));
         }
     }
 }

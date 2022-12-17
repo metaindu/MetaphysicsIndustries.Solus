@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value.ToFloat());
+            Assert.That(literal.Value.ToFloat(), Is.EqualTo(0));
             // and
             Assert.True(thenEvaled);
             Assert.False(elseEvaled);
@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value.ToFloat());
+            Assert.That(literal.Value.ToFloat(), Is.EqualTo(0));
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);
@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value.ToFloat());
+            Assert.That(literal.Value.ToFloat(), Is.EqualTo(0));
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);
@@ -152,7 +152,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value.ToFloat());
+            Assert.That(literal.Value.ToFloat(), Is.EqualTo(0));
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);
@@ -183,7 +183,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal) result;
-            Assert.AreEqual(0, literal.Value.ToFloat());
+            Assert.That(literal.Value.ToFloat(), Is.EqualTo(0));
             // and
             Assert.False(thenEvaled);
             Assert.True(elseEvaled);

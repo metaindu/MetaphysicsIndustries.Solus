@@ -44,14 +44,14 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VectorExpressionT
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsTrue(result.IsVector(env));
             Assert.IsFalse(result.IsMatrix(env));
-            Assert.AreEqual(1, result.GetTensorRank(env));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(1));
             Assert.IsFalse(result.IsString(env));
             Assert.IsNull(result.GetDimension(env, -1));
-            Assert.AreEqual(4, result.GetDimension(env, 0));
+            Assert.That(result.GetDimension(env, 0), Is.EqualTo(4));
             Assert.IsNull(result.GetDimension(env, 1));
-            Assert.AreEqual(new int[] { 4 },
-                result.GetDimensions(env));
-            Assert.AreEqual(4, result.GetVectorLength(env));
+            Assert.That(result.GetDimensions(env),
+                Is.EqualTo(new int[] { 4 }));
+            Assert.That(result.GetVectorLength(env), Is.EqualTo(4));
         }
     }
 }

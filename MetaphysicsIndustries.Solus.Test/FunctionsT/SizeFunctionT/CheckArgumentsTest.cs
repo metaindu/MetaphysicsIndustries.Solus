@@ -39,9 +39,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             var ex = Assert.Throws<ArgumentException>(
                 () => SizeFunction.Value.CheckArguments(args));
             // and
-            Assert.AreEqual("Wrong number of arguments given to " +
-                            "size (expected 1 but got 0)",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Wrong number of arguments given to " +
+                    "size (expected 1 but got 0)"));
         }
 
         [Test]
@@ -57,9 +58,11 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             var ex = Assert.Throws<ArgumentException>(
                 () => SizeFunction.Value.CheckArguments(args));
             // and
-            Assert.AreEqual("Wrong number of arguments given to " +
-                            "size (expected 1 but got 2)",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo(
+                    "Wrong number of arguments given to " +
+                    "size (expected 1 but got 2)"));
         }
 
         [Test]
@@ -71,9 +74,11 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             var ex = Assert.Throws<ArgumentException>(
                 () => SizeFunction.Value.CheckArguments(args));
             // and
-            Assert.AreEqual("Argument wrong type: expected " +
-                            "Vector or Matrix or String but got Scalar",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo(
+                    "Argument wrong type: expected " +
+                    "Vector or Matrix or String but got Scalar"));
         }
 
         [Test]

@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FactorialFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.AreEqual("Factorial", FactorialFunction.Value.Name);
+            Assert.That(FactorialFunction.Value.Name, Is.EqualTo("Factorial"));
         }
     }
 }

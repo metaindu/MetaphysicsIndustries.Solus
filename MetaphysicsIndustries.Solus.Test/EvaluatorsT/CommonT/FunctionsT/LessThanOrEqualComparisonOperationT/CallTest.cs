@@ -72,7 +72,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
-            Assert.AreEqual(expected, result.ToFloat(), 0.000001f);
+            Assert.That(result.ToFloat(),
+                Is.EqualTo(expected).Within(0.000001f));
         }
     }
 }

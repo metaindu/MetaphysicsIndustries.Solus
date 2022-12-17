@@ -41,9 +41,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(2, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.Add(), nm.Instructions[0]);
-            Assert.AreEqual(Instruction.Div(), nm.Instructions[1]);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(2));
+            Assert.That(nm.Instructions[0], Is.EqualTo(Instruction.Add()));
+            Assert.That(nm.Instructions[1], Is.EqualTo(Instruction.Div()));
         }
     }
 }

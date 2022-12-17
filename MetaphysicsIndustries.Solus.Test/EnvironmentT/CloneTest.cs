@@ -37,15 +37,15 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var original = new SolusEnvironment(useDefaults: false);
             original.SetVariable("a", new Literal(1));
             // precondition
-            Assert.AreEqual(1, original.CountVariables());
+            Assert.That(original.CountVariables(), Is.EqualTo(1));
             Assert.Contains("a", original.GetVariableNames().ToList());
             // when
             var clone = original.Clone();
             // then
-            Assert.AreEqual(1, original.CountVariables());
+            Assert.That(original.CountVariables(), Is.EqualTo(1));
             Assert.Contains("a", original.GetVariableNames().ToList());
 
-            Assert.AreEqual(1, clone.CountVariables());
+            Assert.That(clone.CountVariables(), Is.EqualTo(1));
             Assert.Contains("a", clone.GetVariableNames().ToList());
         }
 
@@ -57,17 +57,17 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             original.SetVariable("a", new Literal(1));
             var clone = original.Clone();
             // precondition
-            Assert.AreEqual(1,
-                ((Literal)original.GetVariable("a")).Value.ToFloat());
-            Assert.AreEqual(1,
-                ((Literal)clone.GetVariable("a")).Value.ToFloat());
+            Assert.That(((Literal)original.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(1));
+            Assert.That(((Literal)clone.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(1));
             // when
             ((Literal) original.GetVariable("a")).Value = 2.ToNumber();
             // then
-            Assert.AreEqual(2,
-                ((Literal)original.GetVariable("a")).Value.ToFloat());
-            Assert.AreEqual(2,
-                ((Literal)clone.GetVariable("a")).Value.ToFloat());
+            Assert.That(((Literal)original.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(2));
+            Assert.That(((Literal)clone.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(2));
         }
 
         [Test]
@@ -78,8 +78,8 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             original.SetVariable("a", new Literal(1));
             var clone = original.Clone();
             // precondition
-            Assert.AreEqual(1, original.CountVariables());
-            Assert.AreEqual(1, clone.CountVariables());
+            Assert.That(original.CountVariables(), Is.EqualTo(1));
+            Assert.That(clone.CountVariables(), Is.EqualTo(1));
             Assert.IsNotNull(original.GetVariable("a"));
             Assert.IsNotNull(clone.GetVariable("a"));
             Assert.IsNull(original.GetVariable("b"));
@@ -87,8 +87,8 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             clone.SetVariable("b", new Literal(2));
             // then
-            Assert.AreEqual(1, original.CountVariables());
-            Assert.AreEqual(2, clone.CountVariables());
+            Assert.That(original.CountVariables(), Is.EqualTo(1));
+            Assert.That(clone.CountVariables(), Is.EqualTo(2));
             Assert.IsNotNull(original.GetVariable("a"));
             Assert.IsNotNull(clone.GetVariable("a"));
             Assert.IsNull(original.GetVariable("b"));

@@ -33,8 +33,8 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
             // given
             var result = IfMacro.Value;
             // expect
-            Assert.AreEqual("if", result.Name);
-            Assert.AreEqual(3, result.NumArguments);
+            Assert.That(result.Name, Is.EqualTo("if"));
+            Assert.That(result.NumArguments, Is.EqualTo(3));
         }
     }
 }

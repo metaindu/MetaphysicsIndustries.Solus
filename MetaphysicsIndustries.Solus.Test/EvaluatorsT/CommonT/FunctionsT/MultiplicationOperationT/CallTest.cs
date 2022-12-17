@@ -63,7 +63,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
-            Assert.AreEqual(expected, result.ToFloat(), 0.000001f);
+            Assert.That(result.ToFloat(),
+                Is.EqualTo(expected).Within(0.000001f));
         }
 
         [Test]
@@ -104,7 +105,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.AreEqual(6, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(6));
         }
 
         [Test]
@@ -122,7 +123,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.AreEqual(30, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(30));
         }
     }
 }

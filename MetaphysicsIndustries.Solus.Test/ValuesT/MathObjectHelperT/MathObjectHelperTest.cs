@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = mo.ToNumber();
             // then
-            Assert.AreEqual(123, result.Value);
+            Assert.That(result.Value, Is.EqualTo(123));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = value.ToNumber();
             // then
-            Assert.AreEqual(123.45f, result.Value);
+            Assert.That(result.Value, Is.EqualTo(123.45f));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = value.ToNumber();
             // then
-            Assert.AreEqual(123f, result.Value);
+            Assert.That(result.Value, Is.EqualTo(123f));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = value.ToNumber();
             // then
-            Assert.AreEqual(123f, result.Value);
+            Assert.That(result.Value, Is.EqualTo(123f));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(true, false,
                 false, 0);
             // expect
-            Assert.AreEqual(Types.Scalar, mo.GetMathType());
+            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Scalar));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(false, true,
                 false, 1);
             // expect
-            Assert.AreEqual(Types.Vector, mo.GetMathType());
+            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Vector));
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(false, false,
                 true, 2);
             // expect
-            Assert.AreEqual(Types.Matrix, mo.GetMathType());
+            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Matrix));
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(false, false,
                 false, 0);
             // expect
-            Assert.AreEqual(Types.Unknown, mo.GetMathType());
+            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Unknown));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = mo.ToStringValue();
             // then
-            Assert.AreEqual("abc", result.Value);
+            Assert.That(result.Value, Is.EqualTo("abc"));
         }
 
         [Test]
@@ -150,7 +150,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = value.ToStringValue();
             // then
-            Assert.AreEqual("def", result.Value);
+            Assert.That(result.Value, Is.EqualTo("def"));
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // given
             var mo = new MockMathObject(false, isString: true);
             // expect
-            Assert.AreEqual(Types.String, mo.GetMathType());
+            Assert.That(mo.GetMathType(), Is.EqualTo(Types.String));
         }
 
         [Test]
@@ -170,10 +170,10 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = values.ToMathObjects();
             // then
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(1, result[0].ToNumber().Value);
-            Assert.AreEqual(2, result[1].ToNumber().Value);
-            Assert.AreEqual(3, result[2].ToNumber().Value);
+            Assert.That(result.Length, Is.EqualTo(3));
+            Assert.That(result[0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[2].ToNumber().Value, Is.EqualTo(3));
         }
 
         [Test]
@@ -189,14 +189,14 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = values.ToMathObjects();
             // then
-            Assert.AreEqual(3, result.GetLength(0));
-            Assert.AreEqual(2, result.GetLength(1));
-            Assert.AreEqual(1, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(2, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(3, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(4, result[1, 1].ToNumber().Value);
-            Assert.AreEqual(5, result[2, 0].ToNumber().Value);
-            Assert.AreEqual(6, result[2, 1].ToNumber().Value);
+            Assert.That(result.GetLength(0), Is.EqualTo(3));
+            Assert.That(result.GetLength(1), Is.EqualTo(2));
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(3));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(4));
+            Assert.That(result[2, 0].ToNumber().Value, Is.EqualTo(5));
+            Assert.That(result[2, 1].ToNumber().Value, Is.EqualTo(6));
         }
 
         [Test]
@@ -207,10 +207,13 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = values.ToVector();
             // then
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(1.2f,result[0].ToFloat());
-            Assert.AreEqual(3.4f,result[1].ToFloat());
-            Assert.AreEqual(5.6f,result[2].ToFloat());
+            Assert.That(result.Length, Is.EqualTo(3));
+            Assert.That(result[0].ToFloat(),
+                Is.EqualTo(1.2f));
+            Assert.That(result[1].ToFloat(),
+                Is.EqualTo(3.4f));
+            Assert.That(result[2].ToFloat(),
+                Is.EqualTo(5.6f));
         }
 
         [Test]
@@ -221,10 +224,13 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // when
             var result = values.ToVector();
             // then
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(1,result[0].ToFloat());
-            Assert.AreEqual(2,result[1].ToFloat());
-            Assert.AreEqual(3,result[2].ToFloat());
+            Assert.That(result.Length, Is.EqualTo(3));
+            Assert.That(result[0].ToFloat(),
+                Is.EqualTo(1));
+            Assert.That(result[1].ToFloat(),
+                Is.EqualTo(2));
+            Assert.That(result[2].ToFloat(),
+                Is.EqualTo(3));
         }
     }
 }

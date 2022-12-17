@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.Simplify(empty);
             // then
-            Assert.AreSame(ca, result);
+            Assert.That(result, Is.SameAs(ca));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             Assert.IsInstanceOf<Literal>(result);
             var lit = (Literal) result;
             Assert.IsTrue(lit.Value.IsScalar(null));
-            Assert.AreEqual(5, lit.Value.ToFloat());
+            Assert.That(lit.Value.ToFloat(), Is.EqualTo(5));
         }
 
         [Test]
@@ -108,8 +108,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             Assert.IsInstanceOf<ComponentAccess>(result);
             var ca2 = (ComponentAccess) result;
             Assert.IsInstanceOf<VectorExpression>(ca2.Expr);
-            Assert.AreEqual(3, ((VectorExpression) ca2.Expr).Length);
-            Assert.AreEqual(1, ca2.Indexes.Count);
+            Assert.That(((VectorExpression) ca2.Expr).Length, Is.EqualTo(3));
+            Assert.That(ca2.Indexes.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<VariableAccess>(ca2.Indexes[0]);
         }
 
@@ -125,7 +125,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // then
             Assert.IsInstanceOf<VariableAccess>(result);
             var va = (VariableAccess) result;
-            Assert.AreEqual("b", va.VariableName);
+            Assert.That(va.VariableName, Is.EqualTo("b"));
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.Simplify(empty);
             // then
-            Assert.AreSame(ca, result);
+            Assert.That(result, Is.SameAs(ca));
         }
 
         [Test]
@@ -153,7 +153,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var result = expr.Simplify(env);
             // then
             Assert.IsInstanceOf<VariableAccess>(result);
-            Assert.AreEqual("b", ((VariableAccess)result).VariableName);
+            Assert.That(((VariableAccess)result).VariableName,
+                Is.EqualTo("b"));
         }
 
         [Test]
@@ -170,7 +171,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             var result = expr.Simplify(env);
             // then
             Assert.IsInstanceOf<VariableAccess>(result);
-            Assert.AreEqual("d", ((VariableAccess)result).VariableName);
+            Assert.That(((VariableAccess)result).VariableName,
+                Is.EqualTo("d"));
         }
 
         class MockTensorExpression : TensorExpression
@@ -219,7 +221,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -233,7 +235,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -249,7 +251,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -266,7 +268,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -285,7 +287,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -302,7 +304,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -316,7 +318,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         // TODO: check for index greater than vector dimension
@@ -333,7 +335,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -347,7 +349,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -363,7 +365,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -379,7 +381,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -395,7 +397,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.Simplify(env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
     }
 }

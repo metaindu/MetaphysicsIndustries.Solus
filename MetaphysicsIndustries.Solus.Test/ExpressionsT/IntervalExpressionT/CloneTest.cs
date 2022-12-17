@@ -40,15 +40,15 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.IntervalExpressionT
             // then
             Assert.IsInstanceOf<IntervalExpression>(result0);
             var result = (IntervalExpression)result0;
-            Assert.AreNotSame(i, result);
+            Assert.That(result, Is.Not.SameAs(i));
 
             // shallow, for now
-            Assert.AreSame(i.LowerBound, result.LowerBound);
-            Assert.AreEqual(i.OpenLowerBound, result.OpenLowerBound);
+            Assert.That(result.LowerBound, Is.SameAs(i.LowerBound));
+            Assert.That(result.OpenLowerBound, Is.EqualTo(i.OpenLowerBound));
 
             // shallow, for now
-            Assert.AreSame(i.UpperBound, result.UpperBound);
-            Assert.AreEqual(i.OpenUpperBound, result.OpenUpperBound);
+            Assert.That(result.UpperBound, Is.SameAs(i.UpperBound));
+            Assert.That(result.OpenUpperBound, Is.EqualTo(i.OpenUpperBound));
         }
     }
 }

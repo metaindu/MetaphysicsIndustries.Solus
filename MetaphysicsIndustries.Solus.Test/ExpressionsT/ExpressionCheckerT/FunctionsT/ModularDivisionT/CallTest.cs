@@ -101,7 +101,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Division by zero", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Division by zero"));
         }
     }
 }

@@ -45,8 +45,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<NewObjIlExpression>(result);
-            Assert.AreSame(ctor, result.Constructor);
-            Assert.AreSame(args, result.Arguments);
+            Assert.That(result.Constructor, Is.SameAs(ctor));
+            Assert.That(result.Arguments, Is.SameAs(args));
         }
 
         [Test]
@@ -58,9 +58,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new NewObjIlExpression(null, args));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: constructor",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: constructor"));
         }
 
         [Test]
@@ -72,9 +72,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new NewObjIlExpression(ctor, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: arguments",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: arguments"));
         }
 
         [Test]
@@ -84,9 +84,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new NewObjIlExpression(null, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: constructor",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: constructor"));
         }
     }
 }

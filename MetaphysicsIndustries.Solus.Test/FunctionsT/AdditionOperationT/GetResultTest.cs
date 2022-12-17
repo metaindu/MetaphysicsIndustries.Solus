@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             Assert.IsTrue(arg1.IsScalar(null));
             Assert.IsFalse(arg1.IsVector(null));
             Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(arg1.IsString(null));
             // when
             var value = AdditionOperation.Value;
@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(result.IsString(null));
         }
 
@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             Assert.IsFalse(arg1.IsScalar(null));
             Assert.IsFalse(arg1.IsVector(null));
             Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsTrue(arg1.IsString(null));
             // when
             var value = AdditionOperation.Value;
@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(result.IsString(null));
         }
     }

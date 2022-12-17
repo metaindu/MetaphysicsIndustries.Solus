@@ -50,10 +50,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
                 Function.CheckArguments(args, paramTypes, "displayName"));
-            Assert.AreEqual(
-                "Wrong number of arguments given to displayName " +
-                "(expected 0 but got 1)",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Wrong number of arguments given to displayName " +
+                    "(expected 0 but got 1)"));
         }
 
         [Test]
@@ -65,10 +65,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
                 Function.CheckArguments(args, paramTypes, "displayName"));
-            Assert.AreEqual(
-                "Wrong number of arguments given to displayName " +
-                "(expected 1 but got 0)",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Wrong number of arguments given to displayName " +
+                    "(expected 1 but got 0)"));
         }
 
         [Test]
@@ -80,9 +80,9 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
                 Function.CheckArguments(args, paramTypes, "displayName"));
-            Assert.AreEqual(
-                $"Argument 0 wrong type: expected Scalar but got Vector",
-                ex.Message);
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Argument 0 wrong type: expected Scalar but got Vector"));
         }
     }
 }

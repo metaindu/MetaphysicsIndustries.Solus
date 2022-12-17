@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.AreEqual(1, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.AreEqual(1, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
     }
 }

@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Argument less than -1", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument less than -1"));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Argument greater than 1", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument greater than 1"));
         }
     }
 }

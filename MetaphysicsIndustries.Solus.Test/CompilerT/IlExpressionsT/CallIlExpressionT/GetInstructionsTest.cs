@@ -46,15 +46,16 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var expr = new CallIlExpression(method, args);
             var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(1, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.ArgumentType.Method,
-                nm.Instructions[0].ArgType);
-            Assert.AreEqual(method.Method, nm.Instructions[0].MethodArg);
-            Assert.AreEqual(OpCodes.Call, nm.Instructions[0].OpCode);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(1));
+            Assert.That(nm.Instructions[0].ArgType,
+                Is.EqualTo(Instruction.ArgumentType.Method));
+            Assert.That(nm.Instructions[0].MethodArg,
+                Is.EqualTo(method.Method));
+            Assert.That(nm.Instructions[0].OpCode, Is.EqualTo(OpCodes.Call));
         }
 
         [Test]
@@ -71,18 +72,22 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var expr = new CallIlExpression(method, args);
             var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(4, nm.Instructions.Count);
-            Assert.AreEqual(Instruction.LoadConstant(1), nm.Instructions[0]);
-            Assert.AreEqual(Instruction.LoadConstant(2), nm.Instructions[1]);
-            Assert.AreEqual(Instruction.LoadConstant(3), nm.Instructions[2]);
-            Assert.AreEqual(Instruction.ArgumentType.Method,
-                nm.Instructions[3].ArgType);
-            Assert.AreEqual(method.Method, nm.Instructions[3].MethodArg);
-            Assert.AreEqual(OpCodes.Call, nm.Instructions[3].OpCode);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(4));
+            Assert.That(nm.Instructions[0],
+                Is.EqualTo(Instruction.LoadConstant(1)));
+            Assert.That(nm.Instructions[1],
+                Is.EqualTo(Instruction.LoadConstant(2)));
+            Assert.That(nm.Instructions[2],
+                Is.EqualTo(Instruction.LoadConstant(3)));
+            Assert.That(nm.Instructions[3].ArgType,
+                Is.EqualTo(Instruction.ArgumentType.Method));
+            Assert.That(nm.Instructions[3].MethodArg,
+                Is.EqualTo(method.Method));
+            Assert.That(nm.Instructions[3].OpCode, Is.EqualTo(OpCodes.Call));
         }
     }
 }

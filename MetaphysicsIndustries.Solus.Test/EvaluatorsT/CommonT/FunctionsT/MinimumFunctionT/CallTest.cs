@@ -53,7 +53,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(1, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(6, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(6));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(-5, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(-5));
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(-9, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(-9));
         }
 
         [Test]
@@ -133,7 +133,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(-1, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(-1));
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(1, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(5, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(5));
         }
 
         [Test]
@@ -185,7 +185,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<ArgumentException>(
                 () => eval.Call(f, args, null));
             // and
-            Assert.AreEqual("No arguments passed", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("No arguments passed"));
         }
 
         [Test]
@@ -206,7 +206,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(float.NaN, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(float.NaN));
         }
 
         [Test]
@@ -227,7 +227,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(1, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -248,7 +248,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(float.NegativeInfinity, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value,
+                Is.EqualTo(float.NegativeInfinity));
         }
 
         [Test]
@@ -267,7 +268,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Call(f, args, null);
             // then
             Assert.IsInstanceOf<Number>(result);
-            Assert.AreEqual(float.NaN, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(float.NaN));
         }
     }
 }
