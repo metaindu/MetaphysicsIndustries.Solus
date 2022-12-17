@@ -20,8 +20,8 @@
  *
  */
 
-using System.Drawing;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ColorExpressionT

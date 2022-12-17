@@ -21,7 +21,6 @@
  */
 
 using System;
-using System.Drawing;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
