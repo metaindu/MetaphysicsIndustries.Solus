@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ColorExpressionT
             Assert.IsTrue(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
             Assert.IsFalse(result.IsMatrix(env));
-            Assert.AreEqual(0, result.GetTensorRank(env));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsFalse(result.IsString(env));
             Assert.IsNull(result.GetDimension(env, 0));
             Assert.IsNull(result.GetDimensions(env));

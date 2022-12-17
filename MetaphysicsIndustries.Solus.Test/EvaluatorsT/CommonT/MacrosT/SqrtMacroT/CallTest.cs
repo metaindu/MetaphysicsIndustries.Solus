@@ -48,14 +48,15 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var fc = (FunctionCall)result;
             Assert.IsInstanceOf<Literal>(fc.Function);
             var target = (Literal)fc.Function;
-            Assert.AreSame(ExponentOperation.Value, target.Value);
-            Assert.AreEqual(2,fc.Arguments.Count);
+            Assert.That(target.Value, Is.SameAs(ExponentOperation.Value));
+            Assert.That(fc.Arguments.Count,
+                Is.EqualTo(2));
             Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
-            Assert.AreEqual(2f,
-                ((Literal)fc.Arguments[0]).Value.ToNumber().Value);
+            Assert.That(((Literal)fc.Arguments[0]).Value.ToNumber().Value,
+                Is.EqualTo(2f));
             Assert.IsInstanceOf<Literal>(fc.Arguments[1]);
-            Assert.AreEqual(0.5f,
-                ((Literal)fc.Arguments[1]).Value.ToNumber().Value);
+            Assert.That(((Literal)fc.Arguments[1]).Value.ToNumber().Value,
+                Is.EqualTo(0.5f));
         }
     }
 }

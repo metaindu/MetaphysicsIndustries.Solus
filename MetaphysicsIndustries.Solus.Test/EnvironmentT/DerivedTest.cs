@@ -74,10 +74,10 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var clone = original.Clone();
             // then
             var derived = (DerivedEnvironment) clone;
-            Assert.AreEqual(3, derived.Items.Count);
-            Assert.AreEqual("one", derived.Items[0]);
-            Assert.AreEqual("two", derived.Items[1]);
-            Assert.AreEqual("three", derived.Items[2]);
+            Assert.That(derived.Items.Count, Is.EqualTo(3));
+            Assert.That(derived.Items[0], Is.EqualTo("one"));
+            Assert.That(derived.Items[1], Is.EqualTo("two"));
+            Assert.That(derived.Items[2], Is.EqualTo("three"));
         }
 
         [Test]

@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogarithmFunctionT
             Assert.IsTrue(arg1.IsScalar(null));
             Assert.IsFalse(arg1.IsVector(null));
             Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(arg1.IsString(null));
             // when
             var value = LogarithmFunction.Value;
@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogarithmFunctionT
             Assert.IsTrue(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(0, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(result.IsString(null));
         }
     }

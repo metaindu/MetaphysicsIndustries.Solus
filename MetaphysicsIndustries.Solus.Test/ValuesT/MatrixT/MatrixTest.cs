@@ -42,23 +42,23 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // when
             var result = new Matrix(values);
             // then
-            Assert.AreEqual(2, result.RowCount);
-            Assert.AreEqual(2, result.ColumnCount);
-            Assert.AreEqual(Types.Scalar, result.ComponentType);
-            Assert.AreEqual(1, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(2, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(3, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(4, result[1, 1].ToNumber().Value);
+            Assert.That(result.RowCount, Is.EqualTo(2));
+            Assert.That(result.ColumnCount, Is.EqualTo(2));
+            Assert.That(result.ComponentType, Is.EqualTo(Types.Scalar));
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(3));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(4));
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsFalse(result.IsVector(null));
             Assert.IsTrue(result.IsMatrix(null));
-            Assert.AreEqual(2, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(2));
             Assert.IsFalse(result.IsString(null));
-            Assert.AreEqual(2, result.GetDimension(null, 0));
-            Assert.AreEqual(2, result.GetDimension(null, 1));
+            Assert.That(result.GetDimension(null, 0), Is.EqualTo(2));
+            Assert.That(result.GetDimension(null, 1), Is.EqualTo(2));
             Assert.IsNull(result.GetDimension(null, -1));
             Assert.IsNull(result.GetDimension(null, 3));
-            Assert.AreEqual(new[] {2, 2}, result.GetDimensions(null));
+            Assert.That(result.GetDimensions(null), Is.EqualTo(new[] {2, 2}));
         }
 
         [Test]
@@ -73,12 +73,12 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // when
             var result = new Matrix(values);
             // then
-            Assert.AreEqual(2, result.RowCount);
-            Assert.AreEqual(2, result.ColumnCount);
-            Assert.AreEqual(1, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(2, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(3, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(4, result[1, 1].ToNumber().Value);
+            Assert.That(result.RowCount, Is.EqualTo(2));
+            Assert.That(result.ColumnCount, Is.EqualTo(2));
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(3));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(4));
         }
 
         [Test]
@@ -94,14 +94,14 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // when
             var result = new Matrix(values);
             // then
-            Assert.AreEqual(3, result.RowCount);
-            Assert.AreEqual(2, result.ColumnCount);
-            Assert.AreEqual(1, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(2, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(3, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(4, result[1, 1].ToNumber().Value);
-            Assert.AreEqual(5, result[2, 0].ToNumber().Value);
-            Assert.AreEqual(6, result[2, 1].ToNumber().Value);
+            Assert.That(result.RowCount, Is.EqualTo(3));
+            Assert.That(result.ColumnCount, Is.EqualTo(2));
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(3));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(4));
+            Assert.That(result[2, 0].ToNumber().Value, Is.EqualTo(5));
+            Assert.That(result[2, 1].ToNumber().Value, Is.EqualTo(6));
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // when
             var result = new Matrix(values);
             // then
-            Assert.AreEqual(Types.Mixed, result.ComponentType);
+            Assert.That(result.ComponentType, Is.EqualTo(Types.Mixed));
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // when
             var result = value.ToString();
             // then
-            Assert.AreEqual("[1, 2; 3, 4; 5, 6]", result);
+            Assert.That(result, Is.EqualTo("[1, 2; 3, 4; 5, 6]"));
         }
 
         [Test]
@@ -157,8 +157,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // when
             var result = value.ToString();
             // then
-            Assert.AreEqual("[\"one\", [2, 2, 2]; 3, [4, 5; 6, 7]]",
-                result);
+            Assert.That(result,
+                Is.EqualTo("[\"one\", [2, 2, 2]; 3, [4, 5; 6, 7]]"));
         }
     }
 }

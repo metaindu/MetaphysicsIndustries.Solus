@@ -50,12 +50,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
             eval.EvalInterval(expr, env, interval, numSteps, store);
             // then
             Assert.IsNotNull(store.Values);
-            Assert.AreEqual(5, store.Values.Length);
-            Assert.AreEqual(4, store.Values[0].Value);
-            Assert.AreEqual(9, store.Values[1].Value);
-            Assert.AreEqual(16, store.Values[2].Value);
-            Assert.AreEqual(25, store.Values[3].Value);
-            Assert.AreEqual(36, store.Values[4].Value);
+            Assert.That(store.Values.Length, Is.EqualTo(5));
+            Assert.That(store.Values[0].Value, Is.EqualTo(4));
+            Assert.That(store.Values[1].Value, Is.EqualTo(9));
+            Assert.That(store.Values[2].Value, Is.EqualTo(16));
+            Assert.That(store.Values[3].Value, Is.EqualTo(25));
+            Assert.That(store.Values[4].Value, Is.EqualTo(36));
         }
 
         [Test]
@@ -75,12 +75,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
             eval.EvalInterval(expr, env, interval, numSteps, store);
             // then
             var result = store.GetResult();
-            Assert.AreEqual(5, result.Length);
-            Assert.AreEqual(4, result[0].ToNumber().Value);
-            Assert.AreEqual(9, result[1].ToNumber().Value);
-            Assert.AreEqual(16, result[2].ToNumber().Value);
-            Assert.AreEqual(25, result[3].ToNumber().Value);
-            Assert.AreEqual(36, result[4].ToNumber().Value);
+            Assert.That(result.Length, Is.EqualTo(5));
+            Assert.That(result[0].ToNumber().Value, Is.EqualTo(4));
+            Assert.That(result[1].ToNumber().Value, Is.EqualTo(9));
+            Assert.That(result[2].ToNumber().Value, Is.EqualTo(16));
+            Assert.That(result[3].ToNumber().Value, Is.EqualTo(25));
+            Assert.That(result[4].ToNumber().Value, Is.EqualTo(36));
         }
 
         [Test]
@@ -106,43 +106,43 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 store);
             // then
             Assert.IsNotNull(store.Values);
-            Assert.AreEqual(5, store.Values.GetLength(0));
-            Assert.AreEqual(6, store.Values.GetLength(1));
+            Assert.That(store.Values.GetLength(0), Is.EqualTo(5));
+            Assert.That(store.Values.GetLength(1), Is.EqualTo(6));
 
-            Assert.AreEqual(14, store.Values[0, 0].Value);
-            Assert.AreEqual(16, store.Values[0, 1].Value);
-            Assert.AreEqual(18, store.Values[0, 2].Value);
-            Assert.AreEqual(20, store.Values[0, 3].Value);
-            Assert.AreEqual(22, store.Values[0, 4].Value);
-            Assert.AreEqual(24, store.Values[0, 5].Value);
+            Assert.That(store.Values[0, 0].Value, Is.EqualTo(14));
+            Assert.That(store.Values[0, 1].Value, Is.EqualTo(16));
+            Assert.That(store.Values[0, 2].Value, Is.EqualTo(18));
+            Assert.That(store.Values[0, 3].Value, Is.EqualTo(20));
+            Assert.That(store.Values[0, 4].Value, Is.EqualTo(22));
+            Assert.That(store.Values[0, 5].Value, Is.EqualTo(24));
 
-            Assert.AreEqual(21, store.Values[1, 0].Value);
-            Assert.AreEqual(24, store.Values[1, 1].Value);
-            Assert.AreEqual(27, store.Values[1, 2].Value);
-            Assert.AreEqual(30, store.Values[1, 3].Value);
-            Assert.AreEqual(33, store.Values[1, 4].Value);
-            Assert.AreEqual(36, store.Values[1, 5].Value);
+            Assert.That(store.Values[1, 0].Value, Is.EqualTo(21));
+            Assert.That(store.Values[1, 1].Value, Is.EqualTo(24));
+            Assert.That(store.Values[1, 2].Value, Is.EqualTo(27));
+            Assert.That(store.Values[1, 3].Value, Is.EqualTo(30));
+            Assert.That(store.Values[1, 4].Value, Is.EqualTo(33));
+            Assert.That(store.Values[1, 5].Value, Is.EqualTo(36));
 
-            Assert.AreEqual(28, store.Values[2, 0].Value);
-            Assert.AreEqual(32, store.Values[2, 1].Value);
-            Assert.AreEqual(36, store.Values[2, 2].Value);
-            Assert.AreEqual(40, store.Values[2, 3].Value);
-            Assert.AreEqual(44, store.Values[2, 4].Value);
-            Assert.AreEqual(48, store.Values[2, 5].Value);
+            Assert.That(store.Values[2, 0].Value, Is.EqualTo(28));
+            Assert.That(store.Values[2, 1].Value, Is.EqualTo(32));
+            Assert.That(store.Values[2, 2].Value, Is.EqualTo(36));
+            Assert.That(store.Values[2, 3].Value, Is.EqualTo(40));
+            Assert.That(store.Values[2, 4].Value, Is.EqualTo(44));
+            Assert.That(store.Values[2, 5].Value, Is.EqualTo(48));
 
-            Assert.AreEqual(35, store.Values[3, 0].Value);
-            Assert.AreEqual(40, store.Values[3, 1].Value);
-            Assert.AreEqual(45, store.Values[3, 2].Value);
-            Assert.AreEqual(50, store.Values[3, 3].Value);
-            Assert.AreEqual(55, store.Values[3, 4].Value);
-            Assert.AreEqual(60, store.Values[3, 5].Value);
+            Assert.That(store.Values[3, 0].Value, Is.EqualTo(35));
+            Assert.That(store.Values[3, 1].Value, Is.EqualTo(40));
+            Assert.That(store.Values[3, 2].Value, Is.EqualTo(45));
+            Assert.That(store.Values[3, 3].Value, Is.EqualTo(50));
+            Assert.That(store.Values[3, 4].Value, Is.EqualTo(55));
+            Assert.That(store.Values[3, 5].Value, Is.EqualTo(60));
 
-            Assert.AreEqual(42, store.Values[4, 0].Value);
-            Assert.AreEqual(48, store.Values[4, 1].Value);
-            Assert.AreEqual(54, store.Values[4, 2].Value);
-            Assert.AreEqual(60, store.Values[4, 3].Value);
-            Assert.AreEqual(66, store.Values[4, 4].Value);
-            Assert.AreEqual(72, store.Values[4, 5].Value);
+            Assert.That(store.Values[4, 0].Value, Is.EqualTo(42));
+            Assert.That(store.Values[4, 1].Value, Is.EqualTo(48));
+            Assert.That(store.Values[4, 2].Value, Is.EqualTo(54));
+            Assert.That(store.Values[4, 3].Value, Is.EqualTo(60));
+            Assert.That(store.Values[4, 4].Value, Is.EqualTo(66));
+            Assert.That(store.Values[4, 5].Value, Is.EqualTo(72));
         }
 
         [Test]
@@ -168,43 +168,43 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 store);
             // then
             var result = store.GetResult();
-            Assert.AreEqual(5, result.RowCount);
-            Assert.AreEqual(6, result.ColumnCount);
+            Assert.That(result.RowCount, Is.EqualTo(5));
+            Assert.That(result.ColumnCount, Is.EqualTo(6));
 
-            Assert.AreEqual(14, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(16, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(18, result[0, 2].ToNumber().Value);
-            Assert.AreEqual(20, result[0, 3].ToNumber().Value);
-            Assert.AreEqual(22, result[0, 4].ToNumber().Value);
-            Assert.AreEqual(24, result[0, 5].ToNumber().Value);
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(14));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(16));
+            Assert.That(result[0, 2].ToNumber().Value, Is.EqualTo(18));
+            Assert.That(result[0, 3].ToNumber().Value, Is.EqualTo(20));
+            Assert.That(result[0, 4].ToNumber().Value, Is.EqualTo(22));
+            Assert.That(result[0, 5].ToNumber().Value, Is.EqualTo(24));
 
-            Assert.AreEqual(21, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(24, result[1, 1].ToNumber().Value);
-            Assert.AreEqual(27, result[1, 2].ToNumber().Value);
-            Assert.AreEqual(30, result[1, 3].ToNumber().Value);
-            Assert.AreEqual(33, result[1, 4].ToNumber().Value);
-            Assert.AreEqual(36, result[1, 5].ToNumber().Value);
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(21));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(24));
+            Assert.That(result[1, 2].ToNumber().Value, Is.EqualTo(27));
+            Assert.That(result[1, 3].ToNumber().Value, Is.EqualTo(30));
+            Assert.That(result[1, 4].ToNumber().Value, Is.EqualTo(33));
+            Assert.That(result[1, 5].ToNumber().Value, Is.EqualTo(36));
 
-            Assert.AreEqual(28, result[2, 0].ToNumber().Value);
-            Assert.AreEqual(32, result[2, 1].ToNumber().Value);
-            Assert.AreEqual(36, result[2, 2].ToNumber().Value);
-            Assert.AreEqual(40, result[2, 3].ToNumber().Value);
-            Assert.AreEqual(44, result[2, 4].ToNumber().Value);
-            Assert.AreEqual(48, result[2, 5].ToNumber().Value);
+            Assert.That(result[2, 0].ToNumber().Value, Is.EqualTo(28));
+            Assert.That(result[2, 1].ToNumber().Value, Is.EqualTo(32));
+            Assert.That(result[2, 2].ToNumber().Value, Is.EqualTo(36));
+            Assert.That(result[2, 3].ToNumber().Value, Is.EqualTo(40));
+            Assert.That(result[2, 4].ToNumber().Value, Is.EqualTo(44));
+            Assert.That(result[2, 5].ToNumber().Value, Is.EqualTo(48));
 
-            Assert.AreEqual(35, result[3, 0].ToNumber().Value);
-            Assert.AreEqual(40, result[3, 1].ToNumber().Value);
-            Assert.AreEqual(45, result[3, 2].ToNumber().Value);
-            Assert.AreEqual(50, result[3, 3].ToNumber().Value);
-            Assert.AreEqual(55, result[3, 4].ToNumber().Value);
-            Assert.AreEqual(60, result[3, 5].ToNumber().Value);
+            Assert.That(result[3, 0].ToNumber().Value, Is.EqualTo(35));
+            Assert.That(result[3, 1].ToNumber().Value, Is.EqualTo(40));
+            Assert.That(result[3, 2].ToNumber().Value, Is.EqualTo(45));
+            Assert.That(result[3, 3].ToNumber().Value, Is.EqualTo(50));
+            Assert.That(result[3, 4].ToNumber().Value, Is.EqualTo(55));
+            Assert.That(result[3, 5].ToNumber().Value, Is.EqualTo(60));
 
-            Assert.AreEqual(42, result[4, 0].ToNumber().Value);
-            Assert.AreEqual(48, result[4, 1].ToNumber().Value);
-            Assert.AreEqual(54, result[4, 2].ToNumber().Value);
-            Assert.AreEqual(60, result[4, 3].ToNumber().Value);
-            Assert.AreEqual(66, result[4, 4].ToNumber().Value);
-            Assert.AreEqual(72, result[4, 5].ToNumber().Value);
+            Assert.That(result[4, 0].ToNumber().Value, Is.EqualTo(42));
+            Assert.That(result[4, 1].ToNumber().Value, Is.EqualTo(48));
+            Assert.That(result[4, 2].ToNumber().Value, Is.EqualTo(54));
+            Assert.That(result[4, 3].ToNumber().Value, Is.EqualTo(60));
+            Assert.That(result[4, 4].ToNumber().Value, Is.EqualTo(66));
+            Assert.That(result[4, 5].ToNumber().Value, Is.EqualTo(72));
         }
 
         [Test]
@@ -235,45 +235,45 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 store);
             // then
             Assert.IsNotNull(store.Values);
-            Assert.AreEqual(2, store.Values.GetLength(0));
-            Assert.AreEqual(3, store.Values.GetLength(1));
-            Assert.AreEqual(5, store.Values.GetLength(2));
+            Assert.That(store.Values.GetLength(0), Is.EqualTo(2));
+            Assert.That(store.Values.GetLength(1), Is.EqualTo(3));
+            Assert.That(store.Values.GetLength(2), Is.EqualTo(5));
 
-            Assert.AreEqual(56, store.Values[0, 0, 0].Value);
-            Assert.AreEqual(64, store.Values[0, 0, 1].Value);
-            Assert.AreEqual(72, store.Values[0, 0, 2].Value);
-            Assert.AreEqual(80, store.Values[0, 0, 3].Value);
-            Assert.AreEqual(88, store.Values[0, 0, 4].Value);
+            Assert.That(store.Values[0, 0, 0].Value, Is.EqualTo(56));
+            Assert.That(store.Values[0, 0, 1].Value, Is.EqualTo(64));
+            Assert.That(store.Values[0, 0, 2].Value, Is.EqualTo(72));
+            Assert.That(store.Values[0, 0, 3].Value, Is.EqualTo(80));
+            Assert.That(store.Values[0, 0, 4].Value, Is.EqualTo(88));
 
-            Assert.AreEqual(70, store.Values[0, 1, 0].Value);
-            Assert.AreEqual(80, store.Values[0, 1, 1].Value);
-            Assert.AreEqual(90, store.Values[0, 1, 2].Value);
-            Assert.AreEqual(100, store.Values[0, 1, 3].Value);
-            Assert.AreEqual(110, store.Values[0, 1, 4].Value);
+            Assert.That(store.Values[0, 1, 0].Value, Is.EqualTo(70));
+            Assert.That(store.Values[0, 1, 1].Value, Is.EqualTo(80));
+            Assert.That(store.Values[0, 1, 2].Value, Is.EqualTo(90));
+            Assert.That(store.Values[0, 1, 3].Value, Is.EqualTo(100));
+            Assert.That(store.Values[0, 1, 4].Value, Is.EqualTo(110));
 
-            Assert.AreEqual(84, store.Values[0, 2, 0].Value);
-            Assert.AreEqual(96, store.Values[0, 2, 1].Value);
-            Assert.AreEqual(108, store.Values[0, 2, 2].Value);
-            Assert.AreEqual(120, store.Values[0, 2, 3].Value);
-            Assert.AreEqual(132, store.Values[0, 2, 4].Value);
+            Assert.That(store.Values[0, 2, 0].Value, Is.EqualTo(84));
+            Assert.That(store.Values[0, 2, 1].Value, Is.EqualTo(96));
+            Assert.That(store.Values[0, 2, 2].Value, Is.EqualTo(108));
+            Assert.That(store.Values[0, 2, 3].Value, Is.EqualTo(120));
+            Assert.That(store.Values[0, 2, 4].Value, Is.EqualTo(132));
 
-            Assert.AreEqual(84, store.Values[1, 0, 0].Value);
-            Assert.AreEqual(96, store.Values[1, 0, 1].Value);
-            Assert.AreEqual(108, store.Values[1, 0, 2].Value);
-            Assert.AreEqual(120, store.Values[1, 0, 3].Value);
-            Assert.AreEqual(132, store.Values[1, 0, 4].Value);
+            Assert.That(store.Values[1, 0, 0].Value, Is.EqualTo(84));
+            Assert.That(store.Values[1, 0, 1].Value, Is.EqualTo(96));
+            Assert.That(store.Values[1, 0, 2].Value, Is.EqualTo(108));
+            Assert.That(store.Values[1, 0, 3].Value, Is.EqualTo(120));
+            Assert.That(store.Values[1, 0, 4].Value, Is.EqualTo(132));
 
-            Assert.AreEqual(105, store.Values[1, 1, 0].Value);
-            Assert.AreEqual(120, store.Values[1, 1, 1].Value);
-            Assert.AreEqual(135, store.Values[1, 1, 2].Value);
-            Assert.AreEqual(150, store.Values[1, 1, 3].Value);
-            Assert.AreEqual(165, store.Values[1, 1, 4].Value);
+            Assert.That(store.Values[1, 1, 0].Value, Is.EqualTo(105));
+            Assert.That(store.Values[1, 1, 1].Value, Is.EqualTo(120));
+            Assert.That(store.Values[1, 1, 2].Value, Is.EqualTo(135));
+            Assert.That(store.Values[1, 1, 3].Value, Is.EqualTo(150));
+            Assert.That(store.Values[1, 1, 4].Value, Is.EqualTo(165));
 
-            Assert.AreEqual(126, store.Values[1, 2, 0].Value);
-            Assert.AreEqual(144, store.Values[1, 2, 1].Value);
-            Assert.AreEqual(162, store.Values[1, 2, 2].Value);
-            Assert.AreEqual(180, store.Values[1, 2, 3].Value);
-            Assert.AreEqual(198, store.Values[1, 2, 4].Value);
+            Assert.That(store.Values[1, 2, 0].Value, Is.EqualTo(126));
+            Assert.That(store.Values[1, 2, 1].Value, Is.EqualTo(144));
+            Assert.That(store.Values[1, 2, 2].Value, Is.EqualTo(162));
+            Assert.That(store.Values[1, 2, 3].Value, Is.EqualTo(180));
+            Assert.That(store.Values[1, 2, 4].Value, Is.EqualTo(198));
         }
 
         [Test]
@@ -329,7 +329,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
             eval.EvalInterval(expr, env, interval, 5, null,
                 new AggregateOp[] { aggr });
             // then
-            Assert.AreEqual(25, aggr.State.Value);
+            Assert.That(aggr.State.Value, Is.EqualTo(25));
         }
 
         [Test]
@@ -365,7 +365,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 null,
                 new AggregateOp[] { aggr });
             // then
-            Assert.AreEqual(18, aggr.State.Value);
+            Assert.That(aggr.State.Value, Is.EqualTo(18));
         }
 
         [Test]
@@ -404,7 +404,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
                 null,
                 new AggregateOp[] { aggr });
             // then
-            Assert.AreEqual(162, aggr.State.Value);
+            Assert.That(aggr.State.Value, Is.EqualTo(162));
         }
 
         [Test]
@@ -436,8 +436,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
             // when
             eval.EvalInterval(expr, env, interval, 5, null, aggrs);
             // then
-            Assert.AreEqual(7, aggrMax.State.Value);
-            Assert.AreEqual(3, aggrMin.State.Value);
+            Assert.That(aggrMax.State.Value, Is.EqualTo(7));
+            Assert.That(aggrMin.State.Value, Is.EqualTo(3));
         }
 
         [Test]
@@ -457,7 +457,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
             eval.EvalInterval(expr, env, interval, 5, null,
                 new AggregateOp[] { aggr });
             // then
-            Assert.AreEqual(25, aggr.State.ToNumber().Value);
+            Assert.That(aggr.State.ToNumber().Value, Is.EqualTo(25));
         }
 
     }

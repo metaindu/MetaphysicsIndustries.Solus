@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadConstantIlExpression(1.0d);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(1.0d, result.Instruction.DoubleArg);
+            Assert.That(result.Instruction.DoubleArg, Is.EqualTo(1.0d));
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadConstantIlExpression(1.0f);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(1.0f, result.Instruction.FloatArg);
+            Assert.That(result.Instruction.FloatArg, Is.EqualTo(1.0f));
         }
 
         private static readonly OpCode[] OpCodeValues =
@@ -84,8 +84,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadConstantIlExpression(arg);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Instruction.IntArg);
-            Assert.AreEqual(opcode, result.Instruction.OpCode);
+            Assert.That(result.Instruction.IntArg, Is.EqualTo(0));
+            Assert.That(result.Instruction.OpCode, Is.EqualTo(opcode));
         }
 
         [Test]
@@ -99,8 +99,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadConstantIlExpression(arg);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(arg, result.Instruction.IntArg);
-            Assert.AreEqual(OpCodes.Ldc_I4_S, result.Instruction.OpCode);
+            Assert.That(result.Instruction.IntArg, Is.EqualTo(arg));
+            Assert.That(result.Instruction.OpCode,
+                Is.EqualTo(OpCodes.Ldc_I4_S));
         }
 
         [Test]
@@ -114,8 +115,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadConstantIlExpression(arg);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(arg, result.Instruction.IntArg);
-            Assert.AreEqual(OpCodes.Ldc_I4, result.Instruction.OpCode);
+            Assert.That(result.Instruction.IntArg, Is.EqualTo(arg));
+            Assert.That(result.Instruction.OpCode,
+                Is.EqualTo(OpCodes.Ldc_I4));
         }
 
         [Test]
@@ -127,8 +129,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var result = new LoadConstantIlExpression(arg);
             // then
             Assert.IsNotNull(result);
-            Assert.AreEqual(arg, result.Instruction.IntArg);
-            Assert.AreEqual(OpCodes.Ldc_I8, result.Instruction.OpCode);
+            Assert.That(result.Instruction.IntArg, Is.EqualTo(arg));
+            Assert.That(result.Instruction.OpCode,
+                Is.EqualTo(OpCodes.Ldc_I8));
         }
     }
 }

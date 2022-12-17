@@ -48,9 +48,9 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result.IsInterval(null));
             Assert.IsInstanceOf<Interval>(result);
             var interval = (Interval)result;
-            Assert.AreEqual(1, interval.LowerBound);
+            Assert.That(interval.LowerBound, Is.EqualTo(1));
             Assert.IsTrue(interval.OpenLowerBound);
-            Assert.AreEqual(2, interval.UpperBound);
+            Assert.That(interval.UpperBound, Is.EqualTo(2));
             Assert.IsTrue(interval.OpenUpperBound);
         }
     }

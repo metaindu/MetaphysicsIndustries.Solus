@@ -47,10 +47,10 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.AreSame(original, result);
+            Assert.That(result, Is.SameAs(original));
             Assert.IsInstanceOf<VariableAccess>(result);
-            Assert.AreEqual("x",
-                ((VariableAccess)result).VariableName);
+            Assert.That(((VariableAccess)result).VariableName,
+                Is.EqualTo("x"));
         }
 
         [Test]
@@ -67,8 +67,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Literal>(result);
-            Assert.AreEqual(1,
-                ((Literal)result).Value.ToNumber().Value);
+            Assert.That(((Literal)result).Value.ToNumber().Value,
+                Is.EqualTo(1));
         }
     }
 }

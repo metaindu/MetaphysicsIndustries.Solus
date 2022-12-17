@@ -36,9 +36,9 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = new Interval(1, false, 2, true, false);
             // then
-            Assert.AreEqual(1, result.LowerBound);
+            Assert.That(result.LowerBound, Is.EqualTo(1));
             Assert.IsFalse(result.OpenLowerBound);
-            Assert.AreEqual(2, result.UpperBound);
+            Assert.That(result.UpperBound, Is.EqualTo(2));
             Assert.IsTrue(result.OpenUpperBound);
             Assert.IsFalse(result.IsIntegerInterval);
         }
@@ -59,10 +59,10 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             //       consistent.
             // TODO: Create some exception classes for bad types, values,
             //       and/or arguments
-            Assert.AreEqual("lowerBound", ex.ParamName);
-            Assert.AreEqual(
-                "Not a number: lowerBound",
-                ex.Message);
+            Assert.That(ex.ParamName, Is.EqualTo("lowerBound"));
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Not a number: lowerBound"));
         }
 
         [Test]
@@ -75,10 +75,10 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
                     var i = new Interval(1, false, float.NaN, false, false);
                 });
             // and
-            Assert.AreEqual("upperBound", ex.ParamName);
-            Assert.AreEqual(
-                "Not a number: upperBound",
-                ex.Message);
+            Assert.That(ex.ParamName, Is.EqualTo("upperBound"));
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Not a number: upperBound"));
         }
 
         [Test]
@@ -111,9 +111,9 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = new Interval(2, false, 1, true, false);
             // then
-            Assert.AreEqual(1, result.LowerBound);
+            Assert.That(result.LowerBound, Is.EqualTo(1));
             Assert.IsTrue(result.OpenLowerBound);
-            Assert.AreEqual(2, result.UpperBound);
+            Assert.That(result.UpperBound, Is.EqualTo(2));
             Assert.IsFalse(result.OpenUpperBound);
         }
 
@@ -123,9 +123,9 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = new Interval(3, true, 4, false, true);
             // then
-            Assert.AreEqual(3, result.LowerBound);
+            Assert.That(result.LowerBound, Is.EqualTo(3));
             Assert.IsTrue(result.OpenLowerBound);
-            Assert.AreEqual(4, result.UpperBound);
+            Assert.That(result.UpperBound, Is.EqualTo(4));
             Assert.IsFalse(result.OpenUpperBound);
             Assert.IsTrue(result.IsIntegerInterval);
         }
@@ -139,7 +139,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // given
             var interval = new Interval(1, false, 3, false, false);
             // expect
-            Assert.AreEqual(2, interval.Length);
+            Assert.That(interval.Length, Is.EqualTo(2));
         }
 
         [Test]
@@ -148,9 +148,9 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = Interval.Integer(1, 3);
             // then
-            Assert.AreEqual(1, result.LowerBound);
+            Assert.That(result.LowerBound, Is.EqualTo(1));
             Assert.IsFalse(result.OpenLowerBound);
-            Assert.AreEqual(3, result.UpperBound);
+            Assert.That(result.UpperBound, Is.EqualTo(3));
             Assert.IsFalse(result.OpenUpperBound);
             Assert.IsTrue(result.IsIntegerInterval);
         }
@@ -163,9 +163,9 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = interval.Round();
             // then
-            Assert.AreEqual(1, result.LowerBound);
+            Assert.That(result.LowerBound, Is.EqualTo(1));
             Assert.IsFalse(result.OpenLowerBound);
-            Assert.AreEqual(3, result.UpperBound);
+            Assert.That(result.UpperBound, Is.EqualTo(3));
             Assert.IsFalse(result.OpenUpperBound);
             Assert.IsTrue(result.IsIntegerInterval);
         }
@@ -182,7 +182,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = interval.CalcDelta(2);
             // then
-            Assert.AreEqual(2, result, 0.000001f);
+            Assert.That(result, Is.EqualTo(2).Within(0.000001f));
         }
 
         [Test]
@@ -193,7 +193,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = interval.CalcDelta(3);
             // then
-            Assert.AreEqual(1, result, 0.000001f);
+            Assert.That(result, Is.EqualTo(1).Within(0.000001f));
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.IntervalT
             // when
             var result = interval.CalcDelta(101);
             // then
-            Assert.AreEqual(0.02f, result, 0.000001f);
+            Assert.That(result, Is.EqualTo(0.02f).Within(0.000001f));
         }
 
         [Test]

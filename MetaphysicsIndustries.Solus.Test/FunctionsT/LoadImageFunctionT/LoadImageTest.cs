@@ -39,24 +39,24 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             // when
             var result = LoadImageFunction.LoadImage("filename", reader);
             // then
-            Assert.AreEqual(4, result.RowCount);
-            Assert.AreEqual(4, result.ColumnCount);
-            Assert.AreEqual(0x0000ff, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(0x00007f, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(0x000000, result[0, 2].ToNumber().Value);
-            Assert.AreEqual(0x7f7f7f, result[0, 3].ToNumber().Value);
-            Assert.AreEqual(0x00ff00, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(0x007f00, result[1, 1].ToNumber().Value);
-            Assert.AreEqual(0xffff00, result[1, 2].ToNumber().Value);
-            Assert.AreEqual(0x7f7f00, result[1, 3].ToNumber().Value);
-            Assert.AreEqual(0xff0000, result[2, 0].ToNumber().Value);
-            Assert.AreEqual(0x7f0000, result[2, 1].ToNumber().Value);
-            Assert.AreEqual(0xff00ff, result[2, 2].ToNumber().Value);
-            Assert.AreEqual(0x7f007f, result[2, 3].ToNumber().Value);
-            Assert.AreEqual(0xffffff, result[3, 0].ToNumber().Value);
-            Assert.AreEqual(0x7f7f7f, result[3, 1].ToNumber().Value);
-            Assert.AreEqual(0x00ffff, result[3, 2].ToNumber().Value);
-            Assert.AreEqual(0x007f7f, result[3, 3].ToNumber().Value);
+            Assert.That(result.RowCount, Is.EqualTo(4));
+            Assert.That(result.ColumnCount, Is.EqualTo(4));
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(0x0000ff));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(0x00007f));
+            Assert.That(result[0, 2].ToNumber().Value, Is.EqualTo(0x000000));
+            Assert.That(result[0, 3].ToNumber().Value, Is.EqualTo(0x7f7f7f));
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(0x00ff00));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(0x007f00));
+            Assert.That(result[1, 2].ToNumber().Value, Is.EqualTo(0xffff00));
+            Assert.That(result[1, 3].ToNumber().Value, Is.EqualTo(0x7f7f00));
+            Assert.That(result[2, 0].ToNumber().Value, Is.EqualTo(0xff0000));
+            Assert.That(result[2, 1].ToNumber().Value, Is.EqualTo(0x7f0000));
+            Assert.That(result[2, 2].ToNumber().Value, Is.EqualTo(0xff00ff));
+            Assert.That(result[2, 3].ToNumber().Value, Is.EqualTo(0x7f007f));
+            Assert.That(result[3, 0].ToNumber().Value, Is.EqualTo(0xffffff));
+            Assert.That(result[3, 1].ToNumber().Value, Is.EqualTo(0x7f7f7f));
+            Assert.That(result[3, 2].ToNumber().Value, Is.EqualTo(0x00ffff));
+            Assert.That(result[3, 3].ToNumber().Value, Is.EqualTo(0x007f7f));
         }
 
         [Test]
@@ -72,24 +72,24 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
             // then
             Assert.IsTrue(result0.IsIsMatrix(null));
             var result = result0.ToMatrix();
-            Assert.AreEqual(4, result.RowCount);
-            Assert.AreEqual(4, result.ColumnCount);
-            Assert.AreEqual(0x0000ff, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(0x00007f, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(0x000000, result[0, 2].ToNumber().Value);
-            Assert.AreEqual(0x7f7f7f, result[0, 3].ToNumber().Value);
-            Assert.AreEqual(0x00ff00, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(0x007f00, result[1, 1].ToNumber().Value);
-            Assert.AreEqual(0xffff00, result[1, 2].ToNumber().Value);
-            Assert.AreEqual(0x7f7f00, result[1, 3].ToNumber().Value);
-            Assert.AreEqual(0xff0000, result[2, 0].ToNumber().Value);
-            Assert.AreEqual(0x7f0000, result[2, 1].ToNumber().Value);
-            Assert.AreEqual(0xff00ff, result[2, 2].ToNumber().Value);
-            Assert.AreEqual(0x7f007f, result[2, 3].ToNumber().Value);
-            Assert.AreEqual(0xffffff, result[3, 0].ToNumber().Value);
-            Assert.AreEqual(0x7f7f7f, result[3, 1].ToNumber().Value);
-            Assert.AreEqual(0x00ffff, result[3, 2].ToNumber().Value);
-            Assert.AreEqual(0x007f7f, result[3, 3].ToNumber().Value);
+            Assert.That(result.RowCount, Is.EqualTo(4));
+            Assert.That(result.ColumnCount, Is.EqualTo(4));
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(0x0000ff));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(0x00007f));
+            Assert.That(result[0, 2].ToNumber().Value, Is.EqualTo(0x000000));
+            Assert.That(result[0, 3].ToNumber().Value, Is.EqualTo(0x7f7f7f));
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(0x00ff00));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(0x007f00));
+            Assert.That(result[1, 2].ToNumber().Value, Is.EqualTo(0xffff00));
+            Assert.That(result[1, 3].ToNumber().Value, Is.EqualTo(0x7f7f00));
+            Assert.That(result[2, 0].ToNumber().Value, Is.EqualTo(0xff0000));
+            Assert.That(result[2, 1].ToNumber().Value, Is.EqualTo(0x7f0000));
+            Assert.That(result[2, 2].ToNumber().Value, Is.EqualTo(0xff00ff));
+            Assert.That(result[2, 3].ToNumber().Value, Is.EqualTo(0x7f007f));
+            Assert.That(result[3, 0].ToNumber().Value, Is.EqualTo(0xffffff));
+            Assert.That(result[3, 1].ToNumber().Value, Is.EqualTo(0x7f7f7f));
+            Assert.That(result[3, 2].ToNumber().Value, Is.EqualTo(0x00ffff));
+            Assert.That(result[3, 3].ToNumber().Value, Is.EqualTo(0x007f7f));
         }
 
         public byte[] TinyTestPatternPng =

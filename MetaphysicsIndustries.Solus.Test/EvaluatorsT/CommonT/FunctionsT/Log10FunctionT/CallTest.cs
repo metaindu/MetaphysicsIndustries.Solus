@@ -62,7 +62,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, null);
             // then
-            Assert.AreEqual(expected, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(expected));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
             // and
-            Assert.AreEqual("Argument must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<OperandException>(
                 () => eval.Call(f, args, null));
             // and
-            Assert.AreEqual("Argument must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
     }
 }

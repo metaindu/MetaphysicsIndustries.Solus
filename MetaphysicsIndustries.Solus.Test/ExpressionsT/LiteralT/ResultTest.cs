@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             Assert.IsTrue(value.IsScalar(env));
             Assert.IsFalse(value.IsVector(env));
             Assert.IsFalse(value.IsMatrix(env));
-            Assert.AreEqual(0, value.GetTensorRank(env));
+            Assert.That(value.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsFalse(value.IsString(env));
             // when
             var result = expr.GetResultType(env);
@@ -48,7 +48,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             Assert.IsTrue(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
             Assert.IsFalse(result.IsMatrix(env));
-            Assert.AreEqual(0, result.GetTensorRank(env));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsFalse(result.IsString(env));
         }
 
@@ -70,9 +70,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             Assert.IsFalse(value.IsScalar(env));
             Assert.IsFalse(value.IsVector(env));
             Assert.IsTrue(value.IsMatrix(env));
-            Assert.AreEqual(2, value.GetTensorRank(env));
-            Assert.AreEqual(3, value.GetDimension(env, 0));
-            Assert.AreEqual(4, value.GetDimension(env, 1));
+            Assert.That(value.GetTensorRank(env), Is.EqualTo(2));
+            Assert.That(value.GetDimension(env, 0), Is.EqualTo(3));
+            Assert.That(value.GetDimension(env, 1), Is.EqualTo(4));
             Assert.IsFalse(value.IsString(env));
             // when
             var result = expr.GetResultType(env);
@@ -80,9 +80,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
             Assert.IsTrue(result.IsMatrix(env));
-            Assert.AreEqual(2, result.GetTensorRank(env));
-            Assert.AreEqual(3, result.GetDimension(env, 0));
-            Assert.AreEqual(4, result.GetDimension(env, 1));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(2));
+            Assert.That(result.GetDimension(env, 0), Is.EqualTo(3));
+            Assert.That(result.GetDimension(env, 1), Is.EqualTo(4));
             Assert.IsFalse(result.IsString(env));
         }
 
@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             Assert.IsFalse(value.IsScalar(env));
             Assert.IsFalse(value.IsVector(env));
             Assert.IsFalse(value.IsMatrix(env));
-            Assert.AreEqual(0, value.GetTensorRank(env));
+            Assert.That(value.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsTrue(value.IsString(env));
             // when
             var result = expr.GetResultType(env);
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
             Assert.IsFalse(result.IsMatrix(env));
-            Assert.AreEqual(0, result.GetTensorRank(env));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsTrue(result.IsString(env));
         }
     }

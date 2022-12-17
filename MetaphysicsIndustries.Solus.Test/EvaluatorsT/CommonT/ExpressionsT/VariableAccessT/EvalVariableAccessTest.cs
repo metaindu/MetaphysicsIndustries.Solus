@@ -51,7 +51,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsScalar(null));
             Assert.IsInstanceOf<Number>(result0);
             var result = result0.ToNumber();
-            Assert.AreEqual(3, result.Value);
+            Assert.That(result.Value, Is.EqualTo(3));
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsScalar(null));
             Assert.IsInstanceOf<Number>(result0);
             var result = result0.ToNumber();
-            Assert.AreEqual(1, result.Value);
+            Assert.That(result.Value, Is.EqualTo(1));
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsScalar(null));
             Assert.IsInstanceOf<Number>(result0);
             var result = result0.ToNumber();
-            Assert.AreEqual(3, result.Value);
+            Assert.That(result.Value, Is.EqualTo(3));
         }
 
         [Test]
@@ -109,10 +109,10 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsVector(null));
             Assert.IsInstanceOf<Vector>(result0);
             var result = (Vector)result0;
-            Assert.AreEqual(3, result.Length);
-            Assert.AreEqual(1, result[0].ToNumber().Value);
-            Assert.AreEqual(2, result[1].ToNumber().Value);
-            Assert.AreEqual(3, result[2].ToNumber().Value);
+            Assert.That(result.Length, Is.EqualTo(3));
+            Assert.That(result[0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[2].ToNumber().Value, Is.EqualTo(3));
         }
 
         [Test]
@@ -135,12 +135,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsMatrix(null));
             Assert.IsInstanceOf<Matrix>(result0);
             var result = (Matrix)result0;
-            Assert.AreEqual(2, result.RowCount);
-            Assert.AreEqual(2, result.ColumnCount);
-            Assert.AreEqual(1, result[0, 0].ToNumber().Value);
-            Assert.AreEqual(2, result[0, 1].ToNumber().Value);
-            Assert.AreEqual(3, result[1, 0].ToNumber().Value);
-            Assert.AreEqual(4, result[1, 1].ToNumber().Value);
+            Assert.That(result.RowCount, Is.EqualTo(2));
+            Assert.That(result.ColumnCount, Is.EqualTo(2));
+            Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(1));
+            Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(2));
+            Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(3));
+            Assert.That(result[1, 1].ToNumber().Value, Is.EqualTo(4));
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsString(null));
             Assert.IsInstanceOf<StringValue>(result0);
             var result = (StringValue)result0;
-            Assert.AreEqual("abc", result.Value);
+            Assert.That(result.Value, Is.EqualTo("abc"));
         }
 
         [Test]
@@ -178,8 +178,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsInterval(null));
             Assert.IsInstanceOf<Interval>(result0);
             var result = (Interval)result0;
-            Assert.AreEqual(1.1f, result.LowerBound);
-            Assert.AreEqual(3.5f, result.UpperBound);
+            Assert.That(result.LowerBound, Is.EqualTo(1.1f));
+            Assert.That(result.UpperBound, Is.EqualTo(3.5f));
         }
 
         [Test]
@@ -197,7 +197,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsConcrete);
             Assert.IsTrue(result0.IsIsFunction(null));
             Assert.IsInstanceOf<CosineFunction>(result0);
-            Assert.AreSame(CosineFunction.Value, result0);
+            Assert.That(result0, Is.SameAs(CosineFunction.Value));
         }
 
         [Test]
@@ -215,7 +215,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result.IsConcrete);
             Assert.IsTrue(result.IsIsExpression(null));
             Assert.IsInstanceOf<ColorExpression>(result);
-            Assert.AreSame(expr2, result);
+            Assert.That(result, Is.SameAs(expr2));
         }
 
         [Test]
@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var ex = Assert.Throws<NameException>(
                 () => eval.Eval(expr, env));
             // and
-            Assert.AreEqual("Variable not found: a", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Variable not found: a"));
         }
     }
 }

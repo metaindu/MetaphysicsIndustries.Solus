@@ -166,7 +166,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<NameException>(
                 () => ec.Check(expr, env));
             // and
-            Assert.AreEqual("Variable not found: a", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Variable not found: a"));
         }
     }
 }

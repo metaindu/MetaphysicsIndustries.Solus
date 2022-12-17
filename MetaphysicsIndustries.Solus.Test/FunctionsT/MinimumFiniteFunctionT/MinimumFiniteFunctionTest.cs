@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MinimumFiniteFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.AreEqual("minf", MinimumFiniteFunction.Value.Name);
+            Assert.That(MinimumFiniteFunction.Value.Name, Is.EqualTo("minf"));
         }
     }
 }

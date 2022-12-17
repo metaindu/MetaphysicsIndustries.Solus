@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
             // when
             var result = HelpCommand.ConstructListText(env, cs);
             // then
-            Assert.AreEqual(@"Commands:
+            Assert.That(result, Is.EqualTo(@"Commands:
   delete func_assign help var_assign vars 
 
 Functions:
@@ -55,7 +55,7 @@ Macros:
 
 Additional topics:
   solus t 
-", result);
+"));
         }
 
         [Test]
@@ -75,7 +75,7 @@ Additional topics:
             // when
             var result = HelpCommand.ConstructListText(env, cs);
             // then
-            Assert.AreEqual(@"Commands:
+            Assert.That(result, Is.EqualTo(@"Commands:
   delete func_assign help var_assign vars 
 
 Functions:
@@ -87,7 +87,7 @@ Macros:
 
 Additional topics:
   solus t 
-", result);
+"));
         }
 
         [Test]
@@ -107,7 +107,7 @@ Additional topics:
             // when
             var result = HelpCommand.ConstructListText(env, cs);
             // then
-            Assert.AreEqual(@"Commands:
+            Assert.That(result, Is.EqualTo(@"Commands:
   delete func_assign help var_assign vars 
 
 Functions:
@@ -119,7 +119,7 @@ Macros:
 
 Additional topics:
   solus t 
-", result);
+"));
         }
     }
 }

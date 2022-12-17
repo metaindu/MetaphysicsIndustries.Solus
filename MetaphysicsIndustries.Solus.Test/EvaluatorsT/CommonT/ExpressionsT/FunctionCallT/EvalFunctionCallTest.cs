@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsScalar(null));
             Assert.IsInstanceOf<Number>(result0);
             var result = result0.ToNumber();
-            Assert.AreEqual(5, result.Value);
+            Assert.That(result.Value, Is.EqualTo(5));
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result0.IsIsScalar(null));
             Assert.IsInstanceOf<Number>(result0);
             var result = result0.ToNumber();
-            Assert.AreEqual(5, result.Value);
+            Assert.That(result.Value, Is.EqualTo(5));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // then
             Assert.IsInstanceOf<Number>(result);
             var n = (Number)result;
-            Assert.AreEqual(2, n.Value);
+            Assert.That(n.Value, Is.EqualTo(2));
         }
     }
 }

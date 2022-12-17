@@ -39,13 +39,14 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
                 new MockIlExpression(il => il.Add(i1)));
             var nm = new NascentMethod();
             // precondition
-            Assert.AreEqual(0, nm.Instructions.Count);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(0));
             // when
             expr.GetInstructions(nm);
             // then
-            Assert.AreEqual(2, nm.Instructions.Count);
-            Assert.AreEqual(i1, nm.Instructions[0]);
-            Assert.AreEqual(Instruction.ConvertR4(), nm.Instructions[1]);
+            Assert.That(nm.Instructions.Count, Is.EqualTo(2));
+            Assert.That(nm.Instructions[0], Is.EqualTo(i1));
+            Assert.That(nm.Instructions[1],
+                Is.EqualTo(Instruction.ConvertR4()));
         }
     }
 }

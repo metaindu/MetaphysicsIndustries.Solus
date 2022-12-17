@@ -37,15 +37,15 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             var parent = new SolusEnvironment(useDefaults: false);
             parent.SetVariable("a", new Literal(1));
             // precondition
-            Assert.AreEqual(1, parent.CountVariables());
+            Assert.That(parent.CountVariables(), Is.EqualTo(1));
             Assert.Contains("a", parent.GetVariableNames().ToList());
             // when
             var child = parent.CreateChildEnvironment();
             // then
-            Assert.AreEqual(1, parent.CountVariables());
+            Assert.That(parent.CountVariables(), Is.EqualTo(1));
             Assert.Contains("a", parent.GetVariableNames().ToList());
 
-            Assert.AreEqual(1, child.CountVariables());
+            Assert.That(child.CountVariables(), Is.EqualTo(1));
             Assert.Contains("a", child.GetVariableNames().ToList());
         }
 
@@ -57,8 +57,8 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             parent.SetVariable("a", new Literal(1));
             var child = parent.CreateChildEnvironment();
             // precondition
-            Assert.AreEqual(1, parent.CountVariables());
-            Assert.AreEqual(1, child.CountVariables());
+            Assert.That(parent.CountVariables(), Is.EqualTo(1));
+            Assert.That(child.CountVariables(), Is.EqualTo(1));
             Assert.IsNotNull(parent.GetVariable("a"));
             Assert.IsNotNull(child.GetVariable("a"));
             Assert.IsNull(parent.GetVariable("b"));
@@ -66,8 +66,8 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             parent.SetVariable("b", new Literal(2));
             // then
-            Assert.AreEqual(2, parent.CountVariables());
-            Assert.AreEqual(2, child.CountVariables());
+            Assert.That(parent.CountVariables(), Is.EqualTo(2));
+            Assert.That(child.CountVariables(), Is.EqualTo(2));
             Assert.IsNotNull(parent.GetVariable("a"));
             Assert.IsNotNull(child.GetVariable("a"));
             Assert.IsNotNull(parent.GetVariable("b"));
@@ -99,8 +99,8 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             parent.SetVariable("a", new Literal(1));
             var child = parent.CreateChildEnvironment();
             // precondition
-            Assert.AreEqual(1, parent.CountVariables());
-            Assert.AreEqual(1, child.CountVariables());
+            Assert.That(parent.CountVariables(), Is.EqualTo(1));
+            Assert.That(child.CountVariables(), Is.EqualTo(1));
             Assert.IsNotNull(parent.GetVariable("a"));
             Assert.IsNotNull(child.GetVariable("a"));
             Assert.IsNull(parent.GetVariable("b"));
@@ -108,8 +108,8 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             child.SetVariable("b", new Literal(2));
             // then
-            Assert.AreEqual(1, parent.CountVariables());
-            Assert.AreEqual(2, child.CountVariables());
+            Assert.That(parent.CountVariables(), Is.EqualTo(1));
+            Assert.That(child.CountVariables(), Is.EqualTo(2));
             Assert.IsNotNull(parent.GetVariable("a"));
             Assert.IsNotNull(child.GetVariable("a"));
             Assert.IsNull(parent.GetVariable("b"));
@@ -141,22 +141,22 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             parent.SetVariable("a", new Literal(1));
             var child = parent.CreateChildEnvironment();
             // precondition
-            Assert.AreEqual(1,
-                ((Literal)parent.GetVariable("a")).Value.ToFloat());
-            Assert.AreEqual(1,
-                ((Literal)child.GetVariable("a")).Value.ToFloat());
-            Assert.AreSame(parent.GetVariable("a"),
-                child.GetVariable("a"));
+            Assert.That(((Literal)parent.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(1));
+            Assert.That(((Literal)child.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(1));
+            Assert.That(child.GetVariable("a"),
+                Is.SameAs(parent.GetVariable("a")));
             // when
             child.RemoveVariable("a");
             child.SetVariable("a", new Literal(2));
             // then
-            Assert.AreEqual(1,
-                ((Literal)parent.GetVariable("a")).Value.ToFloat());
-            Assert.AreEqual(2,
-                ((Literal)child.GetVariable("a")).Value.ToFloat());
-            Assert.AreNotSame(parent.GetVariable("a"),
-                child.GetVariable("a"));
+            Assert.That(((Literal)parent.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(1));
+            Assert.That(((Literal)child.GetVariable("a")).Value.ToFloat(),
+                Is.EqualTo(2));
+            Assert.That(parent.GetVariable("a"),
+                Is.Not.SameAs(child.GetVariable("a")));
         }
     }
 }

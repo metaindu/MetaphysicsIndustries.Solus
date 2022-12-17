@@ -40,11 +40,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = new ComponentAccess(expr, indexes);
             // then
-            Assert.AreSame(expr, result.Expr);
-            Assert.AreEqual(1, result.Indexes.Count);
+            Assert.That(result.Expr, Is.SameAs(expr));
+            Assert.That(result.Indexes.Count, Is.EqualTo(1));
             Assert.IsInstanceOf<Literal>(result.Indexes[0]);
-            Assert.AreEqual(1,
-                ((Literal) result.Indexes[0]).Value.ToFloat());
+            Assert.That(((Literal) result.Indexes[0]).Value.ToFloat(),
+                Is.EqualTo(1));
         }
 
         [Test]
@@ -59,10 +59,10 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // then
             Assert.IsInstanceOf<ComponentAccess>(result);
             var ca2 = (ComponentAccess) result;
-            Assert.AreNotSame(ca, ca2);
-            Assert.AreSame(ca.Expr, ca2.Expr);
-            Assert.AreEqual(1, ca2.Indexes.Count);
-            Assert.AreSame(ca.Indexes[0], ca2.Indexes[0]);
+            Assert.That(ca2, Is.Not.SameAs(ca));
+            Assert.That(ca2.Expr, Is.SameAs(ca.Expr));
+            Assert.That(ca2.Indexes.Count, Is.EqualTo(1));
+            Assert.That(ca2.Indexes[0], Is.SameAs(ca.Indexes[0]));
         }
 
         [Test]
@@ -83,11 +83,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             ca.AcceptVisitor(visitor);
             // then
-            Assert.AreEqual(4, exprs.Count);
-            Assert.AreSame(ca, exprs[0]);
-            Assert.AreSame(expr, exprs[1]);
-            Assert.AreSame(indexes[0], exprs[2]);
-            Assert.AreSame(indexes[1], exprs[3]);
+            Assert.That(exprs.Count, Is.EqualTo(4));
+            Assert.That(exprs[0], Is.SameAs(ca));
+            Assert.That(exprs[1], Is.SameAs(expr));
+            Assert.That(exprs[2], Is.SameAs(indexes[0]));
+            Assert.That(exprs[3], Is.SameAs(indexes[1]));
         }
 
         [Test]
@@ -104,7 +104,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = ca.ToString();
             // then
-            Assert.AreEqual("a[b, c]", result);
+            Assert.That(result, Is.EqualTo("a[b, c]"));
         }
     }
 }

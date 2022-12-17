@@ -52,8 +52,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var fc = (FunctionCall)result;
             Assert.IsInstanceOf<Literal>(fc.Function);
             var f = (Literal)fc.Function;
-            Assert.AreSame(AdditionOperation.Value, f.Value);
-            Assert.AreEqual(2, fc.Arguments.Count);
+            Assert.That(f.Value, Is.SameAs(AdditionOperation.Value));
+            Assert.That(fc.Arguments.Count, Is.EqualTo(2));
             Assert.IsTrue(fc.Arguments[0] is Literal ||
                           fc.Arguments[0] is FunctionCall);
             Assert.IsTrue(fc.Arguments[1] is Literal ||
@@ -71,30 +71,32 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 lit = (Literal)fc.Arguments[1];
             }
 
-            Assert.AreEqual(5,lit.Value.ToNumber().Value);
+            Assert.That(lit.Value.ToNumber().Value,
+                Is.EqualTo(5));
 
             Assert.IsInstanceOf<Literal>(fc2.Function);
-            Assert.AreSame(MultiplicationOperation.Value,
-                ((Literal)fc2.Function).Value);
-            Assert.AreEqual(2, fc2.Arguments.Count);
+            Assert.That(((Literal)fc2.Function).Value,
+                Is.SameAs(MultiplicationOperation.Value));
+            Assert.That(fc2.Arguments.Count, Is.EqualTo(2));
             Assert.IsInstanceOf<Literal>(fc2.Arguments[0]);
 
             var arg11 = (Literal)fc2.Arguments[0];
-            Assert.AreEqual(3,arg11.Value.ToNumber().Value);
+            Assert.That(arg11.Value.ToNumber().Value,
+                Is.EqualTo(3));
 
             Assert.IsInstanceOf<FunctionCall>(fc2.Arguments[1]);
             var arg12 = (FunctionCall)fc2.Arguments[1];
             Assert.IsInstanceOf<Literal>(arg12.Function);
-            Assert.AreSame(MultiplicationOperation.Value,
-                ((Literal)arg12.Function).Value);
-            Assert.AreEqual(2, arg12.Arguments.Count);
+            Assert.That(((Literal)arg12.Function).Value,
+                Is.SameAs(MultiplicationOperation.Value));
+            Assert.That(arg12.Arguments.Count, Is.EqualTo(2));
             Assert.IsInstanceOf<Literal>(arg12.Arguments[0]);
-            Assert.AreEqual(2,
-                ((Literal)arg12.Arguments[0]).Value.ToNumber().Value);
+            Assert.That(((Literal)arg12.Arguments[0]).Value.ToNumber().Value,
+                Is.EqualTo(2));
 
             Assert.IsInstanceOf<VariableAccess>(arg12.Arguments[1]);
-            Assert.AreEqual("x",
-                ((VariableAccess)arg12.Arguments[1]).VariableName);
+            Assert.That(((VariableAccess)arg12.Arguments[1]).VariableName,
+                Is.EqualTo("x"));
         }
     }
 }

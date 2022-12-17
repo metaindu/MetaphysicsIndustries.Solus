@@ -230,7 +230,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.GetResultType(env).GetTensorRank(env);
             // then
-            Assert.AreEqual(result, 0);
+            Assert.That(result, Is.EqualTo(0));
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             // when
             var result = expr.GetResultType(env).GetTensorRank(env);
             // then
-            Assert.AreEqual(result, 0);
+            Assert.That(result, Is.EqualTo(0));
         }
 
         [Test]

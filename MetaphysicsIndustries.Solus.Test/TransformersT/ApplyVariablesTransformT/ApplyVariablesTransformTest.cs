@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr2, result);
+            Assert.That(result, Is.SameAs(expr2));
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // then
             Assert.IsInstanceOf<Literal>(result);
             var literal = (Literal)result;
-            Assert.AreEqual(literal.Value, value);
+            Assert.That(value, Is.EqualTo(literal.Value));
         }
 
         [Test]
@@ -106,15 +106,15 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             Assert.IsInstanceOf<MatrixExpression>(result);
             var me = (MatrixExpression)result;
-            Assert.AreEqual(1, me.RowCount);
-            Assert.AreEqual(2, me.ColumnCount);
-            Assert.AreEqual(3,
-                ((Literal)me[0, 0]).Value.ToNumber().Value);
-            Assert.AreEqual(4,
-                ((Literal)me[0, 1]).Value.ToNumber().Value);
+            Assert.That(me.RowCount, Is.EqualTo(1));
+            Assert.That(me.ColumnCount, Is.EqualTo(2));
+            Assert.That(((Literal)me[0, 0]).Value.ToNumber().Value,
+                Is.EqualTo(3));
+            Assert.That(((Literal)me[0, 1]).Value.ToNumber().Value,
+                Is.EqualTo(4));
         }
 
         [Test]
@@ -132,14 +132,14 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             Assert.IsInstanceOf<MatrixExpression>(result);
             var me = (MatrixExpression)result;
-            Assert.AreEqual(1, me.RowCount);
-            Assert.AreEqual(2, me.ColumnCount);
-            Assert.AreEqual(3,
-                ((Literal)me[0, 0]).Value.ToNumber().Value);
-            Assert.AreSame(expr2, me[0, 1]);
+            Assert.That(me.RowCount, Is.EqualTo(1));
+            Assert.That(me.ColumnCount, Is.EqualTo(2));
+            Assert.That(((Literal)me[0, 0]).Value.ToNumber().Value,
+                Is.EqualTo(3));
+            Assert.That(expr2, Is.SameAs(me[0, 1]));
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -173,14 +173,14 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             Assert.IsInstanceOf<VectorExpression>(result);
             var ve = (VectorExpression)result;
-            Assert.AreEqual(2, ve.Length);
-            Assert.AreEqual(3,
-                ((Literal)ve[0]).Value.ToNumber().Value);
-            Assert.AreEqual(4,
-                ((Literal)ve[1]).Value.ToNumber().Value);
+            Assert.That(ve.Length, Is.EqualTo(2));
+            Assert.That(((Literal)ve[0]).Value.ToNumber().Value,
+                Is.EqualTo(3));
+            Assert.That(((Literal)ve[1]).Value.ToNumber().Value,
+                Is.EqualTo(4));
         }
 
         [Test]
@@ -198,13 +198,13 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             Assert.IsInstanceOf<VectorExpression>(result);
             var ve = (VectorExpression)result;
-            Assert.AreEqual(2, ve.Length);
-            Assert.AreEqual(3,
-                ((Literal)ve[0]).Value.ToNumber().Value);
-            Assert.AreSame(expr2, ve[1]);
+            Assert.That(ve.Length, Is.EqualTo(2));
+            Assert.That(((Literal)ve[0]).Value.ToNumber().Value,
+                Is.EqualTo(3));
+            Assert.That(ve[1], Is.SameAs(expr2));
         }
 
         [Test]
@@ -219,7 +219,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -238,7 +238,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
 
         [Test]
@@ -265,7 +265,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             var result = tf.Transform(expr, env);
             // then
             Assert.IsInstanceOf<ComponentAccess>(result);
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             var ca = (ComponentAccess)result;
             Assert.IsInstanceOf<Literal>(ca.Expr);
             Assert.IsInstanceOf<Literal>(ca.Indexes[0]);
@@ -291,9 +291,9 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             var result = tf.Transform(expr, env);
             // then
             Assert.IsInstanceOf<ComponentAccess>(result);
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             var ca = (ComponentAccess)result;
-            Assert.AreSame(expr.Expr, ca.Expr);
+            Assert.That(ca.Expr, Is.SameAs(expr.Expr));
             Assert.IsInstanceOf<Literal>(ca.Indexes[0]);
             Assert.IsInstanceOf<Literal>(ca.Indexes[1]);
         }
@@ -321,11 +321,11 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             var result = tf.Transform(expr, env);
             // then
             Assert.IsInstanceOf<ComponentAccess>(result);
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             var ca = (ComponentAccess)result;
             Assert.IsInstanceOf<Literal>(ca.Expr);
             Assert.IsInstanceOf<Literal>(ca.Indexes[0]);
-            Assert.AreSame(expr.Indexes[1], ca.Indexes[1]);
+            Assert.That(ca.Indexes[1], Is.SameAs(expr.Indexes[1]));
         }
 
         [Test]
@@ -346,9 +346,9 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             var result = tf.Transform(expr, env);
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             var fc = (FunctionCall)result;
-            Assert.AreSame(expr.Function, fc.Function);
+            Assert.That(fc.Function, Is.SameAs(expr.Function));
             Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
             Assert.IsInstanceOf<Literal>(fc.Arguments[1]);
             Assert.IsInstanceOf<Literal>(fc.Arguments[2]);
@@ -372,12 +372,12 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             var result = tf.Transform(expr, env);
             // then
             Assert.IsInstanceOf<FunctionCall>(result);
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             var fc = (FunctionCall)result;
-            Assert.AreSame(expr.Function, fc.Function);
+            Assert.That(fc.Function, Is.SameAs(expr.Function));
             Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
             Assert.IsInstanceOf<Literal>(fc.Arguments[1]);
-            Assert.AreSame(expr2, fc.Arguments[2]);
+            Assert.That(fc.Arguments[2], Is.SameAs(expr2));
         }
 
         [Test]
@@ -394,7 +394,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
         [Test]
         public void TransformIntervalWithNoneMissingYieldsTransformed()
@@ -413,7 +413,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             var result = tf.Transform(expr, env);
             // then
             Assert.IsInstanceOf<IntervalExpression>(result);
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             var interval = (IntervalExpression)result;
             Assert.IsInstanceOf<Literal>(interval.LowerBound);
             Assert.IsInstanceOf<Literal>(interval.UpperBound);
@@ -436,10 +436,10 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             var result = tf.Transform(expr, env);
             // then
             Assert.IsInstanceOf<IntervalExpression>(result);
-            Assert.AreNotSame(expr, result);
+            Assert.That(result, Is.Not.SameAs(expr));
             var interval = (IntervalExpression)result;
             Assert.IsInstanceOf<Literal>(interval.LowerBound);
-            Assert.AreSame(expr2,interval.UpperBound);
+            Assert.That(interval.UpperBound, Is.SameAs(expr2));
         }
 
         [Test]
@@ -456,7 +456,7 @@ namespace MetaphysicsIndustries.Solus.Test.TransformersT.
             // when
             var result = tf.Transform(expr, env);
             // then
-            Assert.AreSame(expr, result);
+            Assert.That(result, Is.SameAs(expr));
         }
     }
 }

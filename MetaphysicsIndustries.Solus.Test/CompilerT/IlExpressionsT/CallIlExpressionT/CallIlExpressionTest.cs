@@ -47,8 +47,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<CallIlExpression>(result);
-            Assert.AreSame(method.Method, result.Method);
-            Assert.AreSame(args, result.Args);
+            Assert.That(result.Method, Is.SameAs(method.Method));
+            Assert.That(result.Args, Is.SameAs(args));
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((Delegate)null, args));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: method",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: method"));
         }
 
         [Test]
@@ -74,9 +74,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression(method, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: args",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: args"));
         }
 
         [Test]
@@ -86,9 +86,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((Delegate)null, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: method",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: method"));
         }
 
         [Test]
@@ -104,8 +104,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<CallIlExpression>(result);
-            Assert.AreSame(method, result.Method);
-            Assert.AreSame(args, result.Args);
+            Assert.That(result.Method, Is.SameAs(method));
+            Assert.That(result.Args, Is.SameAs(args));
         }
 
         [Test]
@@ -117,9 +117,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((MethodInfo)null, args));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: method",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: method"));
         }
 
         [Test]
@@ -133,9 +133,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression(method, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: args",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: args"));
         }
 
         [Test]
@@ -145,9 +145,9 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new CallIlExpression((MethodInfo)null, null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: method",
-                ex.Message);
+            Assert.That(
+                ex.Message,
+                Is.EqualTo("Value cannot be null: method"));
         }
     }
 }

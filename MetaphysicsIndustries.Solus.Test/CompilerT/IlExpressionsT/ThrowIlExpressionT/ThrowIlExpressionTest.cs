@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<ThrowIlExpression>(result);
-            Assert.AreSame(argument, result.Argument);
+            Assert.That(result.Argument, Is.SameAs(argument));
         }
 
         [Test]
@@ -51,9 +51,8 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             var ex = Assert.Throws<ValueException>(
                 () => new ThrowIlExpression(null));
             // and
-            Assert.AreEqual(
-                "Value cannot be null: argument",
-                ex.Message);
+            Assert.That(
+                ex.Message, Is.EqualTo("Value cannot be null: argument"));
         }
     }
 }

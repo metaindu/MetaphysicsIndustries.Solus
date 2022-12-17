@@ -82,7 +82,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Argument must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Base must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Base must be positive"));
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Base must not be one", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Base must not be one"));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Argument must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<OperandException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.AreEqual("Base must be positive", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("Base must be positive"));
         }
     }
 }

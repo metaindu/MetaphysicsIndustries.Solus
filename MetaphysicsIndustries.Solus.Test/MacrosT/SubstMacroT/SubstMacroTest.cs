@@ -33,8 +33,8 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.SubstMacroT
         {
             // expect
             Assert.IsNotNull(SubstMacro.Value);
-            Assert.AreEqual("subst", SubstMacro.Value.Name);
-            Assert.AreEqual(3, SubstMacro.Value.NumArguments);
+            Assert.That(SubstMacro.Value.Name, Is.EqualTo("subst"));
+            Assert.That(SubstMacro.Value.NumArguments, Is.EqualTo(3));
         }
     }
 }

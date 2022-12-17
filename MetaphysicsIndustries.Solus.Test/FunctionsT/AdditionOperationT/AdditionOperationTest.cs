@@ -41,22 +41,22 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
         public void NameIsSet()
         {
             // expect
-            Assert.AreEqual("+", AdditionOperation.Value.Name);
+            Assert.That(AdditionOperation.Value.Name, Is.EqualTo("+"));
         }
 
         [Test]
         public void PrecedenceIsSet()
         {
             // expect
-            Assert.AreEqual(OperationPrecedence.Addition,
-                AdditionOperation.Value.Precedence);
+            Assert.That(AdditionOperation.Value.Precedence,
+                Is.EqualTo(OperationPrecedence.Addition));
         }
 
         [Test]
         public void IdentityValueIsSet()
         {
             // expect
-            Assert.AreEqual(0, AdditionOperation.Value.IdentityValue);
+            Assert.That(AdditionOperation.Value.IdentityValue, Is.EqualTo(0));
         }
     }
 }

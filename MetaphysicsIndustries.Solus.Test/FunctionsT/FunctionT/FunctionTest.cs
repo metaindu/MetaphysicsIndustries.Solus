@@ -38,11 +38,11 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             // when
             var f = new MockFunction(paramTypes, "func1");
             // then
-            Assert.AreEqual("func1", f.Name);
-            Assert.AreEqual("func1", f.DisplayName);
+            Assert.That(f.Name, Is.EqualTo("func1"));
+            Assert.That(f.DisplayName, Is.EqualTo("func1"));
             Assert.IsNotNull(f.ParamTypes);
-            Assert.AreEqual(1, f.ParamTypes.Count);
-            Assert.AreEqual(Types.Scalar, f.ParamTypes[0]);
+            Assert.That(f.ParamTypes.Count, Is.EqualTo(1));
+            Assert.That(f.ParamTypes[0], Is.EqualTo(Types.Scalar));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             var ex = Assert.Throws<ValueException>(
                 () => new MockFunction(null, "func2"));
             // and
-            Assert.AreEqual("paramTypes", ex.ParamName);
+            Assert.That(ex.ParamName, Is.EqualTo("paramTypes"));
         }
     }
 }

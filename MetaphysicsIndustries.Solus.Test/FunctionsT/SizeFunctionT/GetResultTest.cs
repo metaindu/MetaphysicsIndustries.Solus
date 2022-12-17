@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             Assert.IsTrue(arg1.IsScalar(null));
             Assert.IsFalse(arg1.IsVector(null));
             Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.AreEqual(0, arg1.GetTensorRank(null));
+            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
             Assert.IsFalse(arg1.IsString(null));
             // when
             var value = SizeFunction.Value;
@@ -48,10 +48,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(1, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
             Assert.IsFalse(result.IsString(null));
             // and
-            Assert.AreEqual(0, result.GetVectorLength(null));
+            Assert.That(result.GetVectorLength(null), Is.EqualTo(0));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             Assert.IsFalse(arg1.IsScalar(null));
             Assert.IsTrue(arg1.IsVector(null));
             Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.AreEqual(1, arg1.GetTensorRank(null));
+            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(1));
             Assert.IsFalse(arg1.IsString(null));
             // when
             var value = SizeFunction.Value;
@@ -73,10 +73,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(1, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
             Assert.IsFalse(result.IsString(null));
             // and
-            Assert.AreEqual(1, result.GetVectorLength(null));
+            Assert.That(result.GetVectorLength(null), Is.EqualTo(1));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             Assert.IsFalse(arg1.IsScalar(null));
             Assert.IsFalse(arg1.IsVector(null));
             Assert.IsTrue(arg1.IsMatrix(null));
-            Assert.AreEqual(2, arg1.GetTensorRank(null));
+            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(2));
             Assert.IsFalse(arg1.IsString(null));
             // when
             var value = SizeFunction.Value;
@@ -98,10 +98,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(1, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
             Assert.IsFalse(result.IsString(null));
             // and
-            Assert.AreEqual(2, result.GetVectorLength(null));
+            Assert.That(result.GetVectorLength(null), Is.EqualTo(2));
         }
     }
 }

@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Call(f, args, env);
             // then
-            Assert.AreEqual(7, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(7));
         }
 
         [Test]
@@ -85,18 +85,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             // precondition
             Assert.IsInstanceOf<Literal>(env.GetVariable("a"));
-            Assert.AreEqual(8,
-                ((Literal)env.GetVariable("a")).Value.ToNumber().Value);
+            Assert.That(((Literal)env.GetVariable("a")).Value.ToNumber().Value,
+                Is.EqualTo(8));
             Assert.IsFalse(env.ContainsVariable("b"));
             Assert.IsFalse(env.ContainsVariable("c"));
             // when
             var result = eval.Call(f, args, env);
             // then
-            Assert.AreEqual(7, result.ToNumber().Value);
+            Assert.That(result.ToNumber().Value, Is.EqualTo(7));
             // and
             Assert.IsInstanceOf<Literal>(env.GetVariable("a"));
-            Assert.AreEqual(8,
-                ((Literal)env.GetVariable("a")).Value.ToNumber().Value);
+            Assert.That(((Literal)env.GetVariable("a")).Value.ToNumber().Value,
+                Is.EqualTo(8));
             Assert.IsFalse(env.ContainsVariable("b"));
             Assert.IsFalse(env.ContainsVariable("c"));
         }

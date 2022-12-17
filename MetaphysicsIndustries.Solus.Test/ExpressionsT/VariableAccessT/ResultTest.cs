@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.IsTrue(mmo.IsScalar(env));
             Assert.IsFalse(mmo.IsVector(env));
             Assert.IsFalse(mmo.IsMatrix(env));
-            Assert.AreEqual(0, mmo.GetTensorRank(env));
+            Assert.That(mmo.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsFalse(mmo.IsString(env));
             // when
             var result = expr.GetResultType(env);
@@ -49,7 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.IsTrue(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
             Assert.IsFalse(result.IsMatrix(env));
-            Assert.AreEqual(0, result.GetTensorRank(env));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsFalse(result.IsString(env));
         }
 
@@ -67,9 +67,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.IsFalse(mmo.IsScalar(env));
             Assert.IsFalse(mmo.IsVector(env));
             Assert.IsTrue(mmo.IsMatrix(env));
-            Assert.AreEqual(2, mmo.GetTensorRank(env));
-            Assert.AreEqual(3, mmo.GetDimension(env, 0));
-            Assert.AreEqual(4, mmo.GetDimension(env, 1));
+            Assert.That(mmo.GetTensorRank(env), Is.EqualTo(2));
+            Assert.That(mmo.GetDimension(env, 0), Is.EqualTo(3));
+            Assert.That(mmo.GetDimension(env, 1), Is.EqualTo(4));
             Assert.IsFalse(mmo.IsString(env));
             // when
             var result = expr.GetResultType(env);
@@ -77,9 +77,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
             Assert.IsTrue(result.IsMatrix(env));
-            Assert.AreEqual(2, result.GetTensorRank(env));
-            Assert.AreEqual(3, result.GetDimension(env, 0));
-            Assert.AreEqual(4, result.GetDimension(env, 1));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(2));
+            Assert.That(result.GetDimension(env, 0), Is.EqualTo(3));
+            Assert.That(result.GetDimension(env, 1), Is.EqualTo(4));
             Assert.IsFalse(result.IsString(env));
         }
 
@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.IsFalse(mmo.IsScalar(env));
             Assert.IsFalse(mmo.IsVector(env));
             Assert.IsFalse(mmo.IsMatrix(env));
-            Assert.AreEqual(0, mmo.GetTensorRank(env));
+            Assert.That(mmo.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsTrue(mmo.IsString(env));
             // when
             var result = expr.GetResultType(env);
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
             Assert.IsFalse(result.IsScalar(env));
             Assert.IsFalse(result.IsVector(env));
             Assert.IsFalse(result.IsMatrix(env));
-            Assert.AreEqual(0, result.GetTensorRank(env));
+            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
             Assert.IsTrue(result.IsString(env));
         }
 

@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.CompilerT.IlExpressionsT.
             // then
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<DupIlExpression>(result);
-            Assert.AreSame(target, result.Target);
+            Assert.That(result.Target, Is.SameAs(target));
         }
 
         [Test]

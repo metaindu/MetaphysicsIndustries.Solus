@@ -34,24 +34,25 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.Vector2T
             // when
             var result = new Vector2(1, 2);
             // then
-            Assert.AreEqual(1, result.X);
-            Assert.AreEqual(2, result.Y);
+            Assert.That(result.X, Is.EqualTo(1));
+            Assert.That(result.Y, Is.EqualTo(2));
             // and
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
             Assert.IsFalse(result.IsMatrix(null));
-            Assert.AreEqual(1, result.GetTensorRank(null));
+            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
             Assert.IsFalse(result.IsString(null));
             Assert.IsNull(result.GetDimension(null, -1));
-            Assert.AreEqual(2, result.GetDimension(null, 0));
+            Assert.That(result.GetDimension(null, 0), Is.EqualTo(2));
             Assert.IsNull(result.GetDimension(null, 1));
-            Assert.AreEqual(new int[1] { 2 }, result.GetDimensions(null));
-            Assert.AreEqual(2, result.GetVectorLength(null));
+            Assert.That(result.GetDimensions(null),
+                Is.EqualTo(new int[1] { 2 }));
+            Assert.That(result.GetVectorLength(null), Is.EqualTo(2));
             Assert.IsFalse(result.IsInterval(null));
             Assert.IsFalse(result.IsFunction(null));
             Assert.IsFalse(result.IsExpression(null));
             Assert.IsTrue(result.IsConcrete);
-            Assert.AreEqual("", result.DocString);
+            Assert.That(result.DocString, Is.EqualTo(""));
         }
 
         [Test]
@@ -62,8 +63,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.Vector2T
             // when
             var result = -v;
             // then
-            Assert.AreEqual(-1, result.X);
-            Assert.AreEqual(-2, result.Y);
+            Assert.That(result.X, Is.EqualTo(-1));
+            Assert.That(result.Y, Is.EqualTo(-2));
         }
 
         [Test]
@@ -75,8 +76,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.Vector2T
             // when
             var result = u - v;
             // then
-            Assert.AreEqual(3, result.X);
-            Assert.AreEqual(4, result.Y);
+            Assert.That(result.X, Is.EqualTo(3));
+            Assert.That(result.Y, Is.EqualTo(4));
         }
 
         [Test]
@@ -88,8 +89,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.Vector2T
             // when
             var result = u + v;
             // then
-            Assert.AreEqual(5, result.X);
-            Assert.AreEqual(8, result.Y);
+            Assert.That(result.X, Is.EqualTo(5));
+            Assert.That(result.Y, Is.EqualTo(8));
         }
 
         [Test]
@@ -100,8 +101,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.Vector2T
             // when
             var result = v * 2;
             // then
-            Assert.AreEqual(2, result.X);
-            Assert.AreEqual(4, result.Y);
+            Assert.That(result.X, Is.EqualTo(2));
+            Assert.That(result.Y, Is.EqualTo(4));
         }
 
         [Test]
@@ -112,8 +113,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.Vector2T
             // when
             var result = 2 * v;
             // then
-            Assert.AreEqual(2, result.X);
-            Assert.AreEqual(4, result.Y);
+            Assert.That(result.X, Is.EqualTo(2));
+            Assert.That(result.Y, Is.EqualTo(4));
         }
 
         [Test]
@@ -124,8 +125,8 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.Vector2T
             // when
             var result = v / 2;
             // then
-            Assert.AreEqual(0.5f, result.X);
-            Assert.AreEqual(1, result.Y);
+            Assert.That(result.X, Is.EqualTo(0.5f));
+            Assert.That(result.Y, Is.EqualTo(1));
         }
 
         [Test]
