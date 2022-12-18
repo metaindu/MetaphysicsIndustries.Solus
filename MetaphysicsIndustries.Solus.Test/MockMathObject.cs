@@ -30,6 +30,7 @@ namespace MetaphysicsIndustries.Solus.Test
             bool isMatrix = false, int tensorRank = 0, bool isString = false,
             int[] dimensions = null, bool isInterval = false,
             bool isFunction = false, bool isExpression = false,
+            bool isSet = false,
             bool isConcrete = false, string docString = "")
         {
             _isScalar = isScalar;
@@ -43,6 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test
             _isInterval = isInterval;
             _isFunction = isFunction;
             _isExpression = isExpression;
+            _isSet = isSet;
             _isConcrete = isConcrete;
             _docString = docString;
         }
@@ -88,6 +90,9 @@ namespace MetaphysicsIndustries.Solus.Test
 
         private readonly bool? _isExpression;
         public bool? IsExpression(SolusEnvironment env) => _isExpression;
+
+        private readonly bool? _isSet;
+        public bool? IsSet(SolusEnvironment env) => _isSet;
 
         private readonly bool _isConcrete;
         public bool IsConcrete => _isConcrete;

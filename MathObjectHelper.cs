@@ -70,6 +70,12 @@ namespace MetaphysicsIndustries.Solus
             var iss = mo.IsExpression(env);
             return iss.HasValue && iss.Value;
         }
+        public static bool IsIsSet(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsSet(env);
+            return iss.HasValue && iss.Value;
+        }
 
         public static Number ToNumber(this IMathObject mo) => (Number) mo;
 
@@ -106,6 +112,8 @@ namespace MetaphysicsIndustries.Solus
 
         public static Interval ToInterval(this IMathObject mo) =>
             (Interval)mo;
+
+        public static ISet ToSet(this IMathObject mo) => (ISet)mo;
 
         public static Types GetMathType(this IMathObject mo,
             SolusEnvironment env=null)

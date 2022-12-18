@@ -38,6 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test
             Func<SolusEnvironment, bool?> isIntervalF = null,
             Func<SolusEnvironment, bool?> isFunctionF = null,
             Func<SolusEnvironment, bool?> isExpressionF = null,
+            Func<SolusEnvironment, bool?> isSetF = null,
             bool isConcreteV = false,
             string docStringV = "")
         {
@@ -52,6 +53,7 @@ namespace MetaphysicsIndustries.Solus.Test
             IsIntervalF = isIntervalF;
             IsFunctionF = isFunctionF;
             IsExpressionF = isExpressionF;
+            IsSetF = isSetF;
             IsConcreteV = isConcreteV;
             DocStringV = docStringV;
         }
@@ -130,6 +132,13 @@ namespace MetaphysicsIndustries.Solus.Test
         public bool? IsExpression(SolusEnvironment env)
         {
             if (IsExpressionF != null) return IsExpressionF(env);
+            throw new NotImplementedException();
+        }
+
+        public Func<SolusEnvironment, bool?> IsSetF;
+        public bool? IsSet(SolusEnvironment env)
+        {
+            if (IsSetF != null) return IsSetF(env);
             throw new NotImplementedException();
         }
 

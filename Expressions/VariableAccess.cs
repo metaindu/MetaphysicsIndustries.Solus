@@ -213,6 +213,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return true;
             }
 
+            public bool? IsSet(SolusEnvironment env)
+            {
+                if (env == null) return null;
+                if (!env.ContainsVariable(_va.VariableName)) return null;
+                var varexpr = env.GetVariable(_va.VariableName);
+                if (varexpr.IsIsSet(env))
+                    varexpr = ((Expression)varexpr).GetResultType(env);
+                return true;
+            }
+
             public bool IsConcrete => false;
             public string DocString => "";
         }

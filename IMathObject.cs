@@ -36,6 +36,7 @@ namespace MetaphysicsIndustries.Solus
         bool? IsInterval(SolusEnvironment env);
         bool? IsFunction(SolusEnvironment env);
         bool? IsExpression(SolusEnvironment env);
+        bool? IsSet(SolusEnvironment env);
 
         bool IsConcrete { get; }
 
@@ -61,6 +62,11 @@ namespace MetaphysicsIndustries.Solus
         IMathObject this[int row,int column] { get; }
     }
 
+    public interface ISet : IMathObject
+    {
+        bool Contains(IMathObject mo);
+    }
+
     public class ScalarMathObject : IMathObject
     {
         public static readonly ScalarMathObject Value = new ScalarMathObject();
@@ -75,6 +81,7 @@ namespace MetaphysicsIndustries.Solus
         public bool? IsInterval(SolusEnvironment env) => false;
         public bool? IsFunction(SolusEnvironment env) => false;
         public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
 
@@ -96,6 +103,7 @@ namespace MetaphysicsIndustries.Solus
         public bool? IsInterval(SolusEnvironment env) => true;
         public bool? IsFunction(SolusEnvironment env) => false;
         public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => false;
 
         public bool IsConcrete => false;
 
