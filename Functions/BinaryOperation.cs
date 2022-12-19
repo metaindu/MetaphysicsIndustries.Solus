@@ -29,6 +29,7 @@
  *                                                                           *
  *****************************************************************************/
 
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -36,7 +37,11 @@ namespace MetaphysicsIndustries.Solus.Functions
     public abstract class BinaryOperation : Operation
     {
         protected BinaryOperation()
-            : base(new[] {Types.Scalar, Types.Scalar})
+            : base(new[]
+            {
+                new Parameter("left", Reals.Value),
+                new Parameter("right", Reals.Value)
+            })
         {
         }
 

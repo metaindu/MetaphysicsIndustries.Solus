@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly MinimumFunction Value = new MinimumFunction();
 
         public MinimumFunction() :
-            base(new Types[0], "min")
+            base(Array.Empty<Parameter>(), "min")
         {
         }
 

@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly MaximumFunction Value = new MaximumFunction();
 
         public MaximumFunction() :
-            base(new Types[0], "max")
+            base(Array.Empty<Parameter>(), "max")
         {
         }
 

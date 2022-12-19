@@ -38,8 +38,8 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class Operation : Function
     {
-        protected Operation(Types[] paramTypes)
-            : base(paramTypes)
+        protected Operation(Parameter[] parameters)
+            : base(parameters)
         {
         }
 

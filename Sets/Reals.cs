@@ -22,7 +22,7 @@
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
-    public class Reals
+    public class Reals : ISet
     {
         public static readonly Reals Value = new Reals();
 
@@ -35,5 +35,21 @@ namespace MetaphysicsIndustries.Solus.Sets
             // TODO: check for NaN, qNaN, and ±inf
             return mo.IsIsScalar(null);
         }
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => true;
+        public bool IsConcrete => true;
+
+        public string DocString => "The real numbers";
     }
 }

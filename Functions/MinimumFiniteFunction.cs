@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             new MinimumFiniteFunction();
 
         public MinimumFiniteFunction() :
-            base(new Types[0], "minf")
+            base(Array.Empty<Parameter>(), "minf")
         {
         }
 

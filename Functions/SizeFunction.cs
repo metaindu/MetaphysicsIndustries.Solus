@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly SizeFunction Value = new SizeFunction();
 
         protected SizeFunction()
-            : base(new Types[0], "size")
+            : base(Array.Empty<Parameter>(), "size")
         {
         }
 

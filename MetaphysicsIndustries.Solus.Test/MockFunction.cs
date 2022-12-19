@@ -29,7 +29,7 @@ namespace MetaphysicsIndustries.Solus.Test
 {
     public class MockFunction : Function
     {
-        public MockFunction(Types[] paramTypes, string name = "")
+        public MockFunction(Parameter[] paramTypes, string name = "")
             : base(paramTypes, name)
         {
         }

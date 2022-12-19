@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -568,7 +569,11 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         public class CustomAsdfFunction : Function
         {
             public CustomAsdfFunction()
-                : base(new Types[] {Types.Scalar, Types.Scalar},
+                : base(new[]
+                    {
+                        new Parameter("", Reals.Value),
+                        new Parameter("", Reals.Value)
+                    },
                     "asdf")
             {
             }
@@ -609,7 +614,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         class CountArgsFunction : Function
         {
             public CountArgsFunction()
-                : base(new Types[0], "count")
+                : base(Array.Empty<Parameter>(), "count")
             {
             }
 
@@ -1266,8 +1271,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsInstanceOf<FuncAssignCommandData>(result[0]);
             var udf = ((FuncAssignCommandData)result[0]).Func;
             Assert.That(udf.Name, Is.EqualTo("f"));
-            Assert.That(udf.Argnames.Length, Is.EqualTo(1));
-            Assert.That(udf.Argnames[0], Is.EqualTo("x"));
+            Assert.That(udf.Parameters.Count, Is.EqualTo(1));
+            Assert.That(udf.Parameters[0].Name, Is.EqualTo("x"));
             Assert.IsInstanceOf<VariableAccess>(udf.Expression);
             var va = (VariableAccess)udf.Expression;
             Assert.That(va.VariableName, Is.EqualTo("x"));
@@ -1293,8 +1298,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsInstanceOf<FuncAssignCommandData>(result[0]);
             var udf = ((FuncAssignCommandData)result[0]).Func;
             Assert.That(udf.Name, Is.EqualTo("f"));
-            Assert.That(udf.Argnames.Length, Is.EqualTo(1));
-            Assert.That(udf.Argnames[0], Is.EqualTo("x"));
+            Assert.That(udf.Parameters.Count, Is.EqualTo(1));
+            Assert.That(udf.Parameters[0].Name, Is.EqualTo("x"));
             Assert.IsInstanceOf<FunctionCall>(udf.Expression);
             var call = (FunctionCall)udf.Expression;
             Assert.IsInstanceOf<VariableAccess>(call.Function);

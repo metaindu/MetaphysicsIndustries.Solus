@@ -23,6 +23,7 @@
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -36,7 +37,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         public void FunctionCallWithNumberArgDoesNotThrow()
         {
             // given
-            var mf = new MockFunction(new[] { Types.Scalar }, "f")
+            var mf = new MockFunction(
+                new[] { new Parameter("", Reals.Value) },
+                "f")
             {
                 CallF = args => args.First()
             };
@@ -50,7 +53,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         public void FunctionCallWithVariableTargetDoesNotThrow()
         {
             // given
-            var mf = new MockFunction(new[] { Types.Scalar }, "f")
+            var mf = new MockFunction(
+                new[] { new Parameter("", Reals.Value) },
+                "f")
             {
                 CallF = args => args.First()
             };

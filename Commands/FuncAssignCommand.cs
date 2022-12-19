@@ -53,7 +53,8 @@ namespace MetaphysicsIndustries.Solus.Commands
             var func = ((FuncAssignCommandData) data).Func;
             env.SetVariable(func.DisplayName, func);
 
-            var varrefs = func.Argnames.Select(x => new VariableAccess(x));
+            var varrefs =
+                func.Parameters.Select(x => new VariableAccess(x.Name));
             var fcall = new FunctionCall(func, varrefs);
             Console.WriteLine($"{fcall} := {func.Expression}");
         }

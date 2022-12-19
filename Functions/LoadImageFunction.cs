@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -35,7 +36,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             new LoadImageFunction();
 
         protected LoadImageFunction()
-            : base(new[] {Types.String}, "load_image")
+            : base(new[] { new Parameter("arg", Strings.Value) },
+                "load_image")
         {
         }
 

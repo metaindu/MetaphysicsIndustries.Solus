@@ -22,6 +22,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -34,11 +35,11 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
         public void TestZeroArgumentsZeroParamsOk()
         {
             // given
-            var args = new IMathObject[0];
-            var paramTypes = new Types[0];
+            var args = Array.Empty<IMathObject>();
+            var parameters = Array.Empty<Parameter>();
             // expect
             Assert.DoesNotThrow(() =>
-                Function.CheckArguments(args, paramTypes, "displayName"));
+                Function.CheckArguments(args, parameters, "displayName"));
         }
 
         [Test]
@@ -46,10 +47,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
         {
             // given
             var args = new IMathObject[] {0.ToNumber()};
-            var paramTypes = new Types[0];
+            var parameters = Array.Empty<Parameter>();
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
-                Function.CheckArguments(args, paramTypes, "displayName"));
+                Function.CheckArguments(args, parameters, "displayName"));
             Assert.That(ex.Message,
                 Is.EqualTo(
                     "Wrong number of arguments given to displayName " +
@@ -60,11 +61,11 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
         public void TooFewArgsThrows()
         {
             // given
-            var args = new IMathObject[0];
-            var paramTypes = new[] {Types.Scalar};
+            var args = Array.Empty<IMathObject>();
+            var parameters = new[] { new Parameter("", Reals.Value) };
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
-                Function.CheckArguments(args, paramTypes, "displayName"));
+                Function.CheckArguments(args, parameters, "displayName"));
             Assert.That(ex.Message,
                 Is.EqualTo(
                     "Wrong number of arguments given to displayName " +
@@ -76,10 +77,10 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
         {
             // given
             var args = new IMathObject[] {new MockMathObject(false, true)};
-            var paramTypes = new[] {Types.Scalar};
+            var parameters = new[] { new Parameter("", Reals.Value) };
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
-                Function.CheckArguments(args, paramTypes, "displayName"));
+                Function.CheckArguments(args, parameters, "displayName"));
             Assert.That(ex.Message,
                 Is.EqualTo(
                     "Argument 0 wrong type: expected Scalar but got Vector"));

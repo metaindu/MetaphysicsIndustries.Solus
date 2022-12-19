@@ -20,14 +20,14 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Values;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class UnaryOperation : Operation
     {
         protected UnaryOperation()
-            : base(new[] {Types.Scalar})
+            : base(new[] { new Parameter("arg", Reals.Value) })
         {
         }
 

@@ -187,7 +187,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     if (argtype != Types.Scalar)
                         throw new ArgumentException(
                             $"Argument {i} wrong type: expected " +
-                            $"{f.ParamTypes[i]} but got {argtype}");
+                            $"{f.Parameters[i]} but got {argtype}");
                 }
 
                 return;
@@ -291,22 +291,22 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     CheckFunctionCall(ff, args, env); return;
             }
             
-            if (args.Count != f.ParamTypes.Count)
+            if (args.Count != f.Parameters.Count)
             {
                 throw new ArgumentException(
                     $"Wrong number of arguments given to " +
-                    $"{f.DisplayName} (expected {f.ParamTypes.Count} but " +
+                    $"{f.DisplayName} (expected {f.Parameters.Count} but " +
                     $"got {args.Count})");
             }
 
             for (var i = 0; i < args.Count; i++)
             {
                 var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != f.ParamTypes[i])
+                if (!f.Parameters[i].Type.Contains(args[i]))
                 {
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
-                        $"{f.ParamTypes[i]} but got {argtype}");
+                        $"{f.Parameters[i].Type} but got {argtype}");
                 }
             }
         }
@@ -632,10 +632,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public void CheckFunctionCall(UserDefinedFunction ff, List<Expression> args, SolusEnvironment env)
         {
-            if (args.Count != ff.Argnames.Length)
+            if (args.Count != ff.Parameters.Count)
                 throw new ArgumentException(
                     $"Wrong number of arguments given to " +
-                    $"{ff.DisplayName} (expected {ff.Argnames.Length} but " +
+                    $"{ff.DisplayName} (expected {ff.Parameters.Count} but " +
                     $"got {args.Count})");
         }
     }

@@ -21,6 +21,8 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -33,8 +35,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
         public void ResultMatchesFunction1()
         {
             // given
-            var paramTypes = new[] { Types.Scalar };
-            var f = new MockFunction(paramTypes, "f");
+            var parameters = new[] { new Parameter("", Reals.Value) };
+            var f = new MockFunction(parameters, "f");
             var mmo = new MockMathObject(isScalar: true);
             f.GetResultF = args => mmo;
             var expr = new FunctionCall(f);
@@ -65,8 +67,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.FunctionCallT
         public void ResultMatchesFunction2()
         {
             // given
-            var paramTypes = new[] { Types.Scalar };
-            var f = new MockFunction(paramTypes, "f");
+            var parameters = new[] { new Parameter("", Reals.Value) };
+            var f = new MockFunction(parameters, "f");
             var mmo = new MockMathObject(isScalar: false, isMatrix: true,
                 tensorRank: 2, dimensions: new[] { 3, 4 });
             f.GetResultF = args => mmo;

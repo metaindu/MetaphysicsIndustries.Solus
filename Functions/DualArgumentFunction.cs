@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -27,7 +28,11 @@ namespace MetaphysicsIndustries.Solus.Functions
     public abstract class DualArgumentFunction : Function
     {
         protected DualArgumentFunction(string name)
-            : base(new[] {Types.Scalar, Types.Scalar}, name)
+            : base(new[]
+            {
+                new Parameter("a", Reals.Value),
+                new Parameter("b", Reals.Value)
+            }, name)
         {
         }
     }

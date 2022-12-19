@@ -499,9 +499,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var env2 = _udfChildCache;
 
             int i;
-            for (i = 0; i < f.Argnames.Length; i++)
+            for (i = 0; i < f.Parameters.Count; i++)
             {
-                env2.SetVariable(f.Argnames[i], args[i]);
+                env2.SetVariable(f.Parameters[i].Name, args[i]);
             }
 
             return Eval(f.Expression, env2);

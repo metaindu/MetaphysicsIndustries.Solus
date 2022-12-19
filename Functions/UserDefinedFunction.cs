@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -31,24 +32,22 @@ namespace MetaphysicsIndustries.Solus.Functions
     public class UserDefinedFunction : Function
     {
         public UserDefinedFunction(string name, string[] argnames, Expression expr)
-            : base(argnames.Select(_ => Types.Scalar).ToArray(), name)
+            : base(argnames.Select(_ =>new Parameter("",Reals.Value)).ToArray(), name)
         {
             Name = name;
-            Argnames = argnames;
             Expression = expr;
         }
 
-        public string[] Argnames;
         public Expression Expression;
 
         public override void CheckArguments(IMathObject[] args)
         {
-            if (args.Length != Argnames.Length)
+            if (args.Length != Parameters.Count)
                 throw new ArgumentException(
                     $"Wrong number of arguments given to " +
-                    $"{DisplayName} (expected {Argnames.Length} but got " +
+                    $"{DisplayName} (expected {Parameters.Count} but got " +
                     $"{args.Length})");
-        }
+        }   
 
         public override IMathObject GetResultType(SolusEnvironment env,
             IEnumerable<IMathObject> argTypes)
@@ -60,11 +59,11 @@ namespace MetaphysicsIndustries.Solus.Functions
                 env2 = new SolusEnvironment();
             var argValues = argTypes.ToList();
             int i;
-            for (i = 0; i < Argnames.Length; i++)
+            for (i = 0; i < Parameters.Count; i++)
             {
-                var argName = Argnames[i];
+                var param = Parameters[i];
                 var argValue = argValues[i];
-                env2.SetVariable(argName, argValue);
+                env2.SetVariable(param.Name, argValue);
             }
 
             return Expression.GetResultType(env2);

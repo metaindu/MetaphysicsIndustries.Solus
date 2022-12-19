@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             new MaximumFiniteFunction();
 
         public MaximumFiniteFunction() :
-            base(new Types[0], "maxf")
+            base(Array.Empty<Parameter>(), "maxf")
         {
         }
 

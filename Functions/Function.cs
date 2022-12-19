@@ -36,6 +36,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Values;
 using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
@@ -44,12 +45,12 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class Function : IMathObject
     {
-        protected Function(Types[] paramTypes, string name="")
+        protected Function(Parameter[] parameters, string name = "")
         {
-            if (paramTypes == null)
-                throw ValueException.Null(nameof(paramTypes));
+            if (parameters == null)
+                throw ValueException.Null(nameof(parameters));
             _name = name;
-            ParamTypes = Array.AsReadOnly(paramTypes);
+            Parameters = Array.AsReadOnly(parameters);
         }
 
         public virtual IMathObject CustomCall(IMathObject[] args,
@@ -98,31 +99,31 @@ namespace MetaphysicsIndustries.Solus.Functions
 		}
 
         public virtual void CheckArguments(IMathObject[] args) =>
-            CheckArguments(args, ParamTypes, DisplayName);
+            CheckArguments(args, Parameters, DisplayName);
 
         public static void CheckArguments(IMathObject[] args,
-            IList<Types> paramTypes, string displayName)
+            IList<Parameter> parameters, string displayName)
         {
-            if (args.Length != paramTypes.Count)
+            if (args.Length != parameters.Count)
             {
                 throw new ArgumentException(
                     $"Wrong number of arguments given to " +
-                    $"{displayName} (expected {paramTypes.Count} but got " +
+                    $"{displayName} (expected {parameters.Count} but got " +
                     $"{args.Length})");
             }
             for (var i = 0; i < args.Length; i++)
             {
                 var argtype = args[i].GetMathType();
-                if (argtype != paramTypes[i])
+                if (!parameters[i].Type.Contains(args[i]))
                 {
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
-                        $"{paramTypes[i]} but got {argtype}");
+                        $"{parameters[i].Type} but got {argtype}");
                 }
             }
         }
 
-        public ReadOnlyCollection<Types> ParamTypes { get; }
+        public ReadOnlyCollection<Parameter> Parameters { get; }
         private string _name;
 
         public virtual string ToString(List<Expression> arguments)
