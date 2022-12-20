@@ -20,8 +20,10 @@
  *
  */
 
+using System;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
@@ -123,6 +125,47 @@ namespace MetaphysicsIndustries.Solus
             if (mo.IsIsMatrix(env)) return Types.Matrix;
             if (mo.IsIsString(env)) return Types.String;
             return Types.Unknown;
+        }
+
+        public static ISet GetMathType2(this IMathObject mo)
+        {
+            if (Reals.Value.Contains(mo)) return Reals.Value;
+            if (RealCoordinateSpace.R2.Contains(mo))
+                return RealCoordinateSpace.R2;
+            if (RealCoordinateSpace.R3.Contains(mo))
+                return RealCoordinateSpace.R3;
+            if (AllVectors.Value.Contains(mo))
+            {
+                var v = mo.ToVector();
+                var rcs = RealCoordinateSpace.Get(v.Length);
+                if (rcs != null && rcs.Contains(mo))
+                    return rcs;
+                return AllVectors.Value;
+            }
+
+            if (AllMatrices.Value.Contains(mo))
+            {
+                var m = mo.ToMatrix();
+                var ms = Matrices.Get(m.RowCount, m.ColumnCount);
+                if (ms != null && ms.Contains(mo))
+                    return ms;
+                return AllMatrices.Value;
+            }
+
+            if (Strings.Value.Contains(mo)) return Strings.Value;
+            if (Intervals.Value.Contains(mo)) return Intervals.Value;
+
+            var rank = mo.GetTensorRank(null);
+            if (rank.HasValue && rank.Value > 2)
+                return Tensors.Value;
+
+            if (Sets.Functions.Value.Contains(mo))
+                return Sets.Functions.Value;
+
+            if (Sets.Sets.Value.Contains(mo))
+                return Sets.Sets.Value;
+
+            throw new NotImplementedException();
         }
 
         public static IMathObject[] ToMathObjects(this float[] values)

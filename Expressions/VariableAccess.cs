@@ -85,17 +85,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env)
+        public override ISet GetResultType(SolusEnvironment env)
         {
-            if (env.ContainsVariable(VariableName))
-            {
-                var value = env.GetVariable(VariableName);
-                if (value.IsIsExpression(env))
-                    return ((Expression)value).GetResultType(env);
-                return value;
-            }
-
-            return _result;
+            return env.GetVariableType(VariableName);
         }
 
         private class ResultC : IMathObject

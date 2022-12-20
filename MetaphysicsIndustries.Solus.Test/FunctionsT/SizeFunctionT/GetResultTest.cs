@@ -20,7 +20,9 @@
  *
  */
 
+using System;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -33,75 +35,35 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
         public void ResultForScalarIsVector()
         {
             // given
-            var arg1 = 1.ToNumber();
-            var args = new IMathObject[] { arg1 };
-            // precondition
-            Assert.IsTrue(arg1.IsScalar(null));
-            Assert.IsFalse(arg1.IsVector(null));
-            Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(arg1.IsString(null));
-            // when
+            var args = new ISet[] { Reals.Value };
+            // expect
             var value = SizeFunction.Value;
-            var result = value.GetResultType(null, args);
-            // then
-            Assert.IsFalse(result.IsScalar(null));
-            Assert.IsTrue(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
-            Assert.IsFalse(result.IsString(null));
-            // and
-            Assert.That(result.GetVectorLength(null), Is.EqualTo(0));
+            Assert.Throws<NotImplementedException>(
+                () => value.GetResultType(null, args));
         }
 
         [Test]
         public void ResultForVectorIsVector()
         {
             // given
-            var arg1 = new Vector(new float[] { 1, 2, 3 });
-            var args = new IMathObject[] { arg1 };
-            // precondition
-            Assert.IsFalse(arg1.IsScalar(null));
-            Assert.IsTrue(arg1.IsVector(null));
-            Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(1));
-            Assert.IsFalse(arg1.IsString(null));
+            var args = new ISet[] { RealCoordinateSpace.R3 };
             // when
             var value = SizeFunction.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.IsFalse(result.IsScalar(null));
-            Assert.IsTrue(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
-            Assert.IsFalse(result.IsString(null));
-            // and
-            Assert.That(result.GetVectorLength(null), Is.EqualTo(1));
+            Assert.That(result, Is.SameAs(RealCoordinateSpace.Get(1)));
         }
 
         [Test]
         public void ResultForMatrixIsVector()
         {
             // given
-            var arg1 = new Matrix(new float[,] { { 1, 2, 3 }, { 4, 5, 6 } });
-            var args = new IMathObject[] { arg1 };
-            // precondition
-            Assert.IsFalse(arg1.IsScalar(null));
-            Assert.IsFalse(arg1.IsVector(null));
-            Assert.IsTrue(arg1.IsMatrix(null));
-            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(2));
-            Assert.IsFalse(arg1.IsString(null));
+            var args = new ISet[] { Matrices.M2x3 };
             // when
             var value = SizeFunction.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.IsFalse(result.IsScalar(null));
-            Assert.IsTrue(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
-            Assert.IsFalse(result.IsString(null));
-            // and
-            Assert.That(result.GetVectorLength(null), Is.EqualTo(2));
+            Assert.That(result, Is.SameAs(RealCoordinateSpace.R2));
         }
     }
 }

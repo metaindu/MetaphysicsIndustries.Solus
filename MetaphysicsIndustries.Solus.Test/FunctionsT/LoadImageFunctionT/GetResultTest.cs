@@ -22,6 +22,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -34,29 +35,12 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LoadImageFunctionT
         public void ResultIsMatrixOfUnknownSize()
         {
             // given
-            var arg1 = 1.ToNumber();
-            var args = new IMathObject[] { arg1 };
-            // precondition
-            Assert.IsTrue(arg1.IsScalar(null));
-            Assert.IsFalse(arg1.IsVector(null));
-            Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(arg1.IsString(null));
+            var args = new ISet[] { Strings.Value };
             // when
             var value = LoadImageFunction.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.IsFalse(result.IsScalar(null));
-            Assert.IsFalse(result.IsVector(null));
-            Assert.IsTrue(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(2));
-            Assert.IsFalse(result.IsString(null));
-            Assert.IsNull(result.GetDimension(null, -1));
-            Assert.IsNull(result.GetDimension(null, 0));
-            Assert.IsNull(result.GetDimension(null, 1));
-            Assert.IsNull(result.GetDimension(null, 2));
-            Assert.IsNull(result.GetDimensions(null));
-            Assert.IsNull(result.GetVectorLength(null));
+            Assert.That(result, Is.SameAs(AllMatrices.Value));
         }
     }
 }

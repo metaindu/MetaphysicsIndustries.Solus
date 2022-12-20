@@ -26,6 +26,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
@@ -71,13 +72,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var varValue = vi.Value;
                 var mathType = vi.MathType;
                 if (mathType == null)
-                    mathType = varValue;
-                typeEnv.SetVariable(varName, mathType);
+                    mathType = varValue.GetMathType2();
+                typeEnv.SetVariableType(varName, mathType);
                 var iltype = vi.IlType;
                 if (iltype == null && mathType != null)
                     iltype = ResolveType(mathType);
                 if (iltype == null && varValue != null)
-                    iltype = ResolveType(varValue);
+                    iltype = ResolveType(varValue.GetMathType2());
                 param.ParamType = iltype;
                 paramTypes[i] = iltype;
                 i++;
@@ -173,23 +174,25 @@ namespace MetaphysicsIndustries.Solus.Compiler
             };
         }
 
-        public Type ResolveType(IMathObject value,
+        public Type ResolveType(ISet type,
             SolusEnvironment typeEnv=null)
         {
-            if (value.IsIsString(typeEnv))
+            if (type == Strings.Value)
                 return typeof(string);
-            if (value.IsIsScalar(typeEnv))
+            if (type == Reals.Value)
                 return typeof(float);
-            if (value.IsIsVector(typeEnv))
+            if (type is RealCoordinateSpace ||
+                type == AllVectors.Value)
                 return typeof(float[]);
-            if (value.IsIsMatrix(typeEnv))
+            if (type is Matrices ||
+                type == AllMatrices.Value)
                 return typeof(float[,]);
-            if (value.IsIsFunction(typeEnv))
+            if (type == Sets.Functions.Value)
                 return typeof(MethodInfo);
-            if (value.IsIsInterval(typeEnv))
+            if (type == Intervals.Value)
                 return typeof(STuple<float, bool, float, bool>);
             throw new NotImplementedException(
-                $"Unrecognized type, {value.GetType()}");
+                $"Unrecognized type, {type.GetType()}");
         }
     }
 }

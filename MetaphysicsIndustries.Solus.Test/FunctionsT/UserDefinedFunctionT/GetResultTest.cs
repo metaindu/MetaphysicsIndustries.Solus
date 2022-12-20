@@ -20,8 +20,10 @@
  *
  */
 
+using System;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -37,43 +39,28 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             var expr = new Literal(1.ToNumber());
             var f = new UserDefinedFunction("f", new string[0], expr);
             // precondition
-            Assert.IsTrue(expr.GetResultType(null).IsScalar(null));
-            Assert.IsFalse(expr.GetResultType(null).IsVector(null));
-            Assert.IsFalse(expr.GetResultType(null).IsMatrix(null));
-            Assert.That(expr.GetResultType(null).GetTensorRank(null),
-                Is.EqualTo(0));
-            Assert.IsFalse(expr.GetResultType(null).IsString(null));
+            Assert.That(expr.GetResultType(null), Is.SameAs(Reals.Value));
             // when
-            var result = f.GetResultType(null, new IMathObject[0]);
+            var result = f.GetResultType(null, Array.Empty<ISet>());
             // then
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.IsFalse(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(result.IsString(null));
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
 
         [Test]
         public void ResultMatchesDefinedFunction2()
         {
             // given
-            var expr = new Literal(new Vector(new float[] { 1, 2, 3 }));
-            var f = new UserDefinedFunction("f", new string[0], expr);
+            var expr = new Literal(
+                new Vector(new float[] { 1, 2, 3 }));
+            var f = new UserDefinedFunction(
+                "f", Array.Empty<string>(), expr);
             // precondition
-            Assert.IsFalse(expr.GetResultType(null).IsScalar(null));
-            Assert.IsTrue(expr.GetResultType(null).IsVector(null));
-            Assert.IsFalse(expr.GetResultType(null).IsMatrix(null));
-            Assert.That(expr.GetResultType(null).GetTensorRank(null),
-                Is.EqualTo(1));
-            Assert.IsFalse(expr.GetResultType(null).IsString(null));
+            Assert.That(expr.GetResultType(null),
+                Is.SameAs(RealCoordinateSpace.R3));
             // when
-            var result = f.GetResultType(null, new IMathObject[0]);
+            var result = f.GetResultType(null, Array.Empty<ISet>());
             // then
-            Assert.IsFalse(result.IsScalar(null));
-            Assert.IsTrue(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(1));
-            Assert.IsFalse(result.IsString(null));
+            Assert.That(result, Is.SameAs(RealCoordinateSpace.R3));
         }
     }
 }

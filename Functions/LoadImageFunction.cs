@@ -202,10 +202,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         private readonly ResultC _result = new ResultC();
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
-            return _result;
+            return AllMatrices.Value;
         }
     }
 }

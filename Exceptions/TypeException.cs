@@ -20,26 +20,34 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Sets;
-using MetaphysicsIndustries.Solus.Values;
-using NUnit.Framework;
+using System;
 
-namespace MetaphysicsIndustries.Solus.Test.FunctionsT.TangentFunctionT
+namespace MetaphysicsIndustries.Solus.Exceptions
 {
-    [TestFixture]
-    public class GetResultTest
+    public class TypeException : SolusException
     {
-        [Test]
-        public void ResultIsScalar()
+        public TypeException(string paramName=null, string message=null)
+            : base(FormatMessage(paramName, message), null)
         {
-            // given
-            var args = new ISet[] { Reals.Value };
-            // when
-            var value = TangentFunction.Value;
-            var result = value.GetResultType(null, args);
-            // then
-            Assert.That(result, Is.SameAs(Reals.Value));
+            ParamName = paramName;
+        }
+
+        public TypeException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
+
+        public string ParamName { get; }
+
+        public static string FormatMessage(string paramName, string message)
+        {
+            if (paramName == null && message == null)
+                return "The type was incorrect";
+            if (paramName == null)
+                return message;
+            if (message == null)
+                return $"The type was incorrect: {paramName}";
+            return $"{message}: {paramName}";
         }
     }
 }

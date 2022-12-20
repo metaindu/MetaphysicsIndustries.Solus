@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -81,30 +82,41 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (i = 0; i < expr.Indexes.Count; i++)
                 Check(expr.Indexes[i], env);
 
-            var value = expr.Expr.GetResultType(env);
-            if (value.IsIsString(env))
+            var exprResultType = expr.Expr.GetResultType(env);
+            if (exprResultType is Strings)
             {
                 if (expr.Indexes.Count != 1)
                     throw new OperandException(
                         "Wrong number of indexes for the expression");
             }
-            else
+            else if (exprResultType is RealCoordinateSpace rcs)
             {
-                var rank = value.GetTensorRank(env);
-                if (rank == null || rank.Value < 1 || rank.Value > 2)
-                    throw new OperandException(
-                        "Unable to get components from expression, " +
-                        "or the expression does not have components");
-                if (rank.Value != expr.Indexes.Count)
+                if (expr.Indexes.Count != 1)
                     throw new OperandException(
                         "Wrong number of indexes for the expression");
             }
+            else if (exprResultType is Matrices ms)
+            {
+                if (expr.Indexes.Count != 2)
+                    throw new OperandException(
+                        "Wrong number of indexes for the expression");
+            }
+            else
+            {
+                throw new OperandException(
+                    "Unable to get components from expression, " +
+                    "or the expression does not have components");
+            }
+
+            IMathObject exprValue = null;
+            if (expr.Expr is Literal ee)
+                exprValue = ee.Value;
 
             for (i = 0; i < expr.Indexes.Count; i++)
             {
                 var si = expr.Indexes[i].GetResultType(env);
                 if (si == null) continue;
-                if (!si.IsIsScalar(env))
+                if (si != Reals.Value)
                     throw new IndexException(
                         "Indexes must be scalar");
                 if (expr.Indexes[i] is Literal literal)
@@ -121,23 +133,28 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         throw new IndexException(
                             "Indexes must not be negative");
 
-                    if (i == 0 && value is IVector ivec)
-                        if (vi >= ivec.Length)
+                    if (i == 0 && exprResultType is RealCoordinateSpace rcs)
+                        if (vi >= rcs.Dimension)
                             throw new IndexException(
                                 "Index exceeds the size of the vector");
-                    if (i == 0 && value is StringValue sv)
-                        if (vi >= sv.Length)
+
+                    // The following only applies if we can consider the
+                    // length of a string as part of it's type, which is not
+                    // always feasible or useful.
+
+                    if (i == 0 && exprResultType is Strings)
+                        if (vi >= exprValue.ToStringValue().Length)
                             throw new IndexException(
                                 "Index exceeds the size of the string");
 
-                    if (value is IMatrix imat)
+                    if (exprResultType is Matrices ms)
                         switch (i)
                         {
-                            case 0 when vi >= imat.RowCount:
+                            case 0 when vi >= ms.RowCount:
                                 throw new IndexException(
                                     "Index exceeds number of rows of the" +
                                     " matrix");
-                            case 1 when vi >= imat.ColumnCount:
+                            case 1 when vi >= ms.ColumnCount:
                                 throw new IndexException(
                                     "Index exceeds number of columns of" +
                                     " the matrix");
@@ -183,11 +200,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
                 for (var i = 0; i < args.Count; i++)
                 {
-                    var argtype = args[i].GetResultType(env).GetMathType();
-                    if (argtype != Types.Scalar)
+                    var argtype = args[i].GetResultType(env);
+                    if (argtype != Reals.Value)
                         throw new ArgumentException(
                             $"Argument {i} wrong type: expected " +
-                            $"{f.Parameters[i]} but got {argtype}");
+                            $"real but got {argtype}");
                 }
 
                 return;
@@ -301,8 +318,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (!f.Parameters[i].Type.Contains(args[i]))
+                var argtype = args[i].GetResultType(env);
+                if (f.Parameters[i].Type != argtype)
                 {
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
@@ -315,12 +332,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Check(expr.LowerBound, env);
             var lower = expr.LowerBound.GetResultType(env);
-            if (!lower.IsIsScalar(env))
+            if (lower != Reals.Value)
                 throw new OperandException("Lower bound is not a scalar");
 
             Check(expr.UpperBound, env);
             var upper = expr.UpperBound.GetResultType(env);
-            if (!upper.IsIsScalar(env))
+            if (upper != Reals.Value)
                 throw new OperandException("Upper bound is not a scalar");
         }
 
@@ -517,8 +534,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (argtype != Reals.Value)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -531,8 +548,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (argtype != Reals.Value)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -545,8 +562,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (argtype != Reals.Value)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -559,8 +576,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (argtype != Reals.Value)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -609,14 +626,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     $"Wrong number of arguments given to " +
                     $"{ff.DisplayName} (expected 1 but got " +
                     $"{args.Count})");
-            var argtype = args[0].GetResultType(env).GetMathType();
-            if (argtype != Types.Vector &&
-                argtype != Types.Matrix &&
-                argtype != Types.String)
+            var argtype = args[0].GetResultType(env);
+            if (!(argtype is RealCoordinateSpace ||
+                  argtype == AllVectors.Value ||
+                  argtype is Matrices ||
+                  argtype == AllMatrices.Value ||
+                  argtype == Strings.Value))
             {
                 throw new ArgumentException(
-                    $"Argument wrong type: expected " +
-                    $"Vector or Matrix or String but got {argtype}");
+                    "Argument wrong type: expected Vector " +
+                    $"or Matrix or String but got {argtype.DisplayName}");
             }
         }
 

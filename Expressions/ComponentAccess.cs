@@ -20,10 +20,13 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -147,8 +150,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-            _result;
+        public override ISet GetResultType(SolusEnvironment env)
+        {
+            var exprResultType = Expr.GetResultType(env);
+            if (exprResultType == Strings.Value)
+                return Strings.Value;
+            if (exprResultType is RealCoordinateSpace ||
+                exprResultType == AllVectors.Value)
+                return Reals.Value;
+            if (exprResultType is Matrices ||
+                exprResultType == AllMatrices.Value)
+                return Reals.Value;
+
+            throw new TypeException();
+        }
 
         private class ResultC : IMathObject
         {

@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
 
@@ -105,8 +106,20 @@ namespace MetaphysicsIndustries.Solus
 
         protected readonly SolusEnvironment Parent;
 
-        protected readonly Dictionary<string, IMathObject> Variables =
-            new Dictionary<string, IMathObject>();
+        protected struct VariableIdentity
+        {
+            public VariableIdentity(IMathObject value, bool isType)
+            {
+                Value = value;
+                IsType = isType;
+            }
+
+            public readonly IMathObject Value;
+            public bool IsType;
+        }
+
+        protected readonly Dictionary<string, VariableIdentity> Variables =
+            new Dictionary<string, VariableIdentity>();
 
         protected readonly HashSet<string> RemovedVariables =
             new HashSet<string>();
@@ -116,16 +129,45 @@ namespace MetaphysicsIndustries.Solus
             if (RemovedVariables.Contains(name))
                 return null;
             if (Variables.ContainsKey(name))
-                return Variables[name];
+            {
+                var vi = Variables[name];
+                if (!vi.IsType)
+                    return vi.Value;
+            }
             if (Parent != null)
                 return Parent.GetVariable(name);
+            return null;
+        }
+
+        public ISet GetVariableType(string name)
+        {
+            if (RemovedVariables.Contains(name))
+                return null;
+            if (Variables.ContainsKey(name))
+            {
+                var vi = Variables[name];
+                if (vi.IsType)
+                    return (ISet)vi.Value;
+                var value = vi.Value;
+                if (value.IsIsExpression(this))
+                    return ((Expression)value).GetResultType(this);
+                return value.GetMathType2();
+            }
+            if (Parent != null)
+                return Parent.GetVariableType(name);
             return null;
         }
 
         public void SetVariable(string name, IMathObject value)
         {
             RemovedVariables.Remove(name);
-            Variables[name] = value;
+            Variables[name] = new VariableIdentity(value, false);
+        }
+
+        public void SetVariableType(string name, ISet value)
+        {
+            RemovedVariables.Remove(name);
+            Variables[name] = new VariableIdentity(value, true);
         }
 
         public bool ContainsVariable(string name)

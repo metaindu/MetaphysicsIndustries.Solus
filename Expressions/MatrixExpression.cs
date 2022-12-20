@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -771,8 +772,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-            _result;
+        public override ISet GetResultType(SolusEnvironment env) =>
+            Matrices.Get(RowCount, ColumnCount);
 
         private class ResultC : IMathObject
         {

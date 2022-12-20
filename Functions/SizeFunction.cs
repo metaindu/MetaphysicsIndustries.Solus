@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -44,14 +45,16 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"Wrong number of arguments given to " +
                     $"{DisplayName} (expected 1 but got " +
                     $"{args.Length})");
-            var argtype = args[0].GetMathType();
-            if (argtype != Types.Vector &&
-                argtype != Types.Matrix &&
-                argtype != Types.String)
+            var argtype = args[0].GetMathType2();
+            if (!(argtype is RealCoordinateSpace ||
+                  argtype is AllVectors ||
+                  argtype is Matrices ||
+                  argtype is AllMatrices ||
+                  argtype is Strings))
             {
                 throw new ArgumentException(
-                    $"Argument wrong type: expected " +
-                    $"Vector or Matrix or String but got {argtype}");
+                    "Argument wrong type: expected Vector or " +
+                    $"Matrix or String but got {argtype.DisplayName}");
             }
         }
 
@@ -100,10 +103,17 @@ namespace MetaphysicsIndustries.Solus.Functions
             public string DocString => "";
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
-            return new ResultC(argTypes.First());
+            var argType = argTypes.First();
+            if (argType is Strings)
+                return RealCoordinateSpace.Get(1);
+            if (argType is RealCoordinateSpace)
+                return RealCoordinateSpace.Get(1);
+            if (argType is Matrices)
+                return RealCoordinateSpace.R2;
+            throw new NotImplementedException();
         }
     }
 }

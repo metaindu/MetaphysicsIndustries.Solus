@@ -585,8 +585,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             }
             public override bool ProvidesCustomCall => true;
 
-            public override IMathObject GetResultType(SolusEnvironment env,
-                IEnumerable<IMathObject> argTypes)
+            public override ISet GetResultType(SolusEnvironment env,
+                IEnumerable<ISet> argTypes)
             {
                 throw new NotImplementedException();
             }
@@ -629,8 +629,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             {
             }
 
-            public override IMathObject GetResultType(SolusEnvironment env,
-                IEnumerable<IMathObject> argTypes)
+            public override ISet GetResultType(SolusEnvironment env,
+                IEnumerable<ISet> argTypes)
             {
                 throw new NotImplementedException();
             }

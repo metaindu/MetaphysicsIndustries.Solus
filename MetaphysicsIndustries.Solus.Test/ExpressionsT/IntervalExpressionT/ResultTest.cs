@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.IntervalExpressionT
@@ -39,15 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.IntervalExpressionT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.IsFalse(result.IsScalar(env));
-            Assert.IsFalse(result.IsVector(env));
-            Assert.IsFalse(result.IsMatrix(env));
-            Assert.IsNull(result.GetTensorRank(env));
-            Assert.IsFalse(result.IsString(env));
-            Assert.IsNull(result.GetDimension(env, 0));
-            Assert.IsNull(result.GetDimensions(env));
-            Assert.IsNull(result.GetVectorLength(env));
-            Assert.IsTrue(result.IsInterval(env));
+            Assert.That(result, Is.SameAs(Intervals.Value));
         }
         [Test]
         public void ResultIsInterval2()
@@ -60,15 +53,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.IntervalExpressionT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.IsFalse(result.IsScalar(env));
-            Assert.IsFalse(result.IsVector(env));
-            Assert.IsFalse(result.IsMatrix(env));
-            Assert.IsNull(result.GetTensorRank(env));
-            Assert.IsFalse(result.IsString(env));
-            Assert.IsNull(result.GetDimension(env, 0));
-            Assert.IsNull(result.GetDimensions(env));
-            Assert.IsNull(result.GetVectorLength(env));
-            Assert.IsTrue(result.IsInterval(env));
+            Assert.That(result, Is.SameAs(Intervals.Value));
         }
     }
 }

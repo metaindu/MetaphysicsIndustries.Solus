@@ -31,8 +31,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public class UserDefinedFunction : Function
     {
-        public UserDefinedFunction(string name, string[] argnames, Expression expr)
-            : base(argnames.Select(_ =>new Parameter("",Reals.Value)).ToArray(), name)
+        public UserDefinedFunction(string name, string[] argnames,
+            Expression expr)
+            : base(
+                argnames.Select(_ => new Parameter(_, Reals.Value)).ToArray(),
+                name)
         {
             Name = name;
             Expression = expr;
@@ -49,8 +52,8 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"{args.Length})");
         }   
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
             SolusEnvironment env2;
             if (env != null)
@@ -63,7 +66,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 var param = Parameters[i];
                 var argValue = argValues[i];
-                env2.SetVariable(param.Name, argValue);
+                env2.SetVariableType(param.Name, argValue);
             }
 
             return Expression.GetResultType(env2);

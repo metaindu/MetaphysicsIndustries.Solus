@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             var ex = Assert.Throws<ValueException>(
                 () => new MockFunction(null, "func2"));
             // and
-            Assert.That(ex.ParamName, Is.EqualTo("paramTypes"));
+            Assert.That(ex.ParamName, Is.EqualTo("parameters"));
         }
     }
 }

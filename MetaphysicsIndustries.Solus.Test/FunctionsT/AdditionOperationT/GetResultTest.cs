@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -30,51 +31,27 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
     public class GetResultTest
     {
         [Test]
-        public void ResultMatchesFirstArg1()
+        public void ResultIsScalar1()
         {
             // given
-            var arg1 = 1.ToNumber();
-            var arg2 = 1.ToNumber();
-            var args = new IMathObject[] { arg1, arg2 };
-            // precondition
-            Assert.IsTrue(arg1.IsScalar(null));
-            Assert.IsFalse(arg1.IsVector(null));
-            Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(arg1.IsString(null));
+            var args = new ISet[] { Reals.Value, Reals.Value };
             // when
             var value = AdditionOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.IsFalse(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(result.IsString(null));
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
 
         [Test]
-        public void ResultMatchesFirstArg2()
+        public void ResultIsScalar2()
         {
             // given
-            var arg1 = "abc".ToStringValue();
-            var arg2 = "def".ToStringValue();
-            var args = new IMathObject[] { arg1, arg2 };
-            // precondition
-            Assert.IsFalse(arg1.IsScalar(null));
-            Assert.IsFalse(arg1.IsVector(null));
-            Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsTrue(arg1.IsString(null));
+            var args = new ISet[] { Strings.Value, Strings.Value };
             // when
             var value = AdditionOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.IsFalse(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(result.IsString(null));
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
     }
 }

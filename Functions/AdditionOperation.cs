@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -46,12 +47,12 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
             // TODO: tensor arithmetic
             // TODO: string concatenation
-            return ScalarMathObject.Value;
+            return Reals.Value;
         }
     }
 }

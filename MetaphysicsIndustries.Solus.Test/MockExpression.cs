@@ -32,13 +32,13 @@ namespace MetaphysicsIndustries.Solus.Test
             Func<SolusEnvironment, IMathObject> evalf=null,
             Func<Expression> cloneF=null,
             Action<IExpressionVisitor> acceptVisitorF=null,
-            IMathObject result=null)
+            ISet result=null)
         {
             EvalF = evalf;
             CloneF = cloneF;
             AcceptVisitorF = acceptVisitorF;
             if (result == null)
-                result = new MockMathObjectF();
+                result = new MockSet();
             _result = result;
         }
 
@@ -70,9 +70,9 @@ namespace MetaphysicsIndustries.Solus.Test
             throw new NotImplementedException();
         }
 
-        private IMathObject _result;
-        public override IMathObject GetResultType(SolusEnvironment env) =>
+        private ISet _result;
+        public override ISet GetResultType(SolusEnvironment env) =>
             _result;
-        public void SetResult(IMathObject value) => _result = value;
+        public void SetResult(ISet value) => _result = value;
     }
 }

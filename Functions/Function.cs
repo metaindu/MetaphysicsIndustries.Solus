@@ -113,12 +113,13 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
             for (var i = 0; i < args.Length; i++)
             {
-                var argtype = args[i].GetMathType();
+                var argtype = args[i].GetMathType2();
                 if (!parameters[i].Type.Contains(args[i]))
                 {
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
-                        $"{parameters[i].Type} but got {argtype}");
+                        $"{parameters[i].Type.DisplayName} but got " +
+                        $"{argtype.DisplayName}");
                 }
             }
         }
@@ -146,8 +147,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return string.Empty; }
         }
 
-        public abstract IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes);
+        public abstract ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes);
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;

@@ -76,7 +76,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
         public void WrongTypeThrows()
         {
             // given
-            var args = new IMathObject[] {new MockMathObject(false, true)};
+            var args = new IMathObject[] { new Vector3(1, 2, 3) };
             var parameters = new[] { new Parameter("", Reals.Value) };
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>

@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
             // given
             var args = new IMathObject[]
             {
-                new MockMathObject(false, true),
+                new Vector(new float[] { 1, 2, 3 }),
                 1.ToNumber(),
                 2.ToNumber(),
             };

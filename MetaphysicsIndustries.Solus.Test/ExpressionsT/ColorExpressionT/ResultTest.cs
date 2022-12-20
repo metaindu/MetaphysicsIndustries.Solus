@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -38,17 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ColorExpressionT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.IsTrue(result.IsScalar(env));
-            Assert.IsFalse(result.IsVector(env));
-            Assert.IsFalse(result.IsMatrix(env));
-            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
-            Assert.IsFalse(result.IsString(env));
-            Assert.IsNull(result.GetDimension(env, 0));
-            Assert.IsNull(result.GetDimensions(env));
-            Assert.IsNull(result.GetVectorLength(env));
-            Assert.IsFalse(result.IsInterval(env));
-            Assert.IsFalse(result.IsFunction(env));
-            Assert.IsFalse(result.IsExpression(env));
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
     }
 }

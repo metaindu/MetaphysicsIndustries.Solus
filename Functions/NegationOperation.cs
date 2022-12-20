@@ -62,8 +62,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return 0; }
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
             return argTypes.First();
         }

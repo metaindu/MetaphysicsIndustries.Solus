@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -206,8 +207,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
             public override void ApplyToAll(Modulator mod) =>
                 throw new NotImplementedException();
 
-            public override IMathObject GetResultType(SolusEnvironment env) =>
-                _result;
+            public override ISet GetResultType(SolusEnvironment env)
+            {
+                if (TensorRank==0)
+                    return Reals.Value;
+                if (TensorRank==1)
+                    return AllVectors.Value;
+                if (TensorRank==2)
+                    return AllMatrices.Value;
+                throw new NotImplementedException();
+            }
         }
 
         [Test]

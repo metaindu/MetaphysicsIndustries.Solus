@@ -45,9 +45,9 @@ namespace MetaphysicsIndustries.Solus.Test
 
         public override bool ProvidesCustomCall => true;
 
-        public Func<IEnumerable<IMathObject>, IMathObject> GetResultF;
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public Func<IEnumerable<ISet>, ISet> GetResultF;
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
             if (GetResultF != null)
                 return GetResultF(argTypes);

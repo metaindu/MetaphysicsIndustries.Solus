@@ -27,7 +27,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public class VariableIdentity
     {
         public string Name;
-        public IMathObject MathType;
+        public ISet MathType;
         public Type IlType;
         public IMathObject Value;
         public VariableSource Source;

@@ -128,11 +128,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             return v;
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
-        {
-            return ScalarMathObject.Value;
-        }
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Reals.Value;
     }
 }
 

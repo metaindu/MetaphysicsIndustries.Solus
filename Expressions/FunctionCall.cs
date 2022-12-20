@@ -237,9 +237,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return $"{name}(" + string.Join(", ", strs) + ")";
         }
 
-        private IMathObject[] _argumentResultCache;
+        private ISet[] _argumentResultCache;
 
-        public override IMathObject GetResultType(SolusEnvironment env)
+        public override ISet GetResultType(SolusEnvironment env)
         {
             if (!(Function is Expression expr) ||
                 !(expr is Literal literal) ||
@@ -248,7 +248,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             if (_argumentResultCache == null ||
                 _argumentResultCache.Length < Arguments.Count)
-                _argumentResultCache = new IMathObject[Arguments.Count];
+                _argumentResultCache = new ISet[Arguments.Count];
             int i;
             for (i = 0; i < Arguments.Count; i++)
                 _argumentResultCache[i] = Arguments[i].GetResultType(env);
