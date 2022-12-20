@@ -51,5 +51,6 @@ namespace MetaphysicsIndustries.Solus.Sets
 
         public string DocString =>
             "The set of all unicode strings, including null";
+        public string DisplayName => "String";
     }
 }

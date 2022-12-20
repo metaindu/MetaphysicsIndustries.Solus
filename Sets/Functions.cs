@@ -22,19 +22,15 @@
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
-    public class Reals : ISet
+    public class Functions : ISet
     {
-        public static readonly Reals Value = new Reals();
+        public static readonly Functions Value = new Functions();
 
-        protected Reals()
+        protected Functions()
         {
         }
 
-        public bool Contains(IMathObject mo)
-        {
-            // TODO: check for NaN, qNaN, and ±inf
-            return mo.IsIsScalar(null);
-        }
+        public bool Contains(IMathObject mo) => mo.IsIsFunction(null);
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
@@ -50,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool? IsSet(SolusEnvironment env) => true;
         public bool IsConcrete => true;
 
-        public string DocString => "The real numbers, ℝ";
-        public string DisplayName => "Scalar";
+        public string DocString => "The set of all functions";
+        public string DisplayName => "Function";
     }
 }

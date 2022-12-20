@@ -20,22 +20,12 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Sets
+using System;
+
+namespace MetaphysicsIndustries.Solus.Test
 {
-    public class Reals : ISet
+    public class MockSet : ISet
     {
-        public static readonly Reals Value = new Reals();
-
-        protected Reals()
-        {
-        }
-
-        public bool Contains(IMathObject mo)
-        {
-            // TODO: check for NaN, qNaN, and ±inf
-            return mo.IsIsScalar(null);
-        }
-
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;
@@ -49,8 +39,16 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool? IsExpression(SolusEnvironment env) => false;
         public bool? IsSet(SolusEnvironment env) => true;
         public bool IsConcrete => true;
+        public string DocString => "MockSet";
+        public string DisplayName => "MockSet";
 
-        public string DocString => "The real numbers, ℝ";
-        public string DisplayName => "Scalar";
+        public Func<IMathObject, bool> ContainsF;
+
+        public bool Contains(IMathObject mo)
+        {
+            if (ContainsF == null)
+                throw new NotImplementedException();
+            return ContainsF(mo);
+        }
     }
 }

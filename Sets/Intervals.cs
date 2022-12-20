@@ -22,18 +22,17 @@
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
-    public class Reals : ISet
+    public class Intervals : ISet
     {
-        public static readonly Reals Value = new Reals();
+        public static readonly Intervals Value = new Intervals();
 
-        protected Reals()
+        protected Intervals()
         {
         }
 
         public bool Contains(IMathObject mo)
         {
-            // TODO: check for NaN, qNaN, and ±inf
-            return mo.IsIsScalar(null);
+            return mo.IsIsInterval(null);
         }
 
         public bool? IsScalar(SolusEnvironment env) => false;
@@ -50,7 +49,9 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool? IsSet(SolusEnvironment env) => true;
         public bool IsConcrete => true;
 
-        public string DocString => "The real numbers, ℝ";
-        public string DisplayName => "Scalar";
+        public string DocString =>
+            "The set of all intervals on the real numbers";
+
+        public string DisplayName => "Intervals";
     }
 }

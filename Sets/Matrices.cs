@@ -21,46 +21,87 @@
  */
 
 using System.Collections.Generic;
-using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
-    public class RealCoordinateSpace : ISet
+    public class Matrices : ISet
     {
-        protected static readonly List<RealCoordinateSpace> sets =
-            new List<RealCoordinateSpace>();
+        protected static readonly List<List<Matrices>> sets =
+            new List<List<Matrices>>();
 
-        public static readonly RealCoordinateSpace R2 = Get(2);
-        public static readonly RealCoordinateSpace R3 = Get(3);
+        public static readonly Matrices M2x2 = Get(2, 2);
+        public static readonly Matrices M2x3 = Get(2, 3);
+        public static readonly Matrices M2x4 = Get(2, 4);
+        public static readonly Matrices M3x2 = Get(3, 2);
+        public static readonly Matrices M3x3 = Get(3, 3);
+        public static readonly Matrices M3x4 = Get(3, 4);
+        public static readonly Matrices M4x2 = Get(4, 2);
+        public static readonly Matrices M4x3 = Get(4, 3);
+        public static readonly Matrices M4x4 = Get(4, 4);
 
-        public static RealCoordinateSpace Get(int dimension)
+        public static Matrices Get(int rowCount, int columnCount)
         {
             // TODO: make this more efficient in both time and memory for
-            //       large dimensions
-            while (sets.Count <= dimension)
-                sets.Add(null);
-            if (sets[dimension] == null)
-                sets[dimension] = new RealCoordinateSpace(dimension);
-            return sets[dimension];
+            //       large row and column counts
+            while (sets.Count <= rowCount)
+                sets.Add(new List<Matrices>());
+            while (sets[rowCount].Count <= columnCount)
+                sets[rowCount].Add(null);
+            if (sets[rowCount][columnCount] == null)
+                sets[rowCount][columnCount] =
+                    new Matrices(rowCount, columnCount);
+            return sets[rowCount][columnCount];
         }
 
-        protected RealCoordinateSpace(int dimension)
+        protected Matrices(int rowCount, int columnCount)
         {
-            if (dimension < 1)
-                throw new ValueException(nameof(dimension),
-                    "Must be a positive integer");
-            Dimension = dimension;
+            RowCount = rowCount;
+            ColumnCount = columnCount;
         }
 
-        public readonly int Dimension;
+        public readonly int RowCount;
+        public readonly int ColumnCount;
 
         public bool Contains(IMathObject mo)
         {
-            if (!mo.IsIsVector(null))
+            if (!mo.IsIsMatrix(null))
                 return false;
-            var v = mo.ToVector();
+            var m = mo.ToMatrix();
             // TODO: check for NaN, qNaN, and ±inf
-            return v.Length == Dimension;
+            return m.RowCount == RowCount &&
+                   m.ColumnCount == ColumnCount;
+        }
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => true;
+        public bool IsConcrete => true;
+        public string DocString =>
+            $"The set of {RowCount}x{ColumnCount} matrices";
+
+        public string DisplayName => "Matrix";
+    }
+
+    public class AllMatrices : ISet
+    {
+        public static readonly AllMatrices Value = new AllMatrices();
+
+        protected AllMatrices()
+        {
+        }
+
+        public bool Contains(IMathObject mo)
+        {
+            return mo.IsIsMatrix(null);
         }
 
         public bool? IsScalar(SolusEnvironment env) => false;
@@ -78,38 +119,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool IsConcrete => true;
 
         public string DocString =>
-            $"The real coordinate space of dimension {Dimension}, " +
-            $"ℝ^{Dimension}";
-        public string DisplayName => $"Vector";
-    }
-
-    public class AllVectors : ISet
-    {
-        public static readonly AllVectors Value = new AllVectors();
-
-        protected AllVectors()
-        {
-        }
-
-        public bool Contains(IMathObject mo)
-        {
-            return mo.IsIsVector(null);
-        }
-
-        public bool? IsScalar(SolusEnvironment env) => false;
-        public bool? IsVector(SolusEnvironment env) => false;
-        public bool? IsMatrix(SolusEnvironment env) => false;
-        public int? GetTensorRank(SolusEnvironment env) => null;
-        public bool? IsString(SolusEnvironment env) => false;
-        public int? GetDimension(SolusEnvironment env, int index) => null;
-        public int[] GetDimensions(SolusEnvironment env) => null;
-        public int? GetVectorLength(SolusEnvironment env) => null;
-        public bool? IsInterval(SolusEnvironment env) => false;
-        public bool? IsFunction(SolusEnvironment env) => false;
-        public bool? IsExpression(SolusEnvironment env) => false;
-        public bool? IsSet(SolusEnvironment env) => true;
-        public bool IsConcrete => true;
-        public string DocString => "The set of all vectors of any dimension";
-        public string DisplayName => "Vector";
+            "The set of all matrices of any size";
+        public string DisplayName => "Matrix";
     }
 }

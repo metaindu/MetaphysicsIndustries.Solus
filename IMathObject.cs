@@ -65,6 +65,7 @@ namespace MetaphysicsIndustries.Solus
     public interface ISet : IMathObject
     {
         bool Contains(IMathObject mo);
+        string DisplayName { get; }
     }
 
     public class ScalarMathObject : IMathObject

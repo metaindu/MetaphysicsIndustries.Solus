@@ -22,18 +22,18 @@
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
-    public class Reals : ISet
+    public class Tensors : ISet
     {
-        public static readonly Reals Value = new Reals();
+        public static readonly Tensors Value = new Tensors();
 
-        protected Reals()
+        protected Tensors()
         {
         }
 
         public bool Contains(IMathObject mo)
         {
-            // TODO: check for NaN, qNaN, and ±inf
-            return mo.IsIsScalar(null);
+            var rank = mo.GetTensorRank(null);
+            return rank.HasValue && rank.Value > 0;
         }
 
         public bool? IsScalar(SolusEnvironment env) => false;
@@ -50,7 +50,8 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool? IsSet(SolusEnvironment env) => true;
         public bool IsConcrete => true;
 
-        public string DocString => "The real numbers, ℝ";
-        public string DisplayName => "Scalar";
+        public string DocString =>
+            "The set of all etnsors of any rank";
+        public string DisplayName => "Tensor";
     }
 }
