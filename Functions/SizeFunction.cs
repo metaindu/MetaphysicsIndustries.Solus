@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"{DisplayName} (expected 1 but got " +
                     $"{args.Length})");
             var argtype = args[0].GetMathType2();
-            if (!(argtype is RealCoordinateSpace ||
+            if (!(argtype is Vectors ||
                   argtype is AllVectors ||
                   argtype is Matrices ||
                   argtype is AllMatrices ||
@@ -63,11 +63,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             var argType = argTypes.First();
             if (argType is Strings)
-                return RealCoordinateSpace.Get(1);
-            if (argType is RealCoordinateSpace)
-                return RealCoordinateSpace.Get(1);
+                return Vectors.Get(1);
+            if (argType is Vectors)
+                return Vectors.Get(1);
             if (argType is Matrices)
-                return RealCoordinateSpace.R2;
+                return Vectors.R2;
             throw new NotImplementedException();
         }
     }

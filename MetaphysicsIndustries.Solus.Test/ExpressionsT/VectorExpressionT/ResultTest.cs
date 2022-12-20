@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VectorExpressionT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.That(result, Is.SameAs(RealCoordinateSpace.Get(4)));
+            Assert.That(result, Is.SameAs(Vectors.Get(4)));
         }
     }
 }

@@ -56,11 +56,11 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
                 "f", Array.Empty<string>(), expr);
             // precondition
             Assert.That(expr.GetResultType(null),
-                Is.SameAs(RealCoordinateSpace.R3));
+                Is.SameAs(Vectors.R3));
             // when
             var result = f.GetResultType(null, Array.Empty<ISet>());
             // then
-            Assert.That(result, Is.SameAs(RealCoordinateSpace.R3));
+            Assert.That(result, Is.SameAs(Vectors.R3));
         }
     }
 }

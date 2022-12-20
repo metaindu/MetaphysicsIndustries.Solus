@@ -181,7 +181,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return typeof(string);
             if (type == Reals.Value)
                 return typeof(float);
-            if (type is RealCoordinateSpace ||
+            if (type is Vectors ||
                 type == AllVectors.Value)
                 return typeof(float[]);
             if (type is Matrices ||

@@ -130,14 +130,14 @@ namespace MetaphysicsIndustries.Solus
         public static ISet GetMathType2(this IMathObject mo)
         {
             if (Reals.Value.Contains(mo)) return Reals.Value;
-            if (RealCoordinateSpace.R2.Contains(mo))
-                return RealCoordinateSpace.R2;
-            if (RealCoordinateSpace.R3.Contains(mo))
-                return RealCoordinateSpace.R3;
+            if (Vectors.R2.Contains(mo))
+                return Vectors.R2;
+            if (Vectors.R3.Contains(mo))
+                return Vectors.R3;
             if (AllVectors.Value.Contains(mo))
             {
                 var v = mo.ToVector();
-                var rcs = RealCoordinateSpace.Get(v.Length);
+                var rcs = Vectors.Get(v.Length);
                 if (rcs != null && rcs.Contains(mo))
                     return rcs;
                 return AllVectors.Value;

@@ -46,12 +46,12 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
         public void ResultForVectorIsVector()
         {
             // given
-            var args = new ISet[] { RealCoordinateSpace.R3 };
+            var args = new ISet[] { Vectors.R3 };
             // when
             var value = SizeFunction.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.That(result, Is.SameAs(RealCoordinateSpace.Get(1)));
+            Assert.That(result, Is.SameAs(Vectors.Get(1)));
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SizeFunctionT
             var value = SizeFunction.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.That(result, Is.SameAs(RealCoordinateSpace.R2));
+            Assert.That(result, Is.SameAs(Vectors.R2));
         }
     }
 }

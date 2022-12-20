@@ -25,26 +25,26 @@ using MetaphysicsIndustries.Solus.Exceptions;
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
-    public class RealCoordinateSpace : ISet
+    public class Vectors : ISet
     {
-        protected static readonly List<RealCoordinateSpace> sets =
-            new List<RealCoordinateSpace>();
+        protected static readonly List<Vectors> sets =
+            new List<Vectors>();
 
-        public static readonly RealCoordinateSpace R2 = Get(2);
-        public static readonly RealCoordinateSpace R3 = Get(3);
+        public static readonly Vectors R2 = Get(2);
+        public static readonly Vectors R3 = Get(3);
 
-        public static RealCoordinateSpace Get(int dimension)
+        public static Vectors Get(int dimension)
         {
             // TODO: make this more efficient in both time and memory for
             //       large dimensions
             while (sets.Count <= dimension)
                 sets.Add(null);
             if (sets[dimension] == null)
-                sets[dimension] = new RealCoordinateSpace(dimension);
+                sets[dimension] = new Vectors(dimension);
             return sets[dimension];
         }
 
-        protected RealCoordinateSpace(int dimension)
+        protected Vectors(int dimension)
         {
             if (dimension < 1)
                 throw new ValueException(nameof(dimension),

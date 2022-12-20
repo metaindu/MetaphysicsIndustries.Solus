@@ -89,7 +89,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     throw new OperandException(
                         "Wrong number of indexes for the expression");
             }
-            else if (exprResultType is RealCoordinateSpace rcs)
+            else if (exprResultType is Vectors vs)
             {
                 if (expr.Indexes.Count != 1)
                     throw new OperandException(
@@ -133,8 +133,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         throw new IndexException(
                             "Indexes must not be negative");
 
-                    if (i == 0 && exprResultType is RealCoordinateSpace rcs)
-                        if (vi >= rcs.Dimension)
+                    if (i == 0 && exprResultType is Vectors vs)
+                        if (vi >= vs.Dimension)
                             throw new IndexException(
                                 "Index exceeds the size of the vector");
 
@@ -627,7 +627,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     $"{ff.DisplayName} (expected 1 but got " +
                     $"{args.Count})");
             var argtype = args[0].GetResultType(env);
-            if (!(argtype is RealCoordinateSpace ||
+            if (!(argtype is Vectors ||
                   argtype == AllVectors.Value ||
                   argtype is Matrices ||
                   argtype == AllMatrices.Value ||

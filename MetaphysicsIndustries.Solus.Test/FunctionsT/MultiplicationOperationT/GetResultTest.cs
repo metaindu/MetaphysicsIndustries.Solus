@@ -46,12 +46,12 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
         public void ResultMatchesFirstArg2()
         {
             // given
-            var args = new ISet[] { RealCoordinateSpace.R3, Reals.Value };
+            var args = new ISet[] { Vectors.R3, Reals.Value };
             // when
             var value = MultiplicationOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.That(result, Is.SameAs(RealCoordinateSpace.R3));
+            Assert.That(result, Is.SameAs(Vectors.R3));
         }
     }
 }

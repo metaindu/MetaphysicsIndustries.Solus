@@ -153,7 +153,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var exprResultType = Expr.GetResultType(env);
             if (exprResultType == Strings.Value)
                 return Strings.Value;
-            if (exprResultType is RealCoordinateSpace ||
+            if (exprResultType is Vectors ||
                 exprResultType == AllVectors.Value)
                 return Reals.Value;
             if (exprResultType is Matrices ||

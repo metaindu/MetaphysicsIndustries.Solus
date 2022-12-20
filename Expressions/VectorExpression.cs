@@ -287,6 +287,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public override ISet GetResultType(SolusEnvironment env) =>
-            RealCoordinateSpace.Get(Length);
+            Vectors.Get(Length);
     }
 }

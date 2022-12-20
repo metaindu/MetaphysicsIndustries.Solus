@@ -46,12 +46,12 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NegationOperationT
         public void ResultMatchesFirstArg2()
         {
             // given
-            var args = new ISet[] { RealCoordinateSpace.R3 };
+            var args = new ISet[] { Vectors.R3 };
             // when
             var value = NegationOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.That(result, Is.SameAs(RealCoordinateSpace.R3));
+            Assert.That(result, Is.SameAs(Vectors.R3));
         }
     }
 }
