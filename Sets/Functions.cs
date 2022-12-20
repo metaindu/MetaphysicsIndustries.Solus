@@ -20,13 +20,141 @@
  *
  */
 
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using MetaphysicsIndustries.Solus.Functions;
+
 namespace MetaphysicsIndustries.Solus.Sets
 {
     public class Functions : ISet
     {
-        public static readonly Functions Value = new Functions();
+        protected static Dictionary<ISet, Dictionary<ISet[], Functions>> sets =
+            new Dictionary<ISet, Dictionary<ISet[], Functions>>();
+        public static Functions Get(ISet returnType,
+            params ISet[] parameterTypes)
+        {
+            if (!sets.ContainsKey(returnType))
+                sets[returnType] = new Dictionary<ISet[], Functions>();
+            if (!sets[returnType].ContainsKey(parameterTypes))
+                sets[returnType][parameterTypes] =
+                    new Functions(returnType, parameterTypes);
+            return sets[returnType][parameterTypes];
+        }
 
-        protected Functions()
+        protected Functions(ISet returnType, ISet[] parameterTypes)
+        {
+            ReturnType = returnType;
+            ParameterTypes = Array.AsReadOnly(parameterTypes);
+        }
+
+        public readonly ISet ReturnType;
+        public readonly ReadOnlyCollection<ISet> ParameterTypes;
+
+        public static bool FunctionHasFixedTypes(Function f)
+        {
+            if (f is AssociativeCommutativeOperation)
+                // + * |
+                return false;
+            if (f is SizeFunction)
+                return false;
+            if (f is MaximumFiniteFunction ||
+                f is MaximumFunction ||
+                f is MinimumFiniteFunction ||
+                f is MinimumFunction)
+                return false;
+            return true;
+        }
+
+        public bool Contains(IMathObject mo)
+        {
+            if (!mo.IsIsFunction(null))
+                return false;
+            var f = mo.ToFunction();
+            if (!FunctionHasFixedTypes(f))
+                return false;
+            // TODO: is subset/superset, rather than "!="
+            if (f.GetResultType(null, null) != ReturnType)
+                return false;
+            if (f.Parameters.Count != ParameterTypes.Count)
+                return false;
+            for (var i = 0; i < ParameterTypes.Count; i++)
+            {
+                // TODO: is subset/superset, rather than "!="
+                if (f.Parameters[i].Type != ParameterTypes[i])
+                    return false;
+            }
+
+            return true;
+        }
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => true;
+        public bool IsConcrete => true;
+
+        private string _docString = null;
+        public string DocString
+        {
+            get
+            {
+                if (_docString == null)
+                    _docString = FormatDocString(ReturnType, ParameterTypes);
+
+                return _docString;
+            }
+        }
+
+        public static string FormatDocString(ISet returnType,
+            ISet[] parameterTypes)
+        {
+            return FormatDocString(returnType,
+                Array.AsReadOnly(parameterTypes));
+        }
+
+        public static string FormatDocString(ISet returnType,
+            ReadOnlyCollection<ISet> parameterTypes)
+        {
+            var pieces = new List<string>();
+            pieces.Add("The set of all functions taking ");
+            int i;
+            if (parameterTypes.Count < 1)
+                pieces.Add("no arguments");
+            for (i = 0; i < parameterTypes.Count; i++)
+            {
+                pieces.Add(parameterTypes[i].DisplayName);
+                if (i < parameterTypes.Count - 2)
+                {
+                    pieces.Add(", ");
+                }
+                else if (i < parameterTypes.Count - 1)
+                {
+                    pieces.Add(" and ");
+                }
+            }
+
+            pieces.Add(" and returning ");
+            pieces.Add(returnType.DisplayName);
+            return string.Join("", pieces);
+        }
+
+        public string DisplayName => "Function";
+    }
+
+    public class AllFunctions : ISet
+    {
+        public static readonly AllFunctions Value = new AllFunctions();
+
+        protected AllFunctions()
         {
         }
 

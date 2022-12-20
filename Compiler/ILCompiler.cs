@@ -187,7 +187,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
             if (type is Matrices ||
                 type == AllMatrices.Value)
                 return typeof(float[,]);
-            if (type == Sets.Functions.Value)
+            if (type is Sets.Functions ||
+                type == Sets.AllFunctions.Value)
                 return typeof(MethodInfo);
             if (type == Intervals.Value)
                 return typeof(STuple<float, bool, float, bool>);

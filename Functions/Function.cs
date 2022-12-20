@@ -36,10 +36,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
-using MetaphysicsIndustries.Solus.Values;
-using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
+using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
