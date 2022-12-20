@@ -36,12 +36,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Expr = expr;
             Indexes = new ReadOnlyCollection<Expression>(indexes.ToList());
-            _result = new ResultC(this);
         }
 
         public readonly Expression Expr;
         public readonly ReadOnlyCollection<Expression> Indexes;
-        private readonly IMathObject _result;
 
         public override Expression Simplify(SolusEnvironment env)
         {
@@ -163,42 +161,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return Reals.Value;
 
             throw new TypeException();
-        }
-
-        private class ResultC : IMathObject
-        {
-            // TODO: really, we can only interrogate the component if the
-            // object is known to have components all of a particular type,
-            // e.g. 3-vector in R^3. otherwise, we have to evaluate the
-            // indexes.
-            // For now, we assume all components are scalars or strings.
-            public ResultC(ComponentAccess ca) => _ca = ca;
-            private readonly ComponentAccess _ca;
-
-            public bool? IsScalar(SolusEnvironment env)
-            {
-                if (_ca.Expr.GetResultType(env).IsIsString(env))
-                    return false;
-                return true;
-            }
-            public bool? IsVector(SolusEnvironment env) => false;
-            public bool? IsMatrix(SolusEnvironment env) => false;
-            public int? GetTensorRank(SolusEnvironment env) => 0;
-            public bool? IsString(SolusEnvironment env)
-            {
-                if (_ca.Expr.GetResultType(env).IsIsString(env))
-                    return true;
-                return false;
-            }
-            public int? GetDimension(SolusEnvironment env, int index) => null;
-            public int[] GetDimensions(SolusEnvironment env) => null;
-            public int? GetVectorLength(SolusEnvironment env) => null;
-            public bool? IsInterval(SolusEnvironment env) => false;
-            public bool? IsFunction(SolusEnvironment env) => false;
-            public bool? IsExpression(SolusEnvironment env) => false;
-            public bool? IsSet(SolusEnvironment env) => false;
-            public bool IsConcrete => false;
-            public string DocString => "";
         }
     }
 }

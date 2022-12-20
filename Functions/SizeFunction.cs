@@ -58,51 +58,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
         }
 
-        private class ResultC : IMathObject
-        {
-            public ResultC(IMathObject obj) => _obj = obj;
-            private readonly IMathObject _obj;
-            public bool? IsScalar(SolusEnvironment env) => false;
-            public bool? IsVector(SolusEnvironment env) => true;
-            public bool? IsMatrix(SolusEnvironment env) => false;
-            public int? GetTensorRank(SolusEnvironment env) => 1;
-            public bool? IsString(SolusEnvironment env) => false;
-
-            public int? GetDimension(SolusEnvironment env, int index)
-            {
-                if (index != 0) throw new IndexException();
-                return _obj.GetTensorRank(env);
-            }
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                var n = _obj.GetTensorRank(env);
-                if (!n.HasValue)
-                    return null;
-                var dimensions = new int[n.Value];
-                for (var i = 0; i < n; i++)
-                {
-                    var dim = _obj.GetDimension(env, i);
-                    if (!dim.HasValue)
-                        return null;
-                    dimensions[i] = dim.Value;
-                }
-
-                return dimensions;
-            }
-
-            public int? GetVectorLength(SolusEnvironment env) =>
-                GetDimension(env, 0);
-
-            public bool? IsInterval(SolusEnvironment env) => false;
-            public bool? IsFunction(SolusEnvironment env) => false;
-            public bool? IsExpression(SolusEnvironment env) => false;
-            public bool? IsSet(SolusEnvironment env) => false;
-
-            public bool IsConcrete => false;
-            public string DocString => "";
-        }
-
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {
