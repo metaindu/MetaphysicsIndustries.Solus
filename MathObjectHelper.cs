@@ -22,6 +22,7 @@
 
 using System;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
@@ -179,7 +180,8 @@ namespace MetaphysicsIndustries.Solus
             if (Sets.Sets.Value.Contains(mo))
                 return Sets.Sets.Value;
 
-            throw new NotImplementedException();
+            throw new TypeException(
+                $"The object type is unknown: {mo.GetType()}");
         }
 
         public static IMathObject[] ToMathObjects(this float[] values)
