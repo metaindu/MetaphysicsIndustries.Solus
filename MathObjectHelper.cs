@@ -118,16 +118,6 @@ namespace MetaphysicsIndustries.Solus
 
         public static ISet ToSet(this IMathObject mo) => (ISet)mo;
 
-        public static Types GetMathType(this IMathObject mo,
-            SolusEnvironment env=null)
-        {
-            if (mo.IsIsScalar(env)) return Types.Scalar;
-            if (mo.IsIsVector(env)) return Types.Vector;
-            if (mo.IsIsMatrix(env)) return Types.Matrix;
-            if (mo.IsIsString(env)) return Types.String;
-            return Types.Unknown;
-        }
-
         public static ISet GetMathType2(this IMathObject mo)
         {
             if (Reals.Value.Contains(mo)) return Reals.Value;
