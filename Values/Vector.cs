@@ -21,6 +21,8 @@
  */
 
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
@@ -28,18 +30,12 @@ namespace MetaphysicsIndustries.Solus.Values
     {
         public Vector(IMathObject[] components)
         {
+            for (var i=0;i<components.Length;i++)
+                if (components[i].GetMathType2() != Reals.Value)
+                    throw new TypeException("All components must be reals");
             // TODO: don't clone here
             _components = (IMathObject[]) components.Clone();
-
-            var componentType = _components[0].GetMathType();
-            foreach (var c in _components)
-            {
-                if (c.GetMathType() == componentType) continue;
-                componentType = Types.Mixed;
-                break;
-            }
-
-            ComponentType = componentType;
+            ComponentType = Reals.Value;
         }
         public Vector(float[] components)
             : this(components.ToMathObjects())
@@ -51,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public int Length => _components.Length;
         public IMathObject GetComponent(int index) => _components[index];
 
-        public Types ComponentType { get; }
+        public ISet ComponentType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => true;

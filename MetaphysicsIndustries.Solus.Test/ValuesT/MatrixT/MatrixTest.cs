@@ -21,6 +21,8 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -44,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             // then
             Assert.That(result.RowCount, Is.EqualTo(2));
             Assert.That(result.ColumnCount, Is.EqualTo(2));
-            Assert.That(result.ComponentType, Is.EqualTo(Types.Scalar));
+            Assert.That(result.ComponentType, Is.SameAs(Reals.Value));
             Assert.That(result[0, 0].ToNumber().Value, Is.EqualTo(1));
             Assert.That(result[0, 1].ToNumber().Value, Is.EqualTo(2));
             Assert.That(result[1, 0].ToNumber().Value, Is.EqualTo(3));
@@ -105,7 +107,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
         }
 
         [Test]
-        public void DifferentComponentTypesYieldsMixed()
+        public void NonRealComponentsThrows()
         {
             // given
             var values = new IMathObject[,]
@@ -113,10 +115,13 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
                 {1.ToNumber(), 2.ToNumber()},
                 {3.ToNumber(), "four".ToStringValue()}
             };
-            // when
-            var result = new Matrix(values);
-            // then
-            Assert.That(result.ComponentType, Is.EqualTo(Types.Mixed));
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => new Matrix(values));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo("The type was incorrect: " +
+                           "All components must be reals"));
         }
 
         [Test]
@@ -133,32 +138,6 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MatrixT
             var result = value.ToString();
             // then
             Assert.That(result, Is.EqualTo("[1, 2; 3, 4; 5, 6]"));
-        }
-
-        [Test]
-        public void TestToStringComplex()
-        {
-            // given
-            var value = new Matrix(new IMathObject[,]
-            {
-                {
-                    "one".ToStringValue(),
-                    new Vector(new float[] {2, 2, 2})
-                },
-                {
-                    3.ToNumber(),
-                    new Matrix(new float[,]
-                    {
-                        {4, 5},
-                        {6, 7}
-                    })
-                }
-            });
-            // when
-            var result = value.ToString();
-            // then
-            Assert.That(result,
-                Is.EqualTo("[\"one\", [2, 2, 2]; 3, [4, 5; 6, 7]]"));
         }
     }
 }

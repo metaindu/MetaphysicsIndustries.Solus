@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         }
 
         [Test]
-        public void NestedExpressionsYieldNestedValues()
+        public void NestedExpressionsThrows()
         {
             // given
             var expr = new VectorExpression(3,
@@ -105,20 +105,13 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new Literal(4),
                     new Literal(5)));
             var eval = Util.CreateEvaluator<T>();
-            // when
-            var result = eval.Eval(expr, null);
-            // then
-            Assert.IsInstanceOf<IVector>(result);
-            var vector = (IVector)result;
-            Assert.That(vector.Length, Is.EqualTo(3));
-            Assert.That(vector.GetComponent(0), Is.EqualTo(1.ToNumber()));
-            Assert.That(vector.GetComponent(1), Is.EqualTo(2.ToNumber()));
-            Assert.IsInstanceOf<IVector>(vector.GetComponent(2));
-            var vector2 = (IVector)vector.GetComponent(2);
-            Assert.That(vector2.Length, Is.EqualTo(3));
-            Assert.That(vector2.GetComponent(0), Is.EqualTo(3.ToNumber()));
-            Assert.That(vector2.GetComponent(1), Is.EqualTo(4.ToNumber()));
-            Assert.That(vector2.GetComponent(2), Is.EqualTo(5.ToNumber()));
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => eval.Eval(expr, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: All components must be reals"));
         }
     }
 }

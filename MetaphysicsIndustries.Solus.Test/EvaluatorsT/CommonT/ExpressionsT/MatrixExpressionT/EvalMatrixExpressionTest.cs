@@ -129,7 +129,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         }
 
         [Test]
-        public void NestedExpressionsYieldNestedValues()
+        public void NestedExpressionsThrows()
         {
             // given
             var expr = new MatrixExpression(2, 2,
@@ -142,24 +142,13 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new Literal(6),
                     new Literal(7)));
             var eval = Util.CreateEvaluator<T>();
-            // when
-            var result = eval.Eval(expr, null);
-            // then
-            Assert.IsInstanceOf<Matrix>(result);
-            var matrix = (Matrix)result;
-            Assert.That(matrix.RowCount, Is.EqualTo(2));
-            Assert.That(matrix.ColumnCount, Is.EqualTo(2));
-            Assert.That(matrix[0, 0], Is.EqualTo(1.ToNumber()));
-            Assert.That(matrix[0, 1], Is.EqualTo(2.ToNumber()));
-            Assert.That(matrix[1, 0], Is.EqualTo(3.ToNumber()));
-            Assert.IsInstanceOf<Matrix>(matrix[1, 1]);
-            var matrix2 = (Matrix)matrix[1, 1];
-            Assert.That(matrix2.RowCount, Is.EqualTo(2));
-            Assert.That(matrix2.ColumnCount, Is.EqualTo(2));
-            Assert.That(matrix2[0, 0], Is.EqualTo(4.ToNumber()));
-            Assert.That(matrix2[0, 1], Is.EqualTo(5.ToNumber()));
-            Assert.That(matrix2[1, 0], Is.EqualTo(6.ToNumber()));
-            Assert.That(matrix2[1, 1], Is.EqualTo(7.ToNumber()));
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => eval.Eval(expr, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: All components must be reals"));
         }
     }
 }
