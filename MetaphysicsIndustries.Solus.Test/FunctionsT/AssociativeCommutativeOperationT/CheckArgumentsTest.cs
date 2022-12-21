@@ -54,7 +54,6 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
                 1.ToNumber(),
                 2.ToNumber(),
             };
-            var paramTypes = new Types[0];
             // expect
             Assert.DoesNotThrow(
                 () => AdditionOperation.Value.CheckArguments(args));
