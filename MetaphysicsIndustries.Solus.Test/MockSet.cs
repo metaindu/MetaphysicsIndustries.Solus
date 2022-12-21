@@ -50,5 +50,10 @@ namespace MetaphysicsIndustries.Solus.Test
                 throw new NotImplementedException();
             return ContainsF(mo);
         }
+
+        public bool IsSupersetOf(ISet other) =>
+            throw new NotImplementedException();
+        public bool IsSubsetOf(ISet other) =>
+            throw new NotImplementedException();
     }
 }

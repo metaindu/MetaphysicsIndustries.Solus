@@ -63,6 +63,13 @@ namespace MetaphysicsIndustries.Solus.Sets
             return v.Length == Dimension;
         }
 
+        public bool IsSupersetOf(ISet other) => other == this;
+        public bool IsSubsetOf(ISet other) =>
+            other == this ||
+            other is AllVectors ||
+            other is Tensors ||
+            other is Sets;
+
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;
@@ -95,6 +102,14 @@ namespace MetaphysicsIndustries.Solus.Sets
         {
             return mo.IsIsVector(null);
         }
+
+        public bool IsSupersetOf(ISet other) =>
+            other is AllVectors||
+            other is Vectors;
+        public bool IsSubsetOf(ISet other) =>
+            other is AllVectors ||
+            other is Tensors ||
+            other is Sets;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;

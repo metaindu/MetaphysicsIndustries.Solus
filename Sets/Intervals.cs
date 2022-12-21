@@ -35,6 +35,10 @@ namespace MetaphysicsIndustries.Solus.Sets
             return mo.IsIsInterval(null);
         }
 
+        public bool IsSupersetOf(ISet other) => other is Intervals;
+        public bool IsSubsetOf(ISet other) =>
+            other is Intervals || other is Sets;
+
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;

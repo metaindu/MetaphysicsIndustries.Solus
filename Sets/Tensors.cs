@@ -36,6 +36,17 @@ namespace MetaphysicsIndustries.Solus.Sets
             return rank.HasValue && rank.Value > 0;
         }
 
+        public bool IsSupersetOf(ISet other) =>
+            other is Tensors ||
+            other is Vectors ||
+            other is AllVectors ||
+            other is Matrices ||
+            other is AllMatrices;
+
+        public bool IsSubsetOf(ISet other) =>
+            other is Tensors ||
+            other is Sets;
+
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;

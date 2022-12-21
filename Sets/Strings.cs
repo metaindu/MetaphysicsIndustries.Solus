@@ -35,6 +35,11 @@ namespace MetaphysicsIndustries.Solus.Sets
             return mo.IsIsString(null);
         }
 
+        public bool IsSupersetOf(ISet other) => other == this;
+        public bool IsSubsetOf(ISet other) =>
+            other == this ||
+            other is Sets;
+
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;

@@ -66,6 +66,8 @@ namespace MetaphysicsIndustries.Solus
     {
         bool Contains(IMathObject mo);
         string DisplayName { get; }
+        bool IsSupersetOf(ISet other);
+        bool IsSubsetOf(ISet other);
     }
 
     public class ScalarMathObject : IMathObject

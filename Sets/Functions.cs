@@ -42,6 +42,8 @@ namespace MetaphysicsIndustries.Solus.Sets
             return sets[returnType][parameterTypes];
         }
 
+        public static Functions RealsToReals = Get(Reals.Value, Reals.Value);
+
         protected Functions(ISet returnType, ISet[] parameterTypes)
         {
             ReturnType = returnType;
@@ -95,6 +97,12 @@ namespace MetaphysicsIndustries.Solus.Sets
 
             return true;
         }
+
+        public bool IsSupersetOf(ISet other) => this == other;
+        public bool IsSubsetOf(ISet other) =>
+            other == this ||
+            other is AllFunctions ||
+            other is Sets;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
@@ -167,6 +175,14 @@ namespace MetaphysicsIndustries.Solus.Sets
         }
 
         public bool Contains(IMathObject mo) => mo.IsIsFunction(null);
+
+        public bool IsSupersetOf(ISet other) =>
+            other is Functions ||
+            other is AllFunctions;
+
+        public bool IsSubsetOf(ISet other) =>
+            other == this ||
+            other is Sets;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;

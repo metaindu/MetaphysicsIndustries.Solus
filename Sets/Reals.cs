@@ -36,6 +36,15 @@ namespace MetaphysicsIndustries.Solus.Sets
             return mo.IsIsScalar(null);
         }
 
+        public bool IsSupersetOf(ISet other) => other == this;
+
+        public bool IsSubsetOf(ISet other)
+        {
+            // TODO: are reals tensors of rank 0?
+            return other == this ||
+                   other is Sets;
+        }
+
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;

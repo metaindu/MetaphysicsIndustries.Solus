@@ -32,6 +32,24 @@ namespace MetaphysicsIndustries.Solus.Sets
 
         public bool Contains(IMathObject mo) => mo.IsIsSet(null);
 
+        public bool IsSupersetOf(ISet other)
+        {
+            // TODO: Russel's paradox
+            return other is Functions ||
+                   other is AllFunctions ||
+                   other is Intervals ||
+                   other is Matrices ||
+                   other is AllMatrices ||
+                   other is Reals ||
+                   other is Sets ||
+                   other is Strings ||
+                   other is Tensors ||
+                   other is Vectors ||
+                   other is AllVectors;
+        }
+
+        public bool IsSubsetOf(ISet other) => other == this;
+
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;

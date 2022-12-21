@@ -72,6 +72,13 @@ namespace MetaphysicsIndustries.Solus.Sets
                    m.ColumnCount == ColumnCount;
         }
 
+        public bool IsSupersetOf(ISet other) => other == this;
+        public bool IsSubsetOf(ISet other) =>
+            other == this ||
+            other is AllMatrices ||
+            other is Tensors ||
+            other is Sets;
+
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;
@@ -103,6 +110,14 @@ namespace MetaphysicsIndustries.Solus.Sets
         {
             return mo.IsIsMatrix(null);
         }
+
+        public bool IsSupersetOf(ISet other) =>
+            other is Matrices ||
+            other is AllMatrices;
+        public bool IsSubsetOf(ISet other) =>
+            other is AllMatrices ||
+            other is Tensors ||
+            other is Sets;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
