@@ -65,6 +65,12 @@ namespace MetaphysicsIndustries.Solus.Sets
                 return false;
             if (f is NegationOperation)
                 return false;
+            // TODO: other functions without fixed types
+            // TODO: equality and non-equality comparisons
+            // TODO: other comparisons
+            // TODO: udf?
+            // TODO: division with vectors and matrices
+            // TODO: exponent with square matrices
             return true;
         }
 
