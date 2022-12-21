@@ -111,7 +111,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             }
             for (var i = 0; i < args.Length; i++)
             {
-                var argtype = args[i].GetMathType2();
+                var argtype = args[i].GetMathType();
                 if (!parameters[i].Type.Contains(args[i]))
                 {
                     throw new ArgumentException(

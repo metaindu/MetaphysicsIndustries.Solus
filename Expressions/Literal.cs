@@ -99,6 +99,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public override ISet GetResultType(SolusEnvironment env) =>
-	        Value.GetMathType2();
+	        Value.GetMathType();
 	}
 }

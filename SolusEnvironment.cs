@@ -151,7 +151,7 @@ namespace MetaphysicsIndustries.Solus
                 var value = vi.Value;
                 if (value.IsIsExpression(this))
                     return ((Expression)value).GetResultType(this);
-                return value.GetMathType2();
+                return value.GetMathType();
             }
             if (Parent != null)
                 return Parent.GetVariableType(name);

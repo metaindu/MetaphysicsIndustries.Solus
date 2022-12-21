@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Values
         {
             for (var r = 0; r < components.GetLength(0); r++)
             for (var c = 0; c < components.GetLength(1); c++)
-                if (components[r, c].GetMathType2() != Reals.Value)
+                if (components[r, c].GetMathType() != Reals.Value)
                     throw new TypeException("All components must be reals");
 
             // TODO: don't clone here?

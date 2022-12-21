@@ -72,13 +72,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var varValue = vi.Value;
                 var mathType = vi.MathType;
                 if (mathType == null)
-                    mathType = varValue.GetMathType2();
+                    mathType = varValue.GetMathType();
                 typeEnv.SetVariableType(varName, mathType);
                 var iltype = vi.IlType;
                 if (iltype == null && mathType != null)
                     iltype = ResolveType(mathType);
                 if (iltype == null && varValue != null)
-                    iltype = ResolveType(varValue.GetMathType2());
+                    iltype = ResolveType(varValue.GetMathType());
                 param.ParamType = iltype;
                 paramTypes[i] = iltype;
                 i++;

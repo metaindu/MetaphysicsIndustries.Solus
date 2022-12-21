@@ -118,7 +118,7 @@ namespace MetaphysicsIndustries.Solus
 
         public static ISet ToSet(this IMathObject mo) => (ISet)mo;
 
-        public static ISet GetMathType2(this IMathObject mo)
+        public static ISet GetMathType(this IMathObject mo)
         {
             if (Reals.Value.Contains(mo)) return Reals.Value;
             if (Vectors.R2.Contains(mo))

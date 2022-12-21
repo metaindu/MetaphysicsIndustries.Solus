@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public Vector(IMathObject[] components)
         {
             for (var i=0;i<components.Length;i++)
-                if (components[i].GetMathType2() != Reals.Value)
+                if (components[i].GetMathType() != Reals.Value)
                     throw new TypeException("All components must be reals");
             // TODO: don't clone here
             _components = (IMathObject[]) components.Clone();

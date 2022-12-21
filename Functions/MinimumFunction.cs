@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Length; i++)
             {
-                var argtype = args[i].GetMathType2();
+                var argtype = args[i].GetMathType();
                 if (argtype != Reals.Value)
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +

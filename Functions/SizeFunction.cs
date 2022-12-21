@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                     $"Wrong number of arguments given to " +
                     $"{DisplayName} (expected 1 but got " +
                     $"{args.Length})");
-            var argtype = args[0].GetMathType2();
+            var argtype = args[0].GetMathType();
             if (!(argtype is Vectors ||
                   argtype is AllVectors ||
                   argtype is Matrices ||

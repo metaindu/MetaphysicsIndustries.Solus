@@ -91,7 +91,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(true, false,
                 false, 0);
             // expect
-            Assert.That(mo.GetMathType2(), Is.SameAs(Reals.Value));
+            Assert.That(mo.GetMathType(), Is.SameAs(Reals.Value));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // given
             var mo = new Vector(new float[] { 1, 2, 3 });
             // expect
-            Assert.That(mo.GetMathType2(),
+            Assert.That(mo.GetMathType(),
                 Is.InstanceOf<Vectors>().Or.InstanceOf<AllVectors>());
         }
 
@@ -110,7 +110,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // given
             var mo = new Matrix(new float[,] { { 1, 2 }, { 3, 4 } });
             // expect
-            Assert.That(mo.GetMathType2(),
+            Assert.That(mo.GetMathType(),
                 Is.InstanceOf<Matrices>().Or.InstanceOf<AllMatrices>());
         }
 
@@ -121,7 +121,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(false, false,
                 false, 0);
             // expect
-            Assert.Throws<TypeException>(() => mo.GetMathType2());
+            Assert.Throws<TypeException>(() => mo.GetMathType());
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // given
             var mo = new MockMathObject(false, isString: true);
             // expect
-            Assert.That(mo.GetMathType2(), Is.SameAs(Strings.Value));
+            Assert.That(mo.GetMathType(), Is.SameAs(Strings.Value));
         }
 
         [Test]

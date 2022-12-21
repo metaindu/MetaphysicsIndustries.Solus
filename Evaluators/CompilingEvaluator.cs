@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 var value = env.GetVariable(varName);
                 if (value.IsIsExpression(env))
                     value = ((Expression)value).GetResultType(env);
-                var mathType = value.GetMathType2();
+                var mathType = value.GetMathType();
                 variables[varName] = new VariableIdentity
                 {
                     Name = varName,
@@ -120,7 +120,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).GetResultType(env);
-                    var mathType = value.GetMathType2();
+                    var mathType = value.GetMathType();
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
@@ -188,7 +188,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).GetResultType(env);
-                    var mathType = value.GetMathType2();
+                    var mathType = value.GetMathType();
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
