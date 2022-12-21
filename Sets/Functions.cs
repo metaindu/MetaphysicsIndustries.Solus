@@ -63,6 +63,8 @@ namespace MetaphysicsIndustries.Solus.Sets
                 f is MinimumFiniteFunction ||
                 f is MinimumFunction)
                 return false;
+            if (f is NegationOperation)
+                return false;
             return true;
         }
 

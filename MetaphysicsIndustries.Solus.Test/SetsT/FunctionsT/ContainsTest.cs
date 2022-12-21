@@ -49,6 +49,7 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.FunctionsT
             Assert.That(!fs.Contains(MaximumFunction.Value));
             Assert.That(!fs.Contains(MinimumFiniteFunction.Value));
             Assert.That(!fs.Contains(MinimumFunction.Value));
+            Assert.That(!fs.Contains(NegationOperation.Value));
         }
 
         [Test]
@@ -71,6 +72,7 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.FunctionsT
             Assert.That(!fs.Contains(MaximumFunction.Value));
             Assert.That(!fs.Contains(MinimumFiniteFunction.Value));
             Assert.That(!fs.Contains(MinimumFunction.Value));
+            Assert.That(!fs.Contains(NegationOperation.Value));
         }
 
         [Test]
@@ -128,6 +130,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.FunctionsT
                 MinimumFiniteFunction.Value));
             Assert.That(AllFunctions.Value.Contains(
                 MinimumFunction.Value));
+            Assert.That(AllFunctions.Value.Contains(
+                NegationOperation.Value));
         }
 
         [Test]
