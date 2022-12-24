@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 initialContents.GetLength(1))
         {
             int r, c;
-            for(r=0;r<initialContents.GetLength(0);r++)
+            for (r = 0; r < initialContents.GetLength(0); r++)
             for (c = 0; c < initialContents.GetLength(1); c++)
                 this[r, c] = initialContents[r, c];
         }

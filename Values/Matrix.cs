@@ -45,6 +45,30 @@ namespace MetaphysicsIndustries.Solus.Values
         {
         }
 
+        public static readonly Matrix Identity2 =
+            new Matrix(new float[,]
+            {
+                { 1, 0 },
+                { 0, 1 }
+            });
+
+        public static readonly Matrix Identity3 =
+            new Matrix(new float[,]
+            {
+                { 1, 0, 0 },
+                { 0, 1, 0 },
+                { 0, 0, 1 }
+            });
+
+        public static readonly Matrix Identity4 =
+            new Matrix(new float[,]
+            {
+                { 1, 0, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 1, 0 },
+                { 0, 0, 0, 1 }
+            });
+
         private readonly IMathObject[,] _components;
 
         public IMathObject this[int row, int column] =>

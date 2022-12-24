@@ -29,31 +29,51 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.SetsT
     public class SupersetAndSubsetTest
     {
         [Test]
-        public void TestIsSupersetOfSomeSets()
+        public void TestIsSupersetOfItself()
         {
             // expect
             Assert.That(Sets.Sets.Value.IsSupersetOf(Sets.Sets.Value));
-
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Sets.Functions.RealsToReals));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(AllFunctions.Value));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Intervals.Value));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Matrices.M2x2));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Matrices.M3x3));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(AllMatrices.Value));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Reals.Value));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Strings.Value));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Tensors.Value));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Vectors.R2));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(Vectors.R3));
-            Assert.That(Sets.Sets.Value.IsSupersetOf(AllVectors.Value));
         }
 
         [Test]
-        public void TestIsSubsetOfSomeSets()
+        public void TestIsNotSupersetOfMathObjects()
         {
             // expect
-            Assert.That(Intervals.Value.IsSubsetOf(Sets.Sets.Value));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(MathObjects.Value));
 
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(
+                Sets.Functions.RealsToReals));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(AllFunctions.Value));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Intervals.Value));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Matrices.M2x2));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Matrices.M3x3));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(AllMatrices.Value));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Reals.Value));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Strings.Value));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Tensors.Value));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Vectors.R2));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(Vectors.R3));
+            Assert.That(!Sets.Sets.Value.IsSupersetOf(AllVectors.Value));
+        }
+
+        [Test]
+        public void TestIsSubsetOfItself()
+        {
+            // expect
+            Assert.That(Sets.Sets.Value.IsSubsetOf(Sets.Sets.Value));
+        }
+
+        [Test]
+        public void TestIsSubsetOfMathObjects()
+        {
+            // expect
+            Assert.That(Sets.Sets.Value.IsSubsetOf(MathObjects.Value));
+        }
+
+        [Test]
+        public void TestIsNotSubsetOfAnyOtherSet()
+        {
+            // expect
             Assert.That(!Sets.Sets.Value.IsSubsetOf(Sets.Functions.RealsToReals));
             Assert.That(!Sets.Sets.Value.IsSubsetOf(AllFunctions.Value));
             Assert.That(!Sets.Sets.Value.IsSubsetOf(Intervals.Value));

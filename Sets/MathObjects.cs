@@ -22,28 +22,34 @@
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
-    public class Sets : ISet
+    public class MathObjects : ISet
     {
-        public static readonly Sets Value = new Sets();
+        public static readonly MathObjects Value = new MathObjects();
 
-        protected Sets()
+        protected MathObjects()
         {
         }
 
-        public bool Contains(IMathObject mo) =>
-            // TODO: functions and relations can be considered sets of
-            //       ordered pairs/tuples
-            mo.IsIsSet(null);
+        public bool Contains(IMathObject mo) => mo != null;
 
         public bool IsSupersetOf(ISet other)
         {
             // TODO: Russel's paradox
-            return other is Sets;
+            return other is Functions ||
+                   other is AllFunctions ||
+                   other is Intervals ||
+                   other is Matrices ||
+                   other is AllMatrices ||
+                   other is Reals ||
+                   other is Sets ||
+                   other is Strings ||
+                   other is Tensors ||
+                   other is Vectors ||
+                   other is AllVectors ||
+                   other is MathObjects;
         }
 
-        public bool IsSubsetOf(ISet other) =>
-            other is Sets ||
-            other is MathObjects;
+        public bool IsSubsetOf(ISet other) => other is MathObjects;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
@@ -59,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool? IsSet(SolusEnvironment env) => true;
         public bool IsConcrete => true;
 
-        public string DocString => "The set of sets";
-        public string DisplayName => "Set";
+        public string DocString => "The set of math objects";
+        public string DisplayName => "MathObject";
     }
 }
