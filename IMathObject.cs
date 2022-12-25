@@ -69,47 +69,4 @@ namespace MetaphysicsIndustries.Solus
         bool IsSupersetOf(ISet other);
         bool IsSubsetOf(ISet other);
     }
-
-    public class ScalarMathObject : IMathObject
-    {
-        public static readonly ScalarMathObject Value = new ScalarMathObject();
-        public bool? IsScalar(SolusEnvironment env) => true;
-        public bool? IsVector(SolusEnvironment env) => false;
-        public bool? IsMatrix(SolusEnvironment env) => false;
-        public int? GetTensorRank(SolusEnvironment env) => 0;
-        public bool? IsString(SolusEnvironment env) => false;
-        public int? GetDimension(SolusEnvironment env, int index) => null;
-        public int[] GetDimensions(SolusEnvironment env) => null;
-        public int? GetVectorLength(SolusEnvironment env) => null;
-        public bool? IsInterval(SolusEnvironment env) => false;
-        public bool? IsFunction(SolusEnvironment env) => false;
-        public bool? IsExpression(SolusEnvironment env) => false;
-        public bool? IsSet(SolusEnvironment env) => false;
-
-        public bool IsConcrete => false;
-
-        public string DocString => "";
-    }
-
-    public class IntervalMathObject : IMathObject
-    {
-        public static readonly IntervalMathObject Value =
-            new IntervalMathObject();
-        public bool? IsScalar(SolusEnvironment env) => false;
-        public bool? IsVector(SolusEnvironment env) => false;
-        public bool? IsMatrix(SolusEnvironment env) => false;
-        public int? GetTensorRank(SolusEnvironment env) => null;
-        public bool? IsString(SolusEnvironment env) => false;
-        public int? GetDimension(SolusEnvironment env, int index) => null;
-        public int[] GetDimensions(SolusEnvironment env) => null;
-        public int? GetVectorLength(SolusEnvironment env) => null;
-        public bool? IsInterval(SolusEnvironment env) => true;
-        public bool? IsFunction(SolusEnvironment env) => false;
-        public bool? IsExpression(SolusEnvironment env) => false;
-        public bool? IsSet(SolusEnvironment env) => false;
-
-        public bool IsConcrete => false;
-
-        public string DocString => "";
-    }
 }
