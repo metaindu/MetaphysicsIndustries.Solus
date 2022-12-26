@@ -347,7 +347,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             for (int r = 0; r < expr.RowCount; r++)
             for (int c = 0; c < expr.ColumnCount; c++)
+            {
+                if (!expr[r, c].GetResultType(env).IsSubsetOf(Reals.Value))
+                    throw new TypeException("All components must be reals");
                 Check(expr[r, c], env);
+            }
         }
 
         public void Check(RandomExpression expr, SolusEnvironment env) { }
@@ -365,7 +369,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public void Check(VectorExpression expr, SolusEnvironment env)
         {
             for (var i = 0; i < expr.Length; i++)
+            {
+                if (!expr[i].GetResultType(env).IsSubsetOf(Reals.Value))
+                    throw new TypeException("All components must be reals");
                 Check(expr[i], env);
+            }
         }
 
         public void CheckFunctionCall(AbsoluteValueFunction ff, List<Expression> args, SolusEnvironment env)

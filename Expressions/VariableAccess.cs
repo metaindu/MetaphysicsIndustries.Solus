@@ -85,6 +85,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public override ISet GetResultType(SolusEnvironment env)
         {
+            if (env == null)
+                throw new NameException(
+                    $"Variable not found: {VariableName}");
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found: {VariableName}");
             return env.GetVariableType(VariableName);
         }
     }

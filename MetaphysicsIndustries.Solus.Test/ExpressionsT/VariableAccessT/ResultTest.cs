@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Sets;
 using NUnit.Framework;
@@ -73,15 +74,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VariableAccessT
         }
 
         [Test]
-        public void MissingVariableYieldsNull()
+        public void MissingVariableThrows()
         {
             // given
             var expr = new VariableAccess("a");
             var env = new SolusEnvironment();  // no "a"
-            // when
-            var result = expr.GetResultType(env);
-            // then
-            Assert.IsNull(result);
+            // expect
+            var ex = Assert.Throws<NameException>(
+                () => expr.GetResultType(env));
+            // and
+            Assert.That(ex.Message, Is.EqualTo("Variable not found: a"));
         }
     }
 }

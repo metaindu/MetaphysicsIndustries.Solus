@@ -92,7 +92,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                     new Literal(5)));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(expr, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: All components must be reals"));
         }
     }
 }

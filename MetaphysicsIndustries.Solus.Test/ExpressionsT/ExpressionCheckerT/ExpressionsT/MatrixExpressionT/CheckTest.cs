@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void NestedExpressionsYieldNestedValues()
+        public void NestedExpressionThrows()
         {
             // given
             var expr = new MatrixExpression(2, 2,
@@ -112,7 +112,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                     new Literal(7)));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(expr, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: All components must be reals"));
         }
     }
 }
