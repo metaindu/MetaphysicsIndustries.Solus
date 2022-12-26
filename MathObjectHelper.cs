@@ -23,6 +23,7 @@
 using System;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
@@ -73,6 +74,25 @@ namespace MetaphysicsIndustries.Solus
             var iss = mo.IsExpression(env);
             return iss.HasValue && iss.Value;
         }
+
+        // TODO: pass to the object; don't rely on inheritance
+        public static bool IsIsComponentAccess(this IMathObject mo) =>
+            mo is ComponentAccess;
+        public static bool IsIsFunctionCall(this IMathObject mo) =>
+            mo is FunctionCall;
+        public static bool IsIsIntervalExpression(this IMathObject mo) =>
+            mo is IntervalExpression;
+        public static bool IsIsLiteral(this IMathObject mo) =>
+            mo is Literal;
+        public static bool IsIsTensorExpression(this IMathObject mo) =>
+            mo is TensorExpression;
+        public static bool IsIsMatrixExpression(this IMathObject mo) =>
+            mo is MatrixExpression;
+        public static bool IsIsVectorExpression(this IMathObject mo) =>
+            mo is VectorExpression;
+        public static bool IsIsVariableAccess(this IMathObject mo) =>
+            mo is VariableAccess;
+
         public static bool IsIsSet(this IMathObject mo,
             SolusEnvironment env)
         {
