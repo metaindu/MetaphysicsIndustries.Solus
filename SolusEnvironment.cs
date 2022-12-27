@@ -25,6 +25,7 @@ using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -102,6 +103,24 @@ namespace MetaphysicsIndustries.Solus
             {
                 SetVariable(macro.Name, macro);
             }
+
+            SetVariable("Real", Reals.Value);
+            SetVariable("Interval", Intervals.Value);
+            SetVariable("String", Strings.Value);
+            SetVariable("Set", Sets.Sets.Value);
+            SetVariable("Vector", AllVectors.Value);
+            SetVariable("VectorR2", Vectors.R2);
+            SetVariable("VectorR3", Vectors.R3);
+            SetVariable("Matrix", AllMatrices.Value);
+            SetVariable("MatrixM2x2", Matrices.M2x2);
+            SetVariable("MatrixM2x3", Matrices.M2x3);
+            SetVariable("MatrixM2x4", Matrices.M2x4);
+            SetVariable("MatrixM3x2", Matrices.M3x2);
+            SetVariable("MatrixM3x3", Matrices.M3x3);
+            SetVariable("MatrixM3x4", Matrices.M3x4);
+            SetVariable("MatrixM4x2", Matrices.M4x2);
+            SetVariable("MatrixM4x3", Matrices.M4x3);
+            SetVariable("MatrixM4x4", Matrices.M4x4);
         }
 
         protected readonly SolusEnvironment Parent;

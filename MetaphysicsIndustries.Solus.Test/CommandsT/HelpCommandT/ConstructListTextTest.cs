@@ -55,6 +55,11 @@ Functions:
 Macros:
   derive if rand sqrt subst 
 
+Types:
+  Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 MatrixM3x3 
+  MatrixM3x4 MatrixM4x2 MatrixM4x3 MatrixM4x4 Real Set String Vector VectorR2 
+  VectorR3 
+
 Additional topics:
   solus t 
 "));
@@ -87,6 +92,11 @@ Functions:
 
 Macros:
   derive if rand sqrt subst 
+
+Types:
+  Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 MatrixM3x3 
+  MatrixM3x4 MatrixM4x2 MatrixM4x3 MatrixM4x4 Real Set String Vector VectorR2 
+  VectorR3 
 
 Additional topics:
   solus t 
@@ -121,6 +131,11 @@ Functions:
 
 Macros:
   derive if rand sqrt subst 
+
+Types:
+  Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 MatrixM3x3 
+  MatrixM3x4 MatrixM4x2 MatrixM4x3 MatrixM4x4 Real Set String Vector VectorR2 
+  VectorR3 
 
 Additional topics:
   solus t 
