@@ -34,7 +34,7 @@ command = (
 help-command = 'help' identifier?:topic;
 var-assign-command = varref ':=' expr;
 func-assign-command = identifier:name
-    '(' ( identifier:param ( ',' identifier:param )* )? ')'
+    '(' ( identifier:param ( ':' varref )? ( ',' identifier:param ( ':' varref )? )* )? ')'
     ':=' expr ;
 vars-command = ( 'vars' | 'variables' );
 delete-command = 'delete' varref varref* ;

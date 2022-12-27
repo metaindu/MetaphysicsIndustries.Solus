@@ -21,9 +21,11 @@
  */
 
 using System;
-using System.Linq;
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {
@@ -50,11 +52,37 @@ namespace MetaphysicsIndustries.Solus.Commands
         public override void Execute(string input, SolusEnvironment env,
             ICommandData data)
         {
-            var func = ((FuncAssignCommandData) data).Func;
+            var data2 = (FuncAssignCommandData)data;
+            var paramList = new List<Parameter>();
+            int i;
+            for (i = 0; i < data2.Parameters.Count; i++)
+            {
+                var name = data2.Parameters[i].Value1;
+                ISet type = Reals.Value;
+                var typeRef = data2.Parameters[i].Value2;
+                if (typeRef != null)
+                {
+                    var refValue = env.GetVariable(typeRef.VariableName);
+                    if (refValue != null)
+                    {
+                        if (!refValue.IsIsSet(env))
+                            throw new TypeException(
+                                "Parameter type must be a set");
+                        type = refValue.ToSet();
+                    }
+                }
+
+                paramList.Add(new Parameter(name, type));
+            }
+
+            var func = new UserDefinedFunction(data2.FuncName, paramList,
+                data2.Expr);
+
             env.SetVariable(func.DisplayName, func);
 
-            var varrefs =
-                func.Parameters.Select(x => new VariableAccess(x.Name));
+            var varrefs = new List<VariableAccess>();
+            foreach (var p in func.Parameters)
+                varrefs.Add(new VariableAccess(p.Name));
             var fcall = new FunctionCall(func, varrefs);
             Console.WriteLine($"{fcall} := {func.Expression}");
         }
@@ -62,12 +90,17 @@ namespace MetaphysicsIndustries.Solus.Commands
 
     public class FuncAssignCommandData : ICommandData
     {
-        public FuncAssignCommandData(UserDefinedFunction func)
+        public FuncAssignCommandData(string funcName,
+            List<STuple<string, VariableAccess>> parameters, Expression expr)
         {
-            Func = func;
+            FuncName = funcName;
+            Parameters = parameters;
+            Expr = expr;
         }
 
         public Command Command => FuncAssignCommand.Value;
-        public UserDefinedFunction Func { get; }
+        public readonly string FuncName;
+        public readonly List<STuple<string, VariableAccess>> Parameters;
+        public readonly Expression Expr;
     }
 }

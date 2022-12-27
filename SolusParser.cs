@@ -161,19 +161,35 @@ namespace MetaphysicsIndustries.Solus
         {
             var funcname = span.Subspans[0].Value;
 
-            var args = span.Subspans.Skip(1).
-                Where(sub => sub.DefRef == _grammar.def_identifier).
-                Select(sub => sub.Value).
-                ToArray();
+            var args = new List<STuple<string, VariableAccess>>();
+            int i;
+            for (i = 1; i < span.Subspans.Count; i++)
+            {
+                if (span.Subspans[i].Node ==
+                    _grammar.node_func_002D_assign_002D_command_9__0029_)
+                    break;
+                if (span.Subspans[i].DefRef != _grammar.def_identifier)
+                    continue;
+                var varName = span.Subspans[i].Value;
+                VariableAccess varType = null;
+                if (i < span.Subspans.Count - 1 &&
+                    span.Subspans[i + 1].Node == _grammar
+                        .node_func_002D_assign_002D_command_3__003A_ &&
+                    i < span.Subspans.Count - 2 &&
+                    span.Subspans[i + 2].Node == _grammar
+                        .node_func_002D_assign_002D_command_4_varref)
+                {
+                    varType =
+                        GetVariableAccessFromVarref(span.Subspans[i + 2]);
+                    i += 2;
+                }
+                args.Add(new STuple<string, VariableAccess>(
+                    varName, varType));
+            }
 
-            // create the function, with no expr
-            var func = new UserDefinedFunction(funcname, args, null);
-
-            // read the expr. this order of things allows for recursion
             var expr = GetExpressionFromExpr(span.Subspans.Last());
-            func.Expression = expr;
 
-            return new FuncAssignCommandData(func);
+            return new FuncAssignCommandData(funcname, args, expr);
         }
 
         ICommandData GetHelpCommandFromSpan(Span span, CommandSet commandSet)

@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Sets;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -36,6 +35,13 @@ namespace MetaphysicsIndustries.Solus.Functions
             : base(
                 argnames.Select(_ => new Parameter(_, Reals.Value)).ToArray(),
                 name)
+        {
+            Name = name;
+            Expression = expr;
+        }
+        public UserDefinedFunction(string name,
+            IEnumerable<Parameter> parameters, Expression expr)
+            : base(parameters.ToArray(), name)
         {
             Name = name;
             Expression = expr;
