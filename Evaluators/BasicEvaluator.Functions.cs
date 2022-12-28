@@ -321,7 +321,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MaximumFiniteFunction f,
             IMathObject[] args, SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             float current = float.NaN;
             bool first = true;
@@ -347,7 +346,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MaximumFunction f, IMathObject[] args,
             SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             var current = args[0].ToNumber().Value;
             for (i = 1; i < args.Length; i++)
@@ -360,7 +358,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MinimumFiniteFunction f,
             IMathObject[] args, SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             float current = float.NaN;
             bool first = true;
@@ -386,7 +383,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MinimumFunction f, IMathObject[] args,
             SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             var current = args[0].ToNumber().Value;
             for (i = 1; i < args.Length; i++)

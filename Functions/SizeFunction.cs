@@ -38,26 +38,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
         }
 
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length != 1)
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{DisplayName} (expected 1 but got " +
-                    $"{args.Length})");
-            var argtype = args[0].GetMathType();
-            if (!(argtype is Vectors ||
-                  argtype is AllVectors ||
-                  argtype is Matrices ||
-                  argtype is AllMatrices ||
-                  argtype is Strings))
-            {
-                throw new ArgumentException(
-                    "Argument wrong type: expected Vector or " +
-                    $"Matrix or String but got {argtype.DisplayName}");
-            }
-        }
-
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {

@@ -22,8 +22,10 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
@@ -85,6 +87,29 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.DoesNotThrow(() => ec.Check(expr, null));
+        }
+
+        [Test]
+        public void WrongTypeThrows()
+        {
+            // given
+            var f = AdditionOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Literal(1),
+                new Literal(2)
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(expr, null));
+            Assert.That(
+                ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: Argument 0 wrong type: " +
+                    "expected Scalar but got Vector"));
         }
     }
 }

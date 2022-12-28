@@ -40,20 +40,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             "The min function\n  min(x1, x2, ..., xn)\n\n" +
             "Returns the minimum of all arguments.";
 
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length < 1)
-                throw new ArgumentException("No arguments passed");
-            for (var i = 0; i < args.Length; i++)
-            {
-                var argtype = args[i].GetMathType();
-                if (argtype != Reals.Value)
-                    throw new ArgumentException(
-                        $"Argument {i} wrong type: expected " +
-                        $"Scalar but got {argtype.DisplayName}");
-            }
-        }
-
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;
     }

@@ -96,32 +96,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 			}
 		}
 
-        public virtual void CheckArguments(IMathObject[] args) =>
-            CheckArguments(args, Parameters, DisplayName);
-
-        public static void CheckArguments(IMathObject[] args,
-            IList<Parameter> parameters, string displayName)
-        {
-            if (args.Length != parameters.Count)
-            {
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{displayName} (expected {parameters.Count} but got " +
-                    $"{args.Length})");
-            }
-            for (var i = 0; i < args.Length; i++)
-            {
-                var argtype = args[i].GetMathType();
-                if (!parameters[i].Type.Contains(args[i]))
-                {
-                    throw new TypeException(
-                        $"Argument {i} wrong type: expected " +
-                        $"{parameters[i].Type.DisplayName} but got " +
-                        $"{argtype.DisplayName}");
-                }
-            }
-        }
-
         public ReadOnlyCollection<Parameter> Parameters { get; }
         private string _name;
 

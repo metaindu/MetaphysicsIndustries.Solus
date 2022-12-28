@@ -625,10 +625,6 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             }
             public override bool ProvidesCustomCall => true;
 
-            public override void CheckArguments(IMathObject[] args)
-            {
-            }
-
             public override ISet GetResultType(SolusEnvironment env,
                 IEnumerable<ISet> argTypes)
             {

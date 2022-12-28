@@ -171,7 +171,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Check(expr.Function, env);
 
-            IMathObject fv = expr.Function;
+            IMathObject fv = expr.Function;  // TODO: expr.GetResultType
             if (fv is VariableAccess va)
                 fv = va.GetFinalReferencedValue(env);
             if (fv is Literal literal)
@@ -201,9 +201,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 {
                     var argtype = args[i].GetResultType(env);
                     if (argtype != Reals.Value)
-                        throw new ArgumentException(
+                        throw new TypeException(
                             $"Argument {i} wrong type: expected " +
-                            $"real but got {argtype}");
+                            $"{Reals.Value.DisplayName} but got " +
+                            $"{argtype.DisplayName}");
                 }
 
                 return;

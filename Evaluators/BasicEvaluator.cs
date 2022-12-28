@@ -78,7 +78,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Call(Function f, IMathObject[] args,
             SolusEnvironment env)
         {
-            f.CheckArguments(args);
             switch (f)
             {
                 case AbsoluteValueFunction ff:

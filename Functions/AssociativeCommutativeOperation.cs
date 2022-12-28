@@ -36,22 +36,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         private List<Parameter> _lastParameters;
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length < 2)
-            {
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{DisplayName} (given {args.Length}, require at least " +
-                    $"2)");
-            }
-
-            if (_lastParameters == null ||
-                _lastParameters.Count != args.Length)
-                _lastParameters = args.Select(_ =>
-                    new Parameter("", Reals.Value)).ToList();
-            CheckArguments(args, _lastParameters, DisplayName);
-        }
 
         //protected override Expression InternalCleanUp(Expression[] args)
         //{
