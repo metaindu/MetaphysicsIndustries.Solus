@@ -24,6 +24,7 @@ using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
@@ -79,6 +80,32 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 Is.EqualTo(
                     "The type was incorrect: Argument 0 wrong type: " +
                     "expected Scalar but got String"));
+        }
+
+        [Test]
+        public void SubtypeOfParameterTypeIsAllowed()
+        {
+            // given
+            var udf = new UserDefinedFunction("f",
+                new []
+                {
+                    new Parameter("x", AllVectors.Value)
+                },
+                new VariableAccess("x"));
+            var args = new Expression[] { new Literal(new Vector2(1, 2)) };
+            var expr = new FunctionCall(udf, args);
+            var ec = new ExpressionChecker();
+            var env = new SolusEnvironment();
+            // expect
+            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            // and given
+            var args2 = new Expression[]
+            {
+                new Literal(new Vector3(1, 2, 3))
+            };
+            var expr2 = new FunctionCall(udf, args2);
+            // expect
+            Assert.DoesNotThrow(() => ec.Check(expr2, env));
         }
     }
 }

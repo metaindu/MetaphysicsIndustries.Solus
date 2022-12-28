@@ -319,7 +319,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (var i = 0; i < args.Count; i++)
             {
                 var argtype = args[i].GetResultType(env);
-                if (f.Parameters[i].Type != argtype)
+                if (!argtype.IsSubsetOf(f.Parameters[i].Type))
                 {
                     throw new TypeException(
                         $"Argument {i} wrong type: expected " +
