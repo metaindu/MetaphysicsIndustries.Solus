@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
@@ -84,12 +85,13 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
                 2.ToNumber(),
             };
             // expect
-            var ex = Assert.Throws<ArgumentException>(
+            var ex = Assert.Throws<TypeException>(
                 () => AdditionOperation.Value.CheckArguments(args));
             Assert.That(
                 ex.Message,
                 Is.EqualTo(
-                    "Argument 0 wrong type: expected Scalar but got Vector"));
+                    "The type was incorrect: Argument 0 wrong type: " +
+                    "expected Scalar but got Vector"));
         }
     }
 }

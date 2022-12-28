@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
@@ -79,11 +80,12 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             var args = new IMathObject[] { new Vector3(1, 2, 3) };
             var parameters = new[] { new Parameter("", Reals.Value) };
             // expect
-            var ex = Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<TypeException>(() =>
                 Function.CheckArguments(args, parameters, "displayName"));
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Argument 0 wrong type: expected Scalar but got Vector"));
+                    "The type was incorrect: Argument 0 wrong type: " +
+                    "expected Scalar but got Vector"));
         }
     }
 }

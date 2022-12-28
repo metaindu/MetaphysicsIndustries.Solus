@@ -34,8 +34,6 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     public class EvalUserDefinedFunctionTest<T>
         where T : IEvaluator, new()
     {
-        // TODO: check args
-
         [Test]
         public void UserDefinedFunctionYieldsValue()
         {

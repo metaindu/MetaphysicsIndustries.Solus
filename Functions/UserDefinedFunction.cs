@@ -20,7 +20,6 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -49,15 +48,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public Expression Expression;
 
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length != Parameters.Count)
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{DisplayName} (expected {Parameters.Count} but got " +
-                    $"{args.Length})");
-        }   
-
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {
@@ -79,4 +69,3 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
     }
 }
-

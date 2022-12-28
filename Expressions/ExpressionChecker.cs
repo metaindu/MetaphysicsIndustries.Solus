@@ -26,7 +26,6 @@ using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -304,8 +303,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 //     CheckFunctionCall(ff, args, env); return;
                 // case UnitStepFunction ff:
                 //     CheckFunctionCall(ff, args, env); return;
-                case UserDefinedFunction ff:
-                    CheckFunctionCall(ff, args, env); return;
+                // case UserDefinedFunction ff:
+                //     CheckFunctionCall(ff, args, env); return;
             }
             
             if (args.Count != f.Parameters.Count)
@@ -321,9 +320,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 var argtype = args[i].GetResultType(env);
                 if (f.Parameters[i].Type != argtype)
                 {
-                    throw new ArgumentException(
+                    throw new TypeException(
                         $"Argument {i} wrong type: expected " +
-                        $"{f.Parameters[i].Type} but got {argtype}");
+                        $"{f.Parameters[i].Type.DisplayName} but got " +
+                        $"{argtype.DisplayName}");
                 }
             }
         }
@@ -659,11 +659,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public void CheckFunctionCall(UserDefinedFunction ff, List<Expression> args, SolusEnvironment env)
         {
-            if (args.Count != ff.Parameters.Count)
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{ff.DisplayName} (expected {ff.Parameters.Count} but " +
-                    $"got {args.Count})");
+            throw new NotImplementedException();
         }
     }
 }

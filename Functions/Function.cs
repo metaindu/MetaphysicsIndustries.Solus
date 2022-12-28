@@ -114,7 +114,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                 var argtype = args[i].GetMathType();
                 if (!parameters[i].Type.Contains(args[i]))
                 {
-                    throw new ArgumentException(
+                    throw new TypeException(
                         $"Argument {i} wrong type: expected " +
                         $"{parameters[i].Type.DisplayName} but got " +
                         $"{argtype.DisplayName}");

@@ -20,10 +20,10 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
+using MetaphysicsIndustries.Solus.Sets;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
@@ -32,8 +32,6 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
     [TestFixture]
     public class EvalUserDefinedFunctionTest
     {
-        // TODO: check args
-
         [Test]
         public void UserDefinedFunctionDoesNotThrow()
         {
@@ -57,6 +55,30 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.DoesNotThrow(() => ec.Check(expr, env));
+        }
+
+        [Test]
+        public void ParameterTypeIsChecked()
+        {
+            // given
+            var udf = new UserDefinedFunction("f",
+                new Parameter[]
+                {
+                    new Parameter("x", Reals.Value)
+                },
+                new VariableAccess("x"));
+            var args = new Expression[] { new Literal("abc".ToStringValue()) };
+            var expr = new FunctionCall(udf, args);
+            var ec = new ExpressionChecker();
+            var env = new SolusEnvironment();
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(expr, env));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: Argument 0 wrong type: " +
+                    "expected Scalar but got String"));
         }
     }
 }
