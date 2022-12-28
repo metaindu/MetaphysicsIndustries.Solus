@@ -43,6 +43,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
 			: this(v.ToNumber())
 		{
 		}
+		public Literal(string s)
+			: this(s.ToStringValue())
+		{
+		}
 		public Literal(IMathObject value)
         {
             if (!value.IsConcrete)

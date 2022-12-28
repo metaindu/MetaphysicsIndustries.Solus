@@ -46,16 +46,17 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new VariableAccess("a"),
                     new VariableAccess("b"),
                     new VariableAccess("c")));
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(1),
-                new Number(2),
-                new Number(4)
+                new Literal(new Number(1)),
+                new Literal(new Number(2)),
+                new Literal(new Number(4))
             };
             var env = new SolusEnvironment();
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, env);
+            var result = eval.Eval(expr, env);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(7));
         }
@@ -72,15 +73,16 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                     new VariableAccess("a"),
                     new VariableAccess("b"),
                     new VariableAccess("c")));
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(1),
-                new Number(2),
-                new Number(4)
+                new Literal(new Number(1)),
+                new Literal(new Number(2)),
+                new Literal(new Number(4))
             };
             var env = new SolusEnvironment();
             env.SetVariable("a", new Literal(8));
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // precondition
             Assert.IsInstanceOf<Literal>(env.GetVariable("a"));
             Assert.That(((Literal)env.GetVariable("a")).Value.ToNumber().Value,
@@ -88,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsFalse(env.ContainsVariable("b"));
             Assert.IsFalse(env.ContainsVariable("c"));
             // when
-            var result = eval.Call(f, args, env);
+            var result = eval.Eval(expr, env);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(7));
             // and

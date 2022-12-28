@@ -50,10 +50,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = ArcsineFunction.Value;
-            var args = new IMathObject[] { arg.ToNumber() };
+            var args = new Expression[] { new Literal(arg) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.That(result.ToFloat(),
@@ -65,11 +66,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = ArcsineFunction.Value;
-            var args = new IMathObject[] { (-1.0001f).ToNumber() };
+            var args = new Expression[] { new Literal(-1.0001f) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument less than -1"));
         }
@@ -79,11 +81,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = ArcsineFunction.Value;
-            var args = new IMathObject[] { 1.0001f.ToNumber() };
+            var args = new Expression[] { new Literal(1.0001f) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument greater than 1"));
         }

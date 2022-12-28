@@ -64,10 +64,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = CosecantFunction.Value;
-            var args = new IMathObject[] { arg.ToNumber() };
+            var args = new Expression[] { new Literal(arg) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.That(result.ToFloat(),

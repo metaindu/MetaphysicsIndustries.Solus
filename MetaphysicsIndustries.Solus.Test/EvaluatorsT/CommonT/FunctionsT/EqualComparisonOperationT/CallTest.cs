@@ -61,10 +61,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = EqualComparisonOperation.Value;
-            var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
+            var args = new Expression[] { new Literal(a), new Literal(b) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.That(result.ToFloat(),

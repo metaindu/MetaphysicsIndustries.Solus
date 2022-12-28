@@ -57,10 +57,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = Log10Function.Value;
-            var args = new IMathObject[] { arg.ToNumber() };
+            var args = new Expression[] { new Literal(arg) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(expected));
         }
@@ -70,11 +71,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = Log10Function.Value;
-            var args = new IMathObject[] { 0.ToNumber() };
+            var args = new Expression[] { new Literal(0) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
@@ -84,11 +86,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = Log10Function.Value;
-            var args = new IMathObject[] { (-1).ToNumber() };
+            var args = new Expression[] { new Literal((-1)) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }

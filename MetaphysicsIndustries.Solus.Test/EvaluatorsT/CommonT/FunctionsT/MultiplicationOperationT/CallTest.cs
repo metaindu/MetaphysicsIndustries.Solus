@@ -57,10 +57,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MultiplicationOperation.Value;
-            var args = new IMathObject[] { a.ToNumber(), b.ToNumber() };
+            var args = new Expression[] { new Literal(a), new Literal(b) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.That(result.ToFloat(),
@@ -72,11 +73,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MultiplicationOperation.Value;
-            var args = new IMathObject[0];
+            var args = Array.Empty<Expression>();
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
-                eval.Call(f, args, null));
+                eval.Eval(expr, null));
             // and
             Assert.IsTrue(ex.Message.StartsWith("Wrong number of arguments"));
         }
@@ -86,11 +88,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MultiplicationOperation.Value;
-            var args = new IMathObject[] { 2.ToNumber() };
+            var args = new Expression[] { new Literal(2) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<ArgumentException>(() =>
-                eval.Call(f, args, null));
+                eval.Eval(expr, null));
             // and
             Assert.IsTrue(ex.Message.StartsWith("Wrong number of arguments"));
         }
@@ -100,10 +103,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MultiplicationOperation.Value;
-            var args = new IMathObject[] { 2.ToNumber(), 3.ToNumber() };
+            var args = new Expression[] { new Literal(2), new Literal(3) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(6));
         }
@@ -113,15 +117,16 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MultiplicationOperation.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                2.ToNumber(),
-                3.ToNumber(),
-                5.ToNumber()
+                new Literal(2),
+                new Literal(3),
+                new Literal(5)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(30));
         }

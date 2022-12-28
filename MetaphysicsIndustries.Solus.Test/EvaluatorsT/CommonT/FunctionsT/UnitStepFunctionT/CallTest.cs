@@ -23,7 +23,6 @@
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
@@ -39,10 +38,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = UnitStepFunction.Value;
-            var args = new IMathObject[] { 1.ToNumber() };
+            var args = new Expression[] { new Literal(1) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
@@ -52,10 +52,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = UnitStepFunction.Value;
-            var args = new IMathObject[] { 0.ToNumber() };
+            var args = new Expression[] { new Literal(0) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
@@ -65,10 +66,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = UnitStepFunction.Value;
-            var args = new IMathObject[] { new Number(-1) };
+            var args = new Expression[] { new Literal(-1) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(0));
         }

@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
@@ -42,7 +43,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             _args[0] = input;
             _args[1] = State;
-            var result = evaluator.Call(Function, _args, env);
+            var expr = new FunctionCall(
+                new Literal(Function),
+                new Literal(input),
+                new Literal(State));
+            var result = evaluator.Eval(expr, env);
             State = result;
         }
     }

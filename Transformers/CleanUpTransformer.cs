@@ -86,17 +86,16 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 return InternalCleanUpOperation((Operation)function, args);
             }
 
-            bool call = args.All(arg => arg is Literal);
+            var newExpr = new FunctionCall(function, args);
 
+            bool call = args.All(arg => arg is Literal);
             if (call)
             {
-                var args2 = args.Select(
-                    a => (IMathObject)((Literal) a).Value.ToNumber());
-                var result = _evaluator.Call(function, args2.ToArray(), null);
+                var result = _evaluator.Eval(newExpr, null);
                 return new Literal(result.ToNumber().Value);
             }
 
-            return new FunctionCall(function, args);
+            return newExpr;
         }
 
         private Expression InternalCleanUpOperation(Operation function, Expression[] args)
@@ -138,13 +137,9 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     {
                         if (arg is Literal)
                         {
-                            var result = _evaluator.Call(function,
-                                new IMathObject[]
-                                {
-                                    combinedValue.ToNumber(),
-                                    ((Literal)arg).Value.ToNumber()
-                                },
-                                null);
+                            var newCall = new FunctionCall(function,
+                                new Literal(combinedValue), arg);
+                            var result = _evaluator.Eval(newCall, null);
                             combinedValue = result.ToNumber().Value;
                         }
                         else
@@ -244,6 +239,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 return args[0];
             }
 
+            var newExpr = new FunctionCall(function, args);
+
             bool call = true;
             foreach (Expression arg in args)
             {
@@ -253,17 +250,13 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     break;
                 }
             }
-
             if (call)
             {
-                var evaledArgs = args.Select(
-                    a => (IMathObject)((Literal) a).Value.ToNumber());
-                var result = _evaluator.Call(function, evaledArgs.ToArray(),
-                    null);
+                var result = _evaluator.Eval(newExpr, null);
                 return new Literal(result.ToNumber().Value);
             }
 
-            return new FunctionCall(function, args);
+            return newExpr;
         }
 
         public Expression[] InternalCleanUpPartAssociativeOperationAssociativeCommutativeOperation(AssociativeCommutativeOperation function, Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals)
@@ -277,12 +270,10 @@ namespace MetaphysicsIndustries.Solus.Transformers
         public Expression InternalCleanUpBinaryOperation(BinaryOperation function, Expression[] args)
         {
             if (args[0] is Literal &&
-                            args[1] is Literal)
+                args[1] is Literal)
             {
-                IMathObject arg0 = ((Literal) args[0]).Value.ToNumber();
-                IMathObject arg1 = ((Literal) args[1]).Value.ToNumber();
-                var result = _evaluator.Call(function,
-                    new [] { arg0, arg1 }, null);
+                var newExpr = new FunctionCall(function, args);
+                var result = _evaluator.Eval(newExpr, null);
                 return new Literal(result.ToNumber().Value);
             }
 

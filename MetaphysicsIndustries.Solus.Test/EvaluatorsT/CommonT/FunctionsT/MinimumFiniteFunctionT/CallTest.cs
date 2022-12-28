@@ -40,17 +40,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(1),
-                new Number(2),
-                new Number(3),
-                new Number(4),
-                new Number(5)
+                new Literal(1),
+                new Literal(2),
+                new Literal(3),
+                new Literal(4),
+                new Literal(5)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
@@ -61,16 +62,17 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(9),
-                new Number(8),
-                new Number(7),
-                new Number(6)
+                new Literal(9),
+                new Literal(8),
+                new Literal(7),
+                new Literal(6)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(6));
@@ -81,17 +83,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(-5),
-                new Number(-4),
-                new Number(-3),
-                new Number(-2),
-                new Number(-1)
+                new Literal(-5),
+                new Literal(-4),
+                new Literal(-3),
+                new Literal(-2),
+                new Literal(-1)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(-5));
@@ -102,16 +105,17 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(-6),
-                new Number(-7),
-                new Number(-8),
-                new Number(-9)
+                new Literal(-6),
+                new Literal(-7),
+                new Literal(-8),
+                new Literal(-9)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(-9));
@@ -122,15 +126,16 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(-1),
-                new Number(0),
-                new Number(1)
+                new Literal(-1),
+                new Literal(0),
+                new Literal(1)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(-1));
@@ -141,17 +146,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(5),
-                new Number(9),
-                new Number(1),
-                new Number(3),
-                new Number(2)
+                new Literal(5),
+                new Literal(9),
+                new Literal(1),
+                new Literal(3),
+                new Literal(2)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
@@ -162,13 +168,14 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(5)
+                new Literal(5)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(5));
@@ -179,11 +186,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[0];
+            var args = Array.Empty<Expression>();
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<ArgumentException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("No arguments passed"));
         }
@@ -193,17 +201,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(1),
-                new Number(2),
-                new Number(float.NaN),
-                new Number(4),
-                new Number(5)
+                new Literal(1),
+                new Literal(2),
+                new Literal(float.NaN),
+                new Literal(4),
+                new Literal(5)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
@@ -214,17 +223,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(1),
-                new Number(2),
-                new Number(float.PositiveInfinity),
-                new Number(4),
-                new Number(5)
+                new Literal(1),
+                new Literal(2),
+                new Literal(float.PositiveInfinity),
+                new Literal(4),
+                new Literal(5)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
@@ -235,17 +245,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(1),
-                new Number(2),
-                new Number(float.NegativeInfinity),
-                new Number(4),
-                new Number(5)
+                new Literal(1),
+                new Literal(2),
+                new Literal(float.NegativeInfinity),
+                new Literal(4),
+                new Literal(5)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
@@ -256,16 +267,17 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(float.PositiveInfinity),
-                new Number(float.NegativeInfinity),
-                new Number(float.NaN),
-                new Number(1)
+                new Literal(float.PositiveInfinity),
+                new Literal(float.NegativeInfinity),
+                new Literal(float.NaN),
+                new Literal(1)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
@@ -276,15 +288,16 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(float.PositiveInfinity),
-                new Number(float.NegativeInfinity),
-                new Number(float.NaN)
+                new Literal(float.PositiveInfinity),
+                new Literal(float.NegativeInfinity),
+                new Literal(float.NaN)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(float.NaN));
@@ -295,14 +308,15 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = MinimumFiniteFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Number(float.PositiveInfinity),
-                new Number(float.NegativeInfinity)
+                new Literal(float.PositiveInfinity),
+                new Literal(float.NegativeInfinity)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsInstanceOf<Number>(result);
             Assert.That(result.ToNumber().Value, Is.EqualTo(float.NaN));
