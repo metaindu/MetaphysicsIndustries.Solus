@@ -80,17 +80,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             return cleanup.CleanUp(expr.Simplify(env));
         }
 
-        public IMathObject Call(Function f, IMathObject[] args,
-            SolusEnvironment env)
-        {
-            var literals = new Expression[args.Length];
-            int i;
-            for (i = 0; i < args.Length; i++)
-                literals[i] = new Literal(args[i]);
-            var expr = new FunctionCall(new Literal(f), literals);
-            return Eval(expr, env);
-        }
-
         public void EvalInterval(
             Expression expr, SolusEnvironment env,
             VarInterval interval, int numSteps, StoreOp1 store,
