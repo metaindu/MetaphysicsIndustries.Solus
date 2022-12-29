@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -54,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             UpperBound.AcceptVisitor(visitor);
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-            IntervalMathObject.Value;
+        public override ISet GetResultType(SolusEnvironment env) =>
+            Intervals.Value;
     }
 }

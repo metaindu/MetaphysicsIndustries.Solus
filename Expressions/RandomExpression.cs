@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -29,7 +30,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public static readonly Random Source = new Random();
 
         float _value = (float)Source.NextDouble();
-        private readonly IMathObject _result = new ResultC();
 
         public override Expression Clone()
         {
@@ -41,24 +41,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-            _result;
-
-        private class ResultC : IMathObject
-        {
-            public bool? IsScalar(SolusEnvironment env) => true;
-            public bool? IsVector(SolusEnvironment env) => false;
-            public bool? IsMatrix(SolusEnvironment env) => false;
-            public int? GetTensorRank(SolusEnvironment env) => 0;
-            public bool? IsString(SolusEnvironment env) => false;
-            public int? GetDimension(SolusEnvironment env, int index) => null;
-            public int[] GetDimensions(SolusEnvironment env) => null;
-            public int? GetVectorLength(SolusEnvironment env) => null;
-            public bool? IsInterval(SolusEnvironment env) => false;
-            public bool? IsFunction(SolusEnvironment env) => false;
-            public bool? IsExpression(SolusEnvironment env) => false;
-            public bool IsConcrete => false;
-            public string DocString => "";
-        }
+        public override ISet GetResultType(SolusEnvironment env) =>
+            Reals.Value;
     }
 }

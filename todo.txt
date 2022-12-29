@@ -31,8 +31,7 @@ arbitrary rules for function arguments, e.g.:
     - multiplication operator require that subsequent matrix arguments have
       matching inner dimensions, to perform typical matrix multiplication
 similar checks on inputs to expression
-a type system to support the above
-maybe a "property system" in addition to, or in place of, said type system
+maybe a "property system" in addition to, or in place of, the type system
 markers of the type of the result of an expression (or return value of a
         function), based on inputs
 figure out some solution to the problem of values being boxed and unboxed so
@@ -98,3 +97,8 @@ syntax for user-defined functions
 repl line continuation, so it doesn't all have to go on a single line
     wodehouse can do that, but that's python, so not much help
 syntax for variable number of arguments to a function
+fractals
+    mandelbrot
+        depends on complex numbers, and probably parametrics
+    sierpinski triangle
+        depends on parametrics for line segments

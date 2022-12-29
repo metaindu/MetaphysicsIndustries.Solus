@@ -26,7 +26,7 @@ namespace MetaphysicsIndustries.Solus.Exceptions
 {
     public class ValueException : SolusException
     {
-        public ValueException(string paramName, string message)
+        public ValueException(string paramName=null, string message=null)
             : base(FormatMessage(paramName, message), null)
         {
             ParamName = paramName;

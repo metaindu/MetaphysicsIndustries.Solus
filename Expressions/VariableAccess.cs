@@ -39,7 +39,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw ValueException.Null(nameof(variableName));
 
             VariableName = variableName;
-            _result = new ResultC(this);
         }
 
         private readonly HashSet<VariableAccess> _visitedVarrefs =
@@ -73,7 +72,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public string VariableName;
-        private readonly IMathObject _result;
 
         public override string ToString()
         {
@@ -85,136 +83,15 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env)
+        public override ISet GetResultType(SolusEnvironment env)
         {
-            if (env.ContainsVariable(VariableName))
-            {
-                var value = env.GetVariable(VariableName);
-                if (value.IsIsExpression(env))
-                    return ((Expression)value).GetResultType(env);
-                return value;
-            }
-
-            return _result;
-        }
-
-        private class ResultC : IMathObject
-        {
-            public ResultC(VariableAccess va) => _va = va;
-            private readonly VariableAccess _va;
-
-            public bool? IsScalar(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.IsScalar(env);
-            }
-
-            public bool? IsVector(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.IsVector(env);
-            }
-
-            public bool? IsMatrix(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.IsMatrix(env);
-            }
-
-            public int? GetTensorRank(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.GetTensorRank(env);
-            }
-
-            public bool? IsString(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.IsString(env);
-            }
-
-            public int? GetDimension(SolusEnvironment env, int index)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.GetDimension(env, index);
-            }
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.GetDimensions(env);
-            }
-
-            public int? GetVectorLength(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.GetVectorLength(env);
-            }
-
-            public bool? IsInterval(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return varexpr.IsInterval(env);
-            }
-
-            public bool? IsFunction(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return false;
-            }
-
-            public bool? IsExpression(SolusEnvironment env)
-            {
-                if (env == null) return null;
-                if (!env.ContainsVariable(_va.VariableName)) return null;
-                var varexpr = env.GetVariable(_va.VariableName);
-                if (varexpr.IsIsExpression(env))
-                    varexpr = ((Expression)varexpr).GetResultType(env);
-                return true;
-            }
-
-            public bool IsConcrete => false;
-            public string DocString => "";
+            if (env == null)
+                throw new NameException(
+                    $"Variable not found: {VariableName}");
+            if (!env.ContainsVariable(VariableName))
+                throw new NameException(
+                    $"Variable not found: {VariableName}");
+            return env.GetVariableType(VariableName);
         }
     }
 }

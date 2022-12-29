@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
     public class CheckTest
     {
         [Test]
-        public void LiteralsYieldVector()
+        public void LiteralsAreAllowed()
         {
             // given
             var expr = new VectorExpression(3,
@@ -47,7 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void UndefinedVariablesInExpressionCauseException()
+        public void UndefinedVariablesInExpressionThrows()
         {
             // given
             var expr = new VectorExpression(3,
@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void DefinedVariablesInExpressionYieldValue()
+        public void DefinedVariablesInExpressionDoesNotThrow()
         {
             // given
             var expr = new VectorExpression(3,
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void NestedExpressionsYieldNestedValues()
+        public void NestedExpressionsThrows()
         {
             // given
             var expr = new VectorExpression(3,
@@ -92,7 +92,30 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                     new Literal(5)));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(expr, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: All components must be reals"));
+        }
+
+        [Test]
+        public void NonNumberComponentThrows()
+        {
+            // given
+            var expr = new VectorExpression(3,
+                new Literal(1),
+                new Literal(2),
+                new Literal("abc"));
+            var ec = new ExpressionChecker();
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(expr, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: All components must be reals"));
         }
     }
 }

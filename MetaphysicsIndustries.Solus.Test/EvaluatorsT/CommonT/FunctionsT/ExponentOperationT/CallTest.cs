@@ -75,10 +75,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = ExponentOperation.Value;
-            var args = new IMathObject[] { b.ToNumber(), exponent.ToNumber() };
+            var args = new Expression[] { new Literal(b), new Literal(exponent) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.That(result.ToFloat(),

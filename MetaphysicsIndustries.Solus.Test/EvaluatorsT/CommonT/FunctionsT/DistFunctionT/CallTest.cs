@@ -62,10 +62,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = DistFunction.Value;
-            var args = new IMathObject[] { x.ToNumber(), y.ToNumber() };
+            var args = new Expression[] { new Literal(x), new Literal(y) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.That(result.ToFloat(),

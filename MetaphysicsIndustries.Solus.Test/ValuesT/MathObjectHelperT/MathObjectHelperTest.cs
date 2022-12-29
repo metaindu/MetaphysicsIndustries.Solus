@@ -21,6 +21,8 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -89,27 +91,27 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(true, false,
                 false, 0);
             // expect
-            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Scalar));
+            Assert.That(mo.GetMathType(), Is.SameAs(Reals.Value));
         }
 
         [Test]
         public void VectorGetMathTypeYieldsVector()
         {
             // given
-            var mo = new MockMathObject(false, true,
-                false, 1);
+            var mo = new Vector(new float[] { 1, 2, 3 });
             // expect
-            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Vector));
+            Assert.That(mo.GetMathType(),
+                Is.InstanceOf<Vectors>().Or.InstanceOf<AllVectors>());
         }
 
         [Test]
         public void MatrixGetMathTypeYieldsMatrix()
         {
             // given
-            var mo = new MockMathObject(false, false,
-                true, 2);
+            var mo = new Matrix(new float[,] { { 1, 2 }, { 3, 4 } });
             // expect
-            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Matrix));
+            Assert.That(mo.GetMathType(),
+                Is.InstanceOf<Matrices>().Or.InstanceOf<AllMatrices>());
         }
 
         [Test]
@@ -119,7 +121,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             var mo = new MockMathObject(false, false,
                 false, 0);
             // expect
-            Assert.That(mo.GetMathType(), Is.EqualTo(Types.Unknown));
+            Assert.Throws<TypeException>(() => mo.GetMathType());
         }
 
         [Test]
@@ -159,7 +161,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
             // given
             var mo = new MockMathObject(false, isString: true);
             // expect
-            Assert.That(mo.GetMathType(), Is.EqualTo(Types.String));
+            Assert.That(mo.GetMathType(), Is.SameAs(Strings.Value));
         }
 
         [Test]

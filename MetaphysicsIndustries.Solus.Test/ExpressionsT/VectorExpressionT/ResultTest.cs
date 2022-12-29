@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VectorExpressionT
@@ -41,17 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.VectorExpressionT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.IsFalse(result.IsScalar(env));
-            Assert.IsTrue(result.IsVector(env));
-            Assert.IsFalse(result.IsMatrix(env));
-            Assert.That(result.GetTensorRank(env), Is.EqualTo(1));
-            Assert.IsFalse(result.IsString(env));
-            Assert.IsNull(result.GetDimension(env, -1));
-            Assert.That(result.GetDimension(env, 0), Is.EqualTo(4));
-            Assert.IsNull(result.GetDimension(env, 1));
-            Assert.That(result.GetDimensions(env),
-                Is.EqualTo(new int[] { 4 }));
-            Assert.That(result.GetVectorLength(env), Is.EqualTo(4));
+            Assert.That(result, Is.SameAs(Vectors.Get(4)));
         }
     }
 }

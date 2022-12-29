@@ -116,6 +116,7 @@ List the available topics:
             var functions = new List<string>();
             var variables = new List<string>();
             var macros = new List<string>();
+            var types = new List<string>();
 
             foreach (var name in env.GetVariableNames())
             {
@@ -124,6 +125,8 @@ List the available topics:
                     functions.Add(name);
                 else if (v is Macro)
                     macros.Add(name);
+                else if (v is ISet)
+                    types.Add(name);
                 else
                     variables.Add(name);
             }
@@ -131,6 +134,7 @@ List the available topics:
             functions.Sort();
             variables.Sort();
             macros.Sort();
+            types.Sort();
 
             void AddItem(string item)
             {
@@ -181,6 +185,20 @@ List the available topics:
                 line = "";
                 foreach (var m in macros)
                     AddItem(m);
+                if (line.Length > 0)
+                    sb.AppendLine("  " + line);
+                newline = true;
+            }
+
+            if (newline) sb.AppendLine();
+            newline = false;
+
+            if (types.Count > 0)
+            {
+                sb.AppendLine("Types:");
+                line = "";
+                foreach (var t in types)
+                    AddItem(t);
                 if (line.Length > 0)
                     sb.AppendLine("  " + line);
                 newline = true;

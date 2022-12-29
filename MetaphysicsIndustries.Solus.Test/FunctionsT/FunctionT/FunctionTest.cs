@@ -22,6 +22,8 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -34,15 +36,15 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
         public void CreateSetsProperties()
         {
             // given
-            var paramTypes = new[] {Types.Scalar};
+            var paramTypes = new[] { new Parameter("", Reals.Value) };
             // when
             var f = new MockFunction(paramTypes, "func1");
             // then
             Assert.That(f.Name, Is.EqualTo("func1"));
             Assert.That(f.DisplayName, Is.EqualTo("func1"));
-            Assert.IsNotNull(f.ParamTypes);
-            Assert.That(f.ParamTypes.Count, Is.EqualTo(1));
-            Assert.That(f.ParamTypes[0], Is.EqualTo(Types.Scalar));
+            Assert.IsNotNull(f.Parameters);
+            Assert.That(f.Parameters.Count, Is.EqualTo(1));
+            Assert.That(f.Parameters[0].Type, Is.SameAs(Reals.Value));
         }
 
         [Test]
@@ -52,7 +54,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             var ex = Assert.Throws<ValueException>(
                 () => new MockFunction(null, "func2"));
             // and
-            Assert.That(ex.ParamName, Is.EqualTo("paramTypes"));
+            Assert.That(ex.ParamName, Is.EqualTo("parameters"));
         }
     }
 }

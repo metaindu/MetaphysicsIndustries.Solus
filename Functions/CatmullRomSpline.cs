@@ -22,6 +22,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -30,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     {
         public CatmullRomSpline(IEnumerable<float> times,
             IEnumerable<float> values)
-            : base(paramTypes: new Types[] {Solus.Values.Types.Scalar})
+            : base(new [] { new Parameter("arg", Reals.Value)})
         {
             var times2 = times.ToList();
             var values2 = values.ToList();
@@ -127,11 +128,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             return v;
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
-        {
-            return ScalarMathObject.Value;
-        }
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Reals.Value;
     }
 }
 

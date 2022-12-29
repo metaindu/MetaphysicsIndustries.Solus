@@ -34,6 +34,16 @@ namespace MetaphysicsIndustries.Solus.Evaluators
     {
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
+            var ec = new ExpressionChecker();
+            ec.Check(expr, env);
+
+            // We can't rely on callers to have applied all variables. We
+            // have to do it here, even if it turns out to be a no-op in some
+            // cases.
+            var avt = new ApplyVariablesTransform();
+            expr = avt.Transform(expr, env);
+            ec.Check(expr, env);
+
             switch (expr)
             {
                 case ColorExpression ce:
@@ -68,7 +78,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Call(Function f, IMathObject[] args,
             SolusEnvironment env)
         {
-            f.CheckArguments(args);
             switch (f)
             {
                 case AbsoluteValueFunction ff:

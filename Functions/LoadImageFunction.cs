@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -35,7 +36,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             new LoadImageFunction();
 
         protected LoadImageFunction()
-            : base(new[] {Types.String}, "load_image")
+            : base(new[] { new Parameter("arg", Strings.Value) },
+                "load_image")
         {
         }
 
@@ -180,29 +182,10 @@ namespace MetaphysicsIndustries.Solus.Functions
             return LoadViaImageSharp(stream);
         }
 
-        private class ResultC : IMathObject
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
-            public bool? IsScalar(SolusEnvironment env) => false;
-            public bool? IsVector(SolusEnvironment env) => false;
-            public bool? IsMatrix(SolusEnvironment env) => true;
-            public int? GetTensorRank(SolusEnvironment env) => 2;
-            public bool? IsString(SolusEnvironment env) => false;
-            public int? GetDimension(SolusEnvironment env, int index) => null;
-            public int[] GetDimensions(SolusEnvironment env) => null;
-            public int? GetVectorLength(SolusEnvironment env) => null;
-            public bool? IsInterval(SolusEnvironment env) => false;
-            public bool? IsFunction(SolusEnvironment env) => false;
-            public bool? IsExpression(SolusEnvironment env) => false;
-            public bool IsConcrete => false;
-            public string DocString => "";
-        }
-
-        private readonly ResultC _result = new ResultC();
-
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
-        {
-            return _result;
+            return AllMatrices.Value;
         }
     }
 }

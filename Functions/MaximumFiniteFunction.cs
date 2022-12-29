@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -32,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             new MaximumFiniteFunction();
 
         public MaximumFiniteFunction() :
-            base(new Types[0], "maxf")
+            base(Array.Empty<Parameter>(), "maxf")
         {
         }
 
@@ -42,24 +43,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             "NaN are ignored. If no finite numbers are given, NaN is " +
             "returned.";
 
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length < 1)
-                throw new ArgumentException("No arguments passed");
-            for (var i = 0; i < args.Length; i++)
-            {
-                var argtype = args[i].GetMathType();
-                if (argtype != Types.Scalar)
-                    throw new ArgumentException(
-                        $"Argument {i} wrong type: expected " +
-                        $"Scalar but got {argtype}");
-            }
-        }
-
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
-        {
-            return ScalarMathObject.Value;
-        }
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Reals.Value;
     }
 }

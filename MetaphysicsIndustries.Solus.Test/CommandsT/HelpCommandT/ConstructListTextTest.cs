@@ -21,6 +21,8 @@
  */
 
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -53,6 +55,11 @@ Functions:
 Macros:
   derive if rand sqrt subst 
 
+Types:
+  Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 MatrixM3x3 
+  MatrixM3x4 MatrixM4x2 MatrixM4x3 MatrixM4x4 Real Set String Vector VectorR2 
+  VectorR3 
+
 Additional topics:
   solus t 
 "));
@@ -63,7 +70,8 @@ Additional topics:
         {
             // given
             var env = new SolusEnvironment();
-            var f = new MockFunction(new[] { Types.Scalar }, "f");
+            var f = new MockFunction(
+              new[] { new Parameter("", Reals.Value) }, "f");
             f.DocStringV = "asdf";
             env.SetVariable(f.DisplayName, f);
             var cs = new CommandSet();
@@ -85,6 +93,11 @@ Functions:
 Macros:
   derive if rand sqrt subst 
 
+Types:
+  Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 MatrixM3x3 
+  MatrixM3x4 MatrixM4x2 MatrixM4x3 MatrixM4x4 Real Set String Vector VectorR2 
+  VectorR3 
+
 Additional topics:
   solus t 
 "));
@@ -95,7 +108,9 @@ Additional topics:
         {
             // given
             var env = new SolusEnvironment();
-            var f = new MockFunction(new[] { Types.Scalar }, "f");
+            var f = new MockFunction(
+              new[] { new Parameter("", Reals.Value) },
+              "f");
             f.DocStringV = "asdf";
             env.SetVariable("f", f);
             var cs = new CommandSet();
@@ -116,6 +131,11 @@ Functions:
 
 Macros:
   derive if rand sqrt subst 
+
+Types:
+  Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 MatrixM3x3 
+  MatrixM3x4 MatrixM4x2 MatrixM4x3 MatrixM4x4 Real Set String Vector VectorR2 
+  VectorR3 
 
 Additional topics:
   solus t 

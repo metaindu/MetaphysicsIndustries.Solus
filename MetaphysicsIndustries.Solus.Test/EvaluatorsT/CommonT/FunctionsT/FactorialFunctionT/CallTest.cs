@@ -22,6 +22,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
@@ -38,11 +39,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = FactorialFunction.Value;
-            var args = new IMathObject[0];
+            var args = Array.Empty<Expression>();
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             Assert.Throws<ArgumentException>(() =>
-                eval.Call(f, args, null));
+                eval.Eval(expr, null));
         }
 
         [Test]
@@ -50,11 +52,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = FactorialFunction.Value;
-            var args = new IMathObject[] { 1.ToNumber(), 2.ToNumber() };
+            var args = new Expression[] { new Literal(1), new Literal(2) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             Assert.Throws<ArgumentException>(() =>
-                eval.Call(f, args, null));
+                eval.Eval(expr, null));
         }
 
         [Test]
@@ -62,16 +65,17 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = FactorialFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                1.ToNumber(),
-                2.ToNumber(),
-                4.ToNumber()
+                new Literal(1),
+                new Literal(2),
+                new Literal(4)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             Assert.Throws<ArgumentException>(() =>
-                eval.Call(f, args, null));
+                eval.Eval(expr, null));
         }
 
         [Test]
@@ -92,10 +96,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = FactorialFunction.Value;
-            var args = new IMathObject[] { arg.ToNumber() };
+            var args = new Expression[] { new Literal(arg) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(expected));
         }

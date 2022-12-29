@@ -20,9 +20,10 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -32,8 +33,6 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
     [TestFixture]
     public class EvalUserDefinedFunctionTest
     {
-        // TODO: check args
-
         [Test]
         public void UserDefinedFunctionDoesNotThrow()
         {
@@ -57,6 +56,56 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.DoesNotThrow(() => ec.Check(expr, env));
+        }
+
+        [Test]
+        public void ParameterTypeIsChecked()
+        {
+            // given
+            var udf = new UserDefinedFunction("f",
+                new Parameter[]
+                {
+                    new Parameter("x", Reals.Value)
+                },
+                new VariableAccess("x"));
+            var args = new Expression[] { new Literal("abc".ToStringValue()) };
+            var expr = new FunctionCall(udf, args);
+            var ec = new ExpressionChecker();
+            var env = new SolusEnvironment();
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(expr, env));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "The type was incorrect: Argument 0 wrong type: " +
+                    "expected Scalar but got String"));
+        }
+
+        [Test]
+        public void SubtypeOfParameterTypeIsAllowed()
+        {
+            // given
+            var udf = new UserDefinedFunction("f",
+                new []
+                {
+                    new Parameter("x", AllVectors.Value)
+                },
+                new VariableAccess("x"));
+            var args = new Expression[] { new Literal(new Vector2(1, 2)) };
+            var expr = new FunctionCall(udf, args);
+            var ec = new ExpressionChecker();
+            var env = new SolusEnvironment();
+            // expect
+            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            // and given
+            var args2 = new Expression[]
+            {
+                new Literal(new Vector3(1, 2, 3))
+            };
+            var expr2 = new FunctionCall(udf, args2);
+            // expect
+            Assert.DoesNotThrow(() => ec.Check(expr2, env));
         }
     }
 }

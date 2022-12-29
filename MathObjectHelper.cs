@@ -20,8 +20,12 @@
  *
  */
 
+using System;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
@@ -71,6 +75,31 @@ namespace MetaphysicsIndustries.Solus
             return iss.HasValue && iss.Value;
         }
 
+        // TODO: pass to the object; don't rely on inheritance
+        public static bool IsIsComponentAccess(this IMathObject mo) =>
+            mo is ComponentAccess;
+        public static bool IsIsFunctionCall(this IMathObject mo) =>
+            mo is FunctionCall;
+        public static bool IsIsIntervalExpression(this IMathObject mo) =>
+            mo is IntervalExpression;
+        public static bool IsIsLiteral(this IMathObject mo) =>
+            mo is Literal;
+        public static bool IsIsTensorExpression(this IMathObject mo) =>
+            mo is TensorExpression;
+        public static bool IsIsMatrixExpression(this IMathObject mo) =>
+            mo is MatrixExpression;
+        public static bool IsIsVectorExpression(this IMathObject mo) =>
+            mo is VectorExpression;
+        public static bool IsIsVariableAccess(this IMathObject mo) =>
+            mo is VariableAccess;
+
+        public static bool IsIsSet(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsSet(env);
+            return iss.HasValue && iss.Value;
+        }
+
         public static Number ToNumber(this IMathObject mo) => (Number) mo;
 
         public static StringValue ToStringValue(this IMathObject mo) =>
@@ -107,14 +136,62 @@ namespace MetaphysicsIndustries.Solus
         public static Interval ToInterval(this IMathObject mo) =>
             (Interval)mo;
 
-        public static Types GetMathType(this IMathObject mo,
-            SolusEnvironment env=null)
+        public static ISet ToSet(this IMathObject mo) => (ISet)mo;
+
+        public static ISet GetMathType(this IMathObject mo)
         {
-            if (mo.IsIsScalar(env)) return Types.Scalar;
-            if (mo.IsIsVector(env)) return Types.Vector;
-            if (mo.IsIsMatrix(env)) return Types.Matrix;
-            if (mo.IsIsString(env)) return Types.String;
-            return Types.Unknown;
+            if (Reals.Value.Contains(mo)) return Reals.Value;
+            if (Vectors.R2.Contains(mo))
+                return Vectors.R2;
+            if (Vectors.R3.Contains(mo))
+                return Vectors.R3;
+            if (AllVectors.Value.Contains(mo))
+            {
+                var v = mo.ToVector();
+                var rcs = Vectors.Get(v.Length);
+                if (rcs != null && rcs.Contains(mo))
+                    return rcs;
+                return AllVectors.Value;
+            }
+
+            if (AllMatrices.Value.Contains(mo))
+            {
+                var m = mo.ToMatrix();
+                var ms = Matrices.Get(m.RowCount, m.ColumnCount);
+                if (ms != null && ms.Contains(mo))
+                    return ms;
+                return AllMatrices.Value;
+            }
+
+            if (Strings.Value.Contains(mo)) return Strings.Value;
+            if (Intervals.Value.Contains(mo)) return Intervals.Value;
+
+            var rank = mo.GetTensorRank(null);
+            if (rank.HasValue && rank.Value > 2)
+                return Tensors.Value;
+
+            if (mo.IsIsFunction(null))
+            {
+                var f = mo.ToFunction();
+                if (Sets.Functions.FunctionHasFixedTypes(f))
+                {
+                    // TODO: reduce allocations
+                    var paramTypes =
+                        f.Parameters.Select(p => p.Type).ToArray();
+                    return Sets.Functions.Get(
+                        f.GetResultType(null, null),
+                        paramTypes);
+                }
+            }
+
+            if (AllFunctions.Value.Contains(mo))
+                return AllFunctions.Value;
+
+            if (Sets.Sets.Value.Contains(mo))
+                return Sets.Sets.Value;
+
+            throw new TypeException(
+                $"The object type is unknown: {mo.GetType()}");
         }
 
         public static IMathObject[] ToMathObjects(this float[] values)

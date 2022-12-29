@@ -21,6 +21,7 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -97,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             throw new NotImplementedException();
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-            ScalarMathObject.Value;
+        public override ISet GetResultType(SolusEnvironment env) =>
+            Reals.Value;
     }
 }

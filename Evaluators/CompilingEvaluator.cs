@@ -26,6 +26,7 @@ using MetaphysicsIndustries.Solus.Compiler;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -58,10 +59,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 var value = env.GetVariable(varName);
                 if (value.IsIsExpression(env))
                     value = ((Expression)value).GetResultType(env);
+                var mathType = value.GetMathType();
                 variables[varName] = new VariableIdentity
                 {
                     Name = varName,
-                    MathType = value,
+                    MathType = mathType,
                     // IlType =
                     Value = value,
                     Source = VariableSource.Param
@@ -76,17 +78,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             var cleanup = new CleanUpTransformer();
             return cleanup.CleanUp(expr.Simplify(env));
-        }
-
-        public IMathObject Call(Function f, IMathObject[] args,
-            SolusEnvironment env)
-        {
-            var literals = new Expression[args.Length];
-            int i;
-            for (i = 0; i < args.Length; i++)
-                literals[i] = new Literal(args[i]);
-            var expr = new FunctionCall(new Literal(f), literals);
-            return Eval(expr, env);
         }
 
         public void EvalInterval(
@@ -110,7 +101,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = ScalarMathObject.Value,
+                        MathType = Reals.Value,
                         Source = VariableSource.Param
                     };
                 else
@@ -118,10 +109,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).GetResultType(env);
+                    var mathType = value.GetMathType();
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = value,
+                        MathType = mathType,
                         // IlType =
                         Value = value,
                         Source = VariableSource.Param
@@ -177,7 +169,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = ScalarMathObject.Value,
+                        MathType = Reals.Value,
                         Source = VariableSource.Param
                     };
                 else
@@ -185,10 +177,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).GetResultType(env);
+                    var mathType = value.GetMathType();
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = value,
+                        MathType = mathType,
                         // IlType =
                         Value = value,
                         Source = VariableSource.Param
@@ -258,7 +251,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = ScalarMathObject.Value,
+                        MathType = Reals.Value,
                         Source = VariableSource.Param
                     };
                 else

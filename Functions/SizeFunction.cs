@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -33,76 +34,21 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly SizeFunction Value = new SizeFunction();
 
         protected SizeFunction()
-            : base(new Types[0], "size")
+            : base(Array.Empty<Parameter>(), "size")
         {
         }
 
-        public override void CheckArguments(IMathObject[] args)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
-            if (args.Length != 1)
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{DisplayName} (expected 1 but got " +
-                    $"{args.Length})");
-            var argtype = args[0].GetMathType();
-            if (argtype != Types.Vector &&
-                argtype != Types.Matrix &&
-                argtype != Types.String)
-            {
-                throw new ArgumentException(
-                    $"Argument wrong type: expected " +
-                    $"Vector or Matrix or String but got {argtype}");
-            }
-        }
-
-        private class ResultC : IMathObject
-        {
-            public ResultC(IMathObject obj) => _obj = obj;
-            private readonly IMathObject _obj;
-            public bool? IsScalar(SolusEnvironment env) => false;
-            public bool? IsVector(SolusEnvironment env) => true;
-            public bool? IsMatrix(SolusEnvironment env) => false;
-            public int? GetTensorRank(SolusEnvironment env) => 1;
-            public bool? IsString(SolusEnvironment env) => false;
-
-            public int? GetDimension(SolusEnvironment env, int index)
-            {
-                if (index != 0) throw new IndexException();
-                return _obj.GetTensorRank(env);
-            }
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                var n = _obj.GetTensorRank(env);
-                if (!n.HasValue)
-                    return null;
-                var dimensions = new int[n.Value];
-                for (var i = 0; i < n; i++)
-                {
-                    var dim = _obj.GetDimension(env, i);
-                    if (!dim.HasValue)
-                        return null;
-                    dimensions[i] = dim.Value;
-                }
-
-                return dimensions;
-            }
-
-            public int? GetVectorLength(SolusEnvironment env) =>
-                GetDimension(env, 0);
-
-            public bool? IsInterval(SolusEnvironment env) => false;
-            public bool? IsFunction(SolusEnvironment env) => false;
-            public bool? IsExpression(SolusEnvironment env) => false;
-
-            public bool IsConcrete => false;
-            public string DocString => "";
-        }
-
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
-        {
-            return new ResultC(argTypes.First());
+            var argType = argTypes.First();
+            if (argType is Strings)
+                return Vectors.Get(1);
+            if (argType is Vectors)
+                return Vectors.Get(1);
+            if (argType is Matrices)
+                return Vectors.R2;
+            throw new NotImplementedException();
         }
     }
 }

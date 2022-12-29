@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -31,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly MaximumFunction Value = new MaximumFunction();
 
         public MaximumFunction() :
-            base(new Types[0], "max")
+            base(Array.Empty<Parameter>(), "max")
         {
         }
 
@@ -39,24 +40,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             "The max function\n  max(x1, x2, ..., xn)\n\n" +
             "Returns the maximum of all arguments.";
 
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length < 1)
-                throw new ArgumentException("No arguments passed");
-            for (var i = 0; i < args.Length; i++)
-            {
-                var argtype = args[i].GetMathType();
-                if (argtype != Types.Scalar)
-                    throw new ArgumentException(
-                        $"Argument {i} wrong type: expected " +
-                        $"Scalar but got {argtype}");
-            }
-        }
-
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
-        {
-            return ScalarMathObject.Value;
-        }
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Reals.Value;
     }
 }

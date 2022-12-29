@@ -21,6 +21,8 @@
  */
 
 using MetaphysicsIndustries.Solus.Commands;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -34,7 +36,8 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
         {
             // given
             var env = new SolusEnvironment();
-            var f = new MockFunction(new[] { Types.Scalar }, "f");
+            var f = new MockFunction(
+                new[] { new Parameter("", Reals.Value) }, "f");
             f.DocStringV = "asdf";
             env.SetVariable(f.DisplayName, f);
             // precondition
@@ -50,7 +53,8 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
         {
             // given
             var env = new SolusEnvironment();
-            var f = new MockFunction(new Types[] { Types.Scalar }, "f");
+            var f = new MockFunction(
+                new[] { new Parameter("", Reals.Value) }, "f");
             f.DocStringV = "asdf";
             env.SetVariable("f", f);
             // prcondition

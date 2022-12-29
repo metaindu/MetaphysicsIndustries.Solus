@@ -37,19 +37,18 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MetaphysicsIndustries.Solus.Exceptions;
-using MetaphysicsIndustries.Solus.Values;
-using Expression = MetaphysicsIndustries.Solus.Expressions.Expression;
+using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class Function : IMathObject
     {
-        protected Function(Types[] paramTypes, string name="")
+        protected Function(Parameter[] parameters, string name = "")
         {
-            if (paramTypes == null)
-                throw ValueException.Null(nameof(paramTypes));
+            if (parameters == null)
+                throw ValueException.Null(nameof(parameters));
             _name = name;
-            ParamTypes = Array.AsReadOnly(paramTypes);
+            Parameters = Array.AsReadOnly(parameters);
         }
 
         public virtual IMathObject CustomCall(IMathObject[] args,
@@ -97,32 +96,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 			}
 		}
 
-        public virtual void CheckArguments(IMathObject[] args) =>
-            CheckArguments(args, ParamTypes, DisplayName);
-
-        public static void CheckArguments(IMathObject[] args,
-            IList<Types> paramTypes, string displayName)
-        {
-            if (args.Length != paramTypes.Count)
-            {
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{displayName} (expected {paramTypes.Count} but got " +
-                    $"{args.Length})");
-            }
-            for (var i = 0; i < args.Length; i++)
-            {
-                var argtype = args[i].GetMathType();
-                if (argtype != paramTypes[i])
-                {
-                    throw new ArgumentException(
-                        $"Argument {i} wrong type: expected " +
-                        $"{paramTypes[i]} but got {argtype}");
-                }
-            }
-        }
-
-        public ReadOnlyCollection<Types> ParamTypes { get; }
+        public ReadOnlyCollection<Parameter> Parameters { get; }
         private string _name;
 
         public virtual string ToString(List<Expression> arguments)
@@ -145,8 +119,8 @@ namespace MetaphysicsIndustries.Solus.Functions
             get { return string.Empty; }
         }
 
-        public abstract IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes);
+        public abstract ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes);
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
@@ -159,6 +133,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public bool? IsInterval(SolusEnvironment env) => false;
         public bool? IsFunction(SolusEnvironment env) => true;
         public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => false;
         public bool IsConcrete => true;
     }
 }

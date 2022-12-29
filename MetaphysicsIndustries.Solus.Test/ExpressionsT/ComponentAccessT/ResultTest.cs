@@ -20,7 +20,11 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
@@ -29,353 +33,142 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ComponentAccessT
     public class ResultTest
     {
         [Test]
-        public void IsResultScalarYieldsTrue1()
+        public void VectorYieldsReal1()
         {
             // given
             var expr = new ComponentAccess(
                 new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => false))),
+                    new Literal(1),
+                    new Literal(2),
+                    new Literal(3)),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultType(env).IsScalar(env);
+            var result = expr.GetResultType(env);
             // then
-            Assert.IsTrue(result);
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
 
         [Test]
-        public void IsResultScalarYieldsTrue2()
+        public void VectorYieldsReal2()
         {
             // given
             var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => true)),
-                    new MockExpression(result: new MockMathObjectF(
-                        isScalarF: e => false)),
-                    new MockExpression(result: new MockMathObjectF(
-                        isScalarF: e => true))),
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultType(env).IsScalar(env);
+            var result = expr.GetResultType(env);
             // then
-            Assert.IsTrue(result);
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
 
         [Test]
-        public void IsResultVectorYieldsFalse1()
+        public void MatrixYieldsReal1()
         {
             // given
             var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isVectorF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isVectorF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isVectorF: e => false))),
+                new MatrixExpression(2, 3,
+                    new Literal(1),
+                    new Literal(2),
+                    new Literal(3),
+                    new Literal(4),
+                    new Literal(5),
+                    new Literal(6)),
+                new[] { new Literal(1), new Literal(2) });
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.GetResultType(env);
+            // then
+            Assert.That(result, Is.SameAs(Reals.Value));
+        }
+
+        [Test]
+        public void MatrixYieldsReal2()
+        {
+            // given
+            var expr = new ComponentAccess(
+                new Literal(
+                    new Matrix(new float[,]
+                    {
+                        { 1, 2, 3 },
+                        { 4, 5, 6 }
+                    })),
+                new[] { new Literal(1), new Literal(2) });
+            var env = new SolusEnvironment();
+            // when
+            var result = expr.GetResultType(env);
+            // then
+            Assert.That(result, Is.SameAs(Reals.Value));
+        }
+
+        [Test]
+        public void StringYieldsString()
+        {
+            // given
+            var expr = new ComponentAccess(
+                new Literal(
+                    new StringValue("abc")),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
             // when
-            var result = expr.GetResultType(env).IsVector(env);
+            var result = expr.GetResultType(env);
             // then
-            Assert.IsFalse(result);
+            Assert.That(result, Is.SameAs(Strings.Value));
         }
 
         [Test]
-        public void IsResultVectorYieldsFalse2()
+        public void ScalarThrows()
         {
             // given
             var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isVectorF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isVectorF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isVectorF: e => true))),
+                new Literal(1),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).IsVector(env);
-            // then
-            Assert.IsFalse(result);
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => expr.GetResultType(env));
         }
 
         [Test]
-        public void IsResultMatrixYieldsFalse1()
+        public void FunctionThrows()
         {
             // given
             var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isMatrixF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isMatrixF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isMatrixF: e => false))),
+                new Literal(SineFunction.Value),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).IsMatrix(env);
-            // then
-            Assert.IsFalse(result);
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => expr.GetResultType(env));
+            // // and
+            // Assert.That(result, Is.SameAs(Strings.Value));
         }
 
         [Test]
-        public void IsResultMatrixYieldsFalse2()
+        public void IntervalThrows()
         {
             // given
             var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isMatrixF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isMatrixF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isMatrixF: e => true))),
+                new Literal(new Interval(1, 5)),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).IsMatrix(env);
-            // then
-            Assert.IsFalse(result);
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => expr.GetResultType(env));
         }
 
         [Test]
-        public void IsResultStringYieldsFalse1()
+        public void SetThrows()
         {
             // given
             var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isStringF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isStringF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isStringF: e => false))),
+                new Literal(Reals.Value),
                 new[] { new Literal(1) });
             var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).IsString(env);
-            // then
-            Assert.IsFalse(result);
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => expr.GetResultType(env));
         }
-
-        [Test]
-        public void IsResultStringYieldsFalse2()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isStringF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isStringF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isStringF: e => true))),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).IsString(env);
-            // then
-            Assert.IsFalse(result);
-        }
-
-        [Test]
-        public void GetResultTensorRankYieldsZero1()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getTensorRankF: e => 1)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getTensorRankF: e => 2)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getTensorRankF: e => 1))),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).GetTensorRank(env);
-            // then
-            Assert.That(result, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void GetResultTensorRankYieldsZero2()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getTensorRankF: e => 2)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getTensorRankF: e => 1)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getTensorRankF: e => 2))),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).GetTensorRank(env);
-            // then
-            Assert.That(result, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void GetResultDimensionYieldsNull()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getDimensionF: (e, i) => 1)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getDimensionF: (e, i) => 2)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getDimensionF: (e, i) => 1))),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).GetDimension(env, 0);
-            // then
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public void GetResultDimensionsYieldsNull()
-        {
-            // given
-            var one = new[] { 1, 1, 1 };
-            var two = new[] { 2, 2, 2 };
-            var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getDimensionsF: e => one)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getDimensionsF: e => two)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getDimensionsF: e => one))),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).GetDimensions(env);
-            // then
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public void GetResultVectorLengthYieldsNull()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new VectorExpression(3,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getVectorLengthF: e => 1)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getVectorLengthF: e => 2)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            getVectorLengthF: e => 3))),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).GetVectorLength(env);
-            // then
-            Assert.IsNull(result);
-        }
-
-        [Test]
-        public void MatrixComponentYieldsTrue()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new MatrixExpression(2, 2,
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => true)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => false)),
-                    new MockExpression(
-                        result: new MockMathObjectF(
-                            isScalarF: e => false))),
-                new[] { new Literal(0), new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).IsScalar(env);
-            // then
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void StringComponentYieldsNull()
-        {
-            // given
-            var expr = new ComponentAccess(
-                new MockExpression(
-                    result: new MockMathObjectF(
-                        isScalarF: e => false,
-                        isVectorF: e => false,
-                        isMatrixF: e => false,
-                        getTensorRankF: e => 0,
-                        isStringF: e => true)),
-                new[] { new Literal(1) });
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env).IsString(env);
-            // theTruesert.IsNull(result);
-        }
-
-        // scalar?
-        // vector
-        // matrix
-        // mock tensor?
-        // Literal with string value
     }
 }

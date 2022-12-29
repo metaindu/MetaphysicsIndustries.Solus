@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var result = new SolusEnvironment(useDefaults: true);
             // then
-            Assert.That(result.CountVariables(), Is.EqualTo(30));
+            Assert.That(result.CountVariables(), Is.EqualTo(47));
             var vars = result.GetVariableNames().ToList();
             Assert.Contains("sin", vars);
             Assert.Contains("cos", vars);
@@ -100,6 +100,24 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("derive", vars);
             Assert.Contains("subst", vars);
             Assert.Contains("if", vars);
+
+            Assert.Contains("Real", vars);
+            Assert.Contains("Interval", vars);
+            Assert.Contains("String", vars);
+            Assert.Contains("Set", vars);
+            Assert.Contains("Vector", vars);
+            Assert.Contains("VectorR2", vars);
+            Assert.Contains("VectorR3", vars);
+            Assert.Contains("Matrix", vars);
+            Assert.Contains("MatrixM2x2", vars);
+            Assert.Contains("MatrixM2x3", vars);
+            Assert.Contains("MatrixM2x4", vars);
+            Assert.Contains("MatrixM3x2", vars);
+            Assert.Contains("MatrixM3x3", vars);
+            Assert.Contains("MatrixM3x4", vars);
+            Assert.Contains("MatrixM4x2", vars);
+            Assert.Contains("MatrixM4x3", vars);
+            Assert.Contains("MatrixM4x4", vars);
         }
     }
 }

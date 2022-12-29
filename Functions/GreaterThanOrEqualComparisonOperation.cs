@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -38,11 +39,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             return x >= y;
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
             // TODO: boolean
-            return ScalarMathObject.Value;
+            return Reals.Value;
         }
     }
 }

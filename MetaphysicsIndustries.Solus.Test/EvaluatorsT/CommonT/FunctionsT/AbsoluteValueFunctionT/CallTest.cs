@@ -38,10 +38,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = AbsoluteValueFunction.Value;
-            var args = new IMathObject[] { 1.ToNumber() };
+            var args = new Expression[] { new Literal(1) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }
@@ -51,10 +52,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = AbsoluteValueFunction.Value;
-            var args = new IMathObject[] { (-1).ToNumber() };
+            var args = new Expression[] { new Literal(-1) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(1));
         }

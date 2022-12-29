@@ -40,11 +40,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = SizeFunction.Value;
-            var args = new IMathObject[0];
+            var args = Array.Empty<Expression>();
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<ArgumentException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Wrong number of arguments given to " +
@@ -56,15 +57,16 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = SizeFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Vector(new float[] { 1, 2, 3 }),
-                new Vector(new float[] { 4, 5, 6 })
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Literal(new Vector(new float[] { 4, 5, 6 }))
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<ArgumentException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Wrong number of arguments given to " +
@@ -76,11 +78,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = SizeFunction.Value;
-            var args = new IMathObject[] { 1.ToNumber() };
+            var args = new Expression[] { new Literal(1) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<ArgumentException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Argument wrong type: expected " +
@@ -92,13 +95,14 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = SizeFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new float[] { 1, 2 }.ToVector()
+                new Literal(new Vector(new float[] { 1, 2 }))
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
@@ -112,17 +116,19 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = SizeFunction.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                new Matrix(new float[,]
-                {
-                    { 1, 2, 3 },
-                    { 4, 5, 6 }
-                })
+                new Literal(
+                    new Matrix(new float[,]
+                    {
+                        { 1, 2, 3 },
+                        { 4, 5, 6 }
+                    }))
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));
@@ -137,10 +143,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = SizeFunction.Value;
-            var args = new IMathObject[] { "abc".ToStringValue() };
+            var args = new Expression[] { new Literal("abc") };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsFalse(result.IsScalar(null));
             Assert.IsTrue(result.IsVector(null));

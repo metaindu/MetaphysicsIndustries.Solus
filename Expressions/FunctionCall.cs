@@ -193,6 +193,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var args = Arguments.Select(
                 a => a.Simplify(env)).ToArray();
             var allLiterals = args.All(a => a is Literal);
+            var newExpr = new FunctionCall(function, args.ToArray());
             if (allLiterals &&
                 function is Literal literal &&
                 literal.Value.IsIsFunction(env))
@@ -201,11 +202,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 var args2 = args.Select(
                     a => ((Literal)a).Value);
                 var eval = new BasicEvaluator();
-                var result = eval.Call(f, args2.ToArray(), env);
+                var result = eval.Eval(newExpr, env);
                 return new Literal(result);
             }
 
-            return new FunctionCall(function, args.ToArray());
+            return newExpr;
         }
 
         public override string ToString()
@@ -237,9 +238,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return $"{name}(" + string.Join(", ", strs) + ")";
         }
 
-        private IMathObject[] _argumentResultCache;
+        private ISet[] _argumentResultCache;
 
-        public override IMathObject GetResultType(SolusEnvironment env)
+        public override ISet GetResultType(SolusEnvironment env)
         {
             if (!(Function is Expression expr) ||
                 !(expr is Literal literal) ||
@@ -248,7 +249,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             if (_argumentResultCache == null ||
                 _argumentResultCache.Length < Arguments.Count)
-                _argumentResultCache = new IMathObject[Arguments.Count];
+                _argumentResultCache = new ISet[Arguments.Count];
             int i;
             for (i = 0; i < Arguments.Count; i++)
                 _argumentResultCache[i] = Arguments[i].GetResultType(env);

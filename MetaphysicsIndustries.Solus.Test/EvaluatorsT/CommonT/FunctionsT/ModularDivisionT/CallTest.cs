@@ -79,14 +79,15 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = ModularDivision.Value;
-            var args = new IMathObject[]
+            var args = new Expression[]
             {
-                dividend.ToNumber(),
-                divisor.ToNumber()
+                new Literal(dividend),
+                new Literal(divisor)
             };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.IsTrue(result.IsScalar(null));
             Assert.That(result.ToFloat(),
@@ -98,11 +99,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = ModularDivision.Value;
-            var args = new IMathObject[] { 1.ToNumber(), 0.ToNumber() };
+            var args = new Expression[] { new Literal(1), new Literal(0) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Division by zero"));
         }

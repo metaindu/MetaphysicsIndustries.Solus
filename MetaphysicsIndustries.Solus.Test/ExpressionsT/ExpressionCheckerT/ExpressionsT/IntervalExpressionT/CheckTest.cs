@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using NUnit.Framework;
 
@@ -39,6 +40,38 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.DoesNotThrow(() => ec.Check(i, null));
+        }
+
+        [Test]
+        public void NonNumberLowerBoundThrows()
+        {
+            // given
+            var i = new IntervalExpression(
+                new Literal("asdf"), true,
+                new Literal(2), true);
+            var ec = new ExpressionChecker();
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(i, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo("Lower bound is not a scalar"));
+        }
+
+        [Test]
+        public void NonNumberUpperBoundThrows()
+        {
+            // given
+            var i = new IntervalExpression(
+                new Literal(1), true,
+                new Literal("asdf"), true);
+            var ec = new ExpressionChecker();
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => ec.Check(i, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo("Upper bound is not a scalar"));
         }
     }
 }

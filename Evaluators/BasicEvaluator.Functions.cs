@@ -321,7 +321,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MaximumFiniteFunction f,
             IMathObject[] args, SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             float current = float.NaN;
             bool first = true;
@@ -347,7 +346,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MaximumFunction f, IMathObject[] args,
             SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             var current = args[0].ToNumber().Value;
             for (i = 1; i < args.Length; i++)
@@ -360,7 +358,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MinimumFiniteFunction f,
             IMathObject[] args, SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             float current = float.NaN;
             bool first = true;
@@ -386,7 +383,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(MinimumFunction f, IMathObject[] args,
             SolusEnvironment env)
         {
-            // TODO: CheckArguments
             int i;
             var current = args[0].ToNumber().Value;
             for (i = 1; i < args.Length; i++)
@@ -499,9 +495,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var env2 = _udfChildCache;
 
             int i;
-            for (i = 0; i < f.Argnames.Length; i++)
+            for (i = 0; i < f.Parameters.Count; i++)
             {
-                env2.SetVariable(f.Argnames[i], args[i]);
+                env2.SetVariable(f.Parameters[i].Name, args[i]);
             }
 
             return Eval(f.Expression, env2);

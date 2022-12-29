@@ -127,7 +127,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return expr.ToString();
         }
 
-        public abstract IMathObject GetResultType(SolusEnvironment env);
+        public abstract ISet GetResultType(SolusEnvironment env);
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
@@ -140,6 +140,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public bool? IsInterval(SolusEnvironment env) => false;
         public bool? IsFunction(SolusEnvironment env) => false;
         public bool? IsExpression(SolusEnvironment env) => true;
+        public bool? IsSet(SolusEnvironment env) => false;
 
         public bool IsConcrete => true;
         public string DocString => "";

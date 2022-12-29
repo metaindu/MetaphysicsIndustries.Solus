@@ -43,6 +43,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
 			: this(v.ToNumber())
 		{
 		}
+		public Literal(string s)
+			: this(s.ToStringValue())
+		{
+		}
 		public Literal(IMathObject value)
         {
             if (!value.IsConcrete)
@@ -98,7 +102,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             visitor.Visit(this);
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-	        Value;
+        public override ISet GetResultType(SolusEnvironment env) =>
+	        Value.GetMathType();
 	}
 }

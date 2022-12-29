@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -30,26 +31,11 @@ namespace MetaphysicsIndustries.Solus.Functions
     public abstract class AssociativeCommutativeOperation : Operation
     {
         protected AssociativeCommutativeOperation()
-            : base(new Types[0])
+            : base(Array.Empty<Parameter>())
         {
         }
 
-        private List<Types> _lastParamTypes;
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length < 2)
-            {
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{DisplayName} (given {args.Length}, require at least " +
-                    $"2)");
-            }
-
-            if (_lastParamTypes == null ||
-                _lastParamTypes.Count != args.Length)
-                _lastParamTypes = args.Select(_ => Types.Scalar).ToList();
-            CheckArguments(args, _lastParamTypes, DisplayName);
-        }
+        private List<Parameter> _lastParameters;
 
         //protected override Expression InternalCleanUp(Expression[] args)
         //{

@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
@@ -70,8 +71,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     _array[i, j] = Literal.Zero;
                 }
             }
-
-            _result = new ResultC(this);
         }
 
         public MatrixExpression(int rows, int columns,
@@ -115,7 +114,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 initialContents.GetLength(1))
         {
             int r, c;
-            for(r=0;r<initialContents.GetLength(0);r++)
+            for (r = 0; r < initialContents.GetLength(0); r++)
             for (c = 0; c < initialContents.GetLength(1); c++)
                 this[r, c] = initialContents[r, c];
         }
@@ -152,7 +151,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         private Expression[,] _array;
-        private readonly IMathObject _result;
 
         public int Count { get { return RowCount * ColumnCount; } }
 
@@ -771,42 +769,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-            _result;
-
-        private class ResultC : IMathObject
-        {
-            public ResultC(MatrixExpression me) => _me = me;
-            private readonly MatrixExpression _me;
-            public bool? IsScalar(SolusEnvironment env) => false;
-            public bool? IsVector(SolusEnvironment env) => false;
-            public bool? IsMatrix(SolusEnvironment env) => true;
-            public int? GetTensorRank(SolusEnvironment env) => _me.TensorRank;
-            public bool? IsString(SolusEnvironment env) => false;
-
-            public int? GetDimension(SolusEnvironment env, int index)
-            {
-                if (index == 0) return _me.RowCount;
-                if (index == 1) return _me.ColumnCount;
-                return null;
-            }
-
-            private int[] __GetDimensions;
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                if (__GetDimensions == null)
-                    __GetDimensions = new[] { _me.RowCount, _me.ColumnCount };
-                return __GetDimensions;
-            }
-
-            public int? GetVectorLength(SolusEnvironment env) => null;
-            public bool? IsInterval(SolusEnvironment env) => false;
-            public bool? IsFunction(SolusEnvironment env) => false;
-            public bool? IsExpression(SolusEnvironment env) => false;
-
-            public bool IsConcrete => false;
-            public string DocString => "";
-        }
+        public override ISet GetResultType(SolusEnvironment env) =>
+            Matrices.Get(RowCount, ColumnCount);
     }
 }

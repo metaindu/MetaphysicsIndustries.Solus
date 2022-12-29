@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Commands;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -568,7 +569,11 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         public class CustomAsdfFunction : Function
         {
             public CustomAsdfFunction()
-                : base(new Types[] {Types.Scalar, Types.Scalar},
+                : base(new[]
+                    {
+                        new Parameter("", Reals.Value),
+                        new Parameter("", Reals.Value)
+                    },
                     "asdf")
             {
             }
@@ -580,8 +585,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             }
             public override bool ProvidesCustomCall => true;
 
-            public override IMathObject GetResultType(SolusEnvironment env,
-                IEnumerable<IMathObject> argTypes)
+            public override ISet GetResultType(SolusEnvironment env,
+                IEnumerable<ISet> argTypes)
             {
                 throw new NotImplementedException();
             }
@@ -609,7 +614,7 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         class CountArgsFunction : Function
         {
             public CountArgsFunction()
-                : base(new Types[0], "count")
+                : base(Array.Empty<Parameter>(), "count")
             {
             }
 
@@ -620,12 +625,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             }
             public override bool ProvidesCustomCall => true;
 
-            public override void CheckArguments(IMathObject[] args)
-            {
-            }
-
-            public override IMathObject GetResultType(SolusEnvironment env,
-                IEnumerable<IMathObject> argTypes)
+            public override ISet GetResultType(SolusEnvironment env,
+                IEnumerable<ISet> argTypes)
             {
                 throw new NotImplementedException();
             }
@@ -1264,12 +1265,13 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsNotNull(result);
             Assert.That(result.Length, Is.EqualTo(1));
             Assert.IsInstanceOf<FuncAssignCommandData>(result[0]);
-            var udf = ((FuncAssignCommandData)result[0]).Func;
-            Assert.That(udf.Name, Is.EqualTo("f"));
-            Assert.That(udf.Argnames.Length, Is.EqualTo(1));
-            Assert.That(udf.Argnames[0], Is.EqualTo("x"));
-            Assert.IsInstanceOf<VariableAccess>(udf.Expression);
-            var va = (VariableAccess)udf.Expression;
+            var data = (FuncAssignCommandData)result[0];
+            Assert.That(data.FuncName, Is.EqualTo("f"));
+            Assert.That(data.Parameters.Count, Is.EqualTo(1));
+            Assert.That(data.Parameters[0].Value1, Is.EqualTo("x"));
+            Assert.That(data.Parameters[0].Value2, Is.Null);
+            Assert.IsInstanceOf<VariableAccess>(data.Expr);
+            var va = (VariableAccess)data.Expr;
             Assert.That(va.VariableName, Is.EqualTo("x"));
         }
 
@@ -1291,12 +1293,12 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsNotNull(result);
             Assert.That(result.Length, Is.EqualTo(1));
             Assert.IsInstanceOf<FuncAssignCommandData>(result[0]);
-            var udf = ((FuncAssignCommandData)result[0]).Func;
-            Assert.That(udf.Name, Is.EqualTo("f"));
-            Assert.That(udf.Argnames.Length, Is.EqualTo(1));
-            Assert.That(udf.Argnames[0], Is.EqualTo("x"));
-            Assert.IsInstanceOf<FunctionCall>(udf.Expression);
-            var call = (FunctionCall)udf.Expression;
+            var data = (FuncAssignCommandData)result[0];
+            Assert.That(data.FuncName, Is.EqualTo("f"));
+            Assert.That(data.Parameters.Count, Is.EqualTo(1));
+            Assert.That(data.Parameters[0].Value1, Is.EqualTo("x"));
+            Assert.IsInstanceOf<FunctionCall>(data.Expr);
+            var call = (FunctionCall)data.Expr;
             Assert.IsInstanceOf<VariableAccess>(call.Function);
             Assert.That(((VariableAccess)call.Function).VariableName,
                 Is.EqualTo("if"));
@@ -1354,6 +1356,35 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             Assert.IsInstanceOf<Literal>(call5.Arguments[1]);
             Assert.That(((Literal)call5.Arguments[1]).Value.ToNumber().Value,
                 Is.EqualTo(10));
+        }
+
+        [Test]
+        public void ParseUserDefinedFunctionWithParameterType()
+        {
+            // given
+            const string input = "f(x:Something) := x";
+            var parser = new SolusParser();
+            var cs = new CommandSet();
+            cs.AddCommand(DeleteCommand.Value);
+            cs.AddCommand(FuncAssignCommand.Value);
+            cs.AddCommand(HelpCommand.Value);
+            cs.AddCommand(VarAssignCommand.Value);
+            cs.AddCommand(VarsCommand.Value);
+            // when
+            var result = parser.GetCommands(input, cs);
+            // then
+            Assert.IsNotNull(result);
+            Assert.That(result.Length, Is.EqualTo(1));
+            Assert.IsInstanceOf<FuncAssignCommandData>(result[0]);
+            var data = (FuncAssignCommandData)result[0];
+            Assert.That(data.FuncName, Is.EqualTo("f"));
+            Assert.That(data.Parameters.Count, Is.EqualTo(1));
+            Assert.That(data.Parameters[0].Value1, Is.EqualTo("x"));
+            Assert.That(data.Parameters[0].Value2.VariableName,
+                Is.EqualTo("Something"));
+            Assert.IsInstanceOf<VariableAccess>(data.Expr);
+            var va = (VariableAccess)data.Expr;
+            Assert.That(va.VariableName, Is.EqualTo("x"));
         }
     }
 }

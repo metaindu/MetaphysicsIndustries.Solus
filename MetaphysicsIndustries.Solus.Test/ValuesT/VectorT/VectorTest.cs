@@ -21,6 +21,8 @@
  */
 
 using System;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -39,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             var result = new Vector(values);
             // then
             Assert.That(result.Length, Is.EqualTo(3));
-            Assert.That(result.ComponentType, Is.EqualTo(Types.Scalar));
+            Assert.That(result.ComponentType, Is.SameAs(Reals.Value));
             Assert.That(result[0].ToNumber().Value, Is.EqualTo(1));
             Assert.That(result[1].ToNumber().Value, Is.EqualTo(2));
             Assert.That(result[2].ToNumber().Value, Is.EqualTo(3));
@@ -69,7 +71,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
         }
 
         [Test]
-        public void DifferentComponentTypesYieldsMixed()
+        public void NonRealComponentsThrows()
         {
             // given
             var values = new IMathObject[]
@@ -77,10 +79,13 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
                 1.ToNumber(),
                 "abc".ToStringValue()
             };
-            // when
-            var result = new Vector(values);
-            // then
-            Assert.That(result.ComponentType, Is.EqualTo(Types.Mixed));
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => new Vector(values));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo("The type was incorrect: " +
+                           "All components must be reals"));
         }
 
         [Test]
@@ -95,32 +100,6 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             var result = v.ToString();
             // then
             Assert.That(result, Is.EqualTo("[1, 2, 3]"));
-        }
-
-        [Test]
-        public void ComplexVectorYieldsComplexStringRepresentation()
-        {
-            // given
-            var v = new Vector(new IMathObject[]
-            {
-                1.ToNumber(),
-                "two".ToStringValue(),
-                new Vector(new IMathObject[]
-                {
-                    "t".ToStringValue(),
-                    "h".ToStringValue(),
-                    "r".ToStringValue(),
-                    "e".ToStringValue(),
-                    "e".ToStringValue(),
-                })
-            });
-            // when
-            var result = v.ToString();
-            // then
-            Assert.That(
-                result,
-                Is.EqualTo(
-                    "[1, \"two\", [\"t\", \"h\", \"r\", \"e\", \"e\"]]"));
         }
     }
 }

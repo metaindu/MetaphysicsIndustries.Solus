@@ -20,7 +20,10 @@
  *
  */
 
+using System;
 using System.Text;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Values
 {
@@ -28,25 +31,43 @@ namespace MetaphysicsIndustries.Solus.Values
     {
         public Matrix(IMathObject[,] components)
         {
-            _components = (IMathObject[,]) components.Clone();
+            for (var r = 0; r < components.GetLength(0); r++)
+            for (var c = 0; c < components.GetLength(1); c++)
+                if (!components[r, c].GetMathType().IsSubsetOf(Reals.Value))
+                    throw new TypeException("All components must be reals");
 
-            Types GetComponentType(IMathObject[,] comps)
-            {
-                var componentType = comps[0, 0].GetMathType();
-                for (int i = 0; i < comps.GetLength(0); i++)
-                for (int j = 0; j < comps.GetLength(1); j++)
-                    if (comps[i, j].GetMathType() != componentType)
-                        return Types.Mixed;
-
-                return componentType;
-            }
-
-            ComponentType = GetComponentType(_components);
+            // TODO: don't clone here?
+            _components = (IMathObject[,])components.Clone();
+            ComponentType = Reals.Value;
         }
         public Matrix(float[,] components)
             : this(components.ToMathObjects())
         {
         }
+
+        public static readonly Matrix Identity2 =
+            new Matrix(new float[,]
+            {
+                { 1, 0 },
+                { 0, 1 }
+            });
+
+        public static readonly Matrix Identity3 =
+            new Matrix(new float[,]
+            {
+                { 1, 0, 0 },
+                { 0, 1, 0 },
+                { 0, 0, 1 }
+            });
+
+        public static readonly Matrix Identity4 =
+            new Matrix(new float[,]
+            {
+                { 1, 0, 0, 0 },
+                { 0, 1, 0, 0 },
+                { 0, 0, 1, 0 },
+                { 0, 0, 0, 1 }
+            });
 
         private readonly IMathObject[,] _components;
 
@@ -59,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public IMathObject GetComponent(int row, int column) =>
             _components[row, column];
 
-        public Types ComponentType { get; }
+        public ISet ComponentType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
@@ -81,6 +102,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public bool? IsInterval(SolusEnvironment env) => false;
         public bool? IsFunction(SolusEnvironment env) => false;
         public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => false;
 
         public bool IsConcrete => true;
         public string DocString => "";

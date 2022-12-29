@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Text;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -62,8 +63,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 _array[i] = Literal.Zero;
             }
-
-            _result = new ResultC(this);
         }
 
         public VectorExpression(int length, params float[] initialContents)
@@ -219,7 +218,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         private Expression[] _valuesCache = null;
-        private readonly IMathObject _result;
 
         public override Expression Simplify(SolusEnvironment env)
         {
@@ -288,41 +286,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             return sb.ToString();
         }
 
-        public override IMathObject GetResultType(SolusEnvironment env) =>
-            _result;
-
-        private class ResultC : IMathObject
-        {
-            public ResultC(VectorExpression ve) => _ve = ve;
-            private readonly VectorExpression _ve;
-            public bool? IsScalar(SolusEnvironment env) => false;
-            public bool? IsVector(SolusEnvironment env) => true;
-            public bool? IsMatrix(SolusEnvironment env) => false;
-            public int? GetTensorRank(SolusEnvironment env) => 1;
-            public bool? IsString(SolusEnvironment env) => false;
-
-            public int? GetDimension(SolusEnvironment env, int index)
-            {
-                if (index == 0) return _ve.Length;
-                return null;
-            }
-
-            private int[] __GetDimensions;
-
-            public int[] GetDimensions(SolusEnvironment env)
-            {
-                if (__GetDimensions == null)
-                    __GetDimensions = new[] { _ve.Length };
-                return __GetDimensions;
-            }
-
-            public int? GetVectorLength(SolusEnvironment env) => _ve.Length;
-            public bool? IsInterval(SolusEnvironment env) => false;
-            public bool? IsFunction(SolusEnvironment env) => false;
-            public bool? IsExpression(SolusEnvironment env) => false;
-
-            public bool IsConcrete => false;
-            public string DocString => "";
-        }
+        public override ISet GetResultType(SolusEnvironment env) =>
+            Vectors.Get(Length);
     }
 }

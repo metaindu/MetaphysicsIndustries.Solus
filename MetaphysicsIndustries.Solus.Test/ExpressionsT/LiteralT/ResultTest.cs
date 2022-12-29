@@ -20,7 +20,9 @@
  *
  */
 
+using System;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
@@ -45,11 +47,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.IsTrue(result.IsScalar(env));
-            Assert.IsFalse(result.IsVector(env));
-            Assert.IsFalse(result.IsMatrix(env));
-            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
-            Assert.IsFalse(result.IsString(env));
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
 
         [Test]
@@ -77,13 +75,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.IsFalse(result.IsScalar(env));
-            Assert.IsFalse(result.IsVector(env));
-            Assert.IsTrue(result.IsMatrix(env));
-            Assert.That(result.GetTensorRank(env), Is.EqualTo(2));
-            Assert.That(result.GetDimension(env, 0), Is.EqualTo(3));
-            Assert.That(result.GetDimension(env, 1), Is.EqualTo(4));
-            Assert.IsFalse(result.IsString(env));
+            Assert.That(result, Is.SameAs(Matrices.M3x4));
         }
 
         [Test]
@@ -102,11 +94,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.LiteralT
             // when
             var result = expr.GetResultType(env);
             // then
-            Assert.IsFalse(result.IsScalar(env));
-            Assert.IsFalse(result.IsVector(env));
-            Assert.IsFalse(result.IsMatrix(env));
-            Assert.That(result.GetTensorRank(env), Is.EqualTo(0));
-            Assert.IsTrue(result.IsString(env));
+            Assert.That(result, Is.SameAs(Strings.Value));
         }
     }
 }

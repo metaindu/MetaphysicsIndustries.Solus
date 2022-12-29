@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
-using MetaphysicsIndustries.Solus.Values;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -76,73 +76,94 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public void Check(ComponentAccess expr, SolusEnvironment env)
         {
+            var exprResultType = expr.Expr.GetResultType(env);
+            if (!exprResultType.IsSubsetOf(Tensors.Value) &&
+                !exprResultType.IsSubsetOf(Strings.Value))
+                throw new TypeException(null,
+                    "The expression should result in a type with components");
+
             Check(expr.Expr, env);
             int i;
             for (i = 0; i < expr.Indexes.Count; i++)
+            {
+                var indexType = expr.Indexes[i].GetResultType(env);
+                if (!indexType.IsSubsetOf(Reals.Value))
+                    throw new TypeException($"index {i}",
+                        "Index must be a real number");
                 Check(expr.Indexes[i], env);
+            }
 
-            var value = expr.Expr.GetResultType(env);
-            if (value.IsIsString(env))
+            if (exprResultType.IsSubsetOf(Strings.Value))
             {
                 if (expr.Indexes.Count != 1)
-                    throw new OperandException(
+                    throw new TypeException(null,
+                        "Wrong number of indexes for the expression");
+            }
+            else if (exprResultType.IsSubsetOf(AllVectors.Value))
+            {
+                if (expr.Indexes.Count != 1)
+                    throw new TypeException(null,
+                        "Wrong number of indexes for the expression");
+            }
+            else if (exprResultType.IsSubsetOf(AllMatrices.Value))
+            {
+                if (expr.Indexes.Count != 2)
+                    throw new TypeException(null,
                         "Wrong number of indexes for the expression");
             }
             else
             {
-                var rank = value.GetTensorRank(env);
-                if (rank == null || rank.Value < 1 || rank.Value > 2)
-                    throw new OperandException(
-                        "Unable to get components from expression, " +
-                        "or the expression does not have components");
-                if (rank.Value != expr.Indexes.Count)
-                    throw new OperandException(
-                        "Wrong number of indexes for the expression");
+                throw new NotImplementedException(
+                    "Not implemented for high-rank tensors");
             }
+
+            IMathObject exprValue = null;
+            if (expr.Expr is Literal ee)
+                exprValue = ee.Value;
 
             for (i = 0; i < expr.Indexes.Count; i++)
             {
                 var si = expr.Indexes[i].GetResultType(env);
                 if (si == null) continue;
-                if (!si.IsIsScalar(env))
-                    throw new IndexException(
+                if (!si.IsSubsetOf(Reals.Value))
+                    throw new TypeException(null,
                         "Indexes must be scalar");
-                if (expr.Indexes[i] is Literal literal)
-                {
-                    var vv = literal.Value;
-                    if (!vv.IsIsScalar(env))
-                        throw new IndexException(
-                            "Indexes must be scalar");
-                    var vi = vv.ToNumber().Value;
-                    if (!vi.IsInteger())
-                        throw new IndexException(
-                            "Indexes must be integers");
-                    if (vi < 0)
-                        throw new IndexException(
-                            "Indexes must not be negative");
+                if (!(expr.Indexes[i] is Literal literal))
+                    continue;
+                var vv = literal.Value;
+                if (!vv.IsIsScalar(env))
+                    throw new TypeException(null,
+                        "Indexes must be scalar");
+                var vi = vv.ToNumber().Value;
+                if (!vi.IsInteger())
+                    throw new TypeException(null,
+                        "Indexes must be integers");
+                if (vi < 0)
+                    throw new TypeException(null,
+                        "Indexes must not be negative");
 
-                    if (i == 0 && value is IVector ivec)
-                        if (vi >= ivec.Length)
-                            throw new IndexException(
-                                "Index exceeds the size of the vector");
-                    if (i == 0 && value is StringValue sv)
-                        if (vi >= sv.Length)
-                            throw new IndexException(
-                                "Index exceeds the size of the string");
+                if (i == 0 && exprResultType is Strings)
+                    if (vi >= exprValue.ToStringValue().Length)
+                        throw new IndexException(
+                            "Index exceeds the size of the string");
 
-                    if (value is IMatrix imat)
-                        switch (i)
-                        {
-                            case 0 when vi >= imat.RowCount:
-                                throw new IndexException(
-                                    "Index exceeds number of rows of the" +
-                                    " matrix");
-                            case 1 when vi >= imat.ColumnCount:
-                                throw new IndexException(
-                                    "Index exceeds number of columns of" +
-                                    " the matrix");
-                        }
-                }
+                if (i == 0 && exprResultType is Vectors vs)
+                    if (vi >= vs.Dimension)
+                        throw new IndexException(
+                            "Index exceeds the size of the vector");
+
+                if (exprResultType is Matrices ms)
+                    switch (i)
+                    {
+                        case 0 when vi >= ms.RowCount:
+                            throw new IndexException(
+                                "Index exceeds number of rows of the" +
+                                " matrix");
+                        case 1 when vi >= ms.ColumnCount:
+                            throw new IndexException(
+                                "Index exceeds number of columns of" +
+                                " the matrix");
+                    }
             }
         }
 
@@ -155,7 +176,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Check(expr.Function, env);
 
-            IMathObject fv = expr.Function;
+            IMathObject fv = expr.Function;  // TODO: expr.GetResultType
             if (fv is VariableAccess va)
                 fv = va.GetFinalReferencedValue(env);
             if (fv is Literal literal)
@@ -183,11 +204,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
                 for (var i = 0; i < args.Count; i++)
                 {
-                    var argtype = args[i].GetResultType(env).GetMathType();
-                    if (argtype != Types.Scalar)
-                        throw new ArgumentException(
+                    var argtype = args[i].GetResultType(env);
+                    if (!argtype.IsSubsetOf(Reals.Value))
+                        throw new TypeException(
                             $"Argument {i} wrong type: expected " +
-                            $"{f.ParamTypes[i]} but got {argtype}");
+                            $"{Reals.Value.DisplayName} but got " +
+                            $"{argtype.DisplayName}");
                 }
 
                 return;
@@ -287,26 +309,27 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 //     CheckFunctionCall(ff, args, env); return;
                 // case UnitStepFunction ff:
                 //     CheckFunctionCall(ff, args, env); return;
-                case UserDefinedFunction ff:
-                    CheckFunctionCall(ff, args, env); return;
+                // case UserDefinedFunction ff:
+                //     CheckFunctionCall(ff, args, env); return;
             }
             
-            if (args.Count != f.ParamTypes.Count)
+            if (args.Count != f.Parameters.Count)
             {
                 throw new ArgumentException(
                     $"Wrong number of arguments given to " +
-                    $"{f.DisplayName} (expected {f.ParamTypes.Count} but " +
+                    $"{f.DisplayName} (expected {f.Parameters.Count} but " +
                     $"got {args.Count})");
             }
 
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != f.ParamTypes[i])
+                var argtype = args[i].GetResultType(env);
+                if (!argtype.IsSubsetOf(f.Parameters[i].Type))
                 {
-                    throw new ArgumentException(
+                    throw new TypeException(
                         $"Argument {i} wrong type: expected " +
-                        $"{f.ParamTypes[i]} but got {argtype}");
+                        $"{f.Parameters[i].Type.DisplayName} but got " +
+                        $"{argtype.DisplayName}");
                 }
             }
         }
@@ -315,13 +338,15 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Check(expr.LowerBound, env);
             var lower = expr.LowerBound.GetResultType(env);
-            if (!lower.IsIsScalar(env))
-                throw new OperandException("Lower bound is not a scalar");
+            if (!lower.IsSubsetOf(Reals.Value))
+                throw new TypeException(null,
+                    "Lower bound is not a scalar");
 
             Check(expr.UpperBound, env);
             var upper = expr.UpperBound.GetResultType(env);
-            if (!upper.IsIsScalar(env))
-                throw new OperandException("Upper bound is not a scalar");
+            if (!upper.IsSubsetOf(Reals.Value))
+                throw new TypeException(null,
+                    "Upper bound is not a scalar");
         }
 
         public void Check(Literal expr, SolusEnvironment env) { }
@@ -330,7 +355,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             for (int r = 0; r < expr.RowCount; r++)
             for (int c = 0; c < expr.ColumnCount; c++)
+            {
+                if (!expr[r, c].GetResultType(env).IsSubsetOf(Reals.Value))
+                    throw new TypeException("All components must be reals");
                 Check(expr[r, c], env);
+            }
         }
 
         public void Check(RandomExpression expr, SolusEnvironment env) { }
@@ -348,7 +377,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public void Check(VectorExpression expr, SolusEnvironment env)
         {
             for (var i = 0; i < expr.Length; i++)
+            {
+                if (!expr[i].GetResultType(env).IsSubsetOf(Reals.Value))
+                    throw new TypeException("All components must be reals");
                 Check(expr[i], env);
+            }
         }
 
         public void CheckFunctionCall(AbsoluteValueFunction ff, List<Expression> args, SolusEnvironment env)
@@ -517,8 +550,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -531,8 +564,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -545,8 +578,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -559,8 +592,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException("No arguments passed");
             for (var i = 0; i < args.Count; i++)
             {
-                var argtype = args[i].GetResultType(env).GetMathType();
-                if (argtype != Types.Scalar)
+                var argtype = args[i].GetResultType(env);
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -609,14 +642,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     $"Wrong number of arguments given to " +
                     $"{ff.DisplayName} (expected 1 but got " +
                     $"{args.Count})");
-            var argtype = args[0].GetResultType(env).GetMathType();
-            if (argtype != Types.Vector &&
-                argtype != Types.Matrix &&
-                argtype != Types.String)
+            var argtype = args[0].GetResultType(env);
+            if (!(argtype.IsSubsetOf(AllVectors.Value) ||
+                  argtype.IsSubsetOf(AllMatrices.Value) ||
+                  argtype.IsSubsetOf(Strings.Value)))
             {
                 throw new ArgumentException(
-                    $"Argument wrong type: expected " +
-                    $"Vector or Matrix or String but got {argtype}");
+                    "Argument wrong type: expected Vector " +
+                    $"or Matrix or String but got {argtype.DisplayName}");
             }
         }
 
@@ -632,11 +665,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public void CheckFunctionCall(UserDefinedFunction ff, List<Expression> args, SolusEnvironment env)
         {
-            if (args.Count != ff.Argnames.Length)
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{ff.DisplayName} (expected {ff.Argnames.Length} but " +
-                    $"got {args.Count})");
+            throw new NotImplementedException();
         }
     }
 }

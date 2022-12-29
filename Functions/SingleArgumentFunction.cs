@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -27,7 +28,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     public abstract class SingleArgumentFunction : Function
     {
         protected SingleArgumentFunction()
-            : base(new[] {Types.Scalar})
+            : base(new[] { new Parameter("arg", Reals.Value) })
         {
         }
     }

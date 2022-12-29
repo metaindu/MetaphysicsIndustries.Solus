@@ -40,9 +40,9 @@ namespace MetaphysicsIndustries.Solus.Compiler
             int i;
             var seq = new List<IlExpression>();
             var variables2 = variables.CreateChild();
-            for (i = 0; i < func.Argnames.Length; i++)
+            for (i = 0; i < func.Parameters.Count; i++)
             {
-                var name = func.Argnames[i];
+                var name = func.Parameters[i].Name;
                 var value = arguments[i];
                 var arg = ConvertToIlExpression(arguments[i], nm,
                     variables);

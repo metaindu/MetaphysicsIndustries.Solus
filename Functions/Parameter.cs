@@ -20,18 +20,17 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Values
+namespace MetaphysicsIndustries.Solus.Functions
 {
-    public enum Types
+    public readonly struct Parameter
     {
-        Unknown,
-        Indeterminate,
-        Mixed,
+        public Parameter(string name, ISet type)
+        {
+            Name = name;
+            Type = type;
+        }
 
-        Scalar,
-        Vector,
-        Matrix,
-
-        String,
+        public readonly string Name;
+        public readonly ISet Type;
     }
 }

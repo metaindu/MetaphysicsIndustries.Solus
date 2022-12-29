@@ -64,10 +64,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = LogarithmFunction.Value;
-            var args = new IMathObject[] { arg.ToNumber(), b.ToNumber() };
+            var args = new Expression[] { new Literal(arg), new Literal(b) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // when
-            var result = eval.Call(f, args, null);
+            var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value,
                 Is.EqualTo(expected).Within(0.00001f));
@@ -78,11 +79,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = LogarithmFunction.Value;
-            var args = new IMathObject[] { 0.ToNumber(), 2.ToNumber() };
+            var args = new Expression[] { new Literal(0), new Literal(2) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
@@ -92,11 +94,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = LogarithmFunction.Value;
-            var args = new IMathObject[] { 2.ToNumber(), 0.ToNumber() };
+            var args = new Expression[] { new Literal(2), new Literal(0) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Base must be positive"));
         }
@@ -106,11 +109,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = LogarithmFunction.Value;
-            var args = new IMathObject[] { 2.ToNumber(), 1.ToNumber() };
+            var args = new Expression[] { new Literal(2), new Literal(1) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Base must not be one"));
         }
@@ -120,11 +124,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = LogarithmFunction.Value;
-            var args = new IMathObject[] { (-1).ToNumber(), 2.ToNumber() };
+            var args = new Expression[] { new Literal(-1), new Literal(2) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
@@ -134,11 +139,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         {
             // given
             var f = LogarithmFunction.Value;
-            var args = new IMathObject[] { 2.ToNumber(), (-2).ToNumber() };
+            var args = new Expression[] { new Literal(2), new Literal((-2)) };
             var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => eval.Call(f, args, null));
+                () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Base must be positive"));
         }

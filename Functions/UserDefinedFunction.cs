@@ -20,38 +20,36 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Values;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public class UserDefinedFunction : Function
     {
-        public UserDefinedFunction(string name, string[] argnames, Expression expr)
-            : base(argnames.Select(_ => Types.Scalar).ToArray(), name)
+        public UserDefinedFunction(string name, string[] argnames,
+            Expression expr)
+            : base(
+                argnames.Select(_ => new Parameter(_, Reals.Value)).ToArray(),
+                name)
         {
             Name = name;
-            Argnames = argnames;
+            Expression = expr;
+        }
+        public UserDefinedFunction(string name,
+            IEnumerable<Parameter> parameters, Expression expr)
+            : base(parameters.ToArray(), name)
+        {
+            Name = name;
             Expression = expr;
         }
 
-        public string[] Argnames;
         public Expression Expression;
 
-        public override void CheckArguments(IMathObject[] args)
-        {
-            if (args.Length != Argnames.Length)
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{DisplayName} (expected {Argnames.Length} but got " +
-                    $"{args.Length})");
-        }
-
-        public override IMathObject GetResultType(SolusEnvironment env,
-            IEnumerable<IMathObject> argTypes)
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes)
         {
             SolusEnvironment env2;
             if (env != null)
@@ -60,15 +58,14 @@ namespace MetaphysicsIndustries.Solus.Functions
                 env2 = new SolusEnvironment();
             var argValues = argTypes.ToList();
             int i;
-            for (i = 0; i < Argnames.Length; i++)
+            for (i = 0; i < Parameters.Count; i++)
             {
-                var argName = Argnames[i];
+                var param = Parameters[i];
                 var argValue = argValues[i];
-                env2.SetVariable(argName, argValue);
+                env2.SetVariableType(param.Name, argValue);
             }
 
             return Expression.GetResultType(env2);
         }
     }
 }
-

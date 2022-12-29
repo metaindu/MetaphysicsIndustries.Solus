@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Log10FunctionT
@@ -32,23 +33,12 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Log10FunctionT
         public void ResultIsScalar()
         {
             // given
-            var arg1 = 1.ToNumber();
-            var args = new IMathObject[] { arg1 };
-            // precondition
-            Assert.IsTrue(arg1.IsScalar(null));
-            Assert.IsFalse(arg1.IsVector(null));
-            Assert.IsFalse(arg1.IsMatrix(null));
-            Assert.That(arg1.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(arg1.IsString(null));
+            var args = new ISet[] { Reals.Value };
             // when
             var value = Log10Function.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.IsFalse(result.IsVector(null));
-            Assert.IsFalse(result.IsMatrix(null));
-            Assert.That(result.GetTensorRank(null), Is.EqualTo(0));
-            Assert.IsFalse(result.IsString(null));
+            Assert.That(result, Is.SameAs(Reals.Value));
         }
     }
 }
