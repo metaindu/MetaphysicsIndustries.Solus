@@ -44,8 +44,9 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new VariableAccess("y"),
                 new Literal(1));
             var eval = Util.CreateEvaluator<T>();
+            var env = new SolusEnvironment();
             // when
-            var result = eval.Eval(expr, null);
+            var result = eval.Eval(expr, env);
             // then
             Assert.That(result, Is.SameAs(original));
             Assert.IsInstanceOf<VariableAccess>(result);
@@ -63,8 +64,9 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new VariableAccess("x"),
                 new Literal(1));
             var eval = Util.CreateEvaluator<T>();
+            var env = new SolusEnvironment();
             // when
-            var result = eval.Eval(expr, null);
+            var result = eval.Eval(expr, env);
             // then
             Assert.IsInstanceOf<Literal>(result);
             Assert.That(((Literal)result).Value.ToNumber().Value,
