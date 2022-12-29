@@ -76,9 +76,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public void Check(ComponentAccess expr, SolusEnvironment env)
         {
-            var exprType = expr.Expr.GetResultType(env);
-            if (!exprType.IsSubsetOf(Tensors.Value) &&
-                !exprType.IsSubsetOf(Strings.Value))
+            var exprResultType = expr.Expr.GetResultType(env);
+            if (!exprResultType.IsSubsetOf(Tensors.Value) &&
+                !exprResultType.IsSubsetOf(Strings.Value))
                 throw new TypeException(null,
                     "The expression should result in a type with components");
 
@@ -93,7 +93,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 Check(expr.Indexes[i], env);
             }
 
-            var exprResultType = expr.Expr.GetResultType(env);
             if (exprResultType.IsSubsetOf(Strings.Value))
             {
                 if (expr.Indexes.Count != 1)
