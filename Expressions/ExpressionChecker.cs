@@ -339,13 +339,15 @@ namespace MetaphysicsIndustries.Solus.Expressions
         {
             Check(expr.LowerBound, env);
             var lower = expr.LowerBound.GetResultType(env);
-            if (lower != Reals.Value)
-                throw new OperandException("Lower bound is not a scalar");
+            if (!lower.IsSubsetOf(Reals.Value))
+                throw new TypeException(null,
+                    "Lower bound is not a scalar");
 
             Check(expr.UpperBound, env);
             var upper = expr.UpperBound.GetResultType(env);
-            if (upper != Reals.Value)
-                throw new OperandException("Upper bound is not a scalar");
+            if (!upper.IsSubsetOf(Reals.Value))
+                throw new TypeException(null,
+                    "Upper bound is not a scalar");
         }
 
         public void Check(Literal expr, SolusEnvironment env) { }
