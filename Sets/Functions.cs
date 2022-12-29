@@ -84,6 +84,8 @@ namespace MetaphysicsIndustries.Solus.Sets
             if (!FunctionHasFixedTypes(f))
                 return false;
             // TODO: is subset/superset, rather than "!="
+            // what's the best way to do it? exact type match or
+            // f.GetResultType is subset of ReturnType?
             if (f.GetResultType(null, null) != ReturnType)
                 return false;
             if (f.Parameters.Count != ParameterTypes.Count)

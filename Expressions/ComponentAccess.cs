@@ -151,13 +151,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override ISet GetResultType(SolusEnvironment env)
         {
             var exprResultType = Expr.GetResultType(env);
-            if (exprResultType == Strings.Value)
+            if (exprResultType.IsSubsetOf(Strings.Value))
                 return Strings.Value;
-            if (exprResultType is Vectors ||
-                exprResultType == AllVectors.Value)
+            if (exprResultType.IsSubsetOf(AllVectors.Value))
                 return Reals.Value;
-            if (exprResultType is Matrices ||
-                exprResultType == AllMatrices.Value)
+            if (exprResultType.IsSubsetOf(AllMatrices.Value))
                 return Reals.Value;
 
             throw new TypeException();

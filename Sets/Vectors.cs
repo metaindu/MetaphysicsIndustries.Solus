@@ -87,7 +87,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public string DocString =>
             $"The real coordinate space of dimension {Dimension}, " +
             $"ℝ^{Dimension}";
-        public string DisplayName => $"Vector";
+        public string DisplayName => "Vector";
     }
 
     public class AllVectors : ISet

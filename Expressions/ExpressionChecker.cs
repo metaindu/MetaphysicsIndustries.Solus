@@ -205,7 +205,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 for (var i = 0; i < args.Count; i++)
                 {
                     var argtype = args[i].GetResultType(env);
-                    if (argtype != Reals.Value)
+                    if (!argtype.IsSubsetOf(Reals.Value))
                         throw new TypeException(
                             $"Argument {i} wrong type: expected " +
                             $"{Reals.Value.DisplayName} but got " +
@@ -551,7 +551,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (var i = 0; i < args.Count; i++)
             {
                 var argtype = args[i].GetResultType(env);
-                if (argtype != Reals.Value)
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -565,7 +565,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (var i = 0; i < args.Count; i++)
             {
                 var argtype = args[i].GetResultType(env);
-                if (argtype != Reals.Value)
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -579,7 +579,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (var i = 0; i < args.Count; i++)
             {
                 var argtype = args[i].GetResultType(env);
-                if (argtype != Reals.Value)
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -593,7 +593,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (var i = 0; i < args.Count; i++)
             {
                 var argtype = args[i].GetResultType(env);
-                if (argtype != Reals.Value)
+                if (!argtype.IsSubsetOf(Reals.Value))
                     throw new ArgumentException(
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
@@ -643,11 +643,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     $"{ff.DisplayName} (expected 1 but got " +
                     $"{args.Count})");
             var argtype = args[0].GetResultType(env);
-            if (!(argtype is Vectors ||
-                  argtype == AllVectors.Value ||
-                  argtype is Matrices ||
-                  argtype == AllMatrices.Value ||
-                  argtype == Strings.Value))
+            if (!(argtype.IsSubsetOf(AllVectors.Value) ||
+                  argtype.IsSubsetOf(AllMatrices.Value) ||
+                  argtype.IsSubsetOf(Strings.Value)))
             {
                 throw new ArgumentException(
                     "Argument wrong type: expected Vector " +

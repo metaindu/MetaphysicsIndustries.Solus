@@ -177,20 +177,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public Type ResolveType(ISet type,
             SolusEnvironment typeEnv=null)
         {
-            if (type == Strings.Value)
+            if (type.IsSubsetOf(Strings.Value))
                 return typeof(string);
-            if (type == Reals.Value)
+            if (type.IsSubsetOf(Reals.Value))
                 return typeof(float);
-            if (type is Vectors ||
-                type == AllVectors.Value)
+            if (type.IsSubsetOf(AllVectors.Value))
                 return typeof(float[]);
-            if (type is Matrices ||
-                type == AllMatrices.Value)
+            if (type.IsSubsetOf(AllMatrices.Value))
                 return typeof(float[,]);
-            if (type is Sets.Functions ||
-                type == Sets.AllFunctions.Value)
+            if (type.IsSubsetOf(AllFunctions.Value))
                 return typeof(MethodInfo);
-            if (type == Intervals.Value)
+            if (type.IsSubsetOf(Intervals.Value))
                 return typeof(STuple<float, bool, float, bool>);
             throw new NotImplementedException(
                 $"Unrecognized type, {type.GetType()}");
