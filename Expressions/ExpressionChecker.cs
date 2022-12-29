@@ -76,10 +76,22 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         public void Check(ComponentAccess expr, SolusEnvironment env)
         {
+            var exprType = expr.Expr.GetResultType(env);
+            if (!exprType.IsSubsetOf(Tensors.Value) &&
+                !exprType.IsSubsetOf(Strings.Value))
+                throw new TypeException(null,
+                    "The expression should result in a type with components");
+
             Check(expr.Expr, env);
             int i;
             for (i = 0; i < expr.Indexes.Count; i++)
+            {
+                var indexType = expr.Indexes[i].GetResultType(env);
+                if (!indexType.IsSubsetOf(Reals.Value))
+                    throw new TypeException($"index {i}",
+                        "Index must be a real number");
                 Check(expr.Indexes[i], env);
+            }
 
             var exprResultType = expr.Expr.GetResultType(env);
             if (exprResultType is Strings)

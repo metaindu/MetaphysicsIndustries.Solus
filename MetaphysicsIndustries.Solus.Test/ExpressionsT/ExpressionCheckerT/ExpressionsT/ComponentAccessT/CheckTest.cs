@@ -67,13 +67,13 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1) });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Unable to get components from expression, " +
-                    "or the expression does not have components"));
+                    "The expression should result in a type with " +
+                    "components"));
         }
 
         [Test]
@@ -127,7 +127,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
+            Assert.That(ex.Message,
+                Is.EqualTo("Index must be a real number: index 0"));
         }
 
         [Test]
@@ -146,7 +147,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
+            Assert.That(ex.Message,
+                Is.EqualTo("Index must be a real number: index 0"));
         }
 
         [Test]
@@ -161,7 +163,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ex = Assert.Throws<IndexException>(
                 () => ec.Check(expr, null));
             // and
-            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
+            Assert.That(ex.Message,
+                Is.EqualTo("Index must be a real number: index 0"));
         }
 
         [Test]
