@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -78,14 +79,14 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Expression[] { new Literal(1) });
             var eval = Util.CreateEvaluator<T>();
             // expect
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
             Assert.That(
                 ex.Message,
                 Is.EqualTo(
-                    "Unable to get components from expression, " +
-                    "or the expression does not have components"));
+                    "The expression should result in a type with " +
+                    "components"));
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Expression[] { new Literal(1), new Literal(1) });
             var eval = Util.CreateEvaluator<T>();
             // when
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
             Assert.That(
@@ -115,7 +116,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Expression[] { new Literal(1) });
             var eval = Util.CreateEvaluator<T>();
             // when
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
             Assert.That(
@@ -136,10 +137,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 });
             var eval = Util.CreateEvaluator<T>();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
-            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
+            Assert.That(ex.Message,
+                Is.EqualTo("Index must be a real number: index 0"));
         }
 
         [Test]
@@ -155,10 +157,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 });
             var eval = Util.CreateEvaluator<T>();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
-            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
+            Assert.That(ex.Message,
+                Is.EqualTo("Index must be a real number: index 0"));
         }
 
         [Test]
@@ -170,10 +173,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Expression[] { new Literal("abc".ToStringValue()) });
             var eval = Util.CreateEvaluator<T>();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
-            Assert.That(ex.Message, Is.EqualTo("Indexes must be scalar"));
+            Assert.That(ex.Message,
+                Is.EqualTo("Index must be a real number: index 0"));
         }
 
         [Test]
@@ -185,7 +189,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Expression[] { new Literal(-1) });
             var eval = Util.CreateEvaluator<T>();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
             Assert.That(
@@ -214,13 +218,12 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 });
             var eval = Util.CreateEvaluator<T>();
             // expect
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<NotImplementedException>(
                 () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Unable to get components from expression, " +
-                    "or the expression does not have components"));
+                    "Not implemented for high-rank tensors"));
         }
 
         [Test]
@@ -249,7 +252,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 new Expression[] { new Literal(1), new Literal(1) });
             var eval = Util.CreateEvaluator<T>();
             // when
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
             // and
             Assert.That(

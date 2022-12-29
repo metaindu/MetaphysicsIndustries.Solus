@@ -94,29 +94,28 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
 
             var exprResultType = expr.Expr.GetResultType(env);
-            if (exprResultType is Strings)
+            if (exprResultType.IsSubsetOf(Strings.Value))
             {
                 if (expr.Indexes.Count != 1)
-                    throw new OperandException(
+                    throw new TypeException(null,
                         "Wrong number of indexes for the expression");
             }
-            else if (exprResultType is Vectors vs)
+            else if (exprResultType.IsSubsetOf(AllVectors.Value))
             {
                 if (expr.Indexes.Count != 1)
-                    throw new OperandException(
+                    throw new TypeException(null,
                         "Wrong number of indexes for the expression");
             }
-            else if (exprResultType is Matrices ms)
+            else if (exprResultType.IsSubsetOf(AllMatrices.Value))
             {
                 if (expr.Indexes.Count != 2)
-                    throw new OperandException(
+                    throw new TypeException(null,
                         "Wrong number of indexes for the expression");
             }
             else
             {
-                throw new OperandException(
-                    "Unable to get components from expression, " +
-                    "or the expression does not have components");
+                throw new NotImplementedException(
+                    "Not implemented for high-rank tensors");
             }
 
             IMathObject exprValue = null;
@@ -127,50 +126,45 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 var si = expr.Indexes[i].GetResultType(env);
                 if (si == null) continue;
-                if (si != Reals.Value)
-                    throw new IndexException(
+                if (!si.IsSubsetOf(Reals.Value))
+                    throw new TypeException(null,
                         "Indexes must be scalar");
-                if (expr.Indexes[i] is Literal literal)
-                {
-                    var vv = literal.Value;
-                    if (!vv.IsIsScalar(env))
-                        throw new IndexException(
-                            "Indexes must be scalar");
-                    var vi = vv.ToNumber().Value;
-                    if (!vi.IsInteger())
-                        throw new IndexException(
-                            "Indexes must be integers");
-                    if (vi < 0)
-                        throw new IndexException(
-                            "Indexes must not be negative");
+                if (!(expr.Indexes[i] is Literal literal))
+                    continue;
+                var vv = literal.Value;
+                if (!vv.IsIsScalar(env))
+                    throw new TypeException(null,
+                        "Indexes must be scalar");
+                var vi = vv.ToNumber().Value;
+                if (!vi.IsInteger())
+                    throw new TypeException(null,
+                        "Indexes must be integers");
+                if (vi < 0)
+                    throw new TypeException(null,
+                        "Indexes must not be negative");
 
-                    if (i == 0 && exprResultType is Vectors vs)
-                        if (vi >= vs.Dimension)
+                if (i == 0 && exprResultType is Strings)
+                    if (vi >= exprValue.ToStringValue().Length)
+                        throw new IndexException(
+                            "Index exceeds the size of the string");
+
+                if (i == 0 && exprResultType is Vectors vs)
+                    if (vi >= vs.Dimension)
+                        throw new IndexException(
+                            "Index exceeds the size of the vector");
+
+                if (exprResultType is Matrices ms)
+                    switch (i)
+                    {
+                        case 0 when vi >= ms.RowCount:
                             throw new IndexException(
-                                "Index exceeds the size of the vector");
-
-                    // The following only applies if we can consider the
-                    // length of a string as part of it's type, which is not
-                    // always feasible or useful.
-
-                    if (i == 0 && exprResultType is Strings)
-                        if (vi >= exprValue.ToStringValue().Length)
+                                "Index exceeds number of rows of the" +
+                                " matrix");
+                        case 1 when vi >= ms.ColumnCount:
                             throw new IndexException(
-                                "Index exceeds the size of the string");
-
-                    if (exprResultType is Matrices ms)
-                        switch (i)
-                        {
-                            case 0 when vi >= ms.RowCount:
-                                throw new IndexException(
-                                    "Index exceeds number of rows of the" +
-                                    " matrix");
-                            case 1 when vi >= ms.ColumnCount:
-                                throw new IndexException(
-                                    "Index exceeds number of columns of" +
-                                    " the matrix");
-                        }
-                }
+                                "Index exceeds number of columns of" +
+                                " the matrix");
+                    }
             }
         }
 

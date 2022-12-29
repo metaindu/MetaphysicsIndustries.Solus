@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Values;
@@ -85,7 +86,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1), new Literal(1) });
             var ec = new ExpressionChecker();
             // when
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(
@@ -103,7 +104,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1) });
             var ec = new ExpressionChecker();
             // when
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(
@@ -124,7 +125,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(ex.Message,
@@ -144,7 +145,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(ex.Message,
@@ -160,7 +161,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal("abc".ToStringValue()) });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(ex.Message,
@@ -176,7 +177,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(-1) });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<IndexException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(
@@ -205,13 +206,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<NotImplementedException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Unable to get components from expression, " +
-                    "or the expression does not have components"));
+                    "Not implemented for high-rank tensors"));
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1), new Literal(1) });
             var ec = new ExpressionChecker();
             // when
-            var ex = Assert.Throws<OperandException>(
+            var ex = Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
             // and
             Assert.That(
