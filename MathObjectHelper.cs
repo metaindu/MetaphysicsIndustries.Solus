@@ -38,6 +38,12 @@ namespace MetaphysicsIndustries.Solus
             var iss = mo.IsScalar(env);
             return iss.HasValue && iss.Value;
         }
+        public static bool IsIsBoolean(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsBoolean(env);
+            return iss.HasValue && iss.Value;
+        }
         public static bool IsIsVector(this IMathObject mo,
             SolusEnvironment env)
         {

@@ -88,7 +88,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
         public void ScalarGetMathTypeYieldsScalar()
         {
             // given
-            var mo = new MockMathObject(true, false,
+            var mo = new MockMathObject(true, false, false,
                 false, 0);
             // expect
             Assert.That(mo.GetMathType(), Is.SameAs(Reals.Value));
@@ -118,7 +118,7 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.MathObjectHelperT
         public void OtherGetMathTypeYieldsUnknown()
         {
             // given
-            var mo = new MockMathObject(false, false,
+            var mo = new MockMathObject(false, false, false,
                 false, 0);
             // expect
             Assert.Throws<TypeException>(() => mo.GetMathType());

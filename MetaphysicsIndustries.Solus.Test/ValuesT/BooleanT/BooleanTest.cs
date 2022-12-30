@@ -402,6 +402,28 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.BooleanT
         }
 
         [Test]
+        public void IsBoolean1()
+        {
+            // given
+            var a = new Boolean(true);
+            // when
+            var result = a.IsBoolean(null);
+            // then
+            Assert.That(result.HasValue && result.Value == true);
+        }
+
+        [Test]
+        public void IsBoolean2()
+        {
+            // given
+            var a = new Boolean(false);
+            // when
+            var result = a.IsBoolean(null);
+            // then
+            Assert.That(result.HasValue && result.Value == true);
+        }
+
+        [Test]
         public void IsNotVector1()
         {
             // given

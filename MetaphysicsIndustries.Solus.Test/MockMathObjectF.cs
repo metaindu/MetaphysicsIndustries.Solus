@@ -28,6 +28,7 @@ namespace MetaphysicsIndustries.Solus.Test
     {
         public MockMathObjectF(
             Func<SolusEnvironment, bool> isScalarF = null,
+            Func<SolusEnvironment, bool> isBooleanF = null,
             Func<SolusEnvironment, bool> isVectorF = null,
             Func<SolusEnvironment, bool> isMatrixF = null,
             Func<SolusEnvironment, int> getTensorRankF = null,
@@ -43,6 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test
             string docStringV = "")
         {
             IsScalarF = isScalarF;
+            IsBooleanF = isBooleanF;
             IsVectorF = isVectorF;
             IsMatrixF = isMatrixF;
             GetTensorRankF = getTensorRankF;
@@ -62,6 +64,13 @@ namespace MetaphysicsIndustries.Solus.Test
         public bool? IsScalar(SolusEnvironment env)
         {
             if (IsScalarF != null) return IsScalarF(env);
+            throw new NotImplementedException();
+        }
+
+        public Func<SolusEnvironment, bool> IsBooleanF;
+        public bool? IsBoolean(SolusEnvironment env)
+        {
+            if (IsBooleanF != null) return IsBooleanF(env);
             throw new NotImplementedException();
         }
 

@@ -25,6 +25,7 @@ namespace MetaphysicsIndustries.Solus
     public interface IMathObject
     {
         bool? IsScalar(SolusEnvironment env);
+        bool? IsBoolean(SolusEnvironment env);
         bool? IsVector(SolusEnvironment env);
         bool? IsMatrix(SolusEnvironment env);
         int? GetTensorRank(SolusEnvironment env);
