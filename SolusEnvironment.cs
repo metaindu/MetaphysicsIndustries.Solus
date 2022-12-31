@@ -105,6 +105,7 @@ namespace MetaphysicsIndustries.Solus
             }
 
             SetVariable("Real", Reals.Value);
+            SetVariable("Boolean", Booleans.Value);
             SetVariable("Interval", Intervals.Value);
             SetVariable("String", Strings.Value);
             SetVariable("Set", Sets.Sets.Value);
