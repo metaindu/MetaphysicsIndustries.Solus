@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var result = new SolusEnvironment(useDefaults: true);
             // then
-            Assert.That(result.CountVariables(), Is.EqualTo(48));
+            Assert.That(result.CountVariables(), Is.EqualTo(50));
             // and
             var vars = result.GetVariableNames().ToList();
             Assert.Contains("sin", vars);
@@ -120,6 +120,9 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("MatrixM4x2", vars);
             Assert.Contains("MatrixM4x3", vars);
             Assert.Contains("MatrixM4x4", vars);
+            // and
+            Assert.Contains("true", vars);
+            Assert.Contains("false", vars);
         }
     }
 }

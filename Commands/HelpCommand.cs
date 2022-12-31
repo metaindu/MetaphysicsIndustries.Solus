@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Macros;
+using Boolean = MetaphysicsIndustries.Solus.Values.Boolean;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {
@@ -117,6 +118,7 @@ List the available topics:
             var variables = new List<string>();
             var macros = new List<string>();
             var types = new List<string>();
+            var values = new List<string>();
 
             foreach (var name in env.GetVariableNames())
             {
@@ -127,6 +129,8 @@ List the available topics:
                     macros.Add(name);
                 else if (v is ISet)
                     types.Add(name);
+                else if (v is Values.Boolean)
+                    values.Add(name);
                 else
                     variables.Add(name);
             }
@@ -135,6 +139,7 @@ List the available topics:
             variables.Sort();
             macros.Sort();
             types.Sort();
+            values.Sort();
 
             void AddItem(string item)
             {
@@ -199,6 +204,20 @@ List the available topics:
                 line = "";
                 foreach (var t in types)
                     AddItem(t);
+                if (line.Length > 0)
+                    sb.AppendLine("  " + line);
+                newline = true;
+            }
+
+            if (newline) sb.AppendLine();
+            newline = false;
+
+            if (values.Count > 0)
+            {
+                sb.AppendLine("Values:");
+                line = "";
+                foreach (var v in values)
+                    AddItem(v);
                 if (line.Length > 0)
                     sb.AppendLine("  " + line);
                 newline = true;

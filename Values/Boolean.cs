@@ -38,6 +38,11 @@ namespace MetaphysicsIndustries.Solus.Values
             return false;
         }
 
+        public override string ToString()
+        {
+            return Value ? "true" : "false";
+        }
+
         public bool Equals(Boolean other) => Value == other.Value;
         public override int GetHashCode() => Value.GetHashCode();
         public static bool operator ==(Boolean a, Boolean b) =>

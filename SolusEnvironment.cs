@@ -26,6 +26,7 @@ using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -122,6 +123,9 @@ namespace MetaphysicsIndustries.Solus
             SetVariable("MatrixM4x2", Matrices.M4x2);
             SetVariable("MatrixM4x3", Matrices.M4x3);
             SetVariable("MatrixM4x4", Matrices.M4x4);
+
+            SetVariable("true", new Boolean(true));
+            SetVariable("false", new Boolean(false));
         }
 
         protected readonly SolusEnvironment Parent;
