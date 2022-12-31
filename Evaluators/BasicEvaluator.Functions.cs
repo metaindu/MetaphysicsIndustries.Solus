@@ -188,7 +188,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             var x = args[0].ToNumber().Value;
             var y = args[1].ToNumber().Value;
-            return (x == y ? 1 : 0).ToNumber();
+            return (x == y).ToBoolean();
         }
 
         public IMathObject CallFunction(ExponentOperation f,
@@ -226,7 +226,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             var x = args[0].ToNumber().Value;
             var y = args[1].ToNumber().Value;
-            return (x > y ? 1 : 0).ToNumber();
+            return (x > y).ToBoolean();
         }
 
         public IMathObject CallFunction(
@@ -235,7 +235,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             var x = args[0].ToNumber().Value;
             var y = args[1].ToNumber().Value;
-            return (x >= y ? 1 : 0).ToNumber();
+            return (x >= y).ToBoolean();
         }
 
         public IMathObject CallFunction(LessThanComparisonOperation f,
@@ -243,7 +243,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             var x = args[0].ToNumber().Value;
             var y = args[1].ToNumber().Value;
-            return (x < y ? 1 : 0).ToNumber();
+            return (x < y).ToBoolean();
         }
 
         public IMathObject CallFunction(LessThanOrEqualComparisonOperation f,
@@ -251,7 +251,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             var x = args[0].ToNumber().Value;
             var y = args[1].ToNumber().Value;
-            return (x <= y ? 1 : 0).ToNumber();
+            return (x <= y).ToBoolean();
         }
 
         public IMathObject CallFunction(LoadImageFunction f,
@@ -299,23 +299,17 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(LogicalAndOperation f,
             IMathObject[] args, SolusEnvironment env)
         {
-            var x = args[0].ToNumber().Value;
-            var y = args[1].ToNumber().Value;
-            return ((long)x != 0 &&
-                    (long)y != 0
-                ? 1
-                : 0).ToNumber();
+            var x = args[0].ToBoolean().Value;
+            var y = args[1].ToBoolean().Value;
+            return (x && y).ToBoolean();
         }
 
         public IMathObject CallFunction(LogicalOrOperation f,
             IMathObject[] args, SolusEnvironment env)
         {
-            var x = args[0].ToNumber().Value;
-            var y = args[1].ToNumber().Value;
-            return ((long)x != 0 ||
-                    (long)y != 0
-                ? 1
-                : 0).ToNumber();
+            var x = args[0].ToBoolean().Value;
+            var y = args[1].ToBoolean().Value;
+            return (x || y).ToBoolean();
         }
 
         public IMathObject CallFunction(MaximumFiniteFunction f,
@@ -436,7 +430,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             var x = args[0].ToNumber().Value;
             var y = args[1].ToNumber().Value;
-            return (x != y ? 1 : 0).ToNumber();
+            return (x != y).ToBoolean();
         }
 
         public IMathObject CallFunction(SecantFunction f, IMathObject[] args,

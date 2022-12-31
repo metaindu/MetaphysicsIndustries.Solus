@@ -42,8 +42,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {
-            // TODO: boolean
-            return Reals.Value;
+            return Booleans.Value;
         }
     }
 }

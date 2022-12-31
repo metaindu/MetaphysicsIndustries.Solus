@@ -27,6 +27,7 @@ using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
+using Boolean = System.Boolean;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -118,6 +119,9 @@ namespace MetaphysicsIndustries.Solus
         public static Number ToNumber(this int value) => new Number(value);
         public static Number ToNumber(this long value) => new Number(value);
 
+        public static Values.Boolean ToBoolean(this bool value) =>
+            new Values.Boolean(value);
+
         public static Vector ToVector(this float[] values) =>
             new Vector(values);
 
@@ -136,6 +140,9 @@ namespace MetaphysicsIndustries.Solus
         public static float ToFloat(this IMathObject value) =>
             value.ToNumber().Value;
 
+        public static Values.Boolean ToBoolean(this IMathObject mo) =>
+            (Values.Boolean)mo;
+
         public static Function ToFunction(this IMathObject mo) =>
             (Function)mo;
 
@@ -147,6 +154,7 @@ namespace MetaphysicsIndustries.Solus
         public static ISet GetMathType(this IMathObject mo)
         {
             if (Reals.Value.Contains(mo)) return Reals.Value;
+            if (Booleans.Value.Contains(mo)) return Booleans.Value;
             if (Vectors.R2.Contains(mo))
                 return Vectors.R2;
             if (Vectors.R3.Contains(mo))

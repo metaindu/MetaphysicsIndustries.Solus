@@ -32,7 +32,13 @@ namespace MetaphysicsIndustries.Solus.Functions
         protected NotEqualComparisonOperation()
             :base("!=")
         {
+            // TODO: boolean parameters
+            // TODO: matrix parameters
+            // TODO: vector parameters
+            // TODO: string parameters
+            // TODO: complex parameters
         }
+
         protected override bool Compare(float x, float y)
         {
             return x != y;
@@ -57,12 +63,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {
-            // TODO: boolean
-            // TODO: matrix
-            // TODO: vector
-            // TODO: string
-            // TODO: complex
-            return Reals.Value;
+            return Booleans.Value;
         }
     }
 }

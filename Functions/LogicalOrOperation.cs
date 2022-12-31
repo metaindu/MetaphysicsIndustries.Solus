@@ -25,11 +25,17 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class LogicalOrOperation : BinaryOperation
+    public class LogicalOrOperation : Operation
     {
-        public static readonly LogicalOrOperation Value = new LogicalOrOperation();
+        public static readonly LogicalOrOperation Value =
+            new LogicalOrOperation();
 
         protected LogicalOrOperation()
+            : base(new[]
+            {
+                new Parameter("left", Booleans.Value),
+                new Parameter("right", Booleans.Value)
+            })
         {
             Name = "||";
         }
@@ -40,6 +46,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         public override ISet GetResultType(SolusEnvironment env,
-            IEnumerable<ISet> argTypes) => Reals.Value;
+            IEnumerable<ISet> argTypes) => Booleans.Value;
     }
 }

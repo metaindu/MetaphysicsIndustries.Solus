@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
     public class GetResultTest
     {
         [Test]
-        public void ResultIsScalar()
+        public void ResultIsBoolean()
         {
             // given
             var args = new ISet[] { Reals.Value, Reals.Value };
@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
             var value = LessThanComparisonOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.That(result, Is.SameAs(Reals.Value));
+            Assert.That(result, Is.SameAs(Booleans.Value));
         }
     }
 }

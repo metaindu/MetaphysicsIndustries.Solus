@@ -34,30 +34,30 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         where T : IEvaluator, new()
     {
         [Test]
-        [TestCase(0, 0, 1)]
-        [TestCase(0, 1, 0)]
-        [TestCase(0, 2, 0)]
-        [TestCase(0, 3, 0)]
-        [TestCase(1, 0, 0)]
-        [TestCase(1, 1, 1)]
-        [TestCase(1, 2, 0)]
-        [TestCase(1, 3, 0)]
-        [TestCase(2, 0, 0)]
-        [TestCase(2, 1, 0)]
-        [TestCase(2, 2, 1)]
-        [TestCase(2, 3, 0)]
-        [TestCase(3, 0, 0)]
-        [TestCase(3, 1, 0)]
-        [TestCase(3, 2, 0)]
-        [TestCase(3, 3, 1)]
-        [TestCase(0, -1, 0)]
-        [TestCase(1, -1, 0)]
-        [TestCase(-1, 1, 0)]
-        [TestCase(-1, -1, 1)]
-        [TestCase(1.5f, 1.5f, 1)]
-        [TestCase(1.5f, 1.5001f, 0)]
+        [TestCase(0, 0, true)]
+        [TestCase(0, 1, false)]
+        [TestCase(0, 2, false)]
+        [TestCase(0, 3, false)]
+        [TestCase(1, 0, false)]
+        [TestCase(1, 1, true)]
+        [TestCase(1, 2, false)]
+        [TestCase(1, 3, false)]
+        [TestCase(2, 0, false)]
+        [TestCase(2, 1, false)]
+        [TestCase(2, 2, true)]
+        [TestCase(2, 3, false)]
+        [TestCase(3, 0, false)]
+        [TestCase(3, 1, false)]
+        [TestCase(3, 2, false)]
+        [TestCase(3, 3, true)]
+        [TestCase(0, -1, false)]
+        [TestCase(1, -1, false)]
+        [TestCase(-1, 1, false)]
+        [TestCase(-1, -1, true)]
+        [TestCase(1.5f, 1.5f, true)]
+        [TestCase(1.5f, 1.5001f, false)]
         public void EqualComparisonOperationValuesYieldValue(
-            float a, float b, float expected)
+            float a, float b, bool expected)
         {
             // given
             var f = EqualComparisonOperation.Value;
@@ -67,9 +67,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.IsTrue(result.IsScalar(null));
-            Assert.That(result.ToFloat(),
-                Is.EqualTo(expected).Within(0.000001f));
+            Assert.IsTrue(result.IsBoolean(null));
+            Assert.That((bool)(result.ToBoolean()), Is.EqualTo(expected));
         }
     }
 }
