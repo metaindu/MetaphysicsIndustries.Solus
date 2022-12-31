@@ -1248,6 +1248,54 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         }
 
         [Test]
+        public void TestLogicalAndOperator()
+        {
+            // given
+            const string input = "a and b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
+            Assert.That(literal.Value,
+                Is.SameAs(LogicalAndOperation.Value));
+            Assert.That(fc.Arguments.Count, Is.EqualTo(2));
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.That(((VariableAccess)fc.Arguments[0]).VariableName,
+                Is.EqualTo("a"));
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.That(((VariableAccess)fc.Arguments[1]).VariableName,
+                Is.EqualTo("b"));
+        }
+
+        [Test]
+        public void TestLogicalOrOperator()
+        {
+            // given
+            const string input = "a or b";
+            var parser = new SolusParser();
+            // when
+            var result = parser.GetExpression(input);
+            // then
+            Assert.IsInstanceOf<FunctionCall>(result);
+            var fc = (FunctionCall) result;
+            Assert.IsInstanceOf<Literal>(fc.Function);
+            var literal = (Literal)fc.Function;
+            Assert.That(literal.Value,
+                Is.SameAs(LogicalOrOperation.Value));
+            Assert.That(fc.Arguments.Count, Is.EqualTo(2));
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[0]);
+            Assert.That(((VariableAccess)fc.Arguments[0]).VariableName,
+                Is.EqualTo("a"));
+            Assert.IsInstanceOf<VariableAccess>(fc.Arguments[1]);
+            Assert.That(((VariableAccess)fc.Arguments[1]).VariableName,
+                Is.EqualTo("b"));
+        }
+
+        [Test]
         public void ParseUserDefinedFunction()
         {
             // given

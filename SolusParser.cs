@@ -128,6 +128,14 @@ namespace MetaphysicsIndustries.Solus
             {ExponentOperation.Value, 135},
             {BitwiseAndOperation.Value, 100},
             {BitwiseOrOperation.Value, 80},
+            {EqualComparisonOperation.Value, 70},
+            {NotEqualComparisonOperation.Value, 70},
+            {LessThanComparisonOperation.Value, 75},
+            {LessThanOrEqualComparisonOperation.Value, 75},
+            {GreaterThanComparisonOperation.Value, 75},
+            {GreaterThanOrEqualComparisonOperation.Value, 75},
+            {LogicalAndOperation.Value, 62},
+            {LogicalOrOperation.Value, 60},
         };
 
         ICommandData GetCommandFromCommand(Span span, CommandSet commandSet)
@@ -394,6 +402,10 @@ namespace MetaphysicsIndustries.Solus
                 return GreaterThanComparisonOperation.Value;
             if (span.Value == ">=")
                 return GreaterThanOrEqualComparisonOperation.Value;
+            if (span.Value == "and")
+                return LogicalAndOperation.Value;
+            if (span.Value == "or")
+                return LogicalOrOperation.Value;
 
             throw new ParseException(-1,
                 $"Unknown binary operator, \"{span.Value}\"");
