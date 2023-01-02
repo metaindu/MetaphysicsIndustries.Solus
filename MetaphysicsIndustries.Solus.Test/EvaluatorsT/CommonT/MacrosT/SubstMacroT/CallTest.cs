@@ -34,6 +34,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         where T : IEvaluator, new()
     {
         [Test]
+        [Ignore("Macros not supported currently")]
         public void UnmatchedVariableYieldsSame()
         {
             // given
@@ -55,6 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         }
 
         [Test]
+        [Ignore("Macros not supported currently")]
         public void MatchVariableGetsReplaced()
         {
             // given

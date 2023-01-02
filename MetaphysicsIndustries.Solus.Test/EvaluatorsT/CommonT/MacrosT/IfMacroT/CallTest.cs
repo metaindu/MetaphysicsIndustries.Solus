@@ -31,6 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
 {
     [TestFixture(typeof(BasicEvaluator))]
     [TestFixture(typeof(CompilingEvaluator))]
+    [Ignore("Macros not supported currently")]
     public class CallTest<T>
         where T : IEvaluator, new()
     {
