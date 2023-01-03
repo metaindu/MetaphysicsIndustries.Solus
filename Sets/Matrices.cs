@@ -77,7 +77,7 @@ namespace MetaphysicsIndustries.Solus.Sets
             other == this ||
             other is AllMatrices ||
             other is Tensors ||
-            other is Sets;
+            other is MathObjects;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsBoolean(SolusEnvironment env) => false;
@@ -118,7 +118,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool IsSubsetOf(ISet other) =>
             other is AllMatrices ||
             other is Tensors ||
-            other is Sets;
+            other is MathObjects;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsBoolean(SolusEnvironment env) => false;

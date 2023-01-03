@@ -35,10 +35,30 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.SetsT
         public void ContainsOtherSets()
         {
             // expect
+            Assert.That(Sets.Sets.Value.Contains(MathObjects.Value));
+            Assert.That(Sets.Sets.Value.Contains(AllFunctions.Value));
             Assert.That(
                 Sets.Sets.Value.Contains(Sets.Functions.RealsToReals));
+            Assert.That(Sets.Sets.Value.Contains(Tensors.Value));
+            Assert.That(Sets.Sets.Value.Contains(AllVectors.Value));
+            Assert.That(Sets.Sets.Value.Contains(Vectors.R2));
             Assert.That(Sets.Sets.Value.Contains(Vectors.R3));
-            Assert.That(Sets.Sets.Value.Contains(MathObjects.Value));
+            Assert.That(Sets.Sets.Value.Contains(AllMatrices.Value));
+            Assert.That(Sets.Sets.Value.Contains(Matrices.M2x2));
+            Assert.That(Sets.Sets.Value.Contains(Matrices.M3x3));
+            Assert.That(Sets.Sets.Value.Contains(Reals.Value));
+            Assert.That(Sets.Sets.Value.Contains(Strings.Value));
+            Assert.That(Sets.Sets.Value.Contains(Intervals.Value));
+            Assert.That(Sets.Sets.Value.Contains(Booleans.Value));
+            Assert.That(Sets.Sets.Value.Contains(Sets.Expressions.Value));
+            Assert.That(Sets.Sets.Value.Contains(Literals.Value));
+            Assert.That(Sets.Sets.Value.Contains(ComponentAccesses.Value));
+            Assert.That(Sets.Sets.Value.Contains(FunctionCalls.Value));
+            Assert.That(Sets.Sets.Value.Contains(IntervalExpressions.Value));
+            Assert.That(Sets.Sets.Value.Contains(TensorExpressions.Value));
+            Assert.That(Sets.Sets.Value.Contains(MatrixExpressions.Value));
+            Assert.That(Sets.Sets.Value.Contains(VectorExpressions.Value));
+            Assert.That(Sets.Sets.Value.Contains(VariableAccesses.Value));
         }
 
         [Test]

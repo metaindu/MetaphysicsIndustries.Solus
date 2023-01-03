@@ -24,9 +24,25 @@ namespace MetaphysicsIndustries.Solus.Sets
 {
     public class Expressions : ISet
     {
+        public static readonly Expressions Value = new Expressions();
+
+        protected Expressions()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsExpression(null);
         public string DisplayName => "Expression";
-        public bool IsSupersetOf(ISet other) => other is Expressions;
+
+        public bool IsSupersetOf(ISet other) =>
+            other is Expressions ||
+            other is TensorExpressions ||
+            other is MatrixExpressions ||
+            other is VectorExpressions ||
+            other is Literals ||
+            other is ComponentAccesses ||
+            other is FunctionCalls ||
+            other is IntervalExpressions ||
+            other is VariableAccesses;
         public bool IsSubsetOf(ISet other) =>
             other is Expressions ||
             other is MathObjects;
@@ -51,6 +67,13 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class ComponentAccesses : ISet
     {
+        public static readonly ComponentAccesses
+            Value = new ComponentAccesses();
+
+        protected ComponentAccesses()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsComponentAccess();
         public string DisplayName => "ComponentAccess";
         public bool IsSupersetOf(ISet other) => other is ComponentAccesses;
@@ -79,6 +102,12 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class FunctionCalls : ISet
     {
+        public static readonly FunctionCalls Value = new FunctionCalls();
+
+        protected FunctionCalls()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsFunctionCall();
         public string DisplayName => "FunctionCall";
         public bool IsSupersetOf(ISet other) => other is FunctionCalls;
@@ -107,6 +136,13 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class IntervalExpressions : ISet
     {
+        public static readonly IntervalExpressions Value =
+            new IntervalExpressions();
+
+        protected IntervalExpressions()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsIntervalExpression();
         public string DisplayName => "IntervalExpression";
         public bool IsSupersetOf(ISet other) => other is IntervalExpressions;
@@ -135,6 +171,12 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class Literals : ISet
     {
+        public static readonly Literals Value = new Literals();
+
+        protected Literals()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsLiteral();
         public string DisplayName => "Literal";
         public bool IsSupersetOf(ISet other) => other is Literals;
@@ -163,6 +205,13 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class TensorExpressions : ISet
     {
+        public static readonly TensorExpressions
+            Value = new TensorExpressions();
+
+        protected TensorExpressions()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsTensorExpression();
         public string DisplayName => "TensorExpression";
         public bool IsSupersetOf(ISet other) =>
@@ -194,6 +243,13 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class MatrixExpressions : ISet
     {
+        public static readonly MatrixExpressions
+            Value = new MatrixExpressions();
+
+        protected MatrixExpressions()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsMatrixExpression();
         public string DisplayName => "MatrixExpression";
         public bool IsSupersetOf(ISet other) => other is MatrixExpressions;
@@ -223,6 +279,13 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class VectorExpressions : ISet
     {
+        public static readonly VectorExpressions
+            Value = new VectorExpressions();
+
+        protected VectorExpressions()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsVectorExpression();
         public string DisplayName => "VectorExpression";
         public bool IsSupersetOf(ISet other) => other is VectorExpressions;
@@ -252,6 +315,13 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     public class VariableAccesses : ISet
     {
+        public static readonly VariableAccesses Value =
+            new VariableAccesses();
+
+        protected VariableAccesses()
+        {
+        }
+
         public bool Contains(IMathObject mo) => mo.IsIsVariableAccess();
         public string DisplayName => "VariableAccess";
         public bool IsSupersetOf(ISet other) => other is VariableAccesses;

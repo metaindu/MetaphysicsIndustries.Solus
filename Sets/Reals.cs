@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         {
             // TODO: are reals tensors of rank 0?
             return other == this ||
-                   other is Sets;
+                   other is MathObjects;
         }
 
         public bool? IsScalar(SolusEnvironment env) => false;

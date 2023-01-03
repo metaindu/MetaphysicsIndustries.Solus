@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Solus.Sets
 
         public bool IsSubsetOf(ISet other) =>
             other == this ||
-            other is Sets;
+            other is MathObjects;
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsBoolean(SolusEnvironment env) => false;
