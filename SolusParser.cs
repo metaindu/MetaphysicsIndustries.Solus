@@ -223,15 +223,15 @@ namespace MetaphysicsIndustries.Solus
         public Expression GetExpressionFromExpr(Span span)
         {
             var subexprs = new List<Expression>();
-            var operators = new List<Operation>();
-            var operset = new HashSet<Operation>();
+            var operators = new List<Function>();
+            var operset = new HashSet<Function>();
 
             subexprs.Add(GetExpressionFromSubexpr(span.Subspans[0]));
 
             int i;
             for (i = 1; i < span.Subspans.Count; i += 2)
             {
-                Operation op;
+                Function op;
                 Expression arg = GetExpressionFromSubexpr(
                     span.Subspans[i + 1]);
                 if (span.Subspans[i].Value == "-")
@@ -249,7 +249,7 @@ namespace MetaphysicsIndustries.Solus
                 operset.Add(op);
             }
 
-            var sortedOperset = new List<Operation>(operset);
+            var sortedOperset = new List<Function>(operset);
             sortedOperset.Sort((x, y) =>
                 -_operatorPrecedence[x].CompareTo(_operatorPrecedence[y]));
 
@@ -354,7 +354,7 @@ namespace MetaphysicsIndustries.Solus
                 $"Unknown subexpression, \"{defref}\"");
         }
 
-        public Operation GetOperationFromBinop(Span span)
+        public Function GetOperationFromBinop(Span span)
         {
             if (span.Value == "+")
             {

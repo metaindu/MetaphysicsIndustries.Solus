@@ -136,5 +136,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         public bool? IsExpression(SolusEnvironment env) => false;
         public bool? IsSet(SolusEnvironment env) => false;
         public bool IsConcrete => true;
+
+        public virtual bool IsCommutative => false;
+        public virtual bool IsAssociative => false;
     }
 }

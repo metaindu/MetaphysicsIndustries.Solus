@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -35,11 +36,178 @@ namespace MetaphysicsIndustries.Solus.Compiler
             VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var expr = new ConvertR4IlExpression(
-                new CompareEqualIlExpression(
-                    ConvertToIlExpression(arguments[0], nm, variables),
-                    ConvertToIlExpression(arguments[1], nm, variables)));
-            return expr;
+            var a = ConvertToIlExpression(arguments[0], nm, variables);
+            var b = ConvertToIlExpression(arguments[1], nm, variables);
+            var seq = new List<IlExpression>();
+            if (a.ResultType != b.ResultType)
+            {
+                seq.Add(a);
+                seq.Add(b);
+                seq.Add(new PopIlExpression());
+                seq.Add(new PopIlExpression());
+                seq.Add(new LoadConstantIlExpression(false));
+            }
+            else if (a.ResultType == typeof(float) ||
+                     a.ResultType == typeof(double) ||
+                     a.ResultType == typeof(bool) ||
+                     a.ResultType == typeof(byte) ||
+                     a.ResultType == typeof(sbyte) ||
+                     a.ResultType == typeof(short) ||
+                     a.ResultType == typeof(ushort) ||
+                     a.ResultType == typeof(int) ||
+                     a.ResultType == typeof(uint) ||
+                     a.ResultType == typeof(long) ||
+                     a.ResultType == typeof(ulong) ||
+                     a.ResultType == typeof(string))
+            {
+                seq.Add(new CompareEqualIlExpression(a, b));
+            }
+            else if (a.ResultType == typeof(float[]))
+            {
+                // TODO: opportunity for parallelism here
+                var aa = nm.CreateLocal(typeof(float[]), "a");
+                seq.Add(a);
+                seq.Add(new StoreLocalIlExpression(aa, null));
+                var bb = nm.CreateLocal(typeof(float[]), "b");
+                seq.Add(b);
+                seq.Add(new StoreLocalIlExpression(bb, null));
+                var len = typeof(float[]).GetMethod("get_Length");
+                seq.Add(
+                    new CompareEqualIlExpression(
+                        new CallIlExpression(
+                            len,
+                            new LoadLocalIlExpression(aa)),
+                        new CallIlExpression(
+                            len,
+                            new LoadLocalIlExpression(bb))));
+                var returnFalse = new NopIlExpression();
+                var nop = new NopIlExpression();
+                seq.Add(new BrFalseIlExpression(returnFalse));
+                var counter = nm.CreateLocal(typeof(int), "i");
+                seq.Add(
+                    new StoreLocalIlExpression(counter,
+                        new CallIlExpression(len,
+                            new LoadLocalIlExpression(aa))));
+                seq.Add(
+                    new WhileLoopConstruct(
+                        new CompareGreaterThanIlExpression(
+                            new LoadLocalIlExpression(counter),
+                            new LoadConstantIlExpression(0)),
+                        new IlExpressionSequence(
+                            new StoreLocalIlExpression(
+                                counter,
+                                new SubIlExpression(
+                                    new LoadLocalIlExpression(counter),
+                                    new LoadConstantIlExpression(1))),
+                            new CompareEqualIlExpression(
+                                new LoadElemIlExpression(
+                                    new LoadLocalIlExpression(aa),
+                                    new LoadLocalIlExpression(counter)),
+                                new LoadElemIlExpression(
+                                    new LoadLocalIlExpression(bb),
+                                    new LoadLocalIlExpression(counter))),
+                            new BrFalseIlExpression(returnFalse))));
+                seq.Add(new LoadConstantIlExpression(true));
+                seq.Add(new BranchIlExpression(nop));
+                seq.Add(returnFalse);
+                seq.Add(new LoadConstantIlExpression(false));
+                seq.Add(nop);
+            }
+            else if (a.ResultType == typeof(float[,]))
+            {
+                // TODO: opportunity for parallelism here
+                var aa = nm.CreateLocal(typeof(float[,]), "a");
+                seq.Add(a);
+                seq.Add(new StoreLocalIlExpression(aa, null));
+                var bb = nm.CreateLocal(typeof(float[,]), "b");
+                seq.Add(b);
+                seq.Add(new StoreLocalIlExpression(bb, null));
+                var len = typeof(float[,]).GetMethod(
+                    "GetLength",
+                    new[] { typeof(int) });
+                seq.Add(
+                    new CompareEqualIlExpression(
+                        new CallIlExpression(
+                            len,
+                            new LoadLocalIlExpression(aa),
+                            new LoadConstantIlExpression(0)),
+                        new CallIlExpression(
+                            len,
+                            new LoadLocalIlExpression(bb),
+                            new LoadConstantIlExpression(0))));
+                var returnFalse = new NopIlExpression();
+                var nop = new NopIlExpression();
+                seq.Add(new BrFalseIlExpression(returnFalse));
+                seq.Add(
+                    new CompareEqualIlExpression(
+                        new CallIlExpression(
+                            len,
+                            new LoadLocalIlExpression(aa),
+                            new LoadConstantIlExpression(1)),
+                        new CallIlExpression(
+                            len,
+                            new LoadLocalIlExpression(bb),
+                            new LoadConstantIlExpression(1))));
+                seq.Add(new BrFalseIlExpression(returnFalse));
+                var r = nm.CreateLocal(typeof(int), "r");
+                var c = nm.CreateLocal(typeof(int), "c");
+                seq.Add(
+                    new StoreLocalIlExpression(r,
+                        new CallIlExpression(len,
+                            new LoadLocalIlExpression(aa),
+                            new LoadConstantIlExpression(0))));
+                // TODO: hard-code row count and column count
+                // TODO: loop unrolling
+                // TODO: parallelize
+                var get = typeof(float[,]).GetMethod(
+                    "Get", new[] { typeof(int), typeof(int) });
+                seq.Add(
+                    new WhileLoopConstruct(
+                        new CompareGreaterThanIlExpression(
+                            new LoadLocalIlExpression(r),
+                            new LoadConstantIlExpression(0)),
+                        new IlExpressionSequence(
+                            new StoreLocalIlExpression(
+                                r,
+                                new SubIlExpression(
+                                    new LoadLocalIlExpression(r),
+                                    new LoadConstantIlExpression(1))),
+                            new StoreLocalIlExpression(c,
+                                new CallIlExpression(len,
+                                    new LoadLocalIlExpression(aa),
+                                    new LoadConstantIlExpression(1))),
+                            new WhileLoopConstruct(
+                                new CompareGreaterThanIlExpression(
+                                    new LoadLocalIlExpression(c),
+                                    new LoadConstantIlExpression(0)),
+                                new IlExpressionSequence(
+                                    new StoreLocalIlExpression(
+                                        c,
+                                        new SubIlExpression(
+                                            new LoadLocalIlExpression(c),
+                                            new LoadConstantIlExpression(1))),
+                                    new CompareEqualIlExpression(
+                                        new CallIlExpression(
+                                            get,
+                                            new LoadLocalIlExpression(aa),
+                                            new LoadLocalIlExpression(r),
+                                            new LoadLocalIlExpression(c)),
+                                        new CallIlExpression(
+                                            get,
+                                            new LoadLocalIlExpression(bb),
+                                            new LoadLocalIlExpression(r),
+                                            new LoadLocalIlExpression(c))),
+                                    new BrFalseIlExpression(returnFalse))))));
+                seq.Add(new LoadConstantIlExpression(true));
+                seq.Add(new BranchIlExpression(nop));
+                seq.Add(returnFalse);
+                seq.Add(new LoadConstantIlExpression(false));
+                seq.Add(nop);
+            }
+            else
+                throw new NotImplementedException();
+
+            return new IlExpressionSequence(seq);
         }
     }
 }
