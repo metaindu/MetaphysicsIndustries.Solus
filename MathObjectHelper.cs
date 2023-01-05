@@ -204,6 +204,26 @@ namespace MetaphysicsIndustries.Solus
             if (Sets.Sets.Value.Contains(mo))
                 return Sets.Sets.Value;
 
+            if (Sets.Expressions.Value.Contains(mo))
+            {
+                if (ComponentAccesses.Value.Contains(mo))
+                    return ComponentAccesses.Value;
+                if (FunctionCalls.Value.Contains(mo))
+                    return FunctionCalls.Value;
+                if (IntervalExpressions.Value.Contains(mo))
+                    return IntervalExpressions.Value;
+                if (Literals.Value.Contains(mo))
+                    return Literals.Value;
+                if (TensorExpressions.Value.Contains(mo))
+                    return TensorExpressions.Value;
+                if (MatrixExpressions.Value.Contains(mo))
+                    return MatrixExpressions.Value;
+                if (VectorExpressions.Value.Contains(mo))
+                    return VectorExpressions.Value;
+                if (VariableAccesses.Value.Contains(mo))
+                    return VariableAccesses.Value;
+            }
+
             throw new TypeException(
                 $"The object type is unknown: {mo.GetType()}");
         }

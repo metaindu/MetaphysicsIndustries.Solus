@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 
@@ -205,7 +206,22 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 seq.Add(nop);
             }
             else
-                throw new NotImplementedException();
+            {
+                seq.Add(a);
+                seq.Add(b);
+                seq.Add(new PopIlExpression());
+                seq.Add(new PopIlExpression());
+                var ctor = typeof(TypeException).GetConstructor(
+                    new Type[] { typeof(string), typeof(string) });
+                seq.Add(
+                    new ThrowIlExpression(
+                        new NewObjIlExpression(
+                            ctor,
+                            new LoadNullIlExpression(),
+                            new LoadStringIlExpression(
+                                "Type not supported for equality " +
+                                "comparisons: Interval"))));
+            }
 
             return new IlExpressionSequence(seq);
         }

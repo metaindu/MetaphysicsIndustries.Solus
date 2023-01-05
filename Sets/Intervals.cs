@@ -58,6 +58,6 @@ namespace MetaphysicsIndustries.Solus.Sets
         public string DocString =>
             "The set of all intervals on the real numbers";
 
-        public string DisplayName => "Intervals";
+        public string DisplayName => "Interval";
     }
 }

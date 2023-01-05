@@ -252,7 +252,10 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 return true.ToBoolean();
             }
 
-            throw new NotImplementedException();
+            throw new TypeException(
+                null,
+                $"Type not supported for equality comparisons: " +
+                $"{type1.DisplayName}");
         }
 
         public IMathObject CallFunction(ExponentOperation f,

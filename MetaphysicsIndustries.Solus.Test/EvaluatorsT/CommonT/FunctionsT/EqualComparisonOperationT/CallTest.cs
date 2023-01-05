@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
@@ -371,5 +372,78 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.IsTrue(result.IsBoolean(null));
             Assert.That(!result.ToBoolean());
         }
+
+        [Test]
+        public void EqualComparisonOperationIntervalThrows()
+        {
+            // given
+            var a = new Interval(1, 3);
+            var b = new Interval(1, 3);
+            var f = EqualComparisonOperation.Value;
+            var args = new Expression[] { new Literal(a), new Literal(b) };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // expect
+            var ex = Assert.Throws<TypeException>(
+                () => eval.Eval(expr, null));
+            // and
+            Assert.That(ex.Message,
+                Is.EqualTo(
+                    "Type not supported for equality comparisons: Interval"));
+        }
+
+        [Test]
+        public void DifferentTypesWithIntervalYieldsFalse()
+        {
+            // given
+            var a = 123f;
+            var b = new Interval(1, 3);
+            var f = EqualComparisonOperation.Value;
+            var args = new Expression[] { new Literal(a), new Literal(b) };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsTrue(result.IsBoolean(null));
+            Assert.That(!result.ToBoolean());
+        }
+
+        // [Test]
+        // public void EqualComparisonOperationExpressionThrows()
+        // {
+        //     // given
+        //     var a = new Literal(123f);
+        //     var b = new Literal(123f);
+        //     var f = EqualComparisonOperation.Value;
+        //     var args = new Expression[] { new Literal(a), new Literal(b) };
+        //     var eval = Util.CreateEvaluator<T>();
+        //     var expr = new FunctionCall(f, args);
+        //     // expect
+        //     var ex = Assert.Throws<TypeException>(
+        //         () => eval.Eval(expr, null));
+        //     // and
+        //     Assert.That(ex.Message,
+        //         Is.EqualTo(
+        //             "Type not supported for equality comparisons: " +
+        //             "Literal"));
+        // }
+
+        // [Test]
+        // public void DifferentTypesWithExpressionYieldsFalse()
+        // {
+        //     // given
+        //     var a = 123f;
+        //     var b = new Literal(123f);
+        //     var f = EqualComparisonOperation.Value;
+        //     var args = new Expression[] { new Literal(a), new Literal(b) };
+        //     var eval = Util.CreateEvaluator<T>();
+        //     var expr = new FunctionCall(f, args);
+        //     // when
+        //     var result = eval.Eval(expr, null);
+        //     // then
+        //     Assert.IsTrue(result.IsBoolean(null));
+        //     Assert.That(!result.ToBoolean());
+        // }
     }
 }
