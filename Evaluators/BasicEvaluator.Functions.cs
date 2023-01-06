@@ -495,9 +495,75 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(NotEqualComparisonOperation f,
             IMathObject[] args, SolusEnvironment env)
         {
-            var x = args[0].ToNumber().Value;
-            var y = args[1].ToNumber().Value;
-            return (x != y).ToBoolean();
+            var type1 = args[0].GetMathType();
+            var type2 = args[1].GetMathType();
+            if (type1 != type2)
+                return true.ToBoolean();
+
+            if (type1 == Reals.Value)
+            {
+                var x = args[0].ToNumber().Value;
+                var y = args[1].ToNumber().Value;
+                return (x != y).ToBoolean();
+            }
+            else if (type1 == Strings.Value)
+            {
+
+                var x = args[0].ToStringValue().Value;
+                var y = args[1].ToStringValue().Value;
+                return (x != y).ToBoolean();
+            }
+            else if (type1 == Booleans.Value)
+            {
+
+                var x = args[0].ToBoolean().Value;
+                var y = args[1].ToBoolean().Value;
+                return (x != y).ToBoolean();
+            }
+            else if (type1.IsSubsetOf(AllVectors.Value))
+            {
+                var x = args[0].ToVector();
+                var y = args[1].ToVector();
+                if (x.Length != y.Length)
+                    return true.ToBoolean();
+                int i;
+                var argArray = new IMathObject[2];
+                for (i = 0; i < x.Length; i++)
+                {
+                    argArray[0] = x[i];
+                    argArray[1] = y[i];
+                    if (CallFunction(f, argArray, env).ToBoolean())
+                        return true.ToBoolean();
+                }
+
+                return false.ToBoolean();
+            }
+            else if (type1.IsSubsetOf(AllMatrices.Value))
+            {
+                var x = args[0].ToMatrix();
+                var y = args[1].ToMatrix();
+                if (x.RowCount != y.RowCount)
+                    return true.ToBoolean();
+                if (x.ColumnCount != y.ColumnCount)
+                    return true.ToBoolean();
+                int r, c;
+                var argArray = new IMathObject[2];
+                for (r = 0; r < x.RowCount; r++)
+                for (c = 0; c < x.ColumnCount; c++)
+                {
+                    argArray[0] = x[r, c];
+                    argArray[1] = y[r, c];
+                    if (CallFunction(f, argArray, env).ToBoolean())
+                        return true.ToBoolean();
+                }
+
+                return false.ToBoolean();
+            }
+
+            throw new TypeException(
+                null,
+                $"Type not supported for equality comparisons: " +
+                $"{type1.DisplayName}");
         }
 
         public IMathObject CallFunction(SecantFunction f, IMathObject[] args,

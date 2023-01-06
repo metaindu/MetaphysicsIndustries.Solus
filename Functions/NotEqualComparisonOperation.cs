@@ -25,40 +25,23 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class NotEqualComparisonOperation : ComparisonOperation
+    public class NotEqualComparisonOperation : Function
     {
         public static readonly NotEqualComparisonOperation Value = new NotEqualComparisonOperation();
 
         protected NotEqualComparisonOperation()
-            :base("!=")
-        {
-            // TODO: boolean parameters
-            // TODO: matrix parameters
-            // TODO: vector parameters
-            // TODO: string parameters
-            // TODO: complex parameters
-        }
-
-        protected override bool Compare(float x, float y)
-        {
-            return x != y;
-        }
-
-        public override OperationPrecedence Precedence
-        {
-            get
+            :base(new[]
             {
-                return OperationPrecedence.Equality;
-            }
+                new Parameter("left", MathObjects.Value),
+                new Parameter("right", MathObjects.Value)
+            },
+                "!=")
+        {
+            // TODO: intervals
+            // TODO: complex numbers
         }
 
-        public override bool IsCommutative
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool IsCommutative => true;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
