@@ -69,6 +69,9 @@ namespace MetaphysicsIndustries.Solus.Values
                 { 0, 0, 0, 1 }
             });
 
+        public static Matrix Zero(int rowCount, int columnCount) =>
+            new Matrix(new float[rowCount, columnCount]);
+
         private readonly IMathObject[,] _components;
 
         public IMathObject this[int row, int column] =>
