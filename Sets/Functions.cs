@@ -251,6 +251,72 @@ namespace MetaphysicsIndustries.Solus.Sets
     }
 
     /// <summary>
+    /// All functions taking a (positive) fixed or varying number of
+    /// arguments, each argument being a vector, all arguments having the
+    /// same dimension, and returning a vector of that dimension.
+    ///
+    /// i.e. union( VF(V(n), V(n)) for all n in NaturalNumbers )
+    /// </summary>
+    public class AllVectorFunctions : ISet
+    {
+        public static readonly AllVectorFunctions Value =
+            new AllVectorFunctions();
+
+        public bool Contains(IMathObject mo)
+        {
+            if (!mo.IsIsFunction(null))
+                return false;
+            var f = mo.ToFunction();
+            if (f.Parameters.Count < 1)
+                // nullary functions not included
+                return false;
+            if (!f.Parameters[0].Type.IsSubsetOf(AllVectors.Value))
+                return false;
+            var t = f.Parameters[0].Type;
+            if (!(t is Vectors))
+                return false;
+            if (f.GetResultType(null, null) != t)
+                return false;
+            int i;
+            // this will also work for variadic functions
+            for (i = 0; i < f.Parameters.Count; i++)
+                if (f.Parameters[i].Type != t)
+                    return false;
+            return true;
+        }
+
+        public bool IsSupersetOf(ISet other) => this == other;
+        public bool IsSubsetOf(ISet other) =>
+            // TODO: VariadicFunctions ?
+            other == this ||
+            other is AllFunctions ||
+            other is MathObjects;
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsBoolean(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => true;
+        public bool IsConcrete => true;
+
+        private string _docString = null;
+
+        public string DocString =>
+            "The set of all functions taking any number of parameters of a " +
+            "vector type and returning that same vector type";
+
+        public string DisplayName => "VectorFunction";
+    }
+
+    /// <summary>
     /// All functions of any arity
     /// </summary>
     public class AllFunctions : ISet
