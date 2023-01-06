@@ -1,3 +1,4 @@
+vector and matrix arithmetic
 should Expression.Clone be shallow or deep?
     or should it be removed altogether?
 distinguish between tensors (vectors, matrices) and simple arrays
@@ -20,6 +21,7 @@ Functions that take expressions will by default cause their arguments *not* to
     eval(expr: Expression [, env: Environment] [, evaluator: Evaluator]
             ) -> Expression
     parse(s: string) -> Expression
+allow a Literal to hold an Expression -> needs support in compiler
 implement the ILCompiler functionality as an expression transformer
     define functions that represent IEEE754 floating point add, mult, etc
     IlExpression becomes a subtype of regular Expression

@@ -20,9 +20,9 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 
 namespace MetaphysicsIndustries.Solus.Compiler
@@ -122,9 +122,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return rv;
             }
 
-            throw new NotImplementedException(
-                "currently only implemented for numbers, vectors, " +
-                " matrices, and strings.");
+            throw new TypeException(
+                null,
+                $"Type not supported as a literal: " +
+                $"{expr.Value.GetMathType().DisplayName}");
         }
     }
 }

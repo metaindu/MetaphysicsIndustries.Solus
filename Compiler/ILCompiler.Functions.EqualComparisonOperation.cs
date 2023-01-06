@@ -220,6 +220,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             new LoadNullIlExpression(),
                             new LoadStringIlExpression(
                                 "Type not supported for equality " +
+                                // TODO: don't hard-code the type name
                                 "comparisons: Interval"))));
             }
 
