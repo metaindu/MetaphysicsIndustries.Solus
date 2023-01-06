@@ -29,6 +29,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     {
         public static readonly NotEqualComparisonOperation Value = new NotEqualComparisonOperation();
 
+        // TODO: rename to something like "AreNotEqual" or "IsNotEqualTo"
         protected NotEqualComparisonOperation()
             :base(new[]
             {

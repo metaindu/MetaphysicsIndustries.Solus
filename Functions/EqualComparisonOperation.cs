@@ -30,6 +30,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly EqualComparisonOperation Value =
             new EqualComparisonOperation();
 
+        // TODO: rename to something like "AreEqual" or "IsEqualTo"
         protected EqualComparisonOperation()
             : base(new[]
                 {
