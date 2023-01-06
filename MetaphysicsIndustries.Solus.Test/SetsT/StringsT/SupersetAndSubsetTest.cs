@@ -74,14 +74,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.StringsT
         public void TestStringsIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!Strings.Value.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Strings.Value.IsSupersetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestStringsIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(!Strings.Value.IsSubsetOf(Sets.Functions.RealsToReals));
+            Assert.That(!Strings.Value.IsSubsetOf(
+                Sets.Functions.RealsToReals));
         }
 
         [Test]
@@ -274,7 +276,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.StringsT
         public void TestStringsIsNotSupersetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!Strings.Value.IsSupersetOf(IntervalExpressions.Value));
+            Assert.That(!Strings.Value.IsSupersetOf(
+                IntervalExpressions.Value));
         }
 
         [Test]

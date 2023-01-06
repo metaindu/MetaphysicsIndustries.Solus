@@ -80,16 +80,20 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.MatricesT
         public void TestMatricesIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!Matrices.M2x2.IsSupersetOf(Sets.Functions.RealsToReals));
-            Assert.That(!Matrices.M3x3.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Matrices.M2x2.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Matrices.M3x3.IsSupersetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestMatricesIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(!Matrices.M2x2.IsSubsetOf(Sets.Functions.RealsToReals));
-            Assert.That(!Matrices.M3x3.IsSubsetOf(Sets.Functions.RealsToReals));
+            Assert.That(!Matrices.M2x2.IsSubsetOf(
+                Sets.Functions.RealsToReals));
+            Assert.That(!Matrices.M3x3.IsSubsetOf(
+                Sets.Functions.RealsToReals));
         }
 
         [Test]
@@ -312,8 +316,10 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.MatricesT
         public void TestMatricesIsNotSupersetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!Matrices.M2x2.IsSupersetOf(IntervalExpressions.Value));
-            Assert.That(!Matrices.M3x3.IsSupersetOf(IntervalExpressions.Value));
+            Assert.That(!Matrices.M2x2.IsSupersetOf(
+                IntervalExpressions.Value));
+            Assert.That(!Matrices.M3x3.IsSupersetOf(
+                IntervalExpressions.Value));
         }
 
         [Test]

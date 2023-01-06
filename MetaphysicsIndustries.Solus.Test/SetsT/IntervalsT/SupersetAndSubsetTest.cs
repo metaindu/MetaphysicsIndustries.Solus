@@ -74,14 +74,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalsT
         public void TestIntervalsIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Intervals.Value.IsSupersetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestIntervalsIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSubsetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Intervals.Value.IsSubsetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
@@ -246,7 +248,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalsT
         public void TestIntervalsIsNotSupersetOfComponentAccesses()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSupersetOf(ComponentAccesses.Value));
+            Assert.That(!Intervals.Value.IsSupersetOf(
+                ComponentAccesses.Value));
         }
 
         [Test]
@@ -274,21 +277,24 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalsT
         public void TestIntervalsIsNotSupersetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSupersetOf(IntervalExpressions.Value));
+            Assert.That(
+                !Intervals.Value.IsSupersetOf(IntervalExpressions.Value));
         }
 
         [Test]
         public void TestIntervalsIsNotSubsetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSubsetOf(IntervalExpressions.Value));
+            Assert.That(!Intervals.Value.IsSubsetOf(
+                IntervalExpressions.Value));
         }
 
         [Test]
         public void TestIntervalsIsNotSupersetOfTensorExpressions()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSupersetOf(TensorExpressions.Value));
+            Assert.That(!Intervals.Value.IsSupersetOf(
+                TensorExpressions.Value));
         }
 
         [Test]
@@ -302,7 +308,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalsT
         public void TestIntervalsIsNotSupersetOfMatrixExpressions()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSupersetOf(MatrixExpressions.Value));
+            Assert.That(!Intervals.Value.IsSupersetOf(
+                MatrixExpressions.Value));
         }
 
         [Test]
@@ -316,7 +323,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalsT
         public void TestIntervalsIsNotSupersetOfVectorExpressions()
         {
             // expect
-            Assert.That(!Intervals.Value.IsSupersetOf(VectorExpressions.Value));
+            Assert.That(!Intervals.Value.IsSupersetOf(
+                VectorExpressions.Value));
         }
 
         [Test]

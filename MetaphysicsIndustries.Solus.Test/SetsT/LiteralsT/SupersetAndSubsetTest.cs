@@ -74,14 +74,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.LiteralsT
         public void TestLiteralsIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!Literals.Value.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Literals.Value.IsSupersetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestLiteralsIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(!Literals.Value.IsSubsetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Literals.Value.IsSubsetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
@@ -274,7 +276,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.LiteralsT
         public void TestLiteralsIsNotSupersetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!Literals.Value.IsSupersetOf(IntervalExpressions.Value));
+            Assert.That(
+                !Literals.Value.IsSupersetOf(IntervalExpressions.Value));
         }
 
         [Test]

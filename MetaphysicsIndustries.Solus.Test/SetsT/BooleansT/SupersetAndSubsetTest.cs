@@ -74,14 +74,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.BooleansT
         public void TestBooleansIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!Booleans.Value.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Booleans.Value.IsSupersetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestBooleansIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(!Booleans.Value.IsSubsetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Booleans.Value.IsSubsetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
@@ -274,7 +276,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.BooleansT
         public void TestBooleansIsNotSupersetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!Booleans.Value.IsSupersetOf(IntervalExpressions.Value));
+            Assert.That(
+                !Booleans.Value.IsSupersetOf(IntervalExpressions.Value));
         }
 
         [Test]

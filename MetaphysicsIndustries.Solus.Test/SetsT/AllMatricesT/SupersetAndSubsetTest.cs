@@ -74,14 +74,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.AllMatricesT
         public void TestAllMatricesIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestAllMatricesIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSubsetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !AllMatrices.Value.IsSubsetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
@@ -218,7 +220,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.AllMatricesT
         public void TestAllMatricesIsNotSupersetOfExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(Sets.Expressions.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(Sets.Expressions.Value));
         }
 
         [Test]
@@ -246,14 +249,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.AllMatricesT
         public void TestAllMatricesIsNotSupersetOfComponentAccesses()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(ComponentAccesses.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(ComponentAccesses.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSubsetOfComponentAccesses()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSubsetOf(ComponentAccesses.Value));
+            Assert.That(!AllMatrices.Value.IsSubsetOf(
+                ComponentAccesses.Value));
         }
 
         [Test]
@@ -274,63 +279,72 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.AllMatricesT
         public void TestAllMatricesIsNotSupersetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(IntervalExpressions.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(IntervalExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSubsetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSubsetOf(IntervalExpressions.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSubsetOf(IntervalExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSupersetOfTensorExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(TensorExpressions.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(TensorExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSubsetOfTensorExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSubsetOf(TensorExpressions.Value));
+            Assert.That(!AllMatrices.Value.IsSubsetOf(
+                TensorExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSupersetOfMatrixExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(MatrixExpressions.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(MatrixExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSubsetOfMatrixExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSubsetOf(MatrixExpressions.Value));
+            Assert.That(!AllMatrices.Value.IsSubsetOf(
+                MatrixExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSupersetOfVectorExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(VectorExpressions.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(VectorExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSubsetOfVectorExpressions()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSubsetOf(VectorExpressions.Value));
+            Assert.That(!AllMatrices.Value.IsSubsetOf(
+                VectorExpressions.Value));
         }
 
         [Test]
         public void TestAllMatricesIsNotSupersetOfVariableAccesses()
         {
             // expect
-            Assert.That(!AllMatrices.Value.IsSupersetOf(VariableAccesses.Value));
+            Assert.That(
+                !AllMatrices.Value.IsSupersetOf(VariableAccesses.Value));
         }
 
         [Test]

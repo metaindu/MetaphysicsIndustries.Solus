@@ -74,14 +74,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.TensorsT
         public void TestTensorsIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!Tensors.Value.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(
+                !Tensors.Value.IsSupersetOf(Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestTensorsIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(!Tensors.Value.IsSubsetOf(Sets.Functions.RealsToReals));
+            Assert.That(!Tensors.Value.IsSubsetOf(
+                Sets.Functions.RealsToReals));
         }
 
         [Test]
@@ -274,7 +276,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.TensorsT
         public void TestTensorsIsNotSupersetOfIntervalExpressions()
         {
             // expect
-            Assert.That(!Tensors.Value.IsSupersetOf(IntervalExpressions.Value));
+            Assert.That(!Tensors.Value.IsSupersetOf(
+                IntervalExpressions.Value));
         }
 
         [Test]

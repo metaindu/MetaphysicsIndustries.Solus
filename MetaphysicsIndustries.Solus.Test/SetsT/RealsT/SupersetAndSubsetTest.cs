@@ -74,7 +74,8 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.RealsT
         public void TestRealsIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(!Reals.Value.IsSupersetOf(Sets.Functions.RealsToReals));
+            Assert.That(!Reals.Value.IsSupersetOf(
+                Sets.Functions.RealsToReals));
         }
 
         [Test]
