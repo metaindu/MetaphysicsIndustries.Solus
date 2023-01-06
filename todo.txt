@@ -1,3 +1,4 @@
+vector and matrix arithmetic
 should Expression.Clone be shallow or deep?
     or should it be removed altogether?
 distinguish between tensors (vectors, matrices) and simple arrays
