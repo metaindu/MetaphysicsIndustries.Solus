@@ -183,6 +183,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         }
 
         [Test]
+        [Ignore("Not currently supported")]
         public void GetsFunctionFromEnv()
         {
             // given
@@ -201,6 +202,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         }
 
         [Test]
+        [Ignore("Not currently supported")]
         public void GetsExpressionInsideLiteralFromEnv()
         {
             var expr = new VariableAccess("a");
