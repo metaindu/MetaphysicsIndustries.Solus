@@ -34,20 +34,19 @@ namespace MetaphysicsIndustries.Solus.Compiler
             VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var expr = new ConvertR4IlExpression(
-                new CompareEqualIlExpression(
-                    new LoadConstantIlExpression(0),
-                    new AddIlExpression(
-                        new CompareEqualIlExpression(
-                            new LoadConstantIlExpression(0),
-                            new ConvertI4IlExpression(
-                                ConvertToIlExpression(arguments[0],
-                                    nm, variables))),
-                        new CompareEqualIlExpression(
-                            new LoadConstantIlExpression(0),
-                            new ConvertI4IlExpression(
-                                ConvertToIlExpression(arguments[1], nm,
-                                    variables))))));
+            var expr = new CompareEqualIlExpression(
+                new LoadConstantIlExpression(0),
+                new AddIlExpression(
+                    new CompareEqualIlExpression(
+                        new LoadConstantIlExpression(0),
+                        new ConvertI4IlExpression(
+                            ConvertToIlExpression(arguments[0],
+                                nm, variables))),
+                    new CompareEqualIlExpression(
+                        new LoadConstantIlExpression(0),
+                        new ConvertI4IlExpression(
+                            ConvertToIlExpression(arguments[1], nm,
+                                variables)))));
             return expr;
         }
     }

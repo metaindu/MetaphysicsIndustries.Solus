@@ -32,38 +32,12 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
     public class EvalLogicalAndOperationTest
     {
         [Test]
-        [TestCase(0, 0, 0)]
-        [TestCase(0, 1, 0)]
-        [TestCase(0, 2, 0)]
-        [TestCase(0, 3, 0)]
-        [TestCase(1, 0, 0)]
-        [TestCase(1, 1, 1)]
-        [TestCase(1, 2, 1)]
-        [TestCase(1, 3, 1)]
-        [TestCase(2, 0, 0)]
-        [TestCase(2, 1, 1)]
-        [TestCase(2, 2, 1)]
-        [TestCase(2, 3, 1)]
-        [TestCase(3, 0, 0)]
-        [TestCase(3, 1, 1)]
-        [TestCase(3, 2, 1)]
-        [TestCase(3, 3, 1)]
-        [TestCase(0, -1, 0)]
-        [TestCase(1, -1, 1)]
-        [TestCase(-1, 1, 1)]
-        [TestCase(-1, -1, 1)]
-        [TestCase(0.1f, 0.1f, 0)]
-        [TestCase(0.9f, 0.9f, 0)]
-        [TestCase(1.1f, 1.1f, 1)]
-        [TestCase(1.9f, 1.9f, 1)]
-        [TestCase(1.5f, 1.5f, 1)]
-        [TestCase(1.5f, 1.5001f, 1)]
-        [TestCase(-0.1f, -0.1f, 0)]
-        [TestCase(-0.9f, -0.9f, 0)]
-        [TestCase(-1.1f, -1.1f, 1)]
-        [TestCase(-1.9f, -1.9f, 1)]
+        [TestCase(false, false, false)]
+        [TestCase(false, true, true)]
+        [TestCase(true, false, true)]
+        [TestCase(true, true, true)]
         public void LogicalAndOperationValuesYieldValue(
-            float a, float b, float expected)
+            bool a, bool b, bool expected)
         {
             // given
             var f = LogicalAndOperation.Value;

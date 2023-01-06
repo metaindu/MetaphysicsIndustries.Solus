@@ -88,6 +88,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     st.Value3,
                     st.Value4,
                     false);
+            if (result is bool bb)
+                return new Values.Boolean(bb);
 
             throw new InvalidOperationException(
                 $"Unsupported result type: {result.GetType()}");

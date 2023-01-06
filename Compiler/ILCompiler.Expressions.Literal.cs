@@ -41,6 +41,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return new LoadConstantIlExpression(value);
             }
 
+            if (expr.Value.IsIsBoolean(null))
+            {
+                var value = expr.Value.ToBoolean();
+                return new LoadConstantIlExpression(value);
+            }
+
             if (expr.Value.IsIsVector(null))
             {
                 var v = expr.Value.ToVector();

@@ -25,42 +25,31 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class EqualComparisonOperation : ComparisonOperation
+    public class EqualComparisonOperation : Function
     {
-        public static readonly EqualComparisonOperation Value = new EqualComparisonOperation();
+        public static readonly EqualComparisonOperation Value =
+            new EqualComparisonOperation();
 
+        // TODO: rename to something like "AreEqual" or "IsEqualTo"
         protected EqualComparisonOperation()
-            : base("==")
+            : base(new[]
+                {
+                    new Parameter("left", MathObjects.Value),
+                    new Parameter("right", MathObjects.Value)
+                },
+                "==")
         {
-        }
-
-        protected override bool Compare(float x, float y)
-        {
-            return x == y;
-        }
-
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Equality; }
-        }
-
-        public override bool IsCommutative
-        {
-            get
-            {
-                return true;
-            }
+            // TODO: intervals
+            // TODO: complex numbers
         }
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {
-            // TODO: boolean
-            // TODO: matrix
-            // TODO: vector
-            // TODO: string
-            // TODO: complex
-            return Reals.Value;
+            return Booleans.Value;
         }
+
+        public override bool IsAssociative => true;
+        public override bool IsCommutative => true;
     }
 }

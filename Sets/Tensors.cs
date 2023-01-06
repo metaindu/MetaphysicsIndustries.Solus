@@ -45,9 +45,10 @@ namespace MetaphysicsIndustries.Solus.Sets
 
         public bool IsSubsetOf(ISet other) =>
             other is Tensors ||
-            other is Sets;
+            other is MathObjects;
 
         public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsBoolean(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;
         public int? GetTensorRank(SolusEnvironment env) => null;
@@ -62,7 +63,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool IsConcrete => true;
 
         public string DocString =>
-            "The set of all etnsors of any rank";
+            "The set of all tensors of any rank";
         public string DisplayName => "Tensor";
     }
 }

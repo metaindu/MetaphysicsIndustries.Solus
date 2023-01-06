@@ -26,14 +26,23 @@ namespace MetaphysicsIndustries.Solus.Test
 {
     public readonly struct MockMathObject : IMathObject
     {
-        public MockMathObject(bool isScalar = true, bool isVector = false,
-            bool isMatrix = false, int tensorRank = 0, bool isString = false,
-            int[] dimensions = null, bool isInterval = false,
-            bool isFunction = false, bool isExpression = false,
+        public MockMathObject(
+            bool isScalar = true,
+            bool isBoolean = false,
+            bool isVector = false,
+            bool isMatrix = false,
+            int tensorRank = 0,
+            bool isString = false,
+            int[] dimensions = null,
+            bool isInterval = false,
+            bool isFunction = false,
+            bool isExpression = false,
             bool isSet = false,
-            bool isConcrete = false, string docString = "")
+            bool isConcrete = false,
+            string docString = "")
         {
             _isScalar = isScalar;
+            _isBoolean = isBoolean;
             _isVector = isVector;
             _isMatrix = isMatrix;
             _tensorRank = tensorRank;
@@ -51,6 +60,9 @@ namespace MetaphysicsIndustries.Solus.Test
 
         private readonly bool _isScalar;
         public bool? IsScalar(SolusEnvironment env) => _isScalar;
+
+        private readonly bool _isBoolean;
+        public bool? IsBoolean(SolusEnvironment env) => _isBoolean;
 
         private readonly bool _isVector;
         public bool? IsVector(SolusEnvironment env) => _isVector;

@@ -123,6 +123,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             IEnumerable<ISet> argTypes);
 
         public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsBoolean(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;
         public int? GetTensorRank(SolusEnvironment env) => null;
@@ -135,5 +136,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         public bool? IsExpression(SolusEnvironment env) => false;
         public bool? IsSet(SolusEnvironment env) => false;
         public bool IsConcrete => true;
+
+        public virtual bool IsCommutative => false;
+        public virtual bool IsAssociative => false;
     }
 }

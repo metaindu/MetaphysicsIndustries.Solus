@@ -48,20 +48,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             get;
         }
 
-        //public override Expression CleanUp(Expression[] args)
-        //{
-        //    return InternalCleanUp(args);
-        //}
-
-        public virtual bool IsCommutative   // a @ b == b @ a
-        {
-            get { return false; }
-        }
-        public virtual bool IsAssociative   // (a @ b) @ c == a @ (b @ c)
-        {
-            get { return false; }
-        }
-
         public virtual bool HasIdentityValue
         {
             get { return true; }

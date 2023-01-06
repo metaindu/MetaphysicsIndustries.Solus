@@ -189,6 +189,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 return typeof(MethodInfo);
             if (type.IsSubsetOf(Intervals.Value))
                 return typeof(STuple<float, bool, float, bool>);
+            if (type.IsSubsetOf(Booleans.Value))
+                return typeof(bool);
             throw new NotImplementedException(
                 $"Unrecognized type, {type.GetType()}");
         }

@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogicalOrOperationT
     public class GetResultTest
     {
         [Test]
-        public void ResultIsScalar()
+        public void ResultIsBoolean()
         {
             // given
             var args = new ISet[] { Reals.Value, Reals.Value };
@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogicalOrOperationT
             var value = LogicalOrOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.That(result, Is.SameAs(Reals.Value));
+            Assert.That(result, Is.SameAs(Booleans.Value));
         }
     }
 }

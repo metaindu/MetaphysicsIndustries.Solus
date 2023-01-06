@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MetaphysicsIndustries.Solus.Macros;
+using Boolean = MetaphysicsIndustries.Solus.Values.Boolean;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {
@@ -117,6 +118,7 @@ List the available topics:
             var variables = new List<string>();
             var macros = new List<string>();
             var types = new List<string>();
+            var values = new List<string>();
 
             foreach (var name in env.GetVariableNames())
             {
@@ -127,110 +129,56 @@ List the available topics:
                     macros.Add(name);
                 else if (v is ISet)
                     types.Add(name);
+                else if (v is Values.Boolean)
+                    values.Add(name);
                 else
                     variables.Add(name);
             }
 
-            functions.Sort();
-            variables.Sort();
-            macros.Sort();
-            types.Sort();
-
-            void AddItem(string item)
+            var sections = new List<Tuple<string, List<string>>>
             {
-                item = item + " ";
-                if ((line + item).Length > 76)
+                new Tuple<string, List<string>>("Commands",
+                    commandSet.GetCommandNames().ToList()),
+                new Tuple<string, List<string>>("Functions", functions),
+                new Tuple<string, List<string>>("Macros", macros),
+                new Tuple<string, List<string>>("Types", types),
+                new Tuple<string, List<string>>("Values", values),
+                new Tuple<string, List<string>>("Variables", variables),
+                new Tuple<string, List<string>>("Additional topics",
+                    _helpLookups.Keys.ToList()),
+            };
+
+            bool first = true;
+            foreach (var section in sections)
+            {
+                if (!first && newline) sb.AppendLine();
+                newline = false;
+                first = false;
+
+                var heading = section.Item1;
+                var names = section.Item2;
+
+                if (names.Count > 0)
                 {
-                    sb.AppendLine("  " + line);
+                    sb.AppendLine($"{heading}:");
                     line = "";
+                    names.Sort();
+                    foreach (var name in names)
+                    {
+                        var item = name + " ";
+                        if ((line + item).Length > 76)
+                        {
+                            sb.AppendLine("  " + line);
+                            line = "";
+                        }
+
+                        line += item;
+                    }
+
+                    if (line.Length > 0)
+                        sb.AppendLine("  " + line);
+                    newline = true;
                 }
-
-                line += item;
-            }
-
-            if (commandSet.CountCommands() > 0)
-            {
-                sb.AppendLine("Commands:");
-                line = "";
-                var commands = commandSet.GetCommandNames().ToList();
-                commands.Sort();
-                foreach (var c in commands)
-                    AddItem(c);
-                if (line.Length > 0)
-                    sb.AppendLine("  " + line);
-                newline = true;
-            }
-
-            if (newline) sb.AppendLine();
-            newline = false;
-
-            if (functions.Count > 0)
-            {
-                sb.AppendLine("Functions:");
-                line = "";
-                functions.Sort();
-                foreach (var f in functions)
-                    AddItem(f);
-                if (line.Length > 0)
-                    sb.AppendLine("  " + line);
-                newline = true;
-            }
-
-            if (newline) sb.AppendLine();
-            newline = false;
-
-            if (macros.Count > 0)
-            {
-                sb.AppendLine("Macros:");
-                line = "";
-                foreach (var m in macros)
-                    AddItem(m);
-                if (line.Length > 0)
-                    sb.AppendLine("  " + line);
-                newline = true;
-            }
-
-            if (newline) sb.AppendLine();
-            newline = false;
-
-            if (types.Count > 0)
-            {
-                sb.AppendLine("Types:");
-                line = "";
-                foreach (var t in types)
-                    AddItem(t);
-                if (line.Length > 0)
-                    sb.AppendLine("  " + line);
-                newline = true;
-            }
-
-            if (newline) sb.AppendLine();
-            newline = false;
-
-            if (variables.Count > 0)
-            {
-                sb.AppendLine("Variables:");
-                line = "";
-                foreach (var v in variables)
-                    AddItem(v);
-                if (line.Length > 0)
-                    sb.AppendLine("  " + line);
-                newline = true;
-            }
-
-            if (newline) sb.AppendLine();
-            newline = false;
-
-            if (_helpLookups.Count > 0)
-            {
-                sb.AppendLine("Additional topics:");
-                line = "";
-                var topics = _helpLookups.Keys.ToList();
-                topics.Sort();
-                foreach (var t in topics)
-                    AddItem(t);
-                if (line.Length > 0)
-                    sb.AppendLine("  " + line);
             }
 
             return sb.ToString();

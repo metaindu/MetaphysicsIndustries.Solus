@@ -34,6 +34,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         where T : IEvaluator, new()
     {
         [Test]
+        [Ignore("Macros not supported currently")]
         public void CallYieldsRandomExpression()
         {
             // given

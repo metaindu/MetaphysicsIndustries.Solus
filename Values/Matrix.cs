@@ -83,6 +83,7 @@ namespace MetaphysicsIndustries.Solus.Values
         public ISet ComponentType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsBoolean(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => true;
         public int? GetTensorRank(SolusEnvironment env) => 2;

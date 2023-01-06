@@ -37,9 +37,11 @@ namespace MetaphysicsIndustries.Solus.Sets
 
         public bool IsSupersetOf(ISet other) => other is Intervals;
         public bool IsSubsetOf(ISet other) =>
-            other is Intervals || other is Sets;
+            other is Intervals ||
+            other is MathObjects;
 
         public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsBoolean(SolusEnvironment env) => false;
         public bool? IsVector(SolusEnvironment env) => false;
         public bool? IsMatrix(SolusEnvironment env) => false;
         public int? GetTensorRank(SolusEnvironment env) => null;
@@ -56,6 +58,6 @@ namespace MetaphysicsIndustries.Solus.Sets
         public string DocString =>
             "The set of all intervals on the real numbers";
 
-        public string DisplayName => "Intervals";
+        public string DisplayName => "Interval";
     }
 }

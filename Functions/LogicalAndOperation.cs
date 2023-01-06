@@ -25,11 +25,17 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class LogicalAndOperation : BinaryOperation
+    public class LogicalAndOperation : Operation
     {
-        public static readonly LogicalAndOperation Value = new LogicalAndOperation();
+        public static readonly LogicalAndOperation Value =
+            new LogicalAndOperation();
 
         protected LogicalAndOperation()
+            : base(new[]
+            {
+                new Parameter("left", Booleans.Value),
+                new Parameter("right", Booleans.Value)
+            })
         {
             Name = "&&";
         }
@@ -40,6 +46,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
 
         public override ISet GetResultType(SolusEnvironment env,
-            IEnumerable<ISet> argTypes) => Reals.Value;
+            IEnumerable<ISet> argTypes) => Booleans.Value;
     }
 }

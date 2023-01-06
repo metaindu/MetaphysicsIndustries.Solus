@@ -196,16 +196,66 @@ namespace MetaphysicsIndustries.Solus.Compiler
         {
             switch (value)
             {
-            case 0: return new Instruction { OpCode = OpCodes.Ldc_I4_0 };
-            case 1: return new Instruction { OpCode = OpCodes.Ldc_I4_1 };
-            case 2: return new Instruction { OpCode = OpCodes.Ldc_I4_2 };
-            case 3: return new Instruction { OpCode = OpCodes.Ldc_I4_3 };
-            case 4: return new Instruction { OpCode = OpCodes.Ldc_I4_4 };
-            case 5: return new Instruction { OpCode = OpCodes.Ldc_I4_5 };
-            case 6: return new Instruction { OpCode = OpCodes.Ldc_I4_6 };
-            case 7: return new Instruction { OpCode = OpCodes.Ldc_I4_7 };
-            case 8: return new Instruction { OpCode = OpCodes.Ldc_I4_8 };
-            case -1: return new Instruction { OpCode = OpCodes.Ldc_I4_M1 };
+                case 0:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_0,
+                        ArgType = ArgumentType.I4
+                    };
+                case 1:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_1,
+                        ArgType = ArgumentType.I4
+                    };
+                case 2:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_2,
+                        ArgType = ArgumentType.I4
+                    };
+                case 3:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_3,
+                        ArgType = ArgumentType.I4
+                    };
+                case 4:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_4,
+                        ArgType = ArgumentType.I4
+                    };
+                case 5:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_5,
+                        ArgType = ArgumentType.I4
+                    };
+                case 6:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_6,
+                        ArgType = ArgumentType.I4
+                    };
+                case 7:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_7,
+                        ArgType = ArgumentType.I4
+                    };
+                case 8:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_8,
+                        ArgType = ArgumentType.I4
+                    };
+                case -1:
+                    return new Instruction
+                    {
+                        OpCode = OpCodes.Ldc_I4_M1,
+                        ArgType = ArgumentType.I4
+                    };
             }
 
             if (value >= sbyte.MinValue &&

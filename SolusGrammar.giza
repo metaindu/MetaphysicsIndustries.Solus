@@ -58,7 +58,7 @@ expr = subexpr ( binop subexpr )*;
 
 <ignore case, subtoken> unicodechar = '\\x' [\dabcdef][\dabcdef][\dabcdef][\dabcdef];
 
-<token> binop = ( [+-*/%^&|=<>] | '!=' | '<=' | '>=' );
+<token> binop = ( [+-*/%^&|=<>] | '!=' | '<=' | '>=' | 'or' | 'and' );
 
 unary-op = [+-] (
     paren |

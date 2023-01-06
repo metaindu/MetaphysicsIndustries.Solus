@@ -27,6 +27,7 @@ using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
+using Boolean = System.Boolean;
 
 namespace MetaphysicsIndustries.Solus
 {
@@ -36,6 +37,12 @@ namespace MetaphysicsIndustries.Solus
             SolusEnvironment env)
         {
             var iss = mo.IsScalar(env);
+            return iss.HasValue && iss.Value;
+        }
+        public static bool IsIsBoolean(this IMathObject mo,
+            SolusEnvironment env)
+        {
+            var iss = mo.IsBoolean(env);
             return iss.HasValue && iss.Value;
         }
         public static bool IsIsVector(this IMathObject mo,
@@ -112,6 +119,9 @@ namespace MetaphysicsIndustries.Solus
         public static Number ToNumber(this int value) => new Number(value);
         public static Number ToNumber(this long value) => new Number(value);
 
+        public static Values.Boolean ToBoolean(this bool value) =>
+            new Values.Boolean(value);
+
         public static Vector ToVector(this float[] values) =>
             new Vector(values);
 
@@ -130,6 +140,9 @@ namespace MetaphysicsIndustries.Solus
         public static float ToFloat(this IMathObject value) =>
             value.ToNumber().Value;
 
+        public static Values.Boolean ToBoolean(this IMathObject mo) =>
+            (Values.Boolean)mo;
+
         public static Function ToFunction(this IMathObject mo) =>
             (Function)mo;
 
@@ -141,6 +154,7 @@ namespace MetaphysicsIndustries.Solus
         public static ISet GetMathType(this IMathObject mo)
         {
             if (Reals.Value.Contains(mo)) return Reals.Value;
+            if (Booleans.Value.Contains(mo)) return Booleans.Value;
             if (Vectors.R2.Contains(mo))
                 return Vectors.R2;
             if (Vectors.R3.Contains(mo))
@@ -189,6 +203,26 @@ namespace MetaphysicsIndustries.Solus
 
             if (Sets.Sets.Value.Contains(mo))
                 return Sets.Sets.Value;
+
+            if (Sets.Expressions.Value.Contains(mo))
+            {
+                if (ComponentAccesses.Value.Contains(mo))
+                    return ComponentAccesses.Value;
+                if (FunctionCalls.Value.Contains(mo))
+                    return FunctionCalls.Value;
+                if (IntervalExpressions.Value.Contains(mo))
+                    return IntervalExpressions.Value;
+                if (Literals.Value.Contains(mo))
+                    return Literals.Value;
+                if (TensorExpressions.Value.Contains(mo))
+                    return TensorExpressions.Value;
+                if (MatrixExpressions.Value.Contains(mo))
+                    return MatrixExpressions.Value;
+                if (VectorExpressions.Value.Contains(mo))
+                    return VectorExpressions.Value;
+                if (VariableAccesses.Value.Contains(mo))
+                    return VariableAccesses.Value;
+            }
 
             throw new TypeException(
                 $"The object type is unknown: {mo.GetType()}");
