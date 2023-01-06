@@ -50,6 +50,13 @@ namespace MetaphysicsIndustries.Solus.Functions
             _name = name;
             Parameters = Array.AsReadOnly(parameters);
         }
+        protected Function(Parameter parameter, string name)
+        {
+            IsVariadic = true;
+            Parameters = new ReadOnlyCollection<Parameter>(
+                new List<Parameter>(new[] { parameter }));
+            _name = name;
+        }
 
         public virtual IMathObject CustomCall(IMathObject[] args,
             SolusEnvironment env) => null;
@@ -97,6 +104,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 		}
 
         public ReadOnlyCollection<Parameter> Parameters { get; }
+        public bool IsVariadic { get; } = false;
         private string _name;
 
         public virtual string ToString(List<Expression> arguments)

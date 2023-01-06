@@ -27,6 +27,9 @@ using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
+    /// <summary>
+    /// Functions of fixed arity and defined types
+    /// </summary>
     public class Functions : ISet
     {
         protected static Dictionary<ISet, Dictionary<ISet[], Functions>> sets =
@@ -169,6 +172,87 @@ namespace MetaphysicsIndustries.Solus.Sets
         public string DisplayName => "Function";
     }
 
+    /// <summary>
+    /// Functions of varying arity, having all arguments of the same type
+    /// </summary>
+    public class VariadicFunctions : ISet
+    {
+        protected static Dictionary<STuple<ISet, ISet>, VariadicFunctions>
+            sets = new Dictionary<STuple<ISet, ISet>, VariadicFunctions>();
+        public static VariadicFunctions Get(ISet returnType,
+            ISet parameterType)
+        {
+            var stuple = new STuple<ISet, ISet>(returnType, parameterType);
+            if (!sets.ContainsKey(stuple))
+                sets[stuple] = new VariadicFunctions(returnType,
+                    parameterType);
+            return sets[stuple];
+        }
+
+        public static VariadicFunctions RealsToReals = Get(Reals.Value,
+            Reals.Value);
+
+        protected VariadicFunctions(ISet returnType, ISet parameterType)
+        {
+            ReturnType = returnType;
+            ParameterType = parameterType;
+        }
+
+        public readonly ISet ReturnType;
+        public readonly ISet ParameterType;
+
+        public bool Contains(IMathObject mo)
+        {
+            if (!mo.IsIsFunction(null))
+                return false;
+            var f = mo.ToFunction();
+            if (!f.IsVariadic)
+                return false;
+            if (f.GetResultType(null, null) != ReturnType)
+                return false;
+            if (f.Parameters.Count != 1)
+                // this should not even be possible, since the function is
+                // marked variadic
+                return false;
+            if (f.Parameters[0].Type != ParameterType)
+                return false;
+            return true;
+        }
+
+        public bool IsSupersetOf(ISet other) => this == other;
+        public bool IsSubsetOf(ISet other) =>
+            other == this ||
+            other is AllFunctions ||
+            other is MathObjects;
+
+        public bool? IsScalar(SolusEnvironment env) => false;
+        public bool? IsBoolean(SolusEnvironment env) => false;
+        public bool? IsVector(SolusEnvironment env) => false;
+        public bool? IsMatrix(SolusEnvironment env) => false;
+        public int? GetTensorRank(SolusEnvironment env) => null;
+        public bool? IsString(SolusEnvironment env) => false;
+        public int? GetDimension(SolusEnvironment env, int index) => null;
+        public int[] GetDimensions(SolusEnvironment env) => null;
+        public int? GetVectorLength(SolusEnvironment env) => null;
+        public bool? IsInterval(SolusEnvironment env) => false;
+        public bool? IsFunction(SolusEnvironment env) => false;
+        public bool? IsExpression(SolusEnvironment env) => false;
+        public bool? IsSet(SolusEnvironment env) => true;
+        public bool IsConcrete => true;
+
+        private string _docString = null;
+
+        public string DocString =>
+            "The set of all variadic functions taking parameters of " +
+            $"{ParameterType.DisplayName} and returning " +
+            $"{ReturnType.DisplayName}";
+
+        public string DisplayName => "Function";
+    }
+
+    /// <summary>
+    /// All functions of any arity
+    /// </summary>
     public class AllFunctions : ISet
     {
         public static readonly AllFunctions Value = new AllFunctions();
