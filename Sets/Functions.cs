@@ -32,23 +32,40 @@ namespace MetaphysicsIndustries.Solus.Sets
     /// </summary>
     public class Functions : ISet
     {
-        protected static Dictionary<ISet, Dictionary<ISet[], Functions>> sets =
-            new Dictionary<ISet, Dictionary<ISet[], Functions>>();
+        protected static Dictionary<ISet, PrefixTree<ISet, Functions>> sets2 =
+            new Dictionary<ISet, PrefixTree<ISet, Functions>>();
+
         public static Functions Get(ISet returnType,
             params ISet[] parameterTypes)
         {
-            if (!sets.ContainsKey(returnType))
-                sets[returnType] = new Dictionary<ISet[], Functions>();
-            if (!sets[returnType].ContainsKey(parameterTypes))
-                sets[returnType][parameterTypes] =
-                    new Functions(returnType, parameterTypes);
-            return sets[returnType][parameterTypes];
+            if (!sets2.ContainsKey(returnType))
+                sets2[returnType] =
+                    new PrefixTree<ISet, Functions>(new Functions(returnType,
+                        Array.Empty<ISet>()));
+            var x = sets2[returnType].Get(parameterTypes, 0,
+                (ptypes, index) => Allocate(returnType, ptypes, index));
+            return x;
         }
 
-        public static Functions RealsToReals = Get(Reals.Value, Reals.Value);
+        public static Functions Allocate(ISet returnType,
+            ISet[] parameterTypes, int index)
+        {
+            var ptypes2 = new ISet[index + 1];
+            int i;
+            for (i = 0; i <= index; i++)
+                ptypes2[i] = parameterTypes[i];
+            return new Functions(returnType, ptypes2);
+        }
+
+        public static readonly Functions RealsToReals =
+            Get(Reals.Value, Reals.Value);
+
+        private static int __id = 1;
+        public readonly int ID;
 
         protected Functions(ISet returnType, ISet[] parameterTypes)
         {
+            ID = __id++;
             ReturnType = returnType;
             ParameterTypes = Array.AsReadOnly(parameterTypes);
         }
