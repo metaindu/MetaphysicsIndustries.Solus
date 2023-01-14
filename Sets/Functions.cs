@@ -42,9 +42,17 @@ namespace MetaphysicsIndustries.Solus.Sets
     /// Example: A function having the integers as both its domain and
     /// codomain is considered a member of `Functions.RealsToReals`.
     ///
+    /// Example: A function having the reals as its domain and the real
+    /// interval [0, +inf) as its codomain is considered a member of both
+    /// `Functions.RealsToReals` and `Functions.Get([0, +inf), Reals.Values)`.
+    ///
     /// Counter-example: A function having the reals as both its domain and
     /// codomain would not be considered a member of
     /// `Functions.Get(Integers.Value, Integers.Value)`.
+    ///
+    /// Counter-example: A function having the reals as its domain and the
+    /// real interval [0, +inf) as its codomain would not be considered a
+    /// member of `Functions.Get([0, +inf), [0, +inf))`.
     /// </summary>
     public class Functions : IFunctionType
     {
