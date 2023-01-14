@@ -50,5 +50,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                 return Vectors.R2;
             throw new NotImplementedException();
         }
+        public override IFunctionType FunctionType =>
+            throw new NotImplementedException();
     }
 }

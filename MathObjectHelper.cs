@@ -187,15 +187,16 @@ namespace MetaphysicsIndustries.Solus
             if (mo.IsIsFunction(null))
             {
                 var f = mo.ToFunction();
-                if (Sets.Functions.FunctionHasFixedTypes(f))
-                {
-                    // TODO: reduce allocations
-                    var paramTypes =
-                        f.Parameters.Select(p => p.Type).ToArray();
-                    return Sets.Functions.Get(
-                        f.GetResultType(null, null),
-                        paramTypes);
-                }
+                return f.FunctionType;
+                // if (Sets.Functions.FunctionHasFixedTypes(f))
+                // {
+                //     // TODO: reduce allocations
+                //     var paramTypes =
+                //         f.Parameters.Select(p => p.Type).ToArray();
+                //     return Sets.Functions.Get(
+                //         f.GetResultType(null, null),
+                //         paramTypes);
+                // }
             }
 
             if (AllFunctions.Value.Contains(mo))

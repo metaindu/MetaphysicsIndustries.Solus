@@ -590,6 +590,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             {
                 throw new NotImplementedException();
             }
+            public override IFunctionType FunctionType =>
+                throw new NotImplementedException();
         }
 
         [Test]
@@ -630,6 +632,8 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
             {
                 throw new NotImplementedException();
             }
+            public override IFunctionType FunctionType =>
+                throw new NotImplementedException();
         }
 
         [Test]

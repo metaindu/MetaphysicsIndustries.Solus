@@ -48,6 +48,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             return Booleans.Value;
         }
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(
+                Reals.Value,
+                MathObjects.Value,
+                MathObjects.Value);
 
         public override bool IsAssociative => true;
         public override bool IsCommutative => true;

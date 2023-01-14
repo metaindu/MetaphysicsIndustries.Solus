@@ -54,5 +54,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: matrix divided by scalar
             return Reals.Value;
         }
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(Reals.Value, Reals.Value, Reals.Value);
     }
 }
