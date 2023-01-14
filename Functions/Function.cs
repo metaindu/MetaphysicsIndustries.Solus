@@ -113,6 +113,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         public abstract ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes);
 
+        // TODO: this should return an exact type. The function type should
+        //       indicate the exact sets that comprise the domain and codomain
+        //       of this function, as the domain and codomain are defined in
+        //       the class docstring above.
         public abstract IFunctionType FunctionType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;
