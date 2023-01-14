@@ -27,10 +27,14 @@ using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Sets
 {
+    public interface IFunctionType : ISet
+    {
+    }
+
     /// <summary>
     /// Functions of fixed arity and defined types
     /// </summary>
-    public class Functions : ISet
+    public class Functions : IFunctionType
     {
         protected static Dictionary<ISet, PrefixTree<ISet, Functions>> sets2 =
             new Dictionary<ISet, PrefixTree<ISet, Functions>>();
@@ -192,7 +196,7 @@ namespace MetaphysicsIndustries.Solus.Sets
     /// <summary>
     /// Functions of varying arity, having all arguments of the same type
     /// </summary>
-    public class VariadicFunctions : ISet
+    public class VariadicFunctions : IFunctionType
     {
         protected static Dictionary<STuple<ISet, ISet>, VariadicFunctions>
             sets = new Dictionary<STuple<ISet, ISet>, VariadicFunctions>();
@@ -274,7 +278,7 @@ namespace MetaphysicsIndustries.Solus.Sets
     ///
     /// i.e. union( VF(V(n), V(n)) for all n in NaturalNumbers )
     /// </summary>
-    public class AllVectorFunctions : ISet
+    public class AllVectorFunctions : IFunctionType
     {
         public static readonly AllVectorFunctions Value =
             new AllVectorFunctions();
@@ -334,9 +338,9 @@ namespace MetaphysicsIndustries.Solus.Sets
     }
 
     /// <summary>
-    /// All functions of any arity
+    /// All functions of any arity and type
     /// </summary>
-    public class AllFunctions : ISet
+    public class AllFunctions : IFunctionType
     {
         public static readonly AllFunctions Value = new AllFunctions();
 
