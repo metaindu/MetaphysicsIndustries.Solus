@@ -262,7 +262,9 @@ namespace MetaphysicsIndustries.Solus.Sets
             return true;
         }
 
-        public bool IsSupersetOf(ISet other) => this == other;
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other == this ||
             other is AllFunctions ||
@@ -373,9 +375,8 @@ namespace MetaphysicsIndustries.Solus.Sets
         public bool Contains(IMathObject mo) => mo.IsIsFunction(null);
 
         public bool IsSupersetOf(ISet other) =>
-            other is Functions ||
-            other is AllFunctions;
-
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other == this ||
             other is MathObjects;
