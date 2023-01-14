@@ -32,7 +32,19 @@ namespace MetaphysicsIndustries.Solus.Sets
     }
 
     /// <summary>
-    /// Functions of fixed arity and defined types
+    /// The set of functions of fixed arity, and whose parameters' types are
+    /// subsets of the types given in `this.ParameterTypes`, and whose return
+    /// types are subsets of `this.ReturnType`.
+    ///
+    /// Example: A function having the reals as both its domain and
+    /// codomain is a member of `Functions.RealsToReals`.
+    ///
+    /// Example: A function having the integers as both its domain and
+    /// codomain is considered a member of `Functions.RealsToReals`.
+    ///
+    /// Counter-example: A function having the reals as both its domain and
+    /// codomain would not be considered a member of
+    /// `Functions.Get(Integers.Value, Integers.Value)`.
     /// </summary>
     public class Functions : IFunctionType
     {

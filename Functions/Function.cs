@@ -42,6 +42,12 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
+    /// <summary>
+    /// We consider functions as sets of ordered pairs, such that the first
+    /// item of each pair is unique among all of the pairs. We define the
+    /// domain of the function as the set of first items of all pairs. We
+    /// define the codomain as the set of second items from all pairs.
+    /// </summary>
     public abstract class Function : IMathObject
     {
         public virtual IMathObject CustomCall(IMathObject[] args,
