@@ -58,6 +58,8 @@ namespace MetaphysicsIndustries.Solus.Sets
                 sets2[returnType] =
                     new PrefixTree<ISet, Functions>(new Functions(returnType,
                         Array.Empty<ISet>()));
+            if (parameterTypes.Length == 0)
+                return sets2[returnType].Value;
             var x = sets2[returnType].Get(parameterTypes, 0,
                 (ptypes, index) => Allocate(returnType, ptypes, index));
             return x;
