@@ -52,5 +52,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: string concatenation
             return Reals.Value;
         }
+
+        public override IFunctionType FunctionType =>
+            VariadicFunctions.Get(Reals.Value, Reals.Value, 2);
+
+        public override bool IsCommutative => true;
+        public override bool IsAssociative => true;
     }
 }

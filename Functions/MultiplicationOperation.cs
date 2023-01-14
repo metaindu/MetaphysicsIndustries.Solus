@@ -20,8 +20,10 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -82,5 +84,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: vector times scalar
             return argTypes.First();
         }
+        public override IFunctionType FunctionType =>
+            throw new NotImplementedException();
     }
 }

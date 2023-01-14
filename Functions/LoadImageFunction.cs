@@ -190,5 +190,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             return AllMatrices.Value;
         }
+
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(AllMatrices.Value, Strings.Value);
     }
 }

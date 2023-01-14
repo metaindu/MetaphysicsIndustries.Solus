@@ -47,5 +47,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             new List<Parameter>();
         public override bool IsVariadic => true;
         public override ISet VariadicParameterType => Reals.Value;
+        public override IFunctionType FunctionType =>
+            throw new NotImplementedException();
     }
 }

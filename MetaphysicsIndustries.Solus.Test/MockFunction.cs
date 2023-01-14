@@ -22,8 +22,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Test
 {
@@ -56,6 +57,19 @@ namespace MetaphysicsIndustries.Solus.Test
             if (GetResultF != null)
                 return GetResultF(argTypes);
             throw new NotImplementedException();
+        }
+
+        public IFunctionType FunctionTypeV;
+        public override IFunctionType FunctionType
+        {
+            get
+            {
+                if (FunctionTypeV != null)
+                    return FunctionTypeV;
+                return Sets.Functions.Get(
+                    GetResultType(null, null),
+                    Parameters.Select(p => p.Type).ToArray());
+            }
         }
 
         public string DocStringV = "";

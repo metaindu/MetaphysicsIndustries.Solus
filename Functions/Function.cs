@@ -38,6 +38,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -105,6 +106,8 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public abstract ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes);
+
+        public abstract IFunctionType FunctionType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsBoolean(SolusEnvironment env) => false;

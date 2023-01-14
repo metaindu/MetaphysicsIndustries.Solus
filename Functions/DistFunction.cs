@@ -43,5 +43,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(Reals.Value, Reals.Value, Reals.Value);
     }
 }

@@ -50,5 +50,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override IReadOnlyList<Parameter> Parameters { get; } =
             new List<Parameter>() { new Parameter("arg", MathObjects.Value) };
+        public override IFunctionType FunctionType =>
+            throw new NotImplementedException();
     }
 }

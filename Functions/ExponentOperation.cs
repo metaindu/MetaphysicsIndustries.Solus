@@ -44,5 +44,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: square matrix
             return Reals.Value;
         }
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(Reals.Value, Reals.Value, Reals.Value);
     }
 }
