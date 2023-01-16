@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         }
         public override IFunctionType FunctionType =>
             Sets.Functions.Get(
-                Reals.Value,
+                Booleans.Value,
                 MathObjects.Value,
                 MathObjects.Value);
 
