@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                 parameters.Select(p => p.Type).ToArray());
         }
 
-        public Expression Expression;
+        public readonly Expression Expression;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
