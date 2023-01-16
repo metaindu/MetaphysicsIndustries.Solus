@@ -78,8 +78,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "The type was incorrect: Argument 0 wrong type: " +
-                    "expected Scalar but got String"));
+                    "Argument 0 wrong type: " +
+                    "expected Scalar but got String: x"));
         }
 
         [Test]

@@ -96,8 +96,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 () => ec.IsWellDefined(expr, null));
             // and
             Assert.That(ex.Message,
-                Is.EqualTo(
-                    "The type was incorrect: All components must be reals"));
+                Is.EqualTo("All components must be reals"));
         }
 
         [Test]
@@ -114,8 +113,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 () => ec.IsWellDefined(expr, null));
             // and
             Assert.That(ex.Message,
-                Is.EqualTo(
-                    "The type was incorrect: All components must be reals"));
+                Is.EqualTo("All components must be reals"));
         }
     }
 }

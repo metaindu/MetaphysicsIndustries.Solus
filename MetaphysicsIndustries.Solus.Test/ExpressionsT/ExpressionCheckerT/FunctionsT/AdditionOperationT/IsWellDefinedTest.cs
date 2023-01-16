@@ -108,7 +108,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             Assert.That(
                 ex.Message,
                 Is.EqualTo(
-                    "The type was incorrect: Argument 0 wrong type: " +
+                    "Argument 0 wrong type: " +
                     "expected Scalar but got Vector"));
         }
     }

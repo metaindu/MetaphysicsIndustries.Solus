@@ -290,7 +290,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return false;
             }
 
-            for (var i = 0; i < args.Count; i++)
+            int i;
+            for (i = 0; i < args.Count; i++)
             {
                 var pt = f.GetParameterType(i);
                 if (!pt.IsSubsetOf(Sets.Expressions.Value))
@@ -312,13 +313,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     return false;
                 }
 
-                for (var i = 0; i < args.Count; i++)
+                for (i = 0; i < args.Count; i++)
                 {
                     var argtype = args[i].GetResultType(env);
                     if (!argtype.IsSubsetOf(Reals.Value))
                     {
                         if (throws)
                             throw new TypeException(
+                                null,
                                 $"Argument {i} wrong type: " +
                                 $"expected {Reals.Value.DisplayName} but " +
                                 $"got {argtype.DisplayName}");
@@ -526,21 +528,85 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 //     return true;
             }
 
-            for (var i = 0; i < args.Count; i++)
+            // for (var i = 0; i < args.Count; i++)
+            // {
+            //     var argtype = args[i].GetResultType(env);
+            //     if (!argtype.IsSubsetOf(f.Parameters[i].Type))
+            //     {
+            //         if (throws)
+            //             throw new TypeException(
+            //                 $"Argument {i} wrong type: expected " +
+            //                 $"{f.Parameters[i].Type.DisplayName} but got " +
+            //                 $"{argtype.DisplayName}");
+            //         return false;
+            //     }
+            // }
+
+            var ft = f.FunctionType;
+            var argResultTypes = new ISet[args.Count];
+            for (i = 0; i < args.Count; i++)
+                argResultTypes[i] = args[i].GetResultType(env);
+
+            // If the function type is one of the simpler kinds, we can
+            // make use of what we know to provide helpful feedback to the
+            // user.
+            if (ft is Sets.Functions ftf)
             {
-                var argtype = args[i].GetResultType(env);
-                if (!argtype.IsSubsetOf(f.Parameters[i].Type))
-                {
-                    if (throws)
+                if (argResultTypes.Length != ftf.ParameterTypes.Count)
+                    throw new TypeException(
+                        null,
+                        $"Wrong number of arguments given to " +
+                        $"{f.DisplayName} (expected " +
+                        $"{f.Parameters.Count} but got {args.Count})");
+                for (i = 0; i < argResultTypes.Length; i++)
+                    if (!argResultTypes[i].IsSubsetOf(
+                            ftf.ParameterTypes[i]))
+                    {
+                        var p = f.Parameters[i];
                         throw new TypeException(
+                            p.Name,
+                            $"Argument {i} wrong type: " +
+                            $"expected {p.Type.DisplayName} but got " +
+                            $"{argResultTypes[i].DisplayName}");
+                    }
+            }
+            else if (ft is VariadicFunctions vf)
+            {
+                if (argResultTypes.Length < vf.MinimumNumberOfArguments)
+                    throw new TypeException(
+                        null,
+                        $"Wrong number of arguments given to " +
+                        $"{f.DisplayName} (expected at least " +
+                        $"{vf.MinimumNumberOfArguments} but " +
+                        $"got {args.Count})");
+                for (i = 0; i < argResultTypes.Length; i++)
+                    if (!argResultTypes[i].IsSubsetOf(vf.ParameterType))
+                    {
+                        throw new TypeException(
+                            null,
                             $"Argument {i} wrong type: expected " +
-                            $"{f.Parameters[i].Type.DisplayName} but got " +
-                            $"{argtype.DisplayName}");
-                    return false;
-                }
+                            $"{vf.ParameterType.DisplayName} " +
+                            $"but got {argResultTypes[i].DisplayName}");
+                    }
+            }
+            // TODO: AllVectorFunctions ?
+            // TODO: AllRealFunctions ?
+            // TODO: AllFunctions ?
+            else
+            {
+                if (!CanReceive(ft, argResultTypes))
+                    throw new TypeException(
+                        null,
+                        $"Wrong number or type of arguments given " +
+                        $"to {f.DisplayName}");
             }
 
             return true;
+        }
+
+        public bool CanReceive(IFunctionType ft, ISet[] argTypes)
+        {
+            throw new NotImplementedException();
         }
 
         public bool IsWellDefined(IntervalExpression expr, SolusEnvironment env,
@@ -584,6 +650,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 {
                     if (throws)
                         throw new TypeException(
+                            null,
                             "All components must be reals");
                     return false;
                 }
@@ -625,6 +692,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 {
                     if (throws)
                         throw new TypeException(
+                            null,
                             "All components must be reals");
                     return false;
                 }

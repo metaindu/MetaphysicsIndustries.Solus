@@ -127,7 +127,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return true;
             }
 
-            for (var i = 0; i < expr.Arguments.Count; i++)
+            int i;
+            for (i = 0; i < expr.Arguments.Count; i++)
             {
                 rv = IsWellFormed(expr.Arguments[i], throws: throws);
                 if (!rv) return false;

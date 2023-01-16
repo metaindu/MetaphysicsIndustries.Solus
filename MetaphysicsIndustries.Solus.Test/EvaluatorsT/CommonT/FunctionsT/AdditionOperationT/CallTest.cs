@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(f, args);
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
         }
 
@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(f, args);
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => eval.Eval(expr, null));
         }
 
