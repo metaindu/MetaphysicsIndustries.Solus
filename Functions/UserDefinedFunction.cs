@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         private readonly string _name;
         public override string Name => _name;
 
-        public Expression Expression;
+        public readonly Expression Expression;
 
         public override IReadOnlyList<Parameter> Parameters { get; }
 
