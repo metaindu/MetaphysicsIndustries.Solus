@@ -153,6 +153,25 @@ namespace MetaphysicsIndustries.Solus
 
         public static ISet GetMathType(this IMathObject mo)
         {
+            // TODO: The problem with this function is that it tries to map
+            //       from the set of all math objects to the set of types.
+            //       But if a particular object is a member of more than one
+            //       set, this function should not be able to determine which
+            //       set should be returned. For now, we get by because there
+            //       is a small, fixed number of types. In the future,
+            //       however, we will run into problems. For example, if we
+            //       had a type for integers, then any integer would be a
+            //       member of it as well as the set of reals (and the
+            //       rationals, while we're at it). It is little help that the
+            //       integers are a subset of the reals, or else we could
+            //       simply return the most restrictive set of which the
+            //       object is a member, because sets do not always form a
+            //       clean hierarchy. Another counter-example is user-defined
+            //       sets. A given set X could have as members 2, pi, a 2d
+            //       vector, and a set. That set X could then be given as the
+            //       type of an argument to a function. There is virtually no
+            //       way for this function to know that the caller will need
+            //       X instead of the integers or reals or 2d vectors or sets.
             if (Reals.Value.Contains(mo)) return Reals.Value;
             if (Booleans.Value.Contains(mo)) return Booleans.Value;
             if (Vectors.R2.Contains(mo))
