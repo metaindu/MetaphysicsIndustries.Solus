@@ -438,7 +438,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             }
             else
             {
-                return new Literal(AdditionOperation.Value.IdentityValue);
+                // return new Literal(AdditionOperation.Value.IdentityValue);
+                return new Literal(0);
             }
 
 

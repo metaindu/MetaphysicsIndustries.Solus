@@ -25,26 +25,14 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class AdditionOperation : AssociativeCommutativeOperation
+    public class AdditionOperation : Function
     {
-        public static readonly AdditionOperation Value = new AdditionOperation();
+        public static readonly AdditionOperation
+            Value = new AdditionOperation();
 
         protected AdditionOperation()
+            : base(new Parameter("x", Reals.Value), "+")
         {
-            Name = "+";
-        }
-
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Addition; }
-        }
-
-        public override float IdentityValue
-        {
-            get
-            {
-                return 0;
-            }
         }
 
         public override ISet GetResultType(SolusEnvironment env,
