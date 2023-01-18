@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
         }
 
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => ec.Check(expr, null));
         }
 
