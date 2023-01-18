@@ -23,6 +23,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 
 namespace MetaphysicsIndustries.Solus.Sets
@@ -129,28 +130,43 @@ namespace MetaphysicsIndustries.Solus.Sets
             var f = mo.ToFunction();
             if (!FunctionHasFixedTypes(f))
                 return false;
-            // TODO: is subset/superset, rather than "!="
-            // what's the best way to do it? exact type match or
-            // f.GetResultType is subset of ReturnType?
-            if (f.GetResultType(null, null) != ReturnType)
+            if (f.IsVariadic)
                 return false;
-            if (f.Parameters.Count != ParameterTypes.Count)
-                return false;
-            for (var i = 0; i < ParameterTypes.Count; i++)
-            {
-                // TODO: is subset/superset, rather than "!="
-                if (f.Parameters[i].Type != ParameterTypes[i])
-                    return false;
-            }
-
-            return true;
+            return IsSupersetOf(f.FunctionType);
         }
 
-        public bool IsSupersetOf(ISet other) => this == other;
-        public bool IsSubsetOf(ISet other) =>
-            other == this ||
-            other is AllFunctions ||
-            other is MathObjects;
+        public bool IsSupersetOf(ISet other) =>
+            this == other ||
+            other.IsSubsetOf(this);
+
+        public bool IsSubsetOf(ISet other)
+        {
+            if (other == this ||
+                other is AllFunctions ||
+                other is MathObjects)
+                return true;
+
+            if (!(other is IFunctionType))
+                return false;
+
+            if (other is Functions ft)
+            {
+                if (ft.ReturnType != this.ReturnType)
+                    return false;
+                if (ft.ParameterTypes.Count != this.ParameterTypes.Count)
+                    return false;
+                int i;
+                for (i = 0; i < ParameterTypes.Count; i++)
+                    if (ft.ParameterTypes[i] != this.ParameterTypes[i])
+                        return false;
+                return true;
+            }
+
+            if (other is VariadicFunctions vf)
+                return false;
+
+            throw new NotImplementedException();
+        }
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsBoolean(SolusEnvironment env) => false;
@@ -213,62 +229,114 @@ namespace MetaphysicsIndustries.Solus.Sets
         }
 
         public string DisplayName => "Function";
+
+        public override string ToString()
+        {
+            var items = new string[ParameterTypes.Count + 1];
+            items[0] = ReturnType.DisplayName;
+            int i;
+            for (i = 0; i < ParameterTypes.Count; i++)
+                items[i + 1] = ParameterTypes[i].DisplayName;
+            var itemList = string.Join(", ", items);
+            return $"Functions({itemList})";
+        }
     }
 
     /// <summary>
     /// Functions of varying arity, having all arguments of the same type
     /// </summary>
+    /// <summary>
+    /// The set of functions of varying arity starting from minimum, and whose
+    /// parameters' types are all subsets of `this.ParameterType`, and whose
+    /// return types are subsets of `this.ReturnType`. Each function in this
+    /// set has a domain that is the union of all sets of tuples of all sizes
+    /// greater than or equal to `this.MinimumNumberOfArguments`. For example,
+    /// a function that is a member of `VariadicFunctions.RealsToReals` can
+    /// accept zero or more real arguments, or zero or more arguments of a
+    /// subset of the reals.
+    ///
+    /// Example: A variadic function having the reals as its parameter type
+    /// and return type is a member of `VariadicFunctions.RealsToReals`.
+    ///
+    /// Counter-example: A variadic function having the integers as its
+    /// parameter type and return type is not a member of
+    /// `VariadicFunctions.RealsToReals`.
+    ///
+    /// Counter-example: A function that takes any number of arguments of any
+    /// type is a member of `VariadicFunctions.Get(A, MathObjects, 0)`.
+    ///
+    /// Counter-example: A variadic function taking any alternating sequence
+    /// of real and boolean arguments (f(R, B), f(R, B, R, B)...) is not a
+    /// member of any instance of `VariadicFunctions` (not even of
+    /// `VariadicFunctions.Get(A, MathObjects, 0)`), because it only takes
+    /// even numbers of arguments.
+    ///
+    /// Counter-example: A variadic function taking at least 2 arguments is
+    /// not a member of VariadicFunctions.Get(A, A, 1)
+    ///
+    /// Counter-example: A variadic function taking at least 2 arguments is
+    /// not a member of VariadicFunctions.Get(A, A, 3)
+    /// </summary>
     public class VariadicFunctions : IFunctionType
     {
-        protected static Dictionary<STuple<ISet, ISet>, VariadicFunctions>
-            sets = new Dictionary<STuple<ISet, ISet>, VariadicFunctions>();
+        protected static Dictionary<STuple<ISet, ISet, int>, VariadicFunctions>
+            sets = new();
+
         public static VariadicFunctions Get(ISet returnType,
-            ISet parameterType)
+            ISet parameterType, int? minimumNumberOfArguments=null)
         {
-            var stuple = new STuple<ISet, ISet>(returnType, parameterType);
+            if (!minimumNumberOfArguments.HasValue ||
+                minimumNumberOfArguments < 0)
+                minimumNumberOfArguments = 0;
+            var stuple = new STuple<ISet, ISet, int>(returnType,
+                parameterType, minimumNumberOfArguments.Value);
             if (!sets.ContainsKey(stuple))
                 sets[stuple] = new VariadicFunctions(returnType,
-                    parameterType);
+                    parameterType, minimumNumberOfArguments.Value);
             return sets[stuple];
         }
 
         public static VariadicFunctions RealsToReals = Get(Reals.Value,
             Reals.Value);
 
-        protected VariadicFunctions(ISet returnType, ISet parameterType)
+        protected VariadicFunctions(ISet returnType, ISet parameterType,
+            int minimumNumberOfArguments)
         {
             ReturnType = returnType;
             ParameterType = parameterType;
+            MinimumNumberOfArguments = minimumNumberOfArguments;
         }
 
         public readonly ISet ReturnType;
         public readonly ISet ParameterType;
+        public readonly int MinimumNumberOfArguments;
 
         public bool Contains(IMathObject mo)
         {
             if (!mo.IsIsFunction(null))
                 return false;
             var f = mo.ToFunction();
-            if (!f.IsVariadic)
-                return false;
-            if (f.GetResultType(null, null) != ReturnType)
-                return false;
-            if (f.Parameters.Count != 1)
-                // this should not even be possible, since the function is
-                // marked variadic
-                return false;
-            if (f.Parameters[0].Type != ParameterType)
-                return false;
-            return true;
+            var ft = f.FunctionType;
+            if (!(ft is VariadicFunctions vf))
+                // What kind of variadic function type isn't an instance of
+                // VariadicFunctions?
+                throw new TypeException(null,
+                    $"Unknown function type for variadic function: {ft}");
+            return vf.IsSubsetOf(this);
         }
 
         public bool IsSupersetOf(ISet other) =>
             other == this ||
             other.IsSubsetOf(this);
+
         public bool IsSubsetOf(ISet other) =>
             other == this ||
             other is AllFunctions ||
-            other is MathObjects;
+            other is MathObjects ||
+            (other is VariadicFunctions vf &&
+             vf.ReturnType == ReturnType &&
+             vf.ParameterType == ParameterType &&
+             vf.MinimumNumberOfArguments == MinimumNumberOfArguments);
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsBoolean(SolusEnvironment env) => false;
@@ -293,72 +361,6 @@ namespace MetaphysicsIndustries.Solus.Sets
             $"{ReturnType.DisplayName}";
 
         public string DisplayName => "Function";
-    }
-
-    /// <summary>
-    /// All functions taking a (positive) fixed or varying number of
-    /// arguments, each argument being a vector, all arguments having the
-    /// same dimension, and returning a vector of that dimension.
-    ///
-    /// i.e. union( VF(V(n), V(n)) for all n in NaturalNumbers )
-    /// </summary>
-    public class AllVectorFunctions : IFunctionType
-    {
-        public static readonly AllVectorFunctions Value =
-            new AllVectorFunctions();
-
-        public bool Contains(IMathObject mo)
-        {
-            if (!mo.IsIsFunction(null))
-                return false;
-            var f = mo.ToFunction();
-            if (f.Parameters.Count < 1)
-                // nullary functions not included
-                return false;
-            if (!f.Parameters[0].Type.IsSubsetOf(AllVectors.Value))
-                return false;
-            var t = f.Parameters[0].Type;
-            if (!(t is Vectors))
-                return false;
-            if (f.GetResultType(null, null) != t)
-                return false;
-            int i;
-            // this will also work for variadic functions
-            for (i = 0; i < f.Parameters.Count; i++)
-                if (f.Parameters[i].Type != t)
-                    return false;
-            return true;
-        }
-
-        public bool IsSupersetOf(ISet other) => this == other;
-        public bool IsSubsetOf(ISet other) =>
-            // TODO: VariadicFunctions ?
-            other == this ||
-            other is AllFunctions ||
-            other is MathObjects;
-
-        public bool? IsScalar(SolusEnvironment env) => false;
-        public bool? IsBoolean(SolusEnvironment env) => false;
-        public bool? IsVector(SolusEnvironment env) => false;
-        public bool? IsMatrix(SolusEnvironment env) => false;
-        public int? GetTensorRank(SolusEnvironment env) => null;
-        public bool? IsString(SolusEnvironment env) => false;
-        public int? GetDimension(SolusEnvironment env, int index) => null;
-        public int[] GetDimensions(SolusEnvironment env) => null;
-        public int? GetVectorLength(SolusEnvironment env) => null;
-        public bool? IsInterval(SolusEnvironment env) => false;
-        public bool? IsFunction(SolusEnvironment env) => false;
-        public bool? IsExpression(SolusEnvironment env) => false;
-        public bool? IsSet(SolusEnvironment env) => true;
-        public bool IsConcrete => true;
-
-        private string _docString = null;
-
-        public string DocString =>
-            "The set of all functions taking any number of parameters of a " +
-            "vector type and returning that same vector type";
-
-        public string DisplayName => "VectorFunction";
     }
 
     /// <summary>
