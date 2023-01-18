@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         {
             // given
             var f = AdditionOperation.Value;
-            var args = new Expression[] { new Literal(1) };
+            var args = Array.Empty<Expression>();
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
