@@ -71,6 +71,26 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 return result.ToVector();
             }
 
+            if (type is Matrices ms)
+            {
+                var R = ms.RowCount;
+                var C = ms.ColumnCount;
+                int i, r, c;
+                var result = new float[R, C];
+                for (r = 0; r < R; r++)
+                for (c = 0; c < C; c++)
+                    result[r, c] = 0;
+                for (i = 0; i < args.Length; i++)
+                {
+                    var arg = args[i].ToMatrix();
+                    for (r = 0; r < R; r++)
+                    for (c = 0; c < C; c++)
+                        result[r, c] += arg[r, c].ToNumber().Value;
+                }
+
+                return result.ToMatrix();
+            }
+
             throw new TypeException(
                 $"Type not supported: {type.DisplayName}");
         }

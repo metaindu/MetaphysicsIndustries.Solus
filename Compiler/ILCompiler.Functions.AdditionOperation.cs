@@ -107,6 +107,67 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
             else if (argType is Matrices mt)
             {
+                int nr = mt.RowCount;
+                int nc = mt.ColumnCount;
+                var seq = new List<IlExpression>();
+                var destLocal = nm.CreateLocal(typeof(float[]), "sum");
+                var stloc = new StoreLocalIlExpression(
+                    destLocal,
+                    ConvertToIlExpression(
+                        new Literal(Matrix.Zero(nr, nc)), nm, variables));
+                seq.Add(stloc);
+                var addendLocal =
+                    nm.CreateLocal(typeof(float[]), "addend");
+                foreach (var arg in arguments)
+                {
+                    seq.Add(
+                        new StoreLocalIlExpression(
+                            addendLocal,
+                            ConvertToIlExpression(arg, nm, variables)));
+                    // TODO: logic to choose between loops (e.g.
+                    //       WhileLoopConstruct) and a hard-coded sequence of
+                    //       instructions, or something in between, like
+                    //       partially unrolled loops, or even duff's device.
+                    var arrayType = typeof(float[,]);
+                    var ctor = arrayType.GetConstructor(
+                        new[] { typeof(int), typeof(int) });
+                    var getMethod = arrayType.GetMethod("Get",
+                        new[] { typeof(int), typeof(int) });
+                    var setMethod = arrayType.GetMethod("Set",
+                        new[] { typeof(int), typeof(int), typeof(float) });
+                    var destIl = new LoadLocalIlExpression(destLocal);
+                    var addendIl = new LoadLocalIlExpression(addendLocal);
+                    int r, c;
+                    for (r = 0; r < nr; r++)
+                    {
+                        var ril = new LoadConstantIlExpression(r);
+                        for (c = 0; c < nc; c++)
+                        {
+                            var cil = new LoadConstantIlExpression(c);
+                            seq.Add(
+                                new CallIlExpression(
+                                    setMethod,
+                                    destIl,
+                                    ril,
+                                    cil,
+                                    new AddIlExpression(
+                                        new CallIlExpression(
+                                            getMethod,
+                                            destIl,
+                                            ril,
+                                            cil),
+                                        new CallIlExpression(
+                                            getMethod,
+                                            addendIl,
+                                            ril,
+                                            cil))));
+                        }
+                    }
+                }
+
+                seq.Add(new LoadLocalIlExpression(destLocal));
+
+                return new IlExpressionSequence(seq);
             }
             else
                 throw new TypeException("argument at index 0",
