@@ -362,6 +362,45 @@ namespace MetaphysicsIndustries.Solus.Expressions
                             $"but got {argResultTypes[i].DisplayName}");
                     }
             }
+            else if (ft is AdditionOperation.AdditionFunctionType aft)
+            {
+                if (argResultTypes.Length < 2)
+                    throw new TypeException(
+                        null,
+                        $"Wrong number of arguments given to " +
+                        $"{f.DisplayName} (expected at least " +
+                        $"2 but got {args.Count})");
+                var argType = argResultTypes[0];
+                if (!argType.IsSubsetOf(Reals.Value) &&
+                    !(argType is Vectors) &&
+                    // is subset of any Vectors instance? what about a subset
+                    // of a Vectors instance?
+                    //
+                    // for now we cheat and rely on the fact that AllVectors
+                    // and Vectors are the only vector types, and AllMatrices
+                    // and Matrices are the only matrix types.
+                    !(argType is Matrices))
+                    throw new TypeException(
+                        null,
+                        $"Wrong argument type at index 0: expected " +
+                        $"Real or Vector or Matrix, but got " +
+                        $"{argType.DisplayName}");
+                for (i = 0; i < argResultTypes.Length; i++)
+                    // again, if each individual argument reported a type that
+                    // was a different subset of some vector space, that would
+                    // be ok. but we only have Vectors, so we don't have to
+                    // deal with that now. In the future, we'll have to make
+                    // the decision below based on the subset of a broader,
+                    // containing type, such as R^N
+                    if (argResultTypes[i] != argType)
+                    {
+                        throw new TypeException(
+                            null,
+                            $"Wrong argument type at index {i}: " +
+                            $"expected {argType.DisplayName} " +
+                            $"but got {argResultTypes[i].DisplayName}");
+                    }
+            }
             // TODO: AllVectorFunctions ?
             // TODO: AllRealFunctions ?
             // TODO: AllFunctions ?
