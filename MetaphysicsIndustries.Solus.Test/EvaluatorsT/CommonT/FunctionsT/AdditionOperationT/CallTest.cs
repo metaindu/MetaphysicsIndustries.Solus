@@ -160,7 +160,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Vectors(3) and Vectors(2)"));
+                    "Wrong argument type at index 1: expected Vector(3) " +
+                    "but got Vector(2)"));
         }
 
         [Test]
@@ -260,8 +261,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Matrices(2, 2) and " +
-                    "Matrices(3, 2)"));
+                    "Wrong argument type at index 1: expected " +
+                    "Matrix(2, 2) but got Matrix(3, 2)"));
         }
 
         [Test]
@@ -283,7 +284,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Scalar and Vectors(2)"));
+                    "Wrong argument type at index 1: expected Scalar but " +
+                    "got Vector(3)"));
         }
 
         [Test]
@@ -305,7 +307,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Vectors(2) and Scalar"));
+                    "Wrong argument type at index 1: expected Vector(3) " +
+                    "but got Scalar"));
         }
 
         [Test]
@@ -331,7 +334,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Scalar and Matrices(2, 2)"));
+                    "Wrong argument type at index 1: expected Scalar but " +
+                    "got Matrix(2, 2)"));
         }
 
         [Test]
@@ -357,7 +361,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Matrices(2, 2) and Scalar"));
+                    "Wrong argument type at index 1: expected " +
+                    "Matrix(2, 2) but got Scalar"));
         }
 
         [Test]
@@ -383,8 +388,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Vectors(3) and " +
-                    "Matrices(2, 2)"));
+                    "Wrong argument type at index 1: expected Vector(3) " +
+                    "but got Matrix(2, 2)"));
         }
 
         [Test]
@@ -410,8 +415,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             Assert.That(ex, Is.Not.Null);
             Assert.That(ex.Message,
                 Is.EqualTo(
-                    "Operand types do not match: Matrices(2, 2) and " +
-                    "Vector(3)"));
+                    "Wrong argument type at index 1: expected " +
+                    "Matrix(2, 2) but got Vector(3)"));
         }
     }
 }

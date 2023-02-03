@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public string DocString =>
             $"The set of {RowCount}x{ColumnCount} matrices";
 
-        public string DisplayName => "Matrix";
+        public string DisplayName => $"Matrix({RowCount}, {ColumnCount})";
     }
 
     public class AllMatrices : ISet
