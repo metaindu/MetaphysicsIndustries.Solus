@@ -22,8 +22,11 @@
 
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Compiler.IlExpressions;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Compiler
 {
@@ -36,29 +39,78 @@ namespace MetaphysicsIndustries.Solus.Compiler
         {
             IlExpression expr = new RawInstructions();
 
-            bool first = true;
-            foreach (var arg in arguments)
-            {
-                if (!first &&
-                    arg is FunctionCall call &&
-                    call.Function is Literal literal &&
-                    literal.Value is Function f &&
-                    f == NegationOperation.Value)
+            var argType = arguments[0].GetResultType(null);
+            if (argType.IsSubsetOf(Reals.Value)){
+                bool first = true;
+                foreach (var arg in arguments)
                 {
-                    expr = new SubIlExpression(expr,
-                        ConvertToIlExpression(call.Arguments[0], nm,
-                            variables));
-                }
-                else
-                {
-                    if (first)
-                        expr = ConvertToIlExpression(arg, nm, variables);
+                    if (!first &&
+                        arg is FunctionCall call &&
+                        call.Function is Literal literal &&
+                        literal.Value is Function f &&
+                        f == NegationOperation.Value)
+                    {
+                        expr = new SubIlExpression(expr,
+                            ConvertToIlExpression(call.Arguments[0], nm,
+                                variables));
+                    }
                     else
-                        expr = new AddIlExpression(expr,
-                            ConvertToIlExpression(arg, nm, variables));
-                    first = false;
+                    {
+                        if (first)
+                            expr = ConvertToIlExpression(arg, nm, variables);
+                        else
+                            expr = new AddIlExpression(expr,
+                                ConvertToIlExpression(arg, nm, variables));
+                        first = false;
+                    }
                 }
             }
+            else if (argType is Vectors vt)
+            {
+                int n = vt.Dimension;
+                var seq = new List<IlExpression>();
+                var destLocal = nm.CreateLocal(typeof(float[]), "vectorSum");
+                var stloc = new StoreLocalIlExpression(
+                    destLocal,
+                    ConvertToIlExpression(
+                        new Literal(Vector.Zero(n)), nm, variables));
+                seq.Add(stloc);
+                var addendLocal =
+                    nm.CreateLocal(typeof(float[]), "vectorAddend");
+                foreach (var arg in arguments)
+                {
+                    seq.Add(
+                        new StoreLocalIlExpression(
+                            addendLocal,
+                            ConvertToIlExpression(arg, nm, variables)));
+                    // TODO: logic to choose between a loop (e.g.
+                    //       WhileLoopConstruct) and a hard-coded sequence of
+                    //       instructions, or something in between, like a
+                    //       partially unrolled loop, or even a duff's device.
+                    int i;
+                    for (i = 0; i < n; i++)
+                        seq.Add(new StoreElemIlExpression(
+                            new LoadLocalIlExpression(destLocal),
+                            new LoadConstantIlExpression(i),
+                            new AddIlExpression(
+                                new LoadElemIlExpression(
+                                    new LoadLocalIlExpression(destLocal),
+                                    new LoadConstantIlExpression(i)),
+                                new LoadElemIlExpression(
+                                    new LoadLocalIlExpression(addendLocal),
+                                    new LoadConstantIlExpression(i)))));
+                }
+
+                seq.Add(new LoadLocalIlExpression(destLocal));
+
+                return new IlExpressionSequence(seq);
+            }
+            else if (argType is Matrices mt)
+            {
+            }
+            else
+                throw new TypeException("argument at index 0",
+                    $"Unsupported type for addition: {argType.DisplayName}");
 
             return expr;
         }

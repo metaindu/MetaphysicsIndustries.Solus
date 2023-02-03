@@ -43,13 +43,36 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             // TODO: vector
             // TODO: matrix
             // TODO: string?
-            float sum = 0;
-            foreach (var arg in args)
+            var type = args[0].GetMathType();
+            if (type == Reals.Value)
             {
-                sum += arg.ToNumber().Value;
+                float sum = 0;
+                foreach (var arg in args)
+                {
+                    sum += arg.ToNumber().Value;
+                }
+                return sum.ToNumber();
             }
 
-            return sum.ToNumber();
+            if (type is Vectors vs)
+            {
+                var N = vs.Dimension;
+                int i,j;
+                var result = new float[N];
+                for (j = 0; j < N; j++)
+                    result[j] = 0;
+                for (i = 0; i < args.Length; i++)
+                {
+                    var arg = args[i].ToVector();
+                    for (j = 0; j < N; j++)
+                        result[j] += arg[j].ToNumber().Value;
+                }
+
+                return result.ToVector();
+            }
+
+            throw new TypeException(
+                $"Type not supported: {type.DisplayName}");
         }
 
         public IMathObject CallFunction(ArccosecantFunction f,
