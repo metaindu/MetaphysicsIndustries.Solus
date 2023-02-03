@@ -113,8 +113,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var v = result.ToVector();
             Assert.That(v.Length, Is.EqualTo(3));
             Assert.That(v[0].ToNumber().Value, Is.EqualTo(5f));
-            Assert.That(v[0].ToNumber().Value, Is.EqualTo(7f));
-            Assert.That(v[0].ToNumber().Value, Is.EqualTo(9f));
+            Assert.That(v[1].ToNumber().Value, Is.EqualTo(7f));
+            Assert.That(v[2].ToNumber().Value, Is.EqualTo(9f));
         }
 
         [Test]
@@ -137,8 +137,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var v = result.ToVector();
             Assert.That(v.Length, Is.EqualTo(3));
             Assert.That(v[0].ToNumber().Value, Is.EqualTo(12f));
-            Assert.That(v[0].ToNumber().Value, Is.EqualTo(15f));
-            Assert.That(v[0].ToNumber().Value, Is.EqualTo(18f));
+            Assert.That(v[1].ToNumber().Value, Is.EqualTo(15f));
+            Assert.That(v[2].ToNumber().Value, Is.EqualTo(18f));
         }
 
         [Test]

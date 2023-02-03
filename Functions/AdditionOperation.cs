@@ -38,8 +38,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {
-            // TODO: tensor arithmetic
-            // TODO: string concatenation
+            foreach (var argType in argTypes)
+                return argType;
             return Reals.Value;
         }
 
