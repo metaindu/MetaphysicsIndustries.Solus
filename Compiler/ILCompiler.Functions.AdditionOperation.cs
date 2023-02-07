@@ -34,12 +34,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             AdditionOperation func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             IlExpression expr = new RawInstructions();
 
-            var argType = arguments[0].GetResultType(null);
+            var argType = arguments[0].GetResultType(env);
             if (argType.IsSubsetOf(Reals.Value)){
                 bool first = true;
                 foreach (var arg in arguments)
@@ -52,15 +52,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     {
                         expr = new SubIlExpression(expr,
                             ConvertToIlExpression(call.Arguments[0], nm,
-                                variables));
+                                env, variables));
                     }
                     else
                     {
                         if (first)
-                            expr = ConvertToIlExpression(arg, nm, variables);
+                            expr = ConvertToIlExpression(arg, nm, env,
+                                variables);
                         else
                             expr = new AddIlExpression(expr,
-                                ConvertToIlExpression(arg, nm, variables));
+                                ConvertToIlExpression(arg, nm, env,
+                                    variables));
                         first = false;
                     }
                 }
@@ -73,7 +75,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var stloc = new StoreLocalIlExpression(
                     destLocal,
                     ConvertToIlExpression(
-                        new Literal(Vector.Zero(n)), nm, variables));
+                        new Literal(Vector.Zero(n)), nm, env, variables));
                 seq.Add(stloc);
                 var addendLocal =
                     nm.CreateLocal(typeof(float[]), "vectorAddend");
@@ -82,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     seq.Add(
                         new StoreLocalIlExpression(
                             addendLocal,
-                            ConvertToIlExpression(arg, nm, variables)));
+                            ConvertToIlExpression(arg, nm, env, variables)));
                     // TODO: logic to choose between a loop (e.g.
                     //       WhileLoopConstruct) and a hard-coded sequence of
                     //       instructions, or something in between, like a
@@ -114,7 +116,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 var stloc = new StoreLocalIlExpression(
                     destLocal,
                     ConvertToIlExpression(
-                        new Literal(Matrix.Zero(nr, nc)), nm, variables));
+                        new Literal(Matrix.Zero(nr, nc)),
+                        nm, env, variables));
                 seq.Add(stloc);
                 var addendLocal =
                     nm.CreateLocal(typeof(float[]), "addend");
@@ -123,7 +126,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     seq.Add(
                         new StoreLocalIlExpression(
                             addendLocal,
-                            ConvertToIlExpression(arg, nm, variables)));
+                            ConvertToIlExpression(arg, nm, env, variables)));
                     // TODO: logic to choose between loops (e.g.
                     //       WhileLoopConstruct) and a hard-coded sequence of
                     //       instructions, or something in between, like

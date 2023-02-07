@@ -30,7 +30,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             VariableAccess expr, NascentMethod nm,
-            VariableIdentityMap variables)
+            SolusEnvironment env, VariableIdentityMap variables)
         {
             var vi = variables[expr.VariableName];
             if (vi.Source == VariableSource.Param)
