@@ -37,10 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             var result = value.FunctionType;
             // then
             Assert.That(result,
-                Is.SameAs(VariadicFunctions.Get(
-                    Reals.Value,
-                    Reals.Value,
-                    2)));
+                Is.SameAs(AdditionOperation.AdditionFunctionType.Value));
         }
     }
 }
