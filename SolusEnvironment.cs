@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus
         ///
         /// An environment can be a child of another environment. If a
         /// variable is not defined in the child environment, then the parent
-        /// will be search. This process can be repeated recursively.
+        /// will be searched. This process can be repeated recursively.
         /// </summary>
         /// <param name="useDefaults">
         /// Whether to include the default name mappings.</param>

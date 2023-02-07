@@ -31,16 +31,16 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             BitwiseOrOperation func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new ConvertR4IlExpression(
                 new OrIlExpression(
                     new ConvertI4IlExpression(
-                        ConvertToIlExpression(arguments[0], nm,
+                        ConvertToIlExpression(arguments[0], nm, env,
                             variables)),
                     new ConvertI4IlExpression(
-                        ConvertToIlExpression(arguments[1], nm,
+                        ConvertToIlExpression(arguments[1], nm, env,
                             variables))));
             return expr;
         }
