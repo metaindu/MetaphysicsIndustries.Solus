@@ -128,6 +128,9 @@ namespace MetaphysicsIndustries.Solus.Sets
         {
             ID = __id++;
             ReturnType = returnType;
+            // TODO: replace AsReadOnly with something that makes a copy. A
+            //       simple wrapper doesn't guarantee that the underlying
+            //       array can't change.
             ParameterTypes = Array.AsReadOnly(parameterTypes);
         }
 
