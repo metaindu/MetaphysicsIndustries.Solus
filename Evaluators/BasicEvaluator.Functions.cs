@@ -367,7 +367,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject CallFunction(LoadImageFunction f,
             IMathObject[] args, SolusEnvironment env)
         {
-            throw new NotImplementedException();
+            var filename = args[0].ToStringValue().Value;
+            return LoadImageFunction.LoadImage(filename);
         }
 
         public IMathObject CallFunction(Log10Function f, IMathObject[] args,
