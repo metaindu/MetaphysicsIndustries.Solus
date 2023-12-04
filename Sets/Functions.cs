@@ -34,26 +34,60 @@ namespace MetaphysicsIndustries.Solus.Sets
 
     /// <summary>
     /// The set of functions of fixed arity, and whose parameters' types are
-    /// subsets of the types given in `this.ParameterTypes`, and whose return
-    /// types are subsets of `this.ReturnType`.
+    /// supersets of the types given in `this.ParameterTypes`, and whose
+    /// return type is a subset of `this.ReturnType`. A function can be a
+    /// member of more than one function type, as the `ParameterTypes` and
+    /// `ReturnType` do not require strict equality for a function to be
+    /// considered a member.
+    ///
+    /// In brief, the `ParameterTypes` field answers the question "Can the
+    /// function accept arguments that are members of these sets?". The
+    /// `ReturnType` field answers the question "Will the output of the
+    /// function be a member of this set?".
     ///
     /// Example: A function having the reals as both its domain and
     /// codomain is a member of `Functions.RealsToReals`.
     ///
     /// Example: A function having the integers as both its domain and
-    /// codomain is considered a member of `Functions.RealsToReals`.
+    /// codomain is considered a member of
+    /// `Functions.Get(Integers, Integers)`.
+    ///
+    /// Example: A function having the integers as both its domain and
+    /// codomain is also considered a member of
+    /// `Functions.Get(Reals.Value, Integers)`.
     ///
     /// Example: A function having the reals as its domain and the real
     /// interval [0, +inf) as its codomain is considered a member of both
     /// `Functions.RealsToReals` and `Functions.Get([0, +inf), Reals.Values)`.
     ///
+    /// Example: A function having the real interval [0, +inf) as its domain
+    /// and the reals as its codomain is considered a member of
+    /// `Functions.Get(Reals.Values, [0, +inf))` but NOT a member of
+    /// `Functions.RealsToReals`.
+    ///
+    /// Example: A function having the reals as its domain and X as its
+    /// codomain would be a member of both `Functions.Get(X, Reals.Value)` and
+    /// `Functions.Get(X, Integers.Value)`, because the integers are a subset
+    /// of the reals.
+    ///
+    /// Example: A function having the the integers as its domain and X as its
+    /// codomain would be considered a member of
+    /// `Functions.Get(X, Integers.Value)`, but not a member of
+    /// `Functions.Get(X, Reals.Value)`.
+    ///
+    /// Example: A function having X as its domain and the reals as its
+    /// codomain would be considered a member of
+    /// `Functions.Get(Reals.Value, X)`, but not a member of
+    /// `Functions.Get(Integers.Value, X)`.
+    ///
+    /// Example: A function having X as its domain and the integers as its
+    /// codomain would be considered a member of both
+    /// `Functions.Get(Reals.Value, X)` and
+    /// `Functions.Get(Integers.Value, X)`.
+    ///
     /// Counter-example: A function having the reals as both its domain and
     /// codomain would not be considered a member of
     /// `Functions.Get(Integers.Value, Integers.Value)`.
-    ///
-    /// Counter-example: A function having the reals as its domain and the
-    /// real interval [0, +inf) as its codomain would not be considered a
-    /// member of `Functions.Get([0, +inf), [0, +inf))`.
     /// </summary>
     public class Functions : IFunctionType
     {
