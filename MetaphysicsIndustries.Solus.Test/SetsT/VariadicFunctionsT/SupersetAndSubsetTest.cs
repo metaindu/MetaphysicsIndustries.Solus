@@ -60,6 +60,7 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.VariadicFunctionsT
             // Note: This is incorrect if we treat a function as a set of
             // ordered pairs. In that case, `RealsToReals` is a set of other
             // sets and thus a subset of `Sets`.
+            // TODO: fix this so as to treat functions as sets.
 
             // expect
             Assert.False(
