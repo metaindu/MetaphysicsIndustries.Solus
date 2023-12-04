@@ -56,6 +56,11 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.VariadicFunctionsT
         [Test]
         public void TestVariadicFunctionsIsNotSubsetOfSets()
         {
+            // It is a *member* of `Sets`, but not a *subset* of it.
+            // Note: This is incorrect if we treat a function as a set of
+            // ordered pairs. In that case, `RealsToReals` is a set of other
+            // sets and thus a subset of `Sets`.
+
             // expect
             Assert.False(
                 VariadicFunctions.RealsToReals.IsSubsetOf(Sets.Sets.Value));
