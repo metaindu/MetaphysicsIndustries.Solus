@@ -25,7 +25,7 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class AdditionOperation : Function
+    public class AdditionOperation : Function, IAssociativeCommutativeOperation
     {
         public static readonly AdditionOperation
             Value = new AdditionOperation();
@@ -34,6 +34,10 @@ namespace MetaphysicsIndustries.Solus.Functions
             : base(new Parameter("x", Reals.Value), "+")
         {
         }
+
+        public OperationPrecedence Precedence => OperationPrecedence.Addition;
+        public bool HasIdentityValue => true;
+        public float IdentityValue => 0;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
@@ -110,5 +114,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override bool IsCommutative => true;
         public override bool IsAssociative => true;
+
+        public virtual bool Collapses => false;
+        public virtual float CollapseValue => 0;
+        public virtual bool Culls => true;
+        public virtual float CullValue => IdentityValue;
     }
 }
