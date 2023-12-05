@@ -139,7 +139,7 @@ namespace MetaphysicsIndustries.Solus.Sets
 
         public static bool FunctionHasFixedTypes(Function f)
         {
-            if (f is AssociativeCommutativeOperation)
+            if (f is IAssociativeCommutativeOperation)
                 // + * |
                 return false;
             if (f is SizeFunction)

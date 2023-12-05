@@ -25,7 +25,7 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class LessThanOrEqualComparisonOperation : ComparisonOperation
+    public class LessThanOrEqualComparisonOperation : ComparisonOperation, IComparisonOperation
     {
         public static readonly LessThanOrEqualComparisonOperation Value = new LessThanOrEqualComparisonOperation();
 
@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override string Name => "<=";
 
-        protected override bool Compare(float x, float y)
+        public override bool Compare(float x, float y)
         {
             return x <= y;
         }

@@ -26,7 +26,7 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class ModularDivision : BinaryOperation
+    public class ModularDivision : BinaryOperation, IBinaryOperation
     {
         public static readonly ModularDivision Value = new ModularDivision();
 

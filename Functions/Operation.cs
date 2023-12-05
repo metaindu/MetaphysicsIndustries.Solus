@@ -41,6 +41,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         OperationPrecedence Precedence { get; }
         bool HasIdentityValue { get; }
         float IdentityValue { get; }
+
+        // from Function
+        bool IsCommutative { get; }
+        bool IsAssociative { get; }
     }
 
     public abstract class Operation : Function, IOperation

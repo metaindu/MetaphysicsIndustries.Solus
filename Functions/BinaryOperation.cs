@@ -35,7 +35,11 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract class BinaryOperation : Operation
+    public interface IBinaryOperation : IOperation
+    {
+    }
+
+    public abstract class BinaryOperation : Operation, IBinaryOperation
     {
         public override IReadOnlyList<Parameter> Parameters { get; } =
             new[]

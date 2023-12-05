@@ -144,9 +144,9 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 return InternalCleanUpAssociativeCommutativeOperation((IAssociativeCommutativeOperation)function, args);
             }
-            if (function is BinaryOperation)
+            if (function is IBinaryOperation)
             {
-                return InternalCleanUpBinaryOperation((BinaryOperation)function, args);
+                return InternalCleanUpBinaryOperation((IBinaryOperation)function, args);
             }
 
             // throw new NotImplementedException();
@@ -202,17 +202,17 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 return InternalCleanUpPartAssociativeOperationAssociativeCommutativeOperation((IAssociativeCommutativeOperation)function, args, combinedLiteral, nonLiterals);
             }
-            if (function is BinaryOperation)
+            if (function is IBinaryOperation)
             {
-                return InternalCleanUpPartAssociativeOperationBinaryOperation((BinaryOperation)function, args, combinedLiteral, nonLiterals);
+                return InternalCleanUpPartAssociativeOperationBinaryOperation((IBinaryOperation)function, args, combinedLiteral, nonLiterals);
             }
 
             throw new NotImplementedException();
         }
 
-        public Expression[] InternalCleanUpPartAssociativeOperationBinaryOperation(BinaryOperation function, Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals)
+        public Expression[] InternalCleanUpPartAssociativeOperationBinaryOperation(IBinaryOperation function, Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals)
         {
-            FunctionCall ret = new FunctionCall(function, combinedLiteral);
+            FunctionCall ret = new FunctionCall((Function)function, combinedLiteral);
             FunctionCall temp = ret;
             FunctionCall last = null;
 
@@ -220,7 +220,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
             {
                 //Expression cleanExpr = CleanUp(expr);
                 last = temp;
-                temp = new FunctionCall(function, expr);//cleanExpr);
+                temp = new FunctionCall((Function)function, expr);//cleanExpr);
                 last.Arguments.Add(temp);
             }
 
@@ -307,12 +307,12 @@ namespace MetaphysicsIndustries.Solus.Transformers
             return newArgs.ToArray();
         }
 
-        public Expression InternalCleanUpBinaryOperation(BinaryOperation function, Expression[] args)
+        public Expression InternalCleanUpBinaryOperation(IBinaryOperation function, Expression[] args)
         {
             if (args[0] is Literal &&
                 args[1] is Literal)
             {
-                var newExpr = new FunctionCall(function, args);
+                var newExpr = new FunctionCall((Function)function, args);
                 var result = _evaluator.Eval(newExpr, null);
                 return new Literal(result.ToNumber().Value);
             }
@@ -338,7 +338,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 }
             }
 
-            return new FunctionCall(function, args);
+            return new FunctionCall((Function)function, args);
         }
     }
 }
