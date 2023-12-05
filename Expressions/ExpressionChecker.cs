@@ -193,30 +193,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             var args = expr.Arguments;
 
-            if (f is IAssociativeCommutativeOperation)
-            {
-                if (args.Count < 2)
-                {
-                    throw new ArgumentException(
-                        $"Wrong number of arguments given to " +
-                        $"{f.DisplayName} (given {args.Count}, require at " +
-                        $"least 2)");
-                }
-
-                for (i = 0; i < args.Count; i++)
-                {
-                    var argtype = args[i].GetResultType(env);
-                    if (!argtype.IsSubsetOf(Reals.Value))
-                        throw new TypeException(
-                            null,
-                            $"Argument {i} wrong type: expected " +
-                            $"{Reals.Value.DisplayName} but got " +
-                            $"{argtype.DisplayName}");
-                }
-
-                return;
-            }
-
             switch (f)
             {
                 // case AbsoluteValueFunction ff:
