@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
@@ -119,5 +120,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         public virtual float CollapseValue => 0;
         public virtual bool Culls => true;
         public virtual float CullValue => IdentityValue;
+
+        public override string ToString(List<Expression> arguments) =>
+            Operation.ToString(this, arguments);
     }
 }
