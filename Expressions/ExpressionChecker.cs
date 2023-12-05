@@ -136,21 +136,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             var args = expr.Arguments;
 
-            if (f is IAssociativeCommutativeOperation)
-            {
-                if (args.Count < 2)
-                {
-                    if (throws)
-                        throw new ArgumentException(
-                            $"Wrong number of arguments given to " +
-                            $"{f.DisplayName} (given {args.Count}, require " +
-                            $"at least 2)");
-                    return false;
-                }
-
-                return true;
-            }
-
             switch (f)
             {
                 // case AbsoluteValueFunction ff:
