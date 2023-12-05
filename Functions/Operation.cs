@@ -36,7 +36,14 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract class Operation : Function
+    public interface IOperation
+    {
+        OperationPrecedence Precedence { get; }
+        bool HasIdentityValue { get; }
+        float IdentityValue { get; }
+    }
+
+    public abstract class Operation : Function, IOperation
     {
         protected Operation(Parameter[] parameters)
             : base(parameters)
