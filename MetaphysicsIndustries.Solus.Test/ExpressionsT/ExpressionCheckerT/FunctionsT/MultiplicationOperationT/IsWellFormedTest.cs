@@ -22,6 +22,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
@@ -71,7 +72,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<TypeException>(() =>
                 ec.IsWellFormed(expr));
             // and
             Assert.IsTrue(ex.Message.StartsWith("Wrong number of arguments"));
@@ -86,7 +87,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<TypeException>(() =>
                 ec.IsWellFormed(expr));
             // and
             Assert.IsTrue(ex.Message.StartsWith("Wrong number of arguments"));
