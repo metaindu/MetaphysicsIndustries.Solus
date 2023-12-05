@@ -25,7 +25,7 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class BitwiseAndOperation : BinaryOperation
+    public class BitwiseAndOperation : BinaryOperation, IBinaryOperation
     {
         public static readonly BitwiseAndOperation Value = new BitwiseAndOperation();
 

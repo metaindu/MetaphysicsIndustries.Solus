@@ -29,7 +29,7 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class NegationOperation : UnaryOperation
+    public class NegationOperation : UnaryOperation, IUnaryOperation
     {
         public static readonly NegationOperation Value = new NegationOperation();
 

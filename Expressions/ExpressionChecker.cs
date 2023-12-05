@@ -193,7 +193,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             var args = expr.Arguments;
 
-            if (f is AssociativeCommutativeOperation)
+            if (f is IAssociativeCommutativeOperation)
             {
                 if (args.Count < 2)
                 {

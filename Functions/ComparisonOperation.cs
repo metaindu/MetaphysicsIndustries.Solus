@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
@@ -22,14 +21,19 @@
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract class ComparisonOperation : BinaryOperation
+    public interface IComparisonOperation : IBinaryOperation
+    {
+        bool Compare(float x, float y);
+    }
+
+    public abstract class ComparisonOperation : BinaryOperation, IComparisonOperation
     {
         protected ComparisonOperation(string name)
         {
             Name = name;
         }
 
-        protected abstract bool Compare(float x, float y);
+        public abstract bool Compare(float x, float y);
 
         public override OperationPrecedence Precedence
         {
