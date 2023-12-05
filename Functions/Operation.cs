@@ -107,6 +107,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override string ToString(List<Expression> arguments)
         {
+            return ToString(this, arguments);
+        }
+
+        public static string ToString(Function f, List<Expression> arguments)
+        {
             var strs = Array.ConvertAll(arguments.ToArray(),
                 Expression.ToString);
 
@@ -115,12 +120,13 @@ namespace MetaphysicsIndustries.Solus.Functions
             {
                 if (arguments[i] is FunctionCall call &&
                     call.Function is Literal literal &&
-                    literal.Value is Operation oper &&
-                    oper.Precedence < Precedence)
+                    literal.Value is IOperation oper &&
+                    f is IOperation foper &&
+                    oper.Precedence < foper.Precedence)
                     strs[i] = "(" + strs[i] + ")";
             }
 
-            return string.Join(" " + DisplayName + " ", strs);
+            return string.Join(" " + f.DisplayName + " ", strs);
         }
     }
 }
