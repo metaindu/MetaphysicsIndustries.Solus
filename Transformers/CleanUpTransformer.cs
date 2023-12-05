@@ -63,7 +63,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 return fc;
             if (!literal.Value.IsIsFunction(null))
                 throw new OperandException(
-                    "Call target is not a function");
+                    $"Call target is not a function: \"{literal.Value}\"");
             var f = (Function)literal.Value;
 
             Expression[] args = fc.Arguments.ToArray();
@@ -81,9 +81,9 @@ namespace MetaphysicsIndustries.Solus.Transformers
 
         public virtual Expression CleanUpFunctionArgs(Function function, Expression[] args)
         {
-            if (function is Operation)
+            if (function is IOperation)
             {
-                return InternalCleanUpOperation((Operation)function, args);
+                return InternalCleanUpOperation((IOperation)function, args);
             }
 
             var newExpr = new FunctionCall(function, args);
@@ -98,11 +98,51 @@ namespace MetaphysicsIndustries.Solus.Transformers
             return newExpr;
         }
 
-        private Expression InternalCleanUpOperation(Operation function, Expression[] args)
+        private Expression InternalCleanUpMultiplication(Function f, Expression[] args)
         {
-            if (function is AssociativeCommutativeOperation)
+            if (args.Length == 1)
+                return args[0];
+            var literals = new List<Literal>();
+            var nonLiterals = new List<Expression>();
+            foreach (var arg in args)
             {
-                return InternalCleanUpAssociativeCommutativeOperation((AssociativeCommutativeOperation)function, args);
+                if (arg is Literal literal)
+                {
+                    if (literal.Value.ToFloat() == 0)
+                    {
+                        literals.Clear();
+                        nonLiterals.Clear();
+                        literals.Add(literal);
+                        break;
+                    }
+                    if (literal.Value.ToFloat() == 1)
+                        continue;
+                    literals.Add(literal);
+                }
+                else
+                    nonLiterals.Add(arg);
+            }
+
+            float value = 1;
+            foreach (var literal in literals)
+                value *= literal.Value.ToFloat();
+            if (literals.Count > 0 && nonLiterals.Count > 0)
+            {
+                nonLiterals.Insert(0, new Literal(value));
+                return new FunctionCall(f, nonLiterals);
+            }
+            if (literals.Count > 0)
+                return new Literal(value);
+            if (nonLiterals.Count > 0)
+                return new FunctionCall(f, nonLiterals);
+            throw new InvalidOperationException();
+        }
+
+        private Expression InternalCleanUpOperation(IOperation function, Expression[] args)
+        {
+            if (function is IAssociativeCommutativeOperation)
+            {
+                return InternalCleanUpAssociativeCommutativeOperation((IAssociativeCommutativeOperation)function, args);
             }
             if (function is BinaryOperation)
             {
@@ -119,10 +159,10 @@ namespace MetaphysicsIndustries.Solus.Transformers
         //} 
 
 
-        public Expression[] CleanUpPartAssociativeOperationOperation(Operation function, Expression[] args)
+        public Expression[] CleanUpPartAssociativeOperationOperation(IOperation function, Expression[] args)
         {
             List<FunctionCall> assocOps = new List<FunctionCall>();
-            (new FunctionCall(function, args)).GatherMatchingFunctionCalls(assocOps);
+            (new FunctionCall((Function)function, args)).GatherMatchingFunctionCalls(assocOps);
 
             HashSet<FunctionCall> assocOpsSet = new HashSet<FunctionCall>(assocOps);
             var combinedValue = function.IdentityValue;
@@ -137,7 +177,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     {
                         if (arg is Literal)
                         {
-                            var newCall = new FunctionCall(function,
+                            var newCall = new FunctionCall((Function)function,
                                 new Literal(combinedValue), arg);
                             var result = _evaluator.Eval(newCall, null);
                             combinedValue = result.ToNumber().Value;
@@ -156,11 +196,11 @@ namespace MetaphysicsIndustries.Solus.Transformers
             return args;
         }
 
-        public Expression[] InternalCleanUpPartAssociativeOperation(Operation function, Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals)
+        public Expression[] InternalCleanUpPartAssociativeOperation(IOperation function, Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals)
         {
-            if (function is AssociativeCommutativeOperation)
+            if (function is IAssociativeCommutativeOperation)
             {
-                return InternalCleanUpPartAssociativeOperationAssociativeCommutativeOperation((AssociativeCommutativeOperation)function, args, combinedLiteral, nonLiterals);
+                return InternalCleanUpPartAssociativeOperationAssociativeCommutativeOperation((IAssociativeCommutativeOperation)function, args, combinedLiteral, nonLiterals);
             }
             if (function is BinaryOperation)
             {
@@ -190,7 +230,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
         }
 
 
-        public Expression InternalCleanUpAssociativeCommutativeOperation(AssociativeCommutativeOperation function, Expression[] args)
+        public Expression InternalCleanUpAssociativeCommutativeOperation(IAssociativeCommutativeOperation function, Expression[] args)
         {
             if (args.Length == 1)
             {
@@ -239,7 +279,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 return args[0];
             }
 
-            var newExpr = new FunctionCall(function, args);
+            var newExpr = new FunctionCall((Function)function, args);
 
             bool call = true;
             foreach (Expression arg in args)
@@ -259,7 +299,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
             return newExpr;
         }
 
-        public Expression[] InternalCleanUpPartAssociativeOperationAssociativeCommutativeOperation(AssociativeCommutativeOperation function, Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals)
+        public Expression[] InternalCleanUpPartAssociativeOperationAssociativeCommutativeOperation(IAssociativeCommutativeOperation function, Expression[] args, Literal combinedLiteral, List<Expression> nonLiterals)
         {
             List<Expression> newArgs = new List<Expression>(nonLiterals.Count + 1);
             newArgs.Add(combinedLiteral);

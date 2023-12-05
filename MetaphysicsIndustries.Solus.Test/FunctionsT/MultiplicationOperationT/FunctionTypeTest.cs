@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
@@ -35,10 +34,13 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
         {
             // when
             var value = MultiplicationOperation.Value;
-            // expect
-            IFunctionType result;
-            Assert.Throws<NotImplementedException>(
-                () => result = value.FunctionType);
+            var result = value.FunctionType;
+            // then
+            Assert.That(result,
+                Is.SameAs(VariadicFunctions.Get(
+                    Reals.Value,
+                    Reals.Value,
+                    2)));
         }
     }
 }

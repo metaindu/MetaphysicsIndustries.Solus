@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
@@ -20,59 +19,32 @@
  *
  */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Sets;
-using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class MultiplicationOperation : AssociativeCommutativeOperation
+    public class MultiplicationOperation : Function, IAssociativeCommutativeOperation
     {
         public static readonly MultiplicationOperation Value = new MultiplicationOperation();
 
-        protected MultiplicationOperation()
+        private MultiplicationOperation()
+            : base(new Parameter("x", Reals.Value), "*")
         {
-            Name = "*";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Multiplication; }
-        }
+        public OperationPrecedence Precedence => OperationPrecedence.Multiplication;
+        public override bool IsCommutative => true;
+        public override bool IsAssociative => true;
+        public bool HasIdentityValue => true;
+        public float IdentityValue => 1;
+        public bool Collapses => true;
+        public float CollapseValue => 0;
+        public bool Culls => true;
+        public float CullValue => 1;
 
-        //public override bool IsCommutative
-        //{
-        //    get
-        //    {
-        //        return true;
-        //    }
-        //}
-
-        //public override bool IsAssociative
-        //{
-        //    get
-        //    {
-        //        return true;
-        //    }
-        //}
-
-        public override bool Collapses
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        public override float CollapseValue
-        {
-            get
-            {
-                return 0;
-            }
-        }
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
@@ -83,7 +55,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: vector times scalar
             return argTypes.First();
         }
+
         public override IFunctionType FunctionType =>
-            throw new NotImplementedException();
+            VariadicFunctions.Get(Reals.Value, Reals.Value, 2);
+
+        public override string ToString(List<Expression> arguments) =>
+            Operation.ToString(this, arguments);
     }
 }
