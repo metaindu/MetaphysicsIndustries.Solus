@@ -82,5 +82,31 @@ namespace MetaphysicsIndustries.Solus.Values
                 _components.Select(c => c.ToString()));
             return $"[{inner}]";
         }
+
+        public override int GetHashCode()
+        {
+            int hash = 1009;
+            foreach (var v in _components)
+                hash = hash * 2003 + v.GetHashCode();
+            return hash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IVector v))
+                return false;
+            return Equals(this, v);
+        }
+
+        public static bool Equals(IVector a, IVector b)
+        {
+
+            if (a.Length != b.Length)
+                return false;
+            for (var i = 0; i < a.Length; i++)
+                if (a[i].ToFloat() != b[i].ToFloat())
+                    return false;
+            return true;
+        }
     }
 }
