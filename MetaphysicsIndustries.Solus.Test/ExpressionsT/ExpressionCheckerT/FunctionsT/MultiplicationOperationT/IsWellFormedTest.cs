@@ -172,7 +172,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void MismatchedMatrixAndVectorThrows()
+        public void MismatchedMatrixAndVectorThrows1()
         {
             // given
             var f = MultiplicationOperation.Value;
@@ -185,6 +185,22 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.Throws<TypeException>(() => ec.IsWellFormed(expr));
+        }
+
+        [Test]
+        public void MismatchedMatrixAndVectorThrows2()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Matrix.Identity2),
+                new Literal(Vector3.UnitX),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.Throws<TypeException>(() => ec.Check(expr, null));
         }
 
         [Test]
