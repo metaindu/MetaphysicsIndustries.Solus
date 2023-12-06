@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
@@ -507,17 +508,169 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             return ((long)x % (long)y).ToNumber();
         }
 
+        public static IMatrix MultMatrices(IMatrix a, IMatrix b)
+        {
+            var values = new float[a.RowCount, b.ColumnCount];
+            for (var r = 0; r < a.RowCount; r++)
+            for (var c = 0; c < b.ColumnCount; c++)
+            {
+                values[r, c] = 0;
+                int k;
+                for (k = 0; k < a.ColumnCount; k++)
+                    values[r, c] += a[r, k].ToFloat() * b[k, c].ToFloat();
+            }
+
+            return new Matrix(values);
+        }
+
+        public static IVector MultMatrixVector(IMatrix m, IVector v)
+        {
+            var values = new float[m.RowCount];
+            for (var r = 0; r < m.RowCount; r++)
+            {
+                values[r] = 0;
+                int k;
+                for (k = 0; k < m.ColumnCount; k++)
+                    values[r] += m[r, k].ToFloat() * v[k].ToFloat();
+            }
+
+            return new Vector(values);
+        }
+
+        public static IMatrix MultMatrixScalar(IMatrix m, float s)
+        {
+            var values = new float[m.RowCount, m.ColumnCount];
+            for (var r = 0; r < m.RowCount; r++)
+            for (var c = 0; c < m.ColumnCount; c++)
+                values[r, c] = m[r, c].ToFloat() * s;
+            return new Matrix(values);
+        }
+
+        public static IVector MultVectorScalar(IVector v, float s)
+        {
+            var values = new float[v.Length];
+            for (var i = 0; i < v.Length; i++)
+                values[i] = v[i].ToFloat() * s;
+            return new Vector(values);
+        }
+
         public IMathObject CallFunction(MultiplicationOperation f,
             IMathObject[] args, SolusEnvironment env)
         {
-            float value = 1;
-            int i;
-            for (i = 0; i < args.Length; i++)
+            var hasMatrix = false;
+            var hasVector = false;
+            var hasScalar = false;
+            var nonScalars = new List<IMathObject>();
+            foreach (var arg in args)
             {
-                value *= args[i].ToNumber().Value;
+                if (arg.IsIsScalar(env))
+                {
+                    hasScalar = true;
+                }
+                else if (arg.IsIsVector(env))
+                {
+                    hasVector = true;
+                    nonScalars.Add(arg);
+                }
+                else if (arg.IsIsMatrix(env))
+                {
+                    hasMatrix = true;
+                    nonScalars.Add(arg);
+                }
             }
 
-            return value.ToNumber();
+            float scalarValue = 1;
+            foreach (var arg in args)
+                if (arg.IsIsScalar(env))
+                    scalarValue *= arg.ToNumber().Value;
+
+            // ss+ -> scalar
+            // s+m+s -> matrix with scalar
+            // s+vs+ -> vector with scalar
+            // s*vs*vs* -> error, unless row*column
+            // s*vs*v(s*v)+s* -> error
+            // (s*m)+s* -> matmult, possibly w/scalar
+            // (s*m)+s*vs* s*v(s*m)+s* -> matvec, possibly w/scalar
+            //
+            // generally, all scalars can be shifted to the left
+            // if there's more than one vector anywhere, probably an error
+            // if there are more than two vectors, error
+            // vectors and matrices must remain in order
+            if (hasScalar && !hasMatrix && !hasVector)
+                // simple scalar multiplication
+                return scalarValue.ToNumber();
+
+            if (hasMatrix)
+            {
+                // check for more than one vector
+                var foundVector = false;
+                var vectorIndex = -1;
+                for (var i = 0; i < nonScalars.Count; i++)
+                {
+                    var arg = nonScalars[i];
+                    if (arg.IsIsVector(env))
+                    {
+                        if (foundVector)
+                            throw new TypeException("More than one vector");
+                        foundVector = true;
+                        vectorIndex = i;
+                    }
+                }
+
+                if (foundVector)
+                {
+                    if (vectorIndex == 0)
+                    {
+                        // vm+
+                        // vector is 1xM row vector
+                        // first matrix is MxN
+                        // last matrix is LxK
+                        // result is 1xK vector
+                        throw new NotImplementedException();
+                    }
+
+                    if (vectorIndex == nonScalars.Count - 1)
+                    {
+                        // m+v
+                        // first matrix is LxK
+                        // last matrix is MxN
+                        // vector is Nx1 column vector
+                        // result is Lx1 vector
+                        var value = nonScalars[0].ToMatrix();
+                        int i;
+                        for (i = 1; i < nonScalars.Count - 1; i++)
+                            value = MultMatrices(value, nonScalars[i].ToMatrix());
+                        var rv = MultMatrixVector(value, nonScalars[i].ToVector());
+                        if (hasScalar)
+                            rv = MultVectorScalar(rv, scalarValue);
+                        return rv;
+                    }
+
+                    // m+vm+
+                    // last of the first
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    // m+
+                    // first matrix is LxK
+                    // last matrix is MxN
+                    // result is LxN matrix
+                    var value = nonScalars[0].ToMatrix();
+                    for (var i = 1; i < nonScalars.Count; i++)
+                        value = MultMatrices(value, nonScalars[i].ToMatrix());
+                    if (hasScalar)
+                        value = MultMatrixScalar(value, scalarValue);
+                    return value;
+                }
+            }
+            else if (hasVector)
+                // one vector with any number of scalars
+                // s+vs*
+                // vs+
+                return MultVectorScalar(nonScalars[0].ToVector(), scalarValue);
+
+            throw new TypeException("???");
         }
 
         public IMathObject CallFunction(NaturalLogarithmFunction f,
