@@ -144,7 +144,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                     // m+
                     // first matrix is LxK
                     // last matrix is MxN
-                    // result is LxN vector
+                    // result is LxN matrix
                     int i;
                     var mt0 = (Matrices)nonScalars[0];
                     var last = mt0;
@@ -165,10 +165,21 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public static void CheckArguments(SolusEnvironment env, IEnumerable<ISet> argTypes)
         {
+            var argTypes1 = new List<ISet>(argTypes);
+            if (argTypes1.Count < 2)
+            {
+                var name = MultiplicationOperation.Value.DisplayName;
+                throw new TypeException(
+                    null,
+                    $"Wrong number of arguments given to " +
+                    $"{name} (expected at least " +
+                    "2 but " +
+                    $"got {argTypes1.Count})");
+            }
+
             bool hasMatrix = false;
             bool hasVector = false;
             bool hasScalar = false;
-            var argTypes1 = new List<ISet>(argTypes);
             var nonScalars = new List<ISet>();
             foreach (var argType in argTypes1)
             {
@@ -283,7 +294,7 @@ namespace MetaphysicsIndustries.Solus.Functions
                     // m+
                     // first matrix is LxK
                     // last matrix is MxN
-                    // result is LxN vector
+                    // result is LxN matrix
                     int i;
                     var mt0 = (Matrices)nonScalars[0];
                     var last = mt0;
