@@ -72,6 +72,123 @@ namespace MetaphysicsIndustries.Solus.Values
         public static Matrix Zero(int rowCount, int columnCount) =>
             new Matrix(new float[rowCount, columnCount]);
 
+        public static Matrix M22(
+            float m11, float m12,
+            float m21, float m22)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12 },
+                { m21, m22 }
+            });
+        }
+
+        public static Matrix M23(
+            float m11, float m12, float m13,
+            float m21, float m22, float m23)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13 },
+                { m21, m22, m23 }
+            });
+        }
+
+        public static Matrix M24(
+            float m11, float m12, float m13, float m14,
+            float m21, float m22, float m23, float m24)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13, m14 },
+                { m21, m22, m23, m24 }
+            });
+        }
+
+        public static Matrix M32(
+            float m11, float m12,
+            float m21, float m22,
+            float m31, float m32)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12 },
+                { m21, m22 },
+                { m31, m32 }
+            });
+        }
+
+        public static Matrix M33(
+            float m11, float m12, float m13,
+            float m21, float m22, float m23,
+            float m31, float m32, float m33)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13 },
+                { m21, m22, m23 },
+                { m31, m32, m33 }
+            });
+        }
+
+        public static Matrix M34(
+            float m11, float m12, float m13, float m14,
+            float m21, float m22, float m23, float m24,
+            float m31, float m32, float m33, float m34)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13, m14 },
+                { m21, m22, m23, m24 },
+                { m31, m32, m33, m34 }
+            });
+        }
+
+        public static Matrix M42(
+            float m11, float m12,
+            float m21, float m22,
+            float m31, float m32,
+            float m41, float m42)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12 },
+                { m21, m22 },
+                { m31, m32 },
+                { m41, m42 }
+            });
+        }
+
+        public static Matrix M43(
+            float m11, float m12, float m13,
+            float m21, float m22, float m23,
+            float m31, float m32, float m33,
+            float m41, float m42, float m43)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13 },
+                { m21, m22, m23 },
+                { m31, m32, m33 },
+                { m41, m42, m43 }
+            });
+        }
+
+        public static Matrix M44(
+            float m11, float m12, float m13, float m14,
+            float m21, float m22, float m23, float m24,
+            float m31, float m32, float m33, float m34,
+            float m41, float m42, float m43, float m44)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13, m14 },
+                { m21, m22, m23, m24 },
+                { m31, m32, m33, m34 },
+                { m41, m42, m43, m44 }
+            });
+        }
+
         private readonly IMathObject[,] _components;
 
         public IMathObject this[int row, int column] =>
