@@ -641,6 +641,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
                             $"but got {argResultTypes[i].DisplayName}");
                     }
             }
+            else if (ft is MultiplicationOperation.MultiplicationFunctionType mft)
+            {
+                MultiplicationOperation.CheckArguments(env, argResultTypes);
+            }
             // TODO: AllVectorFunctions ?
             // TODO: AllRealFunctions ?
             // TODO: AllFunctions ?

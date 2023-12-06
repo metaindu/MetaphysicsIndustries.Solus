@@ -28,9 +28,8 @@ namespace MetaphysicsIndustries.Solus.Functions
 
     public abstract class ComparisonOperation : BinaryOperation, IComparisonOperation
     {
-        protected ComparisonOperation(string name)
+        protected ComparisonOperation()
         {
-            Name = name;
         }
 
         public abstract bool Compare(float x, float y);
