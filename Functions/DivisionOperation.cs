@@ -26,7 +26,7 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class DivisionOperation : BinaryOperation
+    public class DivisionOperation : BinaryOperation, IBinaryOperation
     {
         public static readonly DivisionOperation Value = new DivisionOperation();
 
@@ -54,5 +54,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: matrix divided by scalar
             return Reals.Value;
         }
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(Reals.Value, Reals.Value, Reals.Value);
     }
 }

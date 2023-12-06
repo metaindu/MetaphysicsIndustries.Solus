@@ -32,22 +32,24 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             UserDefinedFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             // TODO: the variables in the udf definition should be
             //       implemented as locals
             int i;
             var seq = new List<IlExpression>();
+            var env2 = env.CreateChildEnvironment();
             var variables2 = variables.CreateChild();
             for (i = 0; i < func.Parameters.Count; i++)
             {
                 var name = func.Parameters[i].Name;
                 var value = arguments[i];
-                var arg = ConvertToIlExpression(arguments[i], nm,
+                var arg = ConvertToIlExpression(arguments[i], nm, env,
                     variables);
                 var varType = arg.ResultType;
                 var local = nm.CreateLocal(varType, name);
+                env2.SetVariableType(name, func.Parameters[i].Type);
                 variables2.SetVariable(name, new VariableIdentity
                 {
                     Name = name,
@@ -59,7 +61,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                 seq.Add(new StoreLocalIlExpression(local, arg));
             }
 
-            var ilexpr = ConvertToIlExpression(func.Expression, nm,
+            var ilexpr = ConvertToIlExpression(func.Expression, nm, env2,
                 variables2);
             seq.Add(ilexpr);
             return new IlExpressionSequence(seq);

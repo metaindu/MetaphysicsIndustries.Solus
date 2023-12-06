@@ -108,6 +108,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         /// was called on, if it can't be simplified further.</returns>
         public virtual Expression Simplify(SolusEnvironment env)
         {
+            // TODO: check the expression before simplifying
             return this;
         }
 

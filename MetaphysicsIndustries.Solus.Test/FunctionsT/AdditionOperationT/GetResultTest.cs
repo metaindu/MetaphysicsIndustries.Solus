@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
     public class GetResultTest
     {
         [Test]
-        public void ResultIsScalar1()
+        public void ResultIsReal()
         {
             // given
             var args = new ISet[] { Reals.Value, Reals.Value };
@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
         }
 
         [Test]
-        public void ResultIsScalar2()
+        public void ResultIsString()
         {
             // given
             var args = new ISet[] { Strings.Value, Strings.Value };
@@ -51,7 +51,55 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
             var value = AdditionOperation.Value;
             var result = value.GetResultType(null, args);
             // then
-            Assert.That(result, Is.SameAs(Reals.Value));
+            Assert.That(result, Is.SameAs(Strings.Value));
+        }
+
+        [Test]
+        public void ResultIsVector1()
+        {
+            // given
+            var args = new ISet[] { Vectors.R2, Vectors.R2 };
+            // when
+            var value = AdditionOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R2));
+        }
+
+        [Test]
+        public void ResultIsVector2()
+        {
+            // given
+            var args = new ISet[] { Vectors.R3, Vectors.R3 };
+            // when
+            var value = AdditionOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void ResultIsMatrix1()
+        {
+            // given
+            var args = new ISet[] { Matrices.M2x2, Matrices.M2x2 };
+            // when
+            var value = AdditionOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M2x2));
+        }
+
+        [Test]
+        public void ResultIsMatrix2()
+        {
+            // given
+            var args = new ISet[] { Matrices.M3x3, Matrices.M3x3 };
+            // when
+            var value = AdditionOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M3x3));
         }
     }
 }

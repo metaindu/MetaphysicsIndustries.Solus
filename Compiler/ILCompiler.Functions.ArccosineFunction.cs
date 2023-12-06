@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             ArccosineFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var excType = typeof(OperandException);
@@ -45,7 +45,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Acos));
             var seq = new List<IlExpression>();
-            var arg = ConvertToIlExpression(arguments[0], nm, variables);
+            var arg = ConvertToIlExpression(arguments[0], nm, env, variables);
             seq.Add(arg);
             seq.Add(
                 new CompareLessThanIlExpression(

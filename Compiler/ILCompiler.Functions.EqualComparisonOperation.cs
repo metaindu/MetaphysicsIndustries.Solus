@@ -34,11 +34,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             EqualComparisonOperation func,
             NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var a = ConvertToIlExpression(arguments[0], nm, variables);
-            var b = ConvertToIlExpression(arguments[1], nm, variables);
+            var a = ConvertToIlExpression(arguments[0], nm, env, variables);
+            var b = ConvertToIlExpression(arguments[1], nm, env, variables);
             var seq = new List<IlExpression>();
             if (a.ResultType != b.ResultType)
             {

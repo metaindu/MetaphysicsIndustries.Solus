@@ -20,14 +20,16 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class NegationOperation : UnaryOperation
+    public class NegationOperation : UnaryOperation, IUnaryOperation
     {
         public static readonly NegationOperation Value = new NegationOperation();
 
@@ -67,5 +69,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             return argTypes.First();
         }
+
+        public override IFunctionType FunctionType =>
+            Sets.Functions.RealsToReals;
     }
 }

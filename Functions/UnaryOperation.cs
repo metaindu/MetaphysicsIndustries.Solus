@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
@@ -24,7 +23,11 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract class UnaryOperation : Operation
+    public interface IUnaryOperation : IOperation
+    {
+    }
+
+    public abstract class UnaryOperation : Operation, IUnaryOperation
     {
         protected UnaryOperation()
             : base(new[] { new Parameter("arg", Reals.Value) })

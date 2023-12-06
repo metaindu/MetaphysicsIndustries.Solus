@@ -32,14 +32,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             FactorialFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var product = nm.CreateLocal(typeof(float), "product");
             var n = nm.CreateLocal(typeof(float), "n");
             // n = ...
             var initN = new StoreLocalIlExpression(
-                n, ConvertToIlExpression(arguments[0], nm, variables));
+                n, ConvertToIlExpression(arguments[0], nm, env, variables));
             // product = 1
             var initProduct = new StoreLocalIlExpression(
                 product, new LoadConstantIlExpression(1f));

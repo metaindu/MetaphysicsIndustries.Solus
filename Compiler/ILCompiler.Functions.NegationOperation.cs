@@ -31,11 +31,11 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             NegationOperation func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new NegIlExpression(
-                ConvertToIlExpression(arguments[0], nm,
+                ConvertToIlExpression(arguments[0], nm, env,
                     variables));
             return expr;
         }

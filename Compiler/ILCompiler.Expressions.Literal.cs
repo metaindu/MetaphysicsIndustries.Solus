@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             Literal expr, NascentMethod nm,
-            VariableIdentityMap variables)
+            SolusEnvironment env, VariableIdentityMap variables)
         {
             // TODO: work out how to use `variables` in place of null `env`
 

@@ -59,18 +59,16 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 var value = env.GetVariable(varName);
                 if (value.IsIsExpression(env))
                     value = ((Expression)value).GetResultType(env);
-                var mathType = value.GetMathType();
                 variables[varName] = new VariableIdentity
                 {
                     Name = varName,
-                    MathType = mathType,
                     // IlType =
                     Value = value,
                     Source = VariableSource.Param
                 };
             }
 
-            var compiled = _compiler.Compile(expr, variables);
+            var compiled = _compiler.Compile(expr, env, variables);
             return compiled.Evaluate(env);
         }
 
@@ -101,7 +99,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = Reals.Value,
                         Source = VariableSource.Param
                     };
                 else
@@ -113,7 +110,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = mathType,
                         // IlType =
                         Value = value,
                         Source = VariableSource.Param
@@ -125,8 +121,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 
             var env2 = env.CreateChildEnvironment();
             env2.RemoveVariable(interval.Variable);
+            env2.SetVariableType(interval.Variable, Reals.Value);
             var expr2 = Simplify(expr, env2);
-            var compiled = _compiler.Compile(expr2, variables);
+            var compiled = _compiler.Compile(expr2, env2, variables);
             object[] varValuesInOrder = null;
             compiled.CompileEnvironment(env2, ref varValuesInOrder);
 
@@ -169,7 +166,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = Reals.Value,
                         Source = VariableSource.Param
                     };
                 else
@@ -177,11 +173,9 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     var value = env.GetVariable(varName);
                     if (value.IsIsExpression(env))
                         value = ((Expression)value).GetResultType(env);
-                    var mathType = value.GetMathType();
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = mathType,
                         // IlType =
                         Value = value,
                         Source = VariableSource.Param
@@ -194,9 +188,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 
             var env2 = env.CreateChildEnvironment();
             env2.RemoveVariable(interval1.Variable);
+            env2.SetVariableType(interval1.Variable, Reals.Value);
             env2.RemoveVariable(interval2.Variable);
+            env2.SetVariableType(interval2.Variable, Reals.Value);
             var expr2 = Simplify(expr, env2);
-            var compiled = _compiler.Compile(expr2, variables);
+            var compiled = _compiler.Compile(expr2, env2, variables);
             object[] varValuesInOrder = null;
             compiled.CompileEnvironment(env2, ref varValuesInOrder);
 
@@ -251,7 +247,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     variables[varName] = new VariableIdentity
                     {
                         Name = varName,
-                        MathType = Reals.Value,
                         Source = VariableSource.Param
                     };
                 else
@@ -276,10 +271,13 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 
             var env2 = env.CreateChildEnvironment();
             env2.RemoveVariable(interval1.Variable);
+            env2.SetVariableType(interval1.Variable, Reals.Value);
             env2.RemoveVariable(interval2.Variable);
+            env2.SetVariableType(interval2.Variable, Reals.Value);
             env2.RemoveVariable(interval3.Variable);
+            env2.SetVariableType(interval3.Variable, Reals.Value);
             var expr2 = Simplify(expr, env2);
-            var compiled = _compiler.Compile(expr2, variables);
+            var compiled = _compiler.Compile(expr2, env2, variables);
             object[] varValuesInOrder = null;
             compiled.CompileEnvironment(env2, ref varValuesInOrder);
 

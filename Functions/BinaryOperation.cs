@@ -34,7 +34,11 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract class BinaryOperation : Operation
+    public interface IBinaryOperation : IOperation
+    {
+    }
+
+    public abstract class BinaryOperation : Operation, IBinaryOperation
     {
         protected BinaryOperation()
             : base(new[]

@@ -32,13 +32,13 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             ExponentOperation func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             return new CallIlExpression(
                 new Func<double, double, double>(Math.Pow),
-                ConvertToIlExpression(arguments[0], nm, variables),
-                ConvertToIlExpression(arguments[1], nm, variables));
+                ConvertToIlExpression(arguments[0], nm, env, variables),
+                ConvertToIlExpression(arguments[1], nm, env, variables));
         }
     }
 }

@@ -80,19 +80,22 @@ namespace MetaphysicsIndustries.Solus.Values
         }
         public override bool Equals(object other)
         {
-            if (other is Vector2)
+            switch (other)
             {
-                return Equals((Vector2)other);
-            }
-            else
-            {
-                return false;
+                case Vector2 v:
+                    return Equals(v);
+                case IVector vv:
+                    return Vector.Equals(this, vv);
+                default:
+                    return false;
             }
         }
         public override int GetHashCode()
         {
-            var x = 101 * X.GetHashCode();
-            return x ^ Y.GetHashCode();
+            int hash = 1009;
+            hash = hash * 2003 + X.GetHashCode();
+            hash = hash * 2003 + Y.GetHashCode();
+            return hash;
         }
 
         public float Length()

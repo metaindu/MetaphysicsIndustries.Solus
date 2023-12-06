@@ -20,6 +20,7 @@
  *
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
@@ -37,6 +38,9 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             Name = name;
             Expression = expr;
+            FunctionType = Sets.Functions.Get(Reals.Value,
+                argnames.Select(_ => (ISet)Reals.Value).ToArray());
+            // Sets.Functions.Get(expr.GetResultType())
         }
         public UserDefinedFunction(string name,
             IEnumerable<Parameter> parameters, Expression expr)
@@ -44,9 +48,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             Name = name;
             Expression = expr;
+            FunctionType = Sets.Functions.Get(Reals.Value,
+                parameters.Select(p => p.Type).ToArray());
         }
 
-        public Expression Expression;
+        public readonly Expression Expression;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
@@ -67,5 +73,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
             return Expression.GetResultType(env2);
         }
+
+        public override IFunctionType FunctionType { get; }
     }
 }

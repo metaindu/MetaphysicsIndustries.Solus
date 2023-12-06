@@ -161,13 +161,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         //methods and overloaded operators
 
-        public VectorExpression Convolution(VectorExpression convolvee)
-        {
-            return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
-        }
+        // TODO: refactor this into a Function
+        //
+        // public VectorExpression Convolution(VectorExpression convolvee)
+        // {
+        //     return AdvancedConvolution(convolvee,
+        //         MultiplicationOperation.Value,
+        //         AdditionOperation.Value);
+        // }
 
         public VectorExpression AdvancedConvolution(VectorExpression convolvee,
-            Operation firstOp, AssociativeCommutativeOperation secondOp)
+            IOperation firstOp, IAssociativeCommutativeOperation secondOp)
         {
             int r = Length + convolvee.Length - 1;
 
@@ -188,13 +192,13 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
                     group.Add(
                         new FunctionCall(
-                        firstOp,
+                        (Function)firstOp,
                         this[k],
                         convolvee[n - k]));
                 }
 
                 CleanUpTransformer cleanup = new CleanUpTransformer();
-                ret[n] = cleanup.CleanUp(new FunctionCall(secondOp, group.ToArray()));
+                ret[n] = cleanup.CleanUp(new FunctionCall((Function)secondOp, group.ToArray()));
             }
 
             return ret;

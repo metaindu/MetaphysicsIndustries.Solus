@@ -49,31 +49,30 @@ namespace MetaphysicsIndustries.Solus.Compiler
         /// corresponding entry in variableTypesByName
         /// </exception>
         public CompiledExpression Compile(Expression expr,
-            VariableIdentityMap variables)
+            SolusEnvironment env, VariableIdentityMap variables)
         {
             var nm = new NascentMethod();
 
-            var ilexpr = ConvertToIlExpression(expr, nm, variables);
+            var ilexpr = ConvertToIlExpression(expr, nm, env, variables);
 
             var varNames = new string[nm.Params.Count];
             var paramTypes = new Type[nm.Params.Count];
-            var typeEnv = new SolusEnvironment();
             int i = 0;
             foreach (var param in nm.Params)
             {
                 var varName = param.ParamName;
                 varNames[i] = varName;
 
+                if (!env.ContainsVariable(varName))
+                    throw new NameException(
+                        $"Variable not found: {varName}");
                 if (!variables.ContainsVariable(varName))
                     throw new NameException(
                         $"The variable \"{varName}\" doesn't have " +
                         $"a runtime type defined in `variableTypesByName`");
                 var vi = variables[varName];
                 var varValue = vi.Value;
-                var mathType = vi.MathType;
-                if (mathType == null)
-                    mathType = varValue.GetMathType();
-                typeEnv.SetVariableType(varName, mathType);
+                var mathType = env.GetVariableType(varName);
                 var iltype = vi.IlType;
                 if (iltype == null && mathType != null)
                     iltype = ResolveType(mathType);
@@ -85,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             }
 
             var returnType = ResolveType(
-                expr.GetResultType(typeEnv), typeEnv);
+                expr.GetResultType(env), env);
 
             ilexpr.GetInstructions(nm);
 

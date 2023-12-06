@@ -32,14 +32,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             LessThanOrEqualComparisonOperation func,
             NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new CompareEqualIlExpression(
                 new LoadConstantIlExpression(0),
                 new CompareGreaterThanIlExpression(
-                    ConvertToIlExpression(arguments[0], nm, variables),
-                    ConvertToIlExpression(arguments[1], nm, variables)));
+                    ConvertToIlExpression(arguments[0], nm, env, variables),
+                    ConvertToIlExpression(arguments[1], nm, env, variables)));
             return expr;
         }
     }

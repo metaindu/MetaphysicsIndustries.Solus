@@ -32,12 +32,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             TangentFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Tan),
-                ConvertToIlExpression(arguments[0], nm, variables));
+                ConvertToIlExpression(arguments[0], nm, env, variables));
             return expr;
         }
     }

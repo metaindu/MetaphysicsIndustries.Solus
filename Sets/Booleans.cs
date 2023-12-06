@@ -31,8 +31,9 @@ namespace MetaphysicsIndustries.Solus.Sets
         }
 
         public bool Contains(IMathObject mo) => mo.IsIsBoolean(null);
-        public bool IsSupersetOf(ISet other) => other == this;
-
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other == this ||
             other is MathObjects;

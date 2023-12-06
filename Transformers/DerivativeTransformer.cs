@@ -97,7 +97,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                     "Call target is not a function");
             var function = (Function)literal.Value;
 
-            if (function is Operation)
+            if (function is IOperation)
             {
                 return GetDerivativeOfOperation(functionCall, var);
             }
@@ -150,11 +150,11 @@ namespace MetaphysicsIndustries.Solus.Transformers
             if (functionCall.Function is Literal literal)
                 f = literal.Value as Function;
 
-            if (f is BinaryOperation)
+            if (f is IBinaryOperation)
             {
                 return GetDerivativeOfBinaryOperation(functionCall, var);
             }
-            else if (f is AssociativeCommutativeOperation)
+            else if (f is IAssociativeCommutativeOperation)
             {
                 return GetDerivativeOfAssociativeCommutativOperation(functionCall, var);
             }
@@ -193,7 +193,7 @@ namespace MetaphysicsIndustries.Solus.Transformers
                 throw new OperandException(
                     "Call target is not a function");
             var f = (Function)literal.Value;
-            var binaryOperation = f as BinaryOperation;
+            var binaryOperation = f as IBinaryOperation;
 
             if (binaryOperation == DivisionOperation.Value)
                 return GetDerivativeOfDivisionOperation(functionCall, var);
@@ -438,7 +438,8 @@ namespace MetaphysicsIndustries.Solus.Transformers
             }
             else
             {
-                return new Literal(AdditionOperation.Value.IdentityValue);
+                // return new Literal(AdditionOperation.Value.IdentityValue);
+                return new Literal(0);
             }
 
 

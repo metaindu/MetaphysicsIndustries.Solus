@@ -40,15 +40,17 @@ namespace MetaphysicsIndustries.Solus.Compiler
         }
 
         public IlExpression ConvertToIlExpression(ComponentAccess expr,
-            NascentMethod nm, VariableIdentityMap variables)
+            NascentMethod nm, SolusEnvironment env,
+            VariableIdentityMap variables)
         {
-            var expr2 = ConvertToIlExpression(expr.Expr, nm, variables);
+            var expr2 = ConvertToIlExpression(expr.Expr, nm, env, variables);
             var indexes2 = new IlExpression[expr.Indexes.Count];
             int i;
             for (i = 0; i < indexes2.Length; i++)
             {
                 indexes2[i] = new ConvertI4IlExpression(
-                    ConvertToIlExpression(expr.Indexes[i], nm, variables));
+                    ConvertToIlExpression(expr.Indexes[i], nm, env,
+                        variables));
             }
 
             // TODO: check expr.ResultType against the number of indexes

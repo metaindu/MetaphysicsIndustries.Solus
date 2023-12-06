@@ -29,7 +29,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(MatrixExpression expr,
-            NascentMethod nm, VariableIdentityMap variables)
+            NascentMethod nm, SolusEnvironment env,
+            VariableIdentityMap variables)
         {
             var arrayType = typeof(float[,]);
             var ctor = arrayType.GetConstructor(
@@ -51,7 +52,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                         dup,
                         new LoadConstantIlExpression(r),
                         new LoadConstantIlExpression(c),
-                        ConvertToIlExpression(expr[r, c], nm, variables)));
+                        ConvertToIlExpression(expr[r, c], nm, env,
+                            variables)));
             return new IlExpressionSequence(seq);
         }
     }

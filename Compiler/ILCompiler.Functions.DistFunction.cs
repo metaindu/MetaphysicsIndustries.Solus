@@ -32,12 +32,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             DistFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var x = ConvertToIlExpression(arguments[0], nm,
+            var x = ConvertToIlExpression(arguments[0], nm, env,
                 variables);
-            var y = ConvertToIlExpression(arguments[1], nm,
+            var y = ConvertToIlExpression(arguments[1], nm, env,
                 variables);
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Sqrt),

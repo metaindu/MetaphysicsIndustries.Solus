@@ -110,8 +110,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
                 () => eval.Eval(expr, null));
             // and
             Assert.That(ex.Message,
-                Is.EqualTo(
-                    "The type was incorrect: All components must be reals"));
+                Is.EqualTo("All components must be reals"));
         }
     }
 }
