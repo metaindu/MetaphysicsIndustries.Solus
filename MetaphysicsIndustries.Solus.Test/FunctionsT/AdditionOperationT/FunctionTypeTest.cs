@@ -30,7 +30,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
     public class FunctionTypeTest
     {
         [Test]
-        public void TypeIsVariadicRealsToReals()
+        public void TypeIsCustom()
         {
             // when
             var value = AdditionOperation.Value;
