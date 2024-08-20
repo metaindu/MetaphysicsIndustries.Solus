@@ -19,9 +19,7 @@
  *
  */
 
-using System;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Sets;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
@@ -30,17 +28,15 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
     public class FunctionTypeTest
     {
         [Test]
-        public void TypeIsNotImplemented()
+        public void TypeIsCustom()
         {
             // when
             var value = MultiplicationOperation.Value;
             var result = value.FunctionType;
             // then
-            Assert.That(result,
-                Is.SameAs(VariadicFunctions.Get(
-                    Reals.Value,
-                    Reals.Value,
-                    2)));
+            var multType =
+                MultiplicationOperation.MultiplicationFunctionType.Value;
+            Assert.That(result, Is.SameAs(multType));
         }
     }
 }
