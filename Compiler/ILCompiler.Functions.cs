@@ -33,151 +33,152 @@ namespace MetaphysicsIndustries.Solus.Compiler
         public IlExpression ConvertToIlExpression(
             Function func,
             NascentMethod nm,
+            SolusEnvironment env,
             VariableIdentityMap variables,
             List<Expression> arguments)
         {
             switch (func)
             {
                 case AbsoluteValueFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case AdditionOperation ao:
-                    return ConvertToIlExpression(ao, nm, variables,
+                    return ConvertToIlExpression(ao, nm, env, variables,
                         arguments);
                 case ArccosecantFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case ArccosineFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case ArccotangentFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case ArcsecantFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case ArcsineFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case Arctangent2Function ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case ArctangentFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case BitwiseAndOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case BitwiseOrOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case CeilingFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case CosecantFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case CosineFunction c:
-                    return ConvertToIlExpression(c, nm, variables,
+                    return ConvertToIlExpression(c, nm, env, variables,
                         arguments);
                 case CotangentFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case DistFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case DistSqFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case DivisionOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case EqualComparisonOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case ExponentOperation eo:
-                    return ConvertToIlExpression(eo, nm, variables,
+                    return ConvertToIlExpression(eo, nm, env, variables,
                         arguments);
                 case FactorialFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case FloorFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case GreaterThanComparisonOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case GreaterThanOrEqualComparisonOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case LessThanComparisonOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case LessThanOrEqualComparisonOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case LoadImageFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case Log10Function ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case Log2Function ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case LogarithmFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case LogicalAndOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case LogicalOrOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case MaximumFiniteFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case MaximumFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case MinimumFiniteFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case MinimumFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case ModularDivision ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case MultiplicationOperation mo:
-                    return ConvertToIlExpression(mo, nm, variables,
+                    return ConvertToIlExpression(mo, nm, env, variables,
                         arguments);
                 case NaturalLogarithmFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case NegationOperation no:
-                    return ConvertToIlExpression(no, nm, variables,
+                    return ConvertToIlExpression(no, nm, env, variables,
                         arguments);
                 case NotEqualComparisonOperation ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case SecantFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case SineFunction s:
-                    return ConvertToIlExpression(s, nm, variables,
+                    return ConvertToIlExpression(s, nm, env, variables,
                         arguments);
                 case SizeFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case TangentFunction ff:
-                    return ConvertToIlExpression(ff, nm, variables,
+                    return ConvertToIlExpression(ff, nm, env, variables,
                         arguments);
                 case UnitStepFunction usf:
-                    return ConvertToIlExpression(usf, nm, variables,
+                    return ConvertToIlExpression(usf, nm, env, variables,
                         arguments);
                 case UserDefinedFunction udf:
-                    return ConvertToIlExpression(udf, nm, variables,
+                    return ConvertToIlExpression(udf, nm, env, variables,
                         arguments);
                 default:
                     // if (func.ProvidesCustomCall)

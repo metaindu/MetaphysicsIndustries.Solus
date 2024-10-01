@@ -32,11 +32,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             FunctionCall expr, NascentMethod nm,
-            VariableIdentityMap variables)
+            SolusEnvironment env, VariableIdentityMap variables)
         {
             if (expr.Function is Literal literal &&
                 literal.Value is Function f)
-                return ConvertToIlExpression(f, nm, variables, expr.Arguments);
+                return ConvertToIlExpression(f, nm, env, variables,
+                    expr.Arguments);
 
             // TODO:
             throw new NotImplementedException(

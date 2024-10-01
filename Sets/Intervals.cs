@@ -35,7 +35,9 @@ namespace MetaphysicsIndustries.Solus.Sets
             return mo.IsIsInterval(null);
         }
 
-        public bool IsSupersetOf(ISet other) => other is Intervals;
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other is Intervals ||
             other is MathObjects;

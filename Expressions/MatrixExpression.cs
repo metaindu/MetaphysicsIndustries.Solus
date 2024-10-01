@@ -701,17 +701,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 values[r, c] = value;
             }
 
+            if (allLiteral)
+            {
+                var values2 = new IMathObject[RowCount, ColumnCount];
+                for (r = 0; r < RowCount; r++)
+                for (c = 0; c < ColumnCount; c++)
+                    values2[r, c] = ((Literal)values[r, c]).Value;
+                var matrix = new Matrix(values2);
+                return new Literal(matrix);
+            }
+
             if (allSame)
                 return this;
-            if (!allLiteral)
-                return new MatrixExpression(values);
 
-            var values2 = new IMathObject[RowCount, ColumnCount];
-            for (r = 0; r < RowCount; r++)
-            for (c = 0; c < ColumnCount; c++)
-                values2[r, c] = ((Literal) values[r, c]).Value;
-            var matrix = new Matrix(values2);
-            return new Literal(matrix);
+            return new MatrixExpression(values);
         }
 
         public override void ApplyToAll(Modulator mod)

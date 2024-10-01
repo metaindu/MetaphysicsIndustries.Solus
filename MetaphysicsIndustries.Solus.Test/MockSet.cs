@@ -53,7 +53,8 @@ namespace MetaphysicsIndustries.Solus.Test
         }
 
         public bool IsSupersetOf(ISet other) =>
-            throw new NotImplementedException();
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             throw new NotImplementedException();
     }

@@ -1,8 +1,9 @@
 types={
 "MathObjects": ["Sets","AllFunctions", "Tensors", "Booleans", "Reals", "Strings", "Intervals", "Expressions",],
     "Sets": [],
-    "AllFunctions": ["Functions"],
+    "AllFunctions": ["Functions", "VariadicFunctions"],
         "Functions": [],
+        "VariadicFunctions": [],
     "Tensors": ["AllVectors", "AllMatrices",],
         "AllVectors": ["Vectors",],
             "Vectors": [],
@@ -58,6 +59,7 @@ for type in all_types:
 get_type_by_name("Vectors").fields = ["R2", "R3"]
 get_type_by_name("Matrices").fields = ["M2x2", "M3x3"]
 get_type_by_name("Functions").fields = ["RealsToReals"]
+get_type_by_name("VariadicFunctions").fields = ["RealsToReals"]
 get_type_by_name("Sets").display_name = 'Sets.Sets'
 get_type_by_name("Functions").display_name = 'Sets.Functions'
 get_type_by_name("Expressions").display_name = 'Sets.Expressions'
@@ -65,10 +67,11 @@ get_type_by_name("Expressions").display_name = 'Sets.Expressions'
 def gen_test(type1, type2, super_vs_sub, is_x_of):
     lines = []
     not_ = ''
-    exclam = ''
     if not is_x_of:
         not_ = 'Not'
-        exclam = '!'
+    assert_ = 'Assert.True'
+    if not is_x_of:
+        assert_ = 'Assert.False'
     type2_title = type2.name
     if type1 is type2:
         type2_title = 'Self'
@@ -83,9 +86,28 @@ f'''        [Test]
 ''')
     for f1 in type1.fields:
         for f2 in type2.fields:
-            lines.append(
-f'''            Assert.That({exclam}{type1.display_name}.{f1}.Is{super_sub}setOf({type2.display_name}.{f2}));
-''')
+            attempt1 = \
+f'''            {assert_}({type1.display_name}.{f1}.\
+Is{super_sub}setOf({type2.display_name}.{f2}));
+'''
+            if len(attempt1.rstrip()) < 79:
+                lines.append(attempt1)
+            else:
+                attempt2 = \
+f'''            {assert_}(
+                {type1.display_name}.{f1}.\
+Is{super_sub}setOf({type2.display_name}.{f2}));
+'''
+                if len(attempt2.splitlines()[1]) < 79:
+                    lines.append(attempt2)
+                else:
+                    attempt3 = \
+f'''            {assert_}(
+                {type1.display_name}.{f1}.Is{super_sub}setOf(
+                    {type2.display_name}.{f2}));
+'''
+                    lines.append(attempt3)
+
     lines.append(
 '''        }
 ''')
@@ -108,15 +130,30 @@ f'''        [Test]
 ''')
     for f1 in type1.fields:
         for f2 in type2.fields:
-            if f1 == f2:
-                lines.append(
-f'''            Assert.That({type1.display_name}.{f1}.Is{super_sub}setOf({type2.display_name}.{f2}));
-''')
+            assert_ = 'Assert.True'
+            if f1 != f2:
+                assert_ = 'Assert.False'
+            attempt1 = \
+f'''            {assert_}({type1.display_name}.{f1}.\
+Is{super_sub}setOf({type2.display_name}.{f2}));
+'''
+            if len(attempt1.rstrip()) < 79:
+                lines.append(attempt1)
             else:
-                lines.append(
-f'''            Assert.That(!{type1.display_name}.{f1}.Is{super_sub}setOf({type2.display_name}.{f2}));
-''')
-
+                attempt2 = \
+                    f'''            {assert_}(
+                {type1.display_name}.{f1}.\
+Is{super_sub}setOf({type2.display_name}.{f2}));
+'''
+                if len(attempt2.splitlines()[1]) < 79:
+                    lines.append(attempt2)
+                else:
+                    attempt3 = \
+                        f'''            {assert_}(
+                {type1.display_name}.{f1}.Is{super_sub}setOf(
+                    {type2.display_name}.{f2}));
+'''
+                    lines.append(attempt3)
     lines.append(
 '''        }
 ''')

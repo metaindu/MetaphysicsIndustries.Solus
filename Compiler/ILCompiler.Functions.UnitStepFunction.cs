@@ -31,13 +31,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             UnitStepFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new ConvertR4IlExpression(
                 new CompareLessThanIlExpression(
                     new CompareLessThanIlExpression(
-                        ConvertToIlExpression(arguments[0], nm, variables),
+                        ConvertToIlExpression(arguments[0], nm, env,
+                            variables),
                         new LoadConstantIlExpression(0f)),
                     new LoadConstantIlExpression(1)));
             return expr;

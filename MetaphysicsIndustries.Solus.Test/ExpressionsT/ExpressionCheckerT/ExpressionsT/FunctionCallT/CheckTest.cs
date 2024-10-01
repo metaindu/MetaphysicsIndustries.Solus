@@ -41,7 +41,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new[] { new Parameter("", Reals.Value) },
                 "f")
             {
-                CallF = args => args.First()
+                CallF = args => args.First(),
+                FunctionTypeV = Sets.Functions.RealsToReals
             };
             var expr = new FunctionCall(mf, new Literal(5));
             var ec = new ExpressionChecker();
@@ -57,7 +58,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new[] { new Parameter("", Reals.Value) },
                 "f")
             {
-                CallF = args => args.First()
+                CallF = args => args.First(),
+                FunctionTypeV = Sets.Functions.RealsToReals
             };
             var expr = new FunctionCall(new VariableAccess("f"),
                 new Expression[] { new Literal(5) });

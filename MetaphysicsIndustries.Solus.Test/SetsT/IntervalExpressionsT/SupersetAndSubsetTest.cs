@@ -32,15 +32,15 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsNotSupersetOfMathObjects()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(MathObjects.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(MathObjects.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsSubsetOfMathObjects()
         {
             // expect
-            Assert.That(
+            Assert.True(
                 IntervalExpressions.Value.IsSubsetOf(MathObjects.Value));
         }
 
@@ -48,207 +48,226 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsNotSupersetOfSets()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(Sets.Sets.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Sets.Sets.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfSets()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(
-                Sets.Sets.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(Sets.Sets.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfAllFunctions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(AllFunctions.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(AllFunctions.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfAllFunctions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(AllFunctions.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(AllFunctions.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfFunctions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(Sets.Functions
-                    .RealsToReals));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    Sets.Functions.RealsToReals));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfFunctions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(Sets.Functions
-                    .RealsToReals));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(
+                    Sets.Functions.RealsToReals));
+        }
+
+        [Test]
+        public void TestIntervalExpressionsIsNotSupersetOfVariadicFunctions()
+        {
+            // expect
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    VariadicFunctions.RealsToReals));
+        }
+
+        [Test]
+        public void TestIntervalExpressionsIsNotSubsetOfVariadicFunctions()
+        {
+            // expect
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(
+                    VariadicFunctions.RealsToReals));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfTensors()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSupersetOf(
-                Tensors.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Tensors.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfTensors()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Tensors.Value));
+            Assert.False(IntervalExpressions.Value.IsSubsetOf(Tensors.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfAllVectors()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(AllVectors.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(AllVectors.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfAllVectors()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(AllVectors.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(AllVectors.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfVectors()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSupersetOf(Vectors.R2));
-            Assert.That(!IntervalExpressions.Value.IsSupersetOf(Vectors.R3));
+            Assert.False(IntervalExpressions.Value.IsSupersetOf(Vectors.R2));
+            Assert.False(IntervalExpressions.Value.IsSupersetOf(Vectors.R3));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfVectors()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Vectors.R2));
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Vectors.R3));
+            Assert.False(IntervalExpressions.Value.IsSubsetOf(Vectors.R2));
+            Assert.False(IntervalExpressions.Value.IsSubsetOf(Vectors.R3));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfAllMatrices()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(AllMatrices.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(AllMatrices.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfAllMatrices()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(AllMatrices.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(AllMatrices.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfMatrices()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSupersetOf(
-                Matrices.M2x2));
-            Assert.That(!IntervalExpressions.Value.IsSupersetOf(
-                Matrices.M3x3));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Matrices.M2x2));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Matrices.M3x3));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfMatrices()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Matrices.M2x2));
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Matrices.M3x3));
+            Assert.False(IntervalExpressions.Value.IsSubsetOf(Matrices.M2x2));
+            Assert.False(IntervalExpressions.Value.IsSubsetOf(Matrices.M3x3));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfReals()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSupersetOf(Reals.Value));
+            Assert.False(IntervalExpressions.Value.IsSupersetOf(Reals.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfReals()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Reals.Value));
+            Assert.False(IntervalExpressions.Value.IsSubsetOf(Reals.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfStrings()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSupersetOf(
-                Strings.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Strings.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfStrings()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Strings.Value));
+            Assert.False(IntervalExpressions.Value.IsSubsetOf(Strings.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfIntervals()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(Intervals.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Intervals.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfIntervals()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(
-                Intervals.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(Intervals.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfBooleans()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(Booleans.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Booleans.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfBooleans()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Booleans.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(Booleans.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfExpressions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(Sets.Expressions
-                    .Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    Sets.Expressions.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsSubsetOfExpressions()
         {
             // expect
-            Assert.That(
+            Assert.True(
                 IntervalExpressions.Value.IsSubsetOf(Sets.Expressions.Value));
         }
 
@@ -256,32 +275,33 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsNotSupersetOfLiterals()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(Literals.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(Literals.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfLiterals()
         {
             // expect
-            Assert.That(!IntervalExpressions.Value.IsSubsetOf(Literals.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(Literals.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfComponentAccesses()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(ComponentAccesses
-                    .Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    ComponentAccesses.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfComponentAccesses()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(
                     ComponentAccesses.Value));
         }
 
@@ -289,23 +309,23 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsNotSupersetOfFunctionCalls()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(FunctionCalls.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(FunctionCalls.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfFunctionCalls()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(FunctionCalls.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(FunctionCalls.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsSupersetOfSelf()
         {
             // expect
-            Assert.That(
+            Assert.True(
                 IntervalExpressions.Value.IsSupersetOf(
                     IntervalExpressions.Value));
         }
@@ -314,26 +334,26 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsSubsetOfSelf()
         {
             // expect
-            Assert.That(
-                IntervalExpressions.Value.IsSubsetOf(IntervalExpressions
-                    .Value));
+            Assert.True(
+                IntervalExpressions.Value.IsSubsetOf(
+                    IntervalExpressions.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSupersetOfTensorExpressions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(TensorExpressions
-                    .Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    TensorExpressions.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfTensorExpressions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(
                     TensorExpressions.Value));
         }
 
@@ -341,17 +361,17 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsNotSupersetOfMatrixExpressions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(MatrixExpressions
-                    .Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    MatrixExpressions.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfMatrixExpressions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(
                     MatrixExpressions.Value));
         }
 
@@ -359,17 +379,17 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsNotSupersetOfVectorExpressions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(VectorExpressions
-                    .Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    VectorExpressions.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfVectorExpressions()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(
                     VectorExpressions.Value));
         }
 
@@ -377,17 +397,17 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.IntervalExpressionsT
         public void TestIntervalExpressionsIsNotSupersetOfVariableAccesses()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSupersetOf(VariableAccesses
-                    .Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSupersetOf(
+                    VariableAccesses.Value));
         }
 
         [Test]
         public void TestIntervalExpressionsIsNotSubsetOfVariableAccesses()
         {
             // expect
-            Assert.That(
-                !IntervalExpressions.Value.IsSubsetOf(VariableAccesses.Value));
+            Assert.False(
+                IntervalExpressions.Value.IsSubsetOf(VariableAccesses.Value));
         }
     }
 }

@@ -31,22 +31,22 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             Expression expr, NascentMethod nm,
-            VariableIdentityMap variables)
+            SolusEnvironment env, VariableIdentityMap variables)
         {
             if (expr is FunctionCall call)
-                return ConvertToIlExpression(call, nm, variables);
+                return ConvertToIlExpression(call, nm, env, variables);
             if (expr is Literal lit)
-                return ConvertToIlExpression(lit, nm, variables);
+                return ConvertToIlExpression(lit, nm, env, variables);
             if (expr is VariableAccess va)
-                return ConvertToIlExpression(va, nm, variables);
+                return ConvertToIlExpression(va, nm, env, variables);
             if (expr is ComponentAccess ca)
-                return ConvertToIlExpression(ca, nm, variables);
+                return ConvertToIlExpression(ca, nm, env, variables);
             if (expr is VectorExpression ve)
-                return ConvertToIlExpression(ve, nm, variables);
+                return ConvertToIlExpression(ve, nm, env, variables);
             if (expr is MatrixExpression me)
-                return ConvertToIlExpression(me, nm, variables);
+                return ConvertToIlExpression(me, nm, env, variables);
             if (expr is IntervalExpression ie)
-                return ConvertToIlExpression(ie, nm, variables);
+                return ConvertToIlExpression(ie, nm, env, variables);
             throw new ArgumentException(
                 $"Unsupported expression type: \"{expr}\"", nameof(expr));
         }
@@ -54,11 +54,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
         // TODO: copy-paste IlCompiler.Expressions.*.cs here
 
         public IlExpression ConvertToIlExpression(IntervalExpression expr,
-            NascentMethod nm, VariableIdentityMap variables)
+            NascentMethod nm, SolusEnvironment env,
+            VariableIdentityMap variables)
         {
-            var lower = ConvertToIlExpression(expr.LowerBound, nm, variables);
+            var lower = ConvertToIlExpression(expr.LowerBound, nm, env,
+                variables);
             var isLowerOpen = new LoadConstantIlExpression(expr.OpenLowerBound);
-            var upper = ConvertToIlExpression(expr.UpperBound, nm, variables);
+            var upper = ConvertToIlExpression(expr.UpperBound, nm, env,
+                variables);
             var isUpperOpen = new LoadConstantIlExpression(expr.OpenUpperBound);
             // TODO: IsIntegerInterval ?
             var stuple = typeof(STuple<float, bool, float, bool>);

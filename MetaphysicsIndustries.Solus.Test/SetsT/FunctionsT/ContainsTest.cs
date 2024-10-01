@@ -41,15 +41,16 @@ namespace MetaphysicsIndustries.Solus.Test.SetsT.FunctionsT
             Assert.That(fs.Contains(NaturalLogarithmFunction.Value));
             Assert.That(fs.Contains(Log2Function.Value));
             Assert.That(fs.Contains(Log10Function.Value));
-            Assert.That(!fs.Contains(AdditionOperation.Value));
-            Assert.That(!fs.Contains(DivisionOperation.Value));
-            Assert.That(!fs.Contains(LogarithmFunction.Value));
-            Assert.That(!fs.Contains(SizeFunction.Value));
-            Assert.That(!fs.Contains(MaximumFiniteFunction.Value));
-            Assert.That(!fs.Contains(MaximumFunction.Value));
-            Assert.That(!fs.Contains(MinimumFiniteFunction.Value));
-            Assert.That(!fs.Contains(MinimumFunction.Value));
-            Assert.That(!fs.Contains(NegationOperation.Value));
+
+            Assert.IsFalse(fs.Contains(AdditionOperation.Value));
+            Assert.IsFalse(fs.Contains(DivisionOperation.Value));
+            Assert.IsFalse(fs.Contains(LogarithmFunction.Value));
+            Assert.IsFalse(fs.Contains(SizeFunction.Value));
+            Assert.IsFalse(fs.Contains(MaximumFiniteFunction.Value));
+            Assert.IsFalse(fs.Contains(MaximumFunction.Value));
+            Assert.IsFalse(fs.Contains(MinimumFiniteFunction.Value));
+            Assert.IsFalse(fs.Contains(MinimumFunction.Value));
+            Assert.IsFalse(fs.Contains(NegationOperation.Value));
         }
 
         [Test]

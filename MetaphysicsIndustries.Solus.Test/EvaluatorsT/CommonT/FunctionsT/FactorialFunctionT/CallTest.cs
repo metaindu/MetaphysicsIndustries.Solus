@@ -22,6 +22,7 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
@@ -43,7 +44,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(f, args);
             // expect
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<TypeException>(() =>
                 eval.Eval(expr, null));
         }
 
@@ -56,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(f, args);
             // expect
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<TypeException>(() =>
                 eval.Eval(expr, null));
         }
 
@@ -74,7 +75,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(f, args);
             // expect
-            Assert.Throws<ArgumentException>(() =>
+            Assert.Throws<TypeException>(() =>
                 eval.Eval(expr, null));
         }
 

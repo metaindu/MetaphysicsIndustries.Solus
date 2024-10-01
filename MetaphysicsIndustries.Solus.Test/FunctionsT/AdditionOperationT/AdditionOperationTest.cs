@@ -20,9 +20,7 @@
  *
  */
 
-using System;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
@@ -42,21 +40,6 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AdditionOperationT
         {
             // expect
             Assert.That(AdditionOperation.Value.Name, Is.EqualTo("+"));
-        }
-
-        [Test]
-        public void PrecedenceIsSet()
-        {
-            // expect
-            Assert.That(AdditionOperation.Value.Precedence,
-                Is.EqualTo(OperationPrecedence.Addition));
-        }
-
-        [Test]
-        public void IdentityValueIsSet()
-        {
-            // expect
-            Assert.That(AdditionOperation.Value.IdentityValue, Is.EqualTo(0));
         }
     }
 }

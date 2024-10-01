@@ -101,5 +101,43 @@ namespace MetaphysicsIndustries.Solus.Test.ValuesT.VectorT
             // then
             Assert.That(result, Is.EqualTo("[1, 2, 3]"));
         }
+
+        [Test]
+        public void VectorIsEqualToVector2()
+        {
+            // given
+            var a = new Vector(new float[] { 2, 3 });
+            var b = new Vector2(2, 3);
+            // expect
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            Assert.That(a.Equals(b));
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            Assert.That(b.Equals(a));
+#pragma warning disable NUnit2021
+            Assert.That(a, Is.EqualTo(b));
+            Assert.That(b, Is.EqualTo(a));
+#pragma warning restore NUnit2021
+            Assert.That(a.GetHashCode(), Is.EqualTo(b.GetHashCode()));
+            Assert.That(b.GetHashCode(), Is.EqualTo(a.GetHashCode()));
+        }
+
+        [Test]
+        public void VectorIsEqualToVector3()
+        {
+            // given
+            var a = new Vector(new float[] { 5, 7, 11 });
+            var b = new Vector3(5, 7, 11);
+            // expect
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            Assert.That(a.Equals(b));
+            // ReSharper disable once SuspiciousTypeConversion.Global
+            Assert.That(b.Equals(a));
+#pragma warning disable NUnit2021
+            Assert.That(a, Is.EqualTo(b));
+            Assert.That(b, Is.EqualTo(a));
+#pragma warning restore NUnit2021
+            Assert.That(a.GetHashCode(), Is.EqualTo(b.GetHashCode()));
+            Assert.That(b.GetHashCode(), Is.EqualTo(a.GetHashCode()));
+        }
     }
 }

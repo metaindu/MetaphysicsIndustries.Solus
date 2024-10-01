@@ -35,12 +35,10 @@ namespace MetaphysicsIndustries.Solus.Sets
             //       ordered pairs/tuples
             mo.IsIsSet(null);
 
-        public bool IsSupersetOf(ISet other)
-        {
-            // TODO: Russel's paradox
-            return other is Sets;
-        }
-
+        // TODO: Russel's paradox?
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other is Sets ||
             other is MathObjects;

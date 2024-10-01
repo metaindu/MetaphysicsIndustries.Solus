@@ -187,33 +187,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException(
                     "Can't check non-function target.");
 
-            for (var i = 0; i < expr.Arguments.Count; i++)
+            int i;
+            for (i = 0; i < expr.Arguments.Count; i++)
                 Check(expr.Arguments[i], env);
 
             var args = expr.Arguments;
-
-            if (f is AssociativeCommutativeOperation)
-            {
-                if (args.Count < 2)
-                {
-                    throw new ArgumentException(
-                        $"Wrong number of arguments given to " +
-                        $"{f.DisplayName} (given {args.Count}, require at " +
-                        $"least 2)");
-                }
-
-                for (var i = 0; i < args.Count; i++)
-                {
-                    var argtype = args[i].GetResultType(env);
-                    if (!argtype.IsSubsetOf(Reals.Value))
-                        throw new TypeException(
-                            $"Argument {i} wrong type: expected " +
-                            $"{Reals.Value.DisplayName} but got " +
-                            $"{argtype.DisplayName}");
-                }
-
-                return;
-            }
 
             switch (f)
             {
@@ -312,26 +290,113 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 // case UserDefinedFunction ff:
                 //     CheckFunctionCall(ff, args, env); return;
             }
-            
-            if (args.Count != f.Parameters.Count)
-            {
-                throw new ArgumentException(
-                    $"Wrong number of arguments given to " +
-                    $"{f.DisplayName} (expected {f.Parameters.Count} but " +
-                    $"got {args.Count})");
-            }
 
-            for (var i = 0; i < args.Count; i++)
+            var ft = f.FunctionType;
+            var argResultTypes = new ISet[args.Count];
+            for (i = 0; i < args.Count; i++)
+                argResultTypes[i] = args[i].GetResultType(env);
+
+            // If the function type is one of the simpler kinds, we can
+            // make use of what we know to provide helpful feedback to the
+            // user.
+            if (ft is Sets.Functions ftf)
             {
-                var argtype = args[i].GetResultType(env);
-                if (!argtype.IsSubsetOf(f.Parameters[i].Type))
-                {
+                if (argResultTypes.Length != ftf.ParameterTypes.Count)
                     throw new TypeException(
-                        $"Argument {i} wrong type: expected " +
-                        $"{f.Parameters[i].Type.DisplayName} but got " +
-                        $"{argtype.DisplayName}");
-                }
+                        null,
+                        $"Wrong number of arguments given to " +
+                        $"{f.DisplayName} (expected " +
+                        $"{f.Parameters.Count} but got {args.Count})");
+                for (i = 0; i < argResultTypes.Length; i++)
+                    if (!argResultTypes[i].IsSubsetOf(
+                            ftf.ParameterTypes[i]))
+                    {
+                        var p = f.Parameters[i];
+                        throw new TypeException(
+                            p.Name,
+                            $"Argument {i} wrong type: " +
+                            $"expected {p.Type.DisplayName} but got " +
+                            $"{argResultTypes[i].DisplayName}");
+                    }
             }
+            else if (ft is VariadicFunctions vf)
+            {
+                if (argResultTypes.Length < vf.MinimumNumberOfArguments)
+                    throw new TypeException(
+                        null,
+                        $"Wrong number of arguments given to " +
+                        $"{f.DisplayName} (expected at least " +
+                        $"{vf.MinimumNumberOfArguments} but " +
+                        $"got {args.Count})");
+                for (i = 0; i < argResultTypes.Length; i++)
+                    if (!argResultTypes[i].IsSubsetOf(vf.ParameterType))
+                    {
+                        throw new TypeException(
+                            null,
+                            $"Argument {i} wrong type: expected " +
+                            $"{vf.ParameterType.DisplayName} " +
+                            $"but got {argResultTypes[i].DisplayName}");
+                    }
+            }
+            else if (ft is AdditionOperation.AdditionFunctionType aft)
+            {
+                if (argResultTypes.Length < 2)
+                    throw new TypeException(
+                        null,
+                        $"Wrong number of arguments given to " +
+                        $"{f.DisplayName} (expected at least " +
+                        $"2 but got {args.Count})");
+                var argType = argResultTypes[0];
+                if (!argType.IsSubsetOf(Reals.Value) &&
+                    !(argType is Vectors) &&
+                    // is subset of any Vectors instance? what about a subset
+                    // of a Vectors instance?
+                    //
+                    // for now we cheat and rely on the fact that AllVectors
+                    // and Vectors are the only vector types, and AllMatrices
+                    // and Matrices are the only matrix types.
+                    !(argType is Matrices))
+                    throw new TypeException(
+                        null,
+                        $"Wrong argument type at index 0: expected " +
+                        $"Real or Vector or Matrix, but got " +
+                        $"{argType.DisplayName}");
+                for (i = 0; i < argResultTypes.Length; i++)
+                    // again, if each individual argument reported a type that
+                    // was a different subset of some vector space, that would
+                    // be ok. but we only have Vectors, so we don't have to
+                    // deal with that now. In the future, we'll have to make
+                    // the decision below based on the subset of a broader,
+                    // containing type, such as R^N
+                    if (argResultTypes[i] != argType)
+                    {
+                        throw new TypeException(
+                            null,
+                            $"Wrong argument type at index {i}: " +
+                            $"expected {argType.DisplayName} " +
+                            $"but got {argResultTypes[i].DisplayName}");
+                    }
+            }
+            else if (ft is MultiplicationOperation.MultiplicationFunctionType mft)
+            {
+                MultiplicationOperation.CheckArguments(env, argResultTypes);
+            }
+            // TODO: AllVectorFunctions ?
+            // TODO: AllRealFunctions ?
+            // TODO: AllFunctions ?
+            else
+            {
+                if (!CanReceive(ft, argResultTypes))
+                    throw new TypeException(
+                        null,
+                        $"Wrong number or type of arguments given " +
+                        $"to {f.DisplayName}");
+            }
+        }
+
+        public bool CanReceive(IFunctionType ft, ISet[] argTypes)
+        {
+            throw new NotImplementedException();
         }
 
         public void Check(IntervalExpression expr, SolusEnvironment env)
@@ -357,7 +422,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (int c = 0; c < expr.ColumnCount; c++)
             {
                 if (!expr[r, c].GetResultType(env).IsSubsetOf(Reals.Value))
-                    throw new TypeException("All components must be reals");
+                    throw new TypeException(
+                        null,
+                        "All components must be reals");
                 Check(expr[r, c], env);
             }
         }
@@ -379,7 +446,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (var i = 0; i < expr.Length; i++)
             {
                 if (!expr[i].GetResultType(env).IsSubsetOf(Reals.Value))
-                    throw new TypeException("All components must be reals");
+                    throw new TypeException(
+                        null,
+                        "All components must be reals");
                 Check(expr[i], env);
             }
         }

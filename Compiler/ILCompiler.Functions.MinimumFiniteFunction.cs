@@ -32,7 +32,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             MinimumFiniteFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var exprs = new List<IlExpression>(8 * arguments.Count + 7);
@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             IlExpression first = nop;
             for (int i = arguments.Count - 1; i >= 0; i--)
             {
-                var calcArg = ConvertToIlExpression(arguments[i], nm,
+                var calcArg = ConvertToIlExpression(arguments[i], nm, env,
                     variables);
                 var call1 = new CallIlExpression(
                     new Func<float, bool>(float.IsInfinity),

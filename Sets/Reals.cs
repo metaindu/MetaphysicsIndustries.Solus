@@ -36,8 +36,9 @@ namespace MetaphysicsIndustries.Solus.Sets
             return mo.IsIsScalar(null);
         }
 
-        public bool IsSupersetOf(ISet other) => other == this;
-
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other)
         {
             // TODO: are reals tensors of rank 0?
