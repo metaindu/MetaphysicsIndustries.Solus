@@ -20,16 +20,15 @@
  *
  */
 
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class UnaryOperation : Operation
     {
-        protected UnaryOperation()
-            : base(new[] { new Parameter("arg", Reals.Value) })
-        {
-        }
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[] { new Parameter("arg", Reals.Value) };
 
         public override bool HasIdentityValue
         {

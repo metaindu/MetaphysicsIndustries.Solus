@@ -140,12 +140,25 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var f = (Function)f0;
 
             var evaluatedArgs = new IMathObject[expr.Arguments.Count];
-            for (i = 0; i < expr.Arguments.Count; i++)
+            if (f.IsVariadic &&
+                f.VariadicParameterType != null &&
+                f.VariadicParameterType.IsSubsetOf(Sets.Expressions.Value))
             {
-                if (f.Parameters[i].Type.IsSubsetOf(Sets.Expressions.Value))
+                for (i = 0; i < expr.Arguments.Count; i++)
                     evaluatedArgs[i] = expr.Arguments[i];
-                else
-                    evaluatedArgs[i] = Eval(expr.Arguments[i], env);
+            }
+            else
+            {
+                for (i = 0; i < expr.Arguments.Count; i++)
+                {
+                    if (!f.IsVariadic &&
+                        f.Parameters[i].Type.IsSubsetOf(Sets.Expressions.Value))
+                    {
+                        evaluatedArgs[i] = expr.Arguments[i];
+                    }
+                    else
+                        evaluatedArgs[i] = Eval(expr.Arguments[i], env);
+                }
             }
 
             return Call(f, evaluatedArgs, env);

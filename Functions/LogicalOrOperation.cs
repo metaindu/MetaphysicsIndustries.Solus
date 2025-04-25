@@ -31,13 +31,15 @@ namespace MetaphysicsIndustries.Solus.Functions
             new LogicalOrOperation();
 
         protected LogicalOrOperation()
-            : base(new[]
+        {
+        }
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[]
             {
                 new Parameter("left", Booleans.Value),
                 new Parameter("right", Booleans.Value)
-            })
-        {
-        }
+            };
 
         public override string Name => "||";
 

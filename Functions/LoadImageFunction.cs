@@ -36,7 +36,6 @@ namespace MetaphysicsIndustries.Solus.Functions
             new LoadImageFunction();
 
         protected LoadImageFunction()
-            : base(new[] { new Parameter("arg", Strings.Value) })
         {
         }
 
@@ -57,6 +56,9 @@ namespace MetaphysicsIndustries.Solus.Functions
     pixel at that location in the image. Incoming pixels are interpreted as
     24-bit integers, with blue in the low 8 bits, green in the middle 8 bits,
     and red in the high 8 bits; the value is then cast to a float (32-bit).";
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[] { new Parameter("arg", Strings.Value) };
 
         protected IMathObject InternalCall(SolusEnvironment env,
             IMathObject[] args)

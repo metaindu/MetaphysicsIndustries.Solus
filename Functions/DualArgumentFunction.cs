@@ -20,6 +20,7 @@
  *
  */
 
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -27,13 +28,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class DualArgumentFunction : Function
     {
-        protected DualArgumentFunction()
-            : base(new[]
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[]
             {
                 new Parameter("a", Reals.Value),
                 new Parameter("b", Reals.Value)
-            })
-        {
-        }
+            };
     }
 }

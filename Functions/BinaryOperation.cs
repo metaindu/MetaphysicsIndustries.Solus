@@ -29,6 +29,7 @@
  *                                                                           *
  *****************************************************************************/
 
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -36,14 +37,12 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class BinaryOperation : Operation
     {
-        protected BinaryOperation()
-            : base(new[]
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[]
             {
-                new Parameter("left", Reals.Value),
-                new Parameter("right", Reals.Value)
-            })
-        {
-        }
+                new Parameter("a", Reals.Value),
+                new Parameter("b", Reals.Value)
+            };
 
         //protected override Expression InternalCleanUp(Expression[] args)
         //{

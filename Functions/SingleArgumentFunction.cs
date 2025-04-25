@@ -20,6 +20,7 @@
  *
  */
 
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -27,9 +28,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class SingleArgumentFunction : Function
     {
-        protected SingleArgumentFunction()
-            : base(new[] { new Parameter("arg", Reals.Value) })
-        {
-        }
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[] { new Parameter("arg", Reals.Value) };
     }
 }

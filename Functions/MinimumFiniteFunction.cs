@@ -32,11 +32,6 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly MinimumFiniteFunction Value =
             new MinimumFiniteFunction();
 
-        public MinimumFiniteFunction() :
-            base(Array.Empty<Parameter>())
-        {
-        }
-
         public override string Name => "minf";
 
         public override string DocString =>
@@ -47,5 +42,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>();
+        public override bool IsVariadic => true;
+        public override ISet VariadicParameterType => Reals.Value;
     }
 }
