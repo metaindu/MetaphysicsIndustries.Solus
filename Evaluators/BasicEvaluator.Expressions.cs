@@ -141,7 +141,13 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 
             var evaluatedArgs = new IMathObject[expr.Arguments.Count];
             for (i = 0; i < expr.Arguments.Count; i++)
-                evaluatedArgs[i] = Eval(expr.Arguments[i], env);
+            {
+                if (f.Parameters[i].Type.IsSubsetOf(Sets.Expressions.Value))
+                    evaluatedArgs[i] = expr.Arguments[i];
+                else
+                    evaluatedArgs[i] = Eval(expr.Arguments[i], env);
+            }
+
             return Call(f, evaluatedArgs, env);
         }
 
