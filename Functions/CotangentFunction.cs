@@ -41,16 +41,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected CotangentFunction()
 		{
-			this.Name = "Cotangent";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "cot";
-            }
-        }
+        public override string Name => "Cotangent";
+        public override string DisplayName => "cot";
 
         public override string DocString
         {

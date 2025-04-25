@@ -41,16 +41,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
 		protected ArctangentFunction()
 		{
-			this.Name = "Arctangent";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "atan";
-            }
-        }
+        public override string DisplayName => "atan";
+        public override string Name => "Arctangent";
 
         public override string DocString
         {

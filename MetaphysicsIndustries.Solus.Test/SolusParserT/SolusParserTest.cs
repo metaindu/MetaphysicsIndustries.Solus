@@ -573,10 +573,11 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
                     {
                         new Parameter("", Reals.Value),
                         new Parameter("", Reals.Value)
-                    },
-                    "asdf")
+                    })
             {
             }
+
+            public override string Name => "asdf";
 
             public override IMathObject CustomCall(IMathObject[] args,
                 SolusEnvironment env)
@@ -614,9 +615,11 @@ namespace MetaphysicsIndustries.Solus.Test.SolusParserT
         class CountArgsFunction : Function
         {
             public CountArgsFunction()
-                : base(Array.Empty<Parameter>(), "count")
+                : base(Array.Empty<Parameter>())
             {
             }
+
+            public override string Name => "count";
 
             public override IMathObject CustomCall(IMathObject[] args,
                 SolusEnvironment env)

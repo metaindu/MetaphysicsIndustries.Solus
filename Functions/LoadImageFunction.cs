@@ -36,10 +36,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             new LoadImageFunction();
 
         protected LoadImageFunction()
-            : base(new[] { new Parameter("arg", Strings.Value) },
-                "load_image")
+            : base(new[] { new Parameter("arg", Strings.Value) })
         {
         }
+
+        public override string Name => "load_image";
 
         public override string DocString =>
             @"load_image - load an image from disk

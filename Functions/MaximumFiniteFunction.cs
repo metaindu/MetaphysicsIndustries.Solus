@@ -33,9 +33,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             new MaximumFiniteFunction();
 
         public MaximumFiniteFunction() :
-            base(Array.Empty<Parameter>(), "maxf")
+            base(Array.Empty<Parameter>())
         {
         }
+
+        public override string Name => "maxf";
 
         public override string DocString =>
             "The maxf function\n  maxf(x1, x2, ..., xn)\n\n" +

@@ -32,9 +32,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly MaximumFunction Value = new MaximumFunction();
 
         public MaximumFunction() :
-            base(Array.Empty<Parameter>(), "max")
+            base(Array.Empty<Parameter>())
         {
         }
+
+        public override string Name => "max";
 
         public override string DocString =>
             "The max function\n  max(x1, x2, ..., xn)\n\n" +

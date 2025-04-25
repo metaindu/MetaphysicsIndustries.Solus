@@ -41,16 +41,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected FloorFunction()
 		{
-			this.Name = "Floor";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "floor";
-            }
-        }
+        public override string Name => "Floor";
+
+        public override string DisplayName => "floor";
 
         public override string DocString
         {

@@ -54,6 +54,9 @@ namespace MetaphysicsIndustries.Solus.Functions
             Values = values2.ToArray();
         }
 
+        public override string Name => "CatmullRomSpline";
+        public override string DisplayName => "catmullrom";
+
         readonly float[] Times;
         readonly float[] Values;
 

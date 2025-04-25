@@ -30,9 +30,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly LessThanComparisonOperation Value = new LessThanComparisonOperation();
 
         protected LessThanComparisonOperation()
-            : base("<")
         {
         }
+
+        public override string Name => "<";
 
         protected override bool Compare(float x, float y)
         {

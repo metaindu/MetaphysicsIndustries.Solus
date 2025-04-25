@@ -33,9 +33,11 @@ namespace MetaphysicsIndustries.Solus.Functions
             new MinimumFiniteFunction();
 
         public MinimumFiniteFunction() :
-            base(Array.Empty<Parameter>(), "minf")
+            base(Array.Empty<Parameter>())
         {
         }
+
+        public override string Name => "minf";
 
         public override string DocString =>
             "The minf function\n  minf(x1, x2, ..., xn)\n\n" +

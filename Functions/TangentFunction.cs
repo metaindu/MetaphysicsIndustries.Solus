@@ -41,16 +41,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected TangentFunction()
 		{
-			this.Name = "Tangent";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "tan";
-            }
-        }
+        public override string Name => "Tangent";
+
+        public override string DisplayName => "tan";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

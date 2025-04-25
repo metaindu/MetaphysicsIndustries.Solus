@@ -32,9 +32,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly MinimumFunction Value = new MinimumFunction();
 
         public MinimumFunction() :
-            base(Array.Empty<Parameter>(), "min")
+            base(Array.Empty<Parameter>())
         {
         }
+
+        public override string Name => "min";
 
         public override string DocString =>
             "The min function\n  min(x1, x2, ..., xn)\n\n" +

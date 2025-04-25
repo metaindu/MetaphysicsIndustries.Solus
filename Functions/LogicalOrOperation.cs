@@ -37,13 +37,11 @@ namespace MetaphysicsIndustries.Solus.Functions
                 new Parameter("right", Booleans.Value)
             })
         {
-            Name = "||";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.LogicalOr; }
-        }
+        public override string Name => "||";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.LogicalOr;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Booleans.Value;

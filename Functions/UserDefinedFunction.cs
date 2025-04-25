@@ -32,19 +32,21 @@ namespace MetaphysicsIndustries.Solus.Functions
         public UserDefinedFunction(string name, string[] argnames,
             Expression expr)
             : base(
-                argnames.Select(_ => new Parameter(_, Reals.Value)).ToArray(),
-                name)
+                argnames.Select(_ => new Parameter(_, Reals.Value)).ToArray())
         {
-            Name = name;
+            _name = name;
             Expression = expr;
         }
         public UserDefinedFunction(string name,
             IEnumerable<Parameter> parameters, Expression expr)
-            : base(parameters.ToArray(), name)
+            : base(parameters.ToArray())
         {
-            Name = name;
+            _name = name;
             Expression = expr;
         }
+
+        private readonly string _name;
+        public override string Name => _name;
 
         public Expression Expression;
 

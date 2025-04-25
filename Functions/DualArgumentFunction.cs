@@ -27,12 +27,12 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class DualArgumentFunction : Function
     {
-        protected DualArgumentFunction(string name)
+        protected DualArgumentFunction()
             : base(new[]
             {
                 new Parameter("a", Reals.Value),
                 new Parameter("b", Reals.Value)
-            }, name)
+            })
         {
         }
     }

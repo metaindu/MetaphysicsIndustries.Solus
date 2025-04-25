@@ -34,9 +34,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly SizeFunction Value = new SizeFunction();
 
         protected SizeFunction()
-            : base(Array.Empty<Parameter>(), "size")
+            : base(Array.Empty<Parameter>())
         {
         }
+
+        public override string Name => "size";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)

@@ -24,21 +24,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class ComparisonOperation : BinaryOperation
     {
-        protected ComparisonOperation(string name)
-        {
-            Name = name;
-        }
-
         protected abstract bool Compare(float x, float y);
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Comparison; }
-        }
+        public override OperationPrecedence Precedence => OperationPrecedence.Comparison;
 
-        public override bool HasIdentityValue
-        {
-            get { return false; }
-        }
+        public override bool HasIdentityValue => false;
     }
 }

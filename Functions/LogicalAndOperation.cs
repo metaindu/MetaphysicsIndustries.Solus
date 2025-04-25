@@ -37,13 +37,11 @@ namespace MetaphysicsIndustries.Solus.Functions
                 new Parameter("right", Booleans.Value)
             })
         {
-            Name = "&&";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.LogicalAnd; }
-        }
+        public override string Name => "&&";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.LogicalAnd;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Booleans.Value;

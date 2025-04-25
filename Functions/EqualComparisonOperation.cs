@@ -36,12 +36,13 @@ namespace MetaphysicsIndustries.Solus.Functions
                 {
                     new Parameter("left", MathObjects.Value),
                     new Parameter("right", MathObjects.Value)
-                },
-                "==")
+                })
         {
             // TODO: intervals
             // TODO: complex numbers
         }
+
+        public override string Name => "==";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)

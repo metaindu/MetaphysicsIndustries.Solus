@@ -35,13 +35,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected FactorialFunction()
         {
-            Name = "Factorial";
         }
 
-        public override string DisplayName
-        {
-            get { return "!"; }
-        }
+        public override string Name => "Factorial";
+
+        public override string DisplayName => "!";
 
         public override string ToString(List<Expression> arguments)
         {
