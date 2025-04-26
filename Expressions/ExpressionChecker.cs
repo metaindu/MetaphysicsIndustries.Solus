@@ -26,6 +26,7 @@ using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -186,6 +187,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (f == null)
                 throw new ArgumentException(
                     "Can't check non-function target.");
+
+            if (f is DeriveMacro d)
+            {
+                var varname = expr.Arguments[1].As<VariableAccess>()
+                    .VariableName;
+                var env2 = env.CreateChildEnvironment();
+                env2.SetVariable(varname, new Number(0)); // place-holder
+                Check(expr.Arguments[0], env2);
+                return;
+            }
 
             for (var i = 0; i < expr.Arguments.Count; i++)
                 Check(expr.Arguments[i], env);

@@ -35,7 +35,6 @@ namespace MetaphysicsIndustries.Solus.Test.MacrosT.DeriveMacroT
             Assert.IsNotNull(DeriveMacro.Value);
             // and
             Assert.That(DeriveMacro.Value.Name, Is.EqualTo("derive"));
-            Assert.That(DeriveMacro.Value.NumArguments, Is.EqualTo(2));
             Assert.That(
                 DeriveMacro.Value.DocString,
                 Is.EqualTo(

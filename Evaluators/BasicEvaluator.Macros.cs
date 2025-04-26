@@ -28,11 +28,17 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 {
     public partial class BasicEvaluator
     {
-        public Expression CallMacro(DeriveMacro mm, Expression[] args,
+        public Expression CallMacro(DeriveMacro mm, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            return CallFunction(mm, args, env);
+        }
+
+        public Expression CallFunction(DeriveMacro f, IMathObject[] args,
             SolusEnvironment env)
         {
             var derive = new DerivativeTransformer();
-            var expr = args[0];
+            var expr = (Expression)args[0];
             var v = ((VariableAccess)args[1]).VariableName;
             return derive.Transform(expr, new VariableTransformArgs(v));
         }

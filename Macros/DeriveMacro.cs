@@ -20,9 +20,13 @@
  *
  */
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using MetaphysicsIndustries.Solus.Functions;
+
 namespace MetaphysicsIndustries.Solus.Macros
 {
-    public class DeriveMacro : Macro
+    public class DeriveMacro : Function
     {
         public static readonly DeriveMacro Value = new DeriveMacro();
 
@@ -30,8 +34,17 @@ namespace MetaphysicsIndustries.Solus.Macros
         {
         }
 
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Sets.Expressions.Value;
+
         public override string Name => "derive";
-        public override int NumArguments => 2;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>
+            {
+                new Parameter("e", Sets.Expressions.Value),
+                new Parameter("v", Sets.VariableAccesses.Value),
+            };
 
         public override string DocString
         {

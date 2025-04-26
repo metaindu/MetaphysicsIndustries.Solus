@@ -110,6 +110,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case CotangentFunction ff:
                     return CallFunction(ff, args, env);
+                case DeriveMacro ff:
+                    return CallFunction(ff, args, env);
                 case DistFunction ff:
                     return CallFunction(ff, args, env);
                 case DistSqFunction ff:
@@ -191,8 +193,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     "Incorrect number of arguments.");
             switch (m)
             {
-                case DeriveMacro mm:
-                    return CallMacro(mm, args, env);
                 case IfMacro mm:
                     return CallMacro(mm, args, env);
                 case RandMacro mm:

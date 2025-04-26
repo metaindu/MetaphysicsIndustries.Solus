@@ -84,6 +84,7 @@ namespace MetaphysicsIndustries.Solus
                 DistSqFunction.Value,
                 LoadImageFunction.Value,
                 SizeFunction.Value,
+                DeriveMacro.Value,
             };
 
             foreach (var func in functions)
@@ -95,7 +96,6 @@ namespace MetaphysicsIndustries.Solus
             {
                 SqrtMacro.Value,
                 RandMacro.Value,
-                DeriveMacro.Value,
                 SubstMacro.Value,
                 IfMacro.Value,
             };
