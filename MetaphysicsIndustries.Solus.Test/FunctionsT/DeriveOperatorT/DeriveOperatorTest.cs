@@ -20,23 +20,23 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.DeriveMacroT
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DeriveOperatorT
 {
     [TestFixture]
-    public class DeriveMacroTest
+    public class DeriveOperatorTest
     {
         [Test]
         public void ValueIsSet()
         {
             // expect
-            Assert.IsNotNull(DeriveMacro.Value);
+            Assert.IsNotNull(DeriveOperator.Value);
             // and
-            Assert.That(DeriveMacro.Value.Name, Is.EqualTo("derive"));
+            Assert.That(DeriveOperator.Value.Name, Is.EqualTo("derive"));
             Assert.That(
-                DeriveMacro.Value.DocString,
+                DeriveOperator.Value.DocString,
                 Is.EqualTo(
                     @"The derive operator
   derive(f(x), x)

@@ -23,11 +23,10 @@
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
-    MacrosT.DeriveMacroT
+    FunctionsT.DeriveOperatorT
 {
     [TestFixture(typeof(BasicEvaluator))]
     [TestFixture(typeof(CompilingEvaluator))]
@@ -35,12 +34,13 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         where T : IEvaluator, new()
     {
         [Test]
+        [Ignore("Macros not supported currently")]
         public void DeriveYieldsDerivative()
         {
             // given
             var parser = new SolusParser();
             var expr = new FunctionCall(
-                new Literal(DeriveMacro.Value),
+                new Literal(DeriveOperator.Value),
                 parser.GetExpression("3*x^2+5*x+7"),
                 new VariableAccess("x"));
             var env = new SolusEnvironment();

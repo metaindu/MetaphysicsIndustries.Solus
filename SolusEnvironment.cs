@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus
                 DistSqFunction.Value,
                 LoadImageFunction.Value,
                 SizeFunction.Value,
-                DeriveMacro.Value,
+                DeriveOperator.Value,
             };
 
             foreach (var func in functions)

@@ -21,16 +21,14 @@
  */
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using MetaphysicsIndustries.Solus.Functions;
 
-namespace MetaphysicsIndustries.Solus.Macros
+namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class DeriveMacro : Function
+    public class DeriveOperator : Function
     {
-        public static readonly DeriveMacro Value = new DeriveMacro();
+        public static readonly DeriveOperator Value = new DeriveOperator();
 
-        private DeriveMacro()
+        private DeriveOperator()
         {
         }
 

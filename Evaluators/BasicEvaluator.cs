@@ -110,7 +110,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case CotangentFunction ff:
                     return CallFunction(ff, args, env);
-                case DeriveMacro ff:
+                case DeriveOperator ff:
                     return CallFunction(ff, args, env);
                 case DistFunction ff:
                     return CallFunction(ff, args, env);

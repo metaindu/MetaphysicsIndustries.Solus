@@ -188,7 +188,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new ArgumentException(
                     "Can't check non-function target.");
 
-            if (f is DeriveMacro d)
+            if (f is DeriveOperator d)
             {
                 var varname = expr.Arguments[1].As<VariableAccess>()
                     .VariableName;
