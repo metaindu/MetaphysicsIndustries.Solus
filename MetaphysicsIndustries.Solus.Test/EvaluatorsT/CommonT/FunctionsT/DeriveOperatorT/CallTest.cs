@@ -29,12 +29,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.DeriveOperatorT
 {
     [TestFixture(typeof(BasicEvaluator))]
-    [TestFixture(typeof(CompilingEvaluator))]
+    // TODO: [TestFixture(typeof(CompilingEvaluator))]
     public class CallTest<T>
         where T : IEvaluator, new()
     {
         [Test]
-        [Ignore("Macros not supported currently")]
         public void DeriveYieldsDerivative()
         {
             // given

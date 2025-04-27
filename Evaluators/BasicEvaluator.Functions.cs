@@ -21,8 +21,10 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
@@ -156,6 +158,15 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             return
                 ((float)(1 / Math.Tan(args[0].ToNumber().Value))).ToNumber();
+        }
+
+        public Expression CallFunction(DeriveOperator f, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var derive = new DerivativeTransformer();
+            var expr = (Expression)args[0];
+            var v = ((VariableAccess)args[1]).VariableName;
+            return derive.Transform(expr, new VariableTransformArgs(v));
         }
 
         public IMathObject CallFunction(DistFunction f, IMathObject[] args,
