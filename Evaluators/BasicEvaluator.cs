@@ -211,7 +211,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public Expression Simplify(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(expr.Simplify(env));
+            var simplified = expr.Simplify(env);
+            return cleanup.CleanUp(simplified);
         }
 
         public void EvalInterval(Expression expr, SolusEnvironment env,
