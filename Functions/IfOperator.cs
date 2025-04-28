@@ -20,17 +20,33 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Macros
-{
-    public class IfMacro : Macro
-    {
-        public static readonly IfMacro Value = new IfMacro();
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 
-        private IfMacro()
+namespace MetaphysicsIndustries.Solus.Functions
+{
+    public class IfOperator : Function
+    {
+        public static readonly IfOperator Value = new IfOperator();
+
+        private IfOperator()
         {
         }
 
         public override string Name => "if";
-        public override int NumArguments => 3;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>()
+            {
+                new Parameter("condition", Sets.Expressions.Value),
+                new Parameter("if_true", Sets.Expressions.Value),
+                new Parameter("if_false", Sets.Expressions.Value),
+            };
+
+        public override ISet GetResultType(SolusEnvironment env, 
+            IEnumerable<ISet> argTypes)
+        {
+            return MathObjects.Value;
+        }
     }
 }

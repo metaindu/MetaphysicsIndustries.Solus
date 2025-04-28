@@ -78,7 +78,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         }
 
         [Test]
-        [Ignore("IfMacro currently returns a Literal, which confuses " +
+        [Ignore("IfOperator currently returns a Literal, which confuses " +
                 "MultiplicationOperation")]
         public void RecursiveFunctionYieldsValue()
         {

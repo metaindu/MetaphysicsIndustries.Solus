@@ -22,12 +22,12 @@
 
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
-    MacrosT.IfMacroT
+    FunctionsT.IfOperatorT
 {
     [TestFixture(typeof(BasicEvaluator))]
     [TestFixture(typeof(CompilingEvaluator))]
@@ -53,7 +53,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             });
             var condition = new Literal(1);
             var args = new Expression[] {condition, thenArg, elseArg};
-            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var expr = new FunctionCall(new Literal(IfOperator.Value), args);
             var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
@@ -84,7 +84,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             });
             var condition = new Literal(0);
             var args = new Expression[] {condition, thenArg, elseArg};
-            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var expr = new FunctionCall(new Literal(IfOperator.Value), args);
             var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
@@ -115,7 +115,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             });
             var condition = new Literal(float.NaN);
             var args = new Expression[] {condition, thenArg, elseArg};
-            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var expr = new FunctionCall(new Literal(IfOperator.Value), args);
             var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
@@ -146,7 +146,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             });
             var condition = new Literal(float.PositiveInfinity);
             var args = new Expression[] {condition, thenArg, elseArg};
-            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var expr = new FunctionCall(new Literal(IfOperator.Value), args);
             var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
@@ -177,7 +177,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             });
             var condition = new Literal(float.NegativeInfinity);
             var args = new Expression[] {condition, thenArg, elseArg};
-            var expr = new FunctionCall(new Literal(IfMacro.Value), args);
+            var expr = new FunctionCall(new Literal(IfOperator.Value), args);
             var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);

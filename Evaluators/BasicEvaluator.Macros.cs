@@ -28,18 +28,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 {
     public partial class BasicEvaluator
     {
-        public Expression CallMacro(IfMacro mm, Expression[] args,
-            SolusEnvironment env)
-        {
-            var eval = new BasicEvaluator();
-            var value = eval.Eval(args[0], env).ToNumber().Value;
-            if (value == 0 ||
-                float.IsNaN(value) ||
-                float.IsInfinity(value))
-                return new Literal(eval.Eval(args[2], env));
-            return new Literal(eval.Eval(args[1], env));
-        }
-
         public Expression CallMacro(RandMacro mm, Expression[] args,
             SolusEnvironment env)
         {

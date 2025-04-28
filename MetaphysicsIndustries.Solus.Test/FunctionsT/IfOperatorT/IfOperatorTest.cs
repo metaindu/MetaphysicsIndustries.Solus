@@ -20,21 +20,28 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.IfMacroT
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.IfOperatorT
 {
-    public class IfMacroTest
+    public class IfOperatorTest
     {
         [Test]
         public void HasDefaultValues()
         {
             // given
-            var result = IfMacro.Value;
+            var result = IfOperator.Value;
             // expect
             Assert.That(result.Name, Is.EqualTo("if"));
-            Assert.That(result.NumArguments, Is.EqualTo(3));
+            Assert.That(result.Parameters, Is.Not.Null);
+            Assert.That(result.Parameters.Count,Is.EqualTo(3));
+            Assert.That(result.Parameters[0].Type,
+                Is.SameAs(Sets.Expressions.Value));
+            Assert.That(result.Parameters[1].Type,
+                Is.SameAs(Sets.Expressions.Value));
+            Assert.That(result.Parameters[2].Type,
+                Is.SameAs(Sets.Expressions.Value));
         }
     }
 }

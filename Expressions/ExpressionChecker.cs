@@ -198,6 +198,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return;
             }
 
+            if (f is IfOperator ii)
+            {
+                Check(expr.Arguments[0], env);
+                Check(expr.Arguments[1], env);
+                Check(expr.Arguments[2], env);
+                return;
+            }
+
             for (var i = 0; i < expr.Arguments.Count; i++)
                 Check(expr.Arguments[i], env);
 

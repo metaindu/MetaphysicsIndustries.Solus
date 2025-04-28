@@ -130,6 +130,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case GreaterThanOrEqualComparisonOperation ff:
                     return CallFunction(ff, args, env);
+                case IfOperator ff:
+                    return CallFunction(ff, args, env);
                 case LessThanComparisonOperation ff:
                     return CallFunction(ff, args, env);
                 case LessThanOrEqualComparisonOperation ff:
@@ -193,8 +195,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     "Incorrect number of arguments.");
             switch (m)
             {
-                case IfMacro mm:
-                    return CallMacro(mm, args, env);
                 case RandMacro mm:
                     return CallMacro(mm, args, env);
                 case SqrtMacro mm:

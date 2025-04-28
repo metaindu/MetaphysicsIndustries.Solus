@@ -316,6 +316,18 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             return (x >= y).ToBoolean();
         }
 
+        public Expression CallFunction(IfOperator ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var eval = new BasicEvaluator();
+            var value = eval.Eval((Expression)args[0], env).ToNumber().Value;
+            if (value == 0 ||
+                float.IsNaN(value) ||
+                float.IsInfinity(value))
+                return new Literal(eval.Eval((Expression)args[2], env));
+            return new Literal(eval.Eval((Expression)args[1], env));
+        }
+
         public IMathObject CallFunction(LessThanComparisonOperation f,
             IMathObject[] args, SolusEnvironment env)
         {
