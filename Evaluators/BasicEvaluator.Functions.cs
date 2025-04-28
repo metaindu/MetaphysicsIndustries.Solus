@@ -23,6 +23,7 @@ using System;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
@@ -587,6 +588,12 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 null,
                 $"Type not supported for equality comparisons: " +
                 $"{type1.DisplayName}");
+        }
+
+        public IMathObject CallFunction(RandFunction mm, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            return ((float)RandFunction.Source.NextDouble()).ToNumber();
         }
 
         public IMathObject CallFunction(SecantFunction f, IMathObject[] args,

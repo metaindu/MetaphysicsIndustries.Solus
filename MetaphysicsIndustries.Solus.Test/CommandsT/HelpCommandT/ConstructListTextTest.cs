@@ -50,10 +50,10 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
 
 Functions:
   abs acos acot acsc asec asin atan atan2 ceil cos cot csc derive dist distsq 
-  floor if ln load_image log log10 log2 sec sin size tan unitstep 
+  floor if ln load_image log log10 log2 rand sec sin size tan unitstep 
 
 Macros:
-  rand sqrt subst 
+  sqrt subst 
 
 Types:
   Boolean Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 
@@ -91,10 +91,10 @@ Additional topics:
 
 Functions:
   abs acos acot acsc asec asin atan atan2 ceil cos cot csc derive dist distsq 
-  f floor if ln load_image log log10 log2 sec sin size tan unitstep 
+  f floor if ln load_image log log10 log2 rand sec sin size tan unitstep 
 
 Macros:
-  rand sqrt subst 
+  sqrt subst 
 
 Types:
   Boolean Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 
@@ -133,10 +133,10 @@ Additional topics:
 
 Functions:
   abs acos acot acsc asec asin atan atan2 ceil cos cot csc derive dist distsq 
-  f floor if ln load_image log log10 log2 sec sin size tan unitstep 
+  f floor if ln load_image log log10 log2 rand sec sin size tan unitstep 
 
 Macros:
-  rand sqrt subst 
+  sqrt subst 
 
 Types:
   Boolean Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 

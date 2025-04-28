@@ -86,6 +86,7 @@ namespace MetaphysicsIndustries.Solus
                 SizeFunction.Value,
                 DeriveOperator.Value,
                 IfOperator.Value,
+                RandFunction.Value,
             };
 
             foreach (var func in functions)
@@ -96,7 +97,6 @@ namespace MetaphysicsIndustries.Solus
             var macros = new List<Macro>
             {
                 SqrtMacro.Value,
-                RandMacro.Value,
                 SubstMacro.Value,
             };
 

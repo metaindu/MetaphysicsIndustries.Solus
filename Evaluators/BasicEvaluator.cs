@@ -60,8 +60,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return Eval(literal, env);
                 case MatrixExpression me:
                     return Eval(me, env);
-                case RandomExpression re:
-                    return Eval(re, env);
                 case VariableAccess va:
                     return Eval(va, env);
                 case VectorExpression ve:
@@ -166,6 +164,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case NotEqualComparisonOperation ff:
                     return CallFunction(ff, args, env);
+                case RandFunction ff:
+                    return CallFunction(ff, args, env);
                 case SecantFunction ff:
                     return CallFunction(ff, args, env);
                 case SineFunction ff:
@@ -195,8 +195,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     "Incorrect number of arguments.");
             switch (m)
             {
-                case RandMacro mm:
-                    return CallMacro(mm, args, env);
                 case SqrtMacro mm:
                     return CallMacro(mm, args, env);
                 case SubstMacro mm:

@@ -20,13 +20,12 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
-    MacrosT.RandMacroT
+    FunctionsT.RandFunctionT
 {
     [TestFixture]
     public class CallTest
@@ -35,7 +34,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         public void CallDoesNotThrow()
         {
             // given
-            var expr = new FunctionCall(new Literal(RandMacro.Value));
+            var expr = new FunctionCall(new Literal(RandFunction.Value));
             var ec = new ExpressionChecker();
             // expect
             Assert.DoesNotThrow(() => ec.Check(expr, null));

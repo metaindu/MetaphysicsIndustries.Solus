@@ -22,28 +22,36 @@
 
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
-    MacrosT.RandMacroT
+    FunctionsT.RandFunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
-    [TestFixture(typeof(CompilingEvaluator))]
+    // TODO: [TestFixture(typeof(CompilingEvaluator))]
     public class CallTest<T>
         where T : IEvaluator, new()
     {
         [Test]
-        [Ignore("Macros not supported currently")]
-        public void CallYieldsRandomExpression()
+        public void CallYieldsNumber()
         {
             // given
-            var expr = new FunctionCall(new Literal(RandMacro.Value));
+            var expr = new FunctionCall(new Literal(RandFunction.Value));
             var eval = Util.CreateEvaluator<T>();
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.IsInstanceOf<RandomExpression>(result);
+            Assert.IsInstanceOf<Number>(result);
+            var num = result.ToNumber();
+            var f = num.Value;
+            Assert.That(!float.IsInfinity(f));
+            Assert.That(!float.IsNegativeInfinity(f));
+            Assert.That(!float.IsPositiveInfinity(f));
+            Assert.That(!float.IsNaN(f));
+            Assert.That(f, Is.GreaterThanOrEqualTo(0f));
+            Assert.That(f, Is.LessThan(1f));
         }
     }
 }

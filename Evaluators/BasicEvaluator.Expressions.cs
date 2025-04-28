@@ -190,11 +190,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             return new Matrix(values);
         }
 
-        public IMathObject Eval(RandomExpression expr, SolusEnvironment env)
-        {
-            return ((float)RandomExpression.Source.NextDouble()).ToNumber();
-        }
-
         public IMathObject Eval(VariableAccess expr, SolusEnvironment env)
         {
             var var = expr.VariableName;

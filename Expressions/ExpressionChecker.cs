@@ -57,9 +57,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 case MatrixExpression me:
                     Check(me, env);
                     break;
-                case RandomExpression re:
-                    Check(re, env);
-                    break;
                 case VariableAccess va:
                     Check(va, env);
                     break;
@@ -380,8 +377,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 Check(expr[r, c], env);
             }
         }
-
-        public void Check(RandomExpression expr, SolusEnvironment env) { }
 
         public void Check(VariableAccess expr, SolusEnvironment env)
         {

@@ -28,12 +28,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 {
     public partial class BasicEvaluator
     {
-        public Expression CallMacro(RandMacro mm, Expression[] args,
-            SolusEnvironment env)
-        {
-            return new RandomExpression();
-        }
-
         public Expression CallMacro(SqrtMacro mm, Expression[] args,
             SolusEnvironment env)
         {

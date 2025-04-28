@@ -1,4 +1,4 @@
-
+﻿
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
@@ -20,25 +20,28 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Expressions;
+using System;
+using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Sets;
-using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.RandomExpressionT
+namespace MetaphysicsIndustries.Solus.Functions
 {
-    [TestFixture]
-    public class ResultTest
+    public class RandFunction : Function
     {
-        [Test]
-        public void ResultIsScalar()
+        public static readonly RandFunction Value = new RandFunction();
+
+        public static readonly Random Source = new Random();
+        
+        private RandFunction()
         {
-            // given
-            var expr = new RandomExpression();
-            var env = new SolusEnvironment();
-            // when
-            var result = expr.GetResultType(env);
-            // then
-            Assert.That(result, Is.SameAs(Reals.Value));
         }
+
+        public override string Name => "rand";
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>();
+
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Reals.Value;
     }
 }
