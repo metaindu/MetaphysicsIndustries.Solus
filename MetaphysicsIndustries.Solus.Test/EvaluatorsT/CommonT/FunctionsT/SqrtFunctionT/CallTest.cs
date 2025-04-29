@@ -23,11 +23,10 @@
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
-    MacrosT.SqrtMacroT
+    FunctionsT.SqrtFunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
     [TestFixture(typeof(CompilingEvaluator))]
@@ -39,7 +38,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
         public void CallYieldsExponentOperation()
         {
             // given
-            var expr = new FunctionCall(new Literal(SqrtMacro.Value),
+            var expr = new FunctionCall(new Literal(SqrtFunction.Value),
                 new Literal(2));
             var eval = Util.CreateEvaluator<T>();
             // when

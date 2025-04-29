@@ -20,14 +20,12 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
-    MacrosT.SqrtMacroT
+    FunctionsT.SqrtFunctionT
 {
     [TestFixture]
     public class CallTest
@@ -36,7 +34,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         public void CallDoesNotThrow()
         {
             // given
-            var expr = new FunctionCall(new Literal(SqrtMacro.Value),
+            var expr = new FunctionCall(new Literal(SqrtFunction.Value),
                 new Literal(2));
             var ec = new ExpressionChecker();
             // expect

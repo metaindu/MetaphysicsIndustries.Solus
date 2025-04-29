@@ -622,6 +622,13 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             return null;
         }
 
+        public IMathObject CallFunction(SqrtFunction f, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            return CallFunction(ExponentOperation.Value,
+                new[] { args[0], 0.5f.ToNumber() }, env);
+        }
+
         public IMathObject CallFunction(TangentFunction f,
             IMathObject[] args, SolusEnvironment env)
         {

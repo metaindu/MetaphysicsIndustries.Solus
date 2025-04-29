@@ -20,25 +20,27 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Macros
-{
-    public class SqrtMacro : Macro
-    {
-        public static readonly SqrtMacro Value = new SqrtMacro();
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 
-        private SqrtMacro()
+namespace MetaphysicsIndustries.Solus.Functions
+{
+    public class SqrtFunction : Function
+    {
+        public static readonly SqrtFunction Value = new SqrtFunction();
+
+        private SqrtFunction()
         {
         }
 
         public override string Name => "sqrt";
-        public override int NumArguments => 1;
 
-        public override string DocString
-        {
-            get
-            {
-                return "square root";
-            }
-        }
+        public override string DocString => "square root";
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter> { new Parameter("x", Reals.Value) };
+
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Reals.Value;
     }
 }
