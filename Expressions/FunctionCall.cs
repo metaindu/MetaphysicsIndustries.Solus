@@ -190,20 +190,49 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override Expression Simplify(SolusEnvironment env)
         {
             var function = Function.Simplify(env);
-            var args = Arguments.Select(
-                a => a.Simplify(env)).ToArray();
-            var allLiterals = args.All(a => a is Literal);
-            var newExpr = new FunctionCall(function, args.ToArray());
-            if (allLiterals &&
-                function is Literal literal &&
-                literal.Value.IsIsFunction(env))
+            Function f = null;
+            if (function is Literal funlit &&
+                funlit.Value.IsIsFunction(env))
+                f = funlit.Value.ToFunction();
+
+            var simplifiedArgs = new List<Expression>();
+            int i;
+            var allArgsAreEvaluable = true;
+            for (i = 0; i < Arguments.Count; i++)
             {
-                var f = (Function)literal.Value;
-                var args2 = args.Select(
-                    a => ((Literal)a).Value);
+                var paramTypeIsExpression = false;
+                if (f != null)
+                {
+                    if (f.IsVariadic)
+                    {
+                        if (f.VariadicParameterType.IsSubsetOf(
+                                Sets.Expressions.Value))
+                            paramTypeIsExpression = true;
+                    }
+                    else
+                    {
+                        if (f.Parameters[i].Type
+                            .IsSubsetOf(Sets.Expressions.Value))
+                            paramTypeIsExpression = true;
+                    }
+                }
+
+                var arg = Arguments[i];
+                var simplified = arg.Simplify(env);
+                if (!paramTypeIsExpression && !simplified.IsIsLiteral())
+                    allArgsAreEvaluable = false;
+
+                simplifiedArgs.Add(simplified);
+            }
+            var newExpr = new FunctionCall(function, simplifiedArgs.ToArray());
+            if (f !=null &&
+                allArgsAreEvaluable)
+            {
                 var eval = new BasicEvaluator();
                 var result = eval.Eval(newExpr, env);
-                return new Literal(result);
+                if (!(result is Expression))
+                    result = new Literal(result);
+                return (Expression)result;
             }
 
             return newExpr;
