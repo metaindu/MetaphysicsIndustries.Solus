@@ -76,6 +76,13 @@ namespace MetaphysicsIndustries.Solus.Functions
         public virtual bool IsVariadic => false;
         public virtual ISet VariadicParameterType => null;
 
+        public ISet GetParameterType(int i)
+        {
+            if (IsVariadic)
+                return VariadicParameterType;
+            return Parameters[i].Type;
+        }
+
         public virtual string ToString(List<Expression> arguments)
         {
             Expression[] exprs = arguments.ToArray();

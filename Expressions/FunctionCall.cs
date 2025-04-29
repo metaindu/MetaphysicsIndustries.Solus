@@ -200,22 +200,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var allArgsAreEvaluable = true;
             for (i = 0; i < Arguments.Count; i++)
             {
-                var paramTypeIsExpression = false;
-                if (f != null)
-                {
-                    if (f.IsVariadic)
-                    {
-                        if (f.VariadicParameterType.IsSubsetOf(
-                                Sets.Expressions.Value))
-                            paramTypeIsExpression = true;
-                    }
-                    else
-                    {
-                        if (f.Parameters[i].Type
-                            .IsSubsetOf(Sets.Expressions.Value))
-                            paramTypeIsExpression = true;
-                    }
-                }
+                var paramTypeIsExpression =
+                    f != null &&
+                    f.GetParameterType(i).IsSubsetOf(Sets.Expressions.Value);
 
                 var arg = Arguments[i];
                 var simplified = arg.Simplify(env);
@@ -224,8 +211,9 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
                 simplifiedArgs.Add(simplified);
             }
+
             var newExpr = new FunctionCall(function, simplifiedArgs.ToArray());
-            if (f !=null &&
+            if (f != null &&
                 allArgsAreEvaluable)
             {
                 var eval = new BasicEvaluator();
