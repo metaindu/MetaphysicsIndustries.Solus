@@ -201,6 +201,17 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return;
             }
 
+            if (f is SubstFunction)
+            {
+                var varname = expr.Arguments[1].As<VariableAccess>()
+                    .VariableName;
+                var env2 = env.CreateChildEnvironment();
+                env2.SetVariable(varname, new Number(0)); // place-holder
+                Check(expr.Arguments[0], env2);
+                Check(expr.Arguments[2], env2);
+                return;
+            }
+
             for (var i = 0; i < expr.Arguments.Count; i++)
                 Check(expr.Arguments[i], env);
 
