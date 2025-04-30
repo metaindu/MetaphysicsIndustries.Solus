@@ -39,14 +39,14 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
             var ec = new ExpressionChecker();
-            ec.IsWellFormed(expr, env);
+            ec.IsWellFormed(expr);
 
             // We can't rely on callers to have applied all variables. We
             // have to do it here, even if it turns out to be a no-op in some
             // cases.
             var avt = new ApplyVariablesTransform();
             expr = avt.Transform(expr, env);
-            ec.IsWellFormed(expr, env);
+            ec.IsWellFormed(expr);
 
             var varNames = Expression.GatherVariables(expr);
             var variables =
