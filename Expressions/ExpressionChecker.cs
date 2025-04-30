@@ -591,6 +591,10 @@ namespace MetaphysicsIndustries.Solus.Expressions
         }
 
         public bool IsWellFormed(VariableAccess expr, SolusEnvironment env,
+            bool throws = true) =>
+            true;
+
+        public bool IsWellDefined(VariableAccess expr, SolusEnvironment env,
             bool throws = true)
         {
             if (!env.ContainsVariable(expr.VariableName))
