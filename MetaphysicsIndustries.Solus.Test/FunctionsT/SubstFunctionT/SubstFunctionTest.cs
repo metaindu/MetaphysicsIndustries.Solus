@@ -20,21 +20,25 @@
  *
  */
 
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.MacrosT.SubstMacroT
+namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SubstFunctionT
 {
     [TestFixture]
-    public class SubstMacroTest
+    public class SubstFunctionTest
     {
         [Test]
         public void ValueIsSet()
         {
             // expect
-            Assert.IsNotNull(SubstMacro.Value);
-            Assert.That(SubstMacro.Value.Name, Is.EqualTo("subst"));
-            Assert.That(SubstMacro.Value.NumArguments, Is.EqualTo(3));
+            Assert.IsNotNull(SubstFunction.Value);
+            Assert.That(SubstFunction.Value.Name, Is.EqualTo("subst"));
+            Assert.That(SubstFunction.Value.Parameters.Count, Is.EqualTo(3));
+            Assert.That(SubstFunction.Value.Parameters[0].Type, Is.SameAs(Sets.Expressions.Value));
+            Assert.That(SubstFunction.Value.Parameters[1].Type, Is.SameAs(Sets.VariableAccesses.Value));
+            Assert.That(SubstFunction.Value.Parameters[2].Type, Is.SameAs(Sets.Expressions.Value));
+            Assert.That(!SubstFunction.Value.IsVariadic);
         }
     }
 }

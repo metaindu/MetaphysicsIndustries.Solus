@@ -28,14 +28,5 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 {
     public partial class BasicEvaluator
     {
-        public Expression CallMacro(SubstMacro mm, Expression[] args,
-            SolusEnvironment env)
-        {
-            var subst = new SubstTransformer();
-            var cleanup = new CleanUpTransformer();
-            var var = ((VariableAccess)args[1]).VariableName;
-            return cleanup.CleanUp(
-                subst.Subst(args[0], var, args[2]));
-        }
     }
 }

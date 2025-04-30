@@ -20,17 +20,28 @@
  *
  */
 
-namespace MetaphysicsIndustries.Solus.Macros
-{
-    public class SubstMacro : Macro
-    {
-        public static readonly SubstMacro Value = new SubstMacro();
+using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 
-        private SubstMacro()
-        {
-        }
+namespace MetaphysicsIndustries.Solus.Functions
+{
+    public class SubstFunction : Function
+    {
+        public static readonly SubstFunction Value = new SubstFunction();
+
+        private SubstFunction() { }
 
         public override string Name => "subst";
-        public override int NumArguments => 3;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>()
+            {
+                new Parameter("expr", Sets.Expressions.Value),
+                new Parameter("v", VariableAccesses.Value),
+                new Parameter("sub", Sets.Expressions.Value)
+            };
+
+        public override ISet GetResultType(SolusEnvironment env,
+            IEnumerable<ISet> argTypes) => Sets.Expressions.Value;
     }
 }

@@ -174,6 +174,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case SqrtFunction ff:
                     return CallFunction(ff, args, env);
+                case SubstFunction ff:
+                    return CallFunction(ff, args, env);
                 case TangentFunction ff:
                     return CallFunction(ff, args, env);
                 case UnitStepFunction ff:
@@ -197,8 +199,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     "Incorrect number of arguments.");
             switch (m)
             {
-                case SubstMacro mm:
-                    return CallMacro(mm, args, env);
                 default:
                     throw new ArgumentException(
                         $"Unknown macro: {m.GetType().Name}",

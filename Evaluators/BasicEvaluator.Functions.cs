@@ -629,6 +629,16 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 new[] { args[0], 0.5f.ToNumber() }, env);
         }
 
+        public IMathObject CallFunction(SubstFunction ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var subst = new SubstTransformer();
+            var cleanup = new CleanUpTransformer();
+            var var = ((VariableAccess)args[1]).VariableName;
+            return cleanup.CleanUp(
+                subst.Subst((Expression)args[0], var, (Expression)args[2]));
+        }
+
         public IMathObject CallFunction(TangentFunction f,
             IMathObject[] args, SolusEnvironment env)
         {

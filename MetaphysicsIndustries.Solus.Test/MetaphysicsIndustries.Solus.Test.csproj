@@ -24,4 +24,10 @@
     <ProjectReference Include="..\solus\solus.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EvaluatorsT\CommonT\MacrosT\" />
+    <Folder Include="ExpressionsT\ExpressionCheckerT\MacrosT\" />
+    <Folder Include="MacrosT\" />
+  </ItemGroup>
+
 </Project>

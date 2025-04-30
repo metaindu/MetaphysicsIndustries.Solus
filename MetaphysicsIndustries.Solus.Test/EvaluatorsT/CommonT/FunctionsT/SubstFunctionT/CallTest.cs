@@ -22,44 +22,57 @@
 
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
-using MetaphysicsIndustries.Solus.Macros;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
-namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
-    MacrosT.SubstMacroT
+namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
+    FunctionsT.SubstFunctionT
 {
-    [TestFixture]
-    public class CallTest
+    [TestFixture(typeof(BasicEvaluator))]
+    [TestFixture(typeof(CompilingEvaluator))]
+    public class CallTest<T>
+        where T : IEvaluator, new()
     {
         [Test]
-        public void UnmatchedVariableDoesNotThrow()
+        [Ignore("Macros not supported currently")]
+        public void UnmatchedVariableYieldsSame()
         {
             // given
             var original = new VariableAccess("x");
             var expr = new FunctionCall(
-                new Literal(SubstMacro.Value),
+                new Literal(SubstFunction.Value),
                 original,
                 new VariableAccess("y"),
                 new Literal(1));
-            var ec = new ExpressionChecker();
+            var eval = Util.CreateEvaluator<T>();
             var env = new SolusEnvironment();
-            // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            // when
+            var result = eval.Eval(expr, env);
+            // then
+            Assert.That(result, Is.SameAs(original));
+            Assert.IsInstanceOf<VariableAccess>(result);
+            Assert.That(((VariableAccess)result).VariableName,
+                Is.EqualTo("x"));
         }
 
         [Test]
+        [Ignore("Macros not supported currently")]
         public void MatchVariableGetsReplaced()
         {
             // given
             var expr = new FunctionCall(
-                new Literal(SubstMacro.Value),
+                new Literal(SubstFunction.Value),
                 new VariableAccess("x"),
                 new VariableAccess("x"),
                 new Literal(1));
-            var ec = new ExpressionChecker();
+            var eval = Util.CreateEvaluator<T>();
             var env = new SolusEnvironment();
-            // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            // when
+            var result = eval.Eval(expr, env);
+            // then
+            Assert.IsInstanceOf<Literal>(result);
+            Assert.That(((Literal)result).Value.ToNumber().Value,
+                Is.EqualTo(1));
         }
     }
 }
