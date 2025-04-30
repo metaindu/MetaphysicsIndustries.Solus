@@ -31,47 +31,40 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public class ExpressionChecker
     {
-        public void Check(Expression expr, SolusEnvironment env)
+        public bool IsWellFormed(Expression expr, SolusEnvironment env)
         {
             switch (expr)
             {
                 case ColorExpression ce:
-                    Check(ce, env);
-                    break;
+                    return IsWellFormed(ce, env);
                 case ComponentAccess ca:
-                    Check(ca, env);
-                    break;
+                    return IsWellFormed(ca, env);
                 case DerivativeOfVariable dov:
-                    Check(dov, env);
-                    break;
+                    return IsWellFormed(dov, env);
                 case FunctionCall fc:
-                    Check(fc, env);
-                    break;
+                    return IsWellFormed(fc, env);
                 case IntervalExpression interval:
-                    Check(interval, env);
-                    break;
+                    return IsWellFormed(interval, env);
                 case Literal literal:
-                    Check(literal, env);
-                    break;
+                    return IsWellFormed(literal, env);
                 case MatrixExpression me:
-                    Check(me, env);
-                    break;
+                    return IsWellFormed(me, env);
                 case VariableAccess va:
-                    Check(va, env);
-                    break;
+                    return IsWellFormed(va, env);
                 case VectorExpression ve:
-                    Check(ve, env);
-                    break;
-                // default:
-                //     throw new ArgumentException(
-                //         $"Unknown expression type: {expr.GetType().Name}",
-                //         nameof(expr));
+                    return IsWellFormed(ve, env);
             }
+
+            // throw new ArgumentException(
+            //     $"Unknown expression type: {expr.GetType().Name}",
+            //     nameof(expr));
+            return true;
         }
 
-        public void Check(ColorExpression expr, SolusEnvironment env) { }
+        public bool IsWellFormed(ColorExpression expr, SolusEnvironment env) =>
+            true;
 
-        public void Check(ComponentAccess expr, SolusEnvironment env)
+        public bool IsWellFormed(ComponentAccess expr, SolusEnvironment env)
         {
             var exprResultType = expr.Expr.GetResultType(env);
             if (!exprResultType.IsSubsetOf(Tensors.Value) &&
@@ -79,7 +72,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 throw new TypeException(null,
                     "The expression should result in a type with components");
 
-            Check(expr.Expr, env);
+            var rv = IsWellFormed(expr.Expr, env);
+            if (!rv) return false;
             int i;
             for (i = 0; i < expr.Indexes.Count; i++)
             {
@@ -87,7 +81,8 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 if (!indexType.IsSubsetOf(Reals.Value))
                     throw new TypeException($"index {i}",
                         "Index must be a real number");
-                Check(expr.Indexes[i], env);
+                rv = IsWellFormed(expr.Indexes[i], env);
+                if (!rv) return false;
             }
 
             if (exprResultType.IsSubsetOf(Strings.Value))
@@ -162,16 +157,19 @@ namespace MetaphysicsIndustries.Solus.Expressions
                                 " the matrix");
                     }
             }
+
+            return true;
         }
 
-        public void Check(DerivativeOfVariable expr, SolusEnvironment env)
+        public bool IsWellFormed(DerivativeOfVariable expr, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void Check(FunctionCall expr, SolusEnvironment env)
+        public bool IsWellFormed(FunctionCall expr, SolusEnvironment env)
         {
-            Check(expr.Function, env);
+            var rv = IsWellFormed(expr.Function, env);
+            if (!rv) return false;
 
             IMathObject fv = expr.Function;  // TODO: expr.GetResultType
             if (fv is VariableAccess va)
@@ -189,16 +187,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     .VariableName;
                 var env2 = env.CreateChildEnvironment();
                 env2.SetVariable(varname, new Number(0)); // place-holder
-                Check(expr.Arguments[0], env2);
-                return;
+                rv = IsWellFormed(expr.Arguments[0], env2);
+                if (!rv) return false;
+                return true;
             }
 
             if (f is IfOperator ii)
             {
-                Check(expr.Arguments[0], env);
-                Check(expr.Arguments[1], env);
-                Check(expr.Arguments[2], env);
-                return;
+                rv = IsWellFormed(expr.Arguments[0], env);
+                if (!rv) return false;
+                rv = IsWellFormed(expr.Arguments[1], env);
+                if (!rv) return false;
+                rv = IsWellFormed(expr.Arguments[2], env);
+                if (!rv) return false;
+                return true;
             }
 
             if (f is SubstFunction)
@@ -207,13 +209,18 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     .VariableName;
                 var env2 = env.CreateChildEnvironment();
                 env2.SetVariable(varname, new Number(0)); // place-holder
-                Check(expr.Arguments[0], env2);
-                Check(expr.Arguments[2], env2);
-                return;
+                rv = IsWellFormed(expr.Arguments[0], env2);
+                if (!rv) return false;
+                rv = IsWellFormed(expr.Arguments[2], env2);
+                if (!rv) return false;
+                return true;
             }
 
             for (var i = 0; i < expr.Arguments.Count; i++)
-                Check(expr.Arguments[i], env);
+            {
+                rv = IsWellFormed(expr.Arguments[i], env);
+                if (!rv) return false;
+            }
 
             var args = expr.Arguments;
 
@@ -237,107 +244,201 @@ namespace MetaphysicsIndustries.Solus.Expressions
                             $"{argtype.DisplayName}");
                 }
 
-                return;
+                return true;
             }
 
             switch (f)
             {
                 // case AbsoluteValueFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case AdditionOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case ArccosecantFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case ArccosineFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case ArccotangentFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case ArcsecantFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case ArcsineFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case Arctangent2Function ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case ArctangentFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case BitwiseAndOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case BitwiseOrOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case CeilingFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case CosecantFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case CosineFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case CotangentFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case DistFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case DistSqFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case DivisionOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case EqualComparisonOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case ExponentOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case FactorialFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case FloorFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case GreaterThanComparisonOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case GreaterThanOrEqualComparisonOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case LessThanComparisonOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case LessThanOrEqualComparisonOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case LoadImageFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case Log10Function ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case Log2Function ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case LogarithmFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case LogicalAndOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case LogicalOrOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 case MaximumFiniteFunction ff:
-                    CheckFunctionCall(ff, args, env); return;
+                    rv = IsWellFormedFunctionCall(ff, args, env);
+                    if (!rv) return false;
+                    return true;
                 case MaximumFunction ff:
-                    CheckFunctionCall(ff, args, env); return;
+                    rv = IsWellFormedFunctionCall(ff, args, env);
+                    if (!rv) return false;
+                    return true;
                 case MinimumFiniteFunction ff:
-                    CheckFunctionCall(ff, args, env); return;
+                    rv = IsWellFormedFunctionCall(ff, args, env);
+                    if (!rv) return false;
+                    return true;
                 case MinimumFunction ff:
-                    CheckFunctionCall(ff, args, env); return;
+                    rv = IsWellFormedFunctionCall(ff, args, env);
+                    if (!rv) return false;
+                    return true;
                 // case ModularDivision ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case MultiplicationOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case NaturalLogarithmFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case NegationOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case NotEqualComparisonOperation ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case SecantFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case SineFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 case SizeFunction ff:
-                    CheckFunctionCall(ff, args, env); return;
+                    rv = IsWellFormedFunctionCall(ff, args, env);
+                    if (!rv) return false;
+                    return true;
                 // case TangentFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case UnitStepFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
                 // case UserDefinedFunction ff:
-                //     CheckFunctionCall(ff, args, env); return;
+                //     rv = CheckFunctionCall(ff, args, env);
+                //     if (!rv) return false;
+                //     return true;
             }
-            
+
             if (args.Count != f.Parameters.Count)
             {
                 throw new ArgumentException(
@@ -357,217 +458,234 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         $"{argtype.DisplayName}");
                 }
             }
+
+            return true;
         }
 
-        public void Check(IntervalExpression expr, SolusEnvironment env)
+        public bool IsWellFormed(IntervalExpression expr, SolusEnvironment env)
         {
-            Check(expr.LowerBound, env);
+            var rv = IsWellFormed(expr.LowerBound, env);
+            if (!rv) return false;
             var lower = expr.LowerBound.GetResultType(env);
             if (!lower.IsSubsetOf(Reals.Value))
                 throw new TypeException(null,
                     "Lower bound is not a scalar");
 
-            Check(expr.UpperBound, env);
+            rv = IsWellFormed(expr.UpperBound, env);
+            if (!rv) return false;
             var upper = expr.UpperBound.GetResultType(env);
             if (!upper.IsSubsetOf(Reals.Value))
                 throw new TypeException(null,
                     "Upper bound is not a scalar");
+
+            return true;
         }
 
-        public void Check(Literal expr, SolusEnvironment env) { }
+        public bool IsWellFormed(Literal expr, SolusEnvironment env) => true;
 
-        public void Check(MatrixExpression expr, SolusEnvironment env)
+        public bool IsWellFormed(MatrixExpression expr, SolusEnvironment env)
         {
             for (int r = 0; r < expr.RowCount; r++)
             for (int c = 0; c < expr.ColumnCount; c++)
             {
                 if (!expr[r, c].GetResultType(env).IsSubsetOf(Reals.Value))
                     throw new TypeException("All components must be reals");
-                Check(expr[r, c], env);
+                var rv = IsWellFormed(expr[r, c], env);
+                if (!rv) return false;
             }
+
+            return true;
         }
 
-        public void Check(VariableAccess expr, SolusEnvironment env)
+        public bool IsWellFormed(VariableAccess expr, SolusEnvironment env)
         {
             if (!env.ContainsVariable(expr.VariableName))
                 throw new NameException(
                     $"Variable not found: {expr.VariableName}");
             var target = env.GetVariable(expr.VariableName);
             if (target.IsIsExpression(env))
-                Check((Expression)target, env);
+            {
+                var rv = IsWellFormed((Expression)target, env);
+                if (!rv) return false;
+            }
+
+            return true;
         }
 
-        public void Check(VectorExpression expr, SolusEnvironment env)
+        public bool IsWellFormed(VectorExpression expr, SolusEnvironment env)
         {
             for (var i = 0; i < expr.Length; i++)
             {
                 if (!expr[i].GetResultType(env).IsSubsetOf(Reals.Value))
                     throw new TypeException("All components must be reals");
-                Check(expr[i], env);
+                var rv = IsWellFormed(expr[i], env);
+                if (!rv) return false;
             }
+
+            return true;
         }
 
-        public void CheckFunctionCall(AbsoluteValueFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(AbsoluteValueFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(AdditionOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(AdditionOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(ArccosecantFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ArccosecantFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(ArccosineFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ArccosineFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(ArccotangentFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ArccotangentFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(ArcsecantFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ArcsecantFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(ArcsineFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ArcsineFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(Arctangent2Function ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(Arctangent2Function ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(ArctangentFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ArctangentFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(BitwiseAndOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(BitwiseAndOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(BitwiseOrOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(BitwiseOrOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(CeilingFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(CeilingFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(CosecantFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(CosecantFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(CosineFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(CosineFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(CotangentFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(CotangentFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(DistFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(DistFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(DistSqFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(DistSqFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(DivisionOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(DivisionOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(EqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(EqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(ExponentOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ExponentOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(FactorialFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(FactorialFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(FloorFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(FloorFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(GreaterThanComparisonOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(GreaterThanComparisonOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(GreaterThanOrEqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(GreaterThanOrEqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(LessThanComparisonOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(LessThanComparisonOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(LessThanOrEqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(LessThanOrEqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(LoadImageFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(LoadImageFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(Log10Function ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(Log10Function ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(Log2Function ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(Log2Function ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(LogarithmFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(LogarithmFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(LogicalAndOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(LogicalAndOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(LogicalOrOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(LogicalOrOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(MaximumFiniteFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(MaximumFiniteFunction ff, List<Expression> args, SolusEnvironment env)
         {
             if (args.Count < 1)
                 throw new ArgumentException("No arguments passed");
@@ -579,9 +697,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
             }
+
+            return true;
         }
 
-        public void CheckFunctionCall(MaximumFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(MaximumFunction ff, List<Expression> args, SolusEnvironment env)
         {
             if (args.Count < 1)
                 throw new ArgumentException("No arguments passed");
@@ -593,9 +713,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
             }
+
+            return true;
         }
 
-        public void CheckFunctionCall(MinimumFiniteFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(MinimumFiniteFunction ff, List<Expression> args, SolusEnvironment env)
         {
             if (args.Count < 1)
                 throw new ArgumentException("No arguments passed");
@@ -607,9 +729,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
             }
+
+            return true;
         }
 
-        public void CheckFunctionCall(MinimumFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(MinimumFunction ff, List<Expression> args, SolusEnvironment env)
         {
             if (args.Count < 1)
                 throw new ArgumentException("No arguments passed");
@@ -621,44 +745,46 @@ namespace MetaphysicsIndustries.Solus.Expressions
                         $"Argument {i} wrong type: expected " +
                         $"Scalar but got {argtype}");
             }
+
+            return true;
         }
 
-        public void CheckFunctionCall(ModularDivision ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(ModularDivision ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(MultiplicationOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(MultiplicationOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(NaturalLogarithmFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(NaturalLogarithmFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(NegationOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(NegationOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(NotEqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(NotEqualComparisonOperation ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(SecantFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(SecantFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(SineFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(SineFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(SizeFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(SizeFunction ff, List<Expression> args, SolusEnvironment env)
         {
             if (args.Count != 1)
                 throw new ArgumentException(
@@ -674,19 +800,21 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     "Argument wrong type: expected Vector " +
                     $"or Matrix or String but got {argtype.DisplayName}");
             }
+
+            return true;
         }
 
-        public void CheckFunctionCall(TangentFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(TangentFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(UnitStepFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(UnitStepFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }
 
-        public void CheckFunctionCall(UserDefinedFunction ff, List<Expression> args, SolusEnvironment env)
+        public bool IsWellFormedFunctionCall(UserDefinedFunction ff, List<Expression> args, SolusEnvironment env)
         {
             throw new NotImplementedException();
         }

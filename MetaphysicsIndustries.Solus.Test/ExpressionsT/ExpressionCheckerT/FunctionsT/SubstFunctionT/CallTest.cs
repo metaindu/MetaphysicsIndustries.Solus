@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             var env = new SolusEnvironment();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             var env = new SolusEnvironment();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
     }
 }

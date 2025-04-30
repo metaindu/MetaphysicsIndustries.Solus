@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.Throws<ArgumentException>(() =>
-                ec.Check(expr, null));
+                ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.Throws<ArgumentException>(() =>
-                ec.Check(expr, null));
+                ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.Throws<ArgumentException>(() =>
-                ec.Check(expr, null));
+                ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
     }
 }

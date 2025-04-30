@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(mf, new Literal(5));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var env = new SolusEnvironment();
             env.SetVariable("f", mf);
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new VariableAccess("f"),
                 new Literal(2));
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
     }
 }

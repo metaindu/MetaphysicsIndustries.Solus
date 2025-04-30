@@ -66,7 +66,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
@@ -96,7 +96,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Base must be positive"));
         }
@@ -112,7 +112,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Base must not be one"));
         }
@@ -128,7 +128,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Argument must be positive"));
         }
@@ -144,7 +144,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<OperandException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message, Is.EqualTo("Base must be positive"));
         }

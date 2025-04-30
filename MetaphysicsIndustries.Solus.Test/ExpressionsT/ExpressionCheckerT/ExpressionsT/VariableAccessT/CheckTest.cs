@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", expr2);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", expr2);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", value);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", value);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", value);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", value);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", value);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", f);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", expr3);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<NameException>(
-                () => ec.Check(expr, env));
+                () => ec.IsWellFormed(expr, env));
             // and
             Assert.That(ex.Message, Is.EqualTo("Variable not found: a"));
         }

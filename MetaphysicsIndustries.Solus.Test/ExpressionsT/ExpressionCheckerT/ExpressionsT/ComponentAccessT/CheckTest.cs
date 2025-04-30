@@ -42,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1) });
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1), new Literal(1) });
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
@@ -87,7 +87,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // when
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,
@@ -105,7 +105,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // when
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,
@@ -126,7 +126,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Index must be a real number: index 0"));
@@ -146,7 +146,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Index must be a real number: index 0"));
@@ -162,7 +162,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Index must be a real number: index 0"));
@@ -178,7 +178,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,
@@ -207,7 +207,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<NotImplementedException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
@@ -223,7 +223,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1) });
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -236,7 +236,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // when
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,
@@ -253,7 +253,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,
@@ -271,7 +271,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,
@@ -288,7 +288,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,
@@ -305,7 +305,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // when
             var ex = Assert.Throws<IndexException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(
                 ex.Message,

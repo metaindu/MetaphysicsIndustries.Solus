@@ -39,7 +39,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Literal(2), true);
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(i, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(i, null));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(i, null));
+                () => ec.IsWellFormed(i, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Lower bound is not a scalar"));
@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(i, null));
+                () => ec.IsWellFormed(i, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo("Upper bound is not a scalar"));

@@ -37,7 +37,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(new Literal(RandFunction.Value));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
     }
 }

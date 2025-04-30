@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Literal(4));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Literal(6));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, null));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, null));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var exc = Assert.Throws<NameException>(
-                () => ec.Check(expr, env));
+                () => ec.IsWellFormed(expr, env));
             // and
             Assert.That(exc.Message,
                 Is.EqualTo("Variable not found: a"));
@@ -94,7 +94,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             env.SetVariable("a", new Literal(5));
             var ec = new ExpressionChecker();
             // expect
-            Assert.DoesNotThrow(() => ec.Check(expr, env));
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr, env));
         }
 
         [Test]
@@ -113,7 +113,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
@@ -132,7 +132,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             var ex = Assert.Throws<TypeException>(
-                () => ec.Check(expr, null));
+                () => ec.IsWellFormed(expr, null));
             // and
             Assert.That(ex.Message,
                 Is.EqualTo(
