@@ -23,7 +23,6 @@ using System;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;

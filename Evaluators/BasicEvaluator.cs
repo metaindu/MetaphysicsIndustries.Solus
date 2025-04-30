@@ -21,10 +21,8 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -188,21 +186,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     throw new ArgumentException(
                         $"Unknown function: {f.GetType().Name}",
                         nameof(f));
-            }
-        }
-
-        public Expression Call(Macro m, Expression[] args,
-            SolusEnvironment env)
-        {
-            if (args.Length != m.NumArguments)
-                throw new OperandException(
-                    "Incorrect number of arguments.");
-            switch (m)
-            {
-                default:
-                    throw new ArgumentException(
-                        $"Unknown macro: {m.GetType().Name}",
-                        nameof(m));
             }
         }
 

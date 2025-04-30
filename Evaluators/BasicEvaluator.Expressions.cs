@@ -24,7 +24,6 @@ using System;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
@@ -123,22 +122,12 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Eval(FunctionCall expr, SolusEnvironment env)
         {
             var f0 = Eval(expr.Function, env);
-            if (!f0.IsIsFunction(env) &&
-                !(f0 is Macro))
+            if (!f0.IsIsFunction(env))
                 throw new OperandException(
-                    "Call target is not a function or macro");
+                    "Call target is not a function");
 
             int i;
-            if (f0 is Macro macro)
-            {
-                var args = new Expression[expr.Arguments.Count];
-                for (i = 0; i < expr.Arguments.Count; i++)
-                    args[i] = expr.Arguments[i];
-                return Call(macro, args, env);
-            }
-
             var f = (Function)f0;
-
             var evaluatedArgs = new IMathObject[expr.Arguments.Count];
             if (f.IsVariadic &&
                 f.VariadicParameterType != null &&

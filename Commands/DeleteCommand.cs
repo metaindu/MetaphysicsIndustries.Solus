@@ -40,7 +40,7 @@ namespace MetaphysicsIndustries.Solus.Commands
   delete <var> [<var>...]
 
   var
-    The name of a variable, function, or macro.
+    The name of a variable, function, or other object.
 ";
 
         public override void Execute(string input, SolusEnvironment env,

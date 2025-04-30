@@ -34,7 +34,6 @@ using System.Linq;
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -245,8 +244,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 if (lit.Value.IsIsFunction(null))
                     name = ((Function)lit.Value).Name;
-                if (lit.Value is Macro macro)
-                    name = macro.Name;
             }
 
 

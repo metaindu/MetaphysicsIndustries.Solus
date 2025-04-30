@@ -24,7 +24,6 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -179,7 +178,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 fv = va.GetFinalReferencedValue(env);
             if (fv is Literal literal)
                 fv = literal.Value;
-            if (fv is Macro) return;
             var f = fv as Function;
             if (f == null)
                 throw new ArgumentException(

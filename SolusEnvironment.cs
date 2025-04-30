@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -94,15 +93,6 @@ namespace MetaphysicsIndustries.Solus
             foreach (var func in functions)
             {
                 SetVariable(func.DisplayName, func);
-            }
-
-            var macros = new List<Macro>
-            {
-            };
-
-            foreach (var macro in macros)
-            {
-                SetVariable(macro.Name, macro);
             }
 
             SetVariable("Real", Reals.Value);
