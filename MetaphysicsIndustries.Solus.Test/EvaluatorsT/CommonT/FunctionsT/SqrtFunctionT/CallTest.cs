@@ -23,19 +23,35 @@
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.SqrtFunctionT
 {
     [TestFixture(typeof(BasicEvaluator))]
-    [TestFixture(typeof(CompilingEvaluator))]
+    // TODO: [TestFixture(typeof(CompilingEvaluator))]
     public class CallTest<T>
         where T : IEvaluator, new()
     {
         [Test]
-        [Ignore("Macros not supported currently")]
-        public void CallYieldsExponentOperation()
+        public void CallWithVariableYieldsSquareRoot()
+        {
+            // given
+            var expr = new FunctionCall(new Literal(SqrtFunction.Value),
+                new VariableAccess("x"));
+            var env = new SolusEnvironment();
+            env.SetVariable("x", 3f.ToNumber());
+            var eval = Util.CreateEvaluator<T>();
+            // when
+            var result = eval.Eval(expr, env);
+            // then
+            Assert.IsInstanceOf<Number>(result);
+            Assert.That(((Number)result).Value, Is.EqualTo(1.7320508f));
+        }
+
+        [Test]
+        public void CallWithNumberYieldsSquareRoot()
         {
             // given
             var expr = new FunctionCall(new Literal(SqrtFunction.Value),
@@ -44,19 +60,8 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             // when
             var result = eval.Eval(expr, null);
             // then
-            Assert.IsInstanceOf<FunctionCall>(result);
-            var fc = (FunctionCall)result;
-            Assert.IsInstanceOf<Literal>(fc.Function);
-            var target = (Literal)fc.Function;
-            Assert.That(target.Value, Is.SameAs(ExponentOperation.Value));
-            Assert.That(fc.Arguments.Count,
-                Is.EqualTo(2));
-            Assert.IsInstanceOf<Literal>(fc.Arguments[0]);
-            Assert.That(((Literal)fc.Arguments[0]).Value.ToNumber().Value,
-                Is.EqualTo(2f));
-            Assert.IsInstanceOf<Literal>(fc.Arguments[1]);
-            Assert.That(((Literal)fc.Arguments[1]).Value.ToNumber().Value,
-                Is.EqualTo(0.5f));
+            Assert.IsInstanceOf<Number>(result);
+            Assert.That(((Number)result).Value, Is.EqualTo(1.4142135f));
         }
     }
 }

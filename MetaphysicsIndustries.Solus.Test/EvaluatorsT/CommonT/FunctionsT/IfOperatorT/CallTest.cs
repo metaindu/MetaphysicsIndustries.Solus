@@ -30,8 +30,7 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     FunctionsT.IfOperatorT
 {
     [TestFixture(typeof(BasicEvaluator))]
-    [TestFixture(typeof(CompilingEvaluator))]
-    [Ignore("Macros not supported currently")]
+    // TODO: [TestFixture(typeof(CompilingEvaluator))]
     public class CallTest<T>
         where T : IEvaluator, new()
     {
