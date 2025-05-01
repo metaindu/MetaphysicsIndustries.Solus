@@ -248,7 +248,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     .VariableName;
                 var env2 = env.CreateChildEnvironment();
                 env2.SetVariable(varname, new Number(0)); // place-holder
-                rv = IsWellDefined(expr.Arguments[0],env, throws: throws);
+                rv = IsWellDefined(expr.Arguments[0], env2, throws: throws);
                 if (!rv) return false;
                 return true;
             }
