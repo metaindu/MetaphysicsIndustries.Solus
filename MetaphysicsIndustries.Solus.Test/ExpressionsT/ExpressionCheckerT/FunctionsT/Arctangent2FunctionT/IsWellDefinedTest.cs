@@ -20,6 +20,10 @@
  *
  */
 
+using System;
+using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
@@ -28,5 +32,68 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
     [TestFixture]
     public class IsWellDefinedTest
     {
+        [Test]
+        public void UndefinedVariableThrows()
+        {
+            // given
+            var expr = new FunctionCall(
+                Arctangent2Function.Value,
+                new Literal(1),
+                new VariableAccess("x"));
+            var env = new SolusEnvironment();
+            var ec = new ExpressionChecker();
+            // expect
+            var exc = Assert.Throws<NameException>(
+                () => ec.IsWellDefined(expr, env));
+            // and
+            Assert.That(exc.Message,
+                Is.EqualTo("Variable not found: x"));
+        }
+
+        [Test]
+        public void DefinedVariableYieldsTrue()
+        {
+            // given
+            var expr = new FunctionCall(
+                Arctangent2Function.Value,
+                new Literal(1),
+                new VariableAccess("x"));
+            var env = new SolusEnvironment();
+            env.SetVariable("x", 1.ToNumber());
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.That(ec.IsWellDefined(expr, env));
+        }
+
+        [Test]
+        public void TooFewArgsThrows()
+        {
+            // given
+            var expr = new FunctionCall(
+                Arctangent2Function.Value,
+                new Literal(1));
+            var env = new SolusEnvironment();
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.Throws<ArgumentException>(
+                () => ec.IsWellDefined(expr, env));
+        }
+
+        [Test]
+        public void TooManyArgsThrows()
+        {
+            // given
+            var expr = new FunctionCall(
+                Arctangent2Function.Value,
+                new Literal(1),
+                new Literal(2),
+                new Literal(3)
+            );
+            var env = new SolusEnvironment();
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.Throws<ArgumentException>(
+                () => ec.IsWellDefined(expr, env));
+        }
     }
 }

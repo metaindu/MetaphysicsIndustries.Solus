@@ -20,6 +20,8 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
@@ -28,5 +30,17 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
     [TestFixture]
     public class IsWellFormedTest
     {
+        [Test]
+        public void LiteralArgsYieldsTrue()
+        {
+            // given
+            var expr = new FunctionCall(
+                Arctangent2Function.Value,
+                new Literal(1),
+                new Literal(2));
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.That(ec.IsWellFormed(expr));
+        }
     }
 }
