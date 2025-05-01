@@ -69,7 +69,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        [Ignore("IfMacro currently returns a Literal, which confuses " +
+        [Ignore("IfOperator currently returns a Literal, which confuses " +
                 "MultiplicationOperation")]
         public void RecursiveFunctionDoesNotThrow()
         {

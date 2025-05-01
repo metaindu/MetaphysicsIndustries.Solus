@@ -33,13 +33,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected NegationOperation()
         {
-            Name = "-";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Negation; }
-        }
+        public override string Name => "-";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.Negation;
 
         public override string ToString(List<Expression> arguments)
         {

@@ -31,7 +31,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     {
         public CatmullRomSpline(IEnumerable<float> times,
             IEnumerable<float> values)
-            : base(new [] { new Parameter("arg", Reals.Value)})
+            : base()
         {
             var times2 = times.ToList();
             var values2 = values.ToList();
@@ -54,8 +54,14 @@ namespace MetaphysicsIndustries.Solus.Functions
             Values = values2.ToArray();
         }
 
+        public override string Name => "CatmullRomSpline";
+        public override string DisplayName => "catmullrom";
+
         readonly float[] Times;
         readonly float[] Values;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[] { new Parameter("arg", Reals.Value) };
 
         public override IMathObject CustomCall(IMathObject[] args,
             SolusEnvironment env)

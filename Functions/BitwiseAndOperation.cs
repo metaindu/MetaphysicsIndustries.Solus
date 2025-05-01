@@ -31,13 +31,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected BitwiseAndOperation()
         {
-            Name = "&";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Bitwise; }
-        }
+        public override string Name => "&";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.Bitwise;
 
         //public override float IdentityValue
         //{

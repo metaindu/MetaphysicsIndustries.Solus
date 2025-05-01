@@ -21,10 +21,8 @@
  */
 
 using System;
-using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -60,8 +58,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return Eval(literal, env);
                 case MatrixExpression me:
                     return Eval(me, env);
-                case RandomExpression re:
-                    return Eval(re, env);
                 case VariableAccess va:
                     return Eval(va, env);
                 case VectorExpression ve:
@@ -110,6 +106,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case CotangentFunction ff:
                     return CallFunction(ff, args, env);
+                case DeriveOperator ff:
+                    return CallFunction(ff, args, env);
                 case DistFunction ff:
                     return CallFunction(ff, args, env);
                 case DistSqFunction ff:
@@ -127,6 +125,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 case GreaterThanComparisonOperation ff:
                     return CallFunction(ff, args, env);
                 case GreaterThanOrEqualComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case IfOperator ff:
                     return CallFunction(ff, args, env);
                 case LessThanComparisonOperation ff:
                     return CallFunction(ff, args, env);
@@ -162,11 +162,17 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case NotEqualComparisonOperation ff:
                     return CallFunction(ff, args, env);
+                case RandFunction ff:
+                    return CallFunction(ff, args, env);
                 case SecantFunction ff:
                     return CallFunction(ff, args, env);
                 case SineFunction ff:
                     return CallFunction(ff, args, env);
                 case SizeFunction ff:
+                    return CallFunction(ff, args, env);
+                case SqrtFunction ff:
+                    return CallFunction(ff, args, env);
+                case SubstFunction ff:
                     return CallFunction(ff, args, env);
                 case TangentFunction ff:
                     return CallFunction(ff, args, env);
@@ -183,35 +189,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             }
         }
 
-        public Expression Call(Macro m, Expression[] args,
-            SolusEnvironment env)
-        {
-            if (args.Length != m.NumArguments)
-                throw new OperandException(
-                    "Incorrect number of arguments.");
-            switch (m)
-            {
-                case DeriveMacro mm:
-                    return CallMacro(mm, args, env);
-                case IfMacro mm:
-                    return CallMacro(mm, args, env);
-                case RandMacro mm:
-                    return CallMacro(mm, args, env);
-                case SqrtMacro mm:
-                    return CallMacro(mm, args, env);
-                case SubstMacro mm:
-                    return CallMacro(mm, args, env);
-                default:
-                    throw new ArgumentException(
-                        $"Unknown macro: {m.GetType().Name}",
-                        nameof(m));
-            }
-        }
-
         public Expression Simplify(Expression expr, SolusEnvironment env)
         {
             CleanUpTransformer cleanup = new CleanUpTransformer();
-            return cleanup.CleanUp(expr.Simplify(env));
+            var simplified = expr.Simplify(env);
+            return cleanup.CleanUp(simplified);
         }
 
         public void EvalInterval(Expression expr, SolusEnvironment env,

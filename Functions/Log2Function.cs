@@ -34,16 +34,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected Log2Function()
         {
-            Name = "Logarithm of base two";
         }
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "log2";
-            }
-        }
+        public override string Name => "Logarithm of base two";
+
+        public override string DisplayName => "log2";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

@@ -34,7 +34,6 @@ using System.Linq;
 using MetaphysicsIndustries.Solus.Evaluators;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -190,20 +189,37 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public override Expression Simplify(SolusEnvironment env)
         {
             var function = Function.Simplify(env);
-            var args = Arguments.Select(
-                a => a.Simplify(env)).ToArray();
-            var allLiterals = args.All(a => a is Literal);
-            var newExpr = new FunctionCall(function, args.ToArray());
-            if (allLiterals &&
-                function is Literal literal &&
-                literal.Value.IsIsFunction(env))
+            Function f = null;
+            if (function is Literal funlit &&
+                funlit.Value.IsIsFunction(env))
+                f = funlit.Value.ToFunction();
+
+            var simplifiedArgs = new List<Expression>();
+            int i;
+            var allArgsAreEvaluable = true;
+            for (i = 0; i < Arguments.Count; i++)
             {
-                var f = (Function)literal.Value;
-                var args2 = args.Select(
-                    a => ((Literal)a).Value);
+                var paramTypeIsExpression =
+                    f != null &&
+                    f.GetParameterType(i).IsSubsetOf(Sets.Expressions.Value);
+
+                var arg = Arguments[i];
+                var simplified = arg.Simplify(env);
+                if (!paramTypeIsExpression && !simplified.IsIsLiteral())
+                    allArgsAreEvaluable = false;
+
+                simplifiedArgs.Add(simplified);
+            }
+
+            var newExpr = new FunctionCall(function, simplifiedArgs.ToArray());
+            if (f != null &&
+                allArgsAreEvaluable)
+            {
                 var eval = new BasicEvaluator();
                 var result = eval.Eval(newExpr, env);
-                return new Literal(result);
+                if (!(result is Expression))
+                    result = new Literal(result);
+                return (Expression)result;
             }
 
             return newExpr;
@@ -228,8 +244,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
             {
                 if (lit.Value.IsIsFunction(null))
                     name = ((Function)lit.Value).Name;
-                if (lit.Value is Macro macro)
-                    name = macro.Name;
             }
 
 

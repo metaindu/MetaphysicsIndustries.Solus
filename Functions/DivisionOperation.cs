@@ -34,6 +34,8 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
         }
 
+        public override string Name => "/";
+
         public override OperationPrecedence Precedence
         {
             get { return OperationPrecedence.Division; }

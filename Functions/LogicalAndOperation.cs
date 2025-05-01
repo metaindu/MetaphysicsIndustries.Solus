@@ -31,19 +31,19 @@ namespace MetaphysicsIndustries.Solus.Functions
             new LogicalAndOperation();
 
         protected LogicalAndOperation()
-            : base(new[]
+        {
+        }
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[]
             {
                 new Parameter("left", Booleans.Value),
                 new Parameter("right", Booleans.Value)
-            })
-        {
-            Name = "&&";
-        }
+            };
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.LogicalAnd; }
-        }
+        public override string Name => "&&";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.LogicalAnd;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Booleans.Value;

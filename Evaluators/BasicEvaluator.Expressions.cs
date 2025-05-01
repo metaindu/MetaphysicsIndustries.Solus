@@ -24,7 +24,6 @@ using System;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
@@ -123,25 +122,34 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Eval(FunctionCall expr, SolusEnvironment env)
         {
             var f0 = Eval(expr.Function, env);
-            if (!f0.IsIsFunction(env) &&
-                !(f0 is Macro))
+            if (!f0.IsIsFunction(env))
                 throw new OperandException(
-                    "Call target is not a function or macro");
+                    "Call target is not a function");
 
             int i;
-            if (f0 is Macro macro)
+            var f = (Function)f0;
+            var evaluatedArgs = new IMathObject[expr.Arguments.Count];
+            if (f.IsVariadic &&
+                f.VariadicParameterType != null &&
+                f.VariadicParameterType.IsSubsetOf(Sets.Expressions.Value))
             {
-                var args = new Expression[expr.Arguments.Count];
                 for (i = 0; i < expr.Arguments.Count; i++)
-                    args[i] = expr.Arguments[i];
-                return Call(macro, args, env);
+                    evaluatedArgs[i] = expr.Arguments[i];
+            }
+            else
+            {
+                for (i = 0; i < expr.Arguments.Count; i++)
+                {
+                    if (!f.IsVariadic &&
+                        f.Parameters[i].Type.IsSubsetOf(Sets.Expressions.Value))
+                    {
+                        evaluatedArgs[i] = expr.Arguments[i];
+                    }
+                    else
+                        evaluatedArgs[i] = Eval(expr.Arguments[i], env);
+                }
             }
 
-            var f = (Function)f0;
-
-            var evaluatedArgs = new IMathObject[expr.Arguments.Count];
-            for (i = 0; i < expr.Arguments.Count; i++)
-                evaluatedArgs[i] = Eval(expr.Arguments[i], env);
             return Call(f, evaluatedArgs, env);
         }
 
@@ -169,11 +177,6 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             for (int c = 0; c < expr.ColumnCount; c++)
                 values[r, c] = Eval(expr[r, c], env);
             return new Matrix(values);
-        }
-
-        public IMathObject Eval(RandomExpression expr, SolusEnvironment env)
-        {
-            return ((float)RandomExpression.Source.NextDouble()).ToNumber();
         }
 
         public IMathObject Eval(VariableAccess expr, SolusEnvironment env)

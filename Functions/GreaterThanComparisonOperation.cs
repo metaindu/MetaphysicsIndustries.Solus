@@ -30,9 +30,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly GreaterThanComparisonOperation Value = new GreaterThanComparisonOperation();
 
         protected GreaterThanComparisonOperation()
-            : base(">")
         {
         }
+
+        public override string Name => ">";
 
         protected override bool Compare(float x, float y)
         {

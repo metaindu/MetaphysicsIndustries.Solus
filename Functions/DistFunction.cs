@@ -31,9 +31,10 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly DistFunction Value = new DistFunction();
 
         protected DistFunction()
-            : base("Distance")
         {
         }
+
+        public override string Name => "Distance";
 
         public override string DisplayName
         {

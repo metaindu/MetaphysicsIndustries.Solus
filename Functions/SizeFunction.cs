@@ -33,10 +33,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     {
         public static readonly SizeFunction Value = new SizeFunction();
 
-        protected SizeFunction()
-            : base(Array.Empty<Parameter>(), "size")
-        {
-        }
+        public override string Name => "size";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
@@ -50,5 +47,8 @@ namespace MetaphysicsIndustries.Solus.Functions
                 return Vectors.R2;
             throw new NotImplementedException();
         }
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>() { new Parameter("arg", MathObjects.Value) };
     }
 }

@@ -24,8 +24,8 @@ using System;
 using System.Collections.Generic;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Expressions
 {
@@ -55,9 +55,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     break;
                 case MatrixExpression me:
                     Check(me, env);
-                    break;
-                case RandomExpression re:
-                    Check(re, env);
                     break;
                 case VariableAccess va:
                     Check(va, env);
@@ -181,11 +178,39 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 fv = va.GetFinalReferencedValue(env);
             if (fv is Literal literal)
                 fv = literal.Value;
-            if (fv is Macro) return;
             var f = fv as Function;
             if (f == null)
                 throw new ArgumentException(
                     "Can't check non-function target.");
+
+            if (f is DeriveOperator d)
+            {
+                var varname = expr.Arguments[1].As<VariableAccess>()
+                    .VariableName;
+                var env2 = env.CreateChildEnvironment();
+                env2.SetVariable(varname, new Number(0)); // place-holder
+                Check(expr.Arguments[0], env2);
+                return;
+            }
+
+            if (f is IfOperator ii)
+            {
+                Check(expr.Arguments[0], env);
+                Check(expr.Arguments[1], env);
+                Check(expr.Arguments[2], env);
+                return;
+            }
+
+            if (f is SubstFunction)
+            {
+                var varname = expr.Arguments[1].As<VariableAccess>()
+                    .VariableName;
+                var env2 = env.CreateChildEnvironment();
+                env2.SetVariable(varname, new Number(0)); // place-holder
+                Check(expr.Arguments[0], env2);
+                Check(expr.Arguments[2], env2);
+                return;
+            }
 
             for (var i = 0; i < expr.Arguments.Count; i++)
                 Check(expr.Arguments[i], env);
@@ -361,8 +386,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 Check(expr[r, c], env);
             }
         }
-
-        public void Check(RandomExpression expr, SolusEnvironment env) { }
 
         public void Check(VariableAccess expr, SolusEnvironment env)
         {

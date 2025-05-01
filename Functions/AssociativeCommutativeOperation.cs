@@ -30,12 +30,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class AssociativeCommutativeOperation : Operation
     {
-        protected AssociativeCommutativeOperation()
-            : base(Array.Empty<Parameter>())
-        {
-        }
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>();
 
-        private List<Parameter> _lastParameters;
+        public override bool IsVariadic => true;
+        public override ISet VariadicParameterType => Reals.Value;
 
         //protected override Expression InternalCleanUp(Expression[] args)
         //{

@@ -31,10 +31,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     {
         public static readonly MinimumFunction Value = new MinimumFunction();
 
-        public MinimumFunction() :
-            base(Array.Empty<Parameter>(), "min")
-        {
-        }
+        public override string Name => "min";
 
         public override string DocString =>
             "The min function\n  min(x1, x2, ..., xn)\n\n" +
@@ -42,5 +39,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>();
+        public override bool IsVariadic => true;
+        public override ISet VariadicParameterType => Reals.Value;
     }
 }

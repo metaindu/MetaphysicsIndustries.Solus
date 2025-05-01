@@ -30,14 +30,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly DistSqFunction Value = new DistSqFunction();
 
         protected DistSqFunction()
-            : base("DistanceSquared")
         {
         }
 
-        public override string DisplayName
-        {
-            get { return "distsq"; }
-        }
+        public override string Name => "DistanceSquared";
+        public override string DisplayName => "distsq";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

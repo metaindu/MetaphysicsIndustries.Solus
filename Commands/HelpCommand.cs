@@ -24,8 +24,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MetaphysicsIndustries.Solus.Macros;
-using Boolean = MetaphysicsIndustries.Solus.Values.Boolean;
 
 namespace MetaphysicsIndustries.Solus.Commands
 {
@@ -93,8 +91,6 @@ List the available topics:
                     return v.DocString;
                 if (v.IsIsFunction(env))
                     return "This function does not provide any information.";
-                if (v is Macro macro)
-                    return "This macro does not provide any information.";
                 return "This object does not provide any information.";
             }
 
@@ -116,7 +112,6 @@ List the available topics:
 
             var functions = new List<string>();
             var variables = new List<string>();
-            var macros = new List<string>();
             var types = new List<string>();
             var values = new List<string>();
 
@@ -125,8 +120,6 @@ List the available topics:
                 var v = env.GetVariable(name);
                 if (v.IsIsFunction(env))
                     functions.Add(name);
-                else if (v is Macro)
-                    macros.Add(name);
                 else if (v is ISet)
                     types.Add(name);
                 else if (v is Values.Boolean)
@@ -140,7 +133,6 @@ List the available topics:
                 new Tuple<string, List<string>>("Commands",
                     commandSet.GetCommandNames().ToList()),
                 new Tuple<string, List<string>>("Functions", functions),
-                new Tuple<string, List<string>>("Macros", macros),
                 new Tuple<string, List<string>>("Types", types),
                 new Tuple<string, List<string>>("Values", values),
                 new Tuple<string, List<string>>("Variables", variables),

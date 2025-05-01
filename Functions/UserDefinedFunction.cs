@@ -31,22 +31,28 @@ namespace MetaphysicsIndustries.Solus.Functions
     {
         public UserDefinedFunction(string name, string[] argnames,
             Expression expr)
-            : base(
-                argnames.Select(_ => new Parameter(_, Reals.Value)).ToArray(),
-                name)
         {
-            Name = name;
+            _name = name;
             Expression = expr;
+            var parameters = new List<Parameter>();
+            foreach (var argname in argnames)
+                parameters.Add(new Parameter(argname, Reals.Value));
+            Parameters = parameters;
         }
         public UserDefinedFunction(string name,
             IEnumerable<Parameter> parameters, Expression expr)
-            : base(parameters.ToArray(), name)
         {
-            Name = name;
+            _name = name;
             Expression = expr;
+            Parameters = new List<Parameter>(parameters);
         }
 
+        private readonly string _name;
+        public override string Name => _name;
+
         public Expression Expression;
+
+        public override IReadOnlyList<Parameter> Parameters { get; }
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)

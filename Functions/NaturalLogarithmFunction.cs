@@ -34,16 +34,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected NaturalLogarithmFunction()
         {
-            Name = "Natural Logarithm";
         }
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "ln";
-            }
-        }
+        public override string Name => "Natural Logarithm";
+
+        public override string DisplayName => "ln";
 
         public override string DocString
         {

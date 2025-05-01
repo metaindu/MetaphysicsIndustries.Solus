@@ -30,9 +30,13 @@ namespace MetaphysicsIndustries.Solus.Test
     public class MockFunction : Function
     {
         public MockFunction(Parameter[] paramTypes, string name = "")
-            : base(paramTypes, name)
         {
+            Name = name;
+            Parameters = paramTypes;
         }
+
+        public override string Name { get; }
+        public override IReadOnlyList<Parameter> Parameters { get; }
 
         public Func<IEnumerable<IMathObject>, IMathObject> CallF;
 

@@ -42,16 +42,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
 		protected ArccosineFunction()
 		{
-			this.Name = "Arccosine";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "acos";
-            }
-        }
+        public override string DisplayName => "acos";
+        public override string Name => "Arccosine";
 
         public override string DocString
         {

@@ -32,10 +32,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly MaximumFiniteFunction Value =
             new MaximumFiniteFunction();
 
-        public MaximumFiniteFunction() :
-            base(Array.Empty<Parameter>(), "maxf")
-        {
-        }
+        public override string Name => "maxf";
 
         public override string DocString =>
             "The maxf function\n  maxf(x1, x2, ..., xn)\n\n" +
@@ -45,5 +42,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>();
+        public override bool IsVariadic => true;
+        public override ISet VariadicParameterType => Reals.Value;
     }
 }

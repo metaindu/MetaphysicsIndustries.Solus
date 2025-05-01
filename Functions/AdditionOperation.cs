@@ -31,13 +31,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected AdditionOperation()
         {
-            Name = "+";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Addition; }
-        }
+        public override string Name => "+";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.Addition;
 
         public override float IdentityValue
         {
