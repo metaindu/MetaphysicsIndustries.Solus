@@ -50,8 +50,8 @@ namespace MetaphysicsIndustries.Solus.Test.CommandsT.HelpCommandT
 
 Functions:
   abs acos acot acsc asec asin atan atan2 ceil cos cot csc derive dist distsq 
-  floor if ln load_image log log10 log2 rand sec sin size sqrt subst tan 
-  unitstep 
+  floor if is_well_defined is_well_formed ln load_image log log10 log2 
+  parse_expr rand sec sin size sqrt subst tan unitstep 
 
 Types:
   Boolean Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 
@@ -89,8 +89,8 @@ Additional topics:
 
 Functions:
   abs acos acot acsc asec asin atan atan2 ceil cos cot csc derive dist distsq 
-  f floor if ln load_image log log10 log2 rand sec sin size sqrt subst tan 
-  unitstep 
+  f floor if is_well_defined is_well_formed ln load_image log log10 log2 
+  parse_expr rand sec sin size sqrt subst tan unitstep 
 
 Types:
   Boolean Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 
@@ -129,8 +129,8 @@ Additional topics:
 
 Functions:
   abs acos acot acsc asec asin atan atan2 ceil cos cot csc derive dist distsq 
-  f floor if ln load_image log log10 log2 rand sec sin size sqrt subst tan 
-  unitstep 
+  f floor if is_well_defined is_well_formed ln load_image log log10 log2 
+  parse_expr rand sec sin size sqrt subst tan unitstep 
 
 Types:
   Boolean Interval Matrix MatrixM2x2 MatrixM2x3 MatrixM2x4 MatrixM3x2 
