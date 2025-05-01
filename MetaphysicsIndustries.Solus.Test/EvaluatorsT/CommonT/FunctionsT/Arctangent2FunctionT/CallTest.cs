@@ -20,7 +20,10 @@
  *
  */
 
+using System;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
@@ -31,5 +34,40 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
     public class EvalArctangent2FunctionTest<T>
         where T : IEvaluator, new()
     {
+        [Test]
+        [TestCase((float)(-Math.PI / 3), -1.732050807568877f, 1)]
+        [TestCase((float)(2 * Math.PI / 3), 1.732050807568877f, -1)]
+        [TestCase((float)(-Math.PI / 3), -3.464101615137755f, 2)]
+        [TestCase((float)(-Math.PI / 4), -1, 1)]
+        [TestCase((float)(3*Math.PI / 4), 1, -1)]
+        [TestCase((float)(-Math.PI / 6), -0.577350269189626f, 1)]
+        [TestCase((float)(5 * Math.PI / 6), 0.577350269189626f, -1)]
+        [TestCase(0, 0, 1)]
+        [TestCase(0, 0, 2)]
+        [TestCase((float)(Math.PI / 6), 0.577350269189626f, 1)]
+        [TestCase((float)(-5 * Math.PI / 6), -0.577350269189626f, -1)]
+        [TestCase((float)(Math.PI / 4), 1, 1)]
+        [TestCase((float)(-3 * Math.PI / 4), -1, -1)]
+        [TestCase((float)(Math.PI / 3), 1.732050807568877f, 1)]
+        [TestCase((float)(-2 * Math.PI / 3), -1.732050807568877f, -1)]
+        [TestCase(0, 0, 0)]
+        public void Arctangent2FunctionValuesYieldsValue(
+            float expected, float y, float x)
+        {
+            // given
+            var f = Arctangent2Function.Value;
+            var expr = new FunctionCall(f, new Expression[]
+            {
+                new Literal(y),
+                new Literal(x)
+            });
+            var eval = Util.CreateEvaluator<T>();
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.IsTrue(result.IsScalar(null));
+            Assert.That(result.ToFloat(),
+                Is.EqualTo(expected).Within(0.000001f));
+        }
     }
 }

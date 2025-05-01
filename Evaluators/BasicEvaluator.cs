@@ -33,14 +33,14 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Eval(Expression expr, SolusEnvironment env)
         {
             var ec = new ExpressionChecker();
-            ec.Check(expr, env);
+            ec.IsWellFormed(expr);
 
             // We can't rely on callers to have applied all variables. We
             // have to do it here, even if it turns out to be a no-op in some
             // cases.
             var avt = new ApplyVariablesTransform();
             expr = avt.Transform(expr, env);
-            ec.Check(expr, env);
+            ec.IsWellDefined(expr, env);
 
             switch (expr)
             {
@@ -128,6 +128,10 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case IfOperator ff:
                     return CallFunction(ff, args, env);
+                case IsWellDefinedFunction ff:
+                    return CallFunction(ff, args, env);
+                case IsWellFormedFunction ff:
+                    return CallFunction(ff, args, env);
                 case LessThanComparisonOperation ff:
                     return CallFunction(ff, args, env);
                 case LessThanOrEqualComparisonOperation ff:
@@ -161,6 +165,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 case NegationOperation ff:
                     return CallFunction(ff, args, env);
                 case NotEqualComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case ParseExprFunction ff:
                     return CallFunction(ff, args, env);
                 case RandFunction ff:
                     return CallFunction(ff, args, env);

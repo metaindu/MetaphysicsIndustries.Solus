@@ -21,6 +21,7 @@
  */
 
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Expressions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
@@ -30,5 +31,18 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT
     public class EvalTest<T>
         where T : IEvaluator, new()
     {
+        [Test]
+        public void EvalLiteral()
+        {
+            // given
+            var expr = new Literal(1);
+            var eval = Util.CreateEvaluator<T>();
+            var env = new SolusEnvironment();
+            // when
+            var result = eval.Eval(expr, env);
+            // then
+            Assert.That(result.IsIsScalar(null));
+            Assert.That(result.ToNumber().Value, Is.EqualTo(1f));
+        }
     }
 }
