@@ -277,7 +277,20 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return true;
             }
 
-            for (var i = 0; i < expr.Arguments.Count; i++)
+            var args = expr.Arguments;
+
+            if (!f.IsVariadic &&
+                args.Count != f.Parameters.Count)
+            {
+                if (throws)
+                    throw new ArgumentException(
+                        $"Wrong number of arguments given to " +
+                        $"{f.DisplayName} (expected {f.Parameters.Count} " +
+                        $"but got {args.Count})");
+                return false;
+            }
+
+            for (var i = 0; i < args.Count; i++)
             {
                 var pt = f.GetParameterType(i);
                 if (!pt.IsSubsetOf(Sets.Expressions.Value))
@@ -286,8 +299,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     if (!rv) return false;
                 }
             }
-
-            var args = expr.Arguments;
 
             if (f is AssociativeCommutativeOperation)
             {
@@ -513,16 +524,6 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 //     rv = IsWellDefinedFunctionCall(ff, args, throws: throws);
                 //     if (!rv) return false;
                 //     return true;
-            }
-
-            if (args.Count != f.Parameters.Count)
-            {
-                if (throws)
-                    throw new ArgumentException(
-                        $"Wrong number of arguments given to " +
-                        $"{f.DisplayName} (expected {f.Parameters.Count} " +
-                        $"but got {args.Count})");
-                return false;
             }
 
             for (var i = 0; i < args.Count; i++)
