@@ -43,7 +43,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void NonNumberLowerBoundThrows()
+        public void NonNumberLowerBoundYieldsTrue()
         {
             // given
             var i = new IntervalExpression(
@@ -51,15 +51,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Literal(2), true);
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(i));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo("Lower bound is not a scalar"));
+            Assert.That(ec.IsWellFormed(i));
         }
 
         [Test]
-        public void NonNumberUpperBoundThrows()
+        public void NonNumberUpperBoundYieldsTrue()
         {
             // given
             var i = new IntervalExpression(
@@ -67,11 +63,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Literal("asdf"), true);
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(i));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo("Upper bound is not a scalar"));
+            Assert.That(ec.IsWellFormed(i));
         }
     }
 }

@@ -60,7 +60,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void NumberThrows()
+        public void NumberYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -68,34 +68,23 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1) });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo(
-                    "The expression should result in a type with " +
-                    "components"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void VectorWithTooManyIndexesThrows()
+        public void VectorWithTooManyIndexesYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
                 new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new Expression[] { new Literal(1), new Literal(1) });
             var ec = new ExpressionChecker();
-            // when
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Wrong number of indexes for the expression"));
+            // expect
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void MatrixWithTooFewIndexesThrows()
+        public void MatrixWithTooFewIndexesYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -104,16 +93,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(1) });
             var ec = new ExpressionChecker();
             // when
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Wrong number of indexes for the expression"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void VectorAsIndexThrows()
+        public void VectorAsIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -125,15 +109,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo("Index must be a real number: index 0"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void MatrixAsIndexThrows()
+        public void MatrixAsIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -145,15 +125,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo("Index must be a real number: index 0"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void StringAsIndexThrows()
+        public void StringAsIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -161,15 +137,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal("abc".ToStringValue()) });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo("Index must be a real number: index 0"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void NegativeIndexThrows()
+        public void NegativeIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -177,19 +149,14 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(-1) });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Indexes must not be negative"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         // TODO: check for index greater than vector dimension
         // TODO: check for index greater than matrix dimension
 
         [Test]
-        public void HigherTensorRankObjectThrows()
+        public void HigherTensorRankObjectYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -206,12 +173,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 });
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<NotImplementedException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo(
-                    "Not implemented for high-rank tensors"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
@@ -227,59 +189,44 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void StringWithTooManyIndexesThrows()
+        public void StringWithTooManyIndexesYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
                 new Literal("abc".ToStringValue()),
                 new Expression[] { new Literal(1), new Literal(1) });
             var ec = new ExpressionChecker();
-            // when
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Wrong number of indexes for the expression"));
+            // expect
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void VectorWithTooLargeAnIndexThrows()
+        public void VectorWithTooLargeAnIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
                 new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new Expression[] { new Literal(3) });
             var ec = new ExpressionChecker();
-            // when
-            var ex = Assert.Throws<IndexException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Index exceeds the size of the vector"));
+            // expect
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
         // [Ignore("Can't check index against string length yet")]
-        public void StringWithTooLargeAnIndexThrows()
+        public void StringWithTooLargeAnIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
                 new Literal("abc".ToStringValue()),
                 new Expression[] { new Literal(3) });
             var ec = new ExpressionChecker();
-            // when
-            var ex = Assert.Throws<IndexException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Index exceeds the size of the string"));
+            // expect
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void MatrixWithTooLargeRowIndexThrows()
+        public void MatrixWithTooLargeRowIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -287,16 +234,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(2), new Literal(0) });
             var ec = new ExpressionChecker();
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Index exceeds number of rows of the matrix"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]
-        public void MatrixWithTooLargeColumnIndexThrows()
+        public void MatrixWithTooLargeColumnIndexYieldsTrue()
         {
             // given
             var expr = new ComponentAccess(
@@ -304,12 +246,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new Expression[] { new Literal(0), new Literal(2) });
             var ec = new ExpressionChecker();
             // when
-            var ex = Assert.Throws<IndexException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(
-                ex.Message,
-                Is.EqualTo("Index exceeds number of columns of the matrix"));
+            Assert.That(ec.IsWellFormed(expr));
         }
     }
 }

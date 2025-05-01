@@ -74,7 +74,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void SizeFunctionNonTensorThrows()
+        public void SizeFunctionNonTensorYieldsTrue()
         {
             // given
             var f = SizeFunction.Value;
@@ -82,13 +82,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<ArgumentException>(
-                () => ec.IsWellFormed(expr));
-            // and
-            Assert.That(ex.Message,
-                Is.EqualTo(
-                    "Argument wrong type: expected " +
-                    "Vector or Matrix or String but got Scalar"));
+            Assert.That(ec.IsWellFormed(expr));
         }
 
         [Test]

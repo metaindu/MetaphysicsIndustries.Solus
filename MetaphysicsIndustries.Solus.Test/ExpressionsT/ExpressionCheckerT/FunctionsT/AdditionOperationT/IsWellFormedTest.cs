@@ -90,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         }
 
         [Test]
-        public void WrongTypeThrows()
+        public void WrongTypeYieldsTrue()
         {
             // given
             var f = AdditionOperation.Value;
@@ -103,13 +103,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            var ex = Assert.Throws<TypeException>(
-                () => ec.IsWellFormed(expr));
-            Assert.That(
-                ex.Message,
-                Is.EqualTo(
-                    "The type was incorrect: Argument 0 wrong type: " +
-                    "expected Scalar but got Vector"));
+            Assert.That(ec.IsWellFormed(expr));
         }
     }
 }
