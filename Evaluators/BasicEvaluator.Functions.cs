@@ -328,6 +328,22 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             return new Literal(eval.Eval((Expression)args[1], env));
         }
 
+        public Expression CallFunction(IsWellDefinedFunction ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var ec = new ExpressionChecker();
+            var expr = (Expression)args[0];
+            return new Literal(ec.IsWellDefined(expr, env, throws:false));
+        }
+
+        public Expression CallFunction(IsWellFormedFunction ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var ec = new ExpressionChecker();
+            var expr = (Expression)args[0];
+            return new Literal(ec.IsWellFormed(expr, throws:false));
+        }
+
         public IMathObject CallFunction(LessThanComparisonOperation f,
             IMathObject[] args, SolusEnvironment env)
         {
@@ -587,6 +603,13 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 null,
                 $"Type not supported for equality comparisons: " +
                 $"{type1.DisplayName}");
+        }
+
+        public IMathObject CallFunction(ParseExprFunction ff,
+            IMathObject[] args, SolusEnvironment env)
+        {
+            var s = args[0].ToStringValue();
+            return ParseExprFunction.Value.ParseExpr(s.Value);
         }
 
         public IMathObject CallFunction(RandFunction mm, IMathObject[] args,

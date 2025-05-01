@@ -128,6 +128,10 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                     return CallFunction(ff, args, env);
                 case IfOperator ff:
                     return CallFunction(ff, args, env);
+                case IsWellDefinedFunction ff:
+                    return CallFunction(ff, args, env);
+                case IsWellFormedFunction ff:
+                    return CallFunction(ff, args, env);
                 case LessThanComparisonOperation ff:
                     return CallFunction(ff, args, env);
                 case LessThanOrEqualComparisonOperation ff:
@@ -161,6 +165,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 case NegationOperation ff:
                     return CallFunction(ff, args, env);
                 case NotEqualComparisonOperation ff:
+                    return CallFunction(ff, args, env);
+                case ParseExprFunction ff:
                     return CallFunction(ff, args, env);
                 case RandFunction ff:
                     return CallFunction(ff, args, env);

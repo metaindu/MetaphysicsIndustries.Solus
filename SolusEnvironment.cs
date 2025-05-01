@@ -88,6 +88,9 @@ namespace MetaphysicsIndustries.Solus
                 RandFunction.Value,
                 SqrtFunction.Value,
                 SubstFunction.Value,
+                ParseExprFunction.Value,
+                IsWellDefinedFunction.Value,
+                IsWellFormedFunction.Value,
             };
 
             foreach (var func in functions)
