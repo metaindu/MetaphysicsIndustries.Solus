@@ -22,5 +22,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Booleans.Value;
+
+        public override IFunctionType FunctionType { get; } =
+            Sets.Functions.Get(
+                Booleans.Value,
+                Sets.Expressions.Value);
     }
 }

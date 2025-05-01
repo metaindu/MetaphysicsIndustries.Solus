@@ -48,5 +48,12 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             return MathObjects.Value;
         }
+
+        public override IFunctionType FunctionType { get; } =
+            Sets.Functions.Get(
+                Sets.Expressions.Value,
+                Sets.Expressions.Value,
+                Sets.Expressions.Value,
+                Sets.Expressions.Value);
     }
 }

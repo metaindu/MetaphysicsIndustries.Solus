@@ -24,6 +24,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Sets.Expressions.Value;
 
+        public override IFunctionType FunctionType { get; } =
+            Sets.Functions.Get(
+                Sets.Expressions.Value,
+                Strings.Value);
+
         public Expression ParseExpr(string s)
         {
             var p = new SolusParser();
