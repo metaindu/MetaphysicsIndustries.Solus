@@ -37,23 +37,23 @@ namespace MetaphysicsIndustries.Solus.Expressions
             switch (expr)
             {
                 case ColorExpression ce:
-                    return IsWellDefined(ce,env, throws: throws);
+                    return IsWellDefined(ce, env, throws: throws);
                 case ComponentAccess ca:
-                    return IsWellDefined(ca,env, throws: throws);
+                    return IsWellDefined(ca, env, throws: throws);
                 case DerivativeOfVariable dov:
-                    return IsWellDefined(dov,env, throws: throws);
+                    return IsWellDefined(dov, env, throws: throws);
                 case FunctionCall fc:
-                    return IsWellDefined(fc,env, throws: throws);
+                    return IsWellDefined(fc, env, throws: throws);
                 case IntervalExpression interval:
-                    return IsWellDefined(interval, env,throws: throws);
+                    return IsWellDefined(interval, env, throws: throws);
                 case Literal literal:
-                    return IsWellDefined(literal, env,throws: throws);
+                    return IsWellDefined(literal, env, throws: throws);
                 case MatrixExpression me:
-                    return IsWellDefined(me, env,throws: throws);
+                    return IsWellDefined(me, env, throws: throws);
                 case VariableAccess va:
-                    return IsWellDefined(va, env,throws: throws);
+                    return IsWellDefined(va, env, throws: throws);
                 case VectorExpression ve:
-                    return IsWellDefined(ve,env, throws: throws);
+                    return IsWellDefined(ve, env, throws: throws);
             }
 
             // throw new ArgumentException(
@@ -79,7 +79,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return false;
             }
 
-            var rv = IsWellDefined(expr.Expr, env,throws: throws);
+            var rv = IsWellDefined(expr.Expr, env, throws: throws);
             if (!rv) return false;
             int i;
             for (i = 0; i < expr.Indexes.Count; i++)
@@ -93,7 +93,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     return false;
                 }
 
-                rv = IsWellDefined(expr.Indexes[i], env,throws: throws);
+                rv = IsWellDefined(expr.Indexes[i], env, throws: throws);
                 if (!rv) return false;
             }
 
@@ -229,7 +229,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public bool IsWellDefined(FunctionCall expr, SolusEnvironment env,
             bool throws = true)
         {
-            var rv = IsWellDefined(expr.Function, env,throws: throws);
+            var rv = IsWellDefined(expr.Function, env, throws: throws);
             if (!rv) return false;
 
             IMathObject fv = expr.Function; // TODO: expr.GetResultType
@@ -255,11 +255,11 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             if (f is IfOperator ii)
             {
-                rv = IsWellDefined(expr.Arguments[0], env,throws: throws);
+                rv = IsWellDefined(expr.Arguments[0], env, throws: throws);
                 if (!rv) return false;
-                rv = IsWellDefined(expr.Arguments[1], env,throws: throws);
+                rv = IsWellDefined(expr.Arguments[1], env, throws: throws);
                 if (!rv) return false;
-                rv = IsWellDefined(expr.Arguments[2], env,throws: throws);
+                rv = IsWellDefined(expr.Arguments[2], env, throws: throws);
                 if (!rv) return false;
                 return true;
             }
@@ -541,7 +541,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
         public bool IsWellDefined(IntervalExpression expr, SolusEnvironment env,
             bool throws = true)
         {
-            var rv = IsWellDefined(expr.LowerBound, env,throws: throws);
+            var rv = IsWellDefined(expr.LowerBound, env, throws: throws);
             if (!rv) return false;
             var lower = expr.LowerBound.GetResultType(env);
             if (!lower.IsSubsetOf(Reals.Value))
@@ -552,7 +552,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return false;
             }
 
-            rv = IsWellDefined(expr.UpperBound, env,throws: throws);
+            rv = IsWellDefined(expr.UpperBound, env, throws: throws);
             if (!rv) return false;
             var upper = expr.UpperBound.GetResultType(env);
             if (!upper.IsSubsetOf(Reals.Value))
@@ -583,7 +583,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     return false;
                 }
 
-                var rv = IsWellDefined(expr[r, c],env, throws: throws);
+                var rv = IsWellDefined(expr[r, c], env, throws: throws);
                 if (!rv) return false;
             }
 
@@ -604,7 +604,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             var target = env.GetVariable(expr.VariableName);
             if (target.IsIsExpression(env))
             {
-                var rv = IsWellDefined((Expression)target, env,throws: throws);
+                var rv = IsWellDefined((Expression)target, env, throws: throws);
                 if (!rv) return false;
             }
 
@@ -624,7 +624,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                     return false;
                 }
 
-                var rv = IsWellDefined(expr[i],env, throws: throws);
+                var rv = IsWellDefined(expr[i], env, throws: throws);
                 if (!rv) return false;
             }
 
