@@ -279,8 +279,12 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
             for (var i = 0; i < expr.Arguments.Count; i++)
             {
-                rv = IsWellDefined(expr.Arguments[i], env,throws: throws);
-                if (!rv) return false;
+                var pt = f.GetParameterType(i);
+                if (!pt.IsSubsetOf(Sets.Expressions.Value))
+                {
+                    rv = IsWellDefined(expr.Arguments[i], env, throws: throws);
+                    if (!rv) return false;
+                }
             }
 
             var args = expr.Arguments;
