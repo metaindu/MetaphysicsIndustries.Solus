@@ -98,8 +98,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 fv = literal.Value;
             var f = fv as Function;
             if (f == null)
-                throw new ArgumentException(
-                    "Can't check non-function target.");
+                return true;
 
             if (f is DeriveOperator d)
             {
