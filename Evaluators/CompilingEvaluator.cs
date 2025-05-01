@@ -46,7 +46,7 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             // cases.
             var avt = new ApplyVariablesTransform();
             expr = avt.Transform(expr, env);
-            ec.IsWellFormed(expr);
+            ec.IsWellDefined(expr, env);
 
             var varNames = Expression.GatherVariables(expr);
             var variables =
