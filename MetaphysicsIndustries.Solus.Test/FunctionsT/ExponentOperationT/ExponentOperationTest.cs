@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ExponentOperationT
@@ -27,5 +28,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ExponentOperationT
     [TestFixture]
     public class ExponentOperationTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(ExponentOperation.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(ExponentOperation.Value.Name, Is.EqualTo("^"));
+        }
     }
 }

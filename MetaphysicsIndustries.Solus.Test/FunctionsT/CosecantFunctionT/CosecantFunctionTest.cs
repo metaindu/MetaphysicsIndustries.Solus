@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CosecantFunctionT
@@ -27,5 +28,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CosecantFunctionT
     [TestFixture]
     public class CosecantFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(CosecantFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(CosecantFunction.Value.Name, Is.EqualTo("csc"));
+        }
     }
 }

@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AbsoluteValueFunctionT
@@ -27,5 +28,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AbsoluteValueFunctionT
     [TestFixture]
     public class AbsoluteValueFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(AbsoluteValueFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(AdditionOperation.Value.Name, Is.EqualTo("abs"));
+        }
     }
 }

@@ -20,6 +20,9 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Sets;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
@@ -27,5 +30,20 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
     [TestFixture]
     public class UserDefinedFunctionTest
     {
+        [Test]
+        public void CreateSetsProperties()
+        {
+            // when
+            var f = new UserDefinedFunction(
+                "abc",
+                new[] { "x" },
+                new Literal(1));
+            // then
+            Assert.That(f.Name,Is.EqualTo("abc"));
+            Assert.That(f.Parameters.Count,Is.EqualTo(1));
+            Assert.That(f.Parameters[0].Name,Is.EqualTo("x"));
+            Assert.That(f.Parameters[0].Type, Is.SameAs(Reals.Value));
+            Assert.That(f.Expression, Is.EqualTo(new Literal(1)));
+        }
     }
 }

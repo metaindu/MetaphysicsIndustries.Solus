@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ModularDivisionT
@@ -27,5 +28,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ModularDivisionT
     [TestFixture]
     public class ModularDivisionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(ModularDivision.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(ModularDivision.Value.Name, Is.EqualTo("%"));
+        }
     }
 }

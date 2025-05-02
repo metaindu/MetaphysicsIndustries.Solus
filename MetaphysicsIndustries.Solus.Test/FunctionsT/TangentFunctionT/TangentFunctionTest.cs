@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.TangentFunctionT
@@ -27,5 +28,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.TangentFunctionT
     [TestFixture]
     public class TangentFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.IsNotNull(TangentFunction.Value);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(TangentFunction.Value.Name, Is.EqualTo("tan"));
+        }
     }
 }
