@@ -25,9 +25,10 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class AdditionOperation : AssociativeCommutativeOperation
+    public class AdditionOperation : Function
     {
-        public static readonly AdditionOperation Value = new AdditionOperation();
+        public static readonly AdditionOperation
+            Value = new AdditionOperation();
 
         protected AdditionOperation()
         {
@@ -35,15 +36,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override string Name => "+";
 
-        public override OperationPrecedence Precedence => OperationPrecedence.Addition;
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>();
 
-        public override float IdentityValue
-        {
-            get
-            {
-                return 0;
-            }
-        }
+        public override bool IsVariadic => true;
+        public override ISet VariadicParameterType => Reals.Value;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)

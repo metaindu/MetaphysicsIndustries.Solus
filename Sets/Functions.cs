@@ -280,7 +280,8 @@ namespace MetaphysicsIndustries.Solus.Sets
     public class VariadicFunctions : IFunctionType
     {
         protected static Dictionary<STuple<ISet, ISet, int>, VariadicFunctions>
-            sets = new();
+            sets = new Dictionary<STuple<ISet, ISet, int>,
+                VariadicFunctions>();
 
         public static VariadicFunctions Get(ISet returnType,
             ISet parameterType, int? minimumNumberOfArguments=null)

@@ -161,10 +161,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
 
         //methods and overloaded operators
 
-        public VectorExpression Convolution(VectorExpression convolvee)
-        {
-            return AdvancedConvolution(convolvee, MultiplicationOperation.Value, AdditionOperation.Value);
-        }
+        // TODO: refactor this into a Function
+        //
+        // public VectorExpression Convolution(VectorExpression convolvee)
+        // {
+        //     return AdvancedConvolution(convolvee,
+        //         MultiplicationOperation.Value,
+        //         AdditionOperation.Value);
+        // }
 
         public VectorExpression AdvancedConvolution(VectorExpression convolvee,
             Operation firstOp, AssociativeCommutativeOperation secondOp)
