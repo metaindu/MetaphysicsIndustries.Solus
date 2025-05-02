@@ -553,40 +553,53 @@ namespace MetaphysicsIndustries.Solus.Expressions
             if (ft is Sets.Functions ftf)
             {
                 if (argResultTypes.Length != ftf.ParameterTypes.Count)
-                    throw new TypeException(
-                        null,
-                        $"Wrong number of arguments given to " +
-                        $"{f.DisplayName} (expected " +
-                        $"{f.Parameters.Count} but got {args.Count})");
+                {
+                    if (throws)
+                        throw new TypeException(
+                            null,
+                            $"Wrong number of arguments given to " +
+                            $"{f.DisplayName} (expected " +
+                            $"{f.Parameters.Count} but got {args.Count})");
+                    return false;
+                }
+
                 for (i = 0; i < argResultTypes.Length; i++)
                     if (!argResultTypes[i].IsSubsetOf(
                             ftf.ParameterTypes[i]))
                     {
                         var p = f.Parameters[i];
-                        throw new TypeException(
-                            p.Name,
-                            $"Argument {i} wrong type: " +
-                            $"expected {p.Type.DisplayName} but got " +
-                            $"{argResultTypes[i].DisplayName}");
+                        if (throws)
+                            throw new TypeException(
+                                p.Name,
+                                $"Argument {i} wrong type: " +
+                                $"expected {p.Type.DisplayName} but got " +
+                                $"{argResultTypes[i].DisplayName}");
+                        return false;
                     }
             }
             else if (ft is VariadicFunctions vf)
             {
                 if (argResultTypes.Length < vf.MinimumNumberOfArguments)
-                    throw new TypeException(
-                        null,
-                        $"Wrong number of arguments given to " +
-                        $"{f.DisplayName} (expected at least " +
-                        $"{vf.MinimumNumberOfArguments} but " +
-                        $"got {args.Count})");
+                {
+                    if (throws)
+                        throw new TypeException(
+                            null,
+                            $"Wrong number of arguments given to " +
+                            $"{f.DisplayName} (expected at least " +
+                            $"{vf.MinimumNumberOfArguments} but " +
+                            $"got {args.Count})");
+                    return false;
+                }
                 for (i = 0; i < argResultTypes.Length; i++)
                     if (!argResultTypes[i].IsSubsetOf(vf.ParameterType))
                     {
-                        throw new TypeException(
-                            null,
-                            $"Argument {i} wrong type: expected " +
-                            $"{vf.ParameterType.DisplayName} " +
-                            $"but got {argResultTypes[i].DisplayName}");
+                        if (throws)
+                            throw new TypeException(
+                                null,
+                                $"Argument {i} wrong type: expected " +
+                                $"{vf.ParameterType.DisplayName} " +
+                                $"but got {argResultTypes[i].DisplayName}");
+                        return false;
                     }
             }
             // TODO: AllVectorFunctions ?
@@ -595,10 +608,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
             else
             {
                 if (!CanReceive(ft, argResultTypes))
-                    throw new TypeException(
-                        null,
-                        $"Wrong number or type of arguments given " +
-                        $"to {f.DisplayName}");
+                {
+                    if (throws)
+                        throw new TypeException(
+                            null,
+                            $"Wrong number or type of arguments given " +
+                            $"to {f.DisplayName}");
+                    return false;
+                }
             }
 
             return true;
