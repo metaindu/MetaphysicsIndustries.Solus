@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DistSqFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(DistSqFunction.Value.Name, Is.EqualTo("distsq"));
+            Assert.That(DistSqFunction.Value.Name, Is.EqualTo("DistanceSquared"));
+            Assert.That(DistSqFunction.Value.DisplayName, Is.EqualTo("distsq"));
         }
     }
 }

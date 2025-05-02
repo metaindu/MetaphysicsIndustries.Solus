@@ -43,7 +43,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UserDefinedFunctionT
             Assert.That(f.Parameters.Count,Is.EqualTo(1));
             Assert.That(f.Parameters[0].Name,Is.EqualTo("x"));
             Assert.That(f.Parameters[0].Type, Is.SameAs(Reals.Value));
-            Assert.That(f.Expression, Is.EqualTo(new Literal(1)));
+            Assert.That(f.Expression, Is.TypeOf<Literal>());
+            Assert.That(f.Expression.As<Literal>().Value.ToNumber().Value, Is.EqualTo(1));
         }
     }
 }

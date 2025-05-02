@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SecantFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(SecantFunction.Value.Name, Is.EqualTo("sec"));
+            Assert.That(SecantFunction.Value.Name, Is.EqualTo("Secant"));
+            Assert.That(SecantFunction.Value.DisplayName, Is.EqualTo("sec"));
         }
     }
 }

@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CosineFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(CosineFunction.Value.Name, Is.EqualTo("cos"));
+            Assert.That(CosineFunction.Value.Name, Is.EqualTo("Cosine"));
+            Assert.That(CosineFunction.Value.DisplayName, Is.EqualTo("cos"));
         }
     }
 }

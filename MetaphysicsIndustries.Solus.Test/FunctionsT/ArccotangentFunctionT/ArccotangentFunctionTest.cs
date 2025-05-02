@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccotangentFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(ArccotangentFunction.Value.Name, Is.EqualTo("acsc"));
+            Assert.That(ArccotangentFunction.Value.Name, Is.EqualTo("Arccotangent"));
+            Assert.That(ArccotangentFunction.Value.DisplayName, Is.EqualTo("acot"));
         }
     }
 }

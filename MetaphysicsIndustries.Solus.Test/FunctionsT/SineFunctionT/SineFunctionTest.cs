@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SineFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(SineFunction.Value.Name, Is.EqualTo("sin"));
+            Assert.That(SineFunction.Value.Name, Is.EqualTo("Sine"));
+            Assert.That(SineFunction.Value.DisplayName, Is.EqualTo("sin"));
         }
     }
 }

@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Log10FunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(Log10Function.Value.Name, Is.EqualTo("log10"));
+            Assert.That(Log10Function.Value.Name, Is.EqualTo("Logarithm of base ten"));
+            Assert.That(Log10Function.Value.DisplayName, Is.EqualTo("log10"));
         }
     }
 }

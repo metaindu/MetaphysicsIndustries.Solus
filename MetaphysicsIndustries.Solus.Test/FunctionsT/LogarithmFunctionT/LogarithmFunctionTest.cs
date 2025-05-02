@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogarithmFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(LogarithmFunction.Value.Name, Is.EqualTo("log"));
+            Assert.That(LogarithmFunction.Value.Name, Is.EqualTo("Logarithm"));
+            Assert.That(LogarithmFunction.Value.DisplayName, Is.EqualTo("log"));
         }
     }
 }

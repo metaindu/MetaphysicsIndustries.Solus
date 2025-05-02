@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArcsineFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(ArcsineFunction.Value.Name, Is.EqualTo("asin"));
+            Assert.That(ArcsineFunction.Value.Name, Is.EqualTo("Arcsine"));
+            Assert.That(ArcsineFunction.Value.DisplayName, Is.EqualTo("asin"));
         }
     }
 }

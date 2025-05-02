@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArctangentFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(ArctangentFunction.Value.Name, Is.EqualTo("atan"));
+            Assert.That(ArctangentFunction.Value.Name, Is.EqualTo("Arctangent"));
+            Assert.That(ArctangentFunction.Value.DisplayName, Is.EqualTo("atan"));
         }
     }
 }

@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CeilingFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(CeilingFunction.Value.Name, Is.EqualTo("ceil"));
+            Assert.That(CeilingFunction.Value.Name, Is.EqualTo("Ceiling"));
+            Assert.That(CeilingFunction.Value.DisplayName, Is.EqualTo("ceil"));
         }
     }
 }

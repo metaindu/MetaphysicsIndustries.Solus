@@ -40,7 +40,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
         public void NameIsSet()
         {
             // expect
-            Assert.That(EqualComparisonOperation.Value.Name, Is.EqualTo("="));
+            Assert.That(EqualComparisonOperation.Value.Name, Is.EqualTo("=="));
+            Assert.That(EqualComparisonOperation.Value.DisplayName, Is.EqualTo("=="));
         }
     }
 }

@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NaturalLogarithmFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(NaturalLogarithmFunction.Value.Name, Is.EqualTo("ln"));
+            Assert.That(NaturalLogarithmFunction.Value.Name, Is.EqualTo("Natural Logarithm"));
+            Assert.That(NaturalLogarithmFunction.Value.DisplayName, Is.EqualTo("ln"));
         }
     }
 }

@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FloorFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(FloorFunction.Value.Name, Is.EqualTo("floor"));
+            Assert.That(FloorFunction.Value.Name, Is.EqualTo("Floor"));
+            Assert.That(FloorFunction.Value.DisplayName, Is.EqualTo("floor"));
         }
     }
 }

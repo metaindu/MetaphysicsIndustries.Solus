@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.TangentFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(TangentFunction.Value.Name, Is.EqualTo("tan"));
+            Assert.That(TangentFunction.Value.Name, Is.EqualTo("Tangent"));
+            Assert.That(TangentFunction.Value.DisplayName, Is.EqualTo("tan"));
         }
     }
 }

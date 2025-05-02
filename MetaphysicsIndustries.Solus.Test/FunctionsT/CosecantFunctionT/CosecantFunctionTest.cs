@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CosecantFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(CosecantFunction.Value.Name, Is.EqualTo("csc"));
+            Assert.That(CosecantFunction.Value.Name, Is.EqualTo("Cosecant"));
+            Assert.That(CosecantFunction.Value.DisplayName, Is.EqualTo("csc"));
         }
     }
 }

@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CotangentFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(CotangentFunction.Value.Name, Is.EqualTo("cot"));
+            Assert.That(CotangentFunction.Value.Name, Is.EqualTo("Cotangent"));
+            Assert.That(CotangentFunction.Value.DisplayName, Is.EqualTo("cot"));
         }
     }
 }

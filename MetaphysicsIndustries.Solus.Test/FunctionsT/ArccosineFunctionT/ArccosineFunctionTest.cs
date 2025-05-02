@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccosineFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(ArccosineFunction.Value.Name, Is.EqualTo("acos"));
+            Assert.That(ArccosineFunction.Value.Name, Is.EqualTo("Arccosine"));
+            Assert.That(ArccosineFunction.Value.DisplayName, Is.EqualTo("acos"));
         }
     }
 }

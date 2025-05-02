@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.AbsoluteValueFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(AdditionOperation.Value.Name, Is.EqualTo("abs"));
+            Assert.That(AbsoluteValueFunction.Value.Name, Is.EqualTo("Absolute Value"));
+            Assert.That(AbsoluteValueFunction.Value.DisplayName, Is.EqualTo("abs"));
         }
     }
 }

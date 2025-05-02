@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UnitStepFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(UnitStepFunction.Value.Name, Is.EqualTo("unitstep"));
+            Assert.That(UnitStepFunction.Value.Name, Is.EqualTo("UnitStep"));
+            Assert.That(UnitStepFunction.Value.DisplayName, Is.EqualTo("unitstep"));
         }
     }
 }

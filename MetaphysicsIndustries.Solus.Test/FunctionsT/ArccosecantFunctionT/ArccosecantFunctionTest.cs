@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccosecantFunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(ArccosecantFunction.Value.Name, Is.EqualTo("acsc"));
+            Assert.That(ArccosecantFunction.Value.Name, Is.EqualTo("Arccosecant"));
+            Assert.That(ArccosecantFunction.Value.DisplayName, Is.EqualTo("acsc"));
         }
     }
 }

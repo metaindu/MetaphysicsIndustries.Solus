@@ -39,7 +39,8 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Log2FunctionT
         public void NameIsSet()
         {
             // expect
-            Assert.That(Log2Function.Value.Name, Is.EqualTo("log2"));
+            Assert.That(Log2Function.Value.Name, Is.EqualTo("Logarithm of base two"));
+            Assert.That(Log2Function.Value.DisplayName, Is.EqualTo("log2"));
         }
     }
 }
