@@ -348,10 +348,24 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 //     return true;
             }
 
-            if (args.Count != f.Parameters.Count)
+            if (f.FunctionType is VariadicFunctions vf)
+            {
+                if (args.Count < vf.MinimumNumberOfArguments)
+                {
+                    if (throws)
+                        throw new TypeException(
+                            $"Wrong number of arguments given to " +
+                            $"{f.DisplayName} (expected aat least " +
+                            $"{vf.MinimumNumberOfArguments} but got " +
+                            $"{args.Count})");
+                    return false;
+                }
+            }
+            if (!f.IsVariadic && 
+                args.Count != f.Parameters.Count)
             {
                 if (throws)
-                    throw new ArgumentException(
+                    throw new TypeException(
                         $"Wrong number of arguments given to " +
                         $"{f.DisplayName} (expected {f.Parameters.Count} " +
                         $"but got {args.Count})");
