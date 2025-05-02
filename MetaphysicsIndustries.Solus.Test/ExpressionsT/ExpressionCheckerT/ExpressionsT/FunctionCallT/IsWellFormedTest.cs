@@ -20,6 +20,8 @@
  *
  */
 
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
@@ -41,7 +43,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
                 new[] { new Parameter("", Reals.Value) },
                 "f")
             {
-                CallF = args => args.First()
+                CallF = args => args.First(),
+                GetResultF = (_) => Reals.Value,
             };
             var expr = new FunctionCall(mf, new Literal(5));
             var ec = new ExpressionChecker();
