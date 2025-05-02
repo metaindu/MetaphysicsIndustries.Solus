@@ -20,6 +20,8 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
@@ -28,6 +30,16 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
     [TestFixture]
     public class IsWellFormedTest
     {
-        // TODO: how to call Evaluator.Call and specify a loader?
+        [Test]
+        public void IsWellDefined()
+        {
+            // given
+            var f = LoadImageFunction.Value;
+            var args = new Expression[] { new Literal("asdf") };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.DoesNotThrow(() => ec.IsWellFormed(expr));
+        }
     }
 }
