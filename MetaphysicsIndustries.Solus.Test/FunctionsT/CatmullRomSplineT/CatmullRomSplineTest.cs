@@ -24,7 +24,7 @@ using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CatmullRomSplineT
 {
-    [TestFixture]
+    // TODO: [TestFixture]
     public class CatmullRomSplineTest
     {
     }

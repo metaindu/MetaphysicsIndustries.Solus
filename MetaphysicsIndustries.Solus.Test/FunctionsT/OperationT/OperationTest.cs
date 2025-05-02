@@ -24,7 +24,7 @@ using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.OperationT
 {
-    [TestFixture]
+    // TODO: [TestFixture]
     public class OperationTest
     {
     }

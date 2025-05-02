@@ -25,7 +25,7 @@ using NUnit.Framework;
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
     AssociativeCommutativeOperationT
 {
-    [TestFixture]
+    // TODO: [TestFixture]
     public class AssociativeCommutativeOperationTest
     {
     }
