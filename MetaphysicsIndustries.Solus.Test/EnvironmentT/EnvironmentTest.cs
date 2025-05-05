@@ -68,7 +68,7 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             // when
             var result = new SolusEnvironment(useDefaults: true);
             // then
-            Assert.That(result.CountVariables(), Is.EqualTo(50));
+            Assert.That(result.CountVariables(), Is.EqualTo(53));
             // and
             var vars = result.GetVariableNames().ToList();
             Assert.Contains("sin", vars);
@@ -101,6 +101,9 @@ namespace MetaphysicsIndustries.Solus.Test.EnvironmentT
             Assert.Contains("derive", vars);
             Assert.Contains("subst", vars);
             Assert.Contains("if", vars);
+            Assert.Contains("is_well_defined", vars);
+            Assert.Contains("is_well_formed", vars);
+            Assert.Contains("parse_expr", vars);
             // and
             Assert.Contains("Real", vars);
             Assert.Contains("Boolean", vars);

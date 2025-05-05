@@ -31,17 +31,11 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly Arctangent2Function Value = new Arctangent2Function();
 
         protected Arctangent2Function()
-            : base ("Arctangent 2")
         {
         }
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "atan2";
-            }
-        }
+        public override string DisplayName => "atan2";
+        public override string Name => "Arctangent 2";
 
         public override string DocString
         {

@@ -33,16 +33,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected AbsoluteValueFunction()
         {
-            Name = "Absolute Value";
         }
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "abs";
-            }
-        }
+        public override string DisplayName => "abs";
+        public override string Name => "Absolute Value";
 
         public override string DocString
         {

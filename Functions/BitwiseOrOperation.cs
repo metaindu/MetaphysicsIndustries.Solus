@@ -32,13 +32,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected BitwiseOrOperation()
         {
-            Name = "|";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Bitwise; }
-        }
+        public override string Name=>"|";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.Bitwise;
 
         public override bool HasIdentityValue
         {

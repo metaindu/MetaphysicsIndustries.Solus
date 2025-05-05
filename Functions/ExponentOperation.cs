@@ -32,13 +32,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected ExponentOperation()
         {
-            Name = "^";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Exponent; }
-        }
+        public override string Name => "^";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.Exponent;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)

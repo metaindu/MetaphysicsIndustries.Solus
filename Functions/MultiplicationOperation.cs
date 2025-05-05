@@ -32,8 +32,9 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected MultiplicationOperation()
         {
-            Name = "*";
         }
+
+        public override string Name => "*";
 
         public override OperationPrecedence Precedence
         {

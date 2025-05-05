@@ -41,16 +41,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected CosineFunction()
 		{
-			this.Name = "Cosine";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "cos";
-            }
-        }
+        public override string Name => "Cosine";
+
+        public override string DisplayName => "cos";
 
         public override string DocString
         {

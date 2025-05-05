@@ -46,15 +46,5 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.FunctionT
             Assert.That(f.Parameters.Count, Is.EqualTo(1));
             Assert.That(f.Parameters[0].Type, Is.SameAs(Reals.Value));
         }
-
-        [Test]
-        public void NullParamTypesThrows()
-        {
-            // expect
-            var ex = Assert.Throws<ValueException>(
-                () => new MockFunction(null, "func2"));
-            // and
-            Assert.That(ex.ParamName, Is.EqualTo("parameters"));
-        }
     }
 }

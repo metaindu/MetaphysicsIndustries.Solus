@@ -31,10 +31,7 @@ namespace MetaphysicsIndustries.Solus.Functions
     {
         public static readonly MaximumFunction Value = new MaximumFunction();
 
-        public MaximumFunction() :
-            base(Array.Empty<Parameter>(), "max")
-        {
-        }
+        public override string Name => "max";
 
         public override string DocString =>
             "The max function\n  max(x1, x2, ..., xn)\n\n" +
@@ -42,5 +39,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;
+
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new List<Parameter>();
+        public override bool IsVariadic => true;
+        public override ISet VariadicParameterType => Reals.Value;
     }
 }

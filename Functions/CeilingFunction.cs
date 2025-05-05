@@ -41,16 +41,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected CeilingFunction()
 		{
-			this.Name = "Ceiling";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "ceil";
-            }
-        }
+        public override string Name => "Ceiling";
+        public override string DisplayName => "ceil";
 
         public override string DocString
         {

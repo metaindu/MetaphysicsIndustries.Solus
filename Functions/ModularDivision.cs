@@ -32,13 +32,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected ModularDivision()
         {
-            Name = "%";
         }
 
-        public override OperationPrecedence Precedence
-        {
-            get { return OperationPrecedence.Multiplication; }
-        }
+        public override string Name => "%";
+
+        public override OperationPrecedence Precedence => OperationPrecedence.Multiplication;
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

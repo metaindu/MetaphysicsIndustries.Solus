@@ -6,13 +6,8 @@ should arrays be indexed starting at zero or one?
     currently zero. that is common in programming.
     starting at one is common in mathematics
 rename "vars" command to something like "names" ?
-turn macros into some kind of function that doesn't evaluate args before
-        being called
-    basically a transformer, as next item below
-turn transformers into some kind of function that doesn't evaluate args
-        before being called.
-    a function that takes an expression and returns an expression
-    depends on types/constraints for function arguments
+turn transformers into functions that take expressions as arguments and return
+        an expression
 Functions that take expressions will by default cause their arguments *not* to
         be evaluated. To pass to the function the result of evaluating an
         expression, use the eval function. This is the opposite of how it is

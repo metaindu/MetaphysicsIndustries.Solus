@@ -34,16 +34,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected Log10Function()
         {
-            Name = "Logarithm of base ten";
         }
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "log10";
-            }
-        }
+        public override string Name => "Logarithm of base ten";
+
+        public override string DisplayName => "log10";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

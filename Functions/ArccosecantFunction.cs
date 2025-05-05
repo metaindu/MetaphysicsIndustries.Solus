@@ -41,16 +41,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
 		protected ArccosecantFunction()
 		{
-			this.Name = "Arccosecant";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "acsc";
-            }
-        }
+        public override string DisplayName => "acsc";
+        public override string Name => "Arccosecant";
 
         public override string DocString
         {

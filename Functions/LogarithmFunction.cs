@@ -32,17 +32,12 @@ namespace MetaphysicsIndustries.Solus.Functions
         public static readonly LogarithmFunction Value = new LogarithmFunction();
 
         protected LogarithmFunction()
-            : base("Logarithm")
         {
         }
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "log";
-            }
-        }
+        public override string Name => "Logarithm";
+
+        public override string DisplayName => "log";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

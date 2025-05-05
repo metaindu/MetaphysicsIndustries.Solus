@@ -41,16 +41,11 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected SecantFunction()
 		{
-			this.Name = "Secant";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "sec";
-            }
-        }
+        public override string Name => "Secant";
+
+        public override string DisplayName => "sec";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

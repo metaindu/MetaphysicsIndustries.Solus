@@ -32,24 +32,13 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected UnitStepFunction()
         {
-            Name = "UnitStep";
         }
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "unitstep";
-            }
-        }
+        public override string Name => "UnitStep";
 
-        public override string DocString
-        {
-            get
-            {
-                return "unit step function";
-            }
-        }
+        public override string DisplayName => "unitstep";
+
+        public override string DocString => "unit step function";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

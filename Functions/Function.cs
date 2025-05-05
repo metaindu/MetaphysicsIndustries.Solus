@@ -43,14 +43,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class Function : IMathObject
     {
-        protected Function(Parameter[] parameters, string name = "")
-        {
-            if (parameters == null)
-                throw ValueException.Null(nameof(parameters));
-            _name = name;
-            Parameters = Array.AsReadOnly(parameters);
-        }
-
         public virtual IMathObject CustomCall(IMathObject[] args,
             SolusEnvironment env) => null;
 
@@ -76,28 +68,20 @@ namespace MetaphysicsIndustries.Solus.Functions
         //    return new FunctionCall(this, args);
         //}
 
-		public virtual string DisplayName
-		{
-            get { return Name; }
-		}
+		public virtual string DisplayName => Name;
 
-		public string Name
-		{
-			get
-			{
-				return _name;
-			}
-			protected set
-			{
-				if (_name != value)
-				{
-					_name = value;
-				}
-			}
-		}
+        public abstract string Name { get; }
 
-        public ReadOnlyCollection<Parameter> Parameters { get; }
-        private string _name;
+        public abstract IReadOnlyList<Parameter> Parameters { get; }
+        public virtual bool IsVariadic => false;
+        public virtual ISet VariadicParameterType => null;
+
+        public ISet GetParameterType(int i)
+        {
+            if (IsVariadic)
+                return VariadicParameterType;
+            return Parameters[i].Type;
+        }
 
         public virtual string ToString(List<Expression> arguments)
         {

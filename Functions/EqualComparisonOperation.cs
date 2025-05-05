@@ -32,16 +32,18 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         // TODO: rename to something like "AreEqual" or "IsEqualTo"
         protected EqualComparisonOperation()
-            : base(new[]
-                {
-                    new Parameter("left", MathObjects.Value),
-                    new Parameter("right", MathObjects.Value)
-                },
-                "==")
         {
             // TODO: intervals
             // TODO: complex numbers
         }
+        public override IReadOnlyList<Parameter> Parameters { get; } =
+            new[]
+            {
+                new Parameter("left", MathObjects.Value),
+                new Parameter("right", MathObjects.Value)
+            };
+
+        public override string Name => "==";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)

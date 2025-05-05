@@ -41,24 +41,13 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected SineFunction()
 		{
-			this.Name = "Sine";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "sin";
-            }
-        }
+        public override string Name => "Sine";
 
-        public override string DocString
-        {
-            get
-            {
-                return "The sine function\n  sin(x)\n\nReturns the sine of x.";
-            }
-        }
+        public override string DisplayName => "sin";
+
+        public override string DocString => "The sine function\n  sin(x)\n\nReturns the sine of x.";
 
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes) => Reals.Value;

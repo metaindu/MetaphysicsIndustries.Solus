@@ -24,7 +24,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
-using MetaphysicsIndustries.Solus.Macros;
 using MetaphysicsIndustries.Solus.Sets;
 using MetaphysicsIndustries.Solus.Values;
 
@@ -84,25 +83,19 @@ namespace MetaphysicsIndustries.Solus
                 DistSqFunction.Value,
                 LoadImageFunction.Value,
                 SizeFunction.Value,
+                DeriveOperator.Value,
+                IfOperator.Value,
+                RandFunction.Value,
+                SqrtFunction.Value,
+                SubstFunction.Value,
+                ParseExprFunction.Value,
+                IsWellDefinedFunction.Value,
+                IsWellFormedFunction.Value,
             };
 
             foreach (var func in functions)
             {
                 SetVariable(func.DisplayName, func);
-            }
-
-            var macros = new List<Macro>
-            {
-                SqrtMacro.Value,
-                RandMacro.Value,
-                DeriveMacro.Value,
-                SubstMacro.Value,
-                IfMacro.Value,
-            };
-
-            foreach (var macro in macros)
-            {
-                SetVariable(macro.Name, macro);
             }
 
             SetVariable("Real", Reals.Value);

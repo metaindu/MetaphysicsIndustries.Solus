@@ -21,8 +21,10 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Exceptions;
+using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
+using MetaphysicsIndustries.Solus.Transformers;
 using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Evaluators
@@ -156,6 +158,15 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         {
             return
                 ((float)(1 / Math.Tan(args[0].ToNumber().Value))).ToNumber();
+        }
+
+        public Expression CallFunction(DeriveOperator f, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var derive = new DerivativeTransformer();
+            var expr = (Expression)args[0];
+            var v = ((VariableAccess)args[1]).VariableName;
+            return derive.Transform(expr, new VariableTransformArgs(v));
         }
 
         public IMathObject CallFunction(DistFunction f, IMathObject[] args,
@@ -303,6 +314,34 @@ namespace MetaphysicsIndustries.Solus.Evaluators
             var x = args[0].ToNumber().Value;
             var y = args[1].ToNumber().Value;
             return (x >= y).ToBoolean();
+        }
+
+        public Expression CallFunction(IfOperator ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var eval = new BasicEvaluator();
+            var value = eval.Eval((Expression)args[0], env).ToNumber().Value;
+            if (value == 0 ||
+                float.IsNaN(value) ||
+                float.IsInfinity(value))
+                return new Literal(eval.Eval((Expression)args[2], env));
+            return new Literal(eval.Eval((Expression)args[1], env));
+        }
+
+        public Expression CallFunction(IsWellDefinedFunction ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var ec = new ExpressionChecker();
+            var expr = (Expression)args[0];
+            return new Literal(ec.IsWellDefined(expr, env, throws:false));
+        }
+
+        public Expression CallFunction(IsWellFormedFunction ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var ec = new ExpressionChecker();
+            var expr = (Expression)args[0];
+            return new Literal(ec.IsWellFormed(expr, throws:false));
         }
 
         public IMathObject CallFunction(LessThanComparisonOperation f,
@@ -566,6 +605,19 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 $"{type1.DisplayName}");
         }
 
+        public IMathObject CallFunction(ParseExprFunction ff,
+            IMathObject[] args, SolusEnvironment env)
+        {
+            var s = args[0].ToStringValue();
+            return ParseExprFunction.Value.ParseExpr(s.Value);
+        }
+
+        public IMathObject CallFunction(RandFunction mm, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            return ((float)RandFunction.Source.NextDouble()).ToNumber();
+        }
+
         public IMathObject CallFunction(SecantFunction f, IMathObject[] args,
             SolusEnvironment env)
         {
@@ -590,6 +642,23 @@ namespace MetaphysicsIndustries.Solus.Evaluators
                 return arg.GetDimensions(env).ToVector();
 
             return null;
+        }
+
+        public IMathObject CallFunction(SqrtFunction f, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            return CallFunction(ExponentOperation.Value,
+                new[] { args[0], 0.5f.ToNumber() }, env);
+        }
+
+        public IMathObject CallFunction(SubstFunction ff, IMathObject[] args,
+            SolusEnvironment env)
+        {
+            var subst = new SubstTransformer();
+            var cleanup = new CleanUpTransformer();
+            var var = ((VariableAccess)args[1]).VariableName;
+            return cleanup.CleanUp(
+                subst.Subst((Expression)args[0], var, (Expression)args[2]));
         }
 
         public IMathObject CallFunction(TangentFunction f,

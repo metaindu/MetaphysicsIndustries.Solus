@@ -38,11 +38,6 @@ namespace MetaphysicsIndustries.Solus.Functions
 {
     public abstract class Operation : Function
     {
-        protected Operation(Parameter[] parameters)
-            : base(parameters)
-        {
-        }
-
         public abstract OperationPrecedence Precedence
         {
             get;

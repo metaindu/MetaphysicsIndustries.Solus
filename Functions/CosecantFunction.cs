@@ -41,16 +41,10 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         protected CosecantFunction()
 		{
-			this.Name = "Cosecant";
 		}
 
-        public override string DisplayName
-        {
-            get
-            {
-                return "csc";
-            }
-        }
+        public override string Name => "Cosecant";
+        public override string DisplayName => "csc";
 
         public override string DocString
         {
