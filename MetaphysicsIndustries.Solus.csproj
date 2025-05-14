@@ -32,7 +32,7 @@
         <PackageProjectUrl>https://github.com/metaindu/MetaphysicsIndustries.Solus</PackageProjectUrl>
         <Description>Mathematics system</Description>
         <PackageReleaseNotes>Compiling evaluator. Target newer frameworks.</PackageReleaseNotes>
-        <Copyright>Copyright 2022 izrik and Metaphysics Industries, Inc.</Copyright>
+        <Copyright>Copyright 2025 izrik and Metaphysics Industries, Inc.</Copyright>
         <PackageTags>math numeric algebra</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
