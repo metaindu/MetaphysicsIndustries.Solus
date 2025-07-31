@@ -148,7 +148,7 @@ for type1 in all_types:
         f.write(f'''
 /*
  *  MetaphysicsIndustries.Solus
- *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
+ *  Copyright (C) 2006-2025 Metaphysics Industries, Inc., Richard Sartor
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public

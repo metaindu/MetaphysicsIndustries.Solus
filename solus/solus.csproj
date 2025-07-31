@@ -30,7 +30,7 @@
     <!-- TODO: <PackageIcon>images/logo.png</PackageIcon> -->
     <Description>Solus command-line interface</Description>
     <PackageReleaseNotes>Compiling evaluator. Target newer frameworks.</PackageReleaseNotes>
-    <Copyright>Copyright 2022 izrik and Metaphysics Industries, Inc.</Copyright>
+    <Copyright>Copyright 2025 izrik and Metaphysics Industries, Inc.</Copyright>
     <PackageTags>math numeric algebra</PackageTags>
     <!--<PackageReadmeFile>README.md</PackageReadmeFile>-->
   </PropertyGroup>
