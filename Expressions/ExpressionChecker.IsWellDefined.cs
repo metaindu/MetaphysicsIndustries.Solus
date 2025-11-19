@@ -31,6 +31,18 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public partial class ExpressionChecker
     {
+        /// <summary>
+        /// Determine if an expression is well-defined.
+        ///
+        /// An expression is well-defined if its definition assigns it a
+        /// unique interpretation or value. For our purposes, this means that
+        /// the expression could be evaluated to produce a result. For
+        /// example, all arguments have the correct type.
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <param name="env"></param>
+        /// <param name="throws"></param>
+        /// <returns></returns>
         public bool IsWellDefined(Expression expr, SolusEnvironment env,
             bool throws = true)
         {

@@ -31,6 +31,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public partial class ExpressionChecker
     {
+        /// <summary>
+        /// Determine if an expression is well-formed.
+        ///
+        /// A well-formed expression is one that complies with all syntactic
+        /// rules, e.g. a function call has the correct number of arguments
+        /// for the indication function.
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <param name="throws"></param>
+        /// <returns></returns>
         public bool IsWellFormed(Expression expr,
             bool throws = true)
         {
