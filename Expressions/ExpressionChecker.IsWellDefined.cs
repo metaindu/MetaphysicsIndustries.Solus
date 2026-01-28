@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2022 Metaphysics Industries, Inc., Richard Sartor
@@ -303,6 +302,47 @@ namespace MetaphysicsIndustries.Solus.Expressions
             }
 
             int i;
+            if (f is MultiplicationOperation)
+            {
+                var hasMatrix = false;
+                var hasVector = false;
+                var hasScalar = false;
+                var nonScalars = new List<ISet>();
+                ISet scalarType = null;
+                for (i = 0; i < expr.Arguments.Count; i++)
+                {
+                    var arg = expr.Arguments[i];
+                    var argType = arg.GetResultType(env);
+                    if (argType.IsSubsetOf(Reals.Value))
+                    {
+                        hasScalar = true;
+                        scalarType = argType;
+                    }
+                    else if (argType.IsSubsetOf(AllVectors.Value))
+                    {
+                        hasVector = true;
+                        nonScalars.Add(argType);
+                    }
+                    else if (argType.IsSubsetOf(AllMatrices.Value))
+                    {
+                        hasMatrix = true;
+                        nonScalars.Add(argType);
+                    }
+                    else
+                    {
+                        if (throws)
+                            throw new TypeException(
+                                null,
+                                $"Argument {i} wrong type: " +
+                                $"expected {Reals.Value.DisplayName} or " +
+                                $"{AllVectors.Value.DisplayName} or " +
+                                $"{AllMatrices.Value.DisplayName} but " +
+                                $"got {argType.DisplayName}");
+                        return false;
+                    }
+                }
+            }
+
             for (i = 0; i < args.Count; i++)
             {
                 var pt = f.GetParameterType(i);
@@ -602,6 +642,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
                             $"got {args.Count})");
                     return false;
                 }
+
                 for (i = 0; i < argResultTypes.Length; i++)
                     if (!argResultTypes[i].IsSubsetOf(vf.ParameterType))
                     {
