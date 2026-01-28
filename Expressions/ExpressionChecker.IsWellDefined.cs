@@ -306,7 +306,7 @@ namespace MetaphysicsIndustries.Solus.Expressions
             for (i = 0; i < args.Count; i++)
             {
                 var pt = f.GetParameterType(i);
-                if (!pt.IsSubsetOf(Sets.Expressions.Value))
+                if (pt != null && !pt.IsSubsetOf(Sets.Expressions.Value))
                 {
                     rv = IsWellDefined(expr.Arguments[i], env, throws: throws);
                     if (!rv) return false;
