@@ -200,7 +200,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.Throws<TypeException>(() => ec.Check(expr, null));
+            Assert.Throws<TypeException>(() => ec.IsWellFormed(expr));
         }
 
         [Test]
