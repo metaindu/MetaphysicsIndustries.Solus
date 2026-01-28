@@ -51,6 +51,56 @@ namespace MetaphysicsIndustries.Solus.Functions
         public float CullValue => 1;
 
 
+        public static List<List<Expression>> GroupArgumentsByTensorRank(
+            IList<Expression> arguments, SolusEnvironment env)
+        {
+            var rv = new List<List<Expression>>();
+            var hasMatrix = false;
+            var hasVector = false;
+            var hasScalar = false;
+            var nonScalars = new List<ISet>();
+            ISet scalarType = null;
+            int i;
+
+            void PopulateRank(int rank)
+            {
+                while (rv.Count < rank) rv.Add([]);
+            }
+
+            for (i = 0; i < arguments.Count; i++)
+            {
+                var arg = arguments[i];
+                var argType = arg.GetResultType(env);
+                if (argType.IsSubsetOf(Reals.Value))
+                {
+                    PopulateRank(0);
+                    rv[0].Add(arg);
+                }
+                else if (argType.IsSubsetOf(AllVectors.Value))
+                {
+                    PopulateRank(1);
+                    rv[1].Add(arg);
+                }
+                else if (argType.IsSubsetOf(AllMatrices.Value))
+                {
+                    PopulateRank(2);
+                    rv[2].Add(arg);
+                }
+                else
+                {
+                    throw new TypeException(
+                        null,
+                        $"Argument {i} unsupported type: " +
+                        $"expected {Reals.Value.DisplayName} or " +
+                        $"{AllVectors.Value.DisplayName} or " +
+                        $"{AllMatrices.Value.DisplayName} but " +
+                        $"got {argType.DisplayName}");
+                }
+            }
+
+            return rv;
+        }
+
         public override ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes)
         {
