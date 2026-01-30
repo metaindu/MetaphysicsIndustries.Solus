@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DivisionOperationT
@@ -27,5 +28,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DivisionOperationT
     [TestFixture]
     public class DivisionOperationTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(DivisionOperation.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(DivisionOperation.Value.Name, Is.EqualTo("/"));
+        }
     }
 }

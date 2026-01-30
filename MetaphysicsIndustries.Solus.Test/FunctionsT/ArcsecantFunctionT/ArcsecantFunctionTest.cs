@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArcsecantFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArcsecantFunctionT
     [TestFixture]
     public class ArcsecantFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(ArcsecantFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(ArcsecantFunction.Value.Name, Is.EqualTo("Arcsecant"));
+            Assert.That(ArcsecantFunction.Value.DisplayName, Is.EqualTo("asec"));
+        }
     }
 }

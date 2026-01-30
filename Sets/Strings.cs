@@ -35,7 +35,9 @@ namespace MetaphysicsIndustries.Solus.Sets
             return mo.IsIsString(null);
         }
 
-        public bool IsSupersetOf(ISet other) => other == this;
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other == this ||
             other is MathObjects;

@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DistFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DistFunctionT
     [TestFixture]
     public class DistFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(DistFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(DistFunction.Value.Name, Is.EqualTo("Distance"));
+            Assert.That(DistFunction.Value.DisplayName, Is.EqualTo("dist"));
+        }
     }
 }

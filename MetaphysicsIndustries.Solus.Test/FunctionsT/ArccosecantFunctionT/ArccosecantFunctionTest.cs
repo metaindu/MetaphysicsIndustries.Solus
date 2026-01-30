@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccosecantFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccosecantFunctionT
     [TestFixture]
     public class ArccosecantFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(ArccosecantFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(ArccosecantFunction.Value.Name, Is.EqualTo("Arccosecant"));
+            Assert.That(ArccosecantFunction.Value.DisplayName, Is.EqualTo("acsc"));
+        }
     }
 }

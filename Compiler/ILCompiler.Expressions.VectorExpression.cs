@@ -29,7 +29,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
     public partial class ILCompiler
     {
         public IlExpression ConvertToIlExpression(VectorExpression expr,
-            NascentMethod nm, VariableIdentityMap variables)
+            NascentMethod nm, SolusEnvironment env,
+            VariableIdentityMap variables)
         {
             var seq = new List<IlExpression>();
             var newarr = new NewArrIlExpression(
@@ -42,7 +43,8 @@ namespace MetaphysicsIndustries.Solus.Compiler
                     new StoreElemIlExpression(
                         array_: new DupIlExpression(newarr),
                         index: new LoadConstantIlExpression(i),
-                        value: ConvertToIlExpression(expr[i], nm, variables)));
+                        value: ConvertToIlExpression(expr[i], nm, env,
+                            variables)));
 
             return new IlExpressionSequence(seq);
         }

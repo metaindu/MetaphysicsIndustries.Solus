@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NaturalLogarithmFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.NaturalLogarithmFunctionT
     [TestFixture]
     public class NaturalLogarithmFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(NaturalLogarithmFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(NaturalLogarithmFunction.Value.Name, Is.EqualTo("Natural Logarithm"));
+            Assert.That(NaturalLogarithmFunction.Value.DisplayName, Is.EqualTo("ln"));
+        }
     }
 }

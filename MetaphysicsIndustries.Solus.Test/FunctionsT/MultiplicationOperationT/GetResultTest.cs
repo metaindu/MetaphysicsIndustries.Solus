@@ -1,4 +1,3 @@
-
 /*
  *  MetaphysicsIndustries.Solus
  *  Copyright (C) 2006-2025 Metaphysics Industries, Inc., Richard Sartor
@@ -20,9 +19,9 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Functions;
 using MetaphysicsIndustries.Solus.Sets;
-using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
@@ -31,7 +30,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
     public class GetResultTest
     {
         [Test]
-        public void ResultMatchesFirstArg1()
+        public void ScalarsYieldScalar()
         {
             // given
             var args = new ISet[] { Reals.Value, Reals.Value };
@@ -43,7 +42,7 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
         }
 
         [Test]
-        public void ResultMatchesFirstArg2()
+        public void ScalarsAndVectorYieldVector1()
         {
             // given
             var args = new ISet[] { Vectors.R3, Reals.Value };
@@ -52,6 +51,207 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.MultiplicationOperationT
             var result = value.GetResultType(null, args);
             // then
             Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void ScalarsAndVectorYieldVector2()
+        {
+            // given
+            var args = new ISet[] { Vectors.R3, Reals.Value, Reals.Value };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void ScalarsAndVectorYieldVector3()
+        {
+            // given
+            var args = new ISet[] { Reals.Value, Vectors.R3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void ScalarsAndVectorYieldVector4()
+        {
+            // given
+            var args = new ISet[] { Reals.Value, Reals.Value, Vectors.R3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void ScalarsAndVectorYieldVector5()
+        {
+            // given
+            var args = new ISet[] { Reals.Value, Vectors.R3, Reals.Value };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void MultipleVectorsRaises()
+        {
+            // given
+            var args = new ISet[] { Vectors.R3, Vectors.R3, };
+            // expect
+            var value = MultiplicationOperation.Value;
+            Assert.Throws<TypeException>(
+                () => value.GetResultType(null, args));
+        }
+
+
+        [Test]
+        public void ScalarsAndMatrixYieldMatrix1()
+        {
+            // given
+            var args = new ISet[] { Matrices.M3x3, Reals.Value };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M3x3));
+        }
+
+        [Test]
+        public void ScalarsAndMatrixYieldMatrix2()
+        {
+            // given
+            var args = new ISet[] { Matrices.M3x3, Reals.Value, Reals.Value };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M3x3));
+        }
+
+        [Test]
+        public void ScalarsAndMatrixYieldMatrix3()
+        {
+            // given
+            var args = new ISet[] { Reals.Value, Matrices.M3x3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M3x3));
+        }
+
+        [Test]
+        public void ScalarsAndMatrixYieldMatrix4()
+        {
+            // given
+            var args = new ISet[] { Reals.Value, Reals.Value, Matrices.M3x3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M3x3));
+        }
+
+        [Test]
+        public void ScalarsAndMatrixYieldMatrix5()
+        {
+            // given
+            var args = new ISet[] { Reals.Value, Matrices.M3x3, Reals.Value };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M3x3));
+        }
+
+        [Test]
+        public void MatrixAndMatrixYieldsMatrix1()
+        {
+            // given
+            var args = new ISet[] { Matrices.M3x3, Matrices.M3x3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M3x3));
+        }
+
+        [Test]
+        public void MatrixAndMatrixYieldsMatrix2()
+        {
+            // given
+            var args = new ISet[] { Matrices.M2x4, Matrices.M4x3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Matrices.M2x3));
+        }
+
+        [Test]
+        public void IncompatibleMatrixAndMatrixThrows()
+        {
+            // given
+            var args = new ISet[] { Matrices.M2x4, Matrices.M2x4 };
+            // expect
+            var value = MultiplicationOperation.Value;
+            Assert.Throws<TypeException>(
+                () => value.GetResultType(null, args));
+        }
+
+        [Test]
+        public void MatrixAndVectorYieldsVector1()
+        {
+            // given
+            var args = new ISet[] { Matrices.M3x3, Vectors.R3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void MatrixAndVectorYieldsVector2()
+        {
+            // given
+            var args = new ISet[] { Vectors.R3, Matrices.M3x3 };
+            // when
+            var value = MultiplicationOperation.Value;
+            var result = value.GetResultType(null, args);
+            // then
+            Assert.That(result, Is.SameAs(Vectors.R3));
+        }
+
+        [Test]
+        public void IncompatibleMatrixAndVectorThrows1()
+        {
+            // given
+            var args = new ISet[] { Matrices.M3x3, Vectors.R2 };
+            // expect
+            var value = MultiplicationOperation.Value;
+            Assert.Throws<TypeException>(
+                () => value.GetResultType(null, args));
+        }
+
+        [Test]
+        public void IncompatibleMatrixAndVectorThrows2()
+        {
+            // given
+            var args = new ISet[] { Vectors.R2, Matrices.M3x3 };
+            // expect
+            var value = MultiplicationOperation.Value;
+            Assert.Throws<TypeException>(
+                () => value.GetResultType(null, args));
         }
     }
 }

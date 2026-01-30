@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DistSqFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.DistSqFunctionT
     [TestFixture]
     public class DistSqFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(DistSqFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(DistSqFunction.Value.Name, Is.EqualTo("DistanceSquared"));
+            Assert.That(DistSqFunction.Value.DisplayName, Is.EqualTo("distsq"));
+        }
     }
 }

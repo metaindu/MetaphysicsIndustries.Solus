@@ -42,6 +42,9 @@ namespace MetaphysicsIndustries.Solus.Values
         {
         }
 
+        public static Vector Zero(int length) =>
+            new Vector(new float[length]);
+
         private readonly IMathObject[] _components;
         public IMathObject this[int index] => _components[index];
         public int Length => _components.Length;
@@ -78,6 +81,32 @@ namespace MetaphysicsIndustries.Solus.Values
             var inner = string.Join(", ",
                 _components.Select(c => c.ToString()));
             return $"[{inner}]";
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 1009;
+            foreach (var v in _components)
+                hash = hash * 2003 + v.GetHashCode();
+            return hash;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IVector v))
+                return false;
+            return Equals(this, v);
+        }
+
+        public static bool Equals(IVector a, IVector b)
+        {
+
+            if (a.Length != b.Length)
+                return false;
+            for (var i = 0; i < a.Length; i++)
+                if (a[i].ToFloat() != b[i].ToFloat())
+                    return false;
+            return true;
         }
     }
 }

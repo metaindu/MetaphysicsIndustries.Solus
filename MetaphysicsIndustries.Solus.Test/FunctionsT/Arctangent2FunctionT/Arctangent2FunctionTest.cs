@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Arctangent2FunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Arctangent2FunctionT
     [TestFixture]
     public class Arctangent2FunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(Arctangent2Function.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(Arctangent2Function.Value.Name, Is.EqualTo("Arctangent 2"));
+            Assert.That(Arctangent2Function.Value.DisplayName, Is.EqualTo("atan2"));
+        }
     }
 }

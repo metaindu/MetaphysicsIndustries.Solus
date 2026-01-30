@@ -32,12 +32,12 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             SineFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var expr = new CallIlExpression(
                 new Func<double, double>(Math.Sin),
-                ConvertToIlExpression(arguments[0], nm,
+                ConvertToIlExpression(arguments[0], nm, env,
                     variables));
             return expr;
         }

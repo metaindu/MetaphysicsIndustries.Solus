@@ -72,7 +72,9 @@ namespace MetaphysicsIndustries.Solus.Sets
                    m.ColumnCount == ColumnCount;
         }
 
-        public bool IsSupersetOf(ISet other) => other == this;
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other == this ||
             other is AllMatrices ||
@@ -96,7 +98,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public string DocString =>
             $"The set of {RowCount}x{ColumnCount} matrices";
 
-        public string DisplayName => "Matrix";
+        public string DisplayName => $"Matrix({RowCount}, {ColumnCount})";
     }
 
     public class AllMatrices : ISet
@@ -113,8 +115,8 @@ namespace MetaphysicsIndustries.Solus.Sets
         }
 
         public bool IsSupersetOf(ISet other) =>
-            other is Matrices ||
-            other is AllMatrices;
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other is AllMatrices ||
             other is Tensors ||

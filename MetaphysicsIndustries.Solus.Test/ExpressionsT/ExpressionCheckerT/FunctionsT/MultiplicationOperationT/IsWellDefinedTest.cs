@@ -22,8 +22,10 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
@@ -119,6 +121,118 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var ec = new ExpressionChecker();
             // expect
             Assert.DoesNotThrow(() => ec.IsWellDefined(expr, null));
+        }
+
+        [Test]
+        public void ScalarAndVectorDoesNotThrow()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(2),
+                new Literal(Vector3.UnitX),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.DoesNotThrow(() => ec.IsWellDefined(expr, null));
+        }
+
+        [Test]
+        public void ScalarAndMatrixDoesNotThrow()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(2),
+                new Literal(Matrix.Identity3),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.DoesNotThrow(() => ec.IsWellDefined(expr, null));
+        }
+
+        [Test]
+        public void MatrixAndVectorDoesNotThrow()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Matrix.Identity3),
+                new Literal(Vector3.UnitX),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.DoesNotThrow(() => ec.IsWellDefined(expr, null));
+        }
+
+        [Test]
+        public void MismatchedMatrixAndVectorThrows()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Matrix.Identity3),
+                new Literal(Vector2.UnitX),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.Throws<TypeException>(() => ec.IsWellDefined(expr, null));
+        }
+
+        [Test]
+        public void MatrixAndMatrixDoesNotThrow()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Matrix.Identity3),
+                new Literal(Matrix.Identity3),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.DoesNotThrow(() => ec.IsWellDefined(expr, null));
+        }
+
+        [Test]
+        public void MismatchedMatrixAndMatrixThrows()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Matrix.Identity3),
+                new Literal(Matrix.Identity2),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.Throws<TypeException>(() => ec.IsWellDefined(expr, null));
+        }
+
+        [Test]
+        public void VectorAndVectorThrows()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Vector3.UnitX),
+                new Literal(Vector3.One),
+            };
+            var expr = new FunctionCall(f, args);
+            var ec = new ExpressionChecker();
+            // expect
+            Assert.Throws<TypeException>(() => ec.IsWellDefined(expr, null));
         }
     }
 }

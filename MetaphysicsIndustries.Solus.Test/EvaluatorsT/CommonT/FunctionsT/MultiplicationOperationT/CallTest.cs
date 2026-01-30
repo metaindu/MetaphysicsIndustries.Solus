@@ -22,8 +22,10 @@
 
 using System;
 using MetaphysicsIndustries.Solus.Evaluators;
+using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
 using MetaphysicsIndustries.Solus.Functions;
+using MetaphysicsIndustries.Solus.Values;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
@@ -77,10 +79,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(f, args);
             // expect
-            var ex = Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<TypeException>(() =>
                 eval.Eval(expr, null));
             // and
-            Assert.IsTrue(ex.Message.StartsWith("Wrong number of arguments"));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Message, Does.StartWith("Wrong number of arguments"));
         }
 
         [Test]
@@ -92,10 +95,11 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var eval = Util.CreateEvaluator<T>();
             var expr = new FunctionCall(f, args);
             // expect
-            var ex = Assert.Throws<ArgumentException>(() =>
+            var ex = Assert.Throws<TypeException>(() =>
                 eval.Eval(expr, null));
             // and
-            Assert.IsTrue(ex.Message.StartsWith("Wrong number of arguments"));
+            Assert.That(ex, Is.Not.Null);
+            Assert.That(ex.Message, Does.StartWith("Wrong number of arguments"));
         }
 
         [Test]
@@ -129,6 +133,214 @@ namespace MetaphysicsIndustries.Solus.Test.EvaluatorsT.CommonT.
             var result = eval.Eval(expr, null);
             // then
             Assert.That(result.ToNumber().Value, Is.EqualTo(30));
+        }
+
+        [Test]
+        public void ScalarAndVectorYieldsVector()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(2),
+                new Literal(Vector2.One),
+            };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result, Is.EqualTo(new Vector2(2, 2)));
+        }
+
+        [Test]
+        public void VectorAndScalarYieldsVector()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Vector2.One),
+                new Literal(2),
+            };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result, Is.EqualTo(new Vector(new float[] { 2, 2 })));
+        }
+
+        [Test]
+        public void MatrixAndScalarYieldsMatrix()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(Matrix.Identity3),
+                new Literal(2),
+            };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result,
+                Is.EqualTo(new Matrix(
+                    new float[,] { { 2, 0, 0 }, { 0, 2, 0 }, { 0, 0, 2 } })));
+        }
+
+        [Test]
+        public void ScalarAndMatrixYieldsMatrix()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(2),
+                new Literal(Matrix.Identity3),
+            };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result,
+                Is.EqualTo(
+                    Matrix.M33(
+                        2, 0, 0,
+                        0, 2, 0,
+                        0, 0, 2)));
+        }
+
+        [Test]
+        public void MatrixAndVectorYieldsVector()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(
+                    Matrix.M33(
+                        2, 0, 0,
+                        0, 3, 0,
+                        0, 0, 5)),
+                new Literal(new Vector3(7, 11, 13))
+            };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result, Is.EqualTo(new Vector3(14, 33, 65)));
+        }
+
+        [Test]
+        public void MatrixAndMatrixYieldsMatrix()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(
+                    Matrix.M22(
+                        2, 3,
+                        5, 7)),
+                new Literal(
+                    Matrix.M22(
+                        11, 13,
+                        17, 19)),
+            };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result,
+                Is.EqualTo(
+                    Matrix.M22(
+                        73, 83,
+                        174, 198)));
+        }
+
+        // VectorAndMatrix ?
+        // VectorAndVector ?
+
+        [Test]
+        public void ScalarAndVectorAndScalarYieldsVector()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(2),
+                new Literal(new Vector3(3, 5, 7)),
+                new Literal(11),
+            };
+
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result, Is.EqualTo(new Vector3(66, 110, 154)));
+        }
+
+        [Test]
+        public void ScalarAndMatrixAndScalarYieldsMatrix()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(2),
+                new Literal(
+                    Matrix.M22(
+                        3, 5,
+                        7, 11)),
+                new Literal(13),
+            };
+
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result,
+                Is.EqualTo(
+                    Matrix.M22(
+                        78, 130,
+                        182, 286)));
+        }
+
+        [Test]
+        public void MatrixAndScalarAndMatrixYieldsMatrix()
+        {
+            // given
+            var f = MultiplicationOperation.Value;
+            var args = new Expression[]
+            {
+                new Literal(
+                    Matrix.M22(
+                        2, 3,
+                        5, 7)),
+                new Literal(23),
+                new Literal(
+                    Matrix.M22(
+                        11, 13,
+                        17, 19)),
+            };
+            var eval = Util.CreateEvaluator<T>();
+            var expr = new FunctionCall(f, args);
+            // when
+            var result = eval.Eval(expr, null);
+            // then
+            Assert.That(result,
+                Is.EqualTo(
+                    Matrix.M22(
+                        1679, 1909,
+                        4002, 4554)));
         }
     }
 }

@@ -33,10 +33,10 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             Log2Function func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
-            var arg = ConvertToIlExpression(arguments[0], nm,
+            var arg = ConvertToIlExpression(arguments[0], nm, env,
                 variables);
 
             var excType = typeof(OperandException);

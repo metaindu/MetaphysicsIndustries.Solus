@@ -28,7 +28,23 @@ using MetaphysicsIndustries.Solus.Values;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public abstract class AssociativeCommutativeOperation : Operation
+    public interface IAssociativeCommutativeOperation : IOperation
+    {
+        // if the operation collapses, then any argument that evaluates to the
+        // collapse value will cause the result of the entire operation to be
+        // that value.
+        // e.g. a * 0 = 0
+        bool Collapses { get; }
+        float CollapseValue { get; }
+
+        // if the operation culls, then any argument that evaluates to the
+        // cull value should be removed.
+        // e.g. a + 0 = a
+        bool Culls { get; }
+        float CullValue { get; }
+    }
+
+    public abstract class AssociativeCommutativeOperation : Operation, IAssociativeCommutativeOperation
     {
         public override IReadOnlyList<Parameter> Parameters { get; } =
             new List<Parameter>();

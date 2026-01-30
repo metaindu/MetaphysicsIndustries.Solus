@@ -63,7 +63,9 @@ namespace MetaphysicsIndustries.Solus.Sets
             return v.Length == Dimension;
         }
 
-        public bool IsSupersetOf(ISet other) => other == this;
+        public bool IsSupersetOf(ISet other) =>
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other == this ||
             other is AllVectors ||
@@ -88,7 +90,7 @@ namespace MetaphysicsIndustries.Solus.Sets
         public string DocString =>
             $"The real coordinate space of dimension {Dimension}, " +
             $"ℝ^{Dimension}";
-        public string DisplayName => "Vector";
+        public string DisplayName => $"Vector({Dimension})";
     }
 
     public class AllVectors : ISet
@@ -105,8 +107,8 @@ namespace MetaphysicsIndustries.Solus.Sets
         }
 
         public bool IsSupersetOf(ISet other) =>
-            other is AllVectors||
-            other is Vectors;
+            other == this ||
+            other.IsSubsetOf(this);
         public bool IsSubsetOf(ISet other) =>
             other is AllVectors ||
             other is Tensors ||

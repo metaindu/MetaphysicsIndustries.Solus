@@ -25,7 +25,7 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class GreaterThanComparisonOperation : ComparisonOperation
+    public class GreaterThanComparisonOperation : ComparisonOperation, IComparisonOperation
     {
         public static readonly GreaterThanComparisonOperation Value = new GreaterThanComparisonOperation();
 
@@ -35,7 +35,7 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public override string Name => ">";
 
-        protected override bool Compare(float x, float y)
+        public override bool Compare(float x, float y)
         {
             return x > y;
         }
@@ -45,5 +45,7 @@ namespace MetaphysicsIndustries.Solus.Functions
         {
             return Booleans.Value;
         }
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(Booleans.Value, Reals.Value, Reals.Value);
     }
 }

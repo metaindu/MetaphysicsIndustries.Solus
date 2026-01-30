@@ -24,7 +24,7 @@ using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.SingleArgumentFunctionT
 {
-    [TestFixture]
+    // TODO: [TestFixture]
     public class SingleArgumentFunctionTest
     {
     }

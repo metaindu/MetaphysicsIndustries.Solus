@@ -33,7 +33,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             NaturalLogarithmFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
 
@@ -41,7 +41,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
             var ctor = excType.GetConstructor(
                 new Type[] { typeof(string), typeof(Exception) });
 
-            var arg = ConvertToIlExpression(arguments[0], nm,
+            var arg = ConvertToIlExpression(arguments[0], nm, env,
                 variables);
 
             var checkNotPos = new IfThenElseConstruct(

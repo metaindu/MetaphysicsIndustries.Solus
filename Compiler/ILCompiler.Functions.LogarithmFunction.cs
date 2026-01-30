@@ -33,14 +33,14 @@ namespace MetaphysicsIndustries.Solus.Compiler
     {
         public IlExpression ConvertToIlExpression(
             LogarithmFunction func, NascentMethod nm,
-            VariableIdentityMap variables,
+            SolusEnvironment env, VariableIdentityMap variables,
             List<Expression> arguments)
         {
             var excType = typeof(OperandException);
             var ctor = excType.GetConstructor(
                 new Type[] { typeof(string), typeof(Exception) });
 
-            var arg = ConvertToIlExpression(arguments[0], nm,
+            var arg = ConvertToIlExpression(arguments[0], nm, env,
                 variables);
 
             var checkArgNotPos = new IfThenElseConstruct(
@@ -54,7 +54,7 @@ namespace MetaphysicsIndustries.Solus.Compiler
                             "Argument must be positive"),
                         new LoadNullIlExpression())));
 
-            var base_ = ConvertToIlExpression(arguments[1], nm,
+            var base_ = ConvertToIlExpression(arguments[1], nm, env,
                 variables);
 
             var checkBaseNotPos = new IfThenElseConstruct(

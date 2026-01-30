@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CeilingFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.CeilingFunctionT
     [TestFixture]
     public class CeilingFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(CeilingFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(CeilingFunction.Value.Name, Is.EqualTo("Ceiling"));
+            Assert.That(CeilingFunction.Value.DisplayName, Is.EqualTo("ceil"));
+        }
     }
 }

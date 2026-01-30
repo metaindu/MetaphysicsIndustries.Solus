@@ -74,6 +74,11 @@ namespace MetaphysicsIndustries.Solus.Evaluators
         public IMathObject Call(Function f, IMathObject[] args,
             SolusEnvironment env)
         {
+            // TODO: Check before calling the function. This method is called
+            //       by e.g. FunctionCall.Simplify without any kind of
+            //       expression check beforehand. Create a protected/private
+            //       Call_NoCheck(...) or similar method that does the below,
+            //       and make the public Call(...) call that.
             switch (f)
             {
                 case AbsoluteValueFunction ff:
@@ -197,6 +202,8 @@ namespace MetaphysicsIndustries.Solus.Evaluators
 
         public Expression Simplify(Expression expr, SolusEnvironment env)
         {
+            // TODO: Move Simplify et al to a separate class
+            // TODO: check the expression before simplifying
             CleanUpTransformer cleanup = new CleanUpTransformer();
             var simplified = expr.Simplify(env);
             return cleanup.CleanUp(simplified);

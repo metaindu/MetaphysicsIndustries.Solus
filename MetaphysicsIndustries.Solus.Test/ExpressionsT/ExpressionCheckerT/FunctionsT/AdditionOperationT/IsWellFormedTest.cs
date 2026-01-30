@@ -39,11 +39,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         {
             // given
             var f = AdditionOperation.Value;
-            var args = new Expression[] { new Literal(1) };
+            var args = new Expression[] { };
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => ec.IsWellFormed(expr));
         }
 
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => ec.IsWellFormed(expr));
         }
 

@@ -69,6 +69,126 @@ namespace MetaphysicsIndustries.Solus.Values
                 { 0, 0, 0, 1 }
             });
 
+        public static Matrix Zero(int rowCount, int columnCount) =>
+            new Matrix(new float[rowCount, columnCount]);
+
+        public static Matrix M22(
+            float m11, float m12,
+            float m21, float m22)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12 },
+                { m21, m22 }
+            });
+        }
+
+        public static Matrix M23(
+            float m11, float m12, float m13,
+            float m21, float m22, float m23)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13 },
+                { m21, m22, m23 }
+            });
+        }
+
+        public static Matrix M24(
+            float m11, float m12, float m13, float m14,
+            float m21, float m22, float m23, float m24)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13, m14 },
+                { m21, m22, m23, m24 }
+            });
+        }
+
+        public static Matrix M32(
+            float m11, float m12,
+            float m21, float m22,
+            float m31, float m32)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12 },
+                { m21, m22 },
+                { m31, m32 }
+            });
+        }
+
+        public static Matrix M33(
+            float m11, float m12, float m13,
+            float m21, float m22, float m23,
+            float m31, float m32, float m33)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13 },
+                { m21, m22, m23 },
+                { m31, m32, m33 }
+            });
+        }
+
+        public static Matrix M34(
+            float m11, float m12, float m13, float m14,
+            float m21, float m22, float m23, float m24,
+            float m31, float m32, float m33, float m34)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13, m14 },
+                { m21, m22, m23, m24 },
+                { m31, m32, m33, m34 }
+            });
+        }
+
+        public static Matrix M42(
+            float m11, float m12,
+            float m21, float m22,
+            float m31, float m32,
+            float m41, float m42)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12 },
+                { m21, m22 },
+                { m31, m32 },
+                { m41, m42 }
+            });
+        }
+
+        public static Matrix M43(
+            float m11, float m12, float m13,
+            float m21, float m22, float m23,
+            float m31, float m32, float m33,
+            float m41, float m42, float m43)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13 },
+                { m21, m22, m23 },
+                { m31, m32, m33 },
+                { m41, m42, m43 }
+            });
+        }
+
+        public static Matrix M44(
+            float m11, float m12, float m13, float m14,
+            float m21, float m22, float m23, float m24,
+            float m31, float m32, float m33, float m34,
+            float m41, float m42, float m43, float m44)
+        {
+            return new Matrix(new[,]
+            {
+                { m11, m12, m13, m14 },
+                { m21, m22, m23, m24 },
+                { m31, m32, m33, m34 },
+                { m41, m42, m43, m44 }
+            });
+        }
+
         private readonly IMathObject[,] _components;
 
         public IMathObject this[int row, int column] =>
@@ -124,6 +244,52 @@ namespace MetaphysicsIndustries.Solus.Values
 
             sb.Append("]");
             return sb.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IMatrix m))
+                return false;
+            if (m.RowCount != RowCount ||
+                m.ColumnCount != ColumnCount)
+                return false;
+            int r, c;
+            for (r = 0; r < RowCount; r++)
+            for (c = 0; c < ColumnCount; c++)
+                if (!m[r, c].Equals(this[r, c]))
+                    return false;
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            const uint s_seed = 399891796U;
+            const uint Prime1 = 2654435761U;
+            const uint Prime2 = 2246822519U;
+            const uint Prime3 = 3266489917U;
+            const uint Prime4 = 668265263U;
+            const uint Prime5 = 374761393U;
+            var primes = new[] { Prime1, Prime2, Prime3, Prime4, Prime5 };
+            uint hash = s_seed + Prime5;
+            hash += 8;
+
+            int r, c, k;
+            k = 0;
+            for (r = 0; r < RowCount; r++)
+            {
+                for (c = 0; c < ColumnCount; c++, k++)
+                {
+                    var h = this[r, c].GetHashCode();
+                    var x = (uint)(hash + h * primes[k % 5]);
+                    var y = (x << 17) | (x >> (32 - 17));
+                    var z = y * primes[(k + 1) % 5];
+                    hash = z;
+                }
+
+                k++;
+            }
+
+            return (int)hash;
         }
     }
 }

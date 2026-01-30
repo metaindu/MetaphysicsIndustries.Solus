@@ -21,6 +21,7 @@
  */
 
 using System.Collections.Generic;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
@@ -43,6 +44,12 @@ namespace MetaphysicsIndustries.Solus.Functions
                 new Parameter("e", Sets.Expressions.Value),
                 new Parameter("v", Sets.VariableAccesses.Value),
             };
+
+        public override IFunctionType FunctionType { get; } =
+            Sets.Functions.Get(
+                Sets.Expressions.Value,
+                Sets.Expressions.Value,
+                VariableAccesses.Value);
 
         public override string DocString
         {

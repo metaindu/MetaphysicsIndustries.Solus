@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
@@ -28,5 +29,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.
     [TestFixture]
     public class GreaterThanComparisonOperationTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(GreaterThanComparisonOperation.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(GreaterThanComparisonOperation.Value.Name, Is.EqualTo(">"));
+        }
     }
 }

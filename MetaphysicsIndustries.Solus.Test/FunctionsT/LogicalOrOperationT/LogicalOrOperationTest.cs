@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogicalOrOperationT
@@ -27,5 +28,18 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.LogicalOrOperationT
     [TestFixture]
     public class LogicalOrOperationTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(LogicalOrOperation.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(LogicalOrOperation.Value.Name, Is.EqualTo("||"));
+        }
     }
 }

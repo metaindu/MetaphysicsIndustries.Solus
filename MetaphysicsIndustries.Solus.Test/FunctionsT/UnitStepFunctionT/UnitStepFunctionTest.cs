@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UnitStepFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.UnitStepFunctionT
     [TestFixture]
     public class UnitStepFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(UnitStepFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(UnitStepFunction.Value.Name, Is.EqualTo("UnitStep"));
+            Assert.That(UnitStepFunction.Value.DisplayName, Is.EqualTo("unitstep"));
+        }
     }
 }

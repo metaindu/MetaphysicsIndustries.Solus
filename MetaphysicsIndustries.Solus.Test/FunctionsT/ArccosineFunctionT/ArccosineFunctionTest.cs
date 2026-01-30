@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccosineFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccosineFunctionT
     [TestFixture]
     public class ArccosineFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(ArccosineFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(ArccosineFunction.Value.Name, Is.EqualTo("Arccosine"));
+            Assert.That(ArccosineFunction.Value.DisplayName, Is.EqualTo("acos"));
+        }
     }
 }

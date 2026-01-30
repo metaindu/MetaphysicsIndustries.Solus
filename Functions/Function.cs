@@ -38,9 +38,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MetaphysicsIndustries.Solus.Exceptions;
 using MetaphysicsIndustries.Solus.Expressions;
+using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
+    /// <summary>
+    /// We consider functions as sets of ordered pairs, such that the first
+    /// item of each pair is unique among all of the pairs. We define the
+    /// domain of the function as the set of first items of all pairs. We
+    /// define the codomain as the set of second items from all pairs.
+    /// </summary>
     public abstract class Function : IMathObject
     {
         public virtual IMathObject CustomCall(IMathObject[] args,
@@ -105,6 +112,12 @@ namespace MetaphysicsIndustries.Solus.Functions
 
         public abstract ISet GetResultType(SolusEnvironment env,
             IEnumerable<ISet> argTypes);
+
+        // TODO: this should return an exact type. The function type should
+        //       indicate the exact sets that comprise the domain and codomain
+        //       of this function, as the domain and codomain are defined in
+        //       the class docstring above.
+        public abstract IFunctionType FunctionType { get; }
 
         public bool? IsScalar(SolusEnvironment env) => false;
         public bool? IsBoolean(SolusEnvironment env) => false;

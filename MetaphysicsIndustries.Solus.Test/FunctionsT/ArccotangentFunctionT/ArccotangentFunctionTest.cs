@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccotangentFunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.ArccotangentFunctionT
     [TestFixture]
     public class ArccotangentFunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(ArccotangentFunction.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(ArccotangentFunction.Value.Name, Is.EqualTo("Arccotangent"));
+            Assert.That(ArccotangentFunction.Value.DisplayName, Is.EqualTo("acot"));
+        }
     }
 }

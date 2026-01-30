@@ -20,6 +20,7 @@
  *
  */
 
+using MetaphysicsIndustries.Solus.Functions;
 using NUnit.Framework;
 
 namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Log10FunctionT
@@ -27,5 +28,19 @@ namespace MetaphysicsIndustries.Solus.Test.FunctionsT.Log10FunctionT
     [TestFixture]
     public class Log10FunctionTest
     {
+        [Test]
+        public void ValueExists()
+        {
+            // expect
+            Assert.That(Log10Function.Value, Is.Not.Null);
+        }
+
+        [Test]
+        public void NameIsSet()
+        {
+            // expect
+            Assert.That(Log10Function.Value.Name, Is.EqualTo("Logarithm of base ten"));
+            Assert.That(Log10Function.Value.DisplayName, Is.EqualTo("log10"));
+        }
     }
 }

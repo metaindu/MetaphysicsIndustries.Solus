@@ -26,7 +26,7 @@ using MetaphysicsIndustries.Solus.Sets;
 
 namespace MetaphysicsIndustries.Solus.Functions
 {
-    public class ExponentOperation : BinaryOperation
+    public class ExponentOperation : BinaryOperation, IBinaryOperation
     {
         public static readonly ExponentOperation Value = new ExponentOperation();
 
@@ -44,5 +44,7 @@ namespace MetaphysicsIndustries.Solus.Functions
             // TODO: square matrix
             return Reals.Value;
         }
+        public override IFunctionType FunctionType =>
+            Sets.Functions.Get(Reals.Value, Reals.Value, Reals.Value);
     }
 }

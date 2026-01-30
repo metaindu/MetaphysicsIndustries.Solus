@@ -39,11 +39,11 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
         {
             // given
             var f = AdditionOperation.Value;
-            var args = new Expression[] { new Literal(1) };
+            var args = Array.Empty<Expression>();
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => ec.IsWellDefined(expr, null));
         }
 
@@ -56,7 +56,7 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
             // expect
-            Assert.Throws<ArgumentException>(
+            Assert.Throws<TypeException>(
                 () => ec.IsWellDefined(expr, null));
         }
 
@@ -96,9 +96,9 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             var f = AdditionOperation.Value;
             var args = new Expression[]
             {
-                new Literal(new Vector(new float[] { 1, 2, 3 })),
                 new Literal(1),
-                new Literal(2)
+                new Literal(new Vector(new float[] { 1, 2, 3 })),
+                new Literal(3),
             };
             var expr = new FunctionCall(f, args);
             var ec = new ExpressionChecker();
@@ -108,8 +108,8 @@ namespace MetaphysicsIndustries.Solus.Test.ExpressionsT.ExpressionCheckerT.
             Assert.That(
                 ex.Message,
                 Is.EqualTo(
-                    "The type was incorrect: Argument 0 wrong type: " +
-                    "expected Scalar but got Vector"));
+                    "Wrong argument type at index 1: " +
+                    "expected Scalar but got Vector(3)"));
         }
     }
 }

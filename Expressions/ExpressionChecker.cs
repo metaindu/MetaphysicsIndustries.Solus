@@ -31,6 +31,16 @@ namespace MetaphysicsIndustries.Solus.Expressions
 {
     public partial class ExpressionChecker
     {
+        /// <summary>
+        /// Determine if an expression is well-formed.
+        ///
+        /// A well-formed expression is one that complies with all syntactic
+        /// rules, e.g. a function call has the correct number of arguments
+        /// for the indication function.
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <param name="throws"></param>
+        /// <returns></returns>
         public bool IsWellFormed(Expression expr,
             bool throws = true)
         {
@@ -127,28 +137,14 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 return true;
             }
 
-            for (var i = 0; i < expr.Arguments.Count; i++)
+            int i;
+            for (i = 0; i < expr.Arguments.Count; i++)
             {
                 rv = IsWellFormed(expr.Arguments[i], throws: throws);
                 if (!rv) return false;
             }
 
             var args = expr.Arguments;
-
-            if (f is AssociativeCommutativeOperation)
-            {
-                if (args.Count < 2)
-                {
-                    if (throws)
-                        throw new ArgumentException(
-                            $"Wrong number of arguments given to " +
-                            $"{f.DisplayName} (given {args.Count}, require " +
-                            $"at least 2)");
-                    return false;
-                }
-
-                return true;
-            }
 
             switch (f)
             {
@@ -347,10 +343,24 @@ namespace MetaphysicsIndustries.Solus.Expressions
                 //     return true;
             }
 
-            if (args.Count != f.Parameters.Count)
+            if (f.FunctionType is VariadicFunctions vf)
+            {
+                if (args.Count < vf.MinimumNumberOfArguments)
+                {
+                    if (throws)
+                        throw new TypeException(
+                            $"Wrong number of arguments given to " +
+                            $"{f.DisplayName} (expected aat least " +
+                            $"{vf.MinimumNumberOfArguments} but got " +
+                            $"{args.Count})");
+                    return false;
+                }
+            }
+            if (!f.IsVariadic && 
+                args.Count != f.Parameters.Count)
             {
                 if (throws)
-                    throw new ArgumentException(
+                    throw new TypeException(
                         $"Wrong number of arguments given to " +
                         $"{f.DisplayName} (expected {f.Parameters.Count} " +
                         $"but got {args.Count})");
